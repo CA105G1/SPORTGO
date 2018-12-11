@@ -117,6 +117,7 @@ public class ClubJDBCDAO implements ClubDAO_interface{
 	}
 
 	@Override
+//  (社團無刪除)
 	public void delete(String club_no) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -239,6 +240,7 @@ public class ClubJDBCDAO implements ClubDAO_interface{
 				clubVO.setClub_status(rs.getString("club_status"));
 				clubVO.setClub_name(rs.getString("club_name"));
 				clubVO.setClub_intro(rs.getString("club_intro"));
+				list.add(clubVO);
 			}
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. "
@@ -276,7 +278,7 @@ public class ClubJDBCDAO implements ClubDAO_interface{
 		
 		ClubJDBCDAO dao = new ClubJDBCDAO();
 		
-//		//新增
+		//新增
 //		ClubVO clubVO1 = new ClubVO();
 //		clubVO1.setClub_no("");
 //		clubVO1.setSp_no("SP001");
@@ -287,7 +289,7 @@ public class ClubJDBCDAO implements ClubDAO_interface{
 //		clubVO1.setClub_intro("歡迎加入棒球俱樂部");
 //		dao.insert(clubVO1);
 		
-		//修改*
+		//修改
 //		ClubVO clubVO2 = new ClubVO();
 //		clubVO2.setClub_no("C0001");
 //		clubVO2.setSp_no("SP002");
@@ -298,12 +300,12 @@ public class ClubJDBCDAO implements ClubDAO_interface{
 //		clubVO2.setClub_intro("跑起來阿肥豬們");
 //		dao.update(clubVO2);
 		
-		//刪除*
+		//刪除(社團無刪除)
 //		dao.delete("C0007");
 		
 		
-//		//查詢*
-//		ClubVO clubVO3 = dao.findByPrimaryKey("C00001");
+//		//查詢
+//		ClubVO clubVO3 = dao.findByPrimaryKey("C0001");
 //		System.out.println(clubVO3.getClub_no()+ ",");
 //		System.out.println(clubVO3.getSp_no()+ ",");
 //		System.out.println(clubVO3.getPhoto()+ ",");
@@ -313,7 +315,7 @@ public class ClubJDBCDAO implements ClubDAO_interface{
 //		System.out.println(clubVO3.getClub_intro());
 //		System.out.println("------------------------------");
 //
-//		//查詢*
+//		//查詢
 //		List<ClubVO> list = dao.getAll();
 //		for (ClubVO aClub : list) {
 //			System.out.println(aClub.getClub_no()+ ",");
