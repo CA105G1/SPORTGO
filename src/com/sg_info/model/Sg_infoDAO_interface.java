@@ -8,4 +8,5 @@ public interface Sg_infoDAO_interface {
 	public void delete(String sg_no);
 	public Sg_infoVO findByPk(String sg_no);
 	public List<Sg_infoVO> getAll();
+	
 }
