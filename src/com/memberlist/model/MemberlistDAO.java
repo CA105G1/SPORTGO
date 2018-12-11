@@ -24,7 +24,7 @@ public class MemberlistDAO implements MemberlistDAO_interface {
 	private static final String INSERT_STMT = 
 			"INSERT INTO MEMBERLIST (MEM_NO,MEM_NAME,MEM_ACCOUNT,MEM_PSWD,MEM_EMAIL,MEM_PHONE)"
 			+ "VALUES ('M'||LPAD(TO_CHAR(member_seq.NEXTVAL),3,'0'),?,?,?,?,?)";		
-	private static final String UPDATE ="";
+	private static final String UPDATE ="UPDATE";
 	private static final String GET_ALL_STMT = 
 			"SELECT * FROM MEMBERLIST";
 	private static final String GET_ONE_STMT = 
