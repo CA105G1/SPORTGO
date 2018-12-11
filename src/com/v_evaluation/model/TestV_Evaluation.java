@@ -2,7 +2,7 @@ package com.v_evaluation.model;
 
 import java.util.List;
 
-public class TestVE {
+public class TestV_Evaluation {
 		
 	public static void main(String[] args) {
 		
