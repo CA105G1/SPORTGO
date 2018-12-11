@@ -9,9 +9,9 @@ public class MemberlistVO implements java.io.Serializable{
 	private String mem_account;
 	private String mem_pswd;
 	private String mem_email;
-	private Integer mem_phone;
+	private String mem_phone;
 	private String mem_emgc;
-	private Integer mem_emgcphone;
+	private String mem_emgcphone;
 	private String mem_status;
 	private Integer mem_card;
 	private java.sql.Date mem_expiry;
@@ -53,10 +53,10 @@ public class MemberlistVO implements java.io.Serializable{
 	public void setMem_email(String mem_email) {
 		this.mem_email = mem_email;
 	}
-	public Integer getMem_phone() {
+	public String getMem_phone() {
 		return mem_phone;
 	}
-	public void setMem_phone(Integer mem_phone) {
+	public void setMem_phone(String mem_phone) {
 		this.mem_phone = mem_phone;
 	}
 	public String getMem_emgc() {
@@ -65,10 +65,10 @@ public class MemberlistVO implements java.io.Serializable{
 	public void setMem_emgc(String mem_emgc) {
 		this.mem_emgc = mem_emgc;
 	}
-	public Integer getMem_emgcphone() {
+	public String getMem_emgcphone() {
 		return mem_emgcphone;
 	}
-	public void setMem_emgcphone(Integer mem_emgcphone) {
+	public void setMem_emgcphone(String mem_emgcphone) {
 		this.mem_emgcphone = mem_emgcphone;
 	}
 	public String getMem_status() {

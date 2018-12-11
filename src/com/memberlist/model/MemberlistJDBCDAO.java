@@ -55,9 +55,9 @@ public class MemberlistJDBCDAO implements MemberlistDAO_interface  {
 				mem.setMem_account(rs.getString("mem_account"));
 				mem.setMem_pswd(rs.getString("mem_pswd"));
 				mem.setMem_email(rs.getString("mem_email"));
-				mem.setMem_phone(rs.getInt("mem_phone"));
+				mem.setMem_phone(rs.getString("mem_phone"));
 				mem.setMem_emgc(rs.getString("mem_emgc"));
-				mem.setMem_emgcphone(rs.getInt("mem_emgcphone"));
+				mem.setMem_emgcphone(rs.getString("mem_emgcphone"));
 				mem.setMem_status(rs.getString("mem_status"));
 				mem.setMem_card(rs.getInt("mem_card"));
 				mem.setMem_expiry(rs.getDate("mem_expiry"));

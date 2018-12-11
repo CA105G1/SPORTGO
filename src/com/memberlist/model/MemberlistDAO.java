@@ -24,14 +24,45 @@ public class MemberlistDAO implements MemberlistDAO_interface {
 	private static final String INSERT_STMT = 
 			"INSERT INTO MEMBERLIST (MEM_NO,MEM_NAME,MEM_ACCOUNT,MEM_PSWD,MEM_EMAIL,MEM_PHONE)"
 			+ "VALUES ('M'||LPAD(TO_CHAR(member_seq.NEXTVAL),3,'0'),?,?,?,?,?)";		
-	private static final String UPDATE ="UPDATE";
+	private static final String UPDATE =
+			"UPDATE MEMBERLIST SET MEM_NAME=?,MEM_NICK=?,MEM_ACCOUNT=?,MEM_PSWD=?,MEM_EMAIL=?,"
+			+"MEM_PHONE=?,MEM_EMGC=?,MEM_EMCGPHONE=?,MEM_STATUS=?,MEM_CARD=?,MEM_EXPIRY=?,MEM_PIC=?"
+			+"MEM_PICKIND=?";
 	private static final String GET_ALL_STMT = 
 			"SELECT * FROM MEMBERLIST";
 	private static final String GET_ONE_STMT = 
 			"SELECT * FROM MEMBERLIST WHERE MEM_NO = ? ";
 	@Override
 	public void insert(MemberlistVO memberlist) {
-		// TODO Auto-generated method stub
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(INSERT_STMT);
+			
+			pstmt.setString(1, memberlist.getMem_name());
+			pstmt.setString(2, memberlist.getMem_account());
+			pstmt.setString(3, memberlist.getMem_pswd());
+			pstmt.setString(4, memberlist.getMem_email());
+			pstmt.setString(5, memberlist.getMem_phone());
+			
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException("Database errors occured"
+													+e.getMessage());
+		}finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				} 
+			} catch (SQLException se) {
+				se.printStackTrace(System.err);
+			}
+		}
 		
 	}
 	@Override
@@ -66,9 +97,9 @@ public class MemberlistDAO implements MemberlistDAO_interface {
 				mem.setMem_account(rs.getString("mem_account"));
 				mem.setMem_pswd(rs.getString("mem_pswd"));
 				mem.setMem_email(rs.getString("mem_email"));
-				mem.setMem_phone(rs.getInt("mem_phone"));
+				mem.setMem_phone(rs.getString("mem_phone"));
 				mem.setMem_emgc(rs.getString("mem_emgc"));
-				mem.setMem_emgcphone(rs.getInt("mem_emgcphone"));
+				mem.setMem_emgcphone(rs.getString("mem_emgcphone"));
 				mem.setMem_status(rs.getString("mem_status"));
 				mem.setMem_card(rs.getInt("mem_card"));
 				mem.setMem_expiry(rs.getDate("mem_expiry"));
@@ -107,27 +138,6 @@ public class MemberlistDAO implements MemberlistDAO_interface {
 		
 		
 		return list;
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	}
 	
