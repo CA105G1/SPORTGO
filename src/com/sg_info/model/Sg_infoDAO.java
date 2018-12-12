@@ -78,7 +78,6 @@ public class Sg_infoDAO implements Sg_infoDAO_interface{
 				}
 			}
 		}
-		
 	}
 
 	@Override

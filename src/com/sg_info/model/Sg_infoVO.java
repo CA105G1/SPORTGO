@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 public class Sg_infoVO implements Serializable{
-
+ 
 	private String sg_no;
 	private String mem_no;
 	private String sg_name;
