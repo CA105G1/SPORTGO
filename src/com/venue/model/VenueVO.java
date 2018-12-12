@@ -126,6 +126,32 @@ public class VenueVO {
 	public void setV_status(String v_status) {
 		this.v_status = v_status;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((v_name == null) ? 0 : v_name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		VenueVO other = (VenueVO) obj;
+		if (v_name == null) {
+			if (other.v_name != null)
+				return false;
+		} else if (!v_name.equals(other.v_name))
+			return false;
+		return true;
+	}
+	
 	
 	
 	

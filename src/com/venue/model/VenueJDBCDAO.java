@@ -25,7 +25,7 @@ public class VenueJDBCDAO implements VenueDAO_interface {
 	}
 	
 	private static final String INSERT =
-			"INSERT INTO venue (v_no ,v_name ,vt_no ,reg_no ,v_lat ,v_long ,v_pic, v_address ,v_phoneno ,v_status ,v_func) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+			"INSERT INTO venue (v_no ,v_name ,vt_no ,reg_no ,v_lat ,v_long ,v_pic, v_address ,v_phoneno ,v_status ,v_func) VALUES ('V'||LPAD(to_char(VENUE_SEQ.NEXTVAL), 6, '0'),?,?,?,?,?,?,?,?,?,?)";
 	private static final String GET_ALL_STMT =
 			"SELECT * FROM venue ORDER BY v_no";
 	private static final String GET_ONE_STMT =
@@ -44,17 +44,16 @@ public class VenueJDBCDAO implements VenueDAO_interface {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(INSERT);
 
-			pstmt.setString(1, venueVO.getV_no());
-			pstmt.setString(2, venueVO.getV_name());
-			pstmt.setString(3, venueVO.getVt_no());
-			pstmt.setInt(4, venueVO.getReg_no());
-			pstmt.setDouble(5, venueVO.getV_lat());
-			pstmt.setDouble(6, venueVO.getV_long());
-			pstmt.setString(7, venueVO.getV_pic());
-			pstmt.setString(8, venueVO.getV_address());
-			pstmt.setString(9, venueVO.getV_phoneno());
-			pstmt.setString(10, venueVO.getV_status());
-			pstmt.setString(11, venueVO.getV_func());
+			pstmt.setString(1, venueVO.getV_name());
+			pstmt.setString(2, venueVO.getVt_no());
+			pstmt.setInt(3, venueVO.getReg_no());
+			pstmt.setDouble(4, venueVO.getV_lat());
+			pstmt.setDouble(5, venueVO.getV_long());
+			pstmt.setString(6, venueVO.getV_pic());
+			pstmt.setString(7, venueVO.getV_address());
+			pstmt.setString(8, venueVO.getV_phoneno());
+			pstmt.setString(9, venueVO.getV_status());
+			pstmt.setString(10, venueVO.getV_func());
 
 			pstmt.executeUpdate();
 

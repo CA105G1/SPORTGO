@@ -3,33 +3,24 @@ package com.region.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import com.region.model.RegVO;
 
 import java.sql.*;
 
-
-public class RegJDBCDAO implements RegDAO_interface{
+public class RegDAO implements RegDAO_interface{
 	
-//	private static DataSource ds = null;
-//	static {
-//		try {
-//			Context ctx = new InitialContext();
-//			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB");
-//		} catch (NamingException e) {
-//			e.printStackTrace();
-//		}
-//	}
-	
-	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
-	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
-	private static final String USER = "CA105G1";
-	private static final String PASSWORD = "123456";
-	
-	static { //預先載入驅動程式
+	private static DataSource ds = null;
+	static {
 		try {
-			Class.forName(DRIVER);
-		} catch (ClassNotFoundException ce) {
-			ce.printStackTrace();
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB");
+		} catch (NamingException e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -52,7 +43,7 @@ public class RegJDBCDAO implements RegDAO_interface{
 
 		try {
 
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setInt(1, regVO.getReg_no());
@@ -93,7 +84,7 @@ public class RegJDBCDAO implements RegDAO_interface{
 
 		try {
 
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setString(1, regVO.getReg_name());
@@ -134,7 +125,7 @@ public class RegJDBCDAO implements RegDAO_interface{
 
 		try {
 
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(DELETE);
 
 			pstmt.setInt(1, reg_no);
@@ -174,7 +165,7 @@ public class RegJDBCDAO implements RegDAO_interface{
 
 		try {
 
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
 			pstmt.setInt(1, reg_no);
@@ -233,7 +224,7 @@ public class RegJDBCDAO implements RegDAO_interface{
 
 		try {
 
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
@@ -276,4 +267,5 @@ public class RegJDBCDAO implements RegDAO_interface{
 		}
 		return list;
 	}
+
 }
