@@ -11,7 +11,6 @@ public class Post_infoVO implements java.io.Serializable{
 	private Timestamp post_date;
 	
 	
-	
 	public String getPost_no() {
 		return post_no;
 	}
