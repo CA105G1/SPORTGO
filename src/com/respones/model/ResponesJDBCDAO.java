@@ -26,8 +26,7 @@ public class ResponesJDBCDAO implements ResponesDAO_interface {
 			"DELETE FROM respones where res_no = ?";
 		private static final String UPDATE = 
 			"UPDATE respones set post_no=?, mem_no=?, res_content=?, res_date=? where res_no = ?";
-		
-		
+			
 		@Override
 		public void insert(ResponesVO responesVO) {
 			Connection con = null;

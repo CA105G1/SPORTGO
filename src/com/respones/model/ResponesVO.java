@@ -3,6 +3,8 @@ package com.respones.model;
 import java.sql.Timestamp;
 
 public class ResponesVO implements java.io.Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	private String res_no;
 	private String post_no;
 	private String mem_no; 

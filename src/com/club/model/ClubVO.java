@@ -1,6 +1,8 @@
 package com.club.model;
 
 public class ClubVO implements java.io.Serializable{
+	private static final long serialVersionUID = 1L;
+	
 	private String club_no;
 	private String sp_no;
 	private byte[] photo;

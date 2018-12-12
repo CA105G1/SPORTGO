@@ -3,12 +3,14 @@ package com.clubmemberlist.model;
 import java.sql.Timestamp;
 
 public class ClubmemberlistVO implements java.io.Serializable{
+	
+	private static final long serialVersionUID = 1L;
+	
 	private String club_no;
 	private String mem_no;
 	private String cmem_status;
 	private String cmem_class;
-	private Timestamp slience_time;
-	
+	private Timestamp silence_time;
 	
 	public String getClub_no() {
 		return club_no;
@@ -34,11 +36,14 @@ public class ClubmemberlistVO implements java.io.Serializable{
 	public void setCmem_class(String cmem_class) {
 		this.cmem_class = cmem_class;
 	}
-	public Timestamp getSlience_time() {
-		return slience_time;
+	public Timestamp getSilence_time() {
+		return silence_time;
 	}
-	public void setSlience_time(Timestamp slience_time) {
-		this.slience_time = slience_time;
+	public void setSilence_time(Timestamp silence_time) {
+		this.silence_time = silence_time;
 	}
-	
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}	
+
 }

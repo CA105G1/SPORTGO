@@ -279,15 +279,14 @@ public class ClubJDBCDAO implements ClubDAO_interface{
 		
 		//新增
 //		ClubVO clubVO1 = new ClubVO();
-//		clubVO1.setClub_no("");
-//		clubVO1.setSp_no("SP001");
+//		clubVO1.setSp_no("SP007");
 //		clubVO1.setPhoto(null);//圖片GG
 //		clubVO1.setPhoto_ext(null);//圖片GG
 //		clubVO1.setClub_status("正常");
-//		clubVO1.setClub_name("棒球俱樂部");
-//		clubVO1.setClub_intro("歡迎加入棒球俱樂部");
+//		clubVO1.setClub_name("山頂蜘蛛男");
+//		clubVO1.setClub_intro("一騎入魂!");
 //		dao.insert(clubVO1);
-//		
+		
 		//修改
 //		ClubVO clubVO2 = new ClubVO();
 //		clubVO2.setClub_no("C0001");
