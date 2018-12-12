@@ -2,7 +2,7 @@ package com.memberlist.model;
 
 public class MemberlistVO implements java.io.Serializable{
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 88L;
 	private String mem_no;
 	private String mem_name;
 	private String mem_nick;
