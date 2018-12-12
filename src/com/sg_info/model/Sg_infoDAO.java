@@ -16,6 +16,7 @@ public class Sg_infoDAO implements Sg_infoDAO_interface{
 			"INSERT INTO sg_info VALUES('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default, ?, ?, ?, ?)";
 	private static final String updateClientStmt =
 			"UPDATE sg_info SET sg_name=?, sg_date=?, apl_start=?, apl_end=?, sg_fee=?, sg_pic=?, sg_pic_ext=?, sg_per=?, sport_no=?, venue_no=?, sg_maxno=?, sg_minno=?, sg_extrainfo=?, loc_start_lat=?, loc_start_lng=?, loc_end_lat=?, loc_end_lng=? WHERE sg_no=?";
+			//sg_ttlapl, sg_chkno, cg_status還沒設定進去
 	private static final String deleteStmt =
 			"DELETE FROM sg_info WHERE sg_no=?";
 	private static final String findByPkStmt =
@@ -37,13 +38,107 @@ public class Sg_infoDAO implements Sg_infoDAO_interface{
 
 	@Override
 	public void insert(Sg_infoVO sg_infoVO) {
-		// TODO Auto-generated method stub
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(insertStmt);
+			
+			pstmt.setString(1, sg_infoVO.getMem_no());
+			pstmt.setString(2, sg_infoVO.getSg_name());
+			pstmt.setTimestamp(3, sg_infoVO.getSg_date());
+			pstmt.setTimestamp(4, sg_infoVO.getApl_start());
+			pstmt.setTimestamp(5, sg_infoVO.getApl_end());
+			pstmt.setInt(6, sg_infoVO.getSg_fee());
+			pstmt.setBytes(7, sg_infoVO.getSg_pic());
+			pstmt.setString(8, sg_infoVO.getSg_pic_ext());
+			pstmt.setString(9, sg_infoVO.getSg_per());
+			pstmt.setString(10, sg_infoVO.getSport_no());
+			pstmt.setString(11, sg_infoVO.getVenue_no());
+			pstmt.setInt(12, sg_infoVO.getSg_maxno());
+			pstmt.setInt(13, sg_infoVO.getSg_minno());
+			pstmt.setInt(14, sg_infoVO.getSg_ttlapl());
+			pstmt.setInt(15, sg_infoVO.getSg_chkno());
+			pstmt.setString(16, sg_infoVO.getSg_extrainfo());
+			pstmt.setDouble(17, sg_infoVO.getLoc_start_lat());
+			pstmt.setDouble(18, sg_infoVO.getLoc_start_lng());
+			pstmt.setDouble(19, sg_infoVO.getLoc_end_lat());
+			pstmt.setDouble(20, sg_infoVO.getLoc_end_lng());
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 		
 	}
 
 	@Override
 	public void update(Sg_infoVO sg_infoVO) {
-		// TODO Auto-generated method stub
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(insertStmt);
+			
+			pstmt.setString(1, sg_infoVO.getSg_name());
+			pstmt.setTimestamp(2, sg_infoVO.getSg_date());
+			pstmt.setTimestamp(3, sg_infoVO.getApl_start());
+			pstmt.setTimestamp(4, sg_infoVO.getApl_end());
+			pstmt.setInt(5, sg_infoVO.getSg_fee());
+			pstmt.setBytes(6, sg_infoVO.getSg_pic());
+			pstmt.setString(7, sg_infoVO.getSg_pic_ext());
+			pstmt.setString(8, sg_infoVO.getSg_per());
+			pstmt.setString(9, sg_infoVO.getSport_no());
+			pstmt.setString(10, sg_infoVO.getVenue_no());
+			pstmt.setInt(11, sg_infoVO.getSg_maxno());
+			pstmt.setInt(12, sg_infoVO.getSg_minno());
+			pstmt.setString(13, sg_infoVO.getSg_extrainfo());
+			pstmt.setDouble(14, sg_infoVO.getLoc_start_lat());
+			pstmt.setDouble(15, sg_infoVO.getLoc_start_lng());
+			pstmt.setDouble(16, sg_infoVO.getLoc_end_lat());
+			pstmt.setDouble(17, sg_infoVO.getLoc_end_lng());
+			pstmt.setString(18, sg_infoVO.getMem_no());
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 		
 	}
 
@@ -78,6 +173,7 @@ public class Sg_infoDAO implements Sg_infoDAO_interface{
 				}
 			}
 		}
+		
 	}
 
 	@Override
