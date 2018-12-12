@@ -1,9 +1,11 @@
 package com.sg_info.model;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.Context;
@@ -11,6 +13,10 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 public class Sg_infoDAO implements Sg_infoDAO_interface{
+	private static final String driver = "oracle.jdbc.driver.OracleDriver";
+	private static final String url = "jdbc:oracle:thin:@localhost:1521:xe";
+	private static final String user = "CA105B";
+	private static final String psw = "123456";
 	
 	private static final String insertStmt = 
 			"INSERT INTO sg_info VALUES('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default, ?, ?, ?, ?)";
@@ -23,18 +29,29 @@ public class Sg_infoDAO implements Sg_infoDAO_interface{
 			"SELECT * FROM sg_info WHERE sg_no=?";
 	private static final String getAllStmt =
 			"SELECT * FROM sg_info ORDER BY sg_no";
+	//連線池版
+//	private static DataSource ds = null;
+//	
+//	static {
+//		try {
+//			Context ctx = new javax.naming.InitialContext();
+//			ds = (DataSource)ctx.lookup("java:comp/env/jdbc/TestDB");
+//		} catch (NamingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 	
-	private static DataSource ds = null;
-	
+	//JDBC版
 	static {
 		try {
-			Context ctx = new javax.naming.InitialContext();
-			ds = (DataSource)ctx.lookup("java:comp/env/jdbc/TestDB");
-		} catch (NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Class.forName(driver);
+		}catch(ClassNotFoundException ce) {
+			ce.printStackTrace();
 		}
 	}
+	
+	
 
 	@Override
 	public void insert(Sg_infoVO sg_infoVO) {
@@ -42,7 +59,10 @@ public class Sg_infoDAO implements Sg_infoDAO_interface{
 		PreparedStatement pstmt = null;
 		
 		try {
-			con = ds.getConnection();
+			//連線池版
+//			con = ds.getConnection();
+			//JDBC版
+			con = DriverManager.getConnection(url, user, psw);
 			pstmt = con.prepareStatement(insertStmt);
 			
 			pstmt.setString(1, sg_infoVO.getMem_no());
@@ -96,8 +116,11 @@ public class Sg_infoDAO implements Sg_infoDAO_interface{
 		PreparedStatement pstmt = null;
 		
 		try {
-			con = ds.getConnection();
-			pstmt = con.prepareStatement(insertStmt);
+			//連線池版
+//			con = ds.getConnection();
+			//JDBC版
+			con = DriverManager.getConnection(url, user, psw);
+			pstmt = con.prepareStatement(updateClientStmt);
 			
 			pstmt.setString(1, sg_infoVO.getSg_name());
 			pstmt.setTimestamp(2, sg_infoVO.getSg_date());
@@ -148,7 +171,10 @@ public class Sg_infoDAO implements Sg_infoDAO_interface{
 		PreparedStatement pstmt = null;
 		
 		try {
-			con = ds.getConnection();
+			//連線池版
+//			con = ds.getConnection();
+			//JDBC版
+			con = DriverManager.getConnection(url, user, psw);
 			pstmt = con.prepareStatement(deleteStmt);
 			
 			pstmt.setString(1, sg_no);
@@ -184,13 +210,17 @@ public class Sg_infoDAO implements Sg_infoDAO_interface{
 		Sg_infoVO vo = null;
 		
 		try {
-			con = ds.getConnection();
+			//連線池版
+//			con = ds.getConnection();
+			//JDBC版
+			con = DriverManager.getConnection(url, user, psw);
 			pstmt = con.prepareStatement(findByPkStmt);
 			
 			pstmt.setString(1, sg_no);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
+				vo = new Sg_infoVO();
 				vo.setSg_no(sg_no);
 				vo.setMem_no(rs.getString("mem_no"));
 				vo.setSg_name(rs.getString("sg_name"));
@@ -250,14 +280,18 @@ public class Sg_infoDAO implements Sg_infoDAO_interface{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		Sg_infoVO vo = null;
-		List<Sg_infoVO> list = null;
+		List<Sg_infoVO> list = new ArrayList<Sg_infoVO>();
 		
 		try {
-			con = ds.getConnection();
+			//連線池版
+//			con = ds.getConnection();
+			//JDBC版
+			con = DriverManager.getConnection(url, user, psw);
 			pstmt = con.prepareStatement(getAllStmt);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
+				vo = new Sg_infoVO();
 				vo.setSg_no(rs.getString("sg_no"));
 				vo.setMem_no(rs.getString("mem_no"));
 				vo.setSg_name(rs.getString("sg_name"));
@@ -280,6 +314,7 @@ public class Sg_infoDAO implements Sg_infoDAO_interface{
 				vo.setLoc_start_lng(rs.getDouble("loc_start_lng"));
 				vo.setLoc_end_lat(rs.getDouble("loc_end_lat"));
 				vo.setLoc_end_lng(rs.getDouble("loc_end_lng"));
+
 				list.add(vo);
 			}
 			
