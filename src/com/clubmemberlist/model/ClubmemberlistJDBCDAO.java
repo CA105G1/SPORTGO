@@ -11,7 +11,7 @@ import java.util.List;
 import com.club.model.ClubVO;
 
 
-public class ClubmemberlistJDBCDAO implements Clubmemberlist_interface{
+public class ClubmemberlistJDBCDAO implements ClubmemberlistDAO_interface{
 	String driver = "oracle.jdbc.driver.OracleDriver";
 	String url = "jdbc:oracle:thin:@localhost:1521:XE";
 	String userid = "CA105G1";
@@ -282,7 +282,7 @@ public class ClubmemberlistJDBCDAO implements Clubmemberlist_interface{
 //		clubmemberlistVO1.setCmem_class("管理員");
 //		clubmemberlistVO1.setSilence_time(java.sql.Timestamp.valueOf("2018-12-11 12:30:00"));
 //		dao.insert(clubmemberlistVO1);
-		
+//		
 		//修改
 //		ClubmemberlistVO clubmemberlistVO2 = new ClubmemberlistVO();
 //		clubmemberlistVO2.setClub_no("C0008");
@@ -306,15 +306,15 @@ public class ClubmemberlistJDBCDAO implements Clubmemberlist_interface{
 //		System.out.println("------------------------------");
 
 //		//查詢
-		List<ClubmemberlistVO> list = dao.getAll();
-		for (ClubmemberlistVO aClub : list) {
-			System.out.println(aClub.getClub_no()+ ",");
-			System.out.println(aClub.getMem_no()+ ",");
-			System.out.println(aClub.getCmem_status()+ ",");
-			System.out.println(aClub.getCmem_class()+ ",");
-			System.out.println(aClub.getSilence_time()+ ",");
-			System.out.println();
-		}
+//		List<ClubmemberlistVO> list = dao.getAll();
+//		for (ClubmemberlistVO aClub : list) {
+//			System.out.println(aClub.getClub_no()+ ",");
+//			System.out.println(aClub.getMem_no()+ ",");
+//			System.out.println(aClub.getCmem_status()+ ",");
+//			System.out.println(aClub.getCmem_class()+ ",");
+//			System.out.println(aClub.getSilence_time()+ ",");
+//			System.out.println();
+//		}
 	}
 
 }

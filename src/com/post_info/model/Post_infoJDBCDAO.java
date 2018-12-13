@@ -19,7 +19,7 @@ public class Post_infoJDBCDAO implements Post_infoDAO_interface{
 	
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO post_info (post_no,club_no,mem_no,post_topic,post_content,post_date) VALUES (('P'||LPAD(to_char(post_seq.NEXTVAL), 4, '0')), ?, ?, ?, ?, ?)";
+			"INSERT INTO post_info (post_no,club_no,mem_no,post_topic,post_content,post_date) VALUES (('P'||LPAD(to_char(post_info_seq.NEXTVAL), 4, '0')), ?, ?, ?, ?, ?)";
 		private static final String GET_ALL_STMT = 
 			"SELECT post_no,club_no,mem_no,post_topic,post_content,post_date FROM post_info order by post_no";
 		private static final String GET_ONE_STMT = 
@@ -346,6 +346,7 @@ public class Post_infoJDBCDAO implements Post_infoDAO_interface{
 //		    System.out.println();
 //			}
 		}
+		
 	
 	
 }

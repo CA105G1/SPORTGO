@@ -1,4 +1,4 @@
-package com.post_like.model;
+package com.respones_like.model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,27 +8,27 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Post_likeJDBCDAO implements Post_likeDAO_interface{
+import com.post_like.model.Post_likeJDBCDAO;
+
+
+public class Respones_likeJDBCDAO implements Respones_likeDAO_interface {
 	String driver = "oracle.jdbc.driver.OracleDriver";
 	String url = "jdbc:oracle:thin:@localhost:1521:XE";
 	String userid = "CA105G1";
 	String passwd = "123456";
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO post_like (post_no,mem_no,like_type) VALUES (?, ?, ?)";
+			"INSERT INTO respones_like (res_no,mem_no,like_type) VALUES (?, ?, ?)";
 		private static final String GET_ALL_STMT = 
-			"SELECT post_no,mem_no,like_type FROM post_like order by post_no ";
+			"SELECT res_no,mem_no,like_type FROM respones_like order by res_no ";
 		private static final String GET_ONE_STMT = 
-			"SELECT post_no,mem_no,like_type FROM post_like where post_no = ? AND mem_no = ?";
+			"SELECT res_no,mem_no,like_type FROM respones_like where res_no = ? AND mem_no = ?";
 		private static final String DELETE = 
-			"DELETE FROM post_like where post_no = ? AND mem_no = ?";
+			"DELETE FROM respones_like where res_no = ? AND mem_no = ?";
 		private static final String UPDATE = 
-			"UPDATE post_like set  like_type=? where post_no = ? AND mem_no = ?";
-		
-		
-		
+			"UPDATE respones_like set  like_type=? where res_no = ? AND mem_no = ?";
 		@Override
-		public void insert(Post_likeVO post_likeVO) {
+		public void insert(Respones_likeVO respones_likeVO) {
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			
@@ -37,9 +37,9 @@ public class Post_likeJDBCDAO implements Post_likeDAO_interface{
 				con = DriverManager.getConnection(url, userid, passwd);
 				pstmt = con.prepareStatement(INSERT_STMT);
 				
-				pstmt.setString(1, post_likeVO.getPost_no());
-				pstmt.setString(2, post_likeVO.getMem_no());
-				pstmt.setString(3, post_likeVO.getLike_type());
+				pstmt.setString(1, respones_likeVO.getRes_no());
+				pstmt.setString(2, respones_likeVO.getMem_no());
+				pstmt.setString(3, respones_likeVO.getLike_type());
 
 				
 				pstmt.executeUpdate();
@@ -70,7 +70,7 @@ public class Post_likeJDBCDAO implements Post_likeDAO_interface{
 		}
 		
 		@Override
-		public void update(Post_likeVO post_likeVO) {
+		public void update(Respones_likeVO respones_likeVO) {
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			
@@ -79,9 +79,9 @@ public class Post_likeJDBCDAO implements Post_likeDAO_interface{
 				con = DriverManager.getConnection(url, userid, passwd);
 				pstmt = con.prepareStatement(UPDATE);
 				
-				pstmt.setString(1, post_likeVO.getLike_type());
-				pstmt.setString(2, post_likeVO.getPost_no());
-				pstmt.setString(3, post_likeVO.getMem_no());
+				pstmt.setString(1, respones_likeVO.getLike_type());
+				pstmt.setString(2, respones_likeVO.getRes_no());
+				pstmt.setString(3, respones_likeVO.getMem_no());
 				
 				pstmt.executeUpdate();
 				
@@ -111,7 +111,7 @@ public class Post_likeJDBCDAO implements Post_likeDAO_interface{
 		}
 		
 		@Override
-		public void delete(String post_no,String mem_no) {
+		public void delete(String res_no,String mem_no) {
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			
@@ -120,7 +120,7 @@ public class Post_likeJDBCDAO implements Post_likeDAO_interface{
 				con = DriverManager.getConnection(url, userid, passwd);
 				pstmt = con.prepareStatement(DELETE);
 				
-				pstmt.setString(1, post_no);
+				pstmt.setString(1, res_no);
 				pstmt.setString(2, mem_no);
 				
 				
@@ -151,8 +151,8 @@ public class Post_likeJDBCDAO implements Post_likeDAO_interface{
 		}
 		
 		@Override
-		public Post_likeVO findByPrimaryKey(String post_no,String mem_no) {
-			Post_likeVO post_likeVO = null;
+		public Respones_likeVO findByPrimaryKey(String res_no,String mem_no) {
+			Respones_likeVO Respones_likeVO = null;
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
@@ -162,16 +162,16 @@ public class Post_likeJDBCDAO implements Post_likeDAO_interface{
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 			
-			pstmt.setString(1, post_no);
+			pstmt.setString(1, res_no);
 			pstmt.setString(2, mem_no);
 			
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				post_likeVO = new Post_likeVO();
-				post_likeVO.setPost_no(rs.getString("post_no"));
-				post_likeVO.setMem_no(rs.getString("mem_no"));
-				post_likeVO.setLike_type(rs.getString("like_type"));
+				Respones_likeVO = new Respones_likeVO();
+				Respones_likeVO.setRes_no(rs.getString("res_no"));
+				Respones_likeVO.setMem_no(rs.getString("mem_no"));
+				Respones_likeVO.setLike_type(rs.getString("like_type"));
 			}
 			} catch (ClassNotFoundException e) {
 				throw new RuntimeException("Couldn't load database driver. "
@@ -202,12 +202,12 @@ public class Post_likeJDBCDAO implements Post_likeDAO_interface{
 					}
 				}
 			}
-			return post_likeVO;
+			return Respones_likeVO;
 		}
 		@Override
-		public List<Post_likeVO> getAll() {
-			List<Post_likeVO> list = new ArrayList<Post_likeVO>();
-			Post_likeVO post_likeVO = null;
+		public List<Respones_likeVO> getAll() {
+			List<Respones_likeVO> list = new ArrayList<Respones_likeVO>();
+			Respones_likeVO Respones_likeVO = null;
 			
 			Connection con = null;
 			PreparedStatement pstmt = null;
@@ -220,12 +220,12 @@ public class Post_likeJDBCDAO implements Post_likeDAO_interface{
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
-				post_likeVO = new Post_likeVO();
-				post_likeVO.setPost_no(rs.getString("post_no"));
-				post_likeVO.setMem_no(rs.getString("mem_no"));
-				post_likeVO.setLike_type(rs.getString("like_type"));
+				Respones_likeVO = new Respones_likeVO();
+				Respones_likeVO.setRes_no(rs.getString("res_no"));
+				Respones_likeVO.setMem_no(rs.getString("mem_no"));
+				Respones_likeVO.setLike_type(rs.getString("like_type"));
 				
-				list.add(post_likeVO);
+				list.add(Respones_likeVO);
 			}
 			} catch (ClassNotFoundException e) {	
 			throw new RuntimeException("Couldn't load database driver. "
@@ -259,41 +259,41 @@ public class Post_likeJDBCDAO implements Post_likeDAO_interface{
 			return list;
 		}
 		
-		public static void main(String[] args) {
-			Post_likeJDBCDAO dao = new Post_likeJDBCDAO(); 
+		
+	public static void main(String[] args) {
+		Respones_likeJDBCDAO dao = new Respones_likeJDBCDAO(); 
 			
-			//新增
-//			Post_likeVO post_likeVO1 = new Post_likeVO();
-//			post_likeVO1.setPost_no("P0003");
-//			post_likeVO1.setMem_no("M002");
-//			post_likeVO1.setLike_type("XX");
-//			dao.insert(post_likeVO1);
-			
-			//修改
-//			Post_likeVO post_likeVO2 = new Post_likeVO();
-//			post_likeVO2.setPost_no("P0002");
-//			post_likeVO2.setMem_no("M005");
-//			post_likeVO2.setLike_type("");
-//			dao.update(post_likeVO2);
+		//新增
+//		Respones_likeVO Respones_likeVO1 = new Respones_likeVO();
+//		Respones_likeVO1.setRes_no("R0002");
+//		Respones_likeVO1.setMem_no("M002");
+//		Respones_likeVO1.setLike_type("");
+//		dao.insert(Respones_likeVO1);
+//		
+//		//修改
+//		Respones_likeVO Respones_likeVO2 = new Respones_likeVO();
+//		Respones_likeVO2.setRes_no("R0002");
+//		Respones_likeVO2.setMem_no("M005");
+//		Respones_likeVO2.setLike_type("");
+//		dao.update(Respones_likeVO2);
 //
-//			//刪除
-//			dao.delete("P0002","M005");
-//			
-//			//查詢
-//			Post_likeVO post_likeVO3 = dao.findByPrimaryKey("P0001","M001");
-//			System.out.println(post_likeVO3.getPost_no()+ ",");
-//			System.out.println(post_likeVO3.getMem_no()+ ",");
-//			System.out.println(post_likeVO3.getLike_type()+ ",");
-//			System.out.println("------------------------------");
-//			
-//			//查詢
-//			List<Post_likeVO> list = dao.getAll();
-//			for (Post_likeVO aPost_like : list) {
-//				System.out.println(aPost_like.getPost_no()+ ",");
-//				System.out.println(aPost_like.getMem_no()+ ",");
-//				System.out.println(aPost_like.getLike_type()+ ",");
-//				System.out.println();
-//			}
+//		//刪除
+//		dao.delete("R0002","M005");
+//		
+//		//查詢
+//		Respones_likeVO Respones_likeVO3 = dao.findByPrimaryKey("R0001","M003");
+//		System.out.println(Respones_likeVO3.getRes_no()+ ",");
+//		System.out.println(Respones_likeVO3.getMem_no()+ ",");
+//		System.out.println(Respones_likeVO3.getLike_type()+ ",");
+//		System.out.println("------------------------------");
+
+//		//查詢
+		List<Respones_likeVO> list = dao.getAll();
+		for (Respones_likeVO aPost_like : list) {
+			System.out.println(aPost_like.getRes_no()+ ",");
+			System.out.println(aPost_like.getMem_no()+ ",");
+			System.out.println(aPost_like.getLike_type()+ ",");
+			System.out.println();
 		}
-	
+	}
 }
