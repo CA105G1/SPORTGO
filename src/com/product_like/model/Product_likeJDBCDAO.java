@@ -8,12 +8,12 @@ public class Product_likeJDBCDAO implements Product_likeDAO_interface{
 	public Product_likeJDBCDAO() {}
 	
 	private static final String PUSH_LIKE = "INSERT INTO PRODUCT_LIKE VALUES(?,?)";
-	private static final String PUSH_DISLIKE = "DELETE FROM PRODUCT_LIKE WHERE MEM_NO = ?";
+	private static final String PUSH_DISLIKE = "DELETE FROM PRODUCT_LIKE WHERE MEM_NO = ? AND PRODUCT_NO = ?";
 	private static final String PRODUCT_WHO_LIKE = "SELECT MEM_NO FROM PRODUCT_LIKE WHERE PRODUCT_NO = ?";
-	private static final String MEM_LIKE_WHICH_PRODUCT = "SELECT PRODUCT FROM PRODUCT WHERE MEM_NO = ?";
+	private static final String MEM_LIKE_WHICH_PRODUCT = "SELECT PRODUCT_NO FROM PRODUCT_LIKE WHERE MEM_NO = ?";
 	
 	private String driver = "oracle.jdbc.driver.OracleDriver";
-	private String url = "jdbc:oracle:thin@10.37.129.3:1521:xe";
+	private String url = "jdbc:oracle:thin:@10.37.129.3:1521:xe";
 	private String user = "AARON";
 	private String password = "123456";
 	
@@ -46,7 +46,7 @@ public class Product_likeJDBCDAO implements Product_likeDAO_interface{
 	//member push dislike button then delete the data from Product_like table
 	//warning : if member didn't push like button first, it would occur SQLException
 	@Override
-	public void delete(String mem_no) {
+	public void delete(Product_likeVO product_like) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
@@ -55,7 +55,8 @@ public class Product_likeJDBCDAO implements Product_likeDAO_interface{
 			con = DriverManager.getConnection(url, user, password);
 			pstmt = con.prepareStatement(PUSH_DISLIKE);
 			
-			pstmt.setString(1, mem_no);
+			pstmt.setString(1, product_like.getMem_no());
+			pstmt.setString(2, product_like.getProduct_no());
 			pstmt.executeUpdate();
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load the database driver. "
@@ -95,7 +96,7 @@ public class Product_likeJDBCDAO implements Product_likeDAO_interface{
 			
 			while(rs.next()) {
 				Product_likeVO productlike = new Product_likeVO();
-				productlike.setMem_no(rs.getString(productlike.getMem_no()));
+				productlike.setMem_no(rs.getString("mem_no"));
 				list.add(productlike);
 			}
 			
@@ -141,7 +142,7 @@ public class Product_likeJDBCDAO implements Product_likeDAO_interface{
 			
 			while(rs.next()) {
 				Product_likeVO productlike = new Product_likeVO();
-				productlike.setProduct_no(rs.getString(productlike.getProduct_no()));
+				productlike.setProduct_no(rs.getString("product_no"));
 				list.add(productlike);
 			}
 			
@@ -168,5 +169,28 @@ public class Product_likeJDBCDAO implements Product_likeDAO_interface{
 		}
 		return list;
 	}
-
+	
+	public static void main(String[] args) {
+		Product_likeJDBCDAO like = new Product_likeJDBCDAO();
+		Product_likeVO memlike = new Product_likeVO("P001","M001");
+		Product_likeVO memlike2 = new Product_likeVO("P001","M002");
+		
+		like.insert(memlike);
+		like.insert(memlike2);
+		System.out.println("Products be liked. ");
+		
+		List<Product_likeVO> memall = like.Mem_getAll("M001");
+		System.out.println("M001 likes : ");
+		for(Product_likeVO all : memall) {
+			System.out.println("product_no : "+all.getProduct_no());
+		}
+		List<Product_likeVO> proall = like.Product_getAll("P001");
+		System.out.println("P001 is liked by : ");
+		for(Product_likeVO pro : proall) {
+			System.out.println("product_no : "+pro.getMem_no());
+		}
+		
+		like.delete(memlike2);
+		System.out.println("Products be disliked. ");
+	}
 }

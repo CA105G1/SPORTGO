@@ -219,10 +219,10 @@ public class FriendJDBCDAO implements FriendDAO_interface{
 		}
 	}
 	public static void main(String[] args) {
-//		FriendVO friend = new FriendVO();
-//		friend.setMem1_no("M003");
-//		friend.setMem2_no("M001");
-//		friend.setFriend_status("好友");
+		FriendVO friend = new FriendVO();
+		friend.setMem1_no("M003");
+		friend.setMem2_no("M001");
+		friend.setFriend_status("好友");
 		FriendJDBCDAO jdbc = new FriendJDBCDAO();
 		jdbc.updateStatus("M001","M003","好友");
 		System.out.println("update completed.");

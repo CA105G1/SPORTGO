@@ -16,7 +16,22 @@ public class AddressVO implements java.io.Serializable{
 	private String addr_detail;
 	private Integer addr_zip;
 	
-	
+	public AddressVO(String mem_no,String receiver,String receiver_phone,String country
+					,String city,String addr_detail,String addr_zip) {
+		setMem_no(mem_no);
+		setReceiver(receiver);
+		setReceiver_phone(receiver_phone);
+		setCountry(country);
+		setCity(city);
+		setAddr_detail(addr_detail);
+		try {
+			Integer zip = java.lang.Integer.parseInt(addr_zip);
+			setAddr_zip(zip);
+		} catch (Exception e) {
+			throw new RuntimeException("Illegalformat of zipcode. "+e.getMessage());
+		}
+		
+	}
 	public String getAddr_no() {
 		return addr_no;
 	}

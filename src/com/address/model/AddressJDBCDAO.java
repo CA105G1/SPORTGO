@@ -8,13 +8,13 @@ public class AddressJDBCDAO implements AddressDAO_interface {
 	}
 	
 	private String driver = "oracle.jdbc.driver.OracleDriver";
-	private String url = "jdbc:oracle:thin@10.37.129.3:1521:xe";
+	private String url = "jdbc:oracle:thin:@10.37.129.3:1521:xe";
 	private String user = "AARON";
 	private String password = "123456";
 	
 	private static final String INSERT_ADDR = 
 			"INSERT INTO ADDRESS (ADDR_NO,MEM_NO,RECEIVER,RECEIVER_PHONE,COUNTRY,CITY,ADDR_DETAIL"
-			+ ",ADD_ZIP) VALUES ('M'||LPAD(TO_CHAR(member_seq.NEXTVAL),3,'0'),?,?,?,?,?,?,?)";
+			+ ",ADDR_ZIP) VALUES ('A'||LPAD(TO_CHAR(address_seq.NEXTVAL),3,'0'),?,?,?,?,?,?,?)";
 	private static final String DELETE_ADDR = 
 			"DELETE FROM ADDRESS WHERE ADDR_NO = ? ";
 	private static final String FIND_MEM_ADDR =
@@ -30,7 +30,7 @@ public class AddressJDBCDAO implements AddressDAO_interface {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, user, password);
 			pstmt = con.prepareStatement(INSERT_ADDR);
-			
+			System.out.println(address.getAddr_zip());
 			pstmt.setString(1, address.getMem_no());
 			pstmt.setString(2, address.getReceiver());
 			pstmt.setString(3, address.getReceiver_phone());
@@ -91,7 +91,7 @@ public class AddressJDBCDAO implements AddressDAO_interface {
 			}
 		}
 	}
-
+	//find the member address
 	@Override
 	public List<AddressVO> getByForeignKey(String mem_no) {
 		List<AddressVO> list = new ArrayList<>();
@@ -143,11 +143,11 @@ public class AddressJDBCDAO implements AddressDAO_interface {
 		
 		return list;
 	}
-
+	//find all addresses safe in database
 	@Override
 	public List<AddressVO> getAll() {
-		List<AddressVO> list = new ArrayList<>();
-		AddressVO address = new AddressVO();
+		List<AddressVO> listall = new ArrayList<>();
+		AddressVO address = null;
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -160,6 +160,7 @@ public class AddressJDBCDAO implements AddressDAO_interface {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
+				address = new AddressVO();
 				address.setAddr_no(rs.getString("addr_no"));
 				address.setMem_no(rs.getString("mem_no"));
 				address.setReceiver(rs.getString("receiver"));
@@ -168,7 +169,7 @@ public class AddressJDBCDAO implements AddressDAO_interface {
 				address.setCity(rs.getString("city"));
 				address.setAddr_detail(rs.getString("addr_detail"));
 				address.setAddr_zip(rs.getInt("addr_zip"));
-				list.add(address);
+				listall.add(address);
 			}
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load the database driver. "
@@ -191,7 +192,29 @@ public class AddressJDBCDAO implements AddressDAO_interface {
 				se.printStackTrace();
 			}
 		}
-		return list;
+		return listall;
 	}
 
+	public static void main(String[] args) {
+		AddressJDBCDAO dao = new AddressJDBCDAO();
+		AddressVO insertnew = new AddressVO("M008", "Peter1", "0937351931", "台灣", "台北市", "信義路三段1號","59487");
+		dao.insert(insertnew);
+		System.out.println("A new Address created successful. ");
+		
+		List<AddressVO> address = new ArrayList<>();
+		address = dao.getByForeignKey("M008");
+		for(AddressVO list : address) {
+			System.out.println("Recever : "+list.getReceiver());
+			System.out.println("Recever Number : "+list.getReceiver_phone());
+			System.out.println("Recever Country : "+list.getCountry());
+		}
+		
+		List<AddressVO>addressall = dao.getAll();
+		for(AddressVO listall : addressall) {
+			System.out.println("All Recever : "+listall.getReceiver());
+		}
+		
+		dao.delete("A008");
+//		System.out.println("A address is deleted successful.");
+	}
 }

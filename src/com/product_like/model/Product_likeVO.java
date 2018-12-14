@@ -7,6 +7,14 @@ public class Product_likeVO implements java.io.Serializable{
 	private String product_no;
 	private String mem_no;
 	
+	public Product_likeVO() {
+	}
+	
+	public Product_likeVO(String product_no,String mem_no) {
+		setProduct_no(product_no);
+		setMem_no(mem_no);
+	}
+
 	public String getProduct_no() {
 		return product_no;
 	}
@@ -21,9 +29,6 @@ public class Product_likeVO implements java.io.Serializable{
 
 	public void setMem_no(String mem_no) {
 		this.mem_no = mem_no;
-	}
-
-	public Product_likeVO() {
 	}
 
 }

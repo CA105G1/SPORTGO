@@ -6,12 +6,12 @@ import java.sql.*;
 public class Sg_likeJDBCDAO implements Sg_likeDAO_interface{
 	
 	private String driver  = "oracle.jdbc.driver.OracleDriver";
-	private String url     = "jdbc:oracle:thin@10.37.129.3:1521:xe";
+	private String url     = "jdbc:oracle:thin:@10.37.129.3:1521:xe";
 	private String user    = "AARON";
 	private String password= "123456";  
 	
 	private static final String PUSH_LIKE = "INSERT INTO SG_LIKE VALUES (?,?)";
-	private static final String PUSH_DISLIKE = "DELETE FROM SG_LIKE WHERE MEM_NO = ?";
+	private static final String PUSH_DISLIKE = "DELETE FROM SG_LIKE WHERE MEM_NO = ? AND SG_NO = ?";
 	private static final String SG_WHO_LIKE = "SELECT MEM_NO FROM SG_LIKE WHERE SG_NO = ?";
 	private static final String LIKE_WHICH_SG = "SELECT SG_NO FROM SG_LIKE WHERE MEM_NO = ?";
 	
@@ -72,6 +72,7 @@ public class Sg_likeJDBCDAO implements Sg_likeDAO_interface{
 			pstmt = con.prepareStatement(PUSH_DISLIKE);
 			
 			pstmt.setString(1, sg_like.getMem_no());
+			pstmt.setString(2, sg_like.getSg_no());
 			
 			pstmt.executeUpdate();
 		} catch(ClassNotFoundException e) {
@@ -117,7 +118,7 @@ public class Sg_likeJDBCDAO implements Sg_likeDAO_interface{
 			
 			while(rs.next()) {
 				Sg_likeVO sg_like = new Sg_likeVO();
-				sg_like.setMem_no(rs.getString(sg_like.getMem_no()));
+				sg_like.setMem_no(rs.getString("mem_no"));
 				likelist.add(sg_like);
 			}
 			
@@ -169,7 +170,7 @@ public class Sg_likeJDBCDAO implements Sg_likeDAO_interface{
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				Sg_likeVO memlike = new Sg_likeVO();
-				memlike.setSg_no(rs.getString(memlike.getSg_no()));
+				memlike.setSg_no(rs.getString("sg_no"));
 				likelist.add(memlike);
 			}
 		} catch (ClassNotFoundException e) {
@@ -194,4 +195,27 @@ public class Sg_likeJDBCDAO implements Sg_likeDAO_interface{
 		return likelist;
 	}
 
+	public static void main(String[] args) {
+		Sg_likeJDBCDAO sglike = new Sg_likeJDBCDAO();
+		Sg_likeVO sgvocreate = new Sg_likeVO("S002","M010");
+		sglike.insert(sgvocreate);
+		System.out.println("A SG be liked.");
+		List<Sg_likeVO> getall=sglike.Sg_getAll("S001");
+		System.out.println("S001 be liked by : ");
+		for(Sg_likeVO listall : getall) {
+			System.out.println("member : "+listall.getMem_no());
+		}
+		List<Sg_likeVO> memget=sglike.Mem_getAll("M010");
+		System.out.println("M010 likes : ");
+		for(Sg_likeVO listmem : memget) {
+			System.out.println("sg_no : "+listmem.getSg_no());
+		}
+		
+		sglike.delete(sgvocreate);
+		System.out.println("A SG be unliked. ");
+		
+		
+	}
+	
+	
 }

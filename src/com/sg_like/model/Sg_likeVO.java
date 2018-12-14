@@ -8,9 +8,12 @@ public class Sg_likeVO implements java.io.Serializable{
 	private String mem_no;
 	
 	public Sg_likeVO() {
-		// TODO Auto-generated constructor stub
 	}
 
+	public Sg_likeVO(String sg_no, String mem_no) {
+		setSg_no(sg_no);
+		setMem_no(mem_no);
+	}
 	public String getSg_no() {
 		return sg_no;
 	}

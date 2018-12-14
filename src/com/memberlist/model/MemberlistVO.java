@@ -1,5 +1,6 @@
 package com.memberlist.model;
 
+
 public class MemberlistVO implements java.io.Serializable{
 	
 	private static final long serialVersionUID = 88L;
@@ -13,10 +14,50 @@ public class MemberlistVO implements java.io.Serializable{
 	private String mem_emgc;
 	private String mem_emgcphone;
 	private String mem_status;
-	private Integer mem_card;
-	private java.sql.Date mem_expiry;
+	private String mem_card;
+	private String mem_expiry;
 	private byte[] mem_pic;
 	private String mem_pickind;
+	
+	public MemberlistVO() {};
+	//for insert
+	public MemberlistVO(String mem_name,String mem_account,String mem_pswd,
+			String mem_email,String mem_phone) {
+		setMem_name(mem_name);
+		setMem_account(mem_account);
+		setMem_pswd(mem_pswd);
+		setMem_email(mem_email);
+		setMem_phone(mem_phone);
+	}
+	//for update privacy
+	public MemberlistVO(String mem_no,String mem_name,String mem_nick,
+			String mem_email,String mem_phone,String mem_emgc, String mem_emgcphone) {
+		setMem_no(mem_no);
+		setMem_name(mem_name);
+		setMem_nick(mem_nick);
+		setMem_email(mem_email);
+		setMem_phone(mem_phone);
+		setMem_emgc(mem_emgc);
+		setMem_emgcphone(mem_emgcphone);
+	}
+	//for update craditcard
+	public MemberlistVO(String mem_no,String mem_card, String mem_expiry) {
+		setMem_no(mem_no);
+		setMem_card(mem_card);
+		setMem_expiry(mem_expiry);
+	}
+	//for update password
+	public MemberlistVO(String mem_no, String mem_password) {
+		setMem_no(mem_no);
+		setMem_pswd(mem_password);
+	}
+	//fore update picture
+	public MemberlistVO(String mem_no, byte[] mem_pic,String mem_pickind) {
+		setMem_no(mem_no);
+		setMem_pic(mem_pic);
+		setMem_pickind(mem_pickind);
+	}
+	
 	public String getMem_no() {
 		return mem_no;
 	}
@@ -77,16 +118,16 @@ public class MemberlistVO implements java.io.Serializable{
 	public void setMem_status(String mem_status) {
 		this.mem_status = mem_status;
 	}
-	public Integer getMem_card() {
+	public String getMem_card() {
 		return mem_card;
 	}
-	public void setMem_card(Integer mem_card) {
+	public void setMem_card(String mem_card) {
 		this.mem_card = mem_card;
 	}
-	public java.sql.Date getMem_expiry() {
+	public String getMem_expiry() {
 		return mem_expiry;
 	}
-	public void setMem_expiry(java.sql.Date mem_expiry) {
+	public void setMem_expiry(String mem_expiry) {
 		this.mem_expiry = mem_expiry;
 	}
 	public byte[] getMem_pic() {
