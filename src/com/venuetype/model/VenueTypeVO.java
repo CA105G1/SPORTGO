@@ -8,9 +8,8 @@ public class VenueTypeVO {
 		super();
 	}
 	
-	public VenueTypeVO(String vt_no, String vt_name) {
+	public VenueTypeVO(String vt_name) {
 		super();
-		this.vt_no = vt_no;
 		this.vt_name = vt_name;
 	}
 	

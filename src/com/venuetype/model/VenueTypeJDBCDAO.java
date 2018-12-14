@@ -31,7 +31,7 @@ public class VenueTypeJDBCDAO implements VenueTypeDAO_interface{
 	}
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO venuetype (vt_no,vt_name) VALUES (?, ?)";
+			"INSERT INTO venuetype VALUES ('VT'||LPAD(to_char(VENUETYPE_SEQ.NEXTVAL), 3, '0'), ?)";
 		private static final String GET_ALL_STMT = 
 			"SELECT vt_no,vt_name FROM venuetype ORDER BY vt_no";
 		private static final String GET_ONE_STMT = 
@@ -52,8 +52,7 @@ public class VenueTypeJDBCDAO implements VenueTypeDAO_interface{
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(INSERT_STMT);
 
-			pstmt.setString(1, vtVO.getVt_no());
-			pstmt.setString(2, vtVO.getVt_name());
+			pstmt.setString(1, vtVO.getVt_name());
 
 			pstmt.executeUpdate();
 

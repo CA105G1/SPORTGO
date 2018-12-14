@@ -10,7 +10,7 @@ public class TestVT {
 		
 		VenueTypeDAO_interface vi  = new VenueTypeJDBCDAO();
 	
-//		
+		vi.insert(new VenueTypeVO("手球場"));
 //		VenueTypeVO vt = vi.findByPrimaryKey("VT001");
 //		System.out.println(vt.getVt_name());
 //		
