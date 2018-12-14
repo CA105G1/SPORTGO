@@ -1,12 +1,14 @@
 package com.emp.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class EmpVO {
+public class EmpVO implements Serializable{
+	private static final long serialVersionUID = -7688369730611579322L;
 	
 	private String emp_no;
 	private String emp_name;
-	private String emp_auth;
+	private String emp_auth="一般管理員";
 	private String emp_phone;
 	private String emp_email;
 	private String emp_account;
@@ -87,6 +89,13 @@ public class EmpVO {
 
 	public void setLeavedate(Date leavedate) {
 		this.leavedate = leavedate;
+	}
+
+	@Override
+	public String toString() {
+		return "EmpVO [emp_no=" + emp_no + ", emp_name=" + emp_name + ", emp_auth=" + emp_auth + ", emp_phone="
+				+ emp_phone + ", emp_email=" + emp_email + ", emp_account=" + emp_account + ", emp_psw=" + emp_psw
+				+ ", hiredate=" + hiredate + ", leavedate=" + leavedate + "]";
 	}
 	
 	

@@ -1,13 +1,26 @@
 package com.competition.model;
 
-import java.sql.Date;
+import java.io.Serializable;
+import java.sql.Timestamp;
 
-public class CompetitionVO {
+public class CompetitionVO implements Serializable{
+	private static final long serialVersionUID = -4659971941172936503L;
+
+	@Override
+	public String toString() {
+		return "CompetitionVO ["
+				+ "\ncomp_no=" + comp_no + ", "
+						+ "\ncomp_name=" + comp_name + ", "
+								+ "\ncomp_startdate=" + comp_startdate
+				+ ", "
+				+ "\ncomp_enddate=" + comp_enddate + ", "
+						+ "\ncomp_cont=" + comp_cont + "]";
+	}
 
 	private String comp_no;
 	private String comp_name;
-	private Date comp_startdate;
-	private Date comp_enddate;
+	private Timestamp comp_startdate;
+	private Timestamp comp_enddate;
 	private String comp_cont;
 	
 	public CompetitionVO(){
@@ -29,19 +42,19 @@ public class CompetitionVO {
 		this.comp_name = comp_name;
 	}
 
-	public Date getComp_startdate() {
+	public Timestamp getComp_startdate() {
 		return comp_startdate;
 	}
 
-	public void setComp_startdate(Date comp_startdate) {
+	public void setComp_startdate(Timestamp comp_startdate) {
 		this.comp_startdate = comp_startdate;
 	}
 
-	public Date getComp_enddate() {
+	public Timestamp getComp_enddate() {
 		return comp_enddate;
 	}
 
-	public void setComp_enddate(Date comp_enddate) {
+	public void setComp_enddate(Timestamp comp_enddate) {
 		this.comp_enddate = comp_enddate;
 	}
 

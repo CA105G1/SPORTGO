@@ -1,14 +1,18 @@
 package com.multimedia.model;
 
-import java.sql.Date;
+import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Arrays;
 
-public class MultimediaVO {
+public class MultimediaVO implements Serializable{
+	private static final long serialVersionUID = -1316074584045926207L;
+	
 	private String media_no;
 	private String file_extension;
 	private byte[] media_content;
 	private String club_no;
 	private String mem_no;
-	private Date media_releasedate;
+	private Timestamp media_releasedate;
 	private String media_title;
 	
 	public MultimediaVO(){
@@ -54,11 +58,11 @@ public class MultimediaVO {
 		this.mem_no = mem_no;
 	}
 
-	public Date getMedia_releasedate() {
+	public Timestamp getMedia_releasedate() {
 		return media_releasedate;
 	}
 
-	public void setMedia_releasedate(Date media_releasedate) {
+	public void setMedia_releasedate(Timestamp media_releasedate) {
 		this.media_releasedate = media_releasedate;
 	}
 
@@ -68,6 +72,13 @@ public class MultimediaVO {
 
 	public void setMedia_title(String media_title) {
 		this.media_title = media_title;
+	}
+
+	@Override
+	public String toString() {
+		return "MultimediaVO [media_no=" + media_no + ", file_extension=" + file_extension + ", media_content="
+				+ Arrays.toString(media_content) + ", club_no=" + club_no + ", mem_no=" + mem_no
+				+ ", media_releasedate=" + media_releasedate + ", media_title=" + media_title + "]";
 	}
 	
 	

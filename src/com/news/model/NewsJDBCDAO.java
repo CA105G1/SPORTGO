@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewsDAO implements NewsDAO_interface{
+public class NewsJDBCDAO implements NewsDAO_interface{
 
 	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
 	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
@@ -400,5 +400,42 @@ public class NewsDAO implements NewsDAO_interface{
 		}
 		return list;
 	}
+	
+	public static void main(String[] args) {
+		NewsJDBCDAO dao = new NewsJDBCDAO();
+		
+		NewsVO newsVO = new NewsVO();
+		newsVO.setNews_typeno("NT001");
+		newsVO.setNews_script("測試輸入News_script");
+		newsVO.setNews_stutas(NewsVO.STUTAS_DEFAULT);
+		
+		dao.insert(newsVO);
+		
+		newsVO.setPic_extension("Test");
+		dao.update(newsVO);
+		System.out.println("+++++++++++++++++++++++++");
+		
+		dao.updateStutasByNewsNo(newsVO.getNews_no(), "發布中");
+		System.out.println("+++++++++++++++++++++++++");		
+		
+		dao.delete(newsVO.getNews_no());
+		
+		System.out.println(dao.findByPrimaryKey(newsVO.getNews_no()));
+		
+		List<NewsVO> list = dao.getAll();
+		System.out.println("dao.getAll() : "+list.size());
+		for(NewsVO x : list) {
+			System.out.println(x);
+		}
+		
+		List<NewsVO> list2 = dao.getNewsByNewtype("NT001");
+		System.out.println("dao.getNewsByNewtype(\"NT001\") : "+list.size());
+		for(NewsVO x : list2) {
+			System.out.println(x);
+		}
+		
+	}
+	
+	
 	
 }

@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MultimediaDAO implements MultimediaDAO_interface{
+public class MultimediaJDBCDAO implements MultimediaDAO_interface{
 
 	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
 	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
@@ -344,4 +344,34 @@ public class MultimediaDAO implements MultimediaDAO_interface{
 		}
 		return list;
 	}
-}
+	
+	public static void main(String[] args) {
+		MultimediaJDBCDAO dao = new MultimediaJDBCDAO();
+		
+		MultimediaVO multimediaVO = new MultimediaVO();
+		multimediaVO.setClub_no("C0002");
+		multimediaVO.setMem_no("M005");
+		multimediaVO.setMedia_releasedate(java.sql.Timestamp.valueOf("2018-12-31 23:59:59"));
+		dao.insert(multimediaVO);
+		multimediaVO.setMedia_title("測試上傳A");
+		dao.update(multimediaVO);
+		String media_no = multimediaVO.getMedia_no();
+		System.out.println(media_no);
+		System.out.println(dao.findByPrimaryKey(media_no));
+		
+		List<MultimediaVO> list = dao.getAllMediaInClub("C0002");
+		System.out.println("dao.getAllMediaInClub(\"C0002\") : "+list.size());
+		for(MultimediaVO x :list) {
+			System.out.println(x);
+		}
+		
+		List<MultimediaVO> list2 = dao.getAllMediaInClubByTitle("C0002", "a");
+		System.out.println("dao.getAllMediaInClubByTitle(\"C0002\", \"a\") : "+list2.size());
+		for(MultimediaVO x :list2) {
+			System.out.println(x);
+		}
+		
+		
+	}
+	
+}              

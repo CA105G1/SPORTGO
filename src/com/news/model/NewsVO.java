@@ -1,16 +1,22 @@
 package com.news.model;
 
-import java.sql.Date;
+import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Arrays;
 
-public class NewsVO {
+public class NewsVO implements Serializable{
+	private static final long serialVersionUID = 3090317870143707331L;
+
+	public static final String STUTAS_DEFAULT = "未發布";
+	
 	private String news_no;
 	private String news_typeno;
 	private String news_script;
 	private String pic_extension;
 	private byte[] news_picture;
 	private String news_stutas;
-	private Date news_release_date;
-	private Date news_last_date;
+	private Timestamp news_release_date;
+	private Timestamp news_last_date;
 	
 	public NewsVO() {}
 
@@ -62,20 +68,28 @@ public class NewsVO {
 		this.news_stutas = news_stutas;
 	}
 
-	public Date getNews_release_date() {
+	public Timestamp getNews_release_date() {
 		return news_release_date;
 	}
 
-	public void setNews_release_date(Date news_release_date) {
+	public void setNews_release_date(Timestamp news_release_date) {
 		this.news_release_date = news_release_date;
 	}
 
-	public Date getNews_last_date() {
+	public Timestamp getNews_last_date() {
 		return news_last_date;
 	}
 
-	public void setNews_last_date(Date news_last_date) {
+	public void setNews_last_date(Timestamp news_last_date) {
 		this.news_last_date = news_last_date;
+	}
+
+	@Override
+	public String toString() {
+		return "NewsVO [news_no=" + news_no + ", news_typeno=" + news_typeno + ", news_script=" + news_script
+				+ ", pic_extension=" + pic_extension + ", news_picture=" + Arrays.toString(news_picture)
+				+ ", news_stutas=" + news_stutas + ", news_release_date=" + news_release_date + ", news_last_date="
+				+ news_last_date + "]";
 	}
 	
 	

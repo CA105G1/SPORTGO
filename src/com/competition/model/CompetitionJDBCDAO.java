@@ -8,10 +8,11 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
-public class CompetitionDAO implements CompetitionDAO_interface{
-	
+public class CompetitionJDBCDAO implements CompetitionDAO_interface{
+		
 	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
 	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
 	private static final String USER = "CA105G1";
@@ -351,5 +352,53 @@ public class CompetitionDAO implements CompetitionDAO_interface{
 		return list;
 	}
 	
+	
+	public static void main(String[] args) {
+		CompetitionJDBCDAO dao = new CompetitionJDBCDAO();
+		
+		CompetitionVO competitionVO = new CompetitionVO();
+		competitionVO.setComp_cont("FFFFFFFFFFFFFFFFFFFFF");
+		competitionVO.setComp_name("test");
+		///////// 字串 轉成 Timestamp 物件
+		String s="2012-01-02 13:12:21";
+		competitionVO.setComp_startdate(java.sql.Timestamp.valueOf(s));
+		//////////////
+		long xxx = Calendar.getInstance().getTime().getTime();
+		competitionVO.setComp_enddate(new java.sql.Timestamp(xxx));
+	dao.insert(competitionVO);
+		competitionVO.setComp_cont("更新過後DDDDDDDDDDDDDDDDDDDDDDDDDDD");
+		competitionVO.setComp_name("標題更新 test");
+	dao.update(competitionVO);
+		
+	//dao.delete(competitionVO.getComp_no());
+	
+		CompetitionVO competitionVO2 = dao.findByPrimaryKey("c002".toUpperCase());
+		System.out.println(competitionVO2);
+		
+List<CompetitionVO> list = dao.getAll();
+		
+		System.out.println(list.size());
+		
+		if(list.size()>0) {
+			for(CompetitionVO x : list) {
+				System.out.println(x);
+			}
+		}else {
+			System.out.println("there are no data from this table, Newstype");
+		}
+		
+		
+		List<CompetitionVO> list2 = dao.getCompetitionByStartDate(java.sql.Timestamp.valueOf("2018-12-01 13:12:21"));
+		
+		System.out.println(list2.size());
 
+		if(list2.size()>0) {
+			for(CompetitionVO x : list2) {
+				System.out.println(x+"-----");
+			}
+		}else {
+			System.out.println("there are no data from this table, Newstype");
+		}
+		
+	}	
 }

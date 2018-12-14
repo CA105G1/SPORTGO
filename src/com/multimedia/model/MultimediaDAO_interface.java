@@ -6,9 +6,9 @@ public interface MultimediaDAO_interface {
 
 	public void insert(MultimediaVO multimediaVO);
     public void update(MultimediaVO multimediaVO);
-    public void delete(Integer media_no);
-    public MultimediaVO findByPrimaryKey(Integer media_no);
-    public List<MultimediaVO> getAll();
-    public List<MultimediaVO> getMultimediaByDeptno(Integer media_no);
+    public void delete(String media_no);
+    public MultimediaVO findByPrimaryKey(String media_no);
+    public List<MultimediaVO> getAllMediaInClub(String club_no);
+    public List<MultimediaVO> getAllMediaInClubByTitle(String club_no,String media_title);
 	
 }

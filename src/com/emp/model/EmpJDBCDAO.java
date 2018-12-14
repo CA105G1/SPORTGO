@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmpDAO implements EmpDAO_interface{
+public class EmpJDBCDAO implements EmpDAO_interface{
 
 	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
 	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
@@ -372,5 +372,40 @@ public class EmpDAO implements EmpDAO_interface{
 		return list;
 	}
 	
+	public static void main(String[] args) {
+		EmpJDBCDAO dao = new EmpJDBCDAO();
+		EmpVO empVO = new EmpVO();
+		empVO.setEmp_name("David");
+		empVO.setEmp_auth("一般管理員");
+		empVO.setEmp_phone("0987654321");
+		empVO.setEmp_email("david@iii.com.tw");
+		empVO.setEmp_account("david");
+		empVO.setEmp_psw("123456");
+		empVO.setHiredate(java.sql.Date.valueOf("2018-12-01"));
+		empVO.setLeavedate(null);
+		
+		dao.insert(empVO);
+		System.out.println("Before update"+empVO);
+		empVO.setEmp_psw("111");
+		dao.update(empVO);
+		System.out.println(" After update"+empVO);
+		
+		//dao.delete("E002");
+	
+		System.out.println(dao.findByPrimaryKey("E001"));
+		
+		List<EmpVO> list2 = dao.getEmpByEmpName("a");
+		System.out.println("GetEmpByEmpName : "+list2.size());
+		for(EmpVO x : list2 ) {
+			System.out.println(x);
+		}
+
+		List<EmpVO> list = dao.getAll();
+		System.out.println("GetAll : "+list.size());
+		for(EmpVO x : list ) {
+			System.out.println(x);
+		}
+		
+	}
 
 }

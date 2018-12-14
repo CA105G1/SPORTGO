@@ -1,6 +1,10 @@
 package com.newstype.model;
 
-public class NewstypeVO {
+import java.io.Serializable;
+
+public class NewstypeVO implements Serializable{
+	private static final long serialVersionUID = 1175869383665511154L;
+	
 	private String newstype_no;
 	private String newstype_name;
 	
@@ -21,6 +25,14 @@ public class NewstypeVO {
 	public void setNewstype_name(String newstype_name) {
 		this.newstype_name = newstype_name;
 	}
+
+	@Override
+	public String toString() {
+		return "NewstypeVO [newstype_no=" + newstype_no + ", newstype_name=" + newstype_name + "]";
+	}
+	
+	
+	
 	
 	
 	

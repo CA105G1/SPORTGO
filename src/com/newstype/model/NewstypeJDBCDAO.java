@@ -9,7 +9,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewstypeDAO implements NewstypeDAO_interface{
+
+public class NewstypeJDBCDAO implements NewstypeDAO_interface{
 
 	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
 	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
@@ -291,4 +292,38 @@ public class NewstypeDAO implements NewstypeDAO_interface{
 		}
 		return list;
 	}
+
+	public static void main(String[] args) {
+		NewstypeJDBCDAO dao = new NewstypeJDBCDAO();
+		NewstypeVO n = new NewstypeVO();
+		n.setNewstype_name("Test_form_JDBC");
+		dao.insert(n);
+		
+		n.setNewstype_name("Test_UPDATE_JDBC");		
+		dao.update(n);
+		
+		System.out.println("Querry about "+n.getNewstype_no()+"............");
+		NewstypeVO test = dao.findByPrimaryKey(n.getNewstype_no());
+		System.out.println(test);
+		
+		System.out.println("Querry about NT999............");
+		NewstypeVO test1 = dao.findByPrimaryKey("NT999");
+		System.out.println(test1);
+		
+		List<NewstypeVO> list = dao.getAll();
+		
+		System.out.println(list.size());
+		
+		if(list.size()>0) {
+			for(NewstypeVO x : list) {
+				System.out.println(x);
+			}
+		}else {
+			System.out.println("there are no data from this table, Newstype");
+		}
+		
+	}
+	
+	
+	
 }
