@@ -11,7 +11,7 @@ import java.util.List;
 public class Sg_msgDAO implements Sg_msgDAO_interface{
 	private static final String driver = "oracle.jdbc.driver.OracleDriver";
 	private static final String url = "jdbc:oracle:thin:@localhost:1521:xe";
-	private static final String user = "CA105B";
+	private static final String user = "CA105G1";
 	private static final String psw = "123456";
 	
 	private static final String insertStmt = 
@@ -190,6 +190,7 @@ public class Sg_msgDAO implements Sg_msgDAO_interface{
 				vo.setSg_no(rs.getString("sg_no"));
 				vo.setMem_no(rs.getString("mem_no"));
 				vo.setMsg_cont(rs.getString("msg_cont"));
+				vo.setMsg_time(rs.getTimestamp("msg_time"));
 			}
 			
 		} catch (SQLException e) {
@@ -240,6 +241,7 @@ public class Sg_msgDAO implements Sg_msgDAO_interface{
 				vo.setSg_no(rs.getString("sg_no"));
 				vo.setMem_no(rs.getString("mem_no"));
 				vo.setMsg_cont(rs.getString("msg_cont"));
+				vo.setMsg_time(rs.getTimestamp("msg_time"));
 				
 				list.add(vo);
 			}

@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 public class Sg_infoDAO implements Sg_infoDAO_interface{
 	private static final String driver = "oracle.jdbc.driver.OracleDriver";
 	private static final String url = "jdbc:oracle:thin:@localhost:1521:xe";
-	private static final String user = "CA105B";
+	private static final String user = "CA105G1";
 	private static final String psw = "123456";
 	
 	private static final String insertStmt = 
