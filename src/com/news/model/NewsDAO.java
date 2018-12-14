@@ -57,7 +57,6 @@ public class NewsDAO implements NewsDAO_interface{
 		ResultSet rs = null;
 		try {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
-			con.setAutoCommit(false);
 			String[] cols = {"news_no"};
 			pstmt = con.prepareStatement(INSERT_SQL,cols);
 			
@@ -70,7 +69,6 @@ public class NewsDAO implements NewsDAO_interface{
 			pstmt.setTimestamp(7, newsVO.getNews_last_date());
 			
 			if(pstmt.executeUpdate()==1) {
-				con.commit();
 				System.out.println("---成功輸入---");
 			}else {
 				System.out.println("---輸入失敗---");
@@ -91,12 +89,6 @@ public class NewsDAO implements NewsDAO_interface{
 			}
 		} catch (SQLException e0) {
 			e0.printStackTrace();
-			try {
-				con.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			} finally {
-			}
 		} finally {
 			if(rs!=null) {
 				try {
@@ -129,7 +121,6 @@ public class NewsDAO implements NewsDAO_interface{
 		
 		try {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
-			con.setAutoCommit(false);
 			pstmt = con.prepareStatement(UPDATE_SQL);
 			
 			pstmt.setString(1, newsVO.getNews_typeno());
@@ -142,18 +133,12 @@ public class NewsDAO implements NewsDAO_interface{
 			pstmt.setString(8, newsVO.getNews_no());
 			
 			if(pstmt.executeUpdate()==1) {
-				con.commit();
 				System.out.println("---成功更新---編號: "+newsVO.getNews_no());
 			}else {
 				System.out.println("---更新失敗---編號: "+newsVO.getNews_no());
 			}
 		} catch(SQLException e) {
-			try {
-				con.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			} finally {
-			}
+			e.printStackTrace();
 		} finally {
 			if(pstmt!=null) {
 				try {
@@ -178,22 +163,16 @@ public class NewsDAO implements NewsDAO_interface{
 		PreparedStatement pstmt = null;
 		try {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
-			con.setAutoCommit(false);
 			pstmt = con.prepareStatement(UPDATE_STUTAS_BY_NO_SQL);
 			pstmt.setString(1, news_stutas);
 			pstmt.setString(2, news_no);
 			if(pstmt.executeUpdate()==1) {
-				con.commit();
 				System.out.println("---成功更新狀態---");
 			}else {
 				System.out.println("---更新狀態失敗---");
 			}
 		} catch(SQLException e) {
-			try {
-				con.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
+			e.printStackTrace();
 		} finally {
 			if(pstmt!=null) {
 				try {
@@ -218,22 +197,15 @@ public class NewsDAO implements NewsDAO_interface{
 		PreparedStatement pstmt = null;
 		try {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
-			con.setAutoCommit(false);
 			pstmt = con.prepareStatement(DELETE_SQL);
 			pstmt.setString(1, news_no);
 			if(pstmt.executeUpdate()==1) {
-				con.commit();
 				System.out.println("---成功刪除---編號 : "+news_no);
 			}else {
 				System.out.println("---刪除失敗---編號 : "+news_no);
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
-			try {
-				con.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
 		}finally {
 			if(pstmt != null) {
 				try {
@@ -339,8 +311,6 @@ public class NewsDAO implements NewsDAO_interface{
 				}
 			}
 		}
-		
-		
 		return list;
 	}
 	
@@ -400,5 +370,5 @@ public class NewsDAO implements NewsDAO_interface{
 		}
 		return list;
 	}
-	
+
 }

@@ -49,14 +49,12 @@ public class NewstypeDAO implements NewstypeDAO_interface{
 		ResultSet rs = null;
 		try {
 			con = DriverManager.getConnection(URL,USER,PASSWORD);
-			con.setAutoCommit(false);
 			String[] cols = {"newstype_no"};
 			
 			pstmt = con.prepareStatement(INSERT_SQL,cols);
 			pstmt.setString(1, newstypeVO.getNewstype_name());
 			
 			if(pstmt.executeUpdate()==1) {
-				con.commit();
 				System.out.println("---成功輸入---");
 			}else {
 				System.out.println("---輸入失敗---");
@@ -76,12 +74,6 @@ public class NewstypeDAO implements NewstypeDAO_interface{
 			}
 		} catch (SQLException e0) {
 			e0.printStackTrace();
-			try {
-				con.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			} finally {
-			}
 		} finally {
 			if(rs!=null) {
 				try {
@@ -114,14 +106,12 @@ public class NewstypeDAO implements NewstypeDAO_interface{
 		
 		try {
 			con = DriverManager.getConnection(URL,USER,PASSWORD);
-			con.setAutoCommit(false);
 			
 			pstmt = con.prepareStatement(UPDATE_NAME_SQL);
 			pstmt.setString(1, newstypeVO.getNewstype_name());
 			pstmt.setString(2, newstypeVO.getNewstype_no());
 			
 			if(pstmt.executeUpdate()==1) {
-				con.commit();
 				System.out.println("---成功更新---");
 			}else {
 				System.out.println("---更新失敗---");
@@ -129,12 +119,6 @@ public class NewstypeDAO implements NewstypeDAO_interface{
 			
 		} catch (SQLException e0) {
 			e0.printStackTrace();
-			try {
-				con.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			} finally {
-			}
 		} finally {
 			if(pstmt!=null) {
 				try {
@@ -160,13 +144,11 @@ public class NewstypeDAO implements NewstypeDAO_interface{
 		
 		try {
 			con = DriverManager.getConnection(URL,USER,PASSWORD);
-			con.setAutoCommit(false);
 			
 			pstmt = con.prepareStatement(DELETE_BY_PK_SQL);
 			pstmt.setString(1, newstype_no);
 			
 			if(pstmt.executeUpdate()==1) {
-				con.commit();
 				System.out.println("---成功刪除---編號 : "+newstype_no);
 			}else {
 				System.out.println("---刪除失敗---編號 : "+newstype_no);
@@ -174,12 +156,6 @@ public class NewstypeDAO implements NewstypeDAO_interface{
 			
 		} catch (SQLException e0) {
 			e0.printStackTrace();
-			try {
-				con.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			} finally {
-			}
 		} finally {
 			if(pstmt!=null) {
 				try {
@@ -291,4 +267,5 @@ public class NewstypeDAO implements NewstypeDAO_interface{
 		}
 		return list;
 	}
+
 }

@@ -57,7 +57,6 @@ public class EmpDAO implements EmpDAO_interface{
 		ResultSet rs = null;
 		try {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
-			con.setAutoCommit(false);
 			
 			String[] cols = {"emp_no"};
 			
@@ -74,7 +73,6 @@ public class EmpDAO implements EmpDAO_interface{
 			pstmt.setDate(8, empVO.getLeavedate());
 			
 			if(pstmt.executeUpdate()==1) {
-				con.commit();
 				System.out.println("---成功輸入---");
 			}else {
 				System.out.println("---輸入失敗---");
@@ -96,12 +94,6 @@ public class EmpDAO implements EmpDAO_interface{
 			
 		} catch (SQLException e0) {
 			e0.printStackTrace();
-			try {
-				con.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			} finally {
-			}
 		} finally {
 			if(rs!=null) {
 				try {
@@ -134,6 +126,7 @@ public class EmpDAO implements EmpDAO_interface{
 		
 		try {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
+
 			pstmt = con.prepareStatement(UPDATE_SQL);
 			
 			pstmt.setString(1, empVO.getEmp_name());
@@ -147,7 +140,6 @@ public class EmpDAO implements EmpDAO_interface{
 			pstmt.setString(9, empVO.getEmp_no());
 			
 			if(pstmt.executeUpdate()==1) {
-				con.commit();
 				System.out.println("---成功更新---");
 			}else {
 				System.out.println("---更新失敗---");
@@ -155,12 +147,6 @@ public class EmpDAO implements EmpDAO_interface{
 			
 		} catch (SQLException e0) {
 			e0.printStackTrace();
-			try {
-				con.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			} finally {
-			}
 		} finally {
 			if(pstmt!=null) {
 				try {
@@ -185,12 +171,10 @@ public class EmpDAO implements EmpDAO_interface{
 		PreparedStatement pstmt = null;
 		try {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
-			con.setAutoCommit(false);
 			pstmt = con.prepareStatement(DELETE_BY_PK_SQL);
 			pstmt.setString(1, emp_no);
 			
 			if(pstmt.executeUpdate()==1) {
-				con.commit();
 				System.out.println("---成功刪除---編號 : "+emp_no);
 			}else {
 				System.out.println("---刪除失敗---編號 : "+emp_no);
@@ -198,12 +182,6 @@ public class EmpDAO implements EmpDAO_interface{
 			
 		}catch (SQLException e0) {
 			e0.printStackTrace();
-			try {
-				con.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			} finally {
-			}
 		} finally {
 			if(pstmt!=null) {
 				try {
@@ -371,6 +349,5 @@ public class EmpDAO implements EmpDAO_interface{
 		}
 		return list;
 	}
-	
 
 }

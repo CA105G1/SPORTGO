@@ -50,7 +50,6 @@ public class MultimediaJDBCDAO implements MultimediaDAO_interface{
 		ResultSet rs = null;
 		try {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
-			con.setAutoCommit(false);
 			
 			String[] cols = {"media_no"};
 			
@@ -66,7 +65,6 @@ public class MultimediaJDBCDAO implements MultimediaDAO_interface{
 			pstmt.setString(6, multimediaVO.getMedia_title());
 			
 			if(pstmt.executeUpdate()==1) {
-				con.commit();
 				System.out.println("---輸入成功---");
 			}else {
 				System.out.println("---輸入失敗---");
@@ -87,11 +85,6 @@ public class MultimediaJDBCDAO implements MultimediaDAO_interface{
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			try {
-				con.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
 		} finally {
 			if(rs != null) {
 				try {
@@ -123,7 +116,6 @@ public class MultimediaJDBCDAO implements MultimediaDAO_interface{
 		PreparedStatement preparedStatement = null;
 		try {
 			connection = DriverManager.getConnection(URL, USER, PASSWORD);
-			connection.setAutoCommit(false);
 			preparedStatement = connection.prepareStatement(UPDATE_SQL);
 			preparedStatement.setString(1, multimediaVO.getFile_extension());
 			preparedStatement.setBytes(2, multimediaVO.getMedia_content());
@@ -135,18 +127,12 @@ public class MultimediaJDBCDAO implements MultimediaDAO_interface{
 			preparedStatement.setString(7, multimediaVO.getMedia_no());
 			
 			if(preparedStatement.executeUpdate()==1) {
-				connection.commit();
 				System.out.println("---成功更新---");
 			}else {
 				System.out.println("---更新失敗---");
 			}
 		} catch(SQLException e) {
 			e.printStackTrace();
-			try {
-				connection.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
 		}finally {
 			if(preparedStatement != null) {
 				try {
@@ -174,7 +160,6 @@ public class MultimediaJDBCDAO implements MultimediaDAO_interface{
 			preparedStatement = connection.prepareStatement(DELETE_BY_PK_SQL);
 			preparedStatement.setString(1, media_no);
 			if(preparedStatement.executeUpdate()==1) {
-				connection.commit();
 				System.out.println("---成功刪除---編號 : "+media_no);
 			}else {
 				System.out.println("---刪除失敗---編號 : "+media_no);
@@ -182,11 +167,6 @@ public class MultimediaJDBCDAO implements MultimediaDAO_interface{
 			
 		}catch(SQLException e) {
 			e.printStackTrace();
-			try {
-				connection.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
 		}finally {
 			if(preparedStatement!=null) {
 				try {

@@ -33,7 +33,7 @@ public class CompetitionDAO implements CompetitionDAO_interface{
 	
 	private static final String DELETE_BY_PK_SQL = 
 			"DELETE FROM competition where comp_no=?";
-
+	
 	private static final String GET_ALL_SQL = 
 			"SELECT * FROM competition ORDER BY comp_startdate ASC";
 	
@@ -42,7 +42,7 @@ public class CompetitionDAO implements CompetitionDAO_interface{
 	
 	private static final String GET_LIST_BY_STARTDATE =
 			"SELECT * FROM competition where comp_startdate >= ?";
-
+	
 	static {
 		try {
 			Class.forName(DRIVER);
@@ -58,7 +58,6 @@ public class CompetitionDAO implements CompetitionDAO_interface{
 		ResultSet rs = null;
 		try {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
-			con.setAutoCommit(false);
 			
 			String[] cols = {"comp_no"};
 			
@@ -69,7 +68,6 @@ public class CompetitionDAO implements CompetitionDAO_interface{
 			pstmt.setString(4, competitionVO.getComp_cont());
 			
 			if(pstmt.executeUpdate()==1) {
-				con.commit();
 				System.out.println("---成功輸入---");
 			}else {
 				System.out.println("---輸入失敗---");
@@ -90,12 +88,6 @@ public class CompetitionDAO implements CompetitionDAO_interface{
 			}
 		} catch (SQLException e0) {
 			e0.printStackTrace();
-			try {
-				con.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			} finally {
-			}
 		} finally {
 			if(rs!=null) {
 				try {
@@ -120,14 +112,13 @@ public class CompetitionDAO implements CompetitionDAO_interface{
 			}
 		}		
 	}
-
+	
 	@Override
 	public void update(CompetitionVO competitionVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
-			con.setAutoCommit(false);
 			
 			pstmt = con.prepareStatement(UPDATE_SQL);
 			pstmt.setString(1, competitionVO.getComp_name());
@@ -136,7 +127,6 @@ public class CompetitionDAO implements CompetitionDAO_interface{
 			pstmt.setString(4, competitionVO.getComp_cont());
 			pstmt.setString(5, competitionVO.getComp_no());
 			if(pstmt.executeUpdate()==1) {
-				con.commit();
 				System.out.println(competitionVO.getComp_no()+" : 成功更新一筆");
 				System.out.println(competitionVO);
 			}else {
@@ -144,12 +134,6 @@ public class CompetitionDAO implements CompetitionDAO_interface{
 			}
 		} catch (SQLException e0) {
 			e0.printStackTrace();
-			try {
-				con.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			} finally {
-			}
 		} finally {
 			if(pstmt!=null) {
 				try {
@@ -167,18 +151,17 @@ public class CompetitionDAO implements CompetitionDAO_interface{
 			}
 		}		
 	}
-
+	
 	@Override
 	public void delete(String comp_no) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
-			con.setAutoCommit(false);
+	
 			pstmt = con.prepareStatement(DELETE_BY_PK_SQL);
 			pstmt.setString(1, comp_no);
 			if(pstmt.executeUpdate()==1) {
-				con.commit();
 				System.out.println("---成功刪除---編號 : "+comp_no);
 			}else {
 				System.out.println("---刪除失敗---編號 : "+comp_no);
@@ -186,12 +169,6 @@ public class CompetitionDAO implements CompetitionDAO_interface{
 			
 		} catch (SQLException e0) {
 			e0.printStackTrace();
-			try {
-				con.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			} finally {
-			}
 		} finally {
 			if(pstmt!=null) {
 				try {
@@ -209,7 +186,7 @@ public class CompetitionDAO implements CompetitionDAO_interface{
 			}
 		}		
 	}
-
+	
 	@Override
 	public CompetitionVO findByPrimaryKey(String comp_no) {
 		CompetitionVO competitionVO = null;
@@ -257,7 +234,7 @@ public class CompetitionDAO implements CompetitionDAO_interface{
 		}
 		return competitionVO;
 	}
-
+	
 	@Override
 	public List<CompetitionVO> getCompetitionByStartDate(Timestamp timestamp) {
 		List<CompetitionVO> list = new ArrayList<>();
@@ -297,7 +274,7 @@ public class CompetitionDAO implements CompetitionDAO_interface{
 		}
 		return list;
 	}
-
+	
 	@Override
 	public List<CompetitionVO> getAll() {
 		List<CompetitionVO> list = new ArrayList<>();
