@@ -59,15 +59,19 @@ public class MemberlistJDBCDAO implements MemberlistDAO_interface  {
 			throw new RuntimeException("Database errors occured. "
 														+se.getMessage());
 		} finally {
-			try {
-				if (pstmt != null) {
+			if(pstmt!=null) {
+				try {
 					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
 				}
-				if (con != null) {
+			}
+			if(con!=null) {
+				try {
 					con.close();
-				} 
-			} catch (SQLException e) {
-				e.printStackTrace();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
 			}
 		}
 	}
@@ -98,15 +102,19 @@ public class MemberlistJDBCDAO implements MemberlistDAO_interface  {
 			throw new RuntimeException("Database errors occured. "
 														+se.getMessage());
 		} finally {
-			try {
-				if (pstmt != null) {
+			if(pstmt!=null) {
+				try {
 					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
 				}
-				if (con != null) {
+			}
+			if(con!=null) {
+				try {
 					con.close();
-				} 
-			} catch (SQLException se) {
-				se.printStackTrace();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
 			}
 		}
 	}
@@ -132,15 +140,19 @@ public class MemberlistJDBCDAO implements MemberlistDAO_interface  {
 			throw new RuntimeException("Database errors occured" 
 														+se.getMessage());
 		} finally {
-			try {
-				if (pstmt != null) {
+			if(pstmt!=null) {
+				try {
 					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
 				}
-				if (con != null) {
+			}
+			if(con!=null) {
+				try {
 					con.close();
-				} 
-			} catch (SQLException se) {
-				se.printStackTrace();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
 			}
 		}
 		
@@ -168,15 +180,19 @@ public class MemberlistJDBCDAO implements MemberlistDAO_interface  {
 			throw new RuntimeException("Database errors occured. "
 														+se.getMessage());
 		} finally {
-			try {
-				if (pstmt != null) {
+			if(pstmt!=null) {
+				try {
 					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
 				}
-				if (con != null) {
+			}
+			if(con!=null) {
+				try {
 					con.close();
-				} 
-			} catch (SQLException se) {
-				se.printStackTrace();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
 			}
 		}		
 	}
@@ -203,15 +219,19 @@ public class MemberlistJDBCDAO implements MemberlistDAO_interface  {
 			throw new RuntimeException("Database errors occured. "
 														+se.getMessage());
 		} finally {
-			try {
-				if (pstmt != null) {
+			if(pstmt!=null) {
+				try {
 					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
 				}
-				if (con != null) {
+			}
+			if(con!=null) {
+				try {
 					con.close();
-				} 
-			} catch (SQLException se) {
-				se.printStackTrace();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
 			}
 		}		
 	}
@@ -237,17 +257,21 @@ public class MemberlistJDBCDAO implements MemberlistDAO_interface  {
 			throw new RuntimeException("Database errors occured. "
 														+se.getMessage());
 		} finally {
-			try {
-				if (pstmt != null) {
+			if(pstmt!=null) {
+				try {
 					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
 				}
-				if (con != null) {
-					con.close();
-				} 
-			} catch (SQLException se) {
-				se.printStackTrace();
 			}
-		}				
+			if(con!=null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
 	}
 	
 	
@@ -292,18 +316,27 @@ public class MemberlistJDBCDAO implements MemberlistDAO_interface  {
 			throw new RuntimeException("Database errors occured. "
 														+se.getMessage());
 		}finally {
-			try {
-				if (rs != null) {
+			
+			if(rs!=null) {
+				try {
 					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
 				}
-				if (pstmt != null) {
+			}
+			if(pstmt!=null) {
+				try {
 					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
 				}
-				if (con != null) {
+			}
+			if(con!=null) {
+				try {
 					con.close();
-				} 
-			} catch (SQLException e) {
-				e.printStackTrace();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
 			}
 		}
 		return  list;
@@ -352,24 +385,24 @@ public class MemberlistJDBCDAO implements MemberlistDAO_interface  {
 			if(rs!=null) {
 				try {
 					rs.close();
-				}catch(SQLException s) {
-					s.printStackTrace(System.err);
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
 				}
 			}
 			if(pstmt!=null) {
 				try {
 					pstmt.close();
-				}catch (SQLException seq) {
-					seq.printStackTrace(System.err);
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
 				}
 			}
 			if(con!=null) {
 				try {
 					con.close();
-				}catch(Exception e) {
+				} catch (SQLException e) {
 					e.printStackTrace(System.err);
 				}
-			}	
+			}
 		}
 		return list;
 	}

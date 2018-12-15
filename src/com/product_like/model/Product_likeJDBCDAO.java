@@ -39,7 +39,22 @@ public class Product_likeJDBCDAO implements Product_likeDAO_interface{
 		 }catch(SQLException se) {
 			 throw new RuntimeException("Database errors occured. "
 					 									+se.getMessage());
-		 }	 
+		 }finally {
+				if(pstmt!=null) {
+					try {
+						pstmt.close();
+					} catch (SQLException e) {
+						e.printStackTrace(System.err);
+					}
+				}
+				if(con!=null) {
+					try {
+						con.close();
+					} catch (SQLException e) {
+						e.printStackTrace(System.err);
+					}
+				}
+		 }
 		
 	}
 
@@ -65,15 +80,19 @@ public class Product_likeJDBCDAO implements Product_likeDAO_interface{
 			throw new RuntimeException("Database errors occured. "
 														+se.getMessage());
 		}finally {
-			try {
-				if (pstmt != null) {
+			if(pstmt!=null) {
+				try {
 					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
 				}
-				if (con != null) {
+			}
+			if(con!=null) {
+				try {
 					con.close();
-				} 
-			} catch (SQLException se) {
-				se.printStackTrace();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
 			}
 		}
 	}
@@ -106,18 +125,26 @@ public class Product_likeJDBCDAO implements Product_likeDAO_interface{
 		} catch (SQLException se) {
 			throw new RuntimeException("Database errors occured. "+ se.getMessage());
 		} finally {
-			try {
-				if (rs != null) {
+			if(rs!=null) {
+				try {
 					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
 				}
-				if (pstmt != null) {
+			}
+			if(pstmt!=null) {
+				try {
 					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
 				}
-				if (con != null) {
+			}
+			if(con!=null) {
+				try {
 					con.close();
-				} 
-			} catch (SQLException se) {
-				se.printStackTrace();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
 			}
 		}
 		
@@ -153,18 +180,26 @@ public class Product_likeJDBCDAO implements Product_likeDAO_interface{
 			throw new RuntimeException("Database errors occured. " 
 														+se.getMessage());
 		}finally {
-			try {
-				if (rs != null) {
+			if(rs!=null) {
+				try {
 					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
 				}
-				if (pstmt != null) {
+			}
+			if(pstmt!=null) {
+				try {
 					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
 				}
-				if (con != null) {
+			}
+			if(con!=null) {
+				try {
 					con.close();
-				} 
-			} catch (SQLException se) {
-				se.printStackTrace();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
 			}
 		}
 		return list;
