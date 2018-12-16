@@ -58,7 +58,9 @@ public class OneManDoing {
 			File[] imgArray = saveDir.listFiles();
 			numRow = numRow > imgArray.length ? imgArray.length : numRow;
 			for(int i = 0 ; i<numRow ; i++ ) {
-				if(pkList.contains((Object)imgArray[i]))
+				String str = imgArray[i].getName();
+				String str2 = str.substring(0, str.lastIndexOf("."));
+				if(pkList.contains(str2));
 					imgFiles.add(imgArray[i]);				
 			}
 		}else {
