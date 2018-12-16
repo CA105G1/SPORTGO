@@ -73,8 +73,8 @@ public class NewstypeJDBCDAO implements NewstypeDAO_interface{
 			} else {
 				System.out.println("NO KEYS WERE GENERATED.");
 			}
-		} catch (SQLException e0) {
-			e0.printStackTrace();
+		} catch (SQLException e) {
+			throw new RuntimeException("A database error occured. "+e.getMessage());
 		} finally {
 			if(rs!=null) {
 				try {
@@ -118,8 +118,8 @@ public class NewstypeJDBCDAO implements NewstypeDAO_interface{
 				System.out.println("---更新失敗---");
 			}
 			
-		} catch (SQLException e0) {
-			e0.printStackTrace();
+		} catch (SQLException e) {
+			throw new RuntimeException("A database error occured. "+e.getMessage());
 		} finally {
 			if(pstmt!=null) {
 				try {
@@ -155,8 +155,8 @@ public class NewstypeJDBCDAO implements NewstypeDAO_interface{
 				System.out.println("---刪除失敗---編號 : "+newstype_no);
 			}
 			
-		} catch (SQLException e0) {
-			e0.printStackTrace();
+		} catch (SQLException e) {
+			throw new RuntimeException("A database error occured. "+e.getMessage());
 		} finally {
 			if(pstmt!=null) {
 				try {
@@ -195,7 +195,7 @@ public class NewstypeJDBCDAO implements NewstypeDAO_interface{
 				nt.setNewstype_name(rs.getString("newstype_name"));				
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new RuntimeException("A database error occured. "+e.getMessage());
 		} finally {
 			if(rs!=null) {
 				try {
@@ -241,8 +241,8 @@ public class NewstypeJDBCDAO implements NewstypeDAO_interface{
 				nt.setNewstype_name(rs.getString("newstype_name"));
 				list.add(nt);
 			}
-		} catch (SQLException e0) {
-			e0.printStackTrace();
+		} catch (SQLException e) {
+			throw new RuntimeException("A database error occured. "+e.getMessage());
 		} finally {
 			if(rs!=null) {
 				try {

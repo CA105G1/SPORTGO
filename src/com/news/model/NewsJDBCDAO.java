@@ -87,8 +87,8 @@ public class NewsJDBCDAO implements NewsDAO_interface{
 			} else {
 				System.out.println("NO KEYS WERE GENERATED.");
 			}
-		} catch (SQLException e0) {
-			e0.printStackTrace();
+		} catch (SQLException e) {
+			throw new RuntimeException("A database error occured. "+e.getMessage());
 		} finally {
 			if(rs!=null) {
 				try {
@@ -138,7 +138,7 @@ public class NewsJDBCDAO implements NewsDAO_interface{
 				System.out.println("---更新失敗---編號: "+newsVO.getNews_no());
 			}
 		} catch(SQLException e) {
-			e.printStackTrace();
+			throw new RuntimeException("A database error occured. "+e.getMessage());
 		} finally {
 			if(pstmt!=null) {
 				try {
@@ -172,7 +172,7 @@ public class NewsJDBCDAO implements NewsDAO_interface{
 				System.out.println("---更新狀態失敗---");
 			}
 		} catch(SQLException e) {
-			e.printStackTrace();
+			throw new RuntimeException("A database error occured. "+e.getMessage());
 		} finally {
 			if(pstmt!=null) {
 				try {
@@ -205,7 +205,7 @@ public class NewsJDBCDAO implements NewsDAO_interface{
 				System.out.println("---刪除失敗---編號 : "+news_no);
 			}
 		}catch(SQLException e) {
-			e.printStackTrace();
+			throw new RuntimeException("A database error occured. "+e.getMessage());
 		}finally {
 			if(pstmt != null) {
 				try {
@@ -248,7 +248,7 @@ public class NewsJDBCDAO implements NewsDAO_interface{
 			}
 			
 		} catch(SQLException e){
-			e.printStackTrace();
+			throw new RuntimeException("A database error occured. "+e.getMessage());
 		} finally {
 			if(rs!=null) {
 				try {
@@ -287,7 +287,7 @@ public class NewsJDBCDAO implements NewsDAO_interface{
 			rs = pstmt.executeQuery();
 			list = collectNewsVO(rs);			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new RuntimeException("A database error occured. "+e.getMessage());
 		} finally {
 			if(rs != null) {
 				try {
@@ -327,7 +327,7 @@ public class NewsJDBCDAO implements NewsDAO_interface{
 			rs = pstmt.executeQuery();
 			list = collectNewsVO(rs);
 		} catch(SQLException e) {
-			e.printStackTrace();
+			throw new RuntimeException("A database error occured. "+e.getMessage());
 		} finally {
 			if(rs!=null) {
 				try {

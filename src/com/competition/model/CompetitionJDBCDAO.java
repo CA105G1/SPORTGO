@@ -87,8 +87,8 @@ public class CompetitionJDBCDAO implements CompetitionDAO_interface{
 			} else {
 				System.out.println("NO KEYS WERE GENERATED.");
 			}
-		} catch (SQLException e0) {
-			e0.printStackTrace();
+		} catch (SQLException e) {
+			throw new RuntimeException("A database error occured. "+e.getMessage());
 		} finally {
 			if(rs!=null) {
 				try {
@@ -133,8 +133,8 @@ public class CompetitionJDBCDAO implements CompetitionDAO_interface{
 			}else {
 				System.out.println(competitionVO.getComp_no()+" : 更新失敗");
 			}
-		} catch (SQLException e0) {
-			e0.printStackTrace();
+		} catch (SQLException e) {
+			throw new RuntimeException("A database error occured. "+e.getMessage());
 		} finally {
 			if(pstmt!=null) {
 				try {
@@ -168,8 +168,8 @@ public class CompetitionJDBCDAO implements CompetitionDAO_interface{
 				System.out.println("---刪除失敗---編號 : "+comp_no);
 			}
 			
-		} catch (SQLException e0) {
-			e0.printStackTrace();
+		} catch (SQLException e) {
+			throw new RuntimeException("A database error occured. "+e.getMessage());
 		} finally {
 			if(pstmt!=null) {
 				try {
@@ -208,8 +208,8 @@ public class CompetitionJDBCDAO implements CompetitionDAO_interface{
 				competitionVO.setComp_enddate(resultSet.getTimestamp("comp_enddate"));
 				competitionVO.setComp_cont(resultSet.getString("comp_cont"));
 			}
-		} catch (SQLException e0) {
-			e0.printStackTrace();
+		} catch (SQLException e) {
+			throw new RuntimeException("A database error occured. "+e.getMessage());
 		} finally {
 			if(resultSet!=null) {
 				try {
@@ -249,7 +249,7 @@ public class CompetitionJDBCDAO implements CompetitionDAO_interface{
 			resultSet = preparedStatement.executeQuery();
 			list = collectCompetitionVO(resultSet);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new RuntimeException("A database error occured. "+e.getMessage());
 		} finally {
 			if(resultSet!=null) {
 				try {
@@ -288,7 +288,7 @@ public class CompetitionJDBCDAO implements CompetitionDAO_interface{
 			resultSet = preparedStatement.executeQuery();
 			list = collectCompetitionVO(resultSet);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new RuntimeException("A database error occured. "+e.getMessage());
 		} finally {
 			if(resultSet!=null) {
 				try {

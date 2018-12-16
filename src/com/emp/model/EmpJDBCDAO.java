@@ -92,8 +92,8 @@ public class EmpJDBCDAO implements EmpDAO_interface{
 				System.out.println("NO KEYS WERE GENERATED.");
 			}
 			
-		} catch (SQLException e0) {
-			e0.printStackTrace();
+		} catch (SQLException e) {
+			throw new RuntimeException("A database error occured. "+e.getMessage());
 		} finally {
 			if(rs!=null) {
 				try {
@@ -145,8 +145,8 @@ public class EmpJDBCDAO implements EmpDAO_interface{
 				System.out.println("---更新失敗---");
 			}
 			
-		} catch (SQLException e0) {
-			e0.printStackTrace();
+		} catch (SQLException e) {
+			throw new RuntimeException("A database error occured. "+e.getMessage());
 		} finally {
 			if(pstmt!=null) {
 				try {
@@ -180,8 +180,8 @@ public class EmpJDBCDAO implements EmpDAO_interface{
 				System.out.println("---刪除失敗---編號 : "+emp_no);
 			}
 			
-		}catch (SQLException e0) {
-			e0.printStackTrace();
+		}catch (SQLException e) {
+			throw new RuntimeException("A database error occured. "+e.getMessage());
 		} finally {
 			if(pstmt!=null) {
 				try {
@@ -224,8 +224,8 @@ public class EmpJDBCDAO implements EmpDAO_interface{
 				empVO.setHiredate(rs.getDate("HIREDATE"));
 				empVO.setLeavedate(rs.getDate("LEAVEDATE"));
 			}
-		}catch (SQLException e0) {
-			e0.printStackTrace();
+		}catch (SQLException e) {
+			throw new RuntimeException("A database error occured. "+e.getMessage());
 		} finally {
 			if(rs!=null) {
 				try {
@@ -264,8 +264,8 @@ public class EmpJDBCDAO implements EmpDAO_interface{
 			rs = pstmt.executeQuery();
 			list = collectEmpVO(rs);
 			
-		} catch (SQLException e0) {
-			e0.printStackTrace();
+		} catch (SQLException e) {
+			throw new RuntimeException("A database error occured. "+e.getMessage());
 		} finally {
 			if(rs!=null) {
 				try {
@@ -304,8 +304,8 @@ public class EmpJDBCDAO implements EmpDAO_interface{
 			pstmt.setString(1, emp_name);
 			rs = pstmt.executeQuery();
 			list = collectEmpVO(rs);
-		} catch (SQLException e0) {
-			e0.printStackTrace();
+		} catch (SQLException e) {
+			throw new RuntimeException("A database error occured. "+e.getMessage());
 		} finally {
 			if(rs!=null) {
 				try {
