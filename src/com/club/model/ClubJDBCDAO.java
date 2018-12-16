@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,7 @@ public class ClubJDBCDAO implements ClubDAO_interface{
 		try {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
+			
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
 			pstmt.setString(1, clubVO.getSp_no());
@@ -43,7 +45,6 @@ public class ClubJDBCDAO implements ClubDAO_interface{
 			pstmt.setString(6, clubVO.getClub_intro());
 			
 			pstmt.executeUpdate();
-			
 			
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. "

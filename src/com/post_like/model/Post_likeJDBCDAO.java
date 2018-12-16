@@ -262,7 +262,7 @@ public class Post_likeJDBCDAO implements Post_likeDAO_interface{
 		public static void main(String[] args) {
 			Post_likeJDBCDAO dao = new Post_likeJDBCDAO(); 
 			
-			//新增
+			//新增 (要先在Post_infoJDBCDAO按新增)
 //			Post_likeVO post_likeVO1 = new Post_likeVO();
 //			post_likeVO1.setPost_no("P0003");
 //			post_likeVO1.setMem_no("M002");

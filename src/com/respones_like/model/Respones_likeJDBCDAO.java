@@ -288,12 +288,12 @@ public class Respones_likeJDBCDAO implements Respones_likeDAO_interface {
 //		System.out.println("------------------------------");
 
 //		//查詢
-		List<Respones_likeVO> list = dao.getAll();
-		for (Respones_likeVO aPost_like : list) {
-			System.out.println(aPost_like.getRes_no()+ ",");
-			System.out.println(aPost_like.getMem_no()+ ",");
-			System.out.println(aPost_like.getLike_type()+ ",");
-			System.out.println();
-		}
+//		List<Respones_likeVO> list = dao.getAll();
+//		for (Respones_likeVO aPost_like : list) {
+//			System.out.println(aPost_like.getRes_no()+ ",");
+//			System.out.println(aPost_like.getMem_no()+ ",");
+//			System.out.println(aPost_like.getLike_type()+ ",");
+//			System.out.println();
+//		}
 	}
 }

@@ -274,7 +274,7 @@ public class ClubmemberlistJDBCDAO implements ClubmemberlistDAO_interface{
 	public static void main(String[] args) {
 		ClubmemberlistJDBCDAO dao = new ClubmemberlistJDBCDAO();
 		
-		//新增
+		//新增(要先去ClubJDBCDAO按新增)
 //		ClubmemberlistVO clubmemberlistVO1 = new ClubmemberlistVO();
 //		clubmemberlistVO1.setClub_no("C0008");
 //		clubmemberlistVO1.setMem_no("M017");

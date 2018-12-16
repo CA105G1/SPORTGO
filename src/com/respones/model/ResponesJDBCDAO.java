@@ -271,9 +271,9 @@ public class ResponesJDBCDAO implements ResponesDAO_interface {
 			
 			//新增
 //			ResponesVO responesVO1 = new ResponesVO();
-//			responesVO1.setRes_no("");
+//			
 //			responesVO1.setPost_no("P0010");
-//			responesVO1.setMem_no("M002");//M001
+//			responesVO1.setMem_no("M002");
 //			responesVO1.setRes_content("不管他吃了什麼都給我來一點");
 //			responesVO1.setRes_date(java.sql.Timestamp.valueOf("2018-11-15 12:30:00"));
 //			dao.insert(responesVO1);
