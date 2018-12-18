@@ -18,7 +18,7 @@ import com.venue.model.VenueDAO_interface;
 /**
  * Servlet implementation class VenueT
  */
-@WebServlet("/VenueT")
+@WebServlet("/RegS")
 public class TestRegServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
