@@ -2,17 +2,24 @@ package com.memberlist.model;
 
 import java.sql.*;
 import java.util.*;
+import javax.naming.*;
+import javax.sql.*;
 
-public class MemberlistJDBCDAO implements MemberlistDAO_interface  {
+public class MemberlistDAO implements MemberlistDAO_interface{
 
-	public MemberlistJDBCDAO(){
-
+	public MemberlistDAO() {
 	}
-	
-	String driver = "oracle.jdbc.driver.OracleDriver";
-	String url = "jdbc:oracle:thin:@10.37.129.3:1521:XE";
-	String user = "AARON";
-	String password = "123456";
+	private static DataSource ds = null;
+	static {
+		
+			Context ctx;
+			try {
+				ctx = new InitialContext();
+				ds = (DataSource)ctx.lookup("java:comp/env/jdbc/CA105DB");
+			} catch (NamingException e) {
+				e.printStackTrace();
+			}
+	}
 	
 	private static final String INSERT_STMT = 
 			"INSERT INTO MEMBERLIST (MEM_NO,MEM_NAME,MEM_ACCOUNT,MEM_PSWD,MEM_EMAIL,MEM_PHONE)"
@@ -42,8 +49,7 @@ public class MemberlistJDBCDAO implements MemberlistDAO_interface  {
 		PreparedStatement pstmt = null;
 		
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, user, password);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 			pstmt.setString(1, memberlist.getMem_name());
 			pstmt.setString(2, memberlist.getMem_account());
@@ -52,9 +58,6 @@ public class MemberlistJDBCDAO implements MemberlistDAO_interface  {
 			pstmt.setString(5, memberlist.getMem_phone());
 			
 			pstmt.executeUpdate();
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load the database driver. "
-														+e.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("Database errors occured. "
 														+se.getMessage());
@@ -82,8 +85,7 @@ public class MemberlistJDBCDAO implements MemberlistDAO_interface  {
 		PreparedStatement pstmt = null;
 		
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, user, password);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_PRIVACY);
 			System.out.println(memberlist.getMem_emgcphone());
 			pstmt.setString(1, memberlist.getMem_name());
@@ -95,9 +97,6 @@ public class MemberlistJDBCDAO implements MemberlistDAO_interface  {
 			pstmt.setString(7, memberlist.getMem_no());
 			
 			pstmt.executeUpdate();
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load the database driver. "
-														+e.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("Database errors occured. "
 														+se.getMessage());
@@ -125,17 +124,13 @@ public class MemberlistJDBCDAO implements MemberlistDAO_interface  {
 		PreparedStatement pstmt = null;
 		
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, user, password);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_STATUS);
 			
 			pstmt.setString(1, mem_status);
 			pstmt.setString(2, mem_no);
 			
 			pstmt.executeUpdate();
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load the database driver. "
-														+e.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("Database errors occured" 
 														+se.getMessage());
@@ -165,17 +160,13 @@ public class MemberlistJDBCDAO implements MemberlistDAO_interface  {
 		PreparedStatement pstmt = null;
 		
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, user, password);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_PASSWORD);
 			
 			pstmt.setString(1, memberlist.getMem_pswd());
 			pstmt.setString(2, memberlist.getMem_no());
 			
 			pstmt.executeUpdate();
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load the database driver. "
-														+e.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("Database errors occured. "
 														+se.getMessage());
@@ -203,8 +194,7 @@ public class MemberlistJDBCDAO implements MemberlistDAO_interface  {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, user, password);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_PICTURE);
 			
 			pstmt.setBytes(1, memberlist.getMem_pic());
@@ -212,9 +202,6 @@ public class MemberlistJDBCDAO implements MemberlistDAO_interface  {
 			pstmt.setString(3, memberlist.getMem_no());
 			
 			pstmt.executeUpdate();
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load the database driver. "
-														+e.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("Database errors occured. "
 														+se.getMessage());
@@ -241,8 +228,7 @@ public class MemberlistJDBCDAO implements MemberlistDAO_interface  {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, user, password);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_CRADITCARD);
 			
 			pstmt.setString(1, memberlist.getMem_card());
@@ -250,9 +236,6 @@ public class MemberlistJDBCDAO implements MemberlistDAO_interface  {
 			pstmt.setString(3, memberlist.getMem_no());
 			
 			pstmt.executeUpdate();
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load the database driver. "
-														+e.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("Database errors occured. "
 														+se.getMessage());
@@ -284,8 +267,7 @@ public class MemberlistJDBCDAO implements MemberlistDAO_interface  {
 		ResultSet rs = null;
 		
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, user, password);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 			pstmt.setString(1, memno);
 			
@@ -307,13 +289,10 @@ public class MemberlistJDBCDAO implements MemberlistDAO_interface  {
 				memberlist.setMem_pic(rs.getBytes("mem_pic"));
 				memberlist.setMem_pickind(rs.getString("mem_pickind"));
 			}
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load the database driver. "
-														+e.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("Database errors occured. "
 														+se.getMessage());
-		}finally {
+		} finally {
 			
 			if(rs!=null) {
 				try {
@@ -350,8 +329,7 @@ public class MemberlistJDBCDAO implements MemberlistDAO_interface  {
 		ResultSet rs = null;
 		
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, user, password);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 			
@@ -373,10 +351,7 @@ public class MemberlistJDBCDAO implements MemberlistDAO_interface  {
 				mem.setMem_pickind(rs.getString("mem_pickind"));
 				list.add(mem);
 			}
-		}catch(ClassNotFoundException e) {
-				throw new RuntimeException("Couldn't load the database driver. "
-															+e.getMessage());
-			}catch(SQLException se) {
+		}catch(SQLException se) {
 				throw new RuntimeException("Database errors occured. "
 															+se.getMessage());
 		}finally {
@@ -405,45 +380,8 @@ public class MemberlistJDBCDAO implements MemberlistDAO_interface  {
 		return list;
 	}
 
-	public static void main(String[] args) {
-		MemberlistJDBCDAO memlist = new MemberlistJDBCDAO();
-		MemberlistVO memcreate = new MemberlistVO("ICHIRO","a029","123456",
-										"s9821100@gm.pu.edu.tw","0937351931");
-		memlist.insert(memcreate);
-		System.out.println("A member created successful.");
-		
-		MemberlistVO memupdatepivacy = new MemberlistVO("M029","ICHIRO","Baseball man"
-										,"s9821100@gm.pu.edu.tw","0937351931","大崛彩","0937351931");
-		memlist.updatePrivacy(memupdatepivacy);
-		System.out.println("A member privacy updated successful.");
-		
-		MemberlistVO memberupdatepassword = new MemberlistVO("M029", "12345678");
-		memlist.updatePassword(memberupdatepassword);
-		System.out.println("A member password updated successful.");
-		
-//		WARNING
-//		
-		MemberlistVO memberudatecraditcard = new MemberlistVO("M029", "1234567887654321","2021-01");
-		memlist.updateCraditcard(memberudatecraditcard);
-		memlist.updateStatus("M029", "正式會員");
-		System.out.println("A member status updated successful");
-		
-		
-		
-		MemberlistVO findmem = memlist.findByPrimaryKey("M029");
-		
-			System.out.println("Name : "+findmem.getMem_name());
-			System.out.println("Account : "+findmem.getMem_account());
-			System.out.println("Nickname : "+findmem.getMem_nick());
-			System.out.println("Email : "+findmem.getMem_email());
-			System.out.println("Phone : "+findmem.getMem_phone());
-			System.out.println("Status : "+findmem.getMem_status());
-		
-		List<MemberlistVO> list = memlist.getAll();
-		for(MemberlistVO show : list) {
-			System.out.println(show.getMem_name());
-		}
-	}
-
+	
+	
+	
 	
 }
