@@ -61,14 +61,10 @@
 				
 				<div class="collapse navbar-collapse navbar-ex1-collapse">
 					
-					<ul class="nav navbar-nav navbar-right" >
-						<li><a href="#" style="color:yellow;">${MemberlistVO.mem_name} 您好</a></li>
-						<li><a href="#" style="color:yellow;">登出</a></li>
-						
-						<li class="dropdown">
-							
-						</li>
-					</ul>
+						<ul class="nav navbar-nav navbar-right" >
+								<li><a href="#" style="color:yellow;">${MemberlistVO.mem_name} 您好</a></li>
+								<li><a href="logout.do" style="color:yellow;">登出</a></li>
+						</ul>
 				</div>
 			</div>
 		</nav>
@@ -95,8 +91,11 @@
 					<div class="container">
 						<ul class="list">
 							<li>姓名 : ${MemberlistVO.mem_name}</li>
+							<li>暱稱 : ${MemberlistVO.mem_nick}</li>
 							<li>Email : ${MemberlistVO.mem_email}</li>
 							<li>電話 : ${MemberlistVO.mem_phone}</li>
+							<li>緊急聯絡人 : ${MemberlistVO.mem_emgc}</li>
+							<li>緊急聯絡人電話 : ${MemberlistVO.mem_emgcphone}</li>
 						</ul>
 					</div>
 				</div>	
