@@ -31,7 +31,7 @@ public class ClubServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		
-		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
+if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -103,7 +103,7 @@ public class ClubServlet extends HttpServlet {
 		}
 		
 		
-		if ("getOne_For_Update".equals(action)) { // 來自listAllEmp.jsp的請求
+if ("getOne_For_Update".equals(action)) { // 來自listAllEmp.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -112,7 +112,7 @@ public class ClubServlet extends HttpServlet {
 			
 			try {
 				/***************************1.接收請求參數****************************************/
-				String club_no = new String(req.getParameter("club_no"));
+				String club_no = req.getParameter("club_no");
 				
 				/***************************2.開始查詢資料****************************************/
 				ClubService clubSvc = new ClubService();
@@ -133,7 +133,7 @@ public class ClubServlet extends HttpServlet {
 		}
 		
 		
-		if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
+if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -142,7 +142,7 @@ public class ClubServlet extends HttpServlet {
 		
 			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
-				String club_no = new String(req.getParameter("club_no").trim());
+				String club_no =req.getParameter("club_no");
 				
 				String sp_no = req.getParameter("sp_no");
 				String sp_noReg = "^[(A-Z0-9_)]{5,7}$";
@@ -218,7 +218,7 @@ public class ClubServlet extends HttpServlet {
 			}
 		}
 
-        if ("insert".equals(action)) { // 來自addEmp.jsp的請求  
+if ("insert".equals(action)) { // 來自addEmp.jsp的請求  
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
