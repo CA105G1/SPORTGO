@@ -1,0 +1,479 @@
+package com.android.member.model;
+
+import java.sql.*;
+
+import java.util.*;
+import com.util.lang.*;
+
+public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
+
+	public MemberJDBCDAO_Android(){
+
+	}
+	
+	private static final String INSERT_STMT = 
+			"INSERT INTO memberlist (MEM_NO,MEM_NAME,MEM_ACCOUNT,MEM_PSWD,MEM_EMAIL,MEM_PHONE)"
+			+ "VALUES ('M'||LPAD(TO_CHAR(member_seq.NEXTVAL),3,'0'),?,?,?,?,?)";		
+	private static final String UPDATE_PRIVACY =
+			"UPDATE memberlist SET MEM_NAME=?,MEM_NICK=?,MEM_EMAIL=?"
+			+ ",MEM_PHONE=?,MEM_EMGC=?,MEM_EMGCPHONE=? WHERE MEM_NO=?";
+	private static final String UPDATE_STATUS =
+			"UPDATE memberlist SET MEM_STATUS = ? WHERE MEM_NO = ?";
+	private static final String UPDATE_PASSWORD = 
+			"UPDATE memberlist SET MEM_PSWD = ? WHERE MEM_NO = ?";
+//	private static final String UPDATE_PICTURE =
+//			"UPDATE member SET MEM_PIC, MEM_PICKIND WHERE MEM_NO = ?";
+	private static final String UPDATE_CRADITCARD = 
+			"UPDATE memberlist SET MEM_CARD = ?, MEM_EXPIRY = ? WHERE MEM_NO = ?";
+	private static final String GET_ALL_STMT = 
+			"SELECT * FROM memberlist";
+	private static final String GET_ONE_STMT = 
+			"SELECT * FROM memberlist where MEM_NO = ? ";
+	private static final String CHECK_ID_EXIST = 
+			"SELECT * FROM memberlist WHERE mem_account = ? AND mem_pswd = ?";
+	
+	public boolean isMember(String mem_account, String mem_pswd) {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		boolean isMember = false;
+		try {
+			Class.forName(Util.DRIVER);
+			conn = DriverManager.getConnection(Util.URL, Util.USER,
+					Util.PASSWORD);
+			ps = conn.prepareStatement(CHECK_ID_EXIST);
+			ps.setString(1, mem_account);
+			ps.setString(2, mem_pswd);
+			ResultSet rs = ps.executeQuery();
+			isMember = rs.next();
+			return isMember;
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load the database driver. "
+					+e.getMessage());
+		}catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return isMember;
+	}
+		
+	
+	@Override
+	public void insert(MemberVO_Andorid member) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			Class.forName(Util.DRIVER);
+			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			pstmt = con.prepareStatement(INSERT_STMT);
+			pstmt.setString(1, member.getMem_name());
+			pstmt.setString(2, member.getMem_account());
+			pstmt.setString(3, member.getMem_pswd());
+			pstmt.setString(4, member.getMem_email());
+			pstmt.setString(5, member.getMem_phone());
+			
+			pstmt.executeUpdate();
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load the database driver. "
+														+e.getMessage());
+		} catch (SQLException se) {
+			throw new RuntimeException("Database errors occured. "
+														+se.getMessage());
+		} finally {
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if(con!=null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+
+	@Override
+	public void updatePrivacy(MemberVO_Andorid member) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			Class.forName(Util.DRIVER);
+			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			pstmt = con.prepareStatement(UPDATE_PRIVACY);
+			System.out.println(member.getMem_emgcphone());
+			pstmt.setString(1, member.getMem_name());
+			pstmt.setString(2, member.getMem_nick());
+			pstmt.setString(3, member.getMem_email());
+			pstmt.setString(4, member.getMem_phone());
+			pstmt.setString(5, member.getMem_emgc());
+			pstmt.setString(6, member.getMem_emgcphone());
+			pstmt.setString(7, member.getMem_no());
+			
+			pstmt.executeUpdate();
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load the database driver. "
+														+e.getMessage());
+		} catch (SQLException se) {
+			throw new RuntimeException("Database errors occured. "
+														+se.getMessage());
+		} finally {
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if(con!=null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+	
+	@Override
+	public void updateStatus(String mem_no, String mem_status) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			Class.forName(Util.DRIVER);
+			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			pstmt = con.prepareStatement(UPDATE_STATUS);
+			
+			pstmt.setString(1, mem_status);
+			pstmt.setString(2, mem_no);
+			
+			pstmt.executeUpdate();
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load the database driver. "
+														+e.getMessage());
+		} catch (SQLException se) {
+			throw new RuntimeException("Database errors occured" 
+														+se.getMessage());
+		} finally {
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if(con!=null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+	}
+
+
+	@Override
+	public void updatePassword(MemberVO_Andorid member) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			Class.forName(Util.DRIVER);
+			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			pstmt = con.prepareStatement(UPDATE_PASSWORD);
+			
+			pstmt.setString(1, member.getMem_pswd());
+			pstmt.setString(2, member.getMem_no());
+			
+			pstmt.executeUpdate();
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load the database driver. "
+														+e.getMessage());
+		} catch (SQLException se) {
+			throw new RuntimeException("Database errors occured. "
+														+se.getMessage());
+		} finally {
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if(con!=null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}		
+	}
+
+
+//	@Override
+//	public void updatePicture(MemberVO member) {
+//		Connection con = null;
+//		PreparedStatement pstmt = null;
+//		try {
+//			Class.forName(driver);
+//			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+//			pstmt = con.prepareStatement(UPDATE_PICTURE);
+//			
+//			pstmt.setBytes(1, member.getMem_pic());
+//			pstmt.setString(2, member.getMem_pickind());
+//			pstmt.setString(3, member.getMem_no());
+//			
+//			pstmt.executeUpdate();
+//		} catch (ClassNotFoundException e) {
+//			throw new RuntimeException("Couldn't load the database driver. "
+//														+e.getMessage());
+//		} catch (SQLException se) {
+//			throw new RuntimeException("Database errors occured. "
+//														+se.getMessage());
+//		} finally {
+//			if(pstmt!=null) {
+//				try {
+//					pstmt.close();
+//				} catch (SQLException e) {
+//					e.printStackTrace(System.err);
+//				}
+//			}
+//			if(con!=null) {
+//				try {
+//					con.close();
+//				} catch (SQLException e) {
+//					e.printStackTrace(System.err);
+//				}
+//			}
+//		}		
+//	}
+
+	@Override
+	public void updateCraditcard(MemberVO_Andorid member) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			Class.forName(Util.DRIVER);
+			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			pstmt = con.prepareStatement(UPDATE_CRADITCARD);
+			
+			pstmt.setString(1, member.getMem_card());
+			pstmt.setString(2, member.getMem_expiry());
+			pstmt.setString(3, member.getMem_no());
+			
+			pstmt.executeUpdate();
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load the database driver. "
+														+e.getMessage());
+		} catch (SQLException se) {
+			throw new RuntimeException("Database errors occured. "
+														+se.getMessage());
+		} finally {
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if(con!=null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+	
+	
+	
+	@Override
+	public MemberVO_Andorid findByPrimaryKey(String memno) {
+		MemberVO_Andorid member = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			Class.forName(Util.DRIVER);
+			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			pstmt = con.prepareStatement(GET_ONE_STMT);
+			pstmt.setString(1, memno);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				member = new MemberVO_Andorid();
+				member.setMem_name(rs.getString("mem_name"));
+				member.setMem_nick(rs.getString("mem_nick"));
+				member.setMem_account(rs.getString("mem_account"));
+				member.setMem_pswd(rs.getString("mem_pswd"));
+				member.setMem_email(rs.getString("mem_email"));
+				member.setMem_phone(rs.getString("mem_phone"));
+				member.setMem_emgc(rs.getString("mem_emgc"));
+				member.setMem_emgcphone(rs.getString("mem_emgcphone"));
+				member.setMem_status(rs.getString("mem_status"));
+				member.setMem_card(rs.getString("mem_card"));
+				member.setMem_expiry(rs.getString("mem_expiry"));
+//				member.setMem_pic(rs.getBytes("mem_pic"));
+//				member.setMem_pickind(rs.getString("mem_pickind"));
+			}
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load the database driver. "
+														+e.getMessage());
+		} catch (SQLException se) {
+			throw new RuntimeException("Database errors occured. "
+														+se.getMessage());
+		}finally {
+			
+			if(rs!=null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if(con!=null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return  member;
+	}
+
+	@Override
+	public List<MemberVO_Andorid> getAll() {
+		List<MemberVO_Andorid> list = new ArrayList<MemberVO_Andorid>();
+		MemberVO_Andorid mem = null;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			Class.forName(Util.DRIVER);
+			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			pstmt = con.prepareStatement(GET_ALL_STMT);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				mem = new MemberVO_Andorid();
+				mem.setMem_no(rs.getString("mem_no"));
+				mem.setMem_name(rs.getString("mem_name"));
+				mem.setMem_nick(rs.getString("mem_nick"));
+				mem.setMem_account(rs.getString("mem_account"));
+				mem.setMem_pswd(rs.getString("mem_pswd"));
+				mem.setMem_email(rs.getString("mem_email"));
+				mem.setMem_phone(rs.getString("mem_phone"));
+				mem.setMem_emgc(rs.getString("mem_emgc"));
+				mem.setMem_emgcphone(rs.getString("mem_emgcphone"));
+				mem.setMem_status(rs.getString("mem_status"));
+				mem.setMem_card(rs.getString("mem_card"));
+				mem.setMem_expiry(rs.getString("mem_expiry"));
+//				mem.setMem_pic(rs.getBytes("mem_pic"));
+//				mem.setMem_pickind(rs.getString("mem_pickind"));
+				list.add(mem);
+			}
+		}catch(ClassNotFoundException e) {
+				throw new RuntimeException("Couldn't load the database driver. "
+															+e.getMessage());
+			}catch(SQLException se) {
+				throw new RuntimeException("Database errors occured. "
+															+se.getMessage());
+		}finally {
+			if(rs!=null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if(con!=null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
+	public static void main(String[] args) {
+		MemberJDBCDAO_Android memlist = new MemberJDBCDAO_Android();
+		MemberVO_Andorid memcreate = new MemberVO_Andorid("ICHIRO","a029","123456",
+										"s9821100@gm.pu.edu.tw","0937351931");
+		memlist.insert(memcreate);
+		System.out.println("A member created successful.");
+		
+		MemberVO_Andorid memupdatepivacy = new MemberVO_Andorid("M029","ICHIRO","Baseball man"
+										,"s9821100@gm.pu.edu.tw","0937351931","憭批�蔗","0937351931");
+		memlist.updatePrivacy(memupdatepivacy);
+		System.out.println("A member privacy updated successful.");
+		
+		MemberVO_Andorid memberupdatepassword = new MemberVO_Andorid("M029", "12345678");
+		memlist.updatePassword(memberupdatepassword);
+		System.out.println("A member password updated successful.");
+		
+//		WARNING
+//		
+		MemberVO_Andorid memberudatecraditcard = new MemberVO_Andorid("M029", "1234567887654321","2021-01");
+		memlist.updateCraditcard(memberudatecraditcard);
+		memlist.updateStatus("M029", "正常");
+		System.out.println("A member status updated successful");
+		
+		
+		
+		MemberVO_Andorid findmem = memlist.findByPrimaryKey("M029");
+		
+			System.out.println("Name : "+findmem.getMem_name());
+			System.out.println("Account : "+findmem.getMem_account());
+			System.out.println("Nickname : "+findmem.getMem_nick());
+			System.out.println("Email : "+findmem.getMem_email());
+			System.out.println("Phone : "+findmem.getMem_phone());
+			System.out.println("Status : "+findmem.getMem_status());
+		
+		List<MemberVO_Andorid> list = memlist.getAll();
+		for(MemberVO_Andorid show : list) {
+			System.out.println(show.getMem_name());
+		}
+	}
+
+}

@@ -29,6 +29,14 @@
   	<servlet-name>Login</servlet-name>
   	<url-pattern>/login.do</url-pattern>
   </servlet-mapping>
-	
+  
+  <servlet>
+  	<servlet-name>MemberServlet_Android</servlet-name>
+  	<servlet-class>com.android.member.controller.MemberServlet_Android</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>MemberServlet_Android</servlet-name>
+  	<url-pattern>/MemberServlet_Android.do</url-pattern>
+  </servlet-mapping>
 
 </web-app>
