@@ -15,7 +15,7 @@ public class MemberlistDAO implements MemberlistDAO_interface{
 			Context ctx;
 			try {
 				ctx = new InitialContext();
-				ds = (DataSource)ctx.lookup("java:comp/env/jdbc/CA105DB");
+				ds = (DataSource)ctx.lookup("java:comp/env/jdbc/CA105G1DB");
 			} catch (NamingException e) {
 				e.printStackTrace();
 			}
@@ -332,7 +332,6 @@ public class MemberlistDAO implements MemberlistDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
-			
 			while(rs.next()) {
 				mem = new MemberlistVO();
 				mem.setMem_no(rs.getString("mem_no"));

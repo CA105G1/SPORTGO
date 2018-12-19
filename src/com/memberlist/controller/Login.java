@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 import com.memberlist.model.*;
 import java.util.*;
 
-@WebServlet("/Login")
+
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -29,20 +29,29 @@ public class Login extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) 
 			throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
-		String action = req.getParameter("account");
-
+		
+		/*************接受請求參數**************/
+		String account = req.getParameter("account");
+		String password = req.getParameter("password");
+		String mem_no = null;
+		/*************開始查詢資料**************/
 		MemberlistDAO dao = new MemberlistDAO();
 		List<MemberlistVO> listall = dao.getAll();
 		for(MemberlistVO acc : listall) {
-			if(action.equals(acc.getMem_account())) {
-				HttpSession session = req.getSession();
-				session.setAttribute("mem_no", acc.getMem_no());
-				RequestDispatcher memberview = req.
-						getRequestDispatcher("/WebContent/front-end/memberlist/listOneMem.jsp");
-				memberview.forward(req,res);
+			if(account.equals(acc.getMem_account())) {
+				if(password.equals(acc.getMem_pswd())) {
+					account = acc.getMem_account();
+					mem_no = acc.getMem_no();
+				}
 			}
 		}
-			
+		/************查詢完成準備轉交（send the success view）***************/
+		HttpSession session = req.getSession();
+		session.setAttribute("MemberlistVO", dao.findByPrimaryKey(mem_no));
+		String url = "/front-end/memberlist/Member_page.jsp";
+		RequestDispatcher memberview = req.getRequestDispatcher(url);
+		memberview.forward(req,res);
+		
 	}
 
 }

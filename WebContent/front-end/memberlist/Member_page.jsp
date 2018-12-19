@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import = "com.memberlist.model.*" %>
+<%-- <% MemberlistVO memberVO = (MemberlistVO)request.getAttribute("MemberlistVO"); %> --%>
 <!DOCTYPE html>
 <html lang="">
 	<head>
@@ -61,7 +62,7 @@
 				<div class="collapse navbar-collapse navbar-ex1-collapse">
 					
 					<ul class="nav navbar-nav navbar-right" >
-						<li><a href="#" style="color:yellow;">Amos 您好</a></li>
+						<li><a href="#" style="color:yellow;">${MemberlistVO.mem_name} 您好</a></li>
 						<li><a href="#" style="color:yellow;">登出</a></li>
 						
 						<li class="dropdown">
@@ -92,7 +93,11 @@
 				</div>
 				<div class="col-xs-12 col-sm-9">
 					<div class="container">
-						
+						<ul class="list">
+							<li>姓名 : ${MemberlistVO.mem_name}</li>
+							<li>Email : ${MemberlistVO.mem_email}</li>
+							<li>電話 : ${MemberlistVO.mem_phone}</li>
+						</ul>
 					</div>
 				</div>	
 			</div>

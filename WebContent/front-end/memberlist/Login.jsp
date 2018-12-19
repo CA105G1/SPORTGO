@@ -13,14 +13,14 @@
 	</head>
 	<body>
 	
-	<form METHOD="post" ACTION="login.do">
+	<form METHOD="post" ACTION="<%=request.getContextPath()%>/login.do">
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-12 col-sm-6 col-sm-offset-3">
 					<h1>會員登入</h1>
 					<div class="form-group">
 						<label for="account">帳號</label>
-						<input type="text" name="account" id="account" class="form-control" value="">
+						<input type="text" name="account" id="account" class="form-control">
 					<div class="form-group">
 						<label for="password">密碼</label>
 						<input type="text" name="password" id="password" class="form-control">
