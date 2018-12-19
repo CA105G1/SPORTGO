@@ -38,5 +38,23 @@
   	<servlet-name>MemberServlet_Android</servlet-name>
   	<url-pattern>/MemberServlet_Android.do</url-pattern>
   </servlet-mapping>
+  
+   <servlet>
+  	<servlet-name>ClubServlet</servlet-name>
+  	<servlet-class>com.club.controller.ClubServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ClubServlet</servlet-name>
+  	<url-pattern>/club.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>ClubImgServlet</servlet-name>
+  	<servlet-class>com.club.controller.ClubImgServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ClubImgServlet</servlet-name>
+  	<url-pattern>/clubImg.do</url-pattern>
+  </servlet-mapping>
 
 </web-app>
