@@ -1,7 +1,8 @@
 package com.venue.model;
 
+import java.io.Serializable;
 
-public class VenueVO {
+public class VenueVO implements Serializable{
 	private String v_no;
 	private String v_name;
 	private String vt_no;
@@ -150,6 +151,13 @@ public class VenueVO {
 		} else if (!v_name.equals(other.v_name))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "VenueVO [v_no=" + v_no + ", v_name=" + v_name + ", vt_no=" + vt_no + ", reg_no=" + reg_no + ", v_lat="
+				+ v_lat + ", v_long=" + v_long + ", v_pic=" + v_pic + ", v_address=" + v_address + ", v_phoneno="
+				+ v_phoneno + ", v_status=" + v_status + ", v_func=" + v_func + "]";
 	}
 	
 	
