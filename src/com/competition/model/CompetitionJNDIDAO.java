@@ -13,7 +13,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class CompetitionDAO implements CompetitionDAO_interface{
+public class CompetitionJNDIDAO implements CompetitionDAO_interface{
 	
 	private static DataSource ds = null;
 	static {
