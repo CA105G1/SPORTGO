@@ -13,13 +13,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.venue.model.VenueDAO_interface;
-
 /**
  * Servlet implementation class VenueT
  */
-@WebServlet("/RegS")
-public class TestRegServlet extends HttpServlet {
+@WebServlet("/VenueT123465")
+public class ____________TestRegServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 

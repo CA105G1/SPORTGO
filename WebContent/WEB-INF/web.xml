@@ -69,4 +69,14 @@
   	<url-pattern>/clubImg.do</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>VenueServlet</servlet-name>
+    <servlet-class>com.venue.controller.VenueServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>VenueServlet</servlet-name>
+    <url-pattern>/venue/venue.do</url-pattern>
+  </servlet-mapping>
+
+
 </web-app>
