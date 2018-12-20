@@ -78,5 +78,22 @@
     <url-pattern>/venue/venue.do</url-pattern>
   </servlet-mapping>
 
+ <servlet>
+    <servlet-name>Sg_infoServlet</servlet-name>
+    <servlet-class>com.sg_info.controller.Sg_infoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Sg_infoServlet</servlet-name>
+    <url-pattern>/Sg_info/Sg_info.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>Sg_infoImgServlet</servlet-name>
+    <servlet-class>com.sg_info.controller.Sg_infoImgServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Sg_infoImgServlet</servlet-name>
+    <url-pattern>/Sg_info/Sg_infoImg.do</url-pattern>
+  </servlet-mapping>
 
 </web-app>

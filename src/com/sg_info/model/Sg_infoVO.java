@@ -15,7 +15,7 @@ public class Sg_infoVO implements Serializable{
 	private byte[] sg_pic;
 	private String sg_pic_ext;
 	private String sg_per;
-	private String sport_no;
+	private String sp_no;
 	private String venue_no;
 	private Integer sg_maxno;
 	private Integer sg_minno;
@@ -112,12 +112,12 @@ public class Sg_infoVO implements Serializable{
 		this.sg_per = sg_per;
 	}
 
-	public String getSport_no() {
-		return sport_no;
+	public String getSp_no() {
+		return sp_no;
 	}
 
-	public void setSport_no(String sport_no) {
-		this.sport_no = sport_no;
+	public void setSp_no(String sp_no) {
+		this.sp_no = sp_no;
 	}
 
 	public String getVenue_no() {
