@@ -29,7 +29,7 @@ public class Sg_infoServlet extends HttpServlet {
     public Sg_infoServlet() {
         super();
     }
-
+ 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		
