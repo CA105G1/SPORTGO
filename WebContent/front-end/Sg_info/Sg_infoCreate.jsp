@@ -42,12 +42,12 @@
 		<div class="col-xs-12 col-sm-3"></div>
 		<div class="col-xs-12 col-sm-6">
 			<div class="pic"><img src=""></div>
-			<form action="Sg_info.do" method="post" enctype="multipart/form-data">
+			<form action="<%= request.getContextPath()%>/Sg_info/Sg_info.do" method="post" enctype="multipart/form-data">
 				<table class="table table-hover table-striped table-bordered text-center">
-					<caption class="text-center">我是Sg_infoCreate</caption><a href="SgHome.jsp">回到揪團首頁</a>
+					<caption class="text-center">我是Sg_infoCreate</caption><a href="<%= request.getContextPath()%>/front-end/Sg_info/SgHome.jsp">回到揪團首頁</a>
 					<tbody>
 						<tr><td colspan="2" style="flex-direction: column">
-							<div ><img src="" id="showPic"></div>
+							<div ><img src="<%= request.getContextPath()%>/img/no-image.PNG" id="showPic"></div>
 							<input type="file" id="sg_pic" name="sg_pic"><br>
 							</td></tr>
 						<tr><th>團長</th><td><input type="text" name="mem_no" value="M001"></td></tr>

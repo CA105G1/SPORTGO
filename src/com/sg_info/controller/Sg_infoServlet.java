@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -29,7 +30,7 @@ public class Sg_infoServlet extends HttpServlet {
     public Sg_infoServlet() {
         super();
     }
- 
+
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		
@@ -47,31 +48,11 @@ public class Sg_infoServlet extends HttpServlet {
 				
 				//照片檢查
 				byte[] sg_pic = null;
-//				try {
-//System.out.println("insert try");
-//					Part part = req.getPart("sg_pic");
-//System.out.println("part="+part); //有值進不了例外
-//					InputStream in = part.getInputStream();
-//					sg_pic = PicFormat(in);
-//				}catch(Exception e) {
-//System.out.println("innnnnnnnnnnnn");
-//					File file = new File("img/no-image.png");
-//System.out.println(file);
-//					FileInputStream is = new FileInputStream(file);
-//					sg_pic = new byte[is.available()];
-//					is.read(sg_pic);
-//				}
 				Part part = req.getPart("sg_pic");
 				if (getFileNameFromPart(part) != null) {
 					InputStream in = part.getInputStream();
 					sg_pic = new byte[in.available()];
 					in.read(sg_pic);
-				}else {
-					File file = new File("img/no-image.png");
-					FileInputStream is = new FileInputStream(file);
-					sg_pic = new byte[is.available()];
-					is.read(sg_pic);
-					is.close();
 				}
 				
 				
@@ -164,7 +145,7 @@ public class Sg_infoServlet extends HttpServlet {
 				//若有錯誤訊息，將VO跟錯誤訊息回傳
 				if(!errorMsg.isEmpty()) {
 					req.setAttribute("Sg_infoVO", sg_infoVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/Sg_info/Sg_infoCreate.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Sg_info/Sg_infoCreate.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -176,14 +157,14 @@ public class Sg_infoServlet extends HttpServlet {
 						sg_extrainfo, 0.0, 0.0, 0.0, 0.0);
 						
 				req.setAttribute("Sg_infoVO", sg_infoVO);
-				RequestDispatcher dispatcher = req.getRequestDispatcher("/Sg_info/SgTest.jsp");
+				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/Sg_info/SgHome.jsp");
 				dispatcher.forward(req, res);
 				
 				/////////其他錯誤處理/////////
 			}catch(Exception e){
 				errorMsg.add("修改資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/Sg_info/Sg_infoCreate.jsp");
+						.getRequestDispatcher("/front-end/Sg_info/Sg_infoCreate.jsp");
 				failureView.forward(req, res);
 			}
 			
@@ -318,7 +299,7 @@ public class Sg_infoServlet extends HttpServlet {
 				//若有錯誤訊息，將VO跟錯誤訊息回傳
 				if(!errorMsg.isEmpty()) {
 					req.setAttribute("Sg_infoVO", sg_infoVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/Sg_info/Sg_infoGetByPk.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Sg_info/Sg_infoGetByPk.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -327,14 +308,14 @@ public class Sg_infoServlet extends HttpServlet {
 				sg_infoVO = svc.updateSg_info(sg_no, mem_no, sg_name, sg_date, apl_start, apl_end, sg_fee, sg_pic, sg_pic_ext, sg_per, sp_no, venue_no, sg_maxno, sg_minno, sg_ttlapl, sg_extrainfo, loc_start_lat, loc_start_lng, loc_end_lat, loc_end_lng);
 				
 				req.setAttribute("Sg_infoVO", sg_infoVO);
-				RequestDispatcher dispatcher = req.getRequestDispatcher("/Sg_info/Sg_infoGetByPk.jsp");
+				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/Sg_info/Sg_infoGetByPk.jsp");
 				dispatcher.forward(req, res);
 				
 				/////////其他錯誤處理/////////
 			}catch(Exception e){
 				errorMsg.add("修改資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/Sg_info/Sg_infoGetByPk.jsp");
+						.getRequestDispatcher("/front-end/Sg_info/Sg_infoGetByPk.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -349,7 +330,7 @@ public class Sg_infoServlet extends HttpServlet {
 				String sg_no = req.getParameter("sg_no");
 				Sg_infoService svc = new Sg_infoService();
 				svc.deleteSg_info(sg_no);
-				RequestDispatcher dispatcher = req.getRequestDispatcher("/Sg_info/SgTest.jsp");
+				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/Sg_info/SgHome.jsp");
 				dispatcher.forward(req, res);
 			}catch(Exception e) {
 				e.printStackTrace();
@@ -368,7 +349,7 @@ public class Sg_infoServlet extends HttpServlet {
 				Sg_infoVO vo = svc.GetByPK(sg_no);
 				
 				req.setAttribute("Sg_infoVO", vo);
-				RequestDispatcher dispatcher = req.getRequestDispatcher("/Sg_info/Sg_infoGetByPk.jsp");
+				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/Sg_info/Sg_infoGetByPk.jsp");
 				dispatcher.forward(req, res);
 				
 			}catch(Exception e) {

@@ -79,7 +79,7 @@
 				    </div>
 				    <div id="aaa" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="panel1">
 				      <div class="panel-body">
-				        <a href="Sg_infoCreate.jsp">建立揪團</a>
+				        <a href="<%= request.getContextPath()%>/front-end/Sg_info/Sg_infoCreate.jsp">建立揪團</a>
 				      </div>
 				    </div>
 				  </div>
@@ -151,7 +151,7 @@
 						</div>
 					</div>
 				</label>
-					<form method="get" action="Sg_info.do">
+					<form method="get" action="<%= request.getContextPath()%>/Sg_info/Sg_info.do">
 						<input type="hidden" name="sg_no" value="${Sg_infoVO.sg_no}">
 						<input type="hidden" name="action" value="getByPK">
 						<input type="submit" id="${Sg_infoVO.sg_no}"  style="display: none">

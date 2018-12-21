@@ -43,9 +43,9 @@
 		<div class="col-xs-12 col-sm-3"></div>
 		<div class="col-xs-12 col-sm-6">
 			<div class="pic"><img src=""></div>
-			<form action="Sg_info.do" method="post" enctype="multipart/form-data">
+			<form action="<%= request.getContextPath()%>/Sg_info/Sg_info.do" method="post" enctype="multipart/form-data">
 				<table class="table table-hover table-striped table-bordered text-center">
-					<i class="glyphicon glyphicon-circle-arrow-left icon-large brown"></i><a href="SgHome.jsp">回到揪團首頁</a>
+					<i class="glyphicon glyphicon-circle-arrow-left icon-large brown"></i><a href="<%= request.getContextPath()%>/front-end/Sg_info/SgHome.jsp">回到揪團首頁</a>
 					<caption class="text-center">我是Sg_infoGetByPk</caption>
 					<tbody>
 						<tr><td colspan="2">
