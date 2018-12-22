@@ -1,6 +1,6 @@
----SportyGo_ver_0_1_8_create_and_insert_1215------
--------變更地區欄位，場地varchar2長度----
----SportyGo_ver_0_1_8_create_1215------
+---SportyGo_ver_0_1_9rv2_create_and_insert_1222------
+-----------
+---SportyGo_ver_0_1_9rv2_create_1222------
 --------------------------
 ------drop sequence-------
 --------------------------
@@ -156,21 +156,23 @@ CREATE TABLE REGION (
 CREATE TABLE VENUE (
     V_NO        VARCHAR2(7)  PRIMARY KEY, 
     V_NAME      VARCHAR2(60) NOT NULL,
-    VT_NO       VARCHAR2(7),
+    VT_NO       VARCHAR2(7), ----2018-12-18
     REG_NO      NUMBER(5),
     V_LAT       NUMBER(17,14),  ---- 修改欄位 (Number可存浮點數 17長度,小數點14位)
     V_LONG      NUMBER(17,14),  ---- 修改欄位 (Number可存浮點數 17長度,小數點14位)
-    V_PIC       VARCHAR2(500),  ---- New 圖片連結
+    V_LINK       VARCHAR2(500),  ---- New 圖片連結
     V_ADDRESS   VARCHAR2(500),
     V_PHONENO   VARCHAR2(50),
     V_STATUS    VARCHAR2(50),   ---- New 場地狀態
     V_FUNC      VARCHAR2(500),  ---- New 場地功能
-    --V_LINK      VARCHAR2(200),
+    --v_isopenmomday,
+	
+	--V_LINK      VARCHAR2(200),
     --V_OPENDAY   VARCHAR2(7),
     ------暫時刪除欄位openday，link
 
     CONSTRAINT VENUE_VENUETYPE_FK                    ----單字FK放後面
-    FOREIGN KEY(VT_NO) REFERENCES VENUETYPE(VT_NO),
+    FOREIGN KEY(VT_NO) REFERENCES VENUETYPE(VT_NO),  
     CONSTRAINT VENUE_REGION_FK                       ----單字FK放後面
     FOREIGN KEY(REG_NO) REFERENCES REGION(REG_NO)
 );
@@ -209,8 +211,8 @@ CREATE TABLE SG_INFO(
     SG_PIC blob,
     SG_PIC_EXT varchar2(10),
     SG_PER varchar2(10) not null,
-    SPORT_NO varchar2(7) not null,
-    VENUE_NO varchar2(7),
+    SP_NO varchar2(7) not null,
+    V_NO varchar2(7),
     SG_MAXNO number(2,0),
     SG_MINNO number(2,0),
     SG_TTLAPL number(2,0),
@@ -224,8 +226,8 @@ CREATE TABLE SG_INFO(
     
     constraint SG_INFO_PK primary key (SG_NO),
     constraint FK1_SG_INFO_MEM foreign key (MEM_NO) references MEMBERLIST(MEM_NO),
-    constraint FK2_SG_INFO_SPORT foreign key (SPORT_NO) references SPORT(SP_NO),
-    constraint FK3_SG_INFO_VEMUE foreign key (VENUE_NO) references VENUE(V_NO)
+    constraint FK2_SG_INFO_SPORT foreign key (SP_NO) references SPORT(SP_NO),
+    constraint FK3_SG_INFO_VEMUE foreign key (V_NO) references VENUE(V_NO)
 );
 create sequence SG_INFO_SEQ
     start with 1
@@ -704,11 +706,9 @@ CREATE SEQUENCE COMPETITION_SEQ
 COMMIT;
 
 
+---------------
 
---------------------------------------------
-
-
----SportyGo_ver_0_1_7_insert_1213--------
+---SportyGo_ver_0_1_9rv2_insert_1218--------
 ------------01-INSERT--------------------
 ------------MEMBERLIST-------------------
 ---------------------------------20181210
@@ -845,7 +845,7 @@ Insert into REGION values (336, '桃園市', '復興區');
 Insert into REGION values (337, '桃園市', '大園區');
 Insert into REGION values (338, '桃園市', '蘆竹區');
 
-
+commit;
 ------------06-INSERT--------------------
 ------------VENUE------------------------
 ---------------------------------20181210
@@ -1215,6 +1215,12 @@ to_char(sysdate,'yyyymmdd')||'-000001',
 ------------25-INSERT--------------------
 ------------PRODUCTLIKE------------------
 ---------------------------------20181210
+
+
+
+------------26-INSERT--------------------
+------------SHOPPINGCART---Redis---------
+---------------------------------20181209
 
 
 
