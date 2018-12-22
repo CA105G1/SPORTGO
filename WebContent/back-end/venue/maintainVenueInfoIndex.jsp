@@ -115,7 +115,7 @@
 								<div class="label label-warning label-text">
 									<%= request.getAttribute("showDeleteResult")%>
 								</div>
-							<% }%>
+							<% } %>
 						</div>
 					</div>
 

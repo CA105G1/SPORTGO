@@ -5,7 +5,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <% 
 	List<VenueVO> list = (List<VenueVO>)request.getAttribute("myList");
-	pageContext.setAttribute("myList", list);
+	//pageContext.setAttribute("myList", list);
+	//System.out.println("list : "+list);
 %>
 <!DOCTYPE html>
 <html>
@@ -90,8 +91,9 @@
 			<div class="col-sm-4">
 			<br>
 				<form method="post" action="<%=request.getContextPath()%>/venue/venue.do">
-					<input type="hidden" name="action" value="update" />
-					<input type="submit" value="${venueVO.v_no}_update_btn" class="form-control btn-warning"/>
+					<input type="hidden" name="action" value="updateForQuery" />
+					<input type="hidden" name="v_no" value="${venueVO.v_no}" />
+					<input type="submit" value="${venueVO.v_no}_updateForQuery_btn" class="form-control btn-warning"/>
 				</form>
 			</div>
 			<div class="col-sm-4">
