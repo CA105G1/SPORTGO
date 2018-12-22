@@ -11,7 +11,7 @@ public class Sg_infoService {
 	}
 	
 	public Sg_infoVO insertSg_info(String mem_no, String sg_name, Timestamp sg_date, Timestamp apl_start, Timestamp apl_end, 
-			Integer sg_fee, byte[] sg_pic, String sg_pic_ext, String sg_per, String sp_no, String venue_no, 
+			Integer sg_fee, byte[] sg_pic, String sg_pic_ext, String sg_per, String sp_no, String v_no, 
 			Integer sg_maxno, Integer sg_minno, Integer sg_ttlapl, Integer sg_chkno, String sg_extrainfo, Double loc_start_lat, 
 			Double loc_start_lng,Double loc_end_lat, Double loc_end_lng) {
 		
@@ -27,7 +27,7 @@ public class Sg_infoService {
 		vo.setSg_pic_ext(sg_pic_ext);
 		vo.setSg_per(sg_per);
 		vo.setSp_no(sp_no);
-		vo.setVenue_no(venue_no);
+		vo.setV_no(v_no);
 		vo.setSg_maxno(sg_maxno);
 		vo.setSg_minno(sg_minno);
 		vo.setSg_ttlapl(sg_ttlapl);
@@ -46,7 +46,7 @@ public class Sg_infoService {
 	
 	
 	public Sg_infoVO updateSg_info(String sg_no, String mem_no, String sg_name, Timestamp sg_date, Timestamp apl_start, Timestamp apl_end, 
-			Integer sg_fee, byte[] sg_pic, String sg_pic_ext, String sg_per, String sp_no, String venue_no, 
+			Integer sg_fee, byte[] sg_pic, String sg_pic_ext, String sg_per, String sp_no, String v_no, 
 			Integer sg_maxno, Integer sg_minno, Integer sg_ttlapl, String sg_extrainfo, Double loc_start_lat, 
 			Double loc_start_lng,Double loc_end_lat, Double loc_end_lng) {
 		
@@ -63,7 +63,7 @@ public class Sg_infoService {
 		vo.setSg_pic_ext(sg_pic_ext);
 		vo.setSg_per(sg_per);
 		vo.setSp_no(sp_no);
-		vo.setVenue_no(venue_no);
+		vo.setV_no(v_no);
 		vo.setSg_maxno(sg_maxno);
 		vo.setSg_minno(sg_minno);
 		vo.setSg_ttlapl(sg_ttlapl);

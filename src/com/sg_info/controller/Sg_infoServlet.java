@@ -1,6 +1,8 @@
+//代辦事項
+//日期格式轉換
+
 package com.sg_info.controller;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -34,9 +36,7 @@ public class Sg_infoServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		
-		
 		String action = req.getParameter("action");
-		
 		
 		
 		if("insert".equals(action)) {
@@ -53,6 +53,11 @@ public class Sg_infoServlet extends HttpServlet {
 					InputStream in = part.getInputStream();
 					sg_pic = new byte[in.available()];
 					in.read(sg_pic);
+				}else {
+					InputStream is = getServletContext().getResourceAsStream("/img/no-image.PNG");
+					sg_pic = new byte[is.available()];
+					is.read(sg_pic);
+					is.close();
 				}
 				
 				
@@ -122,7 +127,7 @@ public class Sg_infoServlet extends HttpServlet {
 				String mem_no = req.getParameter("mem_no").trim();
 				String sg_per = req.getParameter("sg_per").trim();
 				String sp_no = req.getParameter("sp_no").trim();
-				String venue_no = req.getParameter("venue_no").trim();
+				String v_no = req.getParameter("v_no").trim();
 				String sg_extrainfo = req.getParameter("sg_extrainfo").trim();
 				
 				
@@ -137,7 +142,7 @@ public class Sg_infoServlet extends HttpServlet {
 				sg_infoVO.setSg_fee(sg_fee);
 				sg_infoVO.setSg_per(sg_per);
 				sg_infoVO.setSp_no(sp_no);
-				sg_infoVO.setVenue_no(venue_no);
+				sg_infoVO.setV_no(v_no);
 				sg_infoVO.setSg_maxno(sg_maxno);
 				sg_infoVO.setSg_minno(sg_minno);
 				sg_infoVO.setSg_extrainfo(sg_extrainfo);
@@ -153,7 +158,7 @@ public class Sg_infoServlet extends HttpServlet {
 				///////////////////開始INSERT資料//////////////////////////
 				Sg_infoService svc = new Sg_infoService();
 				sg_infoVO = svc.insertSg_info(mem_no, sg_name, sg_date, apl_start, apl_end, sg_fee, sg_pic, 
-						null, sg_per, sp_no, venue_no, sg_maxno, sg_minno, -1, -1, 
+						null, sg_per, sp_no, v_no, sg_maxno, sg_minno, -1, -1, 
 						sg_extrainfo, 0.0, 0.0, 0.0, 0.0);
 						
 				req.setAttribute("Sg_infoVO", sg_infoVO);
@@ -264,7 +269,7 @@ public class Sg_infoServlet extends HttpServlet {
 				String sg_pic_ext = req.getParameter("sg_pic_ext").trim();
 				String sg_per = req.getParameter("sg_per").trim();
 				String sp_no = req.getParameter("sp_no").trim();
-				String venue_no = req.getParameter("venue_no").trim();
+				String v_no = req.getParameter("v_no").trim();
 				Integer sg_ttlapl = new Integer(req.getParameter("sg_ttlapl").trim());
 				String sg_extrainfo = req.getParameter("sg_info4").trim();
 				Double loc_start_lat = new Double(req.getParameter("sg_info5").trim());
@@ -286,7 +291,7 @@ public class Sg_infoServlet extends HttpServlet {
 				sg_infoVO.setSg_pic_ext(sg_pic_ext);
 				sg_infoVO.setSg_per(sg_per);
 				sg_infoVO.setSp_no(sp_no);
-				sg_infoVO.setVenue_no(venue_no);
+				sg_infoVO.setV_no(v_no);
 				sg_infoVO.setSg_maxno(sg_maxno);
 				sg_infoVO.setSg_minno(sg_minno);
 				sg_infoVO.setSg_ttlapl(sg_ttlapl);
@@ -305,7 +310,7 @@ public class Sg_infoServlet extends HttpServlet {
 				}
 				
 				///////////////////開始UPDATE資料//////////////////////////
-				sg_infoVO = svc.updateSg_info(sg_no, mem_no, sg_name, sg_date, apl_start, apl_end, sg_fee, sg_pic, sg_pic_ext, sg_per, sp_no, venue_no, sg_maxno, sg_minno, sg_ttlapl, sg_extrainfo, loc_start_lat, loc_start_lng, loc_end_lat, loc_end_lng);
+				sg_infoVO = svc.updateSg_info(sg_no, mem_no, sg_name, sg_date, apl_start, apl_end, sg_fee, sg_pic, sg_pic_ext, sg_per, sp_no, v_no, sg_maxno, sg_minno, sg_ttlapl, sg_extrainfo, loc_start_lat, loc_start_lng, loc_end_lat, loc_end_lng);
 				
 				req.setAttribute("Sg_infoVO", sg_infoVO);
 				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/Sg_info/Sg_infoGetByPk.jsp");
@@ -358,19 +363,6 @@ public class Sg_infoServlet extends HttpServlet {
 		}
 		
 		
-		if("getAll".equals(action)) {
-			try {
-				Sg_infoService svc = new Sg_infoService();
-				svc.getAll();
-			}catch(Exception e){
-				e.printStackTrace();
-			}
-		}
-		
-		
-		
-		
-		
 		
 		
 		
@@ -381,32 +373,32 @@ public class Sg_infoServlet extends HttpServlet {
 	}
 	
 	
-	public byte[] PicFormat(InputStream in) {
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		byte[] buffer = new byte[8192];
-		int i;
-		try {
-			while((i = in.read(buffer)) != -1) {
-				baos.write(buffer, 0, i);
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
-			try {
-				baos.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		return baos.toByteArray();
-	}
+//	public byte[] PicFormat(InputStream in) {
+//		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//		byte[] buffer = new byte[8192];
+//		int i;
+//		try {
+//			while((i = in.read(buffer)) != -1) {
+//				baos.write(buffer, 0, i);
+//			}
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}finally {
+//			try {
+//				baos.close();
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
+//		return baos.toByteArray();
+//	}
 	public String getFileNameFromPart(Part part) {
 		String header = part.getHeader("content-disposition");
-		System.out.println("header=" + header); // 測試用
+//		System.out.println("header=" + header); // 測試用
 		String filename = new File(header.substring(header.lastIndexOf("=") + 2, header.length() - 1)).getName();
-		System.out.println("filename=" + filename); // 測試用
+//		System.out.println("filename=" + filename); // 測試用
 		if (filename.length() == 0) {
 			return null;
 		}

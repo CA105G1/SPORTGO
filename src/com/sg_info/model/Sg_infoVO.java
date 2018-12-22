@@ -16,7 +16,7 @@ public class Sg_infoVO implements Serializable{
 	private String sg_pic_ext;
 	private String sg_per;
 	private String sp_no;
-	private String venue_no;
+	private String v_no;
 	private Integer sg_maxno;
 	private Integer sg_minno;
 	private Integer sg_ttlapl;
@@ -120,12 +120,12 @@ public class Sg_infoVO implements Serializable{
 		this.sp_no = sp_no;
 	}
 
-	public String getVenue_no() {
-		return venue_no;
+	public String getV_no() {
+		return v_no;
 	}
 
-	public void setVenue_no(String venue_no) {
-		this.venue_no = venue_no;
+	public void setV_no(String v_no) {
+		this.v_no = v_no;
 	}
 
 	public Integer getSg_maxno() {

@@ -1,9 +1,12 @@
+<!-- 代辦事項 -->
+<!-- 按鍵功能無效 -->
+
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="com.sg_info.model.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <html>
 <head>
 <title>Sg_infoGetByPk</title>
@@ -15,9 +18,20 @@
 <script src="<%= request.getContextPath()%>/datetimepicker/jquery.js"></script>
 <script src="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
 
+
 <style type="text/css">
 	th{
 		text-align:center;
+	}
+	.backToList{
+		cursor: pointer;
+	}
+	.backToList:active {
+	  	transform: translateY(1px);
+	}
+	#map {
+		height: 400px;  /* The height is 400 pixels */
+		width: 100%;  /* The width is the width of the web page */
 	}
 </style>
 
@@ -45,40 +59,109 @@
 			<div class="pic"><img src=""></div>
 			<form action="<%= request.getContextPath()%>/Sg_info/Sg_info.do" method="post" enctype="multipart/form-data">
 				<table class="table table-hover table-striped table-bordered text-center">
-					<i class="glyphicon glyphicon-circle-arrow-left icon-large brown"></i><a href="<%= request.getContextPath()%>/front-end/Sg_info/SgHome.jsp">回到揪團首頁</a>
+					<i class="glyphicon glyphicon-circle-arrow-left icon-large brown backToList"></i>  <!-- 返回按鍵 -->
+					<a href="<%= request.getContextPath()%>/front-end/Sg_info/SgHome.jsp" display="none" id="linkBack">回到揪團首頁</a>
+					
 					<caption class="text-center">我是Sg_infoGetByPk</caption>
 					<tbody>
-						<tr><td colspan="2">
-							<img id="showPic" class="img-responsive" src="<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${Sg_infoVO.sg_no}">
-							<div class="uploadPic"></div><br></td></tr>
-						<tr><th>揪團編號</th><td><%= vo.getSg_no() %></td></tr>
-						<tr><th>團長</th><td><%= vo.getMem_no() %></td></tr>
-						<tr><th>團名</th><td class="writable"><%= vo.getSg_name() %></td></tr>  <!-- sg_info0 -->
-						<tr><th>活動時間</th><td id="sg_date"><fmt:formatDate value="${Sg_infoVO.sg_date}" pattern="yyyy-MM-dd HH:mm"/></td></tr>
-						<tr><th>報名開始日期</th><td id="apl_start"><fmt:formatDate value="${Sg_infoVO.apl_start}" pattern="yyyy-MM-dd"/></td></tr>
-						<tr><th>報名截止日期</th><td id="apl_end"><fmt:formatDate value="${Sg_infoVO.apl_end}" pattern="yyyy-MM-dd"/></td></tr>
-						<tr><th>報名費用</th><td class="writable"><%= vo.getSg_fee() %></td></tr> <!-- sg_info1 -->
-						<tr><th>權限</th><td id="sg_per"><%= vo.getSg_per() %></td></tr>  <!-- 下拉選單 -->
-						<tr><th>運動種類</th><td id="sp_no"><%= vo.getSp_no() %></td></tr> <!-- 下拉選單 -->
-						<tr><th>場地名稱</th><td ><%= vo.getVenue_no() %></td></tr> <!-- 下拉選單 -->
-						<tr><th>人數上限</th><td class="writable"><%= vo.getSg_maxno() %></td></tr> <!-- sg_info2 -->
-						<tr><th>人數下限</th><td class="writable"><%= vo.getSg_minno() %></td></tr> <!-- sg_info3 -->
-						<tr><th>-報名總人數</th><td><%= vo.getSg_ttlapl() %></td></tr> <!-- 之後動態增加 -->
-						<tr><th>-額外資訊</th><td class="writable"><%= vo.getSg_extrainfo() %></td></tr>  <!-- sg_info4 -->
+						<tr>  <!-------- 照片 -------->
+							<td colspan="2">
+								<img id="showPic" class="img-responsive" src="<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${Sg_infoVO.sg_no}">
+								<div class="uploadPic"></div><br>
+							</td>
+						</tr>
+						<tr>
+							<th>揪團編號</th>
+							<td><%= vo.getSg_no() %></td>
+						</tr>
+						<tr>
+							<th>團長</th>
+							<td><%= vo.getMem_no() %></td>
+						</tr>
+						<tr>
+							<th>團名</th>
+							<td class="writable"><%= vo.getSg_name() %></td>  <!-- sg_info0 -->
+						</tr>  
+						<tr>
+							<th>活動時間</th>
+							<td id="sg_date">
+								<fmt:formatDate value="${Sg_infoVO.sg_date}" pattern="yyyy-MM-dd HH:mm"/>
+							</td>
+						</tr>
+						<tr>
+							<th>報名開始日期</th>
+							<td id="apl_start">
+								<fmt:formatDate value="${Sg_infoVO.apl_start}" pattern="yyyy-MM-dd"/>
+							</td>
+						</tr>
+						<tr>
+							<th>報名截止日期</th>
+							<td id="apl_end">
+								<fmt:formatDate value="${Sg_infoVO.apl_end}" pattern="yyyy-MM-dd"/>
+							</td>
+						</tr>
+						<tr>
+							<th>報名費用</th>
+							<td class="writable"><%= vo.getSg_fee() %></td> <!-- sg_info1 -->
+						</tr> 
+						<tr>
+							<th>權限</th>
+							<td id="sg_per"><%= vo.getSg_per() %></td> <!-- 下拉選單 -->
+						</tr>  
+						<tr>
+							<th>運動種類</th>
+							<td id="sp_no"><%= vo.getSp_no() %></td> <!-- 下拉選單 -->
+						</tr> 
+						<tr>
+							<th>場地名稱</th>
+							<td ><%= vo.getV_no() %></td> <!-- 下拉選單 -->
+						</tr> 
+						<tr>
+							<th>人數上限</th>
+							<td class="writable"><%= vo.getSg_maxno() %></td>  <!-- sg_info2 -->
+						</tr> 
+						<tr>
+							<th>人數下限</th>
+							<td class="writable"><%= vo.getSg_minno() %></td> <!-- sg_info3 -->
+						</tr> 
+						<tr>
+							<th>目前報名人數</th>
+							<td><%= vo.getSg_ttlapl() %></td> <!-- 之後動態增加 -->
+						</tr> 
+						<tr>
+							<th>團長的話</th>
+							<td class="writable"><%= vo.getSg_extrainfo() %></td> <!-- sg_info4 -->
+						</tr>  
 						<tr><th>-路線起點經度</th><td class="writable"><%= vo.getLoc_start_lat() %></td></tr> <!-- sg_info5 -->
 						<tr><th>-路線起點緯度</th><td class="writable"><%= vo.getLoc_start_lng() %></td></tr> <!-- sg_info6 -->
 						<tr><th>-路線終點經度</th><td class="writable"><%= vo.getLoc_end_lat() %></td></tr> <!-- sg_info7 -->
 						<tr><th>-路線終點緯度</th><td class="writable"><%= vo.getLoc_end_lng() %></td></tr> <!-- sg_info8 -->
 					</tbody>
 				</table>
-					<input type="button" id="update" value="編輯" class="btn btn-info btn-block" align="center" style="display: ">
-					<input type="submit" id="done" value="完成" class="btn btn-info btn-block" align="center" style="display: none">
+				<!-------------GOOGLE地圖 -------------->
+				<div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="panel1">
+							<h4 class="panel-title text-center">
+								<a href="#aaa" data-parent="#accordion2" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="aaa">
+								顯示地圖
+								</a>
+							</h4>
+						</div>
+						<div id="aaa" class="panel-collapse collapse" role="tabpanel" aria-labelledby="panel1">
+								<div id="map"></div>
+						</div>
+					</div>
+				</div>
 				
+				
+				<input type="button" id="update" value="編輯" class="btn btn-info btn-block" align="center" style="display: ">
+				<input type="submit" id="done" value="完成" class="btn btn-info btn-block" align="center" style="display: none">
 				
 				<input type="hidden" name="sg_no" value="<%= vo.getSg_no()%>" >
 				<input type="hidden" name="mem_no" value="<%= vo.getMem_no()%>" >
 				<input type="hidden" name="sg_pic_ext" value="<%= vo.getSg_pic_ext()%>" >
-				<input type="hidden" name="venue_no" value="<%= vo.getVenue_no()%>" >
+				<input type="hidden" name="v_no" value="<%= vo.getV_no()%>" >
 				<input type="hidden" name="sg_ttlapl" value="<%= vo.getSg_ttlapl()%>" >
 				<input type="hidden" name="action" value="update">
 			</form>
@@ -94,7 +177,8 @@
 
 
 <script type="text/javascript">
-	$(document).ready(function(){
+		
+		
 	  $("#update").click(function(){
 		//編輯照片
 		$(".uploadPic").html(function(index, content){
@@ -218,17 +302,36 @@
 	  });
 	
 	  
+	//google map設定
+	var map;
+	function initMap(){
+		navigator.geolocation.getCurrentPosition(myLoc);
+	}
+	function myLoc(pos){
+	
+		var loc = {lat: pos.coords.latitude, lng: pos.coords.longitude};
+	
+		map = new google.maps.Map(document.getElementById('map'), {
+			center: loc,
+			zoom: 16
+		});
+		
+		var marker = new google.maps.Marker({
+			position: loc,
+			map: map,
+			animation: google.maps.Animation.DROP,
+			draggable: true
+		});
+	}
 	  
-	  
-	  
-	});  //document.ready
 	
 	
 	
 	
 
 </script>
-
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAb2lDof7yMn-TTXwt2hwVm4y92t1AqvyU&callback=initMap&libraries=places"
+        async defer></script>
 
 
 
