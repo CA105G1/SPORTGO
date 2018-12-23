@@ -259,6 +259,7 @@
    	   	var directionsService;
    	    var directionsDisplay;
    		var loc = {lat: pos.coords.latitude, lng: pos.coords.longitude};
+console.log(pos)
    	
    		map = new google.maps.Map(document.getElementById('map'), {
    			center: loc,
@@ -293,6 +294,7 @@
                 if(status == 'OK'){
                     var loc = results[0].geometry.location;
                     map.setCenter(loc);
+console.log(results);
                     var markerRoute = new google.maps.Marker({
                         position: loc,
                         map: map
