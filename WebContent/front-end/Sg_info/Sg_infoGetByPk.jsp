@@ -170,6 +170,34 @@
 				<input type="hidden" name="action" value="delete">
 				<input type="hidden" name="sg_no" value="<%= vo.getSg_no()%>">
 			</form>
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-12 col-sm-3">
+						<div class="btn" id="likebtn">
+							<img src="<%= request.getContextPath()%>/img/love.png" id="like" style="display:none">
+							<img src="<%= request.getContextPath()%>/img/love_white.png" id="dislike" style="display:">
+							加入收藏
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						<div class="btn" >
+							<img src="<%= request.getContextPath()%>/img/add.png">
+							加入揪團
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						<img src="<%= request.getContextPath()%>/img/share.png">
+						分享給好友
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						<div class="btn">
+							<img src="<%= request.getContextPath()%>/img/warning.png">
+							檢舉
+						</div>
+					</div>
+				</div>
+			</div>
+			
 		</div>
 		<div class="col-xs-12 col-sm-3"></div>
 	</div>
@@ -266,8 +294,8 @@
              }});
 	    
 	    
-	    $("#update").attr("style","display:none");
-	    $("#done").attr("style","");
+	    $("#update").css("display","none");
+	    $("#done").css("display","");
 	    
 	    
 	    
@@ -300,6 +328,32 @@
 		    
 		  }
 	  });
+	  
+	  
+	  //點擊收藏按鍵
+	  var like = false;
+	  $("#likebtn").click(function(){
+		  if(like){
+			 $("#dislike").css("display","");
+			 $("#like").css("display","none");
+			 like = false;
+		  }else{
+			 $("#like").css("display","");
+			 $("#dislike").css("display","none");
+			 like = true;
+		  }
+	  });
+	  
+	  
+	  
+	  $("#like").click(function(){
+		 $("#dislike").css("display","");
+		 $("#like").css("display","none");
+	  });
+	  $("#dislike").click(function(){
+			 $("#like").css("display","");
+			 $("#dislike").css("display","none");
+		  });
 	
 	  
 	//google map設定

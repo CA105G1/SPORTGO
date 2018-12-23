@@ -134,7 +134,7 @@
 						      			</tr>
 				      				<!-------- 地區查詢 --------->
 						      			<tr>
-						      				<th>場地名稱</th>
+						      				<th>地區</th>
 						      				<th>
 						      					<select size="1" name="reg_noSearch" class="text-center">
 						      						<option value="null">請選擇地區

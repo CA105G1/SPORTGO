@@ -373,27 +373,7 @@ public class Sg_infoServlet extends HttpServlet {
 	}
 	
 	
-//	public byte[] PicFormat(InputStream in) {
-//		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//		byte[] buffer = new byte[8192];
-//		int i;
-//		try {
-//			while((i = in.read(buffer)) != -1) {
-//				baos.write(buffer, 0, i);
-//			}
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}finally {
-//			try {
-//				baos.close();
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
-//		return baos.toByteArray();
-//	}
+	//得到上傳檔案的名稱
 	public String getFileNameFromPart(Part part) {
 		String header = part.getHeader("content-disposition");
 //		System.out.println("header=" + header); // 測試用
