@@ -5,20 +5,12 @@ import java.util.List;
 
 import com.region.model.RegVO;
 
+import oracle.net.aso.e;
+
 import java.sql.*;
 
 
 public class RegJDBCDAO implements RegDAO_interface{
-	
-//	private static DataSource ds = null;
-//	static {
-//		try {
-//			Context ctx = new InitialContext();
-//			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB");
-//		} catch (NamingException e) {
-//			e.printStackTrace();
-//		}
-//	}
 	
 	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
 	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
@@ -29,7 +21,7 @@ public class RegJDBCDAO implements RegDAO_interface{
 		try {
 			Class.forName(DRIVER);
 		} catch (ClassNotFoundException ce) {
-			ce.printStackTrace();
+			throw new RuntimeException("ClassNotFoundException ce :　"+ce.getMessage());
 		}
 	}
 	
@@ -276,4 +268,20 @@ public class RegJDBCDAO implements RegDAO_interface{
 		}
 		return list;
 	}
+
+	public static void main(String[] args) {
+		
+//		RegJDBCDAO regJDBCDAO = new RegJDBCDAO();
+//		RegVO regVO = new RegVO();
+//		regVO.setReg_no(999);
+//		regVO.setReg_name("Test_name");
+//		regVO.setReg_dist("test_dist");
+//		regJDBCDAO.insert(regVO);
+		
+		
+		
+		
+		
+	}
+
 }

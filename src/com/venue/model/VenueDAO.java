@@ -1,30 +1,25 @@
 package com.venue.model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.management.RuntimeErrorException;
+import javax.sql.DataSource;
+import javax.naming.Context;
+import javax.naming.NamingException;
 
-import org.apache.tomcat.dbcp.dbcp2.PStmtKey;
-import org.eclipse.jdt.internal.compiler.env.IUpdatableModule.UpdateKind;
-
-
-public class VenueJDBCDAO implements VenueDAO_interface {
+public class VenueDAO implements VenueDAO_interface{
 	
-	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
-	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
-	private static final String USER = "CA105G1";
-	private static final String PASSWORD = "123456";
+	private static DataSource ds = null;
 	
 	static {
 		try {
-			Class.forName(DRIVER);
-		} catch (ClassNotFoundException e) {
+			Context context = new javax.naming.InitialContext();
+			ds = (DataSource)context.lookup(com.util.lang.Util.JNDI_DATABASE_NAME);
+		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
@@ -54,7 +49,7 @@ public class VenueJDBCDAO implements VenueDAO_interface {
 
 		try {
 
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT);
 
 			pstmt.setString(1, venueVO.getV_name());
@@ -72,8 +67,7 @@ public class VenueJDBCDAO implements VenueDAO_interface {
 
 			// Handle any SQL errors
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
@@ -100,7 +94,7 @@ public class VenueJDBCDAO implements VenueDAO_interface {
 		PreparedStatement pstmt = null;
 		try {
 			
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 			
 			pstmt.setString(1, venueVO.getV_name());
@@ -118,14 +112,13 @@ public class VenueJDBCDAO implements VenueDAO_interface {
 			pstmt.executeUpdate();
 			
 		}catch(SQLException e) {
-			throw new RuntimeException("A database error occured. "
-					+ e.getMessage());
+			throw new RuntimeException("A database error occured. "	+ e.getMessage());
 		}finally {
 			if(pstmt!=null) {
 				try {
 					pstmt.close();
 				}catch(SQLException e) {
-					e.printStackTrace();
+					e.printStackTrace(System.err);
 				}
 			}
 			
@@ -133,7 +126,7 @@ public class VenueJDBCDAO implements VenueDAO_interface {
 				try {
 					con.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					e.printStackTrace(System.err);
 				}
 			}
 		}
@@ -149,7 +142,7 @@ public class VenueJDBCDAO implements VenueDAO_interface {
 
 		try {
 
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(DELETE);
 
 			pstmt.setString(1, v_no);
@@ -158,8 +151,7 @@ public class VenueJDBCDAO implements VenueDAO_interface {
 
 			// Handle any SQL errors
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
@@ -189,7 +181,7 @@ public class VenueJDBCDAO implements VenueDAO_interface {
 
 		try {
 
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
 			pstmt.setString(1, v_no);
@@ -199,7 +191,7 @@ public class VenueJDBCDAO implements VenueDAO_interface {
 			while (rs.next()) {
 				// vtVo 也稱為 Domain objects
 				venueVO = new VenueVO();
-				venueVO.setV_no(rs.getString("vt_no"));
+				venueVO.setV_no(rs.getString("v_no"));
 				venueVO.setV_name(rs.getString("v_name"));
 				venueVO.setVt_no(rs.getString("vt_no"));
 				venueVO.setReg_no(rs.getInt("reg_no"));
@@ -214,8 +206,7 @@ public class VenueJDBCDAO implements VenueDAO_interface {
 
 			// Handle any driver errors
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. "	+ se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
@@ -254,15 +245,15 @@ public class VenueJDBCDAO implements VenueDAO_interface {
 		ResultSet rs = null;
 
 		try {
-
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				// vtVo 也稱為 Domain objects
 				venueVO = new VenueVO();
-				venueVO.setV_no(rs.getString("vt_no"));
+				venueVO.setV_no(rs.getString("v_no"));
 				venueVO.setV_name(rs.getString("v_name"));
 				venueVO.setVt_no(rs.getString("vt_no"));
 				venueVO.setReg_no(rs.getInt("reg_no"));
@@ -273,12 +264,12 @@ public class VenueJDBCDAO implements VenueDAO_interface {
 				venueVO.setV_phoneno(rs.getString("v_phoneno"));
 				venueVO.setV_status(rs.getString("v_status"));
 				venueVO.setV_func(rs.getString("v_func"));
+				list.add(venueVO);
 			}
 
 			// Handle any driver errors
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. "	+ se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
@@ -306,15 +297,6 @@ public class VenueJDBCDAO implements VenueDAO_interface {
 		return list;
 	}
 	
-	public static void main(String[] args) {
-		
-		VenueDAO_interface vi = new VenueJDBCDAO();
-		
-		VenueVO vo = vi.findByPrimaryKey("V000003");
-		
-		System.out.println(vo.getV_name() + vo.getV_address());
-		
-	}
-	
 	
 }
+

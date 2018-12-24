@@ -1,4 +1,4 @@
-package com.venue.model;
+package com.scheduler.venue;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,6 +17,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.venue.model.VenueDAO_interface;
+import com.venue.model.VenueJDBCDAO;
+import com.venue.model.VenueVO;
 import com.venuetype.model.VenueTypeDAO_interface;
 import com.venuetype.model.VenueTypeJDBCDAO;
 import com.venuetype.model.VenueTypeVO;
@@ -39,7 +42,9 @@ public class GetVenueData {
 
 				findVenue(vt_no, vt_name);
 				
-			} catch (IOException | JSONException e) {
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 		}
@@ -47,11 +52,13 @@ public class GetVenueData {
 	
 	
 	private static int count = 0;
-		
+	
+	
 	public static void findVenue(String vt_no, String vt_name) throws IOException, JSONException {
 		
-		
-		String myUrl = "https://iplay.sa.gov.tw/api/GymSearchAllList?$format=application/json;odata.metadata=none&City=桃園市&Country=中壢區&GymType=" + vt_name;
+		String myUrl = "https://iplay.sa.gov.tw/api/GymSearchAllList?"
+				+ "$format=application/json;odata.metadata=none&"
+				+ "City=桃園市&Country=中壢區&GymType=" + vt_name;
 		
 		URL url = new URL(myUrl);
 		HttpURLConnection con = (HttpURLConnection)url.openConnection();
@@ -112,19 +119,15 @@ public class GetVenueData {
 			System.out.println("=========================");
 			
 //			veSet.add(vo);
-			
-			vi.insert(vo);
-			
+			try {
+				vi.insert(vo);
+			}catch (RuntimeException e) {
+			}
 			++count;
 			
 		}
 		
 		System.out.println("共 "+ count + " 筆");
 		
-//		for (VenueVO vevo: veSet) {
-//			
-//		}
-//		
-//		System.out.println(veSet.size());
 	}
 }

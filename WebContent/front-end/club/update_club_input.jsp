@@ -78,7 +78,7 @@
 	</tr>
 	<tr>
 		<td>照片:</td>
-		<td><input type="TEXT" name="photo" size="45"	value="<%=clubVO.getPhoto()%>" /></td>
+		<td><input type="FILE" name="photo" size="45"	value="<%=clubVO.getPhoto()%>" /></td>
 	</tr>
 	<tr>
 		<td>照片副檔名:</td>
@@ -92,6 +92,12 @@
 		<td>社團名稱:</td>
 		<td><input type="TEXT" name="club_name" size="45" value="<%=clubVO.getClub_name()%>" /></td>
 	</tr>
+	
+	<tr>
+		<td>社團簡介:</td>
+		<td><input type="TEXT" name="club_intro" size="45" value="<%=clubVO.getClub_intro()%>" /></td>
+	</tr>
+	
 </table>
 <br>
 <input type="hidden" name="action" value="update">

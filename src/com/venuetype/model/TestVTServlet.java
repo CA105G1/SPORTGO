@@ -12,7 +12,7 @@ import com.venue.model.VenueDAO_interface;
 /**
  * Servlet implementation class VenueT
  */
-@WebServlet("/VenueT111")
+@WebServlet("/VenueT111111")
 public class TestVTServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
