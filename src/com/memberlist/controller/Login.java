@@ -83,6 +83,16 @@ public class Login extends HttpServlet {
 				error.forward(req, res);
 			}else {
 				session.setAttribute("MemberlistVO", service.getOneMem(mem_no));
+				try{
+					String location = (String) session.getAttribute("location");
+					if(location!=null) {
+						session.removeAttribute("location");
+						res.sendRedirect(location);
+						return;
+					}
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
 				res.sendRedirect("Member_page.jsp");
 			}
 		}
