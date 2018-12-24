@@ -153,14 +153,20 @@
 				</table>
 				
 				<!-------------GOOGLE地圖 -------------->
-				<input type="text" name="addr" id="addr">
-		        <input type="button" name="search" value="查詢" id="btnSubmit">
-		        <input type="button" name="road" id="road" value="GO">
+				<div>
+					起點：<input type="text" name="startAddr" id="startAddr">
+			        <input type="button" name="startSearchBtn" value="查詢" id="startSearchBtn">
+					終點：<input type="text" name="endAddr" id="endAddr">
+			        <input type="button" name="endSearchBtn" value="查詢" id="endSearchBtn">
+				</div>
+				<div>
+			        <input type="button" name="road" id="road" value="規劃路線">
+				</div>
 				<div id="map"></div>
 				
 				<input type="submit" value="送出" class="btn btn-success btn-block">
 				<input type="hidden" name="action"value="insert">
-				
+<input type="hidden" name="test" id="test">
 			</form>
 		</div>
 		<div class="col-xs-12 col-sm-3"></div>
@@ -259,7 +265,6 @@
    	   	var directionsService;
    	    var directionsDisplay;
    		var loc = {lat: pos.coords.latitude, lng: pos.coords.longitude};
-console.log(pos)
    	
    		map = new google.maps.Map(document.getElementById('map'), {
    			center: loc,
@@ -277,37 +282,52 @@ console.log(pos)
         var endloc
         // 地圖查詢定位 Geocoding API
         var geocoder = new google.maps.Geocoder();
-        var btnSubmit = document.getElementById("btnSubmit");
-        var locSearch = true;
+        var startSearchBtn = document.getElementById("startSearchBtn");
+        var endSearchBtn = document.getElementById("endSearchBtn");
 
-        btnSubmit.addEventListener("click", function(){
-            var addr = document.getElementById("addr").value;
+        startSearchBtn.addEventListener("click", function(){
+            var startAddr = document.getElementById("startAddr").value;
             // console.log(addr);
             //若重新設定起點則重置地圖
-            if(locSearch){
-            	map = new google.maps.Map(document.getElementById('map'), {
-           			center: loc,
-           			zoom: 16
-           		});
-            }
-            geocoder.geocode({'address': addr}, function(results, status){
+        	map = new google.maps.Map(document.getElementById('map'), {
+       			center: loc,
+       			zoom: 16
+       		});
+            geocoder.geocode({'address': startAddr}, function(results, status){
                 if(status == 'OK'){
                     var loc = results[0].geometry.location;
                     map.setCenter(loc);
-console.log(results);
+console.log(loc);
                     var markerRoute = new google.maps.Marker({
                         position: loc,
                         map: map
                     });
-                    if(locSearch){
-                        startloc = loc;
-                        $("#addr").val("");
-                        locSearch = false;
-                    }else{
-                        endloc = loc;
-                        $("#addr").val("");
-                        locSearch = true;
-                    }
+startloc = loc;
+$("#test").val(loc);
+                }else{
+                    console.log(status);
+                }
+            });
+        }, false);
+        
+        endSearchBtn.addEventListener("click", function(){
+            var endAddr = document.getElementById("endAddr").value;
+            // console.log(addr);
+            //若重新設定起點則重置地圖
+        	map = new google.maps.Map(document.getElementById('map'), {
+       			center: loc,
+       			zoom: 16
+       		});
+            geocoder.geocode({'address': endAddr}, function(results, status){
+                if(status == 'OK'){
+                    var loc = results[0].geometry.location;
+                    map.setCenter(loc);
+console.log(loc);
+                    var markerRoute = new google.maps.Marker({
+                        position: loc,
+                        map: map
+                    });
+                    endloc = loc;
                 }else{
                     console.log(status);
                 }

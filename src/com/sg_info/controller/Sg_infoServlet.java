@@ -37,7 +37,8 @@ public class Sg_infoServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		
 		String action = req.getParameter("action");
-		
+String test = req.getParameter("test");
+System.out.println("LOC="+test);
 		
 		if("insert".equals(action)) {
 			List<String> errorMsg = new LinkedList<String>();
