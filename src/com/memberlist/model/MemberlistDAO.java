@@ -32,13 +32,15 @@ public class MemberlistDAO implements MemberlistDAO_interface{
 	private static final String UPDATE_PASSWORD = 
 			"UPDATE MEMBERLIST SET MEM_PSWD = ? WHERE MEM_NO = ?";
 	private static final String UPDATE_PICTURE =
-			"UPDATE MEMBERLIST SET MEM_PIC, MEM_PICKIND WHERE MEM_NO = ?";
+			"UPDATE MEMBERLIST SET MEM_PIC=?, MEM_PICKIND=? WHERE MEM_NO = ?";
 	private static final String UPDATE_CRADITCARD = 
 			"UPDATE MEMBERLIST SET MEM_CARD = ?, MEM_EXPIRY = ? WHERE MEM_NO = ?";
 	private static final String GET_ALL_STMT = 
 			"SELECT * FROM Memberlist";
 	private static final String GET_ONE_STMT = 
-			"SELECT * FROM Memberlist where MEM_NO = ? ";
+			"SELECT * FROM Memberlist WHERE MEM_NO = ? ";
+	private static final String GET_ONE_STMT_FROM_ACCOUNT = 
+			"SELECT * FROM Memberlist WHERE MEM_ACCOUNT = ? ";
 	
 	
 		
@@ -275,6 +277,7 @@ public class MemberlistDAO implements MemberlistDAO_interface{
 			
 			while(rs.next()) {
 				memberlist = new MemberlistVO();
+				memberlist.setMem_no(memno);
 				memberlist.setMem_name(rs.getString("mem_name"));
 				memberlist.setMem_nick(rs.getString("mem_nick"));
 				memberlist.setMem_account(rs.getString("mem_account"));
@@ -377,6 +380,53 @@ public class MemberlistDAO implements MemberlistDAO_interface{
 			}
 		}
 		return list;
+	}
+	
+	@Override
+	public String findByAccount(String account) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String mem_no = null;
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ONE_STMT_FROM_ACCOUNT);
+			pstmt.setString(1, account);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				mem_no = rs.getString("mem_no");
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("Database errors occured. "
+														+se.getMessage());
+		} finally {
+			
+			if(rs!=null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if(con!=null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return  mem_no;
 	}
 
 	

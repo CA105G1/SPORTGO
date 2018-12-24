@@ -53,7 +53,7 @@ public class RegisterMem extends HttpServlet {
 		memall = service.getAllMem();
 		for(MemberlistVO check : memall) {
 			if(account.equals(check.getMem_account())) {
-				errorMsgs.put("account", "帳號欄位重複");
+				errorMsgs.put("account", "此帳號已被使用");
 			}
 		}
 		/*******必填欄位驗證*********/

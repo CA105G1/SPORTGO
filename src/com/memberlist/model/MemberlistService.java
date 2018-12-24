@@ -60,6 +60,10 @@ public class MemberlistService {
 		return dao.findByPrimaryKey(mem_no);
 	}
 	
+	public String getOneMemByAccount(String account) {
+		return dao.findByAccount(account);
+	}
+	
 	public List<MemberlistVO> getAllMem(){
 		return dao.getAll();
 	}

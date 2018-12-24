@@ -404,6 +404,60 @@ public class MemberlistJDBCDAO implements MemberlistDAO_interface  {
 		}
 		return list;
 	}
+	@Override
+	public String findByAccount(String account) {
+		MemberlistVO memberlist = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String mem_no = null;
+		
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, user, password);
+			pstmt = con.prepareStatement(GET_ONE_STMT);
+			pstmt.setString(1, account);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				memberlist = new MemberlistVO();
+				memberlist.setMem_no(rs.getString("mem_no"));
+			}
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load the database driver. "
+														+e.getMessage());
+		} catch (SQLException se) {
+			throw new RuntimeException("Database errors occured. "
+														+se.getMessage());
+		}finally {
+			
+			if(rs!=null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if(con!=null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return  mem_no;
+	}
+	
+	
 
 	public static void main(String[] args) {
 		MemberlistJDBCDAO memlist = new MemberlistJDBCDAO();

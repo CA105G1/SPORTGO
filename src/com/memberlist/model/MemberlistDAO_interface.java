@@ -10,5 +10,6 @@ public interface MemberlistDAO_interface {
 	public void updateCraditcard(MemberlistVO memberlist);
 	public void updateStatus(String mem_no,String mem_status);
 	public MemberlistVO findByPrimaryKey(String mem_no);
+	public String findByAccount(String account);
 	public List<MemberlistVO> getAll();
 }

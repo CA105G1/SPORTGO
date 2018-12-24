@@ -36,7 +36,7 @@
 						class="form-control" value="${param.account}">
 					<div class="form-group">
 						<label for="password">密碼</label>
-						<input type="text" name="password" id="password" 
+						<input type="password" name="password" id="password" 
 						class="form-control" value="${param.password}">
 					</div>
 						<div class="col-xs-12 col-sm-6">
