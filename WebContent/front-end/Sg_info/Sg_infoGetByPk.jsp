@@ -170,6 +170,7 @@
 				<input type="hidden" name="action" value="delete">
 				<input type="hidden" name="sg_no" value="<%= vo.getSg_no()%>">
 			</form>
+			
 			<div class="container">
 				<div class="row">
 					<div class="col-xs-12 col-sm-3">
@@ -186,8 +187,10 @@
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-3">
-						<img src="<%= request.getContextPath()%>/img/share.png">
-						分享給好友
+						<div class="btn">
+							<img src="<%= request.getContextPath()%>/img/share.png">
+							分享給好友
+						</div>
 					</div>
 					<div class="col-xs-12 col-sm-3">
 						<div class="btn">
@@ -197,6 +200,7 @@
 					</div>
 				</div>
 			</div>
+			<%@ include file="Sg_repPage.file" %>
 			
 		</div>
 		<div class="col-xs-12 col-sm-3"></div>

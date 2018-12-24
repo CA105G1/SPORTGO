@@ -23,7 +23,6 @@
     <servlet-name>Login</servlet-name>
     <url-pattern>/front-end/memberlist/login.do</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>Logout</servlet-name>
     <servlet-class>com.memberlist.controller.Logout</servlet-class>
@@ -32,7 +31,6 @@
     <servlet-name>Logout</servlet-name>
     <url-pattern>/front-end/memberlist/logout.do</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>RegisterMem</servlet-name>
     <servlet-class>com.memberlist.controller.RegisterMem</servlet-class>
@@ -41,34 +39,30 @@
     <servlet-name>RegisterMem</servlet-name>
     <url-pattern>/front-end/memberlist/Register.do</url-pattern>
   </servlet-mapping>
-  
   <servlet>
-  	<servlet-name>MemberServlet_Android</servlet-name>
-  	<servlet-class>com.android.member.controller.MemberServlet_Android</servlet-class>
+    <servlet-name>MemberServlet_Android</servlet-name>
+    <servlet-class>com.android.member.controller.MemberServlet_Android</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>MemberServlet_Android</servlet-name>
-  	<url-pattern>/MemberServlet_Android.do</url-pattern>
+    <servlet-name>MemberServlet_Android</servlet-name>
+    <url-pattern>/MemberServlet_Android.do</url-pattern>
   </servlet-mapping>
-  
-   <servlet>
-  	<servlet-name>ClubServlet</servlet-name>
-  	<servlet-class>com.club.controller.ClubServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-  	<servlet-name>ClubServlet</servlet-name>
-  	<url-pattern>/club.do</url-pattern>
-  </servlet-mapping>
-  
   <servlet>
-  	<servlet-name>ClubImgServlet</servlet-name>
-  	<servlet-class>com.club.controller.ClubImgServlet</servlet-class>
+    <servlet-name>ClubServlet</servlet-name>
+    <servlet-class>com.club.controller.ClubServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>ClubImgServlet</servlet-name>
-  	<url-pattern>/clubImg.do</url-pattern>
+    <servlet-name>ClubServlet</servlet-name>
+    <url-pattern>/club.do</url-pattern>
   </servlet-mapping>
-
+  <servlet>
+    <servlet-name>ClubImgServlet</servlet-name>
+    <servlet-class>com.club.controller.ClubImgServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ClubImgServlet</servlet-name>
+    <url-pattern>/clubImg.do</url-pattern>
+  </servlet-mapping>
   <servlet>
     <servlet-name>VenueServlet</servlet-name>
     <servlet-class>com.venue.controller.VenueServlet</servlet-class>
@@ -77,8 +71,7 @@
     <servlet-name>VenueServlet</servlet-name>
     <url-pattern>/venue/venue.do</url-pattern>
   </servlet-mapping>
-
- <servlet>
+  <servlet>
     <servlet-name>Sg_infoServlet</servlet-name>
     <servlet-class>com.sg_info.controller.Sg_infoServlet</servlet-class>
   </servlet>
@@ -86,7 +79,6 @@
     <servlet-name>Sg_infoServlet</servlet-name>
     <url-pattern>/Sg_info/Sg_info.do</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>Sg_infoImgServlet</servlet-name>
     <servlet-class>com.sg_info.controller.Sg_infoImgServlet</servlet-class>
@@ -95,5 +87,12 @@
     <servlet-name>Sg_infoImgServlet</servlet-name>
     <url-pattern>/Sg_info/Sg_infoImg.do</url-pattern>
   </servlet-mapping>
-
+  <servlet>
+    <servlet-name>Sg_memServlet</servlet-name>
+    <servlet-class>com.sg_mem.controller.Sg_memServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Sg_memServlet</servlet-name>
+    <url-pattern>/Sg_mem/Sg_mem.do</url-pattern>
+  </servlet-mapping>
 </web-app>
