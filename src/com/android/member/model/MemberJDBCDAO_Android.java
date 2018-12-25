@@ -1,8 +1,11 @@
 package com.android.member.model;
 
 import java.sql.*;
-
 import java.util.*;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
 import com.util.lang.*;
 
 public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
@@ -31,44 +34,10 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 			"SELECT * FROM memberlist where MEM_NO = ? ";
 	private static final String CHECK_ID_EXIST = 
 			"SELECT * FROM memberlist WHERE mem_account = ? AND mem_pswd = ?";
-	
-	public boolean isMember(String mem_account, String mem_pswd) {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		boolean isMember = false;
-		try {
-			Class.forName(Util.DRIVER);
-			conn = DriverManager.getConnection(Util.URL, Util.USER,
-					Util.PASSWORD);
-			ps = conn.prepareStatement(CHECK_ID_EXIST);
-			ps.setString(1, mem_account);
-			ps.setString(2, mem_pswd);
-			ResultSet rs = ps.executeQuery();
-			isMember = rs.next();
-			return isMember;
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load the database driver. "
-					+e.getMessage());
-		}catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (ps != null) {
-					ps.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return isMember;
-	}
 		
 	
 	@Override
-	public void insert(MemberVO_Andorid member) {
+	public void insert(MemberVO_Android member) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
@@ -108,7 +77,7 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 	}
 
 	@Override
-	public void updatePrivacy(MemberVO_Andorid member) {
+	public void updatePrivacy(MemberVO_Android member) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
@@ -164,6 +133,7 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 			pstmt.setString(2, mem_no);
 			
 			pstmt.executeUpdate();
+			
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load the database driver. "
 														+e.getMessage());
@@ -191,7 +161,7 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 
 
 	@Override
-	public void updatePassword(MemberVO_Andorid member) {
+	public void updatePassword(MemberVO_Android member) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
@@ -268,7 +238,7 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 //	}
 
 	@Override
-	public void updateCraditcard(MemberVO_Andorid member) {
+	public void updateCraditcard(MemberVO_Android member) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -308,8 +278,9 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 	
 	
 	@Override
-	public MemberVO_Andorid findByPrimaryKey(String memno) {
-		MemberVO_Andorid member = null;
+	public MemberVO_Android findByPrimaryKey(String memno) {
+		
+		MemberVO_Android member = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -323,7 +294,7 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				member = new MemberVO_Andorid();
+				member = new MemberVO_Android();
 				member.setMem_name(rs.getString("mem_name"));
 				member.setMem_nick(rs.getString("mem_nick"));
 				member.setMem_account(rs.getString("mem_account"));
@@ -335,24 +306,29 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 				member.setMem_status(rs.getString("mem_status"));
 				member.setMem_card(rs.getString("mem_card"));
 				member.setMem_expiry(rs.getString("mem_expiry"));
-//				member.setMem_pic(rs.getBytes("mem_pic"));
-//				member.setMem_pickind(rs.getString("mem_pickind"));
 			}
+			
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load the database driver. "
 														+e.getMessage());
+			
 		} catch (SQLException se) {
 			throw new RuntimeException("Database errors occured. "
 														+se.getMessage());
-		}finally {
+			
+		} finally {
 			
 			if(rs!=null) {
+				
 				try {
 					rs.close();
+					
 				} catch (SQLException e) {
 					e.printStackTrace(System.err);
 				}
+				
 			}
+			
 			if(pstmt!=null) {
 				try {
 					pstmt.close();
@@ -360,6 +336,7 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 					e.printStackTrace(System.err);
 				}
 			}
+			
 			if(con!=null) {
 				try {
 					con.close();
@@ -368,13 +345,14 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 				}
 			}
 		}
-		return  member;
+		
+		return member;
 	}
 
 	@Override
-	public List<MemberVO_Andorid> getAll() {
-		List<MemberVO_Andorid> list = new ArrayList<MemberVO_Andorid>();
-		MemberVO_Andorid mem = null;
+	public List<MemberVO_Android> getAll() {
+		List<MemberVO_Android> list = new ArrayList<MemberVO_Android>();
+		MemberVO_Android mem = null;
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -387,7 +365,7 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				mem = new MemberVO_Andorid();
+				mem = new MemberVO_Android();
 				mem.setMem_no(rs.getString("mem_no"));
 				mem.setMem_name(rs.getString("mem_name"));
 				mem.setMem_nick(rs.getString("mem_nick"));
@@ -400,8 +378,6 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 				mem.setMem_status(rs.getString("mem_status"));
 				mem.setMem_card(rs.getString("mem_card"));
 				mem.setMem_expiry(rs.getString("mem_expiry"));
-//				mem.setMem_pic(rs.getBytes("mem_pic"));
-//				mem.setMem_pickind(rs.getString("mem_pickind"));
 				list.add(mem);
 			}
 		}catch(ClassNotFoundException e) {
@@ -435,45 +411,74 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 		}
 		return list;
 	}
-
-	public static void main(String[] args) {
-		MemberJDBCDAO_Android memlist = new MemberJDBCDAO_Android();
-		MemberVO_Andorid memcreate = new MemberVO_Andorid("ICHIRO","a029","123456",
-										"s9821100@gm.pu.edu.tw","0937351931");
-		memlist.insert(memcreate);
-		System.out.println("A member created successful.");
+	
+	public String isMember(String mem_account, String mem_pswd) {
 		
-		MemberVO_Andorid memupdatepivacy = new MemberVO_Andorid("M029","ICHIRO","Baseball man"
-										,"s9821100@gm.pu.edu.tw","0937351931","憭批�蔗","0937351931");
-		memlist.updatePrivacy(memupdatepivacy);
-		System.out.println("A member privacy updated successful.");
+		Connection conn = null;
+		PreparedStatement ps = null;
+		JsonObject jobj = new JsonObject();
 		
-		MemberVO_Andorid memberupdatepassword = new MemberVO_Andorid("M029", "12345678");
-		memlist.updatePassword(memberupdatepassword);
-		System.out.println("A member password updated successful.");
-		
-//		WARNING
-//		
-		MemberVO_Andorid memberudatecraditcard = new MemberVO_Andorid("M029", "1234567887654321","2021-01");
-		memlist.updateCraditcard(memberudatecraditcard);
-		memlist.updateStatus("M029", "正常");
-		System.out.println("A member status updated successful");
-		
-		
-		
-		MemberVO_Andorid findmem = memlist.findByPrimaryKey("M029");
-		
-			System.out.println("Name : "+findmem.getMem_name());
-			System.out.println("Account : "+findmem.getMem_account());
-			System.out.println("Nickname : "+findmem.getMem_nick());
-			System.out.println("Email : "+findmem.getMem_email());
-			System.out.println("Phone : "+findmem.getMem_phone());
-			System.out.println("Status : "+findmem.getMem_status());
-		
-		List<MemberVO_Andorid> list = memlist.getAll();
-		for(MemberVO_Andorid show : list) {
-			System.out.println(show.getMem_name());
+		try {
+			Class.forName(Util.DRIVER);
+			conn = DriverManager.getConnection(Util.URL, Util.USER,
+					Util.PASSWORD);
+			
+			ps = conn.prepareStatement(CHECK_ID_EXIST);
+			ps.setString(1, mem_account);
+			ps.setString(2, mem_pswd);
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				MemberVO_Android mem = new MemberVO_Android();
+				mem = new MemberVO_Android();
+				mem.setMem_no(rs.getString("mem_no"));
+				mem.setMem_name(rs.getString("mem_name"));
+				mem.setMem_nick(rs.getString("mem_nick"));
+				mem.setMem_account(rs.getString("mem_account"));
+				mem.setMem_pswd(rs.getString("mem_pswd"));
+				mem.setMem_email(rs.getString("mem_email"));
+				mem.setMem_phone(rs.getString("mem_phone"));
+				mem.setMem_emgc(rs.getString("mem_emgc"));
+				mem.setMem_emgcphone(rs.getString("mem_emgcphone"));
+				mem.setMem_status(rs.getString("mem_status"));
+				mem.setMem_card(rs.getString("mem_card"));
+				mem.setMem_expiry(rs.getString("mem_expiry"));
+				
+				String member = new Gson().toJson(mem);
+				jobj.addProperty("member", member);
+				jobj.addProperty("isMember", true);
+			}
+			
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load the database driver. "
+					+e.getMessage());
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} finally {
+			
+			try {
+				
+				if (ps != null) {
+					ps.close();
+				}
+				
+				if (conn != null) {
+					conn.close();
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
+		
+		return jobj.toString();
 	}
 
+	@Override
+	public byte[] getImage(String mem_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
