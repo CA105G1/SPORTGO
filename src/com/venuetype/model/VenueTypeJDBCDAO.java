@@ -7,20 +7,10 @@ import java.sql.*;
 
 public class VenueTypeJDBCDAO implements VenueTypeDAO_interface{
 	
-//	private static DataSource ds = null;
-//	static {
-//		try {
-//			Context ctx = new InitialContext();
-//			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB");
-//		} catch (NamingException e) {
-//			e.printStackTrace();
-//		}
-//	}
-	
-	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
-	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
-	private static final String USER = "CA105G1";
-	private static final String PASSWORD = "123456";
+	private static final String DRIVER = com.util.lang.Util.DRIVER;
+	private static final String URL = com.util.lang.Util.URL;
+	private static final String USER = com.util.lang.Util.USER;
+	private static final String PASSWORD = com.util.lang.Util.PASSWORD;
 	
 	static { //預先載入驅動程式
 		try {
@@ -32,15 +22,16 @@ public class VenueTypeJDBCDAO implements VenueTypeDAO_interface{
 	
 	private static final String INSERT_STMT = 
 			"INSERT INTO venuetype VALUES ('VT'||LPAD(to_char(VENUETYPE_SEQ.NEXTVAL), 3, '0'), ?)";
-		private static final String GET_ALL_STMT = 
-			"SELECT vt_no,vt_name FROM venuetype ORDER BY vt_no";
-		private static final String GET_ONE_STMT = 
-			"SELECT vt_no,vt_name FROM venuetype WHERE vt_no = ?";
-		private static final String DELETE = 
-			"DELETE FROM venuetype WHERE vt_no = ?";
-		private static final String UPDATE = 
-			"UPDATE venuetype SET vt_name = ? WHERE vt_no = ?";
-		
+	private static final String GET_ALL_STMT = 
+		"SELECT vt_no,vt_name FROM venuetype ORDER BY vt_no";
+	private static final String GET_ONE_STMT = 
+		"SELECT vt_no,vt_name FROM venuetype WHERE vt_no = ?";
+	private static final String DELETE = 
+		"DELETE FROM venuetype WHERE vt_no = ?";
+	private static final String UPDATE = 
+		"UPDATE venuetype SET vt_name = ? WHERE vt_no = ?";	
+	
+	
 	@Override
 	public void insert(VenueTypeVO vtVO) {
 		
@@ -239,8 +230,7 @@ public class VenueTypeJDBCDAO implements VenueTypeDAO_interface{
 
 			// Handle any driver errors
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
@@ -268,4 +258,75 @@ public class VenueTypeJDBCDAO implements VenueTypeDAO_interface{
 		return list;
 	}
 
+	private static final String IS_VENUETYPE_SQL = ""
+			+ " SELECT vt_no, vt_name FROM "
+			+ " (SELECT vt_no, vt_name FROM venuetype WHERE vt_name=?) "
+			+ " WHERE ? LIKE '%'||?||'%'";
+	
+	@Override
+	public boolean isVenueType(String funcList, String vt_name) {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		VenueTypeVO venueTypeVO = null;
+		try {
+			connection = DriverManager.getConnection(URL, USER, PASSWORD);
+			preparedStatement = connection.prepareStatement(IS_VENUETYPE_SQL);
+			preparedStatement.setString(1, vt_name);
+			preparedStatement.setString(2, funcList);
+			preparedStatement.setString(3, vt_name);
+			resultSet = preparedStatement.executeQuery();
+			venueTypeVO = new VenueTypeVO();
+			if(resultSet.next()) {
+				venueTypeVO.setVt_no(resultSet.getString("vt_no"));
+				venueTypeVO.setVt_name(resultSet.getString("vt_name"));
+			}
+			
+		}catch (SQLException e) {
+			throw new RuntimeException("A database error occured. " + e.getMessage());
+		}finally {
+			if(resultSet!=null) {
+				try {
+					resultSet.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(preparedStatement!=null) {
+				try {
+					preparedStatement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(connection!=null) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}		
+		return vt_name.equals(venueTypeVO.getVt_name());
+	}
+
+	public static void main(String[] args) {
+		
+		VenueTypeDAO_interface vi  = new VenueTypeJDBCDAO();
+	
+		vi.insert(new VenueTypeVO("手球場"));
+//		VenueTypeVO vt = vi.findByPrimaryKey("VT001");
+//		System.out.println(vt.getVt_name());
+//		
+//		System.out.println("========================");
+		
+		List<VenueTypeVO> vtVO = vi.getAll();
+		
+		
+		for (VenueTypeVO x : vtVO) {
+			System.out.println(x.getVt_no() + " " + x.getVt_name());
+		}
+		
+	}
+	
 }

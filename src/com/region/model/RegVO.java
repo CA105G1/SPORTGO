@@ -37,4 +37,7 @@ public class RegVO {
 		this.reg_dist = reg_dist;
 	}	
 	
+	
+	
+	
 }

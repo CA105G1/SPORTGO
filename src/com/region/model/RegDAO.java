@@ -3,24 +3,23 @@ package com.region.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
-
 import com.region.model.RegVO;
 
 import java.sql.*;
 
+
 public class RegDAO implements RegDAO_interface{
 	
-	private static DataSource ds = null;
-	static {
+	private static final String DRIVER = com.util.lang.Util.DRIVER;
+	private static final String URL = com.util.lang.Util.URL;
+	private static final String USER = com.util.lang.Util.USER;
+	private static final String PASSWORD = com.util.lang.Util.PASSWORD;
+	
+	static { //預先載入驅動程式
 		try {
-			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB");
-		} catch (NamingException e) {
-			e.printStackTrace();
+			Class.forName(DRIVER);
+		} catch (ClassNotFoundException ce) {
+			throw new RuntimeException("ClassNotFoundException ce :　"+ce.getMessage());
 		}
 	}
 	
@@ -43,7 +42,7 @@ public class RegDAO implements RegDAO_interface{
 
 		try {
 
-			con = ds.getConnection();
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setInt(1, regVO.getReg_no());
@@ -84,7 +83,7 @@ public class RegDAO implements RegDAO_interface{
 
 		try {
 
-			con = ds.getConnection();
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setString(1, regVO.getReg_name());
@@ -125,7 +124,7 @@ public class RegDAO implements RegDAO_interface{
 
 		try {
 
-			con = ds.getConnection();
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(DELETE);
 
 			pstmt.setInt(1, reg_no);
@@ -165,7 +164,7 @@ public class RegDAO implements RegDAO_interface{
 
 		try {
 
-			con = ds.getConnection();
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
 			pstmt.setInt(1, reg_no);
@@ -224,7 +223,7 @@ public class RegDAO implements RegDAO_interface{
 
 		try {
 
-			con = ds.getConnection();
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
@@ -268,4 +267,55 @@ public class RegDAO implements RegDAO_interface{
 		return list;
 	}
 
+	private static final String GET_REGVO_FROM_ADDRESS_SQL = ""
+			+ "Select reg_no, reg_name, reg_dist from region where ? like '%'||reg_name||reg_dist||'%'";
+	
+	@Override
+	public RegVO getRegVOFromAddress(String address) {
+		RegVO regVO = null;
+		Connection connection = null;
+		PreparedStatement preparedStatement  = null;
+		ResultSet resultSet = null;
+		try {
+			connection = DriverManager.getConnection(URL, USER, PASSWORD);
+			preparedStatement = connection.prepareStatement(GET_REGVO_FROM_ADDRESS_SQL);
+			preparedStatement.setString(1, address);
+			resultSet = preparedStatement.executeQuery();
+			if(resultSet.next()) {
+				regVO = new RegVO();
+				regVO.setReg_no(resultSet.getInt("REG_NO"));
+				regVO.setReg_name(resultSet.getString("REG_NAME"));
+				regVO.setReg_dist(resultSet.getString("REG_DIST"));
+			}
+		}catch (SQLException se) {
+			se.printStackTrace();
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		}finally {
+			if (resultSet != null) {
+				try {
+					resultSet.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (preparedStatement != null) {
+				try {
+					preparedStatement.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return regVO;
+	}
+	
+	
 }

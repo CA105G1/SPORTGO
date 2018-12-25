@@ -1,4 +1,4 @@
----SportyGo_ver_0_1_9_create_1218------
+---SportyGo_ver_0_2_0_create_1225------
 --------------------------
 ------drop sequence-------
 --------------------------
@@ -41,6 +41,7 @@ DROP TABLE ADDRESS;
 DROP TABLE PRODUCT_DETAIL_PROMOTION;
 DROP TABLE PRO_DETAIL_PROM;
 ---
+DROP TABLE GYM;
 DROP TABLE PROMOTION;
 DROP TABLE SHOPPINGCART;
 DROP TABLE PRODUCT_LIKE;
@@ -150,40 +151,53 @@ CREATE TABLE REGION (
 );
 ------------06---------------------------
 ------------VENUE------------------------
----------------------------------20181208
-CREATE TABLE VENUE (
-    V_NO        VARCHAR2(7)  PRIMARY KEY, 
-    V_NAME      VARCHAR2(60) NOT NULL,
-    VT_NO       VARCHAR2(500), ----2018-12-18
-    REG_NO      NUMBER(5),
+---------------------------------20181224
+Create table venue(
+    v_no varchar2(7) PRIMARY KEY, --PK--V0000001
+    v_name varchar2(500) NOT NULL,
+    v_weburl varchar2(1500),
+    v_parktype varchar2(500), -- 停車類型
+    v_introduction   CLOB, ---場館簡介
+    vt_no varchar2(7),
+    v_inout varchar2(500), ---設施室內外類型
+    reg_no NUMBER(5),
+    v_address varchar2(500),
+    v_phoneno varchar2(50),
     V_LAT       NUMBER(17,14),  ---- 修改欄位 (Number可存浮點數 17長度,小數點14位)
     V_LONG      NUMBER(17,14),  ---- 修改欄位 (Number可存浮點數 17長度,小數點14位)
-    V_LINK       VARCHAR2(500),  ---- New 圖片連結
-    V_ADDRESS   VARCHAR2(500),
-    V_PHONENO   VARCHAR2(50),
-    V_STATUS    VARCHAR2(50),   ---- New 場地狀態
-    V_FUNC      VARCHAR2(500),  ---- New 場地功能
-    --v_isopenmomday,
-	
-	--V_LINK      VARCHAR2(200),
-    --V_OPENDAY   VARCHAR2(7),
-    ------暫時刪除欄位openday，link
-
+    -----v_public_transport CLOB, ---交通資訊---因為部分有Array所以就這時放棄
+    v_fitall varchar2(1) check( v_fitall in('Y','N')), ---適用對象-民眾
+    v_fitinter varchar2(1) check (v_fitinter in('Y','N')),---適用對象-所屬單位人員(如校內師生)
+    open_state varchar2(100), --開放情況
+    open_time varchar2(500), --開放時間
+    openday_mon varchar2(1) check (openday_mon in ('Y','N')),    
+    openday_tue varchar2(1) check (openday_tue in ('Y','N')),
+    openday_wed varchar2(1) check (openday_wed in ('Y','N')),
+    openday_thu varchar2(1) check (openday_thu in ('Y','N')),
+    openday_fri varchar2(1) check (openday_fri in ('Y','N')),
+    openday_sat varchar2(1) check (openday_sat in ('Y','N')),
+    openday_sun varchar2(1) check (openday_sun in ('Y','N')),
+    v_photo1 BLOB,
+    v_photo1_ext varchar2(10),
+    v_photo2 BLOB,
+    v_photo2_ext varchar2(10),        
+    ----TEST_ING---
     CONSTRAINT VENUE_VENUETYPE_FK                    ----單字FK放後面
     FOREIGN KEY(VT_NO) REFERENCES VENUETYPE(VT_NO),  
     CONSTRAINT VENUE_REGION_FK                       ----單字FK放後面
     FOREIGN KEY(REG_NO) REFERENCES REGION(REG_NO)
 );
-----
 
-----openday跟link要用id查，較為麻煩，先暫時刪除
 
 CREATE SEQUENCE VENUE_SEQ
     INCREMENT BY 1
     START WITH 1
     NOMAXVALUE
     NOCYCLE
-    NOCACHE;
+    NOCACHE
+    order;
+
+
 ------------07---------------------------
 ------------V_EVALUATION------------------------
 ---------------------------------20181208
@@ -210,7 +224,7 @@ CREATE TABLE SG_INFO(
     SG_PIC_EXT varchar2(10),
     SG_PER varchar2(10) not null,
     SP_NO varchar2(7) not null,
-    VENUE_NO varchar2(7),
+    V_NO varchar2(7),
     SG_MAXNO number(2,0),
     SG_MINNO number(2,0),
     SG_TTLAPL number(2,0),
@@ -225,7 +239,7 @@ CREATE TABLE SG_INFO(
     constraint SG_INFO_PK primary key (SG_NO),
     constraint FK1_SG_INFO_MEM foreign key (MEM_NO) references MEMBERLIST(MEM_NO),
     constraint FK2_SG_INFO_SPORT foreign key (SP_NO) references SPORT(SP_NO),
-    constraint FK3_SG_INFO_VEMUE foreign key (VENUE_NO) references VENUE(V_NO)
+    constraint FK3_SG_INFO_VEMUE foreign key (V_NO) references VENUE(V_NO)
 );
 create sequence SG_INFO_SEQ
     start with 1
@@ -700,5 +714,17 @@ CREATE SEQUENCE COMPETITION_SEQ
     NOCACHE
     NOCYCLE
     ORDER;
+------------33---------------------------
+------------GYM--------------------------
+---------------------------------20181224
+---------------------為了抓場地的ID值使用
+Create table gym(
+	gym_id varchar2(500) primary key,
+	gym_name varchar2(500),
+	gym_funclist varchar2(1500)
+);
+-------
+
+
 
 COMMIT;

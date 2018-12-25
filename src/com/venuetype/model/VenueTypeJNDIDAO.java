@@ -1,53 +1,52 @@
-package com.region.model;
+package com.venuetype.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.region.model.RegVO;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 
 import java.sql.*;
 
-
-public class RegJDBCDAO implements RegDAO_interface{
+public class VenueTypeJNDIDAO implements VenueTypeDAO_interface{
 	
-	private static final String DRIVER = com.util.lang.Util.DRIVER;
-	private static final String URL = com.util.lang.Util.URL;
-	private static final String USER = com.util.lang.Util.USER;
-	private static final String PASSWORD = com.util.lang.Util.PASSWORD;
+	private static DataSource ds = null;
 	
-	static { //預先載入驅動程式
+	static {
 		try {
-			Class.forName(DRIVER);
-		} catch (ClassNotFoundException ce) {
-			throw new RuntimeException("ClassNotFoundException ce :　"+ce.getMessage());
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup(com.util.lang.Util.JNDI_DATABASE_NAME);
+		} catch (NamingException e) {
+			e.printStackTrace();
 		}
 	}
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO region (reg_no,reg_name,reg_dist) VALUES (?, ?, ?)";
+			"INSERT INTO venuetype (vt_no,vt_name) VALUES (?, ?)";
 		private static final String GET_ALL_STMT = 
-			"SELECT * FROM region order by reg_no";
+			"SELECT vt_no,vt_name FROM venuetype ORDER BY vt_no";
 		private static final String GET_ONE_STMT = 
-			"SELECT * FROM region where reg_no = ?";
+			"SELECT vt_no,vt_name FROM venuetype WHERE vt_no = ?";
 		private static final String DELETE = 
-			"DELETE FROM region where reg_no = ?";
+			"DELETE FROM venuetype WHERE vt_no = ?";
 		private static final String UPDATE = 
-			"UPDATE region set reg_name = ? And reg_dist = ? where reg_no = ?";
+			"UPDATE venuetype SET vt_name = ? WHERE vt_no = ?";
 		
 	@Override
-	public void insert(RegVO regVO) {
-
+	public void insert(VenueTypeVO vtVO) {
+		
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
 		try {
 
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
-			pstmt.setInt(1, regVO.getReg_no());
-			pstmt.setString(2, regVO.getReg_name());
-			pstmt.setString(3, regVO.getReg_dist());
+			pstmt.setString(1, vtVO.getVt_no());
+			pstmt.setString(2, vtVO.getVt_name());
 
 			pstmt.executeUpdate();
 
@@ -76,20 +75,18 @@ public class RegJDBCDAO implements RegDAO_interface{
 	}
 
 	@Override
-	public void update(RegVO regVO) {
+	public void update(VenueTypeVO vtVO) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
 		try {
 
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
-			pstmt.setString(1, regVO.getReg_name());
-			pstmt.setString(2, regVO.getReg_dist());
-			pstmt.setInt(3, regVO.getReg_no());
-			
+			pstmt.setString(1, vtVO.getVt_name());
+			pstmt.setString(2, vtVO.getVt_no());
 
 			pstmt.executeUpdate();
 
@@ -117,17 +114,17 @@ public class RegJDBCDAO implements RegDAO_interface{
 	}
 
 	@Override
-	public void delete(Integer reg_no) {
+	public void delete(String vt_no) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
 		try {
 
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(DELETE);
 
-			pstmt.setInt(1, reg_no);
+			pstmt.setString(1, vt_no);
 
 			pstmt.executeUpdate();
 
@@ -155,28 +152,27 @@ public class RegJDBCDAO implements RegDAO_interface{
 	}
 
 	@Override
-	public RegVO findByPrimaryKey(Integer reg_no) {
+	public VenueTypeVO findByPrimaryKey(String vt_no) {
 		
-		RegVO regVO = null;
+		VenueTypeVO vtVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
 		try {
 
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
-			pstmt.setInt(1, reg_no);
+			pstmt.setString(1, vt_no);
 
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// regVo 也稱為 Domain objects
-				regVO = new RegVO();
-				regVO.setReg_no(rs.getInt("reg_no"));
-				regVO.setReg_name(rs.getString("reg_name"));
-				regVO.setReg_dist(rs.getString("reg_dist"));
+				// vtVo 也稱為 Domain objects
+				vtVO = new VenueTypeVO();
+				vtVO.setVt_no(rs.getString("vt_no"));
+				vtVO.setVt_name(rs.getString("vt_name"));
 			}
 
 			// Handle any driver errors
@@ -207,15 +203,15 @@ public class RegJDBCDAO implements RegDAO_interface{
 				}
 			}
 		}
-		return regVO;
+		return vtVO;
 		
 	}
 
 	@Override
-	public List<RegVO> getAll() {
+	public List<VenueTypeVO> getAll() {
 		
-		List<RegVO> list = new ArrayList<RegVO>();
-		RegVO RegVO = null;
+		List<VenueTypeVO> list = new ArrayList<VenueTypeVO>();
+		VenueTypeVO vtVO = null;
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -223,17 +219,16 @@ public class RegJDBCDAO implements RegDAO_interface{
 
 		try {
 
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// RegVO 也稱為 Domain objects
-				RegVO = new RegVO();
-				RegVO.setReg_no(rs.getInt("reg_no"));
-				RegVO.setReg_name(rs.getString("reg_name"));
-				RegVO.setReg_dist(rs.getString("reg_dist"));
-				list.add(RegVO); // Store the row in the list
+				// vtVO 也稱為 Domain objects
+				vtVO = new VenueTypeVO();
+				vtVO.setVt_no(rs.getString("vt_no"));
+				vtVO.setVt_name(rs.getString("vt_name"));
+				list.add(vtVO); // Store the row in the list
 			}
 
 			// Handle any driver errors
@@ -266,69 +261,57 @@ public class RegJDBCDAO implements RegDAO_interface{
 		}
 		return list;
 	}
-
-	private static final String GET_REGVO_FROM_ADDRESS_SQL = ""
-			+ "Select * from region where ? like '%'||reg_name||reg_dist||'%'";
+	
+	private static final String IS_VENUETYPE_SQL = ""
+			+ " SELECT vt_no, vt_name FROM "
+			+ " (SELECT vt_no, vt_name FROM venuetype WHERE vt_name=?) "
+			+ " WHERE ? LIKE '%'||?||'%'";
 	
 	@Override
-	public RegVO getRegVOFromAddress(String address) {
-		RegVO regVO = null;
+	public boolean isVenueType(String funcList, String vt_name) {
 		Connection connection = null;
-		PreparedStatement preparedStatement  = null;
+		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
+		VenueTypeVO venueTypeVO = null;
 		try {
-			connection = DriverManager.getConnection(URL, USER, PASSWORD);
-			preparedStatement = connection.prepareStatement(GET_REGVO_FROM_ADDRESS_SQL);
-			preparedStatement.setString(1, address);
+			connection = ds.getConnection();
+			preparedStatement = connection.prepareStatement(IS_VENUETYPE_SQL);
+			preparedStatement.setString(1, vt_name);
+			preparedStatement.setString(2, funcList);
+			preparedStatement.setString(3, vt_name);
 			resultSet = preparedStatement.executeQuery();
+			venueTypeVO = new VenueTypeVO();
 			if(resultSet.next()) {
-				regVO = new RegVO();
-				regVO.setReg_no(resultSet.getInt("REG_NO"));
-				regVO.setReg_name(resultSet.getString("REG_NAME"));
-				regVO.setReg_dist(resultSet.getString("REG_DIST"));
+				venueTypeVO.setVt_no(resultSet.getString("vt_no"));
+				venueTypeVO.setVt_name(resultSet.getString("vt_name"));
 			}
-		}catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			
+		}catch (SQLException e) {
+			throw new RuntimeException("A database error occured. " + e.getMessage());
 		}finally {
-			if (resultSet != null) {
+			if(resultSet!=null) {
 				try {
 					resultSet.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
+				} catch (SQLException e) {
+					e.printStackTrace();
 				}
 			}
-			if (preparedStatement != null) {
+			if(preparedStatement!=null) {
 				try {
 					preparedStatement.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
+				} catch (SQLException e) {
+					e.printStackTrace();
 				}
 			}
-			if (connection != null) {
+			if(connection!=null) {
 				try {
 					connection.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
+				} catch (SQLException e) {
+					e.printStackTrace();
 				}
 			}
-		}
-		return regVO;
+		}		
+		return vt_name.equals(venueTypeVO.getVt_name());
 	}
-
-	public static void main(String[] args) {
-		
-//		RegJDBCDAO regJDBCDAO = new RegJDBCDAO();
-//		RegVO regVO = new RegVO();
-//		regVO.setReg_no(999);
-//		regVO.setReg_name("Test_name");
-//		regVO.setReg_dist("test_dist");
-//		regJDBCDAO.insert(regVO);
-		
-		
-		
-		
-		
-	}
-
+	
 }
