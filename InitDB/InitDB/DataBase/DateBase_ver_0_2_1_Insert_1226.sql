@@ -592,24 +592,26 @@ Insert into V_EVALUATION values ('M004', 'V000004', 5);
 ------------08-INSERT--------------------
 ------------SG_INFO----------------------
 ---------------------------------20181210
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M001', '中央大學籃球魂不滅', to_timestamp('2018-12-30 10:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-27 00:00:00','yyyy-mm-dd hh24:mi:ss'),100,null,null,'公開','SP003','V000001',10,3,null,null,'歡迎歡迎熱烈歡迎',default,null,null,null,null);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M002', '熱血雙城計畫', to_timestamp('2018-12-20 21:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-8 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-17 00:00:00','yyyy-mm-dd hh24:mi:ss'),100,null,null,'公開','SP007',null,8,5,null,null,'一起來騎卡打掐',default,121.51694880000002,25.0478142,120.30200650000006,22.6389745);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M001', '台北直直跑', to_timestamp('2018-12-7 17:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-11-30 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-4 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP006',null,5,3,5,4,'跑起來','成團',121.56447219999995,25.0339639,121.56631708145142,25.041126551200858);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M001', '打排球', to_timestamp('2018-11-30 18:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-11-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-11-27 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'限社團','SP002','V000003',20,12,5,null,null,'流團',null,null,null,null);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M002', '網球拍拍', to_timestamp('2018-12-30 18:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-27 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP004','V000002',99,3,1,null,'便宜進口包包熱賣中','封鎖',null,null,null,null);--notice the max of SG_MAXNO is 99; 
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M001', '中央大學籃球魂不滅', to_timestamp('2019-02-25 10:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-02-23 00:00:00','yyyy-mm-dd hh24:mi:ss'),0,null,null,'公開','SP003','V000001',10,3,null,null,'歡迎歡迎熱烈歡迎',default,null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M002', '熱血雙城計畫', to_timestamp('2019-02-20 21:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-8 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-02-17 00:00:00','yyyy-mm-dd hh24:mi:ss'),100,null,null,'公開','SP007',null,8,5,4,null,'一起來騎卡打掐',default,'{"lat":25.0478142,"lng":121.51694880000002}','{"lat":22.639146,"lng":120.302201}');
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M001', '台北直直跑', to_timestamp('2019-02-07 17:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-11-30 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-02-04 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP006',null,5,3,5,null,'跑起來',default,'{"lat":24.968264,"lng":121.192198}','{"lat":24.959995,"lng":121.215186}');
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M001', '打排球', to_timestamp('2018-11-30 18:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-11-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-11-27 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'限社團','SP002','V000003',20,12,5,null,null,'流團',null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M002', '跳樓大拍賣', to_timestamp('2019-12-30 18:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-12-27 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP004','V000002',99,3,1,null,'便宜進口包包熱賣中',default,null,null);--notice the max of SG_MAXNO is 99; 
 
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M001', '中央大學籃球魂不滅', to_timestamp('2018-12-30 10:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-27 00:00:00','yyyy-mm-dd hh24:mi:ss'),100,null,null,'公開','SP003','V000001',10,3,null,null,'歡迎歡迎熱烈歡迎',default,null,null,null,null);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M001', '晨間老人羽球', to_timestamp('2018-12-15 08:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-5 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-12 00:00:00','yyyy-mm-dd hh24:mi:ss'),100,null,null,'公開','SP005','V000001',4,2,2,null,'來打羽球吧',default,null,null,null,null);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M006', '熱血雙城計畫', to_timestamp('2018-12-20 21:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-8 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-17 00:00:00','yyyy-mm-dd hh24:mi:ss'),100,null,null,'公開','SP007',null,8,5,3,null,'一起來騎卡打掐',default,121.51694880000002,25.0478142,120.30200650000006,22.6389745);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M005', '台北直直跑', to_timestamp('2018-12-7 17:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-11-30 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-4 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP006',null,5,3,5,4,'跑起來','成團',121.56447219999995,25.0339639,121.56631708145142,25.041126551200858);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M005', '打排球', to_timestamp('2018-11-30 18:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-11-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-11-27 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'限社團','SP002','V000001',20,12,5,null,null,'流團',null,null,null,null);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M007', '網球拍拍', to_timestamp('2018-12-30 18:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-27 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP004','V000001',99,3,1,null,'便宜進口包包熱賣中','封鎖',null,null,null,null);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M002', '棒球大聯盟', to_timestamp('2018-12-31 15:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-10 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-28 00:00:00','yyyy-mm-dd hh24:mi:ss'),300,null,null,'公開','SP001','V000001',20,9,5,null,'沒有棒球就吃不下飯，睡不著覺的人快來唷!',default,null,null,null,null);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M012', '南崁籃球魂不滅', to_timestamp('2019-01-10 15:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-01-5 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP003','V000001',5,2,null,null,'鬥牛要不要',default,null,null,null,null);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M013', '桃園籃球魂不滅', to_timestamp('2018-12-31 19:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-15 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-27 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP003','V000001',10,2,null,null,'少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~',default,null,null,null,null);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M014', '台北籃球魂不滅', to_timestamp('2018-12-25 20:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-10 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-23 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP003','V000001',15,5,2,null,'以球會友!',default,null,null,null,null);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M004', '中原大學籃球魂不滅', to_timestamp('2019-01-05 20:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-10 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-01-02 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP003','V000001',10,3,1,null,'單挑啊!嫩逼',default,null,null,null,null);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M008', '中壢高中籃球魂不滅', to_timestamp('2018-12-30 18:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-05 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP003','V000001',10,5,2,null,'教練，我想打球阿....',default,null,null,null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M001', '籃球火', to_timestamp('2019-01-30 10:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-01-27 00:00:00','yyyy-mm-dd hh24:mi:ss'),100,null,null,'公開','SP003','V000001',10,3,1,null,'歡迎歡迎熱烈歡迎',default,null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M001', '晨間老人羽球', to_timestamp('2019-02-15 08:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-5 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-02-12 00:00:00','yyyy-mm-dd hh24:mi:ss'),100,null,null,'限社團','SP005','V000001',4,2,2,null,'來打羽球吧',default,null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M006', '跑跑跑向前跑', to_timestamp('2018-02-20 21:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-8 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-02-17 00:00:00','yyyy-mm-dd hh24:mi:ss'),100,null,null,'公開','SP006',null,8,5,3,null,'來追我啊',default,'{"lat":25.001000,"lng":121.319393}','{"lat":24.998277,"lng":121.320697}');
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M005', '唯一支持戴資穎', to_timestamp('2018-12-7 17:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-11-30 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-4 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP005','V000001',5,3,5,4,'羽你一起','成團',null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M005', '人妖打排球', to_timestamp('2019-02-26 18:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-11-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-02-27 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'限社團','SP002','V000001',20,12,5,null,null,default,null,null);
+
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M007', '網球王子', to_timestamp('2019-02-10 18:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-02-14 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP004','V000001',4,3,null,null,'吃我一記外旋發球',default,null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M002', '棒球大聯盟', to_timestamp('2019-02-11 15:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-10 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-02-08 00:00:00','yyyy-mm-dd hh24:mi:ss'),300,null,null,'公開','SP001','V000001',20,9,3,null,'沒有棒球就吃不下飯，睡不著覺的人快來唷!',default,null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M012', '南崁籃球魂不滅', to_timestamp('2019-02-03 15:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-02-01 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP003','V000001',5,2,null,null,'鬥牛要不要',default,null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M013', '桃園籃球魂不滅', to_timestamp('2019-02-11 19:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-15 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-02-07 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP003','V000001',10,2,null,null,'少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~',default,null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M014', '台北籃球魂不滅', to_timestamp('2019-02-25 20:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-10 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-02-23 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP003','V000001',15,5,2,null,'以球會友!',default,null,null);
+
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M004', '中原大學籃球魂不滅', to_timestamp('2019-01-25 20:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-10 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-01-24 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'限社團','SP003','V000001',10,3,1,null,'單挑啊!嫩逼',default,null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M008', '中壢高中籃球魂不滅', to_timestamp('2019-02-12 18:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-05 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-02-10 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP003','V000001',10,5,2,null,'教練，我想打球阿....',default,null,null);
 
 
 ------------09-INSERT--------------------
@@ -634,34 +636,44 @@ insert into SG_MSG values('MSG' || LPAD(SG_MSG_SEQ.nextval, 3, 0),'S010','M004',
 ------------SG_MEM-----------------------
 ---------------------------------20181210
 --SG_MEM假資料建立(資料不足 需再補充)
-insert into SG_MEM (SG_NO,MEM_NO,CH_STATUS) values ('S003','M002','已報到');
-insert into SG_MEM (SG_NO,MEM_NO,CH_STATUS) values ('S003','M003','已報到');
-insert into SG_MEM (SG_NO,MEM_NO) values ('S005','M004');
-
 insert into SG_MEM (SG_NO,MEM_NO) values ('S002','M002');
 insert into SG_MEM (SG_NO,MEM_NO) values ('S002','M003');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S002','M005');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S002','M010');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S003','M002');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S003','M003');
 insert into SG_MEM (SG_NO,MEM_NO) values ('S003','M004');
 insert into SG_MEM (SG_NO,MEM_NO) values ('S003','M005');
 insert into SG_MEM (SG_NO,MEM_NO) values ('S003','M007');
-insert into SG_MEM (SG_NO,MEM_NO,CH_STATUS) values ('S004','M002','已報到');
-insert into SG_MEM (SG_NO,MEM_NO,CH_STATUS) values ('S004','M003','已報到');
-insert into SG_MEM (SG_NO,MEM_NO,CH_STATUS) values ('S004','M004','已報到');
-insert into SG_MEM (SG_NO,MEM_NO) values ('S005','M008');
-insert into SG_MEM (SG_NO,MEM_NO) values ('S005','M009');
-insert into SG_MEM (SG_NO,MEM_NO) values ('S005','M010');
-insert into SG_MEM (SG_NO,MEM_NO) values ('S005','M011');
-insert into SG_MEM (SG_NO,MEM_NO) values ('S005','M012');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S004','M002');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S004','M003');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S004','M004');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S005','M004');
 insert into SG_MEM (SG_NO,MEM_NO) values ('S006','M004');
-insert into SG_MEM (SG_NO,MEM_NO) values ('S007','M001');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S007','M010');
 insert into SG_MEM (SG_NO,MEM_NO) values ('S007','M003');
-insert into SG_MEM (SG_NO,MEM_NO) values ('S007','M005');
-insert into SG_MEM (SG_NO,MEM_NO) values ('S007','M013');
-insert into SG_MEM (SG_NO,MEM_NO) values ('S007','M014');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S008','M005');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S008','M013');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S008','M014');
+insert into SG_MEM (SG_NO,MEM_NO,CH_STATUS) values ('S009','M008','已報到');
+insert into SG_MEM (SG_NO,MEM_NO,CH_STATUS) values ('S009','M009','已報到');
+insert into SG_MEM (SG_NO,MEM_NO,CH_STATUS) values ('S009','M010','已報到');
+insert into SG_MEM (SG_NO,MEM_NO,CH_STATUS) values ('S009','M011','已報到');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S009','M012');
 insert into SG_MEM (SG_NO,MEM_NO) values ('S010','M010');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S010','M013');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S010','M014');
 insert into SG_MEM (SG_NO,MEM_NO) values ('S010','M012');
-insert into SG_MEM (SG_NO,MEM_NO) values ('S011','M007');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S010','M015');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S012','M007');
 insert into SG_MEM (SG_NO,MEM_NO) values ('S012','M006');
 insert into SG_MEM (SG_NO,MEM_NO) values ('S012','M009');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S015','M009');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S015','M007');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S016','M003');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S017','M001');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S017','M002');
+
 
 
 ------------11-INSERT--------------------
