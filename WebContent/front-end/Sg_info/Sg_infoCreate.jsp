@@ -151,7 +151,6 @@
 						</tr>  
 					</tbody>
 				</table>
-				
 				<!-------------GOOGLE地圖 -------------->
 				<div>
 					起點：<input type="text" name="startAddr" id="startAddr">
@@ -161,12 +160,14 @@
 				</div>
 				<div>
 			        <input type="button" name="road" id="road" value="規劃路線">
+			        <div id="distance"></div>
 				</div>
 				<div id="map"></div>
 				
 				<input type="submit" value="送出" class="btn btn-success btn-block">
 				<input type="hidden" name="action"value="insert">
-<input type="hidden" name="test" id="test">
+				<input type="hidden" name="loc_start" id="loc_start">
+				<input type="hidden" name="loc_end" id="loc_end">
 			</form>
 		</div>
 		<div class="col-xs-12 col-sm-3"></div>
@@ -278,17 +279,16 @@
    			draggable: true
    		});
    		
-   		var startloc;
-        var endloc
+   		var loc_start;
+        var loc_end
         // 地圖查詢定位 Geocoding API
         var geocoder = new google.maps.Geocoder();
         var startSearchBtn = document.getElementById("startSearchBtn");
         var endSearchBtn = document.getElementById("endSearchBtn");
-
+		//起點座標查詢
         startSearchBtn.addEventListener("click", function(){
             var startAddr = document.getElementById("startAddr").value;
-            // console.log(addr);
-            //若重新設定起點則重置地圖
+            //重置地圖座標
         	map = new google.maps.Map(document.getElementById('map'), {
        			center: loc,
        			zoom: 16
@@ -297,23 +297,22 @@
                 if(status == 'OK'){
                     var loc = results[0].geometry.location;
                     map.setCenter(loc);
-console.log(loc);
+                    //將座標JSON物件轉成字串
+					$("#loc_start").val(JSON.stringify(results[0].geometry.location));
                     var markerRoute = new google.maps.Marker({
                         position: loc,
                         map: map
                     });
-startloc = loc;
-$("#test").val(loc);
+					loc_start = loc;
                 }else{
                     console.log(status);
                 }
             });
         }, false);
-        
+      //終點座標查詢
         endSearchBtn.addEventListener("click", function(){
             var endAddr = document.getElementById("endAddr").value;
-            // console.log(addr);
-            //若重新設定起點則重置地圖
+            //重置地圖座標
         	map = new google.maps.Map(document.getElementById('map'), {
        			center: loc,
        			zoom: 16
@@ -322,12 +321,13 @@ $("#test").val(loc);
                 if(status == 'OK'){
                     var loc = results[0].geometry.location;
                     map.setCenter(loc);
-console.log(loc);
+                  	//將座標JSON物件轉成字串
+					$("#loc_end").val(JSON.stringify(results[0].geometry.location));
                     var markerRoute = new google.maps.Marker({
                         position: loc,
                         map: map
                     });
-                    endloc = loc;
+                    loc_end = loc;
                 }else{
                     console.log(status);
                 }
@@ -343,25 +343,27 @@ console.log(loc);
         var road = document.getElementById("road");
         road.addEventListener("click", function(){
         // 放置路線圖層
-            directionsDisplay.setMap(map);
-        // 路線相關設定
-        var request = {
-         origin: startloc,
-         destination: endloc,
-         travelMode: 'WALKING' //腳踏車模式無法使用?
-        };
-        // 繪製路線
-        directionsService.route(request,function(result, status){
-         if(status == 'OK'){
-             directionsDisplay.setDirections(result);
-             console.log(result);
-         }else{
-             console.log(status);
-         }
-        });
+	        directionsDisplay.setMap(map);
+	        // 路線相關設定
+	        var request = {
+	         origin: loc_start,
+	         destination: loc_end,
+	         travelMode: 'WALKING' //腳踏車模式無法使用?
+	        };
+	        
+	        // 繪製路線
+	        directionsService.route(request,function(result, status){
+	         if(status == 'OK'){
+	             directionsDisplay.setDirections(result);
+	             //顯示路線距離
+	             $("#distance").text("總距離為： "+result.routes[0].legs[0].distance.text);
+	         }else{
+	             console.log(status);
+	         }
+	        });
 
         }, false);
-   		
+        
    	}
    	
     

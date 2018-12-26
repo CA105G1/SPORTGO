@@ -39,7 +39,7 @@
     	border-radius: 30px;
     	cursor: pointer;
     	box-shadow: 0 3px #999;
-    	background-color: lightpink;	
+    	background-color: lightpink;
     }
     .sg_infoList:active {
 	  	box-shadow: 0 1px #666;
@@ -97,14 +97,11 @@
 				  </div>
 <!------------------------------------ 查詢區塊 ----------------------------------->
 				  <div class="panel panel-info">
-				    <div class="panel-heading" role="tab" id="panel2">
+				    <div class="panel-heading">
 				      <h4 class="panel-title">
-				        <a href="#bbb" data-parent="#accordion2" data-toggle="collapse" role="button" class="collapsed" aria-expanded="false" aria-controls="bbb">
 				          <div>揪團查詢</div>
-				        </a>
 				      </h4>
 				    </div>
-				    <div id="bbb" class="panel-collapse collapse" role="tabpanel" aria-labelledby="panel2">
 				      <div class="panel-body">
 				      	<form method="post" action="<%= request.getContextPath()%>/Sg_info/Sg_info.do">
 				      		<div class="table-responsive">
@@ -165,22 +162,17 @@
 				      		</div>
 				      	</form>
 				      </div>
-				    </div>
 				  </div>
 <!---------------------------- 區塊3 ------------------------------->
 				  <div class="panel panel-info">
-				    <div class="panel-heading" role="tab" id="panel3">
+				    <div class="panel-heading">
 				      <h4 class="panel-title">
-				        <a href="#ccc" data-parent="#accordion2" data-toggle="collapse" role="button" class="collapsed" aria-expanded="false" aria-controls="ccc">
-				          收合項目標題三
-				        </a>
+				          	收合項目標題三
 				      </h4>
 				    </div>
-				    <div id="ccc" class="panel-collapse collapse" role="tabpanel" aria-labelledby="panel3">
 				      <div class="panel-body">
-				        內容三置入在這裡
+				        	內容三置入在這裡
 				      </div>
-				    </div>
 				  </div>
 				</div>
 

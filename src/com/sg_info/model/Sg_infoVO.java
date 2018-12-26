@@ -23,10 +23,8 @@ public class Sg_infoVO implements Serializable{
 	private Integer sg_chkno;
 	private String sg_extrainfo;
 	private String sg_status;
-	private Double loc_start_lat;
-	private Double loc_start_lng;
-	private Double loc_end_lat;
-	private Double loc_end_lng;
+	private String loc_start;
+	private String loc_end;
 	
 	public Sg_infoVO() {
 		super();
@@ -176,36 +174,22 @@ public class Sg_infoVO implements Serializable{
 		this.sg_status = sg_status;
 	}
 
-	public Double getLoc_start_lat() {
-		return loc_start_lat;
+
+	public String getLoc_start() {
+		return loc_start;
 	}
 
-	public void setLoc_start_lat(Double loc_start_lat) {
-		this.loc_start_lat = loc_start_lat;
+	public void setLoc_start(String loc_start) {
+		this.loc_start = loc_start;
 	}
 
-	public Double getLoc_start_lng() {
-		return loc_start_lng;
+
+	public String getLoc_end() {
+		return loc_end;
 	}
 
-	public void setLoc_start_lng(Double loc_start_lng) {
-		this.loc_start_lng = loc_start_lng;
-	}
-
-	public Double getLoc_end_lat() {
-		return loc_end_lat;
-	}
-
-	public void setLoc_end_lat(Double loc_end_lat) {
-		this.loc_end_lat = loc_end_lat;
-	}
-
-	public Double getLoc_end_lng() {
-		return loc_end_lng;
-	}
-
-	public void setLoc_end_lng(Double loc_end_lng) {
-		this.loc_end_lng = loc_end_lng;
+	public void setLoc_end(String loc_end) {
+		this.loc_end = loc_end;
 	};
 	
 }

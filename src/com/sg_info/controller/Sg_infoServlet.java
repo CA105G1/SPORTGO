@@ -37,8 +37,6 @@ public class Sg_infoServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		
 		String action = req.getParameter("action");
-String test = req.getParameter("test");
-System.out.println("LOC="+test);
 		
 		if("insert".equals(action)) {
 			List<String> errorMsg = new LinkedList<String>();
@@ -125,9 +123,20 @@ System.out.println("LOC="+test);
 					errorMsg.add("人數下限請填數字");
 				}
 				
+				//路線座標檢查
+				String sp_no = req.getParameter("sp_no").trim();
+				String loc_start = req.getParameter("loc_start");
+				String loc_end = req.getParameter("loc_end");
+System.out.println(loc_start);
+				if("SP006".equals(sp_no) || "SP007".equals(sp_no)) {
+					if(loc_start == null || loc_end == null) {
+						errorMsg.add("請規劃路線");
+					}
+				}
+				
+				
 				String mem_no = req.getParameter("mem_no").trim();
 				String sg_per = req.getParameter("sg_per").trim();
-				String sp_no = req.getParameter("sp_no").trim();
 				String v_no = req.getParameter("v_no").trim();
 				String sg_extrainfo = req.getParameter("sg_extrainfo").trim();
 				
@@ -160,7 +169,7 @@ System.out.println("LOC="+test);
 				Sg_infoService svc = new Sg_infoService();
 				sg_infoVO = svc.insertSg_info(mem_no, sg_name, sg_date, apl_start, apl_end, sg_fee, sg_pic, 
 						null, sg_per, sp_no, v_no, sg_maxno, sg_minno, -1, -1, 
-						sg_extrainfo, 0.0, 0.0, 0.0, 0.0);
+						sg_extrainfo, loc_start, loc_end);
 						
 				req.setAttribute("Sg_infoVO", sg_infoVO);
 				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/Sg_info/SgHome.jsp");
@@ -273,10 +282,8 @@ System.out.println("LOC="+test);
 				String v_no = req.getParameter("v_no").trim();
 				Integer sg_ttlapl = new Integer(req.getParameter("sg_ttlapl").trim());
 				String sg_extrainfo = req.getParameter("sg_info4").trim();
-				Double loc_start_lat = new Double(req.getParameter("sg_info5").trim());
-				Double loc_start_lng = new Double(req.getParameter("sg_info6").trim());
-				Double loc_end_lat = new Double(req.getParameter("sg_info7").trim());
-				Double loc_end_lng = new Double(req.getParameter("sg_info8").trim());
+				String loc_start = new String(req.getParameter("sg_info5").trim());
+				String loc_end = new String(req.getParameter("sg_info6").trim());
 				
 				
 				//準備VO，若有錯誤就原封不動把VO再跟著錯誤送回去
@@ -297,10 +304,8 @@ System.out.println("LOC="+test);
 				sg_infoVO.setSg_minno(sg_minno);
 				sg_infoVO.setSg_ttlapl(sg_ttlapl);
 				sg_infoVO.setSg_extrainfo(sg_extrainfo);
-				sg_infoVO.setLoc_start_lat(loc_start_lat);
-				sg_infoVO.setLoc_start_lng(loc_start_lng);
-				sg_infoVO.setLoc_end_lat(loc_end_lat);
-				sg_infoVO.setLoc_end_lng(loc_end_lng);
+				sg_infoVO.setLoc_start(loc_start);
+				sg_infoVO.setLoc_end(loc_end);
 				
 				//若有錯誤訊息，將VO跟錯誤訊息回傳
 				if(!errorMsg.isEmpty()) {
@@ -311,7 +316,7 @@ System.out.println("LOC="+test);
 				}
 				
 				///////////////////開始UPDATE資料//////////////////////////
-				sg_infoVO = svc.updateSg_info(sg_no, mem_no, sg_name, sg_date, apl_start, apl_end, sg_fee, sg_pic, sg_pic_ext, sg_per, sp_no, v_no, sg_maxno, sg_minno, sg_ttlapl, sg_extrainfo, loc_start_lat, loc_start_lng, loc_end_lat, loc_end_lng);
+				sg_infoVO = svc.updateSg_info(sg_no, mem_no, sg_name, sg_date, apl_start, apl_end, sg_fee, sg_pic, sg_pic_ext, sg_per, sp_no, v_no, sg_maxno, sg_minno, sg_ttlapl, sg_extrainfo, loc_start, loc_end);
 				
 				req.setAttribute("Sg_infoVO", sg_infoVO);
 				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/Sg_info/Sg_infoGetByPk.jsp");

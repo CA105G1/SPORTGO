@@ -19,9 +19,9 @@ public class Sg_infoJDBCDAO implements Sg_infoDAO_interface{
 	private static final String psw = "123456";
 	
 	private static final String insertStmt = 
-			"INSERT INTO sg_info VALUES('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default, ?, ?, ?, ?)";
+			"INSERT INTO sg_info VALUES('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default, ?, ?)";
 	private static final String updateClientStmt =
-			"UPDATE sg_info SET mem_no=?, sg_name=?, sg_date=?, apl_start=?, apl_end=?, sg_fee=?, sg_pic=?, sg_pic_ext=?, sg_per=?, sp_no=?, v_no=?, sg_maxno=?, sg_minno=?, sg_ttlapl=?, sg_extrainfo=?, loc_start_lat=?, loc_start_lng=?, loc_end_lat=?, loc_end_lng=? WHERE sg_no=?";
+			"UPDATE sg_info SET mem_no=?, sg_name=?, sg_date=?, apl_start=?, apl_end=?, sg_fee=?, sg_pic=?, sg_pic_ext=?, sg_per=?, sp_no=?, v_no=?, sg_maxno=?, sg_minno=?, sg_ttlapl=?, sg_extrainfo=?, loc_start=?, loc_end=? WHERE sg_no=?";
 			//sg_chkno, sg_status還沒設定進去，mem_no不能改
 	private static final String deleteStmt =
 			"DELETE FROM sg_info WHERE sg_no=?";
@@ -69,10 +69,8 @@ public class Sg_infoJDBCDAO implements Sg_infoDAO_interface{
 			pstmt.setInt(14, sg_infoVO.getSg_ttlapl());
 			pstmt.setInt(15, sg_infoVO.getSg_chkno());
 			pstmt.setString(16, sg_infoVO.getSg_extrainfo());
-			pstmt.setDouble(17, sg_infoVO.getLoc_start_lat());
-			pstmt.setDouble(18, sg_infoVO.getLoc_start_lng());
-			pstmt.setDouble(19, sg_infoVO.getLoc_end_lat());
-			pstmt.setDouble(20, sg_infoVO.getLoc_end_lng());
+			pstmt.setString(17, sg_infoVO.getLoc_start());
+			pstmt.setString(18, sg_infoVO.getLoc_end());
 			
 			pstmt.executeUpdate();
 			
@@ -123,11 +121,9 @@ public class Sg_infoJDBCDAO implements Sg_infoDAO_interface{
 			pstmt.setInt(13, sg_infoVO.getSg_minno());
 			pstmt.setInt(14, sg_infoVO.getSg_ttlapl());
 			pstmt.setString(15, sg_infoVO.getSg_extrainfo());
-			pstmt.setDouble(16, sg_infoVO.getLoc_start_lat());
-			pstmt.setDouble(17, sg_infoVO.getLoc_start_lng());
-			pstmt.setDouble(18, sg_infoVO.getLoc_end_lat());
-			pstmt.setDouble(19, sg_infoVO.getLoc_end_lng());
-			pstmt.setString(20, sg_infoVO.getSg_no());
+			pstmt.setString(16, sg_infoVO.getLoc_start());
+			pstmt.setString(17, sg_infoVO.getLoc_end());
+			pstmt.setString(18, sg_infoVO.getSg_no());
 			
 			pstmt.executeUpdate();
 			
@@ -223,10 +219,8 @@ public class Sg_infoJDBCDAO implements Sg_infoDAO_interface{
 				vo.setSg_chkno(rs.getInt("sg_chkno"));
 				vo.setSg_extrainfo(rs.getString("sg_extrainfo"));
 				vo.setSg_status(rs.getString("sg_status"));
-				vo.setLoc_start_lat(rs.getDouble("loc_start_lat"));
-				vo.setLoc_start_lng(rs.getDouble("loc_start_lng"));
-				vo.setLoc_end_lat(rs.getDouble("loc_end_lat"));
-				vo.setLoc_end_lng(rs.getDouble("loc_end_lng"));
+				vo.setLoc_start(rs.getString("loc_start"));
+				vo.setLoc_end(rs.getString("loc_end"));
 			}
 			
 		} catch (SQLException e) {
@@ -292,10 +286,8 @@ public class Sg_infoJDBCDAO implements Sg_infoDAO_interface{
 				vo.setSg_chkno(rs.getInt("sg_chkno"));
 				vo.setSg_extrainfo(rs.getString("sg_extrainfo"));
 				vo.setSg_status(rs.getString("sg_status"));
-				vo.setLoc_start_lat(rs.getDouble("loc_start_lat"));
-				vo.setLoc_start_lng(rs.getDouble("loc_start_lng"));
-				vo.setLoc_end_lat(rs.getDouble("loc_end_lat"));
-				vo.setLoc_end_lng(rs.getDouble("loc_end_lng"));
+				vo.setLoc_start(rs.getString("loc_start"));
+				vo.setLoc_end(rs.getString("loc_end"));
 
 				list.add(vo);
 			}
