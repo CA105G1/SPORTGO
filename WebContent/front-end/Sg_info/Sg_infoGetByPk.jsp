@@ -33,6 +33,10 @@
 		height: 400px;  /* The height is 400 pixels */
 		width: 100%;  /* The width is the width of the web page */
 	}
+	#btnGroup{
+		display:flex;
+		justify-content: space-between;
+	}
 </style>
 
 </head>
@@ -132,27 +136,22 @@
 							<th>團長的話</th>
 							<td class="writable"><%= vo.getSg_extrainfo() %></td> <!-- sg_info4 -->
 						</tr>  
-						<tr><th>-路線起點經度</th><td class="writable"><%= vo.getLoc_start_lat() %></td></tr> <!-- sg_info5 -->
-						<tr><th>-路線起點緯度</th><td class="writable"><%= vo.getLoc_start_lng() %></td></tr> <!-- sg_info6 -->
-						<tr><th>-路線終點經度</th><td class="writable"><%= vo.getLoc_end_lat() %></td></tr> <!-- sg_info7 -->
-						<tr><th>-路線終點緯度</th><td class="writable"><%= vo.getLoc_end_lng() %></td></tr> <!-- sg_info8 -->
+						<tr><th>-路線起點座標</th><td class="writable"><%= vo.getLoc_start() %></td></tr> <!-- sg_info5 -->
+						<tr><th>-路線終點座標</th><td class="writable"><%= vo.getLoc_end() %></td></tr> <!-- sg_info6 -->
 					</tbody>
 				</table>
 				<!-------------GOOGLE地圖 -------------->
-				<div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
 					<div class="panel panel-default">
-						<div class="panel-heading" role="tab" id="panel1">
+						<div class="panel-heading">
 							<h4 class="panel-title text-center">
-								<a href="#aaa" data-parent="#accordion2" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="aaa">
 								顯示地圖
-								</a>
 							</h4>
 						</div>
-						<div id="aaa" class="panel-collapse collapse" role="tabpanel" aria-labelledby="panel1">
+						<div>
 								<div id="map"></div>
+								<div id="distance"></div>
 						</div>
 					</div>
-				</div>
 				
 				
 				<input type="button" id="update" value="編輯" class="btn btn-info btn-block" align="center" style="display: ">
@@ -171,41 +170,46 @@
 				<input type="hidden" name="sg_no" value="<%= vo.getSg_no()%>">
 			</form>
 			
-			<div class="container">
-				<div class="row">
-					<div class="col-xs-12 col-sm-3">
-						<div class="btn" id="likebtn">
-							<img src="<%= request.getContextPath()%>/img/love.png" id="like" style="display:none">
-							<img src="<%= request.getContextPath()%>/img/love_white.png" id="dislike" style="display:">
-							加入收藏
-						</div>
-					</div>
-					<div class="col-xs-12 col-sm-3">
-						<div class="btn" >
-							<img src="<%= request.getContextPath()%>/img/add.png">
-							加入揪團
-						</div>
-					</div>
-					<div class="col-xs-12 col-sm-3">
-						<div class="btn">
-							<img src="<%= request.getContextPath()%>/img/share.png">
-							分享給好友
-						</div>
-					</div>
-					<div class="col-xs-12 col-sm-3">
-						<div class="btn">
-							<img src="<%= request.getContextPath()%>/img/warning.png">
-							檢舉
-						</div>
-					</div>
-				</div>
-			</div>
-			<%@ include file="Sg_repPage.file" %>
-			
 		</div>
 		<div class="col-xs-12 col-sm-3"></div>
 	</div>
 </div>
+
+
+
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12 col-sm-3">
+		</div>
+		<div class="col-xs-12 col-sm-6" id="btnGroup">
+			<div class="btn" id="likebtn">
+				<img src="<%= request.getContextPath()%>/img/love.png" id="like" style="display:none">
+				<img src="<%= request.getContextPath()%>/img/love_white.png" id="dislike" style="display:">
+				加入收藏
+			</div>
+			
+			<div class="btn" >
+				<img src="<%= request.getContextPath()%>/img/add.png">
+				加入揪團
+			</div>
+			
+			<div class="btn">
+				<img src="<%= request.getContextPath()%>/img/share.png">
+				分享給好友
+			</div>
+			
+			<div class="btn" data-toggle="modal" data-target="#smallShoes">
+				<img src="<%= request.getContextPath()%>/img/warning.png">
+				檢舉
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-3">
+		</div>
+	</div>
+</div>
+			<%@ include file="Sg_repPage.file" %>
+
+
 
 
 <script type="text/javascript">
@@ -349,15 +353,7 @@
 	  });
 	  
 	  
-	  
-	  $("#like").click(function(){
-		 $("#dislike").css("display","");
-		 $("#like").css("display","none");
-	  });
-	  $("#dislike").click(function(){
-			 $("#like").css("display","");
-			 $("#dislike").css("display","none");
-		  });
+
 	
 	  
 	//google map設定
@@ -371,15 +367,51 @@
 	
 		map = new google.maps.Map(document.getElementById('map'), {
 			center: loc,
-			zoom: 16
+			zoom:14
 		});
+		//取得座標(JSON字串)
+		var loc_start = <%= vo.getLoc_start()%>;
+		var loc_end = <%= vo.getLoc_end()%>;
+		if(loc_start == null || loc_end == null){
+			//若沒有路線資料則設定本機定位(之後改成場館位置)////////////////////////////////////////////////////////////////
+			var marker = new google.maps.Marker({
+	   			position: loc,
+	   			map: map,
+	   			animation: google.maps.Animation.DROP,
+	   			draggable: true
+	   		});
+		}else{
+			// 載入路線服務與路線顯示圖層 Directions API
+	        directionsService = new google.maps.DirectionsService();
+	        directionsDisplay = new google.maps.DirectionsRenderer();
+	        
+	        // 放置路線圖層
+	        directionsDisplay.setMap(map);
+	        
+	        
+	        
+	        // 路線相關設定
+	        var request = {
+	         origin: loc_start,
+	         destination: loc_end,
+	         travelMode: 'DRIVING' //腳踏車模式無法使用?
+	        };
+	        // 繪製路線
+	        directionsService.route(request,function(result, status){
+	         if(status == 'OK'){
+	             directionsDisplay.setDirections(result);
+	             //顯示路線距離
+	             $("#distance").text("總距離為： "+result.routes[0].legs[0].distance.text);
+	             
+	         }else{
+	             console.log(status);
+	         }
+	        });
+		}
 		
-		var marker = new google.maps.Marker({
-			position: loc,
-			map: map,
-			animation: google.maps.Animation.DROP,
-			draggable: true
-		});
+
+        
+        
 	}
 	  
 	
