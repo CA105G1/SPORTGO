@@ -3,35 +3,37 @@ package com.venuetype.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import java.sql.*;
 
 public class VenueTypeDAO implements VenueTypeDAO_interface{
 	
-	private static final String DRIVER = com.util.lang.Util.DRIVER;
-	private static final String URL = com.util.lang.Util.URL;
-	private static final String USER = com.util.lang.Util.USER;
-	private static final String PASSWORD = com.util.lang.Util.PASSWORD;
+	private static DataSource ds = null;
 	
-	static { //預先載入驅動程式
+	static {
 		try {
-			Class.forName(DRIVER);
-		} catch (ClassNotFoundException ce) {
-			ce.printStackTrace();
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup(com.util.lang.Util.JNDI_DATABASE_NAME);
+		} catch (NamingException e) {
+			e.printStackTrace();
 		}
 	}
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO venuetype VALUES ('VT'||LPAD(to_char(VENUETYPE_SEQ.NEXTVAL), 3, '0'), ?)";
-	private static final String GET_ALL_STMT = 
-		"SELECT vt_no,vt_name FROM venuetype ORDER BY vt_no";
-	private static final String GET_ONE_STMT = 
-		"SELECT vt_no,vt_name FROM venuetype WHERE vt_no = ?";
-	private static final String DELETE = 
-		"DELETE FROM venuetype WHERE vt_no = ?";
-	private static final String UPDATE = 
-		"UPDATE venuetype SET vt_name = ? WHERE vt_no = ?";	
-	
-	
+			"INSERT INTO venuetype (vt_no,vt_name) VALUES (?, ?)";
+		private static final String GET_ALL_STMT = 
+			"SELECT vt_no,vt_name FROM venuetype ORDER BY vt_no";
+		private static final String GET_ONE_STMT = 
+			"SELECT vt_no,vt_name FROM venuetype WHERE vt_no = ?";
+		private static final String DELETE = 
+			"DELETE FROM venuetype WHERE vt_no = ?";
+		private static final String UPDATE = 
+			"UPDATE venuetype SET vt_name = ? WHERE vt_no = ?";
+		
 	@Override
 	public void insert(VenueTypeVO vtVO) {
 		
@@ -40,10 +42,11 @@ public class VenueTypeDAO implements VenueTypeDAO_interface{
 
 		try {
 
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
-			pstmt.setString(1, vtVO.getVt_name());
+			pstmt.setString(1, vtVO.getVt_no());
+			pstmt.setString(2, vtVO.getVt_name());
 
 			pstmt.executeUpdate();
 
@@ -79,7 +82,7 @@ public class VenueTypeDAO implements VenueTypeDAO_interface{
 
 		try {
 
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setString(1, vtVO.getVt_name());
@@ -118,7 +121,7 @@ public class VenueTypeDAO implements VenueTypeDAO_interface{
 
 		try {
 
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(DELETE);
 
 			pstmt.setString(1, vt_no);
@@ -158,7 +161,7 @@ public class VenueTypeDAO implements VenueTypeDAO_interface{
 
 		try {
 
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
 			pstmt.setString(1, vt_no);
@@ -216,7 +219,7 @@ public class VenueTypeDAO implements VenueTypeDAO_interface{
 
 		try {
 
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
@@ -230,7 +233,8 @@ public class VenueTypeDAO implements VenueTypeDAO_interface{
 
 			// Handle any driver errors
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
@@ -257,7 +261,7 @@ public class VenueTypeDAO implements VenueTypeDAO_interface{
 		}
 		return list;
 	}
-
+	
 	private static final String IS_VENUETYPE_SQL = ""
 			+ " SELECT vt_no, vt_name FROM "
 			+ " (SELECT vt_no, vt_name FROM venuetype WHERE vt_name=?) "
@@ -270,7 +274,7 @@ public class VenueTypeDAO implements VenueTypeDAO_interface{
 		ResultSet resultSet = null;
 		VenueTypeVO venueTypeVO = null;
 		try {
-			connection = DriverManager.getConnection(URL, USER, PASSWORD);
+			connection = ds.getConnection();
 			preparedStatement = connection.prepareStatement(IS_VENUETYPE_SQL);
 			preparedStatement.setString(1, vt_name);
 			preparedStatement.setString(2, funcList);
