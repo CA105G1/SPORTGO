@@ -14,7 +14,7 @@
 		justify-content:center;
 	}
 	</style>
-	
+	<div style="height:50px;width:50px"></div>
 	<div class="container-fluid">
 			<nav class="navbar navbar-default" role="navigation">
 				<div class="navbar-myself-center">

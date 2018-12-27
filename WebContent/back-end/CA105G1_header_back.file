@@ -25,7 +25,7 @@
 				<span class="icon-bar"></span>
 			</button>
 			<a class="navbar-brand myNoWrap" href="#">
-				<img src="/images/logo_SportyGo_2_light.png" alt="SportyGo!"/>
+				<img src="<%=request.getContextPath()%>/images/logo_SportyGo_2_light.png" alt="SportyGo!"/>
 			</a>
 		</div>
 				
