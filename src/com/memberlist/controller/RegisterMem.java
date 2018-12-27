@@ -5,13 +5,15 @@ import java.util.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import com.memberlist.model.*;
-
+@MultipartConfig(fileSizeThreshold=1024*1024,maxFileSize=5*1024*1024,maxRequestSize=5*5*1024*1024)
 public class RegisterMem extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -24,9 +26,9 @@ public class RegisterMem extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
 		MemberlistService service = new MemberlistService();
 		MemberlistVO newmem = null;
-		List<MemberlistVO> memall = new ArrayList<>();
 		Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 		req.setAttribute("errorMsgs", errorMsgs);
 		String name = req.getParameter("name");
@@ -38,8 +40,11 @@ public class RegisterMem extends HttpServlet {
 		String nick = req.getParameter("nick");
 		String emgc = req.getParameter("emgc");
 		String emgcphone = req.getParameter("emgcphone");
-		String memno = null;
+		String mem_no = null;
 		String button = req.getParameter("button");
+		
+		Part part =req.getPart("picture");
+		byte[] file =null;
 		/*****按鈕驗證*******/
 		if("cancel".equals(button)) {
 			res.sendRedirect("Login.jsp");
@@ -50,11 +55,14 @@ public class RegisterMem extends HttpServlet {
 			errorMsgs.put("account", "帳號欄位必填");
 		}
 		/*******驗證帳號是否重複********/
-		memall = service.getAllMem();
-		for(MemberlistVO check : memall) {
-			if(account.equals(check.getMem_account())) {
+		try{
+			mem_no = service.getOneMemByAccount(account);
+			if(mem_no!=null) {
 				errorMsgs.put("account", "此帳號已被使用");
 			}
+		}catch(RuntimeException re) {
+			System.out.println(re.getMessage());
+			log(re.getMessage());
 		}
 		/*******必填欄位驗證*********/
 		if("".equals(name)||(name.trim()).length()==0) {
@@ -77,7 +85,7 @@ public class RegisterMem extends HttpServlet {
 		/********開始新增資料**********/
 		try {
 			newmem = service.addmemberlist(name, account, password, email, phone);
-			memno = newmem.getMem_no();
+			mem_no = service.getOneMemByAccount(account);
 			/********選填欄位***********/
 			if("".equals(nick)||nick==null) {
 				newmem.setMem_nick(" ");
@@ -89,18 +97,35 @@ public class RegisterMem extends HttpServlet {
 				newmem.setMem_emgcphone(" ");
 			}
 			if (!("".equals(nick) && "".equals(emgc) && "".equals(emgcphone))) {
-				newmem = service.renewPrivacy(memno, name, nick, email, phone, emgc, emgcphone);
+				newmem = service.renewPrivacy(mem_no, name, nick, email, phone, emgc, emgcphone);
 			} 
 		} catch (RuntimeException e) {
 			System.out.println("新增資料錯誤"+e.getMessage());
 			log(e.getMessage());
 		}
+		System.out.println(part);
+		if(part.getContentType()!=null&&part!=null) {
+			InputStream in= part.getInputStream();
+			file = new byte[in.available()];
+			in.read(file);
+			in.close();
+		/****永續層存取,更新會員照片*****/
+			try {
+				service.renewPicture(mem_no, file, part.getContentType());
+				System.out.println("picture renew successful");
+				req.setAttribute("picture", file);
+			} catch (RuntimeException re) {
+				errorMsgs.put("picture", "輸入的照片有誤");
+				re.printStackTrace();
+			}
+		}
 		
 		/************查詢完成準備轉交（send the success view）***************/
 		HttpSession session = req.getSession();
-		session.setAttribute("MemberlistVO", newmem);
-		String url = "Member_page.jsp";
-		RequestDispatcher memberview = req.getRequestDispatcher(url);
-		memberview.forward(req,res);	
+		MemberlistVO memberlistVO = service.getOneMem(mem_no);
+		session.setAttribute("MemberlistVO", memberlistVO);
+		session.setAttribute("mem_no", mem_no);
+		System.out.println("member created successful");
+		res.sendRedirect("Member_page.jsp");
 	} 
 }

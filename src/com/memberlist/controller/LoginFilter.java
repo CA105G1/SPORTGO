@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.memberlist.model.MemberlistVO;
+
 public class LoginFilter implements Filter {
 	
 	ServletContext context =null;
@@ -32,8 +34,9 @@ public class LoginFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest)request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		HttpSession session = req.getSession();
-		Object mem_no = session.getAttribute("mem_no");
-		if(mem_no==null) {
+		String mem_no = (String)session.getAttribute("mem_no");
+		MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("MemberlistVO");
+		if(mem_no==null || memberlistVO==null) {
 			session.setAttribute("location", req.getRequestURL());
 			res.sendRedirect(req.getContextPath()+"/front-end/memberlist/Login.jsp");
 			return;

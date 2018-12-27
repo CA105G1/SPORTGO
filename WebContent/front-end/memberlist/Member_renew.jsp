@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,12 +22,17 @@
   <h1>更換大頭貼</h1>
   <form method="post" class="form-horizontal" enctype="multipart/form-data" action="MemManager.do">
   		<input type="file" name="picture" class="upl">
-  		
   <div>
-  	<img class="preview" src="showPicture.do?mem_no=${MemberlistVO.mem_no}">
-  	<div class="size"></div>
+  	<img class="preview" src="<%=request.getContextPath()%>/img/mem_no.jpg">
   </div>
   <br>
+  	<c:if test="${not empty errorMsgs}">
+		<ul class="error">
+			<c:forEach var="message" items="${errorMsgs}">
+				<li>${message.value}</li>
+			</c:forEach>
+		</ul>
+	</c:if>
     <div class="form-group">
       <label class="control-label col-sm-2" for="name">姓名</label>
       <div class="col-sm-10">
@@ -88,8 +94,8 @@ function preview(input) {
         var reader = new FileReader();
         reader.onload = function (e) {
             $('.preview').attr('src', e.target.result);
-            var KB = format_float(e.total / 1024, 2);
-            $('.size').text("檔案大小：" + KB + " KB");
+           /*  var KB = format_float(e.total / 1024, 2);
+            $('.size').text("檔案大小：" + KB + " KB"); */
         }
         reader.readAsDataURL(input.files[0]);
     }
