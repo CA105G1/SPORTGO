@@ -1,6 +1,10 @@
----SportyGo_ver_0_1_9rv_create_and_insert_1218------
------------
----SportyGo_ver_0_1_9rv_create_1218------
+---SportyGo_ver_0_2_1create_and_insert_1226------
+---alert 修豪的SG_info start_loc, end_loc------
+---SportyGo_ver_0_2_0rv_create_and_insert_1226------
+---增加:insert Region全部資訊
+---SportyGo_ver_0_2_0_create_and_insert_1225------
+---改動場地欄位，聯外沒變，及新增一個獨立表格GYM用來抓資料儲存用
+---SportyGo_ver_0_2_0_create_1226------
 --------------------------
 ------drop sequence-------
 --------------------------
@@ -13,12 +17,9 @@ DROP SEQUENCE SG_MSG_SEQ;
 DROP SEQUENCE SG_REP_SEQ;
 DROP SEQUENCE EVAOFMEM_SEQ;
 DROP SEQUENCE club_seq;
-DROP SEQUENCE club_member_seq;
 DROP SEQUENCE club_member_LIST_seq;
-DROP SEQUENCE MUTIMEDIA_SEQ;
 DROP SEQUENCE MULTIMEDIA_SEQ;
 DROP SEQUENCE post_info_seq;
-DROP SEQUENCE post_seq;
 DROP SEQUENCE post_like_seq;
 DROP SEQUENCE respones_seq;
 DROP SEQUENCE respones_like_seq;
@@ -39,10 +40,8 @@ DROP TABLE EMP;
 DROP TABLE NEWS;
 DROP TABLE NEWSTYPE;
 DROP TABLE ADDRESS;
----有表格改名字--第一個是舊的
-DROP TABLE PRODUCT_DETAIL_PROMOTION;
 DROP TABLE PRO_DETAIL_PROM;
----
+DROP TABLE GYM;
 DROP TABLE PROMOTION;
 DROP TABLE SHOPPINGCART;
 DROP TABLE PRODUCT_LIKE;
@@ -52,13 +51,9 @@ DROP TABLE PRODUCTCLASS;
 DROP TABLE ORD;
 DROP TABLE RESPONES_LIKE;
 DROP TABLE RESPONES;
-DROP TABLE POST;
 DROP TABLE POST_LIKE;
 DROP TABLE POST_INFO;
-DROP TABLE MUTIMEDIA;
 DROP TABLE MULTIMEDIA;
-----FIRST IS OLDEER TABLE;
-DROP TABLE CLUB_MEMBER;
 DROP TABLE CLUB_MEMBERLIST;
 ----
 DROP TABLE CLUB;
@@ -152,40 +147,53 @@ CREATE TABLE REGION (
 );
 ------------06---------------------------
 ------------VENUE------------------------
----------------------------------20181208
-CREATE TABLE VENUE (
-    V_NO        VARCHAR2(7)  PRIMARY KEY, 
-    V_NAME      VARCHAR2(60) NOT NULL,
-    VT_NO       VARCHAR2(500), ----2018-12-18
-    REG_NO      NUMBER(5),
+---------------------------------20181224
+Create table venue(
+    v_no varchar2(7) PRIMARY KEY, --PK--V0000001
+    v_name varchar2(500) NOT NULL,
+    v_weburl varchar2(1500),
+    v_parktype varchar2(500), -- 停車類型
+    v_introduction   CLOB, ---場館簡介
+    vt_no varchar2(7),
+    v_inout varchar2(500), ---設施室內外類型
+    reg_no NUMBER(5),
+    v_address varchar2(500),
+    v_phoneno varchar2(50),
     V_LAT       NUMBER(17,14),  ---- 修改欄位 (Number可存浮點數 17長度,小數點14位)
     V_LONG      NUMBER(17,14),  ---- 修改欄位 (Number可存浮點數 17長度,小數點14位)
-    V_LINK       VARCHAR2(500),  ---- New 圖片連結
-    V_ADDRESS   VARCHAR2(500),
-    V_PHONENO   VARCHAR2(50),
-    V_STATUS    VARCHAR2(50),   ---- New 場地狀態
-    V_FUNC      VARCHAR2(500),  ---- New 場地功能
-    --v_isopenmomday,
-	
-	--V_LINK      VARCHAR2(200),
-    --V_OPENDAY   VARCHAR2(7),
-    ------暫時刪除欄位openday，link
-
+    -----v_public_transport CLOB, ---交通資訊---因為部分有Array所以就這時放棄
+    v_fitall varchar2(1) check( v_fitall in('Y','N')), ---適用對象-民眾
+    v_fitinter varchar2(1) check (v_fitinter in('Y','N')),---適用對象-所屬單位人員(如校內師生)
+    open_state varchar2(100), --開放情況
+    open_time varchar2(500), --開放時間
+    openday_mon varchar2(1) check (openday_mon in ('Y','N')),    
+    openday_tue varchar2(1) check (openday_tue in ('Y','N')),
+    openday_wed varchar2(1) check (openday_wed in ('Y','N')),
+    openday_thu varchar2(1) check (openday_thu in ('Y','N')),
+    openday_fri varchar2(1) check (openday_fri in ('Y','N')),
+    openday_sat varchar2(1) check (openday_sat in ('Y','N')),
+    openday_sun varchar2(1) check (openday_sun in ('Y','N')),
+    v_photo1 BLOB,
+    v_photo1_ext varchar2(10),
+    v_photo2 BLOB,
+    v_photo2_ext varchar2(10),        
+    ----TEST_ING---
     CONSTRAINT VENUE_VENUETYPE_FK                    ----單字FK放後面
     FOREIGN KEY(VT_NO) REFERENCES VENUETYPE(VT_NO),  
     CONSTRAINT VENUE_REGION_FK                       ----單字FK放後面
     FOREIGN KEY(REG_NO) REFERENCES REGION(REG_NO)
 );
-----
 
-----openday跟link要用id查，較為麻煩，先暫時刪除
 
 CREATE SEQUENCE VENUE_SEQ
     INCREMENT BY 1
     START WITH 1
     NOMAXVALUE
     NOCYCLE
-    NOCACHE;
+    NOCACHE
+    order;
+
+
 ------------07---------------------------
 ------------V_EVALUATION------------------------
 ---------------------------------20181208
@@ -212,22 +220,24 @@ CREATE TABLE SG_INFO(
     SG_PIC_EXT varchar2(10),
     SG_PER varchar2(10) not null,
     SP_NO varchar2(7) not null,
-    VENUE_NO varchar2(7),
+    V_NO varchar2(7),
     SG_MAXNO number(2,0),
     SG_MINNO number(2,0),
     SG_TTLAPL number(2,0),
     SG_CHKNO number(2,0),
     SG_EXTRAINFO clob,
     SG_STATUS varchar2(10) default '揪團中' not null,
-    LOC_START_LAT DECIMAL(9,6),
-    LOC_START_LNG DECIMAL(8,6),
-    LOC_END_LAT DECIMAL(9,6),
-    LOC_END_LNG DECIMAL(8,6),
+    --LOC_START_LAT DECIMAL(9,6),
+    --LOC_START_LNG DECIMAL(8,6),
+    --LOC_END_LAT DECIMAL(9,6),
+    --LOC_END_LNG DECIMAL(8,6),
+	LOC_START varchar2(50),
+	LOC_END varchar2(50),
     
     constraint SG_INFO_PK primary key (SG_NO),
     constraint FK1_SG_INFO_MEM foreign key (MEM_NO) references MEMBERLIST(MEM_NO),
     constraint FK2_SG_INFO_SPORT foreign key (SP_NO) references SPORT(SP_NO),
-    constraint FK3_SG_INFO_VEMUE foreign key (VENUE_NO) references VENUE(V_NO)
+    constraint FK3_SG_INFO_VEMUE foreign key (V_NO) references VENUE(V_NO)
 );
 create sequence SG_INFO_SEQ
     start with 1
@@ -702,13 +712,21 @@ CREATE SEQUENCE COMPETITION_SEQ
     NOCACHE
     NOCYCLE
     ORDER;
-
+------------33---------------------------
+------------GYM--------------------------
+---------------------------------20181224
+---------------------為了抓場地的ID值使用
+Create table gym(
+	gym_id varchar2(500) primary key,
+	gym_name varchar2(500),
+	gym_funclist varchar2(1500)
+);
+-------
 COMMIT;
 
 
----------------
-
----SportyGo_ver_0_1_9rv_insert_1218--------
+-------
+---SportyGo_ver_0_2_0rv_insert_1226-------
 ------------01-INSERT--------------------
 ------------MEMBERLIST-------------------
 ---------------------------------20181210
@@ -831,28 +849,463 @@ Insert into VENUETYPE (VT_NO, VT_NAME) values ('VT'||LPAD(to_char(VENUETYPE_SEQ.
 ------------05-INSERT--------------------
 ------------REGION-----------------------
 ---------------------------------20181210
-Insert into REGION values (320, '桃園市', '中壢區');
-Insert into REGION values (324, '桃園市', '平鎮區');
-Insert into REGION values (325, '桃園市', '龍潭區');
-Insert into REGION values (326, '桃園市', '楊梅區');
-Insert into REGION values (327, '桃園市', '新屋區');
-Insert into REGION values (328, '桃園市', '觀音區');
-Insert into REGION values (330, '桃園市', '桃園區');
-Insert into REGION values (333, '桃園市', '龜山區');
-Insert into REGION values (334, '桃園市', '八德區');
-Insert into REGION values (335, '桃園市', '大溪區');
-Insert into REGION values (336, '桃園市', '復興區');
-Insert into REGION values (337, '桃園市', '大園區');
-Insert into REGION values (338, '桃園市', '蘆竹區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (100,'台北市','中正區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (103,'台北市','大同區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (104,'台北市','中山區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (105,'台北市','松山區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (106,'台北市','大安區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (108,'台北市','萬華區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (110,'台北市','信義區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (111,'台北市','士林區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (112,'台北市','北投區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (114,'台北市','內湖區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (115,'台北市','南港區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (116,'台北市','文山區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (200,'基隆市','仁愛區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (201,'基隆市','信義區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (202,'基隆市','中正區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (203,'基隆市','中山區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (204,'基隆市','安樂區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (205,'基隆市','暖暖區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (206,'基隆市','七堵區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (207,'新北市','萬里區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (208,'新北市','金山區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (209,'連江縣','南竿鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (210,'連江縣','北竿鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (211,'連江縣','莒光鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (212,'連江縣','東引鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (220,'新北市','板橋區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (221,'新北市','汐止區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (222,'新北市','深坑區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (223,'新北市','石碇區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (224,'新北市','瑞芳區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (226,'新北市','平溪區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (227,'新北市','雙溪區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (228,'新北市','貢寮區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (231,'新北市','新店區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (232,'新北市','坪林區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (233,'新北市','烏來區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (234,'新北市','永和區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (235,'新北市','中和區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (236,'新北市','土城區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (237,'新北市','三峽區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (238,'新北市','樹林區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (239,'新北市','鶯歌區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (241,'新北市','三重區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (242,'新北市','新莊區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (243,'新北市','泰山區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (244,'新北市','林口區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (247,'新北市','蘆洲區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (248,'新北市','五股區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (249,'新北市','八里區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (251,'新北市','淡水區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (252,'新北市','三芝區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (253,'新北市','石門區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (260,'宜蘭縣','宜蘭市');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (261,'宜蘭縣','頭城鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (262,'宜蘭縣','礁溪鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (263,'宜蘭縣','壯圍鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (264,'宜蘭縣','員山鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (265,'宜蘭縣','羅東鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (266,'宜蘭縣','三星鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (267,'宜蘭縣','大同鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (268,'宜蘭縣','五結鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (269,'宜蘭縣','冬山鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (270,'宜蘭縣','蘇澳鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (272,'宜蘭縣','南澳鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (290,'宜蘭縣','釣魚台列嶼');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (300,'新竹市','東區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (3001,'新竹市','北區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (3002,'新竹市','香山區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (302,'新竹縣','竹北市');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (303,'新竹縣','湖口鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (304,'新竹縣','新豐鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (305,'新竹縣','新埔鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (306,'新竹縣','關西鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (307,'新竹縣','芎林鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (308,'新竹縣','寶山鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (310,'新竹縣','竹東鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (311,'新竹縣','五峰鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (312,'新竹縣','橫山鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (313,'新竹縣','尖石鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (314,'新竹縣','北埔鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (315,'新竹縣','峨嵋鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (320,'桃園市','中壢區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (324,'桃園市','平鎮區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (325,'桃園市','龍潭區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (326,'桃園市','楊梅區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (327,'桃園市','新屋區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (328,'桃園市','觀音區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (330,'桃園市','桃園區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (333,'桃園市','龜山區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (334,'桃園市','八德區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (335,'桃園市','大溪區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (336,'桃園市','復興區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (337,'桃園市','大園區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (338,'桃園市','蘆竹區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (350,'苗栗縣','竹南鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (351,'苗栗縣','頭份鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (352,'苗栗縣','三灣鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (353,'苗栗縣','南庄鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (354,'苗栗縣','獅潭鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (356,'苗栗縣','後龍鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (357,'苗栗縣','通霄鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (358,'苗栗縣','苑裡鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (360,'苗栗縣','苗栗市');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (361,'苗栗縣','造橋鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (362,'苗栗縣','頭屋鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (363,'苗栗縣','公館鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (364,'苗栗縣','大湖鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (365,'苗栗縣','泰安鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (366,'苗栗縣','銅鑼鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (367,'苗栗縣','三義鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (368,'苗栗縣','西湖鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (369,'苗栗縣','卓蘭鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (400,'台中市','中區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (401,'台中市','東區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (402,'台中市','南區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (403,'台中市','西區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (404,'台中市','北區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (406,'台中市','北屯區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (407,'台中市','西屯區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (408,'台中市','南屯區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (411,'台中市','太平區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (412,'台中市','大里區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (413,'台中市','霧峰區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (414,'台中市','烏日區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (420,'台中市','豐原區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (421,'台中市','后里區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (422,'台中市','石岡區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (423,'台中市','東勢區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (424,'台中市','和平區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (426,'台中市','新社區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (427,'台中市','潭子區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (428,'台中市','大雅區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (429,'台中市','神岡區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (432,'台中市','大肚區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (433,'台中市','沙鹿區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (434,'台中市','龍井區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (435,'台中市','梧棲區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (436,'台中市','清水區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (437,'台中市','大甲區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (438,'台中市','外埔區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (439,'台中市','大安區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (500,'彰化縣','彰化市');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (502,'彰化縣','芬園鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (503,'彰化縣','花壇鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (504,'彰化縣','秀水鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (505,'彰化縣','鹿港鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (506,'彰化縣','福興鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (507,'彰化縣','線西鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (508,'彰化縣','和美鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (509,'彰化縣','伸港鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (510,'彰化縣','員林鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (511,'彰化縣','社頭鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (512,'彰化縣','永靖鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (513,'彰化縣','埔心鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (514,'彰化縣','溪湖鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (515,'彰化縣','大村鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (516,'彰化縣','埔鹽鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (520,'彰化縣','田中鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (521,'彰化縣','北斗鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (522,'彰化縣','田尾鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (523,'彰化縣','埤頭鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (524,'彰化縣','溪州鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (525,'彰化縣','竹塘鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (526,'彰化縣','二林鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (527,'彰化縣','大城鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (528,'彰化縣','芳苑鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (530,'彰化縣','二水鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (540,'南投縣','南投市');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (541,'南投縣','中寮鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (542,'南投縣','草屯鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (544,'南投縣','國姓鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (545,'南投縣','埔里鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (546,'南投縣','仁愛鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (551,'南投縣','名間鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (552,'南投縣','集集鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (553,'南投縣','水里鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (555,'南投縣','魚池鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (556,'南投縣','信義鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (557,'南投縣','竹山鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (558,'南投縣','鹿谷鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (6001,'嘉義市','東區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (6002,'嘉義市','西區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (602,'嘉義縣','番路鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (603,'嘉義縣','梅山鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (604,'嘉義縣','竹崎鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (605,'嘉義縣','阿里山');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (606,'嘉義縣','中埔鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (607,'嘉義縣','大埔鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (608,'嘉義縣','水上鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (611,'嘉義縣','鹿草鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (612,'嘉義縣','太保市');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (613,'嘉義縣','朴子市');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (614,'嘉義縣','東石鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (615,'嘉義縣','六腳鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (616,'嘉義縣','新港鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (621,'嘉義縣','民雄鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (622,'嘉義縣','大林鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (623,'嘉義縣','溪口鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (624,'嘉義縣','義竹鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (625,'嘉義縣','布袋鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (630,'雲林縣','斗南鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (631,'雲林縣','大埤鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (632,'雲林縣','虎尾鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (633,'雲林縣','土庫鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (634,'雲林縣','褒忠鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (635,'雲林縣','東勢鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (636,'雲林縣','臺西鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (637,'雲林縣','崙背鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (638,'雲林縣','麥寮鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (640,'雲林縣','斗六市');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (643,'雲林縣','林內鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (646,'雲林縣','古坑鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (647,'雲林縣','莿桐鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (648,'雲林縣','西螺鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (649,'雲林縣','二崙鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (651,'雲林縣','北港鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (652,'雲林縣','水林鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (653,'雲林縣','口湖鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (654,'雲林縣','四湖鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (655,'雲林縣','元長鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (700,'台南市','中西區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (701,'台南市','東區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (702,'台南市','南區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (704,'台南市','北區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (708,'台南市','安平區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (709,'台南市','安南區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (710,'台南市','永康區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (711,'台南市','歸仁區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (712,'台南市','新化區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (713,'台南市','左鎮區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (714,'台南市','玉井區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (715,'台南市','楠西區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (716,'台南市','南化區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (717,'台南市','仁德區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (718,'台南市','關廟區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (719,'台南市','龍崎區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (720,'台南市','官田區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (721,'台南市','麻豆區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (722,'台南市','佳里區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (723,'台南市','西港區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (724,'台南市','七股區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (725,'台南市','將軍區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (726,'台南市','學甲區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (727,'台南市','北門區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (730,'台南市','新營區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (731,'台南市','後壁區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (732,'台南市','白河區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (733,'台南市','東山區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (734,'台南市','六甲區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (735,'台南市','下營區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (736,'台南市','柳營區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (737,'台南市','鹽水區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (741,'台南市','善化區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (742,'台南市','大內區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (743,'台南市','山上區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (744,'台南市','新市區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (745,'台南市','安定區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (800,'高雄市','新興區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (801,'高雄市','前金區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (802,'高雄市','苓雅區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (803,'高雄市','鹽埕區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (804,'高雄市','鼓山區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (805,'高雄市','旗津區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (806,'高雄市','前鎮區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (807,'高雄市','三民區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (811,'高雄市','楠梓區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (812,'高雄市','小港區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (813,'高雄市','左營區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (814,'高雄市','仁武區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (815,'高雄市','大社區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (820,'高雄市','岡山區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (821,'高雄市','路竹區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (822,'高雄市','阿蓮區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (823,'高雄市','田寮鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (824,'高雄市','燕巢區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (825,'高雄市','橋頭區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (826,'高雄市','梓官區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (827,'高雄市','彌陀區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (828,'高雄市','永安區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (829,'高雄市','湖內鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (830,'高雄市','鳳山區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (831,'高雄市','大寮區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (832,'高雄市','林園區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (833,'高雄市','鳥松區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (840,'高雄市','大樹區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (842,'高雄市','旗山區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (843,'高雄市','美濃區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (844,'高雄市','六龜區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (845,'高雄市','內門區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (846,'高雄市','杉林區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (847,'高雄市','甲仙區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (848,'高雄市','桃源區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (849,'高雄市','那瑪夏區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (851,'高雄市','茂林區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (852,'高雄市','茄萣區');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (880,'澎湖縣','馬公市');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (881,'澎湖縣','西嶼鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (882,'澎湖縣','望安鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (883,'澎湖縣','七美鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (884,'澎湖縣','白沙鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (885,'澎湖縣','湖西鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (890,'金門縣','金沙鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (891,'金門縣','金湖鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (892,'金門縣','金寧鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (893,'金門縣','金城鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (894,'金門縣','烈嶼鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (896,'金門縣','烏坵鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (900,'屏東縣','屏東市');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (901,'屏東縣','三地門');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (902,'屏東縣','霧臺鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (903,'屏東縣','瑪家鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (904,'屏東縣','九如鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (905,'屏東縣','里港鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (906,'屏東縣','高樹鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (907,'屏東縣','鹽埔鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (908,'屏東縣','長治鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (909,'屏東縣','麟洛鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (911,'屏東縣','竹田鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (912,'屏東縣','內埔鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (913,'屏東縣','萬丹鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (920,'屏東縣','潮州鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (921,'屏東縣','泰武鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (922,'屏東縣','來義鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (923,'屏東縣','萬巒鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (924,'屏東縣','崁頂鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (925,'屏東縣','新埤鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (926,'屏東縣','南州鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (927,'屏東縣','林邊鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (928,'屏東縣','東港鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (929,'屏東縣','琉球鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (931,'屏東縣','佳冬鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (932,'屏東縣','新園鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (940,'屏東縣','枋寮鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (941,'屏東縣','枋山鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (942,'屏東縣','春日鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (943,'屏東縣','獅子鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (944,'屏東縣','車城鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (945,'屏東縣','牡丹鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (946,'屏東縣','恆春鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (947,'屏東縣','滿州鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (950,'台東縣','臺東市');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (951,'台東縣','綠島鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (952,'台東縣','蘭嶼鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (953,'台東縣','延平鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (954,'台東縣','卑南鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (955,'台東縣','鹿野鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (956,'台東縣','關山鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (957,'台東縣','海端鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (958,'台東縣','池上鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (959,'台東縣','東河鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (961,'台東縣','成功鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (962,'台東縣','長濱鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (963,'台東縣','太麻里鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (964,'台東縣','金峰鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (965,'台東縣','大武鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (966,'台東縣','達仁鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (970,'花蓮縣','花蓮市');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (971,'花蓮縣','新城鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (972,'花蓮縣','秀林鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (973,'花蓮縣','吉安鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (974,'花蓮縣','壽豐鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (975,'花蓮縣','鳳林鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (976,'花蓮縣','光復鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (977,'花蓮縣','豐濱鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (978,'花蓮縣','瑞穗鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (979,'花蓮縣','萬榮鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (981,'花蓮縣','玉里鎮');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (982,'花蓮縣','卓溪鄉');
+Insert into REGION (REG_NO,REG_NAME,REG_DIST) values (983,'花蓮縣','富里鄉');
 
 commit;
 ------------06-INSERT--------------------
 ------------VENUE------------------------
 ---------------------------------20181210
-Insert into VENUE values('V000001', '中央大學附屬中壢高中自強館', 'VT001', 320, 24.9625795754056, 121.211014509136, 'https://az804957.vo.msecnd.net/photogym/20140605155519_自強館1.JPG', '桃園市中壢區三光路115號', '03-4932181#34', '付費開放使用', '籃球場,羽球場(館),桌球場(館)');
-Insert into VENUE values('V000002', '中央大學附屬中壢高中籃球場', 'VT001', 320, 24.9638709920322, 121.210166931414, 'https://az804957.vo.msecnd.net/photogym/20140610141357_籃球場1.JPG', '桃園市中壢區三光路115號', '03-4932181#34', '免費開放使用', '籃球場');
-Insert into VENUE values('V000003', '中央大學依仁堂', 'VT001', 320, 24.9682993807963, 121.190807819366, 'https://az804957.vo.msecnd.net/photogym/20140710103425_依仁堂全景.JPG', '桃園市中壢區中大路300號', '03-4267128', '付費開放使用', '籃球館,排球館,韻律教室,技擊教室,體適能健身教室');
-Insert into VENUE values('V000004', '中央大學籃球場', 'VT001', 320, 24.9697339773255, 121.189337968826, 'https://az804957.vo.msecnd.net/photogym/20140711153257_籃球場全景.JPG', '桃園市中壢區中大路300號', '03-4227151#57251', '免費開放使用', '籃球場');
+--中央大學附屬中壢高中自強館
+--中央大學附屬中壢高中籃球場
+--中央大學依仁堂
+--中央大學籃球場
+
+INSERT into venue values (
+'V000001','中央大學附屬中壢高中籃球場','http://www.clhs.tyc.edu.tw',null,
+'本場地共有5面全場,及一塊三角面積,三角面積內設有2個籃框,共有13個籃框.',
+'VT001','室外設施',320,'桃園市中壢區三光路115號',
+'03-4932181#34',24.9638709920322,121.210166931414,'Y','Y','免費對外開放使用',
+'5:30-7:30','Y','Y','Y','Y','Y','Y','Y',null,null,null,null);
+
+INSERT into venue values (
+'V000002','中央大學羽球場(館)','http://www.ncu.edu.tw','無停車場',
+'本場地建成於60年代. 近年完成PU地面舖設及全面換裝LED照明.',
+'VT005','室內設施',320,'桃園市中壢區中大路300號',
+'03-4267128',24.969189318918,121.190893650055,'Y','Y','付費對外開放使用',
+'6:30-23:0','Y','Y','Y','Y','Y','Y','Y',null,null,null,null);
+
+INSERT into venue values (
+'V000003','中央大學附屬中壢高中自強館','http://www.clhs.tyc.edu.tw','無停車場',
+'本館興建於民國70年,共分地下一層及地上兩層建築,地下室為桌球室, 地上一層為主場地 ,可提供籃球比賽或羽球比賽使用.',
+'VT005','室內設施',320,'桃園市中壢區三光路115號',
+'03-4932181#34',24.9625795754056,121.211014509136,'Y','Y','付費對外開放使用',
+'0:0-0:0','N','N','N','N','N','Y','Y',null,null,null,null);
+
+INSERT into venue values (
+'V000004','中央大學依仁堂','http://140.115.117.199/ncupe/web/main/index.php','無停車場',
+'本場館於76年啟用,內有籃球場,排球場,韻律教室,體適能健身教室等設施.',
+'VT002','室內設施',320,'桃園市中壢區中大路300號',
+'03-4267128',24.9682993807963,121.190807819366,'Y','Y','付費對外開放使用',
+'8:0-21:0','Y','Y','Y','Y','Y','N','N',null,null,null,null);
+
+INSERT into venue values (
+'V000005','中央大學附屬中壢高中網球場(館)','http://www.clhs.tyc.edu.tw',null,
+'本場地為室外球場,共有2個球場可同時使用,興建於民國84年屬硬式網球場地.',
+'VT003','室外設施',320,'桃園市中壢區三光路115號',
+'03-4932181#34',24.9628377431009,121.211016654706,'Y','Y','付費對外開放使用',
+'0:0-0:0','Y','Y','Y','Y','Y','Y','Y',null,null,null,null);
+
+INSERT into venue values (
+'V000006','中央大學籃球場','http://www.ncu.edu.tw','無停車場',
+'本球場位於中央大學校區內，周邊另有游泳池、網球場羽球館等設施。',
+'VT001','室外設施',320,'桃園市中壢區中大路300號',
+'03-4227151#57251',24.9697339773255,121.189337968826,'Y','Y','免費對外開放使用',
+'6:0-23:0','Y','Y','Y','Y','Y','Y','Y',null,null,null,null);
+
+INSERT into venue values (
+'V000007','中央大學附屬中壢高中自強館','http://www.clhs.tyc.edu.tw','無停車場',
+'本館興建於民國70年,共分地下一層及地上兩層建築,地下室為桌球室, 地上一層為主場地 ,可提供籃球比賽或羽球比賽使用.',
+'VT001','室內設施',320,'桃園市中壢區三光路115號',
+'03-4932181#34',24.9625795754056,121.211014509136,'Y','Y','付費對外開放使用',
+'8:0-22:0','N','N','N','N','N','Y','Y',null,null,null,null);
+
+INSERT into venue values (
+'V000008','中央大學依仁堂','http://140.115.117.199/ncupe/web/main/index.php','無停車場',
+'本場館於76年啟用,內有籃球場,排球場,韻律教室,體適能健身教室等設施.',
+'VT001','室內設施',320,'桃園市中壢區中大路300號',
+'03-4267128',24.9682993807963,121.190807819366,'Y','Y','付費對外開放使用',
+'8:0-21:0','Y','Y','Y','Y','Y','N','N',null,null,null,null);
+
+INSERT into venue values (
+'V000009','中央大學排球場','http://www.ncu.edu.tw','無停車場',
+'本排球場於民國82年啟用，位於中央大學校區內，周邊緊鄰依仁堂另、田徑場等設施。',
+'VT002','室外設施',320,'桃園市中壢區中大路300號',
+'03-4227151#57251',24.9676282756607,121.190947294235,'Y','Y','免費對外開放使用',
+'8:0-22:0','Y','Y','Y','Y','Y','Y','Y',null,null,null,null);
+
+INSERT into venue values (
+'V000010','中央大學簡易棒球場','http://www.ncu.edu.tw','無停車場',
+'本場地於99年或教育部專案經費補助整建為簡易棒球場,並於100年12月正式啟用,周邊另有羽球館及溜冰場等場地.',
+'VT004','室外設施',320,'桃園市中壢區中大路300號',
+'03-4267128',24.9692574013508,121.191403269768,'Y','Y','付費對外開放使用',
+'8:0-17:0','Y','Y','Y','Y','Y','Y','Y',null,null,null,null);
+
+INSERT into venue values (
+'V000011','中央大學附屬中壢高中田徑場','http://www.clhs.tyc.edu.tw',null,
+'民國93年開始使用,本田徑場為300公尺跑道,直道有8道,彎道共6道.中間為45M*40M草皮.可做為5人制足球賽場地共2座.兩側為排球場地各3座共有6座.',
+'VT002','室外設施',320,'桃園市中壢區三光路115號',
+'03-4932181#34',24.9637841830203,121.210422277254,'Y','Y','免費對外開放使用',
+'5:30-7:30','Y','Y','Y','Y','Y','Y','Y',null,null,null,null);
+
+
 
 
 ------------07-INSERT--------------------
@@ -867,24 +1320,26 @@ Insert into V_EVALUATION values ('M004', 'V000004', 5);
 ------------08-INSERT--------------------
 ------------SG_INFO----------------------
 ---------------------------------20181210
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M001', '中央大學籃球魂不滅', to_timestamp('2018-12-30 10:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-27 00:00:00','yyyy-mm-dd hh24:mi:ss'),100,null,null,'公開','SP003','V000001',10,3,null,null,'歡迎歡迎熱烈歡迎',default,null,null,null,null);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M002', '熱血雙城計畫', to_timestamp('2018-12-20 21:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-8 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-17 00:00:00','yyyy-mm-dd hh24:mi:ss'),100,null,null,'公開','SP007',null,8,5,null,null,'一起來騎卡打掐',default,121.51694880000002,25.0478142,120.30200650000006,22.6389745);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M001', '台北直直跑', to_timestamp('2018-12-7 17:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-11-30 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-4 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP006',null,5,3,5,4,'跑起來','成團',121.56447219999995,25.0339639,121.56631708145142,25.041126551200858);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M001', '打排球', to_timestamp('2018-11-30 18:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-11-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-11-27 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'限社團','SP002','V000003',20,12,5,null,null,'流團',null,null,null,null);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M002', '網球拍拍', to_timestamp('2018-12-30 18:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-27 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP004','V000002',99,3,1,null,'便宜進口包包熱賣中','封鎖',null,null,null,null);--notice the max of SG_MAXNO is 99; 
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M001', '中央大學籃球魂不滅', to_timestamp('2019-02-25 10:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-02-23 00:00:00','yyyy-mm-dd hh24:mi:ss'),0,null,null,'公開','SP003','V000001',10,3,null,null,'歡迎歡迎熱烈歡迎',default,null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M002', '熱血雙城計畫', to_timestamp('2019-02-20 21:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-8 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-02-17 00:00:00','yyyy-mm-dd hh24:mi:ss'),100,null,null,'公開','SP007',null,8,5,4,null,'一起來騎卡打掐',default,'{"lat":25.0478142,"lng":121.51694880000002}','{"lat":22.639146,"lng":120.302201}');
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M001', '台北直直跑', to_timestamp('2019-02-07 17:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-11-30 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-02-04 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP006',null,5,3,5,null,'跑起來',default,'{"lat":24.968264,"lng":121.192198}','{"lat":24.959995,"lng":121.215186}');
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M001', '打排球', to_timestamp('2018-11-30 18:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-11-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-11-27 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'限社團','SP002','V000003',20,12,5,null,null,'流團',null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M002', '跳樓大拍賣', to_timestamp('2019-12-30 18:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-12-27 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP004','V000002',99,3,1,null,'便宜進口包包熱賣中',default,null,null);--notice the max of SG_MAXNO is 99; 
 
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M001', '中央大學籃球魂不滅', to_timestamp('2018-12-30 10:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-27 00:00:00','yyyy-mm-dd hh24:mi:ss'),100,null,null,'公開','SP003','V000001',10,3,null,null,'歡迎歡迎熱烈歡迎',default,null,null,null,null);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M001', '晨間老人羽球', to_timestamp('2018-12-15 08:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-5 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-12 00:00:00','yyyy-mm-dd hh24:mi:ss'),100,null,null,'公開','SP005','V000001',4,2,2,null,'來打羽球吧',default,null,null,null,null);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M006', '熱血雙城計畫', to_timestamp('2018-12-20 21:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-8 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-17 00:00:00','yyyy-mm-dd hh24:mi:ss'),100,null,null,'公開','SP007',null,8,5,3,null,'一起來騎卡打掐',default,121.51694880000002,25.0478142,120.30200650000006,22.6389745);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M005', '台北直直跑', to_timestamp('2018-12-7 17:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-11-30 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-4 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP006',null,5,3,5,4,'跑起來','成團',121.56447219999995,25.0339639,121.56631708145142,25.041126551200858);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M005', '打排球', to_timestamp('2018-11-30 18:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-11-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-11-27 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'限社團','SP002','V000001',20,12,5,null,null,'流團',null,null,null,null);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M007', '網球拍拍', to_timestamp('2018-12-30 18:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-27 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP004','V000001',99,3,1,null,'便宜進口包包熱賣中','封鎖',null,null,null,null);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M002', '棒球大聯盟', to_timestamp('2018-12-31 15:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-10 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-28 00:00:00','yyyy-mm-dd hh24:mi:ss'),300,null,null,'公開','SP001','V000001',20,9,5,null,'沒有棒球就吃不下飯，睡不著覺的人快來唷!',default,null,null,null,null);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M012', '南崁籃球魂不滅', to_timestamp('2019-01-10 15:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-01-5 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP003','V000001',5,2,null,null,'鬥牛要不要',default,null,null,null,null);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M013', '桃園籃球魂不滅', to_timestamp('2018-12-31 19:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-15 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-27 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP003','V000001',10,2,null,null,'少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~',default,null,null,null,null);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M014', '台北籃球魂不滅', to_timestamp('2018-12-25 20:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-10 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-23 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP003','V000001',15,5,2,null,'以球會友!',default,null,null,null,null);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M004', '中原大學籃球魂不滅', to_timestamp('2019-01-05 20:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-10 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-01-02 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP003','V000001',10,3,1,null,'單挑啊!嫩逼',default,null,null,null,null);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M008', '中壢高中籃球魂不滅', to_timestamp('2018-12-30 18:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-05 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP003','V000001',10,5,2,null,'教練，我想打球阿....',default,null,null,null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M001', '籃球火', to_timestamp('2019-01-30 10:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-01-27 00:00:00','yyyy-mm-dd hh24:mi:ss'),100,null,null,'公開','SP003','V000001',10,3,1,null,'歡迎歡迎熱烈歡迎',default,null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M001', '晨間老人羽球', to_timestamp('2019-02-15 08:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-5 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-02-12 00:00:00','yyyy-mm-dd hh24:mi:ss'),100,null,null,'限社團','SP005','V000001',4,2,2,null,'來打羽球吧',default,null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M006', '跑跑跑向前跑', to_timestamp('2018-02-20 21:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-8 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-02-17 00:00:00','yyyy-mm-dd hh24:mi:ss'),100,null,null,'公開','SP006',null,8,5,3,null,'來追我啊',default,'{"lat":25.001000,"lng":121.319393}','{"lat":24.998277,"lng":121.320697}');
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M005', '唯一支持戴資穎', to_timestamp('2018-12-7 17:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-11-30 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-4 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP005','V000001',5,3,5,4,'羽你一起','成團',null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M005', '人妖打排球', to_timestamp('2019-02-26 18:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-11-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-02-27 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'限社團','SP002','V000001',20,12,5,null,null,default,null,null);
+
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M007', '網球王子', to_timestamp('2019-02-10 18:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-02-14 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP004','V000001',4,3,null,null,'吃我一記外旋發球',default,null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M002', '棒球大聯盟', to_timestamp('2019-02-11 15:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-10 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-02-08 00:00:00','yyyy-mm-dd hh24:mi:ss'),300,null,null,'公開','SP001','V000001',20,9,3,null,'沒有棒球就吃不下飯，睡不著覺的人快來唷!',default,null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M012', '南崁籃球魂不滅', to_timestamp('2019-02-03 15:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-02-01 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP003','V000001',5,2,null,null,'鬥牛要不要',default,null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M013', '桃園籃球魂不滅', to_timestamp('2019-02-11 19:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-15 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-02-07 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP003','V000001',10,2,null,null,'少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~',default,null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M014', '台北籃球魂不滅', to_timestamp('2019-02-25 20:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-10 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-02-23 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP003','V000001',15,5,2,null,'以球會友!',default,null,null);
+
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M004', '中原大學籃球魂不滅', to_timestamp('2019-01-25 20:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-10 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-01-24 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'限社團','SP003','V000001',10,3,1,null,'單挑啊!嫩逼',default,null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M008', '中壢高中籃球魂不滅', to_timestamp('2019-02-12 18:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-05 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-02-10 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP003','V000001',10,5,2,null,'教練，我想打球阿....',default,null,null);
 
 
 ------------09-INSERT--------------------
@@ -909,34 +1364,44 @@ insert into SG_MSG values('MSG' || LPAD(SG_MSG_SEQ.nextval, 3, 0),'S010','M004',
 ------------SG_MEM-----------------------
 ---------------------------------20181210
 --SG_MEM假資料建立(資料不足 需再補充)
-insert into SG_MEM (SG_NO,MEM_NO,CH_STATUS) values ('S003','M002','已報到');
-insert into SG_MEM (SG_NO,MEM_NO,CH_STATUS) values ('S003','M003','已報到');
-insert into SG_MEM (SG_NO,MEM_NO) values ('S005','M004');
-
 insert into SG_MEM (SG_NO,MEM_NO) values ('S002','M002');
 insert into SG_MEM (SG_NO,MEM_NO) values ('S002','M003');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S002','M005');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S002','M010');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S003','M002');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S003','M003');
 insert into SG_MEM (SG_NO,MEM_NO) values ('S003','M004');
 insert into SG_MEM (SG_NO,MEM_NO) values ('S003','M005');
 insert into SG_MEM (SG_NO,MEM_NO) values ('S003','M007');
-insert into SG_MEM (SG_NO,MEM_NO,CH_STATUS) values ('S004','M002','已報到');
-insert into SG_MEM (SG_NO,MEM_NO,CH_STATUS) values ('S004','M003','已報到');
-insert into SG_MEM (SG_NO,MEM_NO,CH_STATUS) values ('S004','M004','已報到');
-insert into SG_MEM (SG_NO,MEM_NO) values ('S005','M008');
-insert into SG_MEM (SG_NO,MEM_NO) values ('S005','M009');
-insert into SG_MEM (SG_NO,MEM_NO) values ('S005','M010');
-insert into SG_MEM (SG_NO,MEM_NO) values ('S005','M011');
-insert into SG_MEM (SG_NO,MEM_NO) values ('S005','M012');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S004','M002');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S004','M003');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S004','M004');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S005','M004');
 insert into SG_MEM (SG_NO,MEM_NO) values ('S006','M004');
-insert into SG_MEM (SG_NO,MEM_NO) values ('S007','M001');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S007','M010');
 insert into SG_MEM (SG_NO,MEM_NO) values ('S007','M003');
-insert into SG_MEM (SG_NO,MEM_NO) values ('S007','M005');
-insert into SG_MEM (SG_NO,MEM_NO) values ('S007','M013');
-insert into SG_MEM (SG_NO,MEM_NO) values ('S007','M014');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S008','M005');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S008','M013');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S008','M014');
+insert into SG_MEM (SG_NO,MEM_NO,CH_STATUS) values ('S009','M008','已報到');
+insert into SG_MEM (SG_NO,MEM_NO,CH_STATUS) values ('S009','M009','已報到');
+insert into SG_MEM (SG_NO,MEM_NO,CH_STATUS) values ('S009','M010','已報到');
+insert into SG_MEM (SG_NO,MEM_NO,CH_STATUS) values ('S009','M011','已報到');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S009','M012');
 insert into SG_MEM (SG_NO,MEM_NO) values ('S010','M010');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S010','M013');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S010','M014');
 insert into SG_MEM (SG_NO,MEM_NO) values ('S010','M012');
-insert into SG_MEM (SG_NO,MEM_NO) values ('S011','M007');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S010','M015');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S012','M007');
 insert into SG_MEM (SG_NO,MEM_NO) values ('S012','M006');
 insert into SG_MEM (SG_NO,MEM_NO) values ('S012','M009');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S015','M009');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S015','M007');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S016','M003');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S017','M001');
+insert into SG_MEM (SG_NO,MEM_NO) values ('S017','M002');
+
 
 
 ------------11-INSERT--------------------

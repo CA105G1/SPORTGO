@@ -5,17 +5,15 @@ import java.util.List;
 
 import com.region.model.RegVO;
 
-import oracle.net.aso.e;
-
 import java.sql.*;
 
 
 public class RegJDBCDAO implements RegDAO_interface{
 	
-	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
-	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
-	private static final String USER = "CA105G1";
-	private static final String PASSWORD = "123456";
+	private static final String DRIVER = com.util.lang.Util.DRIVER;
+	private static final String URL = com.util.lang.Util.URL;
+	private static final String USER = com.util.lang.Util.USER;
+	private static final String PASSWORD = com.util.lang.Util.PASSWORD;
 	
 	static { //預先載入驅動程式
 		try {
@@ -267,6 +265,55 @@ public class RegJDBCDAO implements RegDAO_interface{
 			}
 		}
 		return list;
+	}
+
+	private static final String GET_REGVO_FROM_ADDRESS_SQL = ""
+			+ "Select * from region where ? like '%'||reg_name||reg_dist||'%'";
+	
+	@Override
+	public RegVO getRegVOFromAddress(String address) {
+		RegVO regVO = null;
+		Connection connection = null;
+		PreparedStatement preparedStatement  = null;
+		ResultSet resultSet = null;
+		try {
+			connection = DriverManager.getConnection(URL, USER, PASSWORD);
+			preparedStatement = connection.prepareStatement(GET_REGVO_FROM_ADDRESS_SQL);
+			preparedStatement.setString(1, address);
+			resultSet = preparedStatement.executeQuery();
+			if(resultSet.next()) {
+				regVO = new RegVO();
+				regVO.setReg_no(resultSet.getInt("REG_NO"));
+				regVO.setReg_name(resultSet.getString("REG_NAME"));
+				regVO.setReg_dist(resultSet.getString("REG_DIST"));
+			}
+		}catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		}finally {
+			if (resultSet != null) {
+				try {
+					resultSet.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (preparedStatement != null) {
+				try {
+					preparedStatement.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return regVO;
 	}
 
 	public static void main(String[] args) {

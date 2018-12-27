@@ -34,13 +34,13 @@ public class ImportRegByMainJDBC {
 			e.printStackTrace();
 		}
 		/////sb為josn字串
-		///for postcode2vr.json
+		///for postcode2ver.json
 		RegDAO_interface regDAO = new RegJDBCDAO();
 		int countDistrict = 0;
 		JSONObject jObject = new JSONObject(sb.toString());
 		JSONArray data = jObject.getJSONArray("data");
 		for(int i = 0 ; i<data.length(); i++) {
-			if(i%15==0) {
+			if(i%20==0) {
 				try {
 					Thread.sleep(500);
 				} catch (InterruptedException e) {
@@ -54,11 +54,12 @@ public class ImportRegByMainJDBC {
 			System.out.println("第"+(countDistrict+1)+"筆的reg_no : "+regVO.getReg_no());
 			regVO.setReg_name(jReg.getString("city"));
 			regVO.setReg_dist(jReg.getString("district"));
-				
-			regDAO.insert(regVO);
-			countDistrict++;
-			System.out.println("第"+countDistrict+"筆完成輸入");
-
+			try {	
+				regDAO.insert(regVO);
+				countDistrict++;
+				System.out.println("第"+countDistrict+"筆完成輸入");
+			}catch (Exception e) {
+			}
 		}
 		System.out.println("全部完成，總共"+countDistrict+"筆資料");
 		
