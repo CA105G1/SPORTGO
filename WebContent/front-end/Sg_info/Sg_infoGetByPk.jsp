@@ -404,8 +404,9 @@
 	        });
 		}
 		
-        
-        
+
+		
+		
 	}
 	  
 	$("#share").click(function(){
