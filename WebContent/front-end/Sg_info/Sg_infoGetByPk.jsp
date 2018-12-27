@@ -38,7 +38,7 @@
 		justify-content: space-between;
 	}
 </style>
-
+ 
 </head>
 <body>
 <%@ include file="/front-end/CA105G1_header.file" %>
