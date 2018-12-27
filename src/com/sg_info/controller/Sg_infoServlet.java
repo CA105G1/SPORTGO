@@ -10,8 +10,10 @@ import java.io.InputStream;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -39,7 +41,7 @@ public class Sg_infoServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		
 		if("insert".equals(action)) {
-			List<String> errorMsg = new LinkedList<String>();
+			Map<String, String> errorMsg = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsg", errorMsg);
 			
 			try {
@@ -64,9 +66,9 @@ public class Sg_infoServlet extends HttpServlet {
 				//團名檢查
 				String sg_name = req.getParameter("sg_name").trim();
 				if(sg_name == null || sg_name.trim().length() == 0) {
-					errorMsg.add("團名不得空白");
+					errorMsg.put("sg_name","團名不得空白");
 				}else if(sg_name.length() > 15) {
-					errorMsg.add("團名長度不得大於15個字");
+					errorMsg.put("sg_name","團名長度不得大於15個字");
 				}
 				
 				//日期檢查
@@ -89,7 +91,7 @@ public class Sg_infoServlet extends HttpServlet {
 					sg_date = new Timestamp(System.currentTimeMillis());
 					apl_start = new Timestamp(System.currentTimeMillis());
 					apl_end = new Timestamp(System.currentTimeMillis());
-					errorMsg.add("請輸入日期!");
+					errorMsg.put("date","請輸入日期!");
 				}
 				
 				//費用格式檢查
@@ -102,16 +104,19 @@ public class Sg_infoServlet extends HttpServlet {
 					sg_fee = new Integer(sg_feeStr.trim());
 				} catch (NumberFormatException e) {
 					sg_fee = 0;
-					errorMsg.add("報名費請填數字");
+					errorMsg.put("sg_fee","報名費請填數字");
 				}
 				
 				//人數上限檢查
 				Integer sg_maxno = null;
 				try {
 					sg_maxno = new Integer(req.getParameter("sg_maxno").trim());
+					if(sg_maxno >= 100) {
+						errorMsg.put("sg_maxno","人數上限請小於100");
+					}
 				} catch (NumberFormatException nfe) {
 					sg_maxno = 0;
-					errorMsg.add("人數上限請填數字");
+					errorMsg.put("sg_maxno","人數上限請填數字");
 				}
 					
 				//人數下限檢查
@@ -120,17 +125,16 @@ public class Sg_infoServlet extends HttpServlet {
 					sg_minno = new Integer(req.getParameter("sg_minno").trim());
 				} catch (NumberFormatException e) {
 					sg_minno = 0;
-					errorMsg.add("人數下限請填數字");
+					errorMsg.put("sg_minno","人數下限請填數字");
 				}
 				
 				//路線座標檢查
 				String sp_no = req.getParameter("sp_no").trim();
 				String loc_start = req.getParameter("loc_start");
 				String loc_end = req.getParameter("loc_end");
-System.out.println(loc_start);
 				if("SP006".equals(sp_no) || "SP007".equals(sp_no)) {
 					if(loc_start == null || loc_end == null) {
-						errorMsg.add("請規劃路線");
+						errorMsg.put("loc","請規劃路線");
 					}
 				}
 				
@@ -142,24 +146,24 @@ System.out.println(loc_start);
 				
 				
 				//準備VO，若有錯誤就原封不動把VO再跟著錯誤送回去
-				Sg_infoVO sg_infoVO = new Sg_infoVO();
-				sg_infoVO.setMem_no(mem_no);
-				sg_infoVO.setSg_name(sg_name);
-				sg_infoVO.setSg_date(sg_date);
-				sg_infoVO.setApl_start(apl_start);
-				sg_infoVO.setApl_end(apl_end);
-				sg_infoVO.setSg_pic(sg_pic);
-				sg_infoVO.setSg_fee(sg_fee);
-				sg_infoVO.setSg_per(sg_per);
-				sg_infoVO.setSp_no(sp_no);
-				sg_infoVO.setV_no(v_no);
-				sg_infoVO.setSg_maxno(sg_maxno);
-				sg_infoVO.setSg_minno(sg_minno);
-				sg_infoVO.setSg_extrainfo(sg_extrainfo);
+//				Sg_infoVO sg_infoVO = new Sg_infoVO();
+//				sg_infoVO.setMem_no(mem_no);
+//				sg_infoVO.setSg_name(sg_name);
+//				sg_infoVO.setSg_date(sg_date);
+//				sg_infoVO.setApl_start(apl_start);
+//				sg_infoVO.setApl_end(apl_end);
+//				sg_infoVO.setSg_pic(sg_pic);
+//				sg_infoVO.setSg_fee(sg_fee);
+//				sg_infoVO.setSg_per(sg_per);
+//				sg_infoVO.setSp_no(sp_no);
+//				sg_infoVO.setV_no(v_no);
+//				sg_infoVO.setSg_maxno(sg_maxno);
+//				sg_infoVO.setSg_minno(sg_minno);
+//				sg_infoVO.setSg_extrainfo(sg_extrainfo);
 				
 				//若有錯誤訊息，將VO跟錯誤訊息回傳
 				if(!errorMsg.isEmpty()) {
-					req.setAttribute("Sg_infoVO", sg_infoVO);
+//					req.setAttribute("Sg_infoVO", sg_infoVO);
 					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Sg_info/Sg_infoCreate.jsp");
 					failureView.forward(req, res);
 					return;
@@ -167,17 +171,17 @@ System.out.println(loc_start);
 				
 				///////////////////開始INSERT資料//////////////////////////
 				Sg_infoService svc = new Sg_infoService();
-				sg_infoVO = svc.insertSg_info(mem_no, sg_name, sg_date, apl_start, apl_end, sg_fee, sg_pic, 
-						null, sg_per, sp_no, v_no, sg_maxno, sg_minno, -1, -1, 
+				svc.insertSg_info(mem_no, sg_name, sg_date, apl_start, apl_end, sg_fee, sg_pic, 
+						null, sg_per, sp_no, v_no, sg_maxno, sg_minno, 0, 0, 
 						sg_extrainfo, loc_start, loc_end);
 						
-				req.setAttribute("Sg_infoVO", sg_infoVO);
+//				req.setAttribute("Sg_infoVO", sg_infoVO);
 				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/Sg_info/SgHome.jsp");
 				dispatcher.forward(req, res);
 				
 				/////////其他錯誤處理/////////
 			}catch(Exception e){
-				errorMsg.add("修改資料失敗:"+e.getMessage());
+				errorMsg.put("general","修改資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("/front-end/Sg_info/Sg_infoCreate.jsp");
 				failureView.forward(req, res);
