@@ -80,6 +80,7 @@
 </head>
 <body>
 
+<%@ include file="/front-end/CA105G1_header.file" %>
 
 	<div class="container-fluid">
 		<div class="row">
@@ -167,12 +168,9 @@
 				  <div class="panel panel-info">
 				    <div class="panel-heading">
 				      <h4 class="panel-title">
-				          	收合項目標題三
+			          	 <a href="#">地圖查詢</a>
 				      </h4>
 				    </div>
-				      <div class="panel-body">
-				        	內容三置入在這裡
-				      </div>
 				  </div>
 				</div>
 
@@ -227,7 +225,7 @@
 
 		</div>
 	</div>
-
+<%@ include file="/front-end/CA105G1_footer.file" %>
 
 
 <script>

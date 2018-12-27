@@ -24,14 +24,16 @@
 		width: 100%;  /* The width is the width of the web page */
 	}
 	#sg_extrainfo{
-		height:100%;
+		resize:none;
+		height:100px;
+		width:100%;
 	}
 </style>
 
 
 </head>
 <body>
-
+<%@ include file="/front-end/CA105G1_header.file" %>
 
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsg}">
@@ -177,6 +179,8 @@
 		<div class="col-xs-12 col-sm-3"></div>
 	</div>
 </div>
+
+<%@ include file="/front-end/CA105G1_footer.file" %>
 
 <script type="text/javascript">
 

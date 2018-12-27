@@ -41,9 +41,11 @@
 
 </head>
 <body>
+<%@ include file="/front-end/CA105G1_header.file" %>
+
 
 <% Sg_infoVO vo = (Sg_infoVO)request.getAttribute("Sg_infoVO");
-   pageContext.setAttribute("Sg_infoVO", vo);
+    pageContext.setAttribute("Sg_infoVO", vo);
 %>
 
 <%-- 錯誤表列 --%>
@@ -88,21 +90,15 @@
 						</tr>  
 						<tr>
 							<th>活動時間</th>
-							<td id="sg_date">
-								<fmt:formatDate value="${Sg_infoVO.sg_date}" pattern="yyyy-MM-dd HH:mm"/>
-							</td>
+							<td id="sg_date"><fmt:formatDate value="${Sg_infoVO.sg_date}" pattern="yyyy-MM-dd HH:mm"/></td>
 						</tr>
 						<tr>
 							<th>報名開始日期</th>
-							<td id="apl_start">
-								<fmt:formatDate value="${Sg_infoVO.apl_start}" pattern="yyyy-MM-dd"/>
-							</td>
+							<td id="apl_start"><fmt:formatDate value="${Sg_infoVO.apl_start}" pattern="yyyy-MM-dd"/></td>
 						</tr>
 						<tr>
 							<th>報名截止日期</th>
-							<td id="apl_end">
-								<fmt:formatDate value="${Sg_infoVO.apl_end}" pattern="yyyy-MM-dd"/>
-							</td>
+							<td id="apl_end"><fmt:formatDate value="${Sg_infoVO.apl_end}" pattern="yyyy-MM-dd"/></td>
 						</tr>
 						<tr>
 							<th>報名費用</th>
@@ -209,7 +205,7 @@
 </div>
 			<%@ include file="Sg_repPage.file" %>
 
-
+<%@ include file="/front-end/CA105G1_footer.file" %>
 
 
 <script type="text/javascript">
@@ -387,8 +383,6 @@
 	        
 	        // 放置路線圖層
 	        directionsDisplay.setMap(map);
-	        
-	        
 	        
 	        // 路線相關設定
 	        var request = {
