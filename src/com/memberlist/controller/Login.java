@@ -42,7 +42,7 @@ public class Login extends HttpServlet {
 		if("register".equals(button)) {
 			req.setAttribute("account", account);
 			req.setAttribute("password", password);
-			String url ="/front-end/memberlist/RegisterMem_page.jsp";
+			String url ="RegisterMem_page.jsp";
 			res.sendRedirect(url);
 			return;
 		}

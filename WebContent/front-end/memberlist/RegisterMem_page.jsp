@@ -7,13 +7,19 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 		<title>SPORTGO 會員註冊</title>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://code.jquery.com/jquery.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<style type="text/css">
 			.btn{display: flex;}
 			.error{color:red;}
+			img{width:100%;
+				height:100%;}
 		</style>
 </head>
 <body>
-	<form method="post" action="Register.do">
+	<form method="post" enctype="multipart/form-data" action="Register.do">
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-12 col-sm-6 col-sm-offset-3">
@@ -25,13 +31,19 @@
 							</c:forEach>
 						</ul>
 					</c:if>
+					
+					<div>
+						<label>照片</label>
+						<input type="file" name="picture" class="upl">
+						<img class="preview" src="<%=request.getContextPath()%>/img/mem_no.jpg">
+					</div>
 					<div class="form-group">
 						<label for="account">帳號</label>
 						<input type="text" name="account" 
 						class="form-control" value="${param.account}">
 					<div class="form-group">
 						<label for="password">密碼</label>
-						<input type="text" name="password" 
+						<input type="password" name="password" 
 						class="form-control" value="${param.password}">
 					</div>
 					<div class="form-group">
@@ -83,9 +95,35 @@
 
 		</div>
 	</form>	
+	
+	
+<script>
+$(function (){
+	function format_float(num, pos){
+        var size = Math.pow(10, pos);
+        return Math.round(num * size) / size;
+    }
+function preview(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $('.preview').attr('src', e.target.result);
+           /*  var KB = format_float(e.total / 1024, 2);
+            $('.size').text("檔案大小：" + KB + " KB"); */
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+function format_float(num, pos){
+    var size = Math.pow(10, pos);
+    return Math.round(num * size) / size;
+}
+$("body").on("change", ".upl", function (){
+    preview(this);
+})
+})
+</script>
 		
 		
-		<script src="https://code.jquery.com/jquery.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>
