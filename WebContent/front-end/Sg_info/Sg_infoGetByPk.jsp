@@ -18,6 +18,7 @@
 <script src="<%= request.getContextPath()%>/datetimepicker/jquery.js"></script>
 <script src="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
 
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <style type="text/css">
 	th{
@@ -189,7 +190,7 @@
 				加入揪團
 			</div>
 			
-			<div class="btn">
+			<div class="btn" id="share">
 				<img src="<%= request.getContextPath()%>/img/share.png">
 				分享給好友
 			</div>
@@ -408,9 +409,16 @@
         
 	}
 	  
+	$("#share").click(function(){
+		swal({
+			  title: "Good job!",
+			  text: "You clicked the button!",
+			  icon: "success",
+			});
+
+	});
 	
-	
-	
+		
 	
 
 </script>

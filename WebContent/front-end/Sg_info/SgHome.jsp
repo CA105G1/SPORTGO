@@ -55,12 +55,6 @@
     .img-responsive{
     	border-radius: 50px;
     }
-    #lightBox{
-	    position: fixed;
-	    width: 100%;
-	    height: 100%;
-	    background: rgba(66,66,66,.6);
-	}
 	th{
 		text-align:center;
 	}
@@ -85,7 +79,7 @@
 	<div class="container-fluid">
 		<div class="row">
 
-			<div class="col-xs-12 col-sm-4">
+			<div class="col-xs-12 col-sm-3 col-sm-offset-1">
 				
 				<div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
 <!-------------------- 建立揪團區塊 ---------------------->
@@ -111,6 +105,8 @@
 					      			<!-------- 運動種類查詢 --------->
 						      			<tr>
 						      				<th>運動種類</th>
+					      				</tr>
+					      				<tr>
 						      				<th>
 						      				<jsp:useBean id="sportSvc" scope="page" class="com.sport.model.SportService" />
 						      					<select size="1" name="sp_noSearch" class="text-center">
@@ -124,6 +120,8 @@
 						      		<!-------- 場地名稱查詢 --------->
 						      			<tr>
 						      				<th>場地名稱</th>
+					      				</tr>
+					      				<tr>
 						      				<th>
 						      					<select size="1" name="v_noSearch" class="text-center">
 						      						<option value="null">請選擇場地名稱
@@ -133,6 +131,8 @@
 				      				<!-------- 地區查詢 --------->
 						      			<tr>
 						      				<th>地區</th>
+					      				</tr>
+					      				<tr>
 						      				<th>
 						      					<select size="1" name="reg_noSearch" class="text-center">
 						      						<option value="null">請選擇地區
@@ -142,6 +142,8 @@
 						      		<!-------- 活動日期查詢 --------->
 						      			<tr>
 						      				<th>活動日期</th>
+					      				</tr>
+					      				<tr>
 						      				<th>
 						      					<input name="sg_dateSearch" id="sg_dateSearch" type="text"  class="text-center" placeholder="請選擇日期">
 						      				</th>
@@ -149,13 +151,15 @@
 					      			<!-------- 關鍵字查詢 --------->
 						      			<tr>
 						      				<th>關鍵字</th>
+					      				<tr>
+					      				</tr>
 						      				<th>
 						      					<input name="keyWordSearch" id="keyWordSearch" type="text" class="text-center" placeholder="請輸入關鍵字">
 						      				</th>
 						      			</tr>
 					      			<!-------- 送出查詢 --------->
 						      			<tr>
-						      				<td colspan="2"><input type="submit" value="送出查詢" class="btn btn-primary"></td>
+						      				<td><input type="submit" value="送出查詢" class="btn btn-primary"></td>
 						      			</tr>
 						      			
 					      			</thead >
@@ -178,7 +182,7 @@
 			
 			
 			
-			<div class="col-xs-12 col-sm-8 outer">
+			<div class="col-xs-12 col-sm-7 outer">
 			
 			<%@ include file="page1.file" %>
 			<br>
