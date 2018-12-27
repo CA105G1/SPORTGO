@@ -6,8 +6,10 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-		<title>SPORTGO 會員頁面</title>
+		<script src="https://code.jquery.com/jquery.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<title>SPORTGO 會員頁面</title>
 
 		<style type="text/css">
 			.navbar{
@@ -75,7 +77,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-12 col-sm-3">
-					<div class="list-group">
+					<div class="list-group" id="myTab">
 					<a href="#mem" data-toggle="tab" data-target="#mem" class="list-group-item active">個人頁面</a>
 					<a href="#calendar" data-toggle="tab" class="list-group-item">行事曆</a>
 					<a href="#renew" data-toggle="tab" class="list-group-item">個人頁面管理</a>
@@ -126,9 +128,21 @@
 				</div>	
 			</div>
 		</div>
-		
-		
-		<script src="https://code.jquery.com/jquery.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script>
+	$(function(){
+	    $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
+	        localStorage.setItem('activeTab', $(e.target).attr('href'));
+	    })
+
+	    var hash = window.location.hash;
+	    var activeTab = localStorage.getItem('activeTab');
+
+	    if(hash){
+	          $('#project-tabs  a[href="' + hash + '"]').tab('show');   
+	    }else if (activeTab){
+	        $('#project-tabs a[href="' + activeTab + '"]').tab('show');
+	    }
+	});
+	</script>
 	</body>
 </html>

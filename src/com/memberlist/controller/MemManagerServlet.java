@@ -49,7 +49,7 @@ public class MemManagerServlet extends HttpServlet {
 		if("getOne_For_Display".equals(action)) {
 			MemberlistVO memberlist = service.getOneMem(mem_no);
 			req.setAttribute("MemberlistVO", memberlist);
-			RequestDispatcher listall = req.getRequestDispatcher("getOneMem.jsp");
+			RequestDispatcher listall = req.getRequestDispatcher("/back-end/memberlist/getOneMem.jsp");
 			listall.forward(req, res);
 			return;
 		}
@@ -100,8 +100,6 @@ public class MemManagerServlet extends HttpServlet {
 					service.renewPicture(mem_no, file, part.getContentType());
 					System.out.println("picture renew successful");
 					req.setAttribute("picture", file);
-					RequestDispatcher showpic = req.getRequestDispatcher("Member_page.jsp");
-					showpic.forward(req, res);
 				} catch (RuntimeException re) {
 					errorMsgs.put("picture", "輸入的照片有誤");
 					re.printStackTrace();
@@ -109,6 +107,11 @@ public class MemManagerServlet extends HttpServlet {
 					donothing.forward(req, res);
 				}
 			}
+			if(!errorMsgs.isEmpty()) {
+				RequestDispatcher error = req.getRequestDispatcher("Member_page.jsp");
+				error.forward(req, res);
+			}
+			
 			try {
 				/*******永續層存取,更新會員資料*******/
 				if (!("".equals(nick) && "".equals(emgc) && "".equals(emgcphone)
@@ -126,6 +129,7 @@ public class MemManagerServlet extends HttpServlet {
 			}
 			/*****更新完成,準備轉交******/
 			if(errorMsgs.isEmpty()) {
+				memberlistVO = service.getOneMem(mem_no);
 				session.setAttribute("MemberlistVO", memberlistVO);
 				RequestDispatcher donothing = req.getRequestDispatcher("Member_page.jsp");
 				donothing.forward(req, res);
