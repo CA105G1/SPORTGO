@@ -31,15 +31,19 @@
 
 </head>
 <body>
-<% Sg_infoVO vo = (Sg_infoVO)request.getAttribute("Sg_infoVO");
-%>
+
 
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsg}">
 	<font style="color:red">請修正以下錯誤:</font>
+<!-- 	<ul> -->
+<%-- 		<c:forEach var="message" items="${errorMsg}"> --%>
+<%-- 			<li style="color:red">${message}</li> --%>
+<%-- 		</c:forEach> --%>
+<!-- 	</ul> -->
 	<ul>
-		<c:forEach var="message" items="${errorMsg}">
-			<li style="color:red">${message}</li>
+		<c:forEach var="message" items="${errorMsg}">  <!-- 等同於${errorMsgs.entrySet()} -->
+			<li style="color:red">${message.value}</li>  <!-- 等同於${message.getValue()} -->
 		</c:forEach>
 	</ul>
 </c:if>
@@ -70,35 +74,35 @@
 							<th>團名</th>
 							<td>
 								<input type="text" name="sg_name" 
-									value="<%= (vo==null)? "" : vo.getSg_name()%>">
+									value="${param.sg_name}">
 							</td>
 						</tr>
 						<tr>
 							<th>活動時間</th>
 							<td>
 								<input type="text" id="sg_date" name="sg_date" 
-									value="<%= (vo==null)? "" : vo.getSg_date()%>">
+									value="${param.sg_date }">
 							</td>
 						</tr>
 						<tr>
 							<th>報名開始日期</th>
 							<td>
 								<input type="text" id="apl_start" name="apl_start" 
-									value="<%= (vo==null)? "" : vo.getApl_start()%>">
+									value="${param.apl_start }">
 							</td>
 						</tr>
 						<tr>
 							<th>報名截止日期</th>
 							<td>
 								<input type="text" id="apl_end" name="apl_end" 
-									value="<%= (vo==null)? "" : vo.getApl_end()%>">
+									value="${param.apl_end }">
 							</td>
 						</tr>
 						<tr>
 							<th>報名費用</th>
 							<td>
 								<input type="text" name="sg_fee" 
-									value="<%= (vo==null)? "" : vo.getSg_fee()%>">
+									value="${param.sg_fee }">
 							</td>
 						</tr>
 						<tr>
@@ -116,7 +120,7 @@
 							<td>
 								<select size="1" name="sp_no">
 									<c:forEach var="sportVO" items="${sportSvc.all}" > 
-										<option value="${sportVO.sp_no}">${sportVO.sp_name}
+										<option value="${sportVO.sp_no}" ${(param.sp_no == sportVO.sp_no)? 'selected':'' }>${sportVO.sp_name}
 									</c:forEach>   
 								</select>
 							</td>
@@ -131,21 +135,21 @@
 							<th>人數上限</th>
 							<td>
 								<input type="text" name="sg_maxno" 
-									value="<%= (vo==null)? "" : vo.getSg_maxno()%>">
+									value="${param.sg_maxno }">
 							</td>
 						</tr> 
 						<tr>
 							<th>人數下限</th>
 							<td>
 								<input type="text" name="sg_minno" 
-									value="<%= (vo==null)? "" : vo.getSg_minno()%>">
+									value="${param.sg_minno }">
 							</td>
 						</tr> 
 						<tr>
 							<th>團長的話</th>
 							<td>
 								<textarea name="sg_extrainfo" id="sg_extrainfo">
-									<%= (vo==null)? "" : vo.getSg_extrainfo()%>
+									${param.sg_extrainfo}
 								</textarea>
 							</td>
 						</tr>  
@@ -187,8 +191,8 @@
 			reader.onload = function(e){
 				var img = document.getElementById("showPic");
 				img.src=e.target.result;
-// 				img.height=100;
-// 				img.width=200;
+// 				img.height=auto;
+// 				img.width=100%;
 
 				
 			}
