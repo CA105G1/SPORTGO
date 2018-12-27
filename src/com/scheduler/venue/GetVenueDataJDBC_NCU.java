@@ -10,11 +10,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.gym.model.GymDAO_interface;
-import com.gym.model.GymJDBCDAO;
 import com.region.model.RegDAO_interface;
 import com.region.model.RegJDBCDAO;
-import com.region.model.RegService;
 import com.region.model.RegVO;
 import com.venue.model.VenueDAO_interface;
 import com.venue.model.VenueJDBCDAO;
@@ -36,7 +33,7 @@ public class GetVenueDataJDBC_NCU {
 	public static void main(String[] args) {
 		System.out.println("++++++ "+(++iii)+" ++++++"); // 1
 //		GymService gymService = new GymService();
-		GymDAO_interface gymDAO = new GymJDBCDAO();
+//		GymDAO_interface gymDAO = new GymJDBCDAO();
 		List<String> gymObjectJSONStringList = new ArrayList<>();
 		
 		/// 從網路取得jsonOject

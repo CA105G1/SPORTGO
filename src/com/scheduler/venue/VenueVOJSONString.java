@@ -80,7 +80,6 @@ public class VenueVOJSONString implements Callable<String>{
 			}
 		}
 		return stringBuffer.toString();
-		
 	}
 	
 	private String getURLAboutVenueByGymID(Integer gym_id) {

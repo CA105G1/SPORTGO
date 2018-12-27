@@ -260,244 +260,30 @@ public class V_evaluationJDBCDAO implements V_evaluationDAO_interface{
 		}	
 		return list;
 	}
+	public static void main(String[] args) {
+		
+		V_evaluationDAO_interface vei  = new V_evaluationJDBCDAO();
+		
+//		vei.insert(new V_evaluationVO("M005","V000002", 3));
+//		vei.insert(new VEVO("M002","V000003", 2));
+//		vei.update(new VEVO("M001","V000002", 4));
+//		vei.delete("M001", "V000001");
+//		
+//		
+//		V_evaluationVO ve = vei.findByPrimaryKey("M002", "V000002");
+//		System.out.println(ve.getScore());
+//		
+//		System.out.println("========================");
+		
+		List<V_evaluationVO> veVO = vei.getAll();
+		
+		for (V_evaluationVO x : veVO) {
+			System.out.println(x.getMem_no() + " " + x.getV_no() + " " + x.getScore());
+		}
+		
+	}
+	
+	
 }
 
-//	
-//	private static final String INSERT_STMT = 
-//			"INSERT INTO venuetype (vt_no,vt_name) VALUES (?, ?)";
-//		private static final String GET_ALL_STMT = 
-//			"SELECT vt_no,vt_name FROM venuetype order by vt_no";
-//		private static final String GET_ONE_STMT = 
-//			"SELECT vt_no,vt_name FROM venuetype where vt_no = ?";
-//		private static final String DELETE = 
-//			"DELETE FROM venuetype where vt_no = ?";
-//		private static final String UPDATE = 
-//			"UPDATE venuetype set vt_name = ? where vt_no = ?";
-//		
-//	@Override
-//	public void insert(VEVO vtVO) {
-//		
-//		Connection con = null;
-//		PreparedStatement pstmt = null;
-//
-//		try {
-//
-//			con = DriverManager.getConnection(URL, USER, PASSWORD);
-//			pstmt = con.prepareStatement(INSERT_STMT);
-//
-//			pstmt.setString(1, vtVO.getVt_no());
-//			pstmt.setString(2, vtVO.getVt_name());
-//
-//			pstmt.executeUpdate();
-//
-//			// Handle any SQL errors
-//		} catch (SQLException se) {
-//			throw new RuntimeException("A database error occured. "
-//					+ se.getMessage());
-//			// Clean up JDBC resources
-//		} finally {
-//			if (pstmt != null) {
-//				try {
-//					pstmt.close();
-//				} catch (SQLException se) {
-//					se.printStackTrace(System.err);
-//				}
-//			}
-//			if (con != null) {
-//				try {
-//					con.close();
-//				} catch (Exception e) {
-//					e.printStackTrace(System.err);
-//				}
-//			}
-//		}
-//		
-//	}
-//
-//	@Override
-//	public void update(VEVO vtVO) {
-//
-//		Connection con = null;
-//		PreparedStatement pstmt = null;
-//
-//		try {
-//
-//			con = DriverManager.getConnection(URL, USER, PASSWORD);
-//			pstmt = con.prepareStatement(UPDATE);
-//
-//			pstmt.setString(1, vtVO.getVt_name());
-//			pstmt.setString(2, vtVO.getVt_no());
-//
-//			pstmt.executeUpdate();
-//
-//			// Handle any driver errors
-//		} catch (SQLException se) {
-//			throw new RuntimeException("A database error occured. "
-//					+ se.getMessage());
-//			// Clean up JDBC resources
-//		} finally {
-//			if (pstmt != null) {
-//				try {
-//					pstmt.close();
-//				} catch (SQLException se) {
-//					se.printStackTrace(System.err);
-//				}
-//			}
-//			if (con != null) {
-//				try {
-//					con.close();
-//				} catch (Exception e) {
-//					e.printStackTrace(System.err);
-//				}
-//			}
-//		}
-//	}
-//
-//	@Override
-//	public void delete(String vt_no) {
-//
-//		Connection con = null;
-//		PreparedStatement pstmt = null;
-//
-//		try {
-//
-//			con = DriverManager.getConnection(URL, USER, PASSWORD);
-//			pstmt = con.prepareStatement(DELETE);
-//
-//			pstmt.setString(1, vt_no);
-//
-//			pstmt.executeUpdate();
-//
-//			// Handle any driver errors
-//		} catch (SQLException se) {
-//			throw new RuntimeException("A database error occured. "
-//					+ se.getMessage());
-//			// Clean up JDBC resources
-//		} finally {
-//			if (pstmt != null) {
-//				try {
-//					pstmt.close();
-//				} catch (SQLException se) {
-//					se.printStackTrace(System.err);
-//				}
-//			}
-//			if (con != null) {
-//				try {
-//					con.close();
-//				} catch (Exception e) {
-//					e.printStackTrace(System.err);
-//				}
-//			}
-//		}
-//	}
-//
-//	@Override
-//	public VEVO findByPrimaryKey(String vt_no) {
-//		
-//		VEVO vtVO = null;
-//		Connection con = null;
-//		PreparedStatement pstmt = null;
-//		ResultSet rs = null;
-//
-//		try {
-//
-//			con = DriverManager.getConnection(URL, USER, PASSWORD);
-//			pstmt = con.prepareStatement(GET_ONE_STMT);
-//
-//			pstmt.setString(1, vt_no);
-//
-//			rs = pstmt.executeQuery();
-//
-//			while (rs.next()) {
-//				// vtVo 也稱為 Domain objects
-//				vtVO = new VEVO();
-//				vtVO.setVt_no(rs.getString("vt_no"));
-//				vtVO.setVt_name(rs.getString("vt_name"));
-//			}
-//
-//			// Handle any driver errors
-//		} catch (SQLException se) {
-//			throw new RuntimeException("A database error occured. "
-//					+ se.getMessage());
-//			// Clean up JDBC resources
-//		} finally {
-//			if (rs != null) {
-//				try {
-//					rs.close();
-//				} catch (SQLException se) {
-//					se.printStackTrace(System.err);
-//				}
-//			}
-//			if (pstmt != null) {
-//				try {
-//					pstmt.close();
-//				} catch (SQLException se) {
-//					se.printStackTrace(System.err);
-//				}
-//			}
-//			if (con != null) {
-//				try {
-//					con.close();
-//				} catch (Exception e) {
-//					e.printStackTrace(System.err);
-//				}
-//			}
-//		}
-//		return vtVO;
-//		
-//	}
-//
-//	@Override
-//	public List<VEVO> getAll() {
-//		
-//		List<VEVO> list = new ArrayList<VEVO>();
-//		VEVO vtVO = null;
-//
-//		Connection con = null;
-//		PreparedStatement pstmt = null;
-//		ResultSet rs = null;
-//
-//		try {
-//
-//			con = DriverManager.getConnection(URL, USER, PASSWORD);
-//			pstmt = con.prepareStatement(GET_ALL_STMT);
-//			rs = pstmt.executeQuery();
-//
-//			while (rs.next()) {
-//				// vtVO 也稱為 Domain objects
-//				vtVO = new VEVO();
-//				vtVO.setVt_no(rs.getString("vt_no"));
-//				vtVO.setVt_name(rs.getString("vt_name"));
-//				list.add(vtVO); // Store the row in the list
-//			}
-//
-//			// Handle any driver errors
-//		} catch (SQLException se) {
-//			throw new RuntimeException("A database error occured. "
-//					+ se.getMessage());
-//			// Clean up JDBC resources
-//		} finally {
-//			if (rs != null) {
-//				try {
-//					rs.close();
-//				} catch (SQLException se) {
-//					se.printStackTrace(System.err);
-//				}
-//			}
-//			if (pstmt != null) {
-//				try {
-//					pstmt.close();
-//				} catch (SQLException se) {
-//					se.printStackTrace(System.err);
-//				}
-//			}
-//			if (con != null) {
-//				try {
-//					con.close();
-//				} catch (Exception e) {
-//					e.printStackTrace(System.err);
-//				}
-//			}
-//		}
-//		return list;
-//	}
+

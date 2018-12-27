@@ -1,7 +1,6 @@
 package com.venue.model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -9,19 +8,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
+
 
 public class VenueDAO implements VenueDAO_interface {
 
-	
-	private static final String DRIVER = com.util.lang.Util.DRIVER;
-	private static final String URL = com.util.lang.Util.URL;
-	private static final String USER = com.util.lang.Util.USER;
-	private static final String PASSWORD = com.util.lang.Util.PASSWORD;
+	private static DataSource dataSource = null;
 	
 	static {
 		try {
-			Class.forName(DRIVER);
-		}catch(ClassNotFoundException e) {
+			javax.naming.Context context = new javax.naming.InitialContext();
+			dataSource = (DataSource)context.lookup(com.util.lang.Util.JNDI_DATABASE_NAME);
+		}catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
@@ -88,7 +88,7 @@ public class VenueDAO implements VenueDAO_interface {
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		try {
-			connection = DriverManager.getConnection(URL, USER, PASSWORD);
+			connection = dataSource.getConnection();
 			String[] cols = {"v_no"};	
 			preparedStatement = connection.prepareStatement(INSERT,cols);
 			preparedStatement.setString(1, venueVO.getV_name());
@@ -102,7 +102,7 @@ public class VenueDAO implements VenueDAO_interface {
 			preparedStatement.setString(9, venueVO.getV_phoneno());
 			preparedStatement.setDouble(10, venueVO.getV_lat());
 			preparedStatement.setDouble(11, venueVO.getV_long());
-			//preparedStatement.setString(12, venueVO.getV_public_transport());
+//			preparedStatement.setString(12, venueVO.getV_public_transport());
 			preparedStatement.setString(12, venueVO.getV_fitall());
 			preparedStatement.setString(13, venueVO.getV_fitinter());
 			preparedStatement.setString(14, venueVO.getOpen_state());
@@ -132,7 +132,6 @@ public class VenueDAO implements VenueDAO_interface {
 				}while(resultSet.next());
 			}
 		}catch(SQLException e) {
-			e.printStackTrace();
 			throw new RuntimeException("A database error occured. "+e.getMessage());
 		}finally {
 			if(resultSet!=null) {
@@ -164,7 +163,7 @@ public class VenueDAO implements VenueDAO_interface {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		try {
-			connection = DriverManager.getConnection(URL, USER, PASSWORD);
+			connection = dataSource.getConnection();
 			preparedStatement = connection.prepareStatement(UPDATE);
 			preparedStatement.setString(1, venueVO.getV_name());
 			preparedStatement.setString(2, venueVO.getV_weburl());
@@ -215,10 +214,6 @@ public class VenueDAO implements VenueDAO_interface {
 				}
 			}
 		}
-		
-		
-		
-		
 	}
 
 	@Override
@@ -226,7 +221,7 @@ public class VenueDAO implements VenueDAO_interface {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		try {
-			connection = DriverManager.getConnection(URL, USER, PASSWORD);
+			connection = dataSource.getConnection();
 			preparedStatement = connection.prepareStatement(DELETE);
 			preparedStatement.setString(1, v_no);
 			
@@ -259,7 +254,7 @@ public class VenueDAO implements VenueDAO_interface {
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		try {
-			connection = DriverManager.getConnection(URL, USER, PASSWORD);
+			connection = dataSource.getConnection();
 			preparedStatement = connection.prepareStatement(GET_ONE_STMT);
 			preparedStatement.setString(1, v_no);
 			resultSet = preparedStatement.executeQuery();
@@ -277,7 +272,7 @@ public class VenueDAO implements VenueDAO_interface {
 				venueVO.getV_phoneno();
 				venueVO.getV_lat();
 				venueVO.getV_long();
-				//venueVO.getV_public_transport();
+//				venueVO.getV_public_transport();
 				venueVO.getV_fitall();
 				venueVO.getV_fitinter();
 				venueVO.getOpen_state();
@@ -330,7 +325,7 @@ public class VenueDAO implements VenueDAO_interface {
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		try {
-			connection = DriverManager.getConnection(URL, USER, PASSWORD);
+			connection = dataSource.getConnection();
 			preparedStatement = connection.prepareStatement(GET_ALL_STMT);
 			resultSet = preparedStatement.executeQuery();
 			list = collectVenueVO(resultSet);
