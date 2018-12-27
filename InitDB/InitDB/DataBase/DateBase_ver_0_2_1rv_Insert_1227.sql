@@ -1,4 +1,4 @@
----SportyGo_ver_0_2_0rv_insert_1226-------
+---SportyGo_ver_0_2_0rv_insert_1227-------
 ------------01-INSERT--------------------
 ------------MEMBERLIST-------------------
 ---------------------------------20181210
@@ -500,82 +500,18 @@ commit;
 --中央大學依仁堂
 --中央大學籃球場
 
-INSERT into venue values (
-'V000001','中央大學附屬中壢高中籃球場','http://www.clhs.tyc.edu.tw',null,
-'本場地共有5面全場,及一塊三角面積,三角面積內設有2個籃框,共有13個籃框.',
-'VT001','室外設施',320,'桃園市中壢區三光路115號',
-'03-4932181#34',24.9638709920322,121.210166931414,'Y','Y','免費對外開放使用',
-'5:30-7:30','Y','Y','Y','Y','Y','Y','Y',null,null,null,null);
+Insert into VENUE (V_NO,V_NAME,V_WEBURL,V_PARKTYPE,VT_NO,V_INOUT,REG_NO,V_ADDRESS,V_PHONENO,V_LAT,V_LONG,V_FITALL,V_FITINTER,OPEN_STATE,OPEN_TIME,OPENDAY_MON,OPENDAY_TUE,OPENDAY_WED,OPENDAY_THU,OPENDAY_FRI,OPENDAY_SAT,OPENDAY_SUN,V_PHOTO1_EXT,V_PHOTO2_EXT,V_PHOTO1_URL,V_PHOTO2_URL) values ('V000001','中央大學附屬中壢高中籃球場','http://www.clhs.tyc.edu.tw',null,'VT001','室外設施',320,'桃園市中壢區三光路115號','03-4932181#34',24.9638709920322,121.210166931414,'Y','Y','免費對外開放使用','5:30-7:30','Y','Y','Y','Y','Y','Y','Y',null,null,'https://az804957.vo.msecnd.net/photofunc/20140613120609_籃球場1.JPG','https://az804957.vo.msecnd.net/photofunc/20140613120609_籃球場2.JPG');
+Insert into VENUE (V_NO,V_NAME,V_WEBURL,V_PARKTYPE,VT_NO,V_INOUT,REG_NO,V_ADDRESS,V_PHONENO,V_LAT,V_LONG,V_FITALL,V_FITINTER,OPEN_STATE,OPEN_TIME,OPENDAY_MON,OPENDAY_TUE,OPENDAY_WED,OPENDAY_THU,OPENDAY_FRI,OPENDAY_SAT,OPENDAY_SUN,V_PHOTO1_EXT,V_PHOTO2_EXT,V_PHOTO1_URL,V_PHOTO2_URL) values ('V000002','中央大學羽球場(館)','http://www.ncu.edu.tw','無停車場','VT005','室內設施',320,'桃園市中壢區中大路300號','03-4267128',24.969189318918,121.190893650055,'Y','Y','付費對外開放使用','6:30-23:0','Y','Y','Y','Y','Y','Y','Y',null,null,'https://az804957.vo.msecnd.net/photofunc/20140709162829_羽球館全景.JPG','https://az804957.vo.msecnd.net/photofunc/20140709162829_羽球館1.JPG');
+Insert into VENUE (V_NO,V_NAME,V_WEBURL,V_PARKTYPE,VT_NO,V_INOUT,REG_NO,V_ADDRESS,V_PHONENO,V_LAT,V_LONG,V_FITALL,V_FITINTER,OPEN_STATE,OPEN_TIME,OPENDAY_MON,OPENDAY_TUE,OPENDAY_WED,OPENDAY_THU,OPENDAY_FRI,OPENDAY_SAT,OPENDAY_SUN,V_PHOTO1_EXT,V_PHOTO2_EXT,V_PHOTO1_URL,V_PHOTO2_URL) values ('V000003','中央大學附屬中壢高中自強館','http://www.clhs.tyc.edu.tw','無停車場','VT005','室內設施',320,'桃園市中壢區三光路115號','03-4932181#34',24.9625795754056,121.211014509136,'Y','Y','付費對外開放使用','0:0-0:0','N','N','N','N','N','Y','Y',null,null,'https://az804957.vo.msecnd.net/photofunc/20140609115615_自強館1.JPG','https://az804957.vo.msecnd.net/photofunc/20140609115615_自強館2.JPG');
+Insert into VENUE (V_NO,V_NAME,V_WEBURL,V_PARKTYPE,VT_NO,V_INOUT,REG_NO,V_ADDRESS,V_PHONENO,V_LAT,V_LONG,V_FITALL,V_FITINTER,OPEN_STATE,OPEN_TIME,OPENDAY_MON,OPENDAY_TUE,OPENDAY_WED,OPENDAY_THU,OPENDAY_FRI,OPENDAY_SAT,OPENDAY_SUN,V_PHOTO1_EXT,V_PHOTO2_EXT,V_PHOTO1_URL,V_PHOTO2_URL) values ('V000004','中央大學依仁堂','http://140.115.117.199/ncupe/web/main/index.php','無停車場','VT002','室內設施',320,'桃園市中壢區中大路300號','03-4267128',24.9682993807963,121.190807819366,'Y','Y','付費對外開放使用','8:0-21:0','Y','Y','Y','Y','Y','N','N',null,null,'https://az804957.vo.msecnd.net/photofunc/20140715072039_排球館全景.JPG','https://az804957.vo.msecnd.net/photofunc/20140715072039_排球館1.JPG');
+Insert into VENUE (V_NO,V_NAME,V_WEBURL,V_PARKTYPE,VT_NO,V_INOUT,REG_NO,V_ADDRESS,V_PHONENO,V_LAT,V_LONG,V_FITALL,V_FITINTER,OPEN_STATE,OPEN_TIME,OPENDAY_MON,OPENDAY_TUE,OPENDAY_WED,OPENDAY_THU,OPENDAY_FRI,OPENDAY_SAT,OPENDAY_SUN,V_PHOTO1_EXT,V_PHOTO2_EXT,V_PHOTO1_URL,V_PHOTO2_URL) values ('V000005','中央大學附屬中壢高中網球場(館)','http://www.clhs.tyc.edu.tw',null,'VT003','室外設施',320,'桃園市中壢區三光路115號','03-4932181#34',24.9628377431009,121.211016654706,'Y','Y','付費對外開放使用','0:0-0:0','Y','Y','Y','Y','Y','Y','Y',null,null,'https://az804957.vo.msecnd.net/photofunc/20140613121356_網球場3.JPG','https://az804957.vo.msecnd.net/photofunc/20140613121356_網球場1.JPG');
+Insert into VENUE (V_NO,V_NAME,V_WEBURL,V_PARKTYPE,VT_NO,V_INOUT,REG_NO,V_ADDRESS,V_PHONENO,V_LAT,V_LONG,V_FITALL,V_FITINTER,OPEN_STATE,OPEN_TIME,OPENDAY_MON,OPENDAY_TUE,OPENDAY_WED,OPENDAY_THU,OPENDAY_FRI,OPENDAY_SAT,OPENDAY_SUN,V_PHOTO1_EXT,V_PHOTO2_EXT,V_PHOTO1_URL,V_PHOTO2_URL) values ('V000006','中央大學籃球場','http://www.ncu.edu.tw','無停車場','VT001','室外設施',320,'桃園市中壢區中大路300號','03-4227151#57251',24.9697339773255,121.189337968826,'Y','Y','免費對外開放使用','6:0-23:0','Y','Y','Y','Y','Y','Y','Y',null,null,'https://az804957.vo.msecnd.net/photofunc/20140711154826_籃球場全景.JPG','https://az804957.vo.msecnd.net/photofunc/20140711154826_籃球場2.JPG');
+Insert into VENUE (V_NO,V_NAME,V_WEBURL,V_PARKTYPE,VT_NO,V_INOUT,REG_NO,V_ADDRESS,V_PHONENO,V_LAT,V_LONG,V_FITALL,V_FITINTER,OPEN_STATE,OPEN_TIME,OPENDAY_MON,OPENDAY_TUE,OPENDAY_WED,OPENDAY_THU,OPENDAY_FRI,OPENDAY_SAT,OPENDAY_SUN,V_PHOTO1_EXT,V_PHOTO2_EXT,V_PHOTO1_URL,V_PHOTO2_URL) values ('V000007','中央大學附屬中壢高中自強館','http://www.clhs.tyc.edu.tw','無停車場','VT001','室內設施',320,'桃園市中壢區三光路115號','03-4932181#34',24.9625795754056,121.211014509136,'Y','Y','付費對外開放使用','8:0-22:0','N','N','N','N','N','Y','Y',null,null,'https://az804957.vo.msecnd.net/photofunc/20140609101726_自強館1.JPG','https://az804957.vo.msecnd.net/photofunc/20140609101726_自強館2.JPG');
+Insert into VENUE (V_NO,V_NAME,V_WEBURL,V_PARKTYPE,VT_NO,V_INOUT,REG_NO,V_ADDRESS,V_PHONENO,V_LAT,V_LONG,V_FITALL,V_FITINTER,OPEN_STATE,OPEN_TIME,OPENDAY_MON,OPENDAY_TUE,OPENDAY_WED,OPENDAY_THU,OPENDAY_FRI,OPENDAY_SAT,OPENDAY_SUN,V_PHOTO1_EXT,V_PHOTO2_EXT,V_PHOTO1_URL,V_PHOTO2_URL) values ('V000008','中央大學依仁堂','http://140.115.117.199/ncupe/web/main/index.php','無停車場','VT001','室內設施',320,'桃園市中壢區中大路300號','03-4267128',24.9682993807963,121.190807819366,'Y','Y','付費對外開放使用','8:0-21:0','Y','Y','Y','Y','Y','N','N',null,null,'https://az804957.vo.msecnd.net/photofunc/20140714165230_籃球館全景.JPG','https://az804957.vo.msecnd.net/photofunc/20140714165230_籃球館1.JPG');
+Insert into VENUE (V_NO,V_NAME,V_WEBURL,V_PARKTYPE,VT_NO,V_INOUT,REG_NO,V_ADDRESS,V_PHONENO,V_LAT,V_LONG,V_FITALL,V_FITINTER,OPEN_STATE,OPEN_TIME,OPENDAY_MON,OPENDAY_TUE,OPENDAY_WED,OPENDAY_THU,OPENDAY_FRI,OPENDAY_SAT,OPENDAY_SUN,V_PHOTO1_EXT,V_PHOTO2_EXT,V_PHOTO1_URL,V_PHOTO2_URL) values ('V000009','中央大學排球場','http://www.ncu.edu.tw','無停車場','VT002','室外設施',320,'桃園市中壢區中大路300號','03-4227151#57251',24.9676282756607,121.190947294235,'Y','Y','免費對外開放使用','8:0-22:0','Y','Y','Y','Y','Y','Y','Y',null,null,'https://az804957.vo.msecnd.net/photofunc/20140714150418_球場全景.JPG','https://az804957.vo.msecnd.net/photofunc/20140714150418_排球場1.JPG');
+Insert into VENUE (V_NO,V_NAME,V_WEBURL,V_PARKTYPE,VT_NO,V_INOUT,REG_NO,V_ADDRESS,V_PHONENO,V_LAT,V_LONG,V_FITALL,V_FITINTER,OPEN_STATE,OPEN_TIME,OPENDAY_MON,OPENDAY_TUE,OPENDAY_WED,OPENDAY_THU,OPENDAY_FRI,OPENDAY_SAT,OPENDAY_SUN,V_PHOTO1_EXT,V_PHOTO2_EXT,V_PHOTO1_URL,V_PHOTO2_URL) values ('V000010','中央大學簡易棒球場','http://www.ncu.edu.tw','無停車場','VT004','室外設施',320,'桃園市中壢區中大路300號','03-4267128',24.9692574013508,121.191403269768,'Y','Y','付費對外開放使用','8:0-17:0','Y','Y','Y','Y','Y','Y','Y',null,null,'https://az804957.vo.msecnd.net/photofunc/20140711093606_棒球場1.JPG','https://az804957.vo.msecnd.net/photofunc/20140711093606_棒球場2.JPG');
+Insert into VENUE (V_NO,V_NAME,V_WEBURL,V_PARKTYPE,VT_NO,V_INOUT,REG_NO,V_ADDRESS,V_PHONENO,V_LAT,V_LONG,V_FITALL,V_FITINTER,OPEN_STATE,OPEN_TIME,OPENDAY_MON,OPENDAY_TUE,OPENDAY_WED,OPENDAY_THU,OPENDAY_FRI,OPENDAY_SAT,OPENDAY_SUN,V_PHOTO1_EXT,V_PHOTO2_EXT,V_PHOTO1_URL,V_PHOTO2_URL) values ('V000011','中央大學附屬中壢高中田徑場','http://www.clhs.tyc.edu.tw',null,'VT002','室外設施',320,'桃園市中壢區三光路115號','03-4932181#34',24.9637841830203,121.210422277254,'Y','Y','免費對外開放使用','5:30-7:30','Y','Y','Y','Y','Y','Y','Y',null,null,'https://az804957.vo.msecnd.net/photofunc/20140610135904_DSC03028.JPG','https://az804957.vo.msecnd.net/photofunc/20140610135904_排球場1.JPG');
 
-INSERT into venue values (
-'V000002','中央大學羽球場(館)','http://www.ncu.edu.tw','無停車場',
-'本場地建成於60年代. 近年完成PU地面舖設及全面換裝LED照明.',
-'VT005','室內設施',320,'桃園市中壢區中大路300號',
-'03-4267128',24.969189318918,121.190893650055,'Y','Y','付費對外開放使用',
-'6:30-23:0','Y','Y','Y','Y','Y','Y','Y',null,null,null,null);
-
-INSERT into venue values (
-'V000003','中央大學附屬中壢高中自強館','http://www.clhs.tyc.edu.tw','無停車場',
-'本館興建於民國70年,共分地下一層及地上兩層建築,地下室為桌球室, 地上一層為主場地 ,可提供籃球比賽或羽球比賽使用.',
-'VT005','室內設施',320,'桃園市中壢區三光路115號',
-'03-4932181#34',24.9625795754056,121.211014509136,'Y','Y','付費對外開放使用',
-'0:0-0:0','N','N','N','N','N','Y','Y',null,null,null,null);
-
-INSERT into venue values (
-'V000004','中央大學依仁堂','http://140.115.117.199/ncupe/web/main/index.php','無停車場',
-'本場館於76年啟用,內有籃球場,排球場,韻律教室,體適能健身教室等設施.',
-'VT002','室內設施',320,'桃園市中壢區中大路300號',
-'03-4267128',24.9682993807963,121.190807819366,'Y','Y','付費對外開放使用',
-'8:0-21:0','Y','Y','Y','Y','Y','N','N',null,null,null,null);
-
-INSERT into venue values (
-'V000005','中央大學附屬中壢高中網球場(館)','http://www.clhs.tyc.edu.tw',null,
-'本場地為室外球場,共有2個球場可同時使用,興建於民國84年屬硬式網球場地.',
-'VT003','室外設施',320,'桃園市中壢區三光路115號',
-'03-4932181#34',24.9628377431009,121.211016654706,'Y','Y','付費對外開放使用',
-'0:0-0:0','Y','Y','Y','Y','Y','Y','Y',null,null,null,null);
-
-INSERT into venue values (
-'V000006','中央大學籃球場','http://www.ncu.edu.tw','無停車場',
-'本球場位於中央大學校區內，周邊另有游泳池、網球場羽球館等設施。',
-'VT001','室外設施',320,'桃園市中壢區中大路300號',
-'03-4227151#57251',24.9697339773255,121.189337968826,'Y','Y','免費對外開放使用',
-'6:0-23:0','Y','Y','Y','Y','Y','Y','Y',null,null,null,null);
-
-INSERT into venue values (
-'V000007','中央大學附屬中壢高中自強館','http://www.clhs.tyc.edu.tw','無停車場',
-'本館興建於民國70年,共分地下一層及地上兩層建築,地下室為桌球室, 地上一層為主場地 ,可提供籃球比賽或羽球比賽使用.',
-'VT001','室內設施',320,'桃園市中壢區三光路115號',
-'03-4932181#34',24.9625795754056,121.211014509136,'Y','Y','付費對外開放使用',
-'8:0-22:0','N','N','N','N','N','Y','Y',null,null,null,null);
-
-INSERT into venue values (
-'V000008','中央大學依仁堂','http://140.115.117.199/ncupe/web/main/index.php','無停車場',
-'本場館於76年啟用,內有籃球場,排球場,韻律教室,體適能健身教室等設施.',
-'VT001','室內設施',320,'桃園市中壢區中大路300號',
-'03-4267128',24.9682993807963,121.190807819366,'Y','Y','付費對外開放使用',
-'8:0-21:0','Y','Y','Y','Y','Y','N','N',null,null,null,null);
-
-INSERT into venue values (
-'V000009','中央大學排球場','http://www.ncu.edu.tw','無停車場',
-'本排球場於民國82年啟用，位於中央大學校區內，周邊緊鄰依仁堂另、田徑場等設施。',
-'VT002','室外設施',320,'桃園市中壢區中大路300號',
-'03-4227151#57251',24.9676282756607,121.190947294235,'Y','Y','免費對外開放使用',
-'8:0-22:0','Y','Y','Y','Y','Y','Y','Y',null,null,null,null);
-
-INSERT into venue values (
-'V000010','中央大學簡易棒球場','http://www.ncu.edu.tw','無停車場',
-'本場地於99年或教育部專案經費補助整建為簡易棒球場,並於100年12月正式啟用,周邊另有羽球館及溜冰場等場地.',
-'VT004','室外設施',320,'桃園市中壢區中大路300號',
-'03-4267128',24.9692574013508,121.191403269768,'Y','Y','付費對外開放使用',
-'8:0-17:0','Y','Y','Y','Y','Y','Y','Y',null,null,null,null);
-
-INSERT into venue values (
-'V000011','中央大學附屬中壢高中田徑場','http://www.clhs.tyc.edu.tw',null,
-'民國93年開始使用,本田徑場為300公尺跑道,直道有8道,彎道共6道.中間為45M*40M草皮.可做為5人制足球賽場地共2座.兩側為排球場地各3座共有6座.',
-'VT002','室外設施',320,'桃園市中壢區三光路115號',
-'03-4932181#34',24.9637841830203,121.210422277254,'Y','Y','免費對外開放使用',
-'5:30-7:30','Y','Y','Y','Y','Y','Y','Y',null,null,null,null);
 
 
 

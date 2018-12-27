@@ -1,4 +1,4 @@
----SportyGo_ver_0_2_0_create_1226------
+---SportyGo_ver_0_2_0_create_1227------
 --------------------------
 ------drop sequence-------
 --------------------------
@@ -171,7 +171,8 @@ Create table venue(
     v_photo1_ext varchar2(10),
     v_photo2 BLOB,
     v_photo2_ext varchar2(10),        
-    ----TEST_ING---
+    v_photo1_url varchar2(2000),
+    v_photo2_url varchar2(2000),
     CONSTRAINT VENUE_VENUETYPE_FK                    ----單字FK放後面
     FOREIGN KEY(VT_NO) REFERENCES VENUETYPE(VT_NO),  
     CONSTRAINT VENUE_REGION_FK                       ----單字FK放後面
