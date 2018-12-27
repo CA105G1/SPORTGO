@@ -16,6 +16,7 @@ import javax.sql.DataSource;
 public class VenueDAO implements VenueDAO_interface {
 
 	private static DataSource dataSource = null;
+	
 	static {
 		try {
 			javax.naming.Context context = new javax.naming.InitialContext();
