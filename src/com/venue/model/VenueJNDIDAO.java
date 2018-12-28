@@ -11,6 +11,8 @@ import java.util.List;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.sun.crypto.provider.RSACipher;
+
 
 
 public class VenueJNDIDAO implements VenueDAO_interface {
@@ -24,7 +26,7 @@ public class VenueJNDIDAO implements VenueDAO_interface {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private static final String INSERT=""
 			+ "INSERT INTO venue "
 			+ "(v_no, v_name, v_weburl, v_parktype, v_introduction, "
@@ -34,7 +36,8 @@ public class VenueJNDIDAO implements VenueDAO_interface {
 			+ " openday_mon, openday_tue, openday_wed, openday_thu, "
 			+ " openday_fri, openday_sat, openday_sun, "
 			+ " v_photo1, v_photo1_ext, "
-			+ " v_photo2, v_photo2_ext) "
+			+ " v_photo2, v_photo2_ext,"
+			+ " v_photo1_url, v_photo2_url) "
 			+ " VALUES ('V'||LPAD(venue_seq.NEXTVAL,6,'0'), ?, ?, ?, ?, "
 			+ " ?, ?, ?, ?, ?, ?, ?, "
 			+ " ?, ?, "
@@ -42,32 +45,38 @@ public class VenueJNDIDAO implements VenueDAO_interface {
 			+ " ?, ?, ?, ?, "
 			+ " ?, ?, ?, "
 			+ " ?, ?,"
+			+ " ?, ?,"
 			+ " ?, ?)"
 			+ "";
 	private static final String GET_ALL_STMT=""
 			+ "SELECT "
-			+ "(v_no, v_name, v_weburl, v_parktype, v_introduction, "
-			+ " vt_no, v_inout, reg_n, v_address, v_phoneno, v_lat, v_long, "
+			+ " v_no, v_name, v_weburl, v_parktype, v_introduction, "
+			+ " vt_no, v_inout, reg_no, v_address, v_phoneno, v_lat, v_long, "
 			+ " v_fitall, v_fitinter, "
 			+ " open_state, open_time, "
 			+ " openday_mon, openday_tue, openday_wed, openday_thu, "
 			+ " openday_fri, openday_sat, openday_sun, "
 			+ " v_photo1, v_photo1_ext, "
-			+ " v_photo2, v_photo2_ext) "
+			+ " v_photo2, v_photo2_ext,"
+			+ " v_photo1_url, v_photo2_url "
 			+ " FROM venue ORDER BY v_no ASC";
+	
 	private static final String GET_ONE_STMT=""
 			+ "SELECT "
-			+ "(v_no, v_name, v_weburl, v_parktype, v_introduction, "
-			+ " vt_no, v_inout, reg_n, v_address, v_phoneno, v_lat, v_long, "
+			+ " v_no, v_name, v_weburl, v_parktype, v_introduction, "
+			+ " vt_no, v_inout, reg_no, v_address, v_phoneno, v_lat, v_long, "
 			+ " v_fitall, v_fitinter, "
 			+ " open_state, open_time, "
 			+ " openday_mon, openday_tue, openday_wed, openday_thu, "
 			+ " openday_fri, openday_sat, openday_sun, "
 			+ " v_photo1, v_photo1_ext, "
-			+ " v_photo2, v_photo2_ext) "
-			+ " FROM venue where v_no=? ";;
+			+ " v_photo2, v_photo2_ext,"
+			+ " v_photo1_url, v_photo2_url "
+			+ " FROM venue where v_no=? ";
+	
 	private static final String DELETE=""
 			+ "DELETE FROM venue WHERE v_no=?";
+	
 	private static final String UPDATE=""
 			+ "UPDATE venue SET "
 			+ " v_name=?, v_weburl=?, v_parktype=?, v_introduction=?, "
@@ -76,7 +85,8 @@ public class VenueJNDIDAO implements VenueDAO_interface {
 			+ " open_state=?, open_time=?, "
 			+ " openday_mon=?, openday_tue=?, , openday_wed=?, openday_thu=?, "
 			+ "	openday_fri=?, openday_sat=?, openday_sun=?, "
-			+ " v_photo1=?, v_photo1_ext=?, v_photo2=?, v_photo2_ext=? "
+			+ " v_photo1=?, v_photo1_ext=?, v_photo2=?, v_photo2_ext=?, "
+			+ " v_photo1_url=?, v_photo2_url=?"
 			+ " WHERE v_no=?";
 	
 	
@@ -92,7 +102,7 @@ public class VenueJNDIDAO implements VenueDAO_interface {
 			preparedStatement = connection.prepareStatement(INSERT,cols);
 			preparedStatement.setString(1, venueVO.getV_name());
 			preparedStatement.setString(2, venueVO.getV_weburl());
-			preparedStatement.setString(3, venueVO.getV_patktype());
+			preparedStatement.setString(3, venueVO.getV_parktype());
 			preparedStatement.setString(4, venueVO.getV_introduction());
 			preparedStatement.setString(5, venueVO.getVt_no());
 			preparedStatement.setString(6, venueVO.getV_inout());
@@ -101,7 +111,7 @@ public class VenueJNDIDAO implements VenueDAO_interface {
 			preparedStatement.setString(9, venueVO.getV_phoneno());
 			preparedStatement.setDouble(10, venueVO.getV_lat());
 			preparedStatement.setDouble(11, venueVO.getV_long());
-//			preparedStatement.setString(12, venueVO.getV_public_transport());
+			//preparedStatement.setString(12, venueVO.getV_public_transport());
 			preparedStatement.setString(12, venueVO.getV_fitall());
 			preparedStatement.setString(13, venueVO.getV_fitinter());
 			preparedStatement.setString(14, venueVO.getOpen_state());
@@ -117,6 +127,8 @@ public class VenueJNDIDAO implements VenueDAO_interface {
 			preparedStatement.setString(24, venueVO.getV_photo1_ext());
 			preparedStatement.setBytes(25, venueVO.getV_photo2());
 			preparedStatement.setString(26, venueVO.getV_photo2_ext());
+			preparedStatement.setString(27, venueVO.getV_photo1_url());
+			preparedStatement.setString(28, venueVO.getV_photo2_url());
 			
 			preparedStatement.executeUpdate();
 			
@@ -166,7 +178,7 @@ public class VenueJNDIDAO implements VenueDAO_interface {
 			preparedStatement = connection.prepareStatement(UPDATE);
 			preparedStatement.setString(1, venueVO.getV_name());
 			preparedStatement.setString(2, venueVO.getV_weburl());
-			preparedStatement.setString(3, venueVO.getV_patktype());
+			preparedStatement.setString(3, venueVO.getV_parktype());
 			preparedStatement.setString(4, venueVO.getV_introduction());
 			preparedStatement.setString(5, venueVO.getVt_no());
 			preparedStatement.setString(6, venueVO.getV_inout());
@@ -191,7 +203,9 @@ public class VenueJNDIDAO implements VenueDAO_interface {
 			preparedStatement.setString(24, venueVO.getV_photo1_ext());
 			preparedStatement.setBytes(25, venueVO.getV_photo2());
 			preparedStatement.setString(26, venueVO.getV_photo2_ext());
-			preparedStatement.setString(27, venueVO.getV_no());
+			preparedStatement.setString(27, venueVO.getV_photo1_url());
+			preparedStatement.setString(28, venueVO.getV_photo2_url());
+			preparedStatement.setString(29, venueVO.getV_no());
 			
 			preparedStatement.executeUpdate();
 			
@@ -213,6 +227,10 @@ public class VenueJNDIDAO implements VenueDAO_interface {
 				}
 			}
 		}
+		
+		
+		
+		
 	}
 
 	@Override
@@ -255,38 +273,41 @@ public class VenueJNDIDAO implements VenueDAO_interface {
 		try {
 			connection = dataSource.getConnection();
 			preparedStatement = connection.prepareStatement(GET_ONE_STMT);
+			System.out.println("GET_ONE_STMT : "+GET_ONE_STMT);
 			preparedStatement.setString(1, v_no);
 			resultSet = preparedStatement.executeQuery();
 			if(resultSet.next()) {
 				venueVO = new VenueVO();
-				venueVO.getV_no();
-				venueVO.getV_name();
-				venueVO.getV_weburl();
-				venueVO.getV_patktype();
-				venueVO.getV_introduction();
-				venueVO.getVt_no();
-				venueVO.getV_inout();
-				venueVO.getReg_no();
-				venueVO.getV_address();
-				venueVO.getV_phoneno();
-				venueVO.getV_lat();
-				venueVO.getV_long();
-//				venueVO.getV_public_transport();
-				venueVO.getV_fitall();
-				venueVO.getV_fitinter();
-				venueVO.getOpen_state();
-				venueVO.getOpen_time();
-				venueVO.getOpenday_mon();
-				venueVO.getOpenday_tue();
-				venueVO.getOpenday_wed();
-				venueVO.getOpenday_thu();
-				venueVO.getOpenday_fri();
-				venueVO.getOpenday_sat();
-				venueVO.getOpenday_sun();
-				venueVO.getV_photo1();
-				venueVO.getV_photo1_ext();
-				venueVO.getV_photo2();
-				venueVO.getV_photo2_ext();
+				venueVO.setV_no(resultSet.getString("V_NO"));
+				venueVO.setV_name(resultSet.getString("V_NAME"));
+				venueVO.setV_weburl(resultSet.getString("V_WEBURL"));
+				venueVO.setV_parktype(resultSet.getString("V_PARKTYPE"));
+				venueVO.setV_introduction(resultSet.getString("V_INTRODUCTION"));
+				venueVO.setVt_no(resultSet.getString("VT_NO"));
+				venueVO.setV_inout(resultSet.getString("V_INOUT"));
+				venueVO.setReg_no(resultSet.getInt("REG_NO"));
+				venueVO.setV_address(resultSet.getString("V_ADDRESS"));
+				venueVO.setV_phoneno(resultSet.getString("V_PHONENO"));
+				venueVO.setV_lat(resultSet.getDouble("V_LAT"));
+				venueVO.setV_long(resultSet.getDouble("V_LONG"));
+				//venueVO.setV_public_transport();
+				venueVO.setV_fitall(resultSet.getString("V_FITALL"));
+				venueVO.setV_fitinter(resultSet.getString("V_FITINTER"));
+				venueVO.setOpen_state(resultSet.getString("OPEN_STATE"));
+				venueVO.setOpen_time(resultSet.getString("OPEN_TIME"));
+				venueVO.setOpenday_mon(resultSet.getString("OPENDAY_MON"));
+				venueVO.setOpenday_tue(resultSet.getString("OPENDAY_TUE"));
+				venueVO.setOpenday_wed(resultSet.getString("OPENDAY_WED"));
+				venueVO.setOpenday_thu(resultSet.getString("OPENDAY_THU"));
+				venueVO.setOpenday_fri(resultSet.getString("OPENDAY_FRI"));
+				venueVO.setOpenday_sat(resultSet.getString("OPENDAY_SAT"));
+				venueVO.setOpenday_sun(resultSet.getString("OPENDAY_SUN"));
+				venueVO.setV_photo1(resultSet.getBytes("V_PHOTO1"));
+				venueVO.setV_photo1_ext(resultSet.getString("V_PHOTO1_EXT"));
+				venueVO.setV_photo2(resultSet.getBytes("V_PHOTO2"));
+				venueVO.setV_photo2_ext(resultSet.getString("V_PHOTO2_EXT"));
+				venueVO.setV_photo1_url(resultSet.getString("V_PHOTO1_URL"));
+				venueVO.setV_photo2_url(resultSet.getString("V_PHOTO2_URL"));
 			}
 			
 		}catch (SQLException e) {
@@ -362,40 +383,38 @@ public class VenueJNDIDAO implements VenueDAO_interface {
 		List<VenueVO> list = new ArrayList<>();
 		while(resultSet.next()) {
 			VenueVO venueVO = new VenueVO();
-			venueVO.getV_no();
-			venueVO.getV_name();
-			venueVO.getV_weburl();
-			venueVO.getV_patktype();
-			venueVO.getV_introduction();
-			venueVO.getVt_no();
-			venueVO.getV_inout();
-			venueVO.getReg_no();
-			venueVO.getV_address();
-			venueVO.getV_phoneno();
-			venueVO.getV_lat();
-			venueVO.getV_long();
-//			venueVO.getV_public_transport();
-			venueVO.getV_fitall();
-			venueVO.getV_fitinter();
-			venueVO.getOpen_state();
-			venueVO.getOpen_time();
-			venueVO.getOpenday_mon();
-			venueVO.getOpenday_tue();
-			venueVO.getOpenday_wed();
-			venueVO.getOpenday_thu();
-			venueVO.getOpenday_fri();
-			venueVO.getOpenday_sat();
-			venueVO.getOpenday_sun();
-			venueVO.getV_photo1();
-			venueVO.getV_photo1_ext();
-			venueVO.getV_photo2();
-			venueVO.getV_photo2_ext();
+			venueVO.setV_no(resultSet.getString("V_NO"));
+			venueVO.setV_name(resultSet.getString("V_NAME"));
+			venueVO.setV_weburl(resultSet.getString("V_WEBURL"));
+			venueVO.setV_parktype(resultSet.getString("V_PARKTYPE"));
+			venueVO.setV_introduction(resultSet.getString("V_INTRODUCTION"));
+			venueVO.setVt_no(resultSet.getString("VT_NO"));
+			venueVO.setV_inout(resultSet.getString("V_INOUT"));
+			venueVO.setReg_no(resultSet.getInt("REG_NO"));
+			venueVO.setV_address(resultSet.getString("V_ADDRESS"));
+			venueVO.setV_phoneno(resultSet.getString("V_PHONENO"));
+			venueVO.setV_lat(resultSet.getDouble("V_LAT"));
+			venueVO.setV_long(resultSet.getDouble("V_LONG"));
+			//venueVO.setV_public_transport();
+			venueVO.setV_fitall(resultSet.getString("V_FITALL"));
+			venueVO.setV_fitinter(resultSet.getString("V_FITINTER"));
+			venueVO.setOpen_state(resultSet.getString("OPEN_STATE"));
+			venueVO.setOpen_time(resultSet.getString("OPEN_TIME"));
+			venueVO.setOpenday_mon(resultSet.getString("OPENDAY_MON"));
+			venueVO.setOpenday_tue(resultSet.getString("OPENDAY_TUE"));
+			venueVO.setOpenday_wed(resultSet.getString("OPENDAY_WED"));
+			venueVO.setOpenday_thu(resultSet.getString("OPENDAY_THU"));
+			venueVO.setOpenday_fri(resultSet.getString("OPENDAY_FRI"));
+			venueVO.setOpenday_sat(resultSet.getString("OPENDAY_SAT"));
+			venueVO.setOpenday_sun(resultSet.getString("OPENDAY_SUN"));
+			venueVO.setV_photo1(resultSet.getBytes("V_PHOTO1"));
+			venueVO.setV_photo1_ext(resultSet.getString("V_PHOTO1_EXT"));
+			venueVO.setV_photo2(resultSet.getBytes("V_PHOTO2"));
+			venueVO.setV_photo2_ext(resultSet.getString("V_PHOTO2_EXT"));
+			venueVO.setV_photo1_url(resultSet.getString("V_PHOTO1_URL"));
+			venueVO.setV_photo2_url(resultSet.getString("V_PHOTO2_URL"));
 			list.add(venueVO);
 		}
 		return list;
-	}	
-	
-	
-	
-	
+	}
 }

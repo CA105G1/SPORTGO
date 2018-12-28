@@ -35,13 +35,13 @@ public class VenueService {
 		 String openday_mon, String openday_tue, String openday_wed, String openday_thu,
 		 String openday_fri, String openday_sat, String openday_sun,
 		 byte[] v_photo1, String v_photo1_ext,
-		 byte[] v_photo2, String v_photo2_ext) {
+		 byte[] v_photo2, String v_photo2_ext, String v_photo1_url, String v_photo2_url) {
 
 		VenueVO venueVO = new VenueVO();
 		
 		venueVO.setV_name(v_name);
 		venueVO.setV_weburl(v_weburl);
-		venueVO.setV_patktype(v_patktype);
+		venueVO.setV_parktype(v_patktype);
 		venueVO.setV_introduction(v_introduction);
 		venueVO.setVt_no(vt_no);
 		venueVO.setV_inout(v_inout);
@@ -66,7 +66,8 @@ public class VenueService {
 		venueVO.setV_photo1_ext(v_photo1_ext);
 		venueVO.setV_photo2(v_photo2);
 		venueVO.setV_photo2_ext(v_photo2_ext);
-		
+		venueVO.setV_photo1_url(v_photo1_url);
+		venueVO.setV_photo2_url(v_photo2_url);
 		venueDAO.insert(venueVO);
 		
 	}
@@ -81,14 +82,15 @@ public class VenueService {
 		 String openday_mon, String openday_tue, String openday_wed, String openday_thu,
 		 String openday_fri, String openday_sat, String openday_sun,
 		 byte[] v_photo1, String v_photo1_ext,
-		 byte[] v_photo2, String v_photo2_ext) {
+		 byte[] v_photo2, String v_photo2_ext,
+		 String v_photo1_url, String v_photo2_url) {
 		
 		VenueVO venueVO = new VenueVO();
 		
 		venueVO.setV_no(v_no);
 		venueVO.setV_name(v_name);
 		venueVO.setV_weburl(v_weburl);
-		venueVO.setV_patktype(v_patktype);
+		venueVO.setV_parktype(v_patktype);
 		venueVO.setV_introduction(v_introduction);
 		venueVO.setVt_no(vt_no);
 		venueVO.setV_inout(v_inout);
@@ -113,11 +115,9 @@ public class VenueService {
 		venueVO.setV_photo1_ext(v_photo1_ext);
 		venueVO.setV_photo2(v_photo2);
 		venueVO.setV_photo2_ext(v_photo2_ext);
-		
+		venueVO.setV_photo1_url(v_photo1_url);
+		venueVO.setV_photo2_url(v_photo2_url);
 		venueDAO.update(venueVO);		
-		
-		
-		
 	}
 	
 }

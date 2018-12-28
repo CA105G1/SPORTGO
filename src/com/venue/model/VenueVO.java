@@ -8,7 +8,7 @@ public class VenueVO implements Serializable , Cloneable{
 	private String v_no;
 	private String v_name;
 	private String v_weburl;
-	private String v_patktype;
+	private String v_parktype;
 	private String v_introduction;
 	private String vt_no;
 	private String v_inout;
@@ -33,6 +33,8 @@ public class VenueVO implements Serializable , Cloneable{
 	private String v_photo1_ext;
 	private byte[] v_photo2;
 	private String v_photo2_ext;
+	private String v_photo1_url;
+	private String v_photo2_url;
 	
 	public VenueVO() {
 		
@@ -56,11 +58,11 @@ public class VenueVO implements Serializable , Cloneable{
 	public void setV_weburl(String v_weburl) {
 		this.v_weburl = v_weburl;
 	}
-	public String getV_patktype() {
-		return v_patktype;
+	public String getV_parktype() {
+		return v_parktype;
 	}
-	public void setV_patktype(String v_patktype) {
-		this.v_patktype = v_patktype;
+	public void setV_parktype(String v_parktype) {
+		this.v_parktype = v_parktype;
 	}
 	public String getV_introduction() {
 		return v_introduction;
@@ -206,10 +208,25 @@ public class VenueVO implements Serializable , Cloneable{
 	public void setV_photo2_ext(String v_photo2_ext) {
 		this.v_photo2_ext = v_photo2_ext;
 	}
+	public String getV_photo1_url() {
+		return v_photo1_url;
+	}
+
+	public void setV_photo1_url(String v_photo1_url) {
+		this.v_photo1_url = v_photo1_url;
+	}
+
+	public String getV_photo2_url() {
+		return v_photo2_url;
+	}
+
+	public void setV_photo2_url(String v_photo2_url) {
+		this.v_photo2_url = v_photo2_url;
+	}
 
 	@Override
 	public String toString() {
-		return "VenueVO [v_no=" + v_no + ", v_name=" + v_name + ", v_weburl=" + v_weburl + ", v_patktype=" + v_patktype
+		return "VenueVO [v_no=" + v_no + ", v_name=" + v_name + ", v_weburl=" + v_weburl + ", v_patktype=" + v_parktype
 				+ ", v_introduction=" + v_introduction + ", vt_no=" + vt_no + ", v_inout=" + v_inout + ", reg_no="
 				+ reg_no + ", v_address=" + v_address + ", v_phoneno=" + v_phoneno + ", v_lat=" + v_lat + ", v_long="
 				+ v_long + ", v_fitall=" + v_fitall + ", v_fitinter="
