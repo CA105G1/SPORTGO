@@ -35,6 +35,7 @@ public class VenueVO implements Serializable , Cloneable{
 	private String v_photo2_ext;
 	private String v_photo1_url;
 	private String v_photo2_url;
+	private String v_display = "顯示";
 	
 	public VenueVO() {
 		
@@ -222,6 +223,14 @@ public class VenueVO implements Serializable , Cloneable{
 
 	public void setV_photo2_url(String v_photo2_url) {
 		this.v_photo2_url = v_photo2_url;
+	}
+
+	public String getV_display() {
+		return v_display;
+	}
+
+	public void setV_display(String v_display) {
+		this.v_display = v_display;
 	}
 
 	@Override

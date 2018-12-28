@@ -155,9 +155,11 @@ public class GetVenueDataJDBC_NCU {
 			venueVO.setV_photo1_ext(null);
 			venueVO.setV_photo2(null);
 			venueVO.setV_photo2_ext(null);
-	//		venueVO.setV_photo1("Photo1");
+			venueVO.setV_photo1_url(data.getString("Photo1"));
+			venueVO.setV_photo2_url(data.getString("Photo2"));
 	//		venueVO.setV_photo1_ext("Photo1");
 	//		venueVO.setV_photo2("Photo2");
+	//		venueVO.setV_photo1("Photo1");
 	//		venueVO.setV_photo2_ext("Photo2");
 			venueVOCollectionMap.put(venueVO.getV_name()+venueVO.getVt_no(), venueVO);
 			System.out.println("............第"+kkk+"筆成功轉換為物件........................");

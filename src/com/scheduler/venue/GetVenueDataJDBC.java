@@ -240,6 +240,8 @@ public class GetVenueDataJDBC {
 			venueVO.setV_photo1_ext(null);
 			venueVO.setV_photo2(null);
 			venueVO.setV_photo2_ext(null);
+			venueVO.setV_photo1_url(data.getString("Photo1"));
+			venueVO.setV_photo2_url(data.getString("Photo2"));
 	//		venueVO.setV_photo1("Photo1");
 	//		venueVO.setV_photo1_ext("Photo1");
 	//		venueVO.setV_photo2("Photo2");

@@ -11,6 +11,8 @@ import java.util.List;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+
+
 public class VenueJNDIDAO implements VenueDAO_interface {
 
 	private static DataSource dataSource = null;
@@ -33,7 +35,7 @@ public class VenueJNDIDAO implements VenueDAO_interface {
 			+ " openday_fri, openday_sat, openday_sun, "
 			+ " v_photo1, v_photo1_ext, "
 			+ " v_photo2, v_photo2_ext,"
-			+ " v_photo1_url, v_photo2_url) "
+			+ " v_photo1_url, v_photo2_url, v_display) "
 			+ " VALUES ('V'||LPAD(venue_seq.NEXTVAL,6,'0'), ?, ?, ?, ?, "
 			+ " ?, ?, ?, ?, ?, ?, ?, "
 			+ " ?, ?, "
@@ -42,7 +44,7 @@ public class VenueJNDIDAO implements VenueDAO_interface {
 			+ " ?, ?, ?, "
 			+ " ?, ?,"
 			+ " ?, ?,"
-			+ " ?, ?)"
+			+ " ?, ?, ?)"
 			+ "";
 	private static final String GET_ALL_STMT=""
 			+ "SELECT "
@@ -54,7 +56,7 @@ public class VenueJNDIDAO implements VenueDAO_interface {
 			+ " openday_fri, openday_sat, openday_sun, "
 			+ " v_photo1, v_photo1_ext, "
 			+ " v_photo2, v_photo2_ext,"
-			+ " v_photo1_url, v_photo2_url "
+			+ " v_photo1_url, v_photo2_url ,v_display "
 			+ " FROM venue ORDER BY v_no ASC";
 	
 	private static final String GET_ONE_STMT=""
@@ -67,7 +69,7 @@ public class VenueJNDIDAO implements VenueDAO_interface {
 			+ " openday_fri, openday_sat, openday_sun, "
 			+ " v_photo1, v_photo1_ext, "
 			+ " v_photo2, v_photo2_ext,"
-			+ " v_photo1_url, v_photo2_url "
+			+ " v_photo1_url, v_photo2_url, v_display "
 			+ " FROM venue where v_no=? ";
 	
 	private static final String DELETE=""
@@ -82,7 +84,7 @@ public class VenueJNDIDAO implements VenueDAO_interface {
 			+ " openday_mon=?, openday_tue=?, , openday_wed=?, openday_thu=?, "
 			+ "	openday_fri=?, openday_sat=?, openday_sun=?, "
 			+ " v_photo1=?, v_photo1_ext=?, v_photo2=?, v_photo2_ext=?, "
-			+ " v_photo1_url=?, v_photo2_url=?"
+			+ " v_photo1_url=?, v_photo2_url=?, v_display=? "
 			+ " WHERE v_no=?";
 	
 	
@@ -125,7 +127,7 @@ public class VenueJNDIDAO implements VenueDAO_interface {
 			preparedStatement.setString(26, venueVO.getV_photo2_ext());
 			preparedStatement.setString(27, venueVO.getV_photo1_url());
 			preparedStatement.setString(28, venueVO.getV_photo2_url());
-			
+			preparedStatement.setString(29, venueVO.getV_display());
 			preparedStatement.executeUpdate();
 			
 			resultSet = preparedStatement.getGeneratedKeys();
@@ -201,7 +203,8 @@ public class VenueJNDIDAO implements VenueDAO_interface {
 			preparedStatement.setString(26, venueVO.getV_photo2_ext());
 			preparedStatement.setString(27, venueVO.getV_photo1_url());
 			preparedStatement.setString(28, venueVO.getV_photo2_url());
-			preparedStatement.setString(29, venueVO.getV_no());
+			preparedStatement.setString(29, venueVO.getV_display());
+			preparedStatement.setString(30, venueVO.getV_no());
 			
 			preparedStatement.executeUpdate();
 			
@@ -304,6 +307,7 @@ public class VenueJNDIDAO implements VenueDAO_interface {
 				venueVO.setV_photo2_ext(resultSet.getString("V_PHOTO2_EXT"));
 				venueVO.setV_photo1_url(resultSet.getString("V_PHOTO1_URL"));
 				venueVO.setV_photo2_url(resultSet.getString("V_PHOTO2_URL"));
+				venueVO.setV_display(resultSet.getString("V_DISPLAY"));
 			}
 			
 		}catch (SQLException e) {
@@ -409,6 +413,7 @@ public class VenueJNDIDAO implements VenueDAO_interface {
 			venueVO.setV_photo2_ext(resultSet.getString("V_PHOTO2_EXT"));
 			venueVO.setV_photo1_url(resultSet.getString("V_PHOTO1_URL"));
 			venueVO.setV_photo2_url(resultSet.getString("V_PHOTO2_URL"));
+			venueVO.setV_display(resultSet.getString("V_DISPLAY"));
 			list.add(venueVO);
 		}
 		return list;

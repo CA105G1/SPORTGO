@@ -178,6 +178,7 @@ Create table venue(
     v_photo2_ext varchar2(10),        
     v_photo1_url varchar2(2000),
     v_photo2_url varchar2(2000),
+	v_display varchar2(50) DEFAULT '顯示', ---else is '不顯示'
     CONSTRAINT VENUE_VENUETYPE_FK                    ----單字FK放後面
     FOREIGN KEY(VT_NO) REFERENCES VENUETYPE(VT_NO),  
     CONSTRAINT VENUE_REGION_FK                       ----單字FK放後面
