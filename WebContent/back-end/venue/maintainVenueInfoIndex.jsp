@@ -30,28 +30,29 @@
 		
 	</head>
 	<body>
+		<!-- incluede navbar and header -->
 		<%@ include file="/back-end/CA105G1_header_back.file" %>
 	
-	
+		<!-- maintain venue information index -->
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-xs-12 col-sm-2">
+				<div class="col-xs-12 col-sm-3">
 					<a href="<%=request.getContextPath()+request.getServletPath()%>" for="returnIndex">
 						<img id="returnIndex" src="https://api.fnkr.net/testimg/1500x1000/00CED1/FFF/?text=back_home" class="img-responsive" />
 					</a>
 				</div>
-				<div class="col-xs-12 col-sm-10">
-					<img src="https://api.fnkr.net/testimg/1500x200/00CED1/FFF/?text=justColumn" class="img-responsive" />
+				<div class="col-xs-12 col-sm-9">
+<!-- 					<img src="https://api.fnkr.net/testimg/1500x200/00CED1/FFF/?text=justColumn" class="img-responsive" /> -->
 					<div class='h1'>維護場地資訊</div>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-xs-12 col-sm-2">
+				<div class="col-xs-12 col-sm-3">
 				<!-- 					
 					<img src="https://api.fnkr.net/testimg/1500x200/00CED1/FFF/?text=justColumn" class="img-responsive" />
 				 -->
 				</div>
-				<div class="col-xs-12 col-sm-10">
+				<div class="col-xs-12 col-sm-9">
 					<div>
 						<div>
 							<div class="label label-default label-text">查詢區1版</div>
@@ -82,8 +83,8 @@
 			
 			<c:if test="${not empty errorMsgs}">
 				<div class="row">
-					<div class="col-xs-12 col-sm-2"></div>
-					<div class="col-xs-12 col-sm-10">
+					<div class="col-xs-12 col-sm-3"></div>
+					<div class="col-xs-12 col-sm-9">
 						<div>
 							<div class="label label-default label-text">錯誤提示區1版</div>
 						</div>
@@ -102,11 +103,11 @@
 
 			<div style="height:20px"></div>
 			<div class="row">
-				<div class="col-xs-12 col-sm-2">
+				<div class="col-xs-12 col-sm-3">
 	<!-- 	<img src="https://api.fnkr.net/testimg/1500x1000/00CED1/FFF/?text=justColumn" class="img-responsive" />
 	 -->
 				</div>
-				<div class="col-xs-12 col-sm-10">
+				<div class="col-xs-12 col-sm-9">
 					<div>
 						<div class="label label-default label-text">回應區1版</div>
 						<div>
@@ -127,7 +128,7 @@
 			</div>
 			
 		</div>
-		
+		<!-- incluede footer -->
 		<%@ include file="/back-end/CA105G1_footer_back.file" %>
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>

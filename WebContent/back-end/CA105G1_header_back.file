@@ -119,7 +119,7 @@
 					</ul>
 				</li>
 				<li><a href="#">　賽事　</a></li>
-				<li><a href="#">　場地　</a></li>
+				<li><a href="<%=request.getContextPath()%>/back-end/venue/maintainVenueInfoIndex.jsp">　場地　</a></li>
 			</ul>
 		</div>
 	</nav>
