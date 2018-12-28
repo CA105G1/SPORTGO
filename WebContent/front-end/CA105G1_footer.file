@@ -48,7 +48,7 @@
 								<!-- <b class="caret"></b> -->
 							</a>
 							<ul class="dropdown-menu">
-								<li><a href="#">Member01</a></li>
+								<li><a href="front-end/memberlist/Member_page.jsp">會員首頁</a></li>
 								<li><a href="#">Member02</a></li>
 								<li><a href="#">Member03</a></li>
 							</ul>

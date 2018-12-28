@@ -11,9 +11,6 @@ import java.util.List;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-
-
-
 public class VenueJNDIDAO implements VenueDAO_interface {
 
 	private static DataSource dataSource = null;

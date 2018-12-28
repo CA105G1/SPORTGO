@@ -209,7 +209,7 @@ public class GetVenueDataJDBC {
 			VenueVO venueVO = new VenueVO();
 			venueVO.setV_name(jsonObject.getString("Name"));
 			venueVO.setV_weburl(jsonObject.getString("WebUrl"));
-			venueVO.setV_patktype(jsonObject.getString("ParkType"));
+			venueVO.setV_parktype(jsonObject.getString("ParkType"));
 			venueVO.setV_introduction(jsonObject.getString("Introduction"));
 			venueVO.setV_address(jsonObject.getString("Addr"));
 			venueVO.setV_phoneno(jsonObject.getString("OperationTel"));
