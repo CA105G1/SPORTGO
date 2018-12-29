@@ -1,7 +1,3 @@
-<!-- 代辦事項 -->
-<!-- 查詢功能servlet還沒寫 -->
-
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="com.sg_info.model.*"%>
@@ -10,9 +6,17 @@
 <%@page import="java.util.*"%>
     
 <% 
+List<Sg_infoVO> list = null;
+//取得複合查詢後的list
+list = (List<Sg_infoVO>)request.getAttribute("list");
+//若沒有值就代表是第一次載入頁面，直接getAll
+if(list == null){
+	System.out.print(request.getAttribute("list"));
 	Sg_infoService svc = new Sg_infoService(); 
-	List<Sg_infoVO> list = svc.getAll();
+	list = svc.getAll();
 	pageContext.setAttribute("list",list);
+}
+	
 %>
 
 <html>
@@ -108,12 +112,27 @@
 					      				</tr>
 					      				<tr>
 						      				<th>
-						      				<jsp:useBean id="sportSvc" scope="page" class="com.sport.model.SportService" />
-						      					<select size="1" name="sp_noSearch" class="text-center">
-						      						<option value="null">請選擇運動種類
+						      					<jsp:useBean id="sportSvc" scope="page" class="com.sport.model.SportService" />
+						      					<select size="1" name="sp_no" class="text-center">
+						      						<option value="">請選擇運動種類
 													<c:forEach var="sportVO" items="${sportSvc.all}" > 
 														<option value="${sportVO.sp_no}">${sportVO.sp_name}
 													</c:forEach>   
+												</select>
+						      				</th>
+						      			</tr>
+			      					<!-------- 地區查詢 --------->
+						      			<tr>
+						      				<th>地區</th>
+					      				</tr>
+					      				<tr>
+						      				<th>
+						      					<jsp:useBean id="regSvc" scope="page" class="com.region.model.RegService" />
+						      					<select size="1" name="reg_no" class="text-center">
+						      						<option value="">請選擇地區
+						      						<c:forEach var="regVO" items="${regSvc.all }">
+						      							<option value="${regVO.reg_no }">${regVO.reg_name}-${regVO.reg_dist}
+						      						</c:forEach>
 												</select>
 						      				</th>
 						      			</tr>
@@ -123,29 +142,23 @@
 					      				</tr>
 					      				<tr>
 						      				<th>
-						      					<select size="1" name="v_noSearch" class="text-center">
-						      						<option value="null">請選擇場地名稱
+						      					<jsp:useBean id="venueSvc" scope="page" class="com.venue.model.VenueService" />
+						      					<select size="1" name="v_no" class="text-center">
+						      						<option value="">請選擇場地名稱
+						      						<c:forEach var= "venueVO" items="${venueSvc.all}" >
+						      							<option value="${venueVO.v_no }">${venueVO.v_name }
+						      						</c:forEach>
 												</select>
 						      				</th>
 						      			</tr>
-				      				<!-------- 地區查詢 --------->
-						      			<tr>
-						      				<th>地區</th>
-					      				</tr>
-					      				<tr>
-						      				<th>
-						      					<select size="1" name="reg_noSearch" class="text-center">
-						      						<option value="null">請選擇地區
-												</select>
-						      				</th>
-						      			</tr>
+				      				
 						      		<!-------- 活動日期查詢 --------->
 						      			<tr>
 						      				<th>活動日期</th>
 					      				</tr>
 					      				<tr>
 						      				<th>
-						      					<input name="sg_dateSearch" id="sg_dateSearch" type="text"  class="text-center" placeholder="請選擇日期">
+						      					<input name="sg_date" id="sg_date" type="text"  class="text-center" placeholder="請選擇日期">
 						      				</th>
 						      			</tr>
 					      			<!-------- 關鍵字查詢 --------->
@@ -154,11 +167,12 @@
 					      				<tr>
 					      				</tr>
 						      				<th>
-						      					<input name="keyWordSearch" id="keyWordSearch" type="text" class="text-center" placeholder="請輸入關鍵字">
+						      					<input name="keyword" id="keyword" type="text" class="text-center" placeholder="請輸入關鍵字">
 						      				</th>
 						      			</tr>
 					      			<!-------- 送出查詢 --------->
 						      			<tr>
+						      				<input type="hidden" name="action" value="sg_infoCompositeQuery">
 						      				<td><input type="submit" value="送出查詢" class="btn btn-primary"></td>
 						      			</tr>
 						      			
@@ -168,7 +182,7 @@
 				      	</form>
 				      </div>
 				  </div>
-<!---------------------------- 區塊3 ------------------------------->
+<!----------------------------地圖查詢 ------------------------------->
 				  <div class="panel panel-info">
 				    <div class="panel-heading">
 				      <h4 class="panel-title">
@@ -176,6 +190,16 @@
 				      </h4>
 				    </div>
 				  </div>
+<!---------------------------- 歷史揪團紀錄 ------------------------------->
+				  <div class="panel panel-info">
+				    <div class="panel-heading">
+				      <h4 class="panel-title">
+			          	 <a href="#">歷史揪團紀錄</a>
+				      </h4>
+				    </div>
+				  </div>
+				  
+				  
 				</div>
 
 			</div>
@@ -236,7 +260,7 @@
 
 //查詢活動日期表設定
 	$.datetimepicker.setLocale('zh'); // kr ko ja en
-	$('#sg_dateSearch').datetimepicker({
+	$('#sg_date').datetimepicker({
 	   theme: '',          //theme: 'dark',
 	   timepicker: false,   //timepicker: false,
 	   format: 'Y-m-d',

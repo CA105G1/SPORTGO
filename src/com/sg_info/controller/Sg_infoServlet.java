@@ -375,6 +375,31 @@ public class Sg_infoServlet extends HttpServlet {
 		
 		
 		
+		if("sg_infoCompositeQuery".equals(action)) {
+			List<String> errorMsg = new LinkedList<String>();
+			req.setAttribute("errorMsg", errorMsg);
+			
+			try {
+				///////////將查詢資料轉為MAP///////////////////
+				Map<String, String[]> map = req.getParameterMap();
+				///////////開始查詢/////////////////////
+				Sg_infoService svc = new Sg_infoService();
+				List<Sg_infoVO> list = svc.getAllByQuery(map);
+				///////////轉交資料/////////////////////
+				req.setAttribute("list", list);
+				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/Sg_info/SgHome.jsp");
+				dispatcher.forward(req, res);
+				
+			}catch(Exception e) {
+				errorMsg.add(e.getMessage());
+				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/Sg_info/SgHome.jsp");
+				dispatcher.forward(req, res);
+			}
+		}
+		
+		
+		
+		
 		
 	}
 

@@ -6,14 +6,14 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sg_info.model.Sg_infoJDBCDAO;
+import com.sg_info.model.Sg_infoDAO;
 import com.sg_info.model.Sg_infoVO;
 
 public class Test {
 
 	public static void main(String[] args) throws IOException {
 		
-		Sg_infoJDBCDAO dao = new Sg_infoJDBCDAO();
+		Sg_infoDAO dao = new Sg_infoDAO();
 		
 		
 		

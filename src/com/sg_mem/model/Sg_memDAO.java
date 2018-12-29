@@ -8,12 +8,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.Context;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 public class Sg_memDAO implements Sg_memDAO_interface{
-	private static final String driver = "oracle.jdbc.driver.OracleDriver";
-	private static final String url = "jdbc:oracle:thin:@localhost:1521:xe";
-	private static final String user = "CA105G1";
-	private static final String psw = "123456";
-	
 	private static final String insertStmt = 
 			"INSERT INTO sg_mem VALUES(?,?,default)";
 	private static final String updateStatus =
@@ -26,26 +25,18 @@ public class Sg_memDAO implements Sg_memDAO_interface{
 			"SELECT * FROM sg_mem ORDER BY sg_no";
 	
 	//連線池版
-//	private static DataSource ds = null;
-//	
-//	static {
-//		try {
-//			Context ctx = new javax.naming.InitialContext();
-//			ds = (DataSource)ctx.lookup("java:comp/env/jdbc/TestDB");
-//		} catch (NamingException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
+	private static DataSource ds = null;
 	
-	//JDBC版
 	static {
 		try {
-			Class.forName(driver);
-		}catch(ClassNotFoundException ce) {
-			ce.printStackTrace();
+			Context ctx = new javax.naming.InitialContext();
+			ds = (DataSource)ctx.lookup("java:comp/env/jdbc/TestDB");
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
+	
 
 	@Override
 	public void insert(Sg_memVO sg_memVO) {
@@ -54,9 +45,7 @@ public class Sg_memDAO implements Sg_memDAO_interface{
 		
 		try {
 			//連線池版
-//		con = ds.getConnection();
-			//JDBC版
-			con = DriverManager.getConnection(url, user, psw);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(insertStmt);
 			
 			pstmt.setString(1, sg_memVO.getSg_no());
@@ -92,9 +81,7 @@ public class Sg_memDAO implements Sg_memDAO_interface{
 		
 		try {
 			//連線池版
-//		con = ds.getConnection();
-			//JDBC版
-			con = DriverManager.getConnection(url, user, psw);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(updateStatus);
 			
 			pstmt.setString(1, sg_memVO.getCh_status());
@@ -132,9 +119,7 @@ public class Sg_memDAO implements Sg_memDAO_interface{
 		
 		try {
 			//連線池版
-//		con = ds.getConnection();
-			//JDBC版
-			con = DriverManager.getConnection(url, user, psw);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(deleteStmt);
 			
 			pstmt.setString(1, sg_no);
@@ -173,9 +158,7 @@ public class Sg_memDAO implements Sg_memDAO_interface{
 		
 		try {
 			//連線池版
-//		con = ds.getConnection();
-			//JDBC版
-			con = DriverManager.getConnection(url, user, psw);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(findByPkStmt);
 			
 			pstmt.setString(1, sg_no);
@@ -229,9 +212,7 @@ public class Sg_memDAO implements Sg_memDAO_interface{
 		
 		try {
 			//連線池版
-//		con = ds.getConnection();
-			//JDBC版
-			con = DriverManager.getConnection(url, user, psw);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(getAllStmt);
 			
 			rs = pstmt.executeQuery();

@@ -2,12 +2,13 @@ package com.sg_info.model;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 public class Sg_infoService {
 	private Sg_infoDAO_interface dao = null;
 	
 	public Sg_infoService() {
-		dao = new Sg_infoJDBCDAO();
+		dao = new Sg_infoDAO();
 	}
 	
 	public Sg_infoVO insertSg_info(String mem_no, String sg_name, Timestamp sg_date, Timestamp apl_start, Timestamp apl_end, 
@@ -86,7 +87,9 @@ public class Sg_infoService {
 		return dao.getAll();
 	}
 	
-	
+	public List<Sg_infoVO> getAllByQuery(Map<String,String[]> map){
+		return dao.getAll(map);
+	}
 	
 	
 }
