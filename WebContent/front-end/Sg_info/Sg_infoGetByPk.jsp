@@ -463,6 +463,21 @@
 			  icon: "success",
  			  buttons: ["退出", "前往!"],
 			});
+//////////////////////////debug500,404//////////////////////////////////////////////
+			$.ajax({
+				type: "POST",
+				url: "<%= request.getContextPath()%>/Sg_mem/Sg_mem.do",
+				data: {"action" : "insert", "sg_no" : "<%= vo.getSg_no()%>", "mem_no" : "<%= memberlistVO.getMem_no()%>"},
+				dataType: "json",
+				error: function(){
+					alert("發生錯誤!");
+				},
+				success: function(data){
+					console.log(data);
+				}
+			});
+			
+			
 		});
 		
 		
