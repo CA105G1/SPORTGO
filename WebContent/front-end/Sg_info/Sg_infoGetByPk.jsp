@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="com.sg_info.model.*"%>
+<%@ page import="com.sg_like.model.*"%>
 <%@ page import="com.memberlist.model.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -220,9 +221,12 @@ System.out.println("vo2="+vo);
 		<div class="col-xs-12 col-sm-3">
 		</div>
 		<div class="col-xs-12 col-sm-6" id="btnGroup">
-			<div class="btn" id="likebtn">
-				<img src="<%= request.getContextPath()%>/img/love.png" id="like" style="display:none">
-				<img src="<%= request.getContextPath()%>/img/love_white.png" id="dislike" style="display:">
+			<div class="btn like" id="likebtn" style="display:none">
+				<img src="<%= request.getContextPath()%>/img/love.png" id="like">
+				加入收藏
+			</div>
+			<div class="btn like" id="dislikebtn" style="display:">
+				<img src="<%= request.getContextPath()%>/img/love_white.png" id="dislike">
 				加入收藏
 			</div>
 			
@@ -377,18 +381,18 @@ System.out.println("vo2="+vo);
 	  
 	  
 	  //點擊收藏按鍵變換愛心
-	  var like = false;
-	  $("#likebtn").click(function(){
-		  if(like){
-			 $("#dislike").css("display","");
-			 $("#like").css("display","none");
-			 like = false;
-		  }else{
-			 $("#like").css("display","");
-			 $("#dislike").css("display","none");
-			 like = true;
-		  }
-	  });
+// 	  var like = false;
+// 	  $("#likebtn").click(function(){
+// 		  if(like){
+// 			 $("#dislike").css("display","");
+// 			 $("#like").css("display","none");
+// 			 like = false;
+// 		  }else{
+// 			 $("#like").css("display","");
+// 			 $("#dislike").css("display","none");
+// 			 like = true;
+// 		  }
+// 	  });
 	  
 	  
 
@@ -450,7 +454,7 @@ System.out.println("vo2="+vo);
 	///////4按鍵若尚未登入之設定//////////
 	<%if(memberlistVO == null){
 		session.setAttribute("location", request.getRequestURI());%>
-		$("#likebtn").click(function(){
+		$(".like").click(function(){
 			<%session.setAttribute("isLoginRedirect", true); //設定旗標
 	 		session.setAttribute("Sg_infoVO_Session", vo);%> //原頁面VO由session帶著去跟回
 			document.location.href="<%= request.getContextPath()%>/front-end/memberlist/Login.jsp";
@@ -469,6 +473,50 @@ System.out.println("vo2="+vo);
 			document.location.href="<%= request.getContextPath()%>/front-end/memberlist/Login.jsp";
 		});
 	<%}else{%>
+		/////////////////收藏按鍵設定////////////////////////
+		//若該會員有收藏該揪團則顯示實心
+		<% Sg_likeService likesvc = new Sg_likeService();%>
+		if(<%= likesvc.isLike(vo.getSg_no(), memberlistVO.getMem_no())%>){  
+			$("#likebtn").css("display","");
+			$("#dislikebtn").css("display","none");
+		}else{
+			$("#likebtn").css("display","none");
+			$("#dislikebtn").css("display","");
+		}
+		$("#likebtn").click(function(){
+			 $("#dislikebtn").css("display","");
+			 $("#likebtn").css("display","none");
+			$.ajax({
+				type: "POST",
+				url: "<%= request.getContextPath()%>/Sg_like/Sg_like.do",
+				data: {"action" : "delete", "sg_no" : "<%= vo.getSg_no()%>", "mem_no" : "<%= memberlistVO.getMem_no()%>"},
+				dataType: "json",
+				error: function(){
+					alert("發生錯誤!");
+				},
+				success: function(data){
+					alert("取消收藏");
+				}
+			});
+		});
+		
+		$("#dislikebtn").click(function(){
+			 $("#likebtn").css("display","");
+			 $("#dislikebtn").css("display","none");
+			$.ajax({
+				type: "POST",
+				url: "<%= request.getContextPath()%>/Sg_like/Sg_like.do",
+				data: {"action" : "insert", "sg_no" : "<%= vo.getSg_no()%>", "mem_no" : "<%= memberlistVO.getMem_no()%>"},
+				dataType: "json",
+				error: function(){
+					alert("發生錯誤!");
+				},
+				success: function(data){
+					alert("成功加入收藏");
+				}
+			});
+		});
+		//////////////////加入揪團按鍵設定///////////////////////////
 		//重複加入的錯誤處理還沒做////////////////////////////////////
 		$("#joinbtn").click(function(){
 			swal({
