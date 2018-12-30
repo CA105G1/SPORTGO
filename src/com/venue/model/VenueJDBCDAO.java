@@ -9,6 +9,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.region.model.RegDAO_interface;
+import com.region.model.RegJDBCDAO;
+import com.region.model.RegVO;
+
 
 public class VenueJDBCDAO implements VenueDAO_interface {
 
@@ -419,4 +423,16 @@ public class VenueJDBCDAO implements VenueDAO_interface {
 		}
 		return list;
 	}
+	
+	public static void main(String[] args) {
+		VenueDAO_interface dao_interface = new VenueJDBCDAO();
+		List<VenueVO> list = dao_interface.getAll();
+		for(VenueVO regVO : list) {
+			System.out.println("++++++++++++++++++++++++++");
+			System.out.println(regVO.getReg_no());
+			System.out.println(regVO.getV_name());
+			System.out.println(regVO.getV_display());
+		}
+	}
+	
 }

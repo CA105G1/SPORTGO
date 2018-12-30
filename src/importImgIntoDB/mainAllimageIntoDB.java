@@ -9,14 +9,14 @@ public class mainAllimageIntoDB {
 	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
 	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
 	// pls. set your user in DB
-	private static final String USER = "CA105_WEB";
+	private static final String USER = "CA105G1";
 	// pls. set your password
 	private static final String PASSWORD = "123456";
 	
 	public static void main(String[] args) {
 		
 		// 請設定pull到本地端的路徑，如--->C:\Users\wenshock\git\SPORTGO\InitDB\image
-		String rootPath = "C:\\image";
+		String rootPath = "C:\\Users\\wenshock\\git\\SPORTGO\\InitDB\\image";
 		
 		File file = new File(rootPath);
 		if(!file.isDirectory()) {
@@ -28,6 +28,9 @@ public class mainAllimageIntoDB {
 		// 01-memberlist table image {primaryKeyColnName,pictureColnName,pic_extensionColName}
 		String[] memberListContent = {"MEM_NO","MEM_PIC","MEM_PICKIND"}; 
 		map.put("MEMBERLIST", memberListContent);
+		// 06-venue table image {}
+		String[] venueContent = {"V_NO","V_PHOTO1","V_PHOTO1_EXT"};
+		map.put("VENUE", venueContent);
 		
 		// 08-sg_info table image {primaryKeyColnName,pictureColnName,pic_extensionColName}
 		String[] sg_info_Content = {"SG_NO","SG_PIC","SG_PIC_EXT"}; 
@@ -54,15 +57,17 @@ public class mainAllimageIntoDB {
 		for(int i = 0 ; i < divArray.length ; i++) {
 			File subFile = new File(rootPath+"\\"+divArray[i]);
 			System.out.println(subFile.getName());
+			System.out.println("subFile.isDirectory() : "+subFile.isDirectory());
 			if(subFile.isDirectory()) {
-				if(map.get(subFile.getName())==null) {
-					break;
+				if(map.get(subFile.getName().toUpperCase())==null) {
+					System.out.println("--------------"+subFile.getName().toLowerCase());
+					continue;
 				}
 				String divPath = rootPath+"\\"+subFile.getName();
-				String primaryKeyColnName = map.get(subFile.getName())[0];
-				String pictureColnName = map.get(subFile.getName())[1];
-				String pic_extensionColName = map.get(subFile.getName())[2];
-				KeyInWord inputName = new KeyInWord(divPath,subFile.getName(),
+				String primaryKeyColnName = map.get(subFile.getName().toUpperCase())[0];
+				String pictureColnName = map.get(subFile.getName().toUpperCase())[1];
+				String pic_extensionColName = map.get(subFile.getName().toUpperCase())[2];
+				KeyInWord inputName = new KeyInWord(divPath,subFile.getName().toUpperCase(),
 						primaryKeyColnName,pictureColnName,pic_extensionColName);
 				ForOneTable forOneTable = new ForOneTable(inputName);
 				 forOneTable.setDRIVER(DRIVER)

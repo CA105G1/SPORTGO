@@ -325,7 +325,14 @@ public class RegJDBCDAO implements RegDAO_interface{
 //		regVO.setReg_dist("test_dist");
 //		regJDBCDAO.insert(regVO);
 		
-		
+		RegDAO_interface dao_interface = new RegJDBCDAO();
+		List<RegVO> list = dao_interface.getAll();
+		for(RegVO regVO : list) {
+			System.out.println("++++++++++++++++++++++++++");
+			System.out.println(regVO.getReg_no());
+			System.out.println(regVO.getReg_name());
+			System.out.println(regVO.getReg_dist());
+		}
 		
 		
 		
