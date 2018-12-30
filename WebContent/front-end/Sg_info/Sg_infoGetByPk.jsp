@@ -51,9 +51,17 @@
 
 
 <% 
-	Sg_infoVO vo = (Sg_infoVO)session.getAttribute("Sg_infoVO_Session");
-	if(vo == null){
+	
+	Boolean isLoginRedirect = (Boolean)session.getAttribute("isLoginRedirect");
+System.out.println("isLoginRedirect="+isLoginRedirect);
+	Sg_infoVO vo = null;
+	if(isLoginRedirect == null || isLoginRedirect == false){
 		vo = (Sg_infoVO)request.getAttribute("Sg_infoVO");
+System.out.println("vo1="+vo);
+	}else{
+		vo = (Sg_infoVO)session.getAttribute("Sg_infoVO_Session");
+		session.setAttribute("isLoginRedirect", false);
+System.out.println("vo2="+vo);
 	}
     pageContext.setAttribute("Sg_infoVO", vo);
     
@@ -439,15 +447,20 @@
 		
 	} //myLoc
 	  
-	//判斷4按鍵是否已登入
+	///////4按鍵若尚未登入之設定//////////
 	<%if(memberlistVO == null){
-		session.setAttribute("location", request.getRequestURI());
-		session.setAttribute("Sg_infoVO_Session", vo);%>
+		session.setAttribute("location", request.getRequestURI());%>
 		$("#likebtn").click(function(){
+			<%session.setAttribute("isLoginRedirect", true); //設定旗標
+	 		session.setAttribute("Sg_infoVO_Session", vo);%> //原頁面VO由session帶著去跟回
 			document.location.href="<%= request.getContextPath()%>/front-end/memberlist/Login.jsp";
+			return;
 		});
 		$("#joinbtn").click(function(){
+			<%session.setAttribute("isLoginRedirect", true); //設定旗標
+	 		session.setAttribute("Sg_infoVO_Session", vo);%> //原頁面VO由session帶著去跟回
 			document.location.href="<%= request.getContextPath()%>/front-end/memberlist/Login.jsp";
+			return;
 		});
 		$("#sharebtn").click(function(){
 			document.location.href="<%= request.getContextPath()%>/front-end/memberlist/Login.jsp";
@@ -456,14 +469,16 @@
 			document.location.href="<%= request.getContextPath()%>/front-end/memberlist/Login.jsp";
 		});
 	<%}else{%>
+		//重複加入的錯誤處理還沒做////////////////////////////////////
 		$("#joinbtn").click(function(){
 			swal({
-			  title: "成功加入!",
-			  text: "馬上到我的揪團查看",
-			  icon: "success",
- 			  buttons: ["退出", "前往!"],
+			  title: "成功加入!", text: "馬上到我的揪團查看", icon: "success", buttons: ["退出", "前往!"],
+			})
+			.then((isGo)=>{
+				if(isGo){
+					document.location.href="https://sweetalert.js.org/guides/#advanced-examples";
+				}
 			});
-//////////////////////////debug500,404//////////////////////////////////////////////
 			$.ajax({
 				type: "POST",
 				url: "<%= request.getContextPath()%>/Sg_mem/Sg_mem.do",
@@ -473,11 +488,9 @@
 					alert("發生錯誤!");
 				},
 				success: function(data){
-					console.log(data);
+					
 				}
 			});
-			
-			
 		});
 		
 		

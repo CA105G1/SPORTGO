@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.sg_mem.model.Sg_memService;
 
 public class Sg_memServlet extends HttpServlet {
@@ -25,7 +28,7 @@ public class Sg_memServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		PrintWriter pw = res.getWriter();
 		
-		System.out.println("11111");
+System.out.println("11111");
 		if("insert".equals(action)) {
 			Map<String, String> errorMsg = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsg", errorMsg);
@@ -37,7 +40,15 @@ System.out.println("mem_no="+mem_no);
 			
 			Sg_memService svc = new Sg_memService();
 			svc.insertSg_mem(sg_no, mem_no);
-			pw.write("OK!");
+			
+			JSONObject obj = new JSONObject();
+			try {
+				obj.put("answer", "OK!");
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			pw.write(obj.toString());
 		}
 		
 		
