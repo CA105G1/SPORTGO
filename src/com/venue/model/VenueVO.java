@@ -235,16 +235,19 @@ public class VenueVO implements Serializable , Cloneable{
 
 	@Override
 	public String toString() {
-		return "VenueVO [v_no=" + v_no + ", v_name=" + v_name + ", v_weburl=" + v_weburl + ", v_patktype=" + v_parktype
+		return "VenueVO [v_no=" + v_no + ", v_name=" + v_name + ", v_weburl=" + v_weburl + ", v_parktype=" + v_parktype
 				+ ", v_introduction=" + v_introduction + ", vt_no=" + vt_no + ", v_inout=" + v_inout + ", reg_no="
 				+ reg_no + ", v_address=" + v_address + ", v_phoneno=" + v_phoneno + ", v_lat=" + v_lat + ", v_long="
-				+ v_long + ", v_fitall=" + v_fitall + ", v_fitinter="
-				+ v_fitinter + ", open_state=" + open_state + ", open_time=" + open_time + ", openday_mon="
-				+ openday_mon + ", openday_tue=" + openday_tue + ", openday_wed=" + openday_wed + ", openday_thu="
-				+ openday_thu + ", openday_fri=" + openday_fri + ", openday_sat=" + openday_sat + ", openday_sun="
-				+ openday_sun + ", v_photo1=" + Arrays.toString(v_photo1) + ", v_photo1_ext=" + v_photo1_ext
-				+ ", v_photo2=" + Arrays.toString(v_photo2) + ", v_photo2_ext=" + v_photo2_ext + "]";
+				+ v_long + ", v_fitall=" + v_fitall + ", v_fitinter=" + v_fitinter + ", open_state=" + open_state
+				+ ", open_time=" + open_time + ", openday_mon=" + openday_mon + ", openday_tue=" + openday_tue
+				+ ", openday_wed=" + openday_wed + ", openday_thu=" + openday_thu + ", openday_fri=" + openday_fri
+				+ ", openday_sat=" + openday_sat + ", openday_sun=" + openday_sun + ", v_photo1="
+				+ Arrays.toString(v_photo1) + ", v_photo1_ext=" + v_photo1_ext + ", v_photo2="
+				+ Arrays.toString(v_photo2) + ", v_photo2_ext=" + v_photo2_ext + ", v_photo1_url=" + v_photo1_url
+				+ ", v_photo2_url=" + v_photo2_url + ", v_display=" + v_display + "]";
 	}
+
+	
 	
 	
 	

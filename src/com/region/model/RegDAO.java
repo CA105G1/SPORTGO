@@ -2,6 +2,7 @@ package com.region.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -27,7 +28,7 @@ public class RegDAO implements RegDAO_interface{
 	private static final String INSERT_STMT = 
 			"INSERT INTO region (reg_no,reg_name,reg_dist) VALUES (?, ?, ?)";
 		private static final String GET_ALL_STMT = 
-			"SELECT * FROM region order by reg_no";
+			"SELECT * FROM region order by reg_no ASC";
 		private static final String GET_ONE_STMT = 
 			"SELECT * FROM region where reg_no = ?";
 		private static final String DELETE = 
@@ -228,14 +229,7 @@ public class RegDAO implements RegDAO_interface{
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
-			while (rs.next()) {
-				// RegVO 也稱為 Domain objects
-				RegVO = new RegVO();
-				RegVO.setReg_no(rs.getInt("reg_no"));
-				RegVO.setReg_name(rs.getString("reg_name"));
-				RegVO.setReg_dist(rs.getString("reg_dist"));
-				list.add(RegVO); // Store the row in the list
-			}
+			list = collectRegVO(rs);
 
 			// Handle any driver errors
 		} catch (SQLException se) {
@@ -267,8 +261,7 @@ public class RegDAO implements RegDAO_interface{
 		}
 		return list;
 	}
-	
-	
+
 	private static final String GET_REGVO_FROM_ADDRESS_SQL = ""
 			+ "Select * from region where ? like '%'||reg_name||reg_dist||'%'";
 	
@@ -316,6 +309,62 @@ public class RegDAO implements RegDAO_interface{
 			}
 		}
 		return regVO;
+	}
+	
+	private List<RegVO> collectRegVO(ResultSet resultSet) throws SQLException{
+		List<RegVO> list = new ArrayList<>();
+		while(resultSet.next()) {
+			RegVO regVO = new RegVO();
+			regVO.setReg_no(resultSet.getInt("REG_NO"));
+			regVO.setReg_name(resultSet.getString("REG_NAME"));
+			regVO.setReg_dist(resultSet.getString("REG_DIST"));
+			list.add(regVO);
+		}
+		return list;
+	}
+	
+	@Override
+	public List<RegVO> getAll(Map<String, String[]> map) {
+		List<RegVO> list = new ArrayList<>();
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try {
+			connection = ds.getConnection();
+			String finalSQL = "Select * from region "
+					+ Util_JDBC_CompositeQuery_Region.get_WhereCondition(map)
+					+ " order by reg_no";
+			preparedStatement = connection.prepareStatement(finalSQL);
+			resultSet = preparedStatement.executeQuery();
+			list = collectRegVO(resultSet);
+			
+		}catch (SQLException e) {
+			list = new ArrayList<>();
+			throw new RuntimeException("A database error occured. "+e.getMessage());
+		}finally {
+			if(resultSet!=null) {
+				try {
+					resultSet.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(preparedStatement!=null) {
+				try {
+					preparedStatement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(connection!=null) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return list;
 	}
 
 }

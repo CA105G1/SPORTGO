@@ -102,6 +102,14 @@
     <url-pattern>/venue/venue.do</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>VenueImgServlet</servlet-name>
+    <servlet-class>com.venue.controller.VenueImgServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>VenueImgServlet</servlet-name>
+    <url-pattern>/vunue/venueImg.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>Sg_infoServlet</servlet-name>
     <servlet-class>com.sg_info.controller.Sg_infoServlet</servlet-class>
   </servlet>

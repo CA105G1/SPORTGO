@@ -8,10 +8,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.region.model.RegDAO_interface;
-import com.region.model.RegJDBCDAO;
-import com.region.model.RegVO;
+import java.util.Map;
 
 
 public class VenueJDBCDAO implements VenueDAO_interface {
@@ -423,16 +420,56 @@ public class VenueJDBCDAO implements VenueDAO_interface {
 		}
 		return list;
 	}
+
 	
-	public static void main(String[] args) {
-		VenueDAO_interface dao_interface = new VenueJDBCDAO();
-		List<VenueVO> list = dao_interface.getAll();
-		for(VenueVO regVO : list) {
-			System.out.println("++++++++++++++++++++++++++");
-			System.out.println(regVO.getReg_no());
-			System.out.println(regVO.getV_name());
-			System.out.println(regVO.getV_display());
+	@Override
+	public List<VenueVO> getAll(Map<String, String[]> map) {
+		List<VenueVO> list = new ArrayList<VenueVO>();
+		
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try {
+			connection = DriverManager.getConnection(URL, USER, PASSWORD);
+			String finalSQL = "Select * from venue "
+					+ Util_JDBC_CompositeQuery_Venue.get_WhereCondition(map)
+					+ " order by v_no";
+			
+			preparedStatement = connection.prepareStatement(finalSQL);
+			System.out.println("+++FinalSQL(by JDBCDAO) = "+finalSQL);
+			resultSet = preparedStatement.executeQuery();
+			list = collectVenueVO(resultSet);
+			
+			
+		}catch (SQLException e) {
+			list = new ArrayList<>();
+			throw new RuntimeException("A database error occured. "+e.getMessage());
+		}finally {
+			if(resultSet!=null) {
+				try {
+					resultSet.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(preparedStatement!=null) {
+				try {
+					preparedStatement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(connection!=null) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
+		return list;
 	}
+
 	
+
 }
