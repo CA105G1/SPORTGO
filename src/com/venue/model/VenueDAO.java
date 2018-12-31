@@ -7,6 +7,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.naming.NamingException;
 import javax.sql.DataSource;
@@ -272,7 +273,6 @@ public class VenueDAO implements VenueDAO_interface {
 		try {
 			connection = dataSource.getConnection();
 			preparedStatement = connection.prepareStatement(GET_ONE_STMT);
-			System.out.println("GET_ONE_STMT : "+GET_ONE_STMT);
 			preparedStatement.setString(1, v_no);
 			resultSet = preparedStatement.executeQuery();
 			if(resultSet.next()) {
@@ -418,4 +418,53 @@ public class VenueDAO implements VenueDAO_interface {
 		}
 		return list;
 	}
+	
+	@Override
+	public List<VenueVO> getAll(Map<String, String[]> map) {
+		List<VenueVO> list = new ArrayList<VenueVO>();
+		
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try {
+			connection = dataSource.getConnection();
+			String finalSQL = "Select * from venue "
+					+ Util_JDBC_CompositeQuery_Venue.get_WhereCondition(map)
+					+ " order by v_no";
+			
+			preparedStatement = connection.prepareStatement(finalSQL);
+			System.out.println("+++FinalSQL(by JDBCDAO) = "+finalSQL);
+			resultSet = preparedStatement.executeQuery();
+			list = collectVenueVO(resultSet);
+			
+			
+		}catch (SQLException e) {
+			list = new ArrayList<>();
+			throw new RuntimeException("A database error occured. "+e.getMessage());
+		}finally {
+			if(resultSet!=null) {
+				try {
+					resultSet.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(preparedStatement!=null) {
+				try {
+					preparedStatement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(connection!=null) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return list;
+	}
+	
 }
