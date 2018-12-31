@@ -43,7 +43,7 @@ public class OneManDoing {
 	}
 	
 	public void importImgInotoDB(UtilSQL sql) throws SQLException {
-		
+		System.out.println("doing importImgInotoDB....");
 		File saveDir = new File(dirPath);
 		if(!saveDir.exists()) {
 			System.out.println("Error! Folder, '"+dirPath+"', doesn't exist!!!");
@@ -69,7 +69,11 @@ public class OneManDoing {
 		int i = 0; // record current row number by index
 		for(File file : imgFiles) {
 			String str = file.getName();
+			System.out.println("file.getName() : "+str);
 			String pic_ext = str.substring(str.lastIndexOf(".")+1, str.length());
+			if("txt".equals(pic_ext)) {
+				continue;
+			}
 			FileInputStream fis = null;
 			BufferedInputStream bis = null;
 			byte[] buf = null;

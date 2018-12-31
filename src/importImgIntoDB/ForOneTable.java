@@ -66,7 +66,7 @@ public class ForOneTable {
 //			String pic_extensionColName= "pic_ext";
 			
 			UtilSQL sql = new UtilSQL(inputName.getTableName(),inputName.getPrimaryKeyColnName(),inputName.getPictureColnName(),inputName.getPic_extensionColName());
-			
+			System.out.println(inputName.getTableName()+"_SQL :"+ sql);
 			david = new OneManDoing(new ConnectionFactory(URL,USER,PASSWORD).getConnection(),inputName.getDivPath());
 			david.importImgInotoDB(sql);
 			

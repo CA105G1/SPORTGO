@@ -12,7 +12,8 @@ public interface RegDAO_interface {
 	
 	public RegVO getRegVOFromAddress(String address);
 	
+	
 //	萬用複合查詢(傳入參數型態Map)(回傳 List)
-//  public List<RegVO> getAll(Map<String, String[]> map); 
+	public List<RegVO> getAll(Map<String, String[]> map); 
 
 }

@@ -1,6 +1,7 @@
 package com.venue.model;
 
 import java.util.List;
+import java.util.Map;
 
 public class VenueService {
 	
@@ -8,6 +9,10 @@ public class VenueService {
 	
 	public VenueService() {
 		venueDAO = new VenueDAO();
+	}
+	
+	public List<VenueVO> getAll(Map<String, String[]> map){
+		return venueDAO.getAll(map);
 	}
 	
 	public List<VenueVO> getAll(){

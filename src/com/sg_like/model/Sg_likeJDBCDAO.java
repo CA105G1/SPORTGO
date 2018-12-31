@@ -6,14 +6,16 @@ import java.sql.*;
 public class Sg_likeJDBCDAO implements Sg_likeDAO_interface{
 	
 	private String driver  = "oracle.jdbc.driver.OracleDriver";
-	private String url     = "jdbc:oracle:thin:@10.37.129.3:1521:xe";
-	private String user    = "AARON";
+	private String url     = "jdbc:oracle:thin:@localhost:1521:xe";
+	private String user    = "CA105G1";
 	private String password= "123456";  
 	
 	private static final String PUSH_LIKE = "INSERT INTO SG_LIKE VALUES (?,?)";
 	private static final String PUSH_DISLIKE = "DELETE FROM SG_LIKE WHERE MEM_NO = ? AND SG_NO = ?";
 	private static final String SG_WHO_LIKE = "SELECT MEM_NO FROM SG_LIKE WHERE SG_NO = ?";
 	private static final String LIKE_WHICH_SG = "SELECT SG_NO FROM SG_LIKE WHERE MEM_NO = ?";
+	
+	private static final String GETBYPK = "SELECT * FROM SG_LIKE WHERE SG_NO=? AND MEM_NO=?";
 	
 	//constructor
 	public Sg_likeJDBCDAO() {
@@ -62,7 +64,7 @@ public class Sg_likeJDBCDAO implements Sg_likeDAO_interface{
 	//when member push the dislike button, delete the original data from SG_LIKE
 	//warning : if member push dislike SG button before push like button, it may have SQLException
 	@Override
-	public void delete(Sg_likeVO sg_like) {
+	public void delete(String sg_no, String mem_no) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
@@ -71,8 +73,8 @@ public class Sg_likeJDBCDAO implements Sg_likeDAO_interface{
 			con = DriverManager.getConnection(url, user, password);
 			pstmt = con.prepareStatement(PUSH_DISLIKE);
 			
-			pstmt.setString(1, sg_like.getMem_no());
-			pstmt.setString(2, sg_like.getSg_no());
+			pstmt.setString(1, mem_no);
+			pstmt.setString(2, sg_no);
 			
 			pstmt.executeUpdate();
 		} catch(ClassNotFoundException e) {
@@ -202,6 +204,69 @@ public class Sg_likeJDBCDAO implements Sg_likeDAO_interface{
 		}
 		return likelist;
 	}
+	
+	//check this member has liked or not(by Shawn)
+	@Override
+	public boolean isLike(String sg_no, String mem_no) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, user, password);
+			pstmt = con.prepareStatement(GETBYPK);
+			
+			pstmt.setString(1, sg_no);
+			pstmt.setString(2, mem_no);
+			rs = pstmt.executeQuery();
+			rs.next(); 
+			try {
+				rs.getString(1);
+				rs.getString(2);
+			}catch(Exception e) {
+				//若取不到值，代表該會員沒有收藏該揪團，則拋出例外並回傳false
+				return false;
+			}
+			return true;
+			
+			
+		}catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "+e.getMessage());
+		} catch (SQLException se) {
+			throw new RuntimeException("Database errors occured. "+se.getMessage());
+		}finally {
+			if(rs!=null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if(con!=null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 
 	public static void main(String[] args) {
 		Sg_likeJDBCDAO sglike = new Sg_likeJDBCDAO();
@@ -219,11 +284,14 @@ public class Sg_likeJDBCDAO implements Sg_likeDAO_interface{
 			System.out.println("sg_no : "+listmem.getSg_no());
 		}
 		
-		sglike.delete(sgvocreate);
+//		sglike.delete(sgvocreate);
 		System.out.println("A SG be unliked. ");
 		
 		
 	}
+
+
+	
 	
 	
 }

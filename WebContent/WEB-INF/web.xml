@@ -23,6 +23,19 @@
     <servlet-name>Login</servlet-name>
     <url-pattern>/front-end/memberlist/login.do</url-pattern>
   </servlet-mapping>
+  <!--   <filter> -->
+<!--     <filter-name>Login_pageFilter</filter-name> -->
+<!--     <filter-class>com.memberlist.controller.Login_pageFilter</filter-class> -->
+<!--   </filter> -->
+<!--   <filter-mapping> -->
+<!--     <filter-name>Login_pageFilter</filter-name> -->
+<!--     <url-pattern>/front-end/memberlist/Login.jsp</url-pattern> -->
+<!--     <dispatcher>REQUEST</dispatcher> -->
+<!--     <dispatcher>FORWARD</dispatcher> -->
+<!--     <dispatcher>INCLUDE</dispatcher> -->
+<!--     <dispatcher>ERROR</dispatcher> -->
+<!--     <dispatcher>ASYNC</dispatcher> -->
+<!--   </filter-mapping> -->
   <filter>
     <filter-name>LoginFilter</filter-name>
     <filter-class>com.memberlist.controller.LoginFilter</filter-class>
@@ -43,19 +56,6 @@
     <dispatcher>ERROR</dispatcher>
     <dispatcher>ASYNC</dispatcher>
   </filter-mapping>
-<!--   <filter> -->
-<!--     <filter-name>Login_pageFilter</filter-name> -->
-<!--     <filter-class>com.memberlist.controller.Login_pageFilter</filter-class> -->
-<!--   </filter> -->
-<!--   <filter-mapping> -->
-<!--     <filter-name>Login_pageFilter</filter-name> -->
-<!--     <url-pattern>/front-end/memberlist/Login.jsp</url-pattern> -->
-<!--     <dispatcher>REQUEST</dispatcher> -->
-<!--     <dispatcher>FORWARD</dispatcher> -->
-<!--     <dispatcher>INCLUDE</dispatcher> -->
-<!--     <dispatcher>ERROR</dispatcher> -->
-<!--     <dispatcher>ASYNC</dispatcher> -->
-<!--   </filter-mapping> -->
   <servlet>
     <servlet-name>Logout</servlet-name>
     <servlet-class>com.memberlist.controller.Logout</servlet-class>
@@ -121,6 +121,14 @@
     <url-pattern>/venue/venue.do</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>VenueImgServlet</servlet-name>
+    <servlet-class>com.venue.controller.VenueImgServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>VenueImgServlet</servlet-name>
+    <url-pattern>/vunue/venueImg.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>Sg_infoServlet</servlet-name>
     <servlet-class>com.sg_info.controller.Sg_infoServlet</servlet-class>
   </servlet>
@@ -143,5 +151,21 @@
   <servlet-mapping>
     <servlet-name>Sg_memServlet</servlet-name>
     <url-pattern>/Sg_mem/Sg_mem.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>Sg_likeServlet</servlet-name>
+    <servlet-class>com.sg_like.controller.Sg_likeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Sg_likeServlet</servlet-name>
+    <url-pattern>/Sg_like/Sg_like.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>Sg_repServlet</servlet-name>
+    <servlet-class>com.sg_rep.controller.Sg_repServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Sg_repServlet</servlet-name>
+    <url-pattern>/Sg_rep/Sg_rep.do</url-pattern>
   </servlet-mapping>
 </web-app>

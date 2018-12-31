@@ -30,7 +30,7 @@ public class Sg_memDAO implements Sg_memDAO_interface{
 	static {
 		try {
 			Context ctx = new javax.naming.InitialContext();
-			ds = (DataSource)ctx.lookup("java:comp/env/jdbc/TestDB");
+			ds = (DataSource)ctx.lookup("java:comp/env/jdbc/CA105G1DB");
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

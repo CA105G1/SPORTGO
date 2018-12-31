@@ -1,6 +1,8 @@
 package com.venue.controller;
 
 import java.io.IOException;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -8,7 +10,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.venue.model.Util_Check_Venue_Parameter;
 import com.venue.model.VenueService;
 import com.venue.model.VenueVO;
 
@@ -22,38 +26,43 @@ public class VenueServlet extends HttpServlet {
 		doPost(request, response);
 	}
 
-	private static final String MAINTAIN_VENUE_INFO_INDEX_PATH="/back-end/venue/maintainVenueInfoIndex.jsp";
-	private static final String SUCCESS_GET_ONE_SHOW_PATH = "/back-end/venue/listOneVenue.jsp";
-	private static final String LIST_ALL_VENUE_PATH = "/back-end/venue/listAllVenue.jsp";
+//	private static final String MAINTAIN_VENUE_INFO_INDEX_PATH="/back-end/venue/maintainVenueInfoIndex.jsp";
+//	private static final String SUCCESS_GET_ONE_SHOW_PATH = "/back-end/venue/listOneVenue.jsp";
+//	private static final String LIST_ALL_VENUE_PATH = "/back-end/venue/listAllVenue.jsp";
+	private static final String MAINTAIN_VENUE_INFO_INDEX_BACK_PATH="/back-end/venue/maintain_venue_Info_Index_back.jsp";
+	private static final String SUCCESS_GET_ONE_SHOW_PATH = "/back-end/venue/showOneVenueInfo.jsp";
+	private static final String LIST_ALL_VENUE_PATH = "/back-end/venue/listQueryVenue.jsp";
 	private static final String UPDATE_FOR_QUERY_PATH = "/back-end/venue/updateVenue.jsp";
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
-		
 		if(action!=null) {
 			switch (action) {
 			case "get_all_venue":
-				doActionGetAllVenue(action, request, response);
+				doActionGetAllVenue(request, response);
 				break;
 			case "get_one_venue":
-				doActionGetOneVenue(action, request, response);
+				doActionGetOneVenue(request, response);
 				break;
 			case "delete":
-				doActionDelete(action, request, response);
+				doActionDelete(request, response);
 				break;
 			case "updateForQuery":
-				doActionUpdateForQuery(action, request, response);
+				doActionUpdateForQuery(request, response);
 				break;
 			case "update_cancel":
-				doActionUpdateCancel(action, request, response);
+				doActionUpdateCancel(request, response);
 				break;
 			case "update_reset":
-				doActionUpdateReset(action, request,response);
+				doActionUpdateReset(request,response);
 				break;				
 			case "update_commit":
-				doActionUpdateCommit(action, request,response);
-				break;				
+				doActionUpdateCommit(request,response);
+				break;
+			case "listVenueByCompositeQuery":
+				doActionListVenueByCompositeQuery(request,response);
+				break;
 			default:
 				System.out.println("In this venueServlet, there are no "+action+".");
 			}
@@ -61,14 +70,13 @@ public class VenueServlet extends HttpServlet {
 		
 	}
 	
-	
 	private List<String> getErrorMsgsCollection(HttpServletRequest request){
 		List<String> errorMsgs = new LinkedList<>();
 		request.setAttribute("errorMsgs", errorMsgs);
 		return errorMsgs;
 	}
 	
-	private void doActionGetAllVenue(String action, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	private void doActionGetAllVenue(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		List<String> errorMsgs = getErrorMsgsCollection(request);
 		try {
 		//////there is no error check.
@@ -76,28 +84,29 @@ public class VenueServlet extends HttpServlet {
 		VenueService service = new VenueService();
 		List<VenueVO> list = service.getAll();
 		
-		//////
-		String whichPage = request.getParameter("whichPage");
-		
-		request.setAttribute("myList", list);
-		request.setAttribute("resultAction",action);
-		request.setAttribute("whichPage", whichPage);
-		RequestDispatcher successView = 
-				request.getRequestDispatcher(MAINTAIN_VENUE_INFO_INDEX_PATH);
-				//request.getRequestDispatcher(SUCCESS_GET_ONE_SHOW_PATH);
-		successView.forward(request, response);
+//		//////old version
+//		String whichPage = request.getParameter("whichPage");
+//		
+//		request.setAttribute("myList", list);
+//		request.setAttribute("whichPage", whichPage);
+//		RequestDispatcher successView = 
+//				request.getRequestDispatcher(MAINTAIN_VENUE_INFO_INDEX_BACK_PATH);
+//				//request.getRequestDispatcher(SUCCESS_GET_ONE_SHOW_PATH);
+//		successView.forward(request, response);
+		////
+		showVenueListAndForward(list, MAINTAIN_VENUE_INFO_INDEX_BACK_PATH, request, response);
 		return;
 		
 		}catch (Exception e) {
 			errorMsgs.add("取得資料失敗: "+e.getMessage());
 			RequestDispatcher failureView = 
-					request.getRequestDispatcher(MAINTAIN_VENUE_INFO_INDEX_PATH);
+					request.getRequestDispatcher(MAINTAIN_VENUE_INFO_INDEX_BACK_PATH);
 			failureView.forward(request, response);
 			return;
 		}
 	}
 	
-	private void doActionGetOneVenue(String action, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	private void doActionGetOneVenue(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		List<String> errorMsgs = getErrorMsgsCollection(request);
 		try {
 			////////
@@ -110,7 +119,7 @@ public class VenueServlet extends HttpServlet {
 			}
 			if(!errorMsgs.isEmpty()) {
 				RequestDispatcher failureView = 
-						request.getRequestDispatcher(MAINTAIN_VENUE_INFO_INDEX_PATH);
+						request.getRequestDispatcher(MAINTAIN_VENUE_INFO_INDEX_BACK_PATH);
 				failureView.forward(request, response);
 				return;
 			}
@@ -122,28 +131,27 @@ public class VenueServlet extends HttpServlet {
 			}
 			if(!errorMsgs.isEmpty()) {
 				RequestDispatcher failureView = 
-						request.getRequestDispatcher(MAINTAIN_VENUE_INFO_INDEX_PATH);
+						request.getRequestDispatcher(MAINTAIN_VENUE_INFO_INDEX_BACK_PATH);
 				failureView.forward(request, response);
 				return;
 			}
 			///////
 			request.setAttribute("venueVO", venueVO);
-			request.setAttribute("resultAction",action);
 			RequestDispatcher successView = 
 					//request.getRequestDispatcher(SUCCESS_GET_ONE_SHOW_PATH);
-					request.getRequestDispatcher(MAINTAIN_VENUE_INFO_INDEX_PATH);
+					request.getRequestDispatcher(MAINTAIN_VENUE_INFO_INDEX_BACK_PATH);
 			successView.forward(request, response);
 			return;
 		}catch (Exception e) {
 			errorMsgs.add("取得資料失敗: "+e.getMessage());
 			RequestDispatcher failureView = 
-					request.getRequestDispatcher(MAINTAIN_VENUE_INFO_INDEX_PATH);
+					request.getRequestDispatcher(MAINTAIN_VENUE_INFO_INDEX_BACK_PATH);
 			failureView.forward(request, response);
 			return;
 		}	
 	}
 	
-	private void doActionDelete(String action, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	private void doActionDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		List<String> errorMsgs = getErrorMsgsCollection(request);
 		try {
 			String v_no = (String)request.getParameter("v_no");
@@ -155,19 +163,19 @@ public class VenueServlet extends HttpServlet {
 			
 			
 			RequestDispatcher successView = 
-					request.getRequestDispatcher(MAINTAIN_VENUE_INFO_INDEX_PATH);
+					request.getRequestDispatcher(MAINTAIN_VENUE_INFO_INDEX_BACK_PATH);
 			successView.forward(request, response);
 			return;
 		}catch (Exception e) {
 			errorMsgs.add("刪除資料失敗: "+e.getMessage());
 			RequestDispatcher failureView = 
-					request.getRequestDispatcher(MAINTAIN_VENUE_INFO_INDEX_PATH);
+					request.getRequestDispatcher(MAINTAIN_VENUE_INFO_INDEX_BACK_PATH);
 			failureView.forward(request, response);
 			return;
 		}
 	}
 	
-	private void doActionUpdateForQuery(String action, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	private void doActionUpdateForQuery(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		List<String> errorMsgs = getErrorMsgsCollection(request);
 		try {
 			////// don't need check
@@ -185,14 +193,15 @@ public class VenueServlet extends HttpServlet {
 		}catch (Exception e) {
 			errorMsgs.add("請求更新資料失敗: "+e.getMessage());
 			RequestDispatcher failureView = 
-					request.getRequestDispatcher(MAINTAIN_VENUE_INFO_INDEX_PATH);
+					request.getRequestDispatcher(MAINTAIN_VENUE_INFO_INDEX_BACK_PATH);
 			failureView.forward(request, response);
 			return;
 		}
 	}
 	
-	private void doActionUpdateCancel(String action, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	private void doActionUpdateCancel(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		List<String> errorMsgs = getErrorMsgsCollection(request);
+		String action = request.getParameter("action");
 		try {
 			String v_no = request.getParameter("v_no");
 			action = "get_one_venue";
@@ -212,8 +221,9 @@ public class VenueServlet extends HttpServlet {
 		}
 	}
 	
-	private void doActionUpdateReset(String action, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	private void doActionUpdateReset(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		List<String> errorMsgs = getErrorMsgsCollection(request);
+		String action = request.getParameter("action");
 		try {
 			////don't need check
 			String v_no = request.getParameter("v_no");
@@ -234,7 +244,7 @@ public class VenueServlet extends HttpServlet {
 		}
 	}
 	
-	private void doActionUpdateCommit(String action, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	private void doActionUpdateCommit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 //		List<String> errorMsgs = getErrorMsgsCollection(request);
 //		try {
 //			// commit input date is corrected
@@ -270,4 +280,43 @@ public class VenueServlet extends HttpServlet {
 //			return;
 //		}
 	}
+
+	private void doActionListVenueByCompositeQuery(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		List<String> errorMsgs = getErrorMsgsCollection(request);
+		try {
+			// 1.將輸入Data轉成為MAP
+			HttpSession session = request.getSession();
+			Map<String, String[]> venueMap = (Map<String, String[]>)session.getAttribute("venueMap");
+			if(request.getParameter("whichPage")==null) {
+				HashMap<String, String[]> getMap = new HashMap<String, String[]>(request.getParameterMap());
+				session.setAttribute("venueMap", getMap);
+				venueMap = getMap;
+			}
+			// 1.5 check map
+			venueMap = Util_Check_Venue_Parameter.checkVenueMap(venueMap, errorMsgs);
+			if(!errorMsgs.isEmpty()) {
+				RequestDispatcher failureView = 
+						request.getRequestDispatcher(MAINTAIN_VENUE_INFO_INDEX_BACK_PATH);
+				failureView.forward(request, response);
+			}
+			//2.
+			VenueService venueService = new VenueService();
+			List<VenueVO> list = venueService.getAll(venueMap);
+			//3.
+			showVenueListAndForward(list, MAINTAIN_VENUE_INFO_INDEX_BACK_PATH, request, response);
+			return;
+		}catch (Exception e) {
+			errorMsgs.add(e.getMessage());
+			RequestDispatcher failureView = request.getRequestDispatcher(MAINTAIN_VENUE_INFO_INDEX_BACK_PATH);
+			failureView.forward(request, response);
+			return;
+		}
+	}
+	
+	private void showVenueListAndForward(List<VenueVO> list, String whereUrl,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		request.setAttribute("myList", list);
+		RequestDispatcher successView = request.getRequestDispatcher(whereUrl);
+		successView.forward(request, response);
+	}
+
 }

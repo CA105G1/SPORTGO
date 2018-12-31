@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="com.sg_info.model.*"%>
+<%@ page import="com.sg_like.model.*"%>
 <%@ page import="com.memberlist.model.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -14,11 +15,8 @@
 <link   rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 <script src="<%= request.getContextPath()%>/datetimepicker/jquery.js"></script>
 <script src="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
-
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script>
-
-</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
 
 <style type="text/css">
 	th{
@@ -39,6 +37,7 @@
 		justify-content: space-between;
 	}
 	.showMsg{
+		white-space: pre-wrap;
 		resize:none;
 		height:500px;
 		width:100%;
@@ -51,9 +50,17 @@
 
 
 <% 
-	Sg_infoVO vo = (Sg_infoVO)session.getAttribute("Sg_infoVO_Session");
-	if(vo == null){
+	
+	Boolean isLoginRedirect = (Boolean)session.getAttribute("isLoginRedirect");
+System.out.println("isLoginRedirect="+isLoginRedirect);
+	Sg_infoVO vo = null;
+	if(isLoginRedirect == null || isLoginRedirect == false){
 		vo = (Sg_infoVO)request.getAttribute("Sg_infoVO");
+System.out.println("vo1="+vo);
+	}else{
+		vo = (Sg_infoVO)session.getAttribute("Sg_infoVO_Session");
+		session.setAttribute("isLoginRedirect", false);
+System.out.println("vo2="+vo);
 	}
     pageContext.setAttribute("Sg_infoVO", vo);
     
@@ -194,7 +201,7 @@
 						</form>
 			        </div>
 			        <div role="tabpanel" class="tab-pane" id="msgBoard">
-			        	<textarea id="showMsg" readonly style="resize:none;height:300px;width:100%;">123</textarea>
+			        	<textarea id="showMsg" readonly style="resize:none;height:300px;width:100%;"> 132 </textarea>
 			        	<input type="text" name="sg_msg">
 			        	<input type="button" class="btn" value="送出">
 			        </div>
@@ -207,14 +214,18 @@
 
 
 
+
 <div class="container">
 	<div class="row">
 		<div class="col-xs-12 col-sm-3">
 		</div>
 		<div class="col-xs-12 col-sm-6" id="btnGroup">
-			<div class="btn" id="likebtn">
-				<img src="<%= request.getContextPath()%>/img/love.png" id="like" style="display:none">
-				<img src="<%= request.getContextPath()%>/img/love_white.png" id="dislike" style="display:">
+			<div class="btn like" id="likebtn" style="display:none">
+				<img src="<%= request.getContextPath()%>/img/love.png" id="like">
+				加入收藏
+			</div>
+			<div class="btn like" id="dislikebtn" style="display:">
+				<img src="<%= request.getContextPath()%>/img/love_white.png" id="dislike">
 				加入收藏
 			</div>
 			
@@ -228,7 +239,7 @@
 				分享給好友
 			</div>
 			
-			<div class="btn" id="repbtn" data-toggle="modal" data-target="#smallShoes">
+			<div class="btn" id="repbtn">
 				<img src="<%= request.getContextPath()%>/img/warning.png">
 				檢舉
 			</div>
@@ -237,7 +248,6 @@
 		</div>
 	</div>
 </div>
-			<%@ include file="Sg_repPage.file" %>
 
 <%@ include file="/front-end/CA105G1_footer.file" %>
 
@@ -369,18 +379,18 @@
 	  
 	  
 	  //點擊收藏按鍵變換愛心
-	  var like = false;
-	  $("#likebtn").click(function(){
-		  if(like){
-			 $("#dislike").css("display","");
-			 $("#like").css("display","none");
-			 like = false;
-		  }else{
-			 $("#like").css("display","");
-			 $("#dislike").css("display","none");
-			 like = true;
-		  }
-	  });
+// 	  var like = false;
+// 	  $("#likebtn").click(function(){
+// 		  if(like){
+// 			 $("#dislike").css("display","");
+// 			 $("#like").css("display","none");
+// 			 like = false;
+// 		  }else{
+// 			 $("#like").css("display","");
+// 			 $("#dislike").css("display","none");
+// 			 like = true;
+// 		  }
+// 	  });
 	  
 	  
 
@@ -439,34 +449,146 @@
 		
 	} //myLoc
 	  
-	//判斷4按鍵是否已登入
+	///////4按鍵若尚未登入之設定//////////
 	<%if(memberlistVO == null){
-		session.setAttribute("location", request.getRequestURI());
-		session.setAttribute("Sg_infoVO_Session", vo);%>
-		$("#likebtn").click(function(){
+		session.setAttribute("location", request.getRequestURI());%>
+		$(".like").click(function(){
+			<%session.setAttribute("isLoginRedirect", true); //設定旗標
+	 		session.setAttribute("Sg_infoVO_Session", vo);%> //原頁面VO由session帶著去跟回
 			document.location.href="<%= request.getContextPath()%>/front-end/memberlist/Login.jsp";
+			return;
 		});
 		$("#joinbtn").click(function(){
+			<%session.setAttribute("isLoginRedirect", true); //設定旗標
+	 		session.setAttribute("Sg_infoVO_Session", vo);%> //原頁面VO由session帶著去跟回
 			document.location.href="<%= request.getContextPath()%>/front-end/memberlist/Login.jsp";
+			return;
 		});
 		$("#sharebtn").click(function(){
 			document.location.href="<%= request.getContextPath()%>/front-end/memberlist/Login.jsp";
 		});
 		$("#repbtn").click(function(){
+			<%session.setAttribute("isLoginRedirect", true); //設定旗標
+	 		session.setAttribute("Sg_infoVO_Session", vo);%> //原頁面VO由session帶著去跟回
 			document.location.href="<%= request.getContextPath()%>/front-end/memberlist/Login.jsp";
+			return;
 		});
 	<%}else{%>
+		/////////////////收藏按鍵設定////////////////////////
+		//若該會員有收藏該揪團則顯示實心
+		<% Sg_likeService likesvc = new Sg_likeService();%>
+		if(<%= likesvc.isLike(vo.getSg_no(), memberlistVO.getMem_no())%>){  
+			$("#likebtn").css("display","");
+			$("#dislikebtn").css("display","none");
+		}else{
+			$("#likebtn").css("display","none");
+			$("#dislikebtn").css("display","");
+		}
+		$("#likebtn").click(function(){
+			 $("#dislikebtn").css("display","");
+			 $("#likebtn").css("display","none");
+			$.ajax({
+				type: "POST",
+				url: "<%= request.getContextPath()%>/Sg_like/Sg_like.do",
+				data: {"action" : "delete", "sg_no" : "<%= vo.getSg_no()%>", "mem_no" : "<%= memberlistVO.getMem_no()%>"},
+				dataType: "json",
+				error: function(){
+					alert("發生錯誤!");
+				},
+				success: function(data){
+					alert("取消收藏");
+				}
+			});
+		});
+		
+		$("#dislikebtn").click(function(){
+			 $("#likebtn").css("display","");
+			 $("#dislikebtn").css("display","none");
+			$.ajax({
+				type: "POST",
+				url: "<%= request.getContextPath()%>/Sg_like/Sg_like.do",
+				data: {"action" : "insert", "sg_no" : "<%= vo.getSg_no()%>", "mem_no" : "<%= memberlistVO.getMem_no()%>"},
+				dataType: "json",
+				error: function(){
+					alert("發生錯誤!");
+				},
+				success: function(data){
+					alert("成功加入收藏");
+				}
+			});
+		});
+		//////////////////加入揪團按鍵設定///////////////////////////
+		//重複加入的錯誤處理還沒做////////////////////////////////////
 		$("#joinbtn").click(function(){
 			swal({
-			  title: "成功加入!",
-			  text: "馬上到我的揪團查看",
-			  icon: "success",
- 			  buttons: ["退出", "前往!"],
+			  title: "成功加入!", html: "馬上到我的揪團查看", type: "success", showCancelButton: true, showCloseButton: true,
+			}).then(
+				function (result) {
+				if(result){
+					document.location.href="https://sweetalert.js.org/guides/#advanced-examples";
+				}
+			});
+			$.ajax({
+				type: "POST",
+				url: "<%= request.getContextPath()%>/Sg_mem/Sg_mem.do",
+				data: {"action" : "insert", "sg_no" : "<%= vo.getSg_no()%>", "mem_no" : "<%= memberlistVO.getMem_no()%>"},
+				dataType: "json",
+				error: function(){
+					alert("發生錯誤!");
+				},
+				success: function(data){
+					
+				}
 			});
 		});
 		
 		
-	<%}%>
+		$("#repbtn").click(function(){
+			swal({
+				title: '正義之士就是你!',type: "warning",showCancelButton: true, showCloseButton: true,
+				html:
+	    			'<form>' +
+	    			  '<div class="form-group">' +
+	    			    '<label class="pull-left">檢舉原因：</label>' +
+	    			    '<select id="rep_type" class="form-control">' +
+	    			    '<option value="不雅言語">不雅言語</option>'+
+					    '<option value="廣告推銷">廣告推銷</option>'+
+					    '<option value="其他">其他</option>'+
+					    '</select>'+
+	    			  '</div>' +
+	    			  '<div class="form-group">' +
+	    			    '<label for="rep_cont" class="pull-left">其他原因說明：</label>' +
+	    			    '<textarea id="rep_cont" style="resize:none;height:100px;width:100%;"></textarea>' +
+	    			  '</div>' +
+	    			'</form>',	
+			}).then(
+				function (result) {
+					if(result){
+						var dataStr = {};
+						dataStr.action = "insert";
+						dataStr.sg_no = "<%= vo.getSg_no()%>";
+						dataStr.mem_no = "<%= memberlistVO.getMem_no()%>";
+						dataStr.rep_type = $("#rep_type").val().trim();
+						dataStr.rep_cont = $("#rep_cont").val().trim();
+						$.ajax({
+							type: "POST",
+							url: "<%= request.getContextPath()%>/Sg_rep/Sg_rep.do",
+							data: dataStr,
+							dataType: "json",
+							error: function(){
+								alert("發生錯誤!");
+							},
+							success: function(data){
+								
+							}
+						});
+					};
+				});
+		}); //repbtn click
+		
+		
+		
+	<%}%> //else
 	
 	
 	
