@@ -3,7 +3,7 @@ package com.memberlist.controller;
 import java.io.*;
 import com.memberlist.model.*;
 
-
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.MultipartConfig;
@@ -28,8 +28,8 @@ public class showPicture extends HttpServlet {
 		MemberlistService service = new MemberlistService();
 		MemberlistVO memberlistVO = service.getOneMem(mem_no);
 		ServletOutputStream outpic = res.getOutputStream();
-		File file = new File(req.getRealPath("/img/mem_no.jpg"));
-		FileInputStream fis = new FileInputStream(file);
+		ServletContext context = getServletContext();
+		InputStream fis = context.getResourceAsStream("/img/mem_no.jpg");
 		byte[] pic =memberlistVO.getMem_pic();
 		if(pic==null) {
 			pic = new byte[fis.available()];

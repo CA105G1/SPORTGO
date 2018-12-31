@@ -15,7 +15,6 @@
     <res-type>javax.sql.DataSource</res-type>
     <res-auth>Container</res-auth>
   </resource-ref>
-  
   <servlet>
     <servlet-name>Login</servlet-name>
     <servlet-class>com.memberlist.controller.Login</servlet-class>
@@ -24,22 +23,39 @@
     <servlet-name>Login</servlet-name>
     <url-pattern>/front-end/memberlist/login.do</url-pattern>
   </servlet-mapping>
-  
   <filter>
-  	<filter-name>LoginFilter</filter-name>
-  	<filter-class>com.memberlist.controller.LoginFilter</filter-class>
+    <filter-name>LoginFilter</filter-name>
+    <filter-class>com.memberlist.controller.LoginFilter</filter-class>
   </filter>
   <filter-mapping>
-  	<filter-name>LoginFilter</filter-name>
-  	<url-pattern>/front-end/memberlist/Member_page.jsp</url-pattern>
-  	<url-pattern>/front-end/memberlist/Member_renew.jsp</url-pattern>
-  	<dispatcher>REQUEST</dispatcher>
-  	<dispatcher>FORWARD</dispatcher>
-  	<dispatcher>INCLUDE</dispatcher>
-  	<dispatcher>ERROR</dispatcher>
-  	<dispatcher>ASYNC</dispatcher>
+    <filter-name>LoginFilter</filter-name>
+    <url-pattern>/front-end/memberlist/Member_page.jsp</url-pattern>
+    <url-pattern>/front-end/memberlist/Member_renew.jsp</url-pattern>
+    <url-pattern>/front-end/memberlist/calendar.jsp</url-pattern>
+    <url-pattern>/front-end/memberlist/club.jsp</url-pattern>
+    <url-pattern>/front-end/memberlist/friend.jsp</url-pattern>
+    <url-pattern>/front-end/memberlist/order.jsp</url-pattern>
+    <url-pattern>/front-end/memberlist/prolike.jsp</url-pattern>
+    <url-pattern>/front-end/memberlist/sg.jsp</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>INCLUDE</dispatcher>
+    <dispatcher>ERROR</dispatcher>
+    <dispatcher>ASYNC</dispatcher>
   </filter-mapping>
-  
+<!--   <filter> -->
+<!--     <filter-name>Login_pageFilter</filter-name> -->
+<!--     <filter-class>com.memberlist.controller.Login_pageFilter</filter-class> -->
+<!--   </filter> -->
+<!--   <filter-mapping> -->
+<!--     <filter-name>Login_pageFilter</filter-name> -->
+<!--     <url-pattern>/front-end/memberlist/Login.jsp</url-pattern> -->
+<!--     <dispatcher>REQUEST</dispatcher> -->
+<!--     <dispatcher>FORWARD</dispatcher> -->
+<!--     <dispatcher>INCLUDE</dispatcher> -->
+<!--     <dispatcher>ERROR</dispatcher> -->
+<!--     <dispatcher>ASYNC</dispatcher> -->
+<!--   </filter-mapping> -->
   <servlet>
     <servlet-name>Logout</servlet-name>
     <servlet-class>com.memberlist.controller.Logout</servlet-class>

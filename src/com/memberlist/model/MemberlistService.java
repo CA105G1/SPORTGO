@@ -2,6 +2,9 @@ package com.memberlist.model;
 
 import java.util.*;
 
+import com.sg_info.model.Sg_infoVO;
+import com.sg_mem.model.Sg_memVO;
+
 public class MemberlistService {
 
 	private MemberlistDAO_interface dao;
@@ -60,6 +63,14 @@ public class MemberlistService {
 		return dao.findByPrimaryKey(mem_no);
 	}
 	
+	public List<Sg_infoVO> getSgHostByMem(String mem_no) {
+		return dao.findSgByMem(mem_no);
+	}
+	
+	public List<Sg_memVO> getSgPartByMem(String mem_no) {
+		return dao.findPartByMem(mem_no);
+	}
+	
 	public String getOneMemByAccount(String account) {
 		return dao.findByAccount(account);
 	}
@@ -67,4 +78,5 @@ public class MemberlistService {
 	public List<MemberlistVO> getAllMem(){
 		return dao.getAll();
 	}
+	
 }

@@ -108,10 +108,22 @@ public class MemManagerServlet extends HttpServlet {
 				}
 			}
 			if(!errorMsgs.isEmpty()) {
-				RequestDispatcher error = req.getRequestDispatcher("Member_page.jsp");
-				error.forward(req, res);
+//				res.sendRedirect("Member_page.jsp#renew");
+//				req.setAttribute("data-target", "#renew");
+//				RequestDispatcher error = req.getRequestDispatcher("Member_page.jsp#renew");
+//				error.forward(req, res);
+				
+				req.setAttribute("mem_name", name);
+				req.setAttribute("mem_password", password);
+				req.setAttribute("mem_email", email);
+				req.setAttribute("mem_phone", phone);
+				req.setAttribute("mem_nick", nick);
+				req.setAttribute("mem_emgc", emgc);
+				req.setAttribute("mem_emgcphone", emgcphone);
+				req.setAttribute("action", "Member_renew");
+				RequestDispatcher donothing = req.getRequestDispatcher("Member_page.jsp");
+				donothing.forward(req, res);
 			}
-			
 			try {
 				/*******永續層存取,更新會員資料*******/
 				if (!("".equals(nick) && "".equals(emgc) && "".equals(emgcphone)

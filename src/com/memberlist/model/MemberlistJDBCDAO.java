@@ -3,6 +3,9 @@ package com.memberlist.model;
 import java.sql.*;
 import java.util.*;
 
+import com.sg_info.model.Sg_infoVO;
+import com.sg_mem.model.Sg_memVO;
+
 public class MemberlistJDBCDAO implements MemberlistDAO_interface  {
 
 	public MemberlistJDBCDAO(){
@@ -497,6 +500,17 @@ public class MemberlistJDBCDAO implements MemberlistDAO_interface  {
 		for(MemberlistVO show : list) {
 			System.out.println(show.getMem_name());
 		}
+	}
+
+	@Override
+	public List<Sg_infoVO> findSgByMem(String mem_no) {
+		return null;
+	}
+
+	@Override
+	public List<Sg_memVO> findPartByMem(String mem_no) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	
