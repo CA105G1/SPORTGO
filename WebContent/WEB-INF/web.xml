@@ -133,4 +133,12 @@
     <servlet-name>Sg_likeServlet</servlet-name>
     <url-pattern>/Sg_like/Sg_like.do</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>Sg_repServlet</servlet-name>
+    <servlet-class>com.sg_rep.controller.Sg_repServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Sg_repServlet</servlet-name>
+    <url-pattern>/Sg_rep/Sg_rep.do</url-pattern>
+  </servlet-mapping>
 </web-app>

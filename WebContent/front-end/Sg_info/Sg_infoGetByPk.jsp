@@ -15,11 +15,8 @@
 <link   rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 <script src="<%= request.getContextPath()%>/datetimepicker/jquery.js"></script>
 <script src="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
-
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script>
-
-</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
 
 <style type="text/css">
 	th{
@@ -40,6 +37,7 @@
 		justify-content: space-between;
 	}
 	.showMsg{
+		white-space: pre-wrap;
 		resize:none;
 		height:500px;
 		width:100%;
@@ -203,7 +201,7 @@ System.out.println("vo2="+vo);
 						</form>
 			        </div>
 			        <div role="tabpanel" class="tab-pane" id="msgBoard">
-			        	<textarea id="showMsg" readonly style="resize:none;height:300px;width:100%;">123</textarea>
+			        	<textarea id="showMsg" readonly style="resize:none;height:300px;width:100%;"> 132 </textarea>
 			        	<input type="text" name="sg_msg">
 			        	<input type="button" class="btn" value="送出">
 			        </div>
@@ -240,7 +238,7 @@ System.out.println("vo2="+vo);
 				分享給好友
 			</div>
 			
-			<div class="btn" id="repbtn" data-toggle="modal" data-target="#smallShoes">
+			<div class="btn" id="repbtn">
 				<img src="<%= request.getContextPath()%>/img/warning.png">
 				檢舉
 			</div>
@@ -249,7 +247,6 @@ System.out.println("vo2="+vo);
 		</div>
 	</div>
 </div>
-			<%@ include file="Sg_repPage.file" %>
 
 <%@ include file="/front-end/CA105G1_footer.file" %>
 
@@ -470,7 +467,10 @@ System.out.println("vo2="+vo);
 			document.location.href="<%= request.getContextPath()%>/front-end/memberlist/Login.jsp";
 		});
 		$("#repbtn").click(function(){
+			<%session.setAttribute("isLoginRedirect", true); //設定旗標
+	 		session.setAttribute("Sg_infoVO_Session", vo);%> //原頁面VO由session帶著去跟回
 			document.location.href="<%= request.getContextPath()%>/front-end/memberlist/Login.jsp";
+			return;
 		});
 	<%}else{%>
 		/////////////////收藏按鍵設定////////////////////////
@@ -520,10 +520,10 @@ System.out.println("vo2="+vo);
 		//重複加入的錯誤處理還沒做////////////////////////////////////
 		$("#joinbtn").click(function(){
 			swal({
-			  title: "成功加入!", text: "馬上到我的揪團查看", icon: "success", buttons: ["退出", "前往!"],
-			})
-			.then((isGo)=>{
-				if(isGo){
+			  title: "成功加入!", html: "馬上到我的揪團查看", type: "success", showCancelButton: true, showCloseButton: true,
+			}).then(
+				function (result) {
+				if(result){
 					document.location.href="https://sweetalert.js.org/guides/#advanced-examples";
 				}
 			});
@@ -542,7 +542,52 @@ System.out.println("vo2="+vo);
 		});
 		
 		
-	<%}%>
+		$("#repbtn").click(function(){
+			swal({
+				title: '正義之士就是你!',type: "warning",showCancelButton: true, showCloseButton: true,
+				html:
+	    			'<form>' +
+	    			  '<div class="form-group">' +
+	    			    '<label class="pull-left">檢舉原因：</label>' +
+	    			    '<select id="rep_type" class="form-control">' +
+	    			    '<option value="不雅言語">不雅言語</option>'+
+					    '<option value="廣告推銷">廣告推銷</option>'+
+					    '<option value="其他">其他</option>'+
+					    '</select>'+
+	    			  '</div>' +
+	    			  '<div class="form-group">' +
+	    			    '<label for="rep_cont" class="pull-left">其他原因說明：</label>' +
+	    			    '<textarea id="rep_cont" style="resize:none;height:100px;width:100%;"></textarea>' +
+	    			  '</div>' +
+	    			'</form>',	
+			}).then(
+				function (result) {
+					if(result){
+						var dataStr = {};
+						dataStr.action = "insert";
+						dataStr.sg_no = "<%= vo.getSg_no()%>";
+						dataStr.mem_no = "<%= memberlistVO.getMem_no()%>";
+						dataStr.rep_type = $("#rep_type").val().trim();
+						dataStr.rep_cont = $("#rep_cont").val().trim();
+						$.ajax({
+							type: "POST",
+							url: "<%= request.getContextPath()%>/Sg_rep/Sg_rep.do",
+							data: dataStr,
+							dataType: "json",
+							error: function(){
+								alert("發生錯誤!");
+							},
+							success: function(data){
+								
+							}
+						});
+					};
+				});
+		}); //repbtn click
+		
+		
+		
+	<%}%> //else
 	
 	
 	
