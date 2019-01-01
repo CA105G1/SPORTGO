@@ -15,7 +15,7 @@ import com.android.sport.model.SportService;
 import com.android.sport.model.SportVO_Android;
 import com.google.gson.Gson;
 
-@WebServlet("/SportServlet_Android")
+@WebServlet("/SportServlet_android")
 public class SportServlet_Android extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -28,8 +28,6 @@ public class SportServlet_Android extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		ServletContext context = getServletContext();
-		String contentType = context.getInitParameter("contentType");
 		String outStr = "";
 		
 		String action = req.getParameter("action");
@@ -40,7 +38,7 @@ public class SportServlet_Android extends HttpServlet {
 			outStr = new Gson().toJson(spList);
 		}
 		
-		res.setContentType(contentType);
+		res.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = res.getWriter();
 		System.out.println(outStr);
 		out.print(outStr);

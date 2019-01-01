@@ -2,13 +2,13 @@ package com.android.sg_mem.model;
 
 import java.io.Serializable;
 
-public class Sg_memVO_Android implements Serializable{
+public class Sg_memVO_android implements Serializable{
 
 	private String sg_no;
 	private String mem_no;
 	private String ch_status;
 	
-	public Sg_memVO_Android() {
+	public Sg_memVO_android() {
 	}
 	
 	public String getSg_no() {

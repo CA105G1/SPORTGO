@@ -8,11 +8,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Sg_memJDBCDAO implements Sg_memDAO_interface_Android{
-	private static final String driver = "oracle.jdbc.driver.OracleDriver";
-	private static final String url = "jdbc:oracle:thin:@localhost:1521:xe";
-	private static final String user = "CA105G1";
-	private static final String psw = "123456";
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
+public class Sg_memDAO_android implements Sg_memDAO_interface_android{
 	
 	private static final String INSERT = 
 			"INSERT INTO sg_mem VALUES(?,?,default)";
@@ -21,41 +22,29 @@ public class Sg_memJDBCDAO implements Sg_memDAO_interface_Android{
 	private static final String DELETE =
 			"DELETE FROM sg_mem WHERE sg_no=? and mem_no=?";
 	private static final String FIND_BY_SG =
-			"SELECT SGM.* , SG_INFO.SG_NAME , M.MEM_NAME FROM SG_MEM SGM LEFT JOIN SG_INFO ON SGM.SG_NO = SG_INFO.SG_NO LEFT JOIN MEMBERLIST M ON SGM.MEM_NO = M.MEM_NO WHERE SGM.SG_NO = ? ORDER BY SGM.MEM_NO";
+			"  ;";
+	private static final String FIND_BY_MEM =
+			"SELECT SGM.* , SG.SG_NAME , M.MEM_NAME FROM SG_MEM SGM LEFT JOIN SG_INFO SG ON SGM.SG_NO = SG.SG_NO LEFT JOIN MEMBERLIST M ON SGM.MEM_NO = M.MEM_NO WHERE SGM.MEM_NO =? ORDER BY SGM.MEM_NO;";
 
+	private static DataSource ds = null;
 	
-	//連線池版
-//	private static DataSource ds = null;
-//	
-//	static {
-//		try {
-//			Context ctx = new javax.naming.InitialContext();
-//			ds = (DataSource)ctx.lookup("java:comp/env/jdbc/TestDB");
-//		} catch (NamingException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
-	
-	//JDBC版
 	static {
 		try {
-			Class.forName(driver);
-		}catch(ClassNotFoundException ce) {
-			ce.printStackTrace();
+			Context ctx = new InitialContext();
+			ds = (DataSource)ctx.lookup("java:comp/env/jdbc/CA105G1");
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public void insert(Sg_memVO_Android sg_memVO) {
+	public void insert(Sg_memVO_android sg_memVO) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
 		try {
-			//連線池版
-//		con = ds.getConnection();
-			//JDBC版
-			con = DriverManager.getConnection(url, user, psw);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT);
 			
 			pstmt.setString(1, sg_memVO.getSg_no());
@@ -64,9 +53,8 @@ public class Sg_memJDBCDAO implements Sg_memDAO_interface_Android{
 			pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
+			throw e;
+		} finally {
 			if(pstmt != null) {
 				try {
 					pstmt.close();
@@ -74,6 +62,7 @@ public class Sg_memJDBCDAO implements Sg_memDAO_interface_Android{
 					e.printStackTrace();
 				}
 			}
+			
 			if(con != null) {
 				try {
 					con.close();
@@ -85,15 +74,12 @@ public class Sg_memJDBCDAO implements Sg_memDAO_interface_Android{
 	}
 
 	@Override
-	public void update(Sg_memVO_Android sg_memVO) {
+	public void update(Sg_memVO_android sg_memVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
 		try {
-			//連線池版
-//		con = ds.getConnection();
-			//JDBC版
-			con = DriverManager.getConnection(url, user, psw);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 			
 			pstmt.setString(1, sg_memVO.getCh_status());
@@ -105,7 +91,7 @@ public class Sg_memJDBCDAO implements Sg_memDAO_interface_Android{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			if(pstmt != null) {
 				try {
 					pstmt.close();
@@ -113,6 +99,7 @@ public class Sg_memJDBCDAO implements Sg_memDAO_interface_Android{
 					e.printStackTrace();
 				}
 			}
+			
 			if(con != null) {
 				try {
 					con.close();
@@ -121,7 +108,6 @@ public class Sg_memJDBCDAO implements Sg_memDAO_interface_Android{
 				}
 			}
 		}
-		
 	}
 
 	@Override
@@ -130,10 +116,7 @@ public class Sg_memJDBCDAO implements Sg_memDAO_interface_Android{
 		PreparedStatement pstmt = null;
 		
 		try {
-			//連線池版
-//		con = ds.getConnection();
-			//JDBC版
-			con = DriverManager.getConnection(url, user, psw);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(DELETE);
 			
 			pstmt.setString(1, sg_no);
@@ -144,7 +127,7 @@ public class Sg_memJDBCDAO implements Sg_memDAO_interface_Android{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			if(pstmt != null) {
 				try {
 					pstmt.close();
@@ -152,6 +135,7 @@ public class Sg_memJDBCDAO implements Sg_memDAO_interface_Android{
 					e.printStackTrace();
 				}
 			}
+			
 			if(con != null) {
 				try {
 					con.close();
@@ -160,20 +144,17 @@ public class Sg_memJDBCDAO implements Sg_memDAO_interface_Android{
 				}
 			}
 		}
-		
 	}
 
 	@Override
-	public List<Sg_mem> findBySG(String sg_no) {
+	public List<SGMember> findBySG(String sg_no) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		Sg_mem vo = null;
-		List<Sg_mem> sgmList = new ArrayList<>();
+		List<SGMember> sgmList = new ArrayList<>();
 		
 		try {
-			
-			con = DriverManager.getConnection(url, user, psw);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(FIND_BY_SG);
 			
 			pstmt.setString(1, sg_no);
@@ -181,9 +162,9 @@ public class Sg_memJDBCDAO implements Sg_memDAO_interface_Android{
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				vo = new Sg_mem();
+				SGMember vo = new SGMember();
 				vo.setSg_no(rs.getString("sg_no"));
-				vo.setSg_name("sg_name");
+				vo.setSg_name(rs.getString("sg_name"));
 				vo.setMem_no(rs.getString("mem_no"));
 				vo.setMem_name(rs.getString("mem_name"));
 				vo.setCh_status(rs.getString("ch_status"));
@@ -217,63 +198,62 @@ public class Sg_memJDBCDAO implements Sg_memDAO_interface_Android{
 				}
 			}
 		}
-		
 		return sgmList;
 	}
-
-//	@Override
-//	public List<Sg_mem> getAll() {
-//		Connection con = null;
-//		PreparedStatement pstmt = null;
-//		ResultSet rs = null;
-//		Sg_mem vo = null;
-//		List<Sg_mem> list = new ArrayList<Sg_mem>();;
-//		
-//		try {
-//			//連線池版
-////		con = ds.getConnection();
-//			//JDBC版
-//			con = DriverManager.getConnection(url, user, psw);
-//			pstmt = con.prepareStatement(getAllStmt);
-//			
-//			rs = pstmt.executeQuery();
-//			
-//			while(rs.next()) {
-//				vo = new Sg_memVO();
-//				vo.setSg_no(rs.getString("sg_no"));
-//				vo.setMem_no(rs.getString("mem_no"));
-//				vo.setCh_status(rs.getString("ch_status"));
-//				
-//				list.add(vo);
-//			}
-//			
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}finally {
-//			if(rs != null) {
-//				try {
-//					rs.close();
-//				} catch (SQLException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//			if(pstmt != null) {
-//				try {
-//					pstmt.close();
-//				} catch (SQLException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//			if(con != null) {
-//				try {
-//					con.close();
-//				} catch (SQLException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}
-//		return list;
-//	}
+	
+	@Override
+	public List<SGMember> findByMem(String mem_no) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<SGMember> sgmList = new ArrayList<>();
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(FIND_BY_MEM);
+			
+			pstmt.setString(1, mem_no);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				SGMember vo = new SGMember();
+				vo.setSg_no(rs.getString("sg_no"));
+				vo.setSg_name(rs.getString("sg_name"));
+				vo.setMem_no(rs.getString("mem_no"));
+				vo.setMem_name(rs.getString("mem_name"));
+				vo.setCh_status(rs.getString("ch_status"));
+				
+				sgmList.add(vo);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			if(rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return sgmList;
+	}
 
 }

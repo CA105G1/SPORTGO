@@ -1,13 +1,13 @@
 package com.android.member.model;
 
-public class MemberService_Android {
+public class MemberService_android {
 
-	private MemberDAO_interface_Android dao;
-	public MemberService_Android() {
-		dao = new MemberDAO_Android();
+	private MemberDAO_interface_android dao;
+	public MemberService_android() {
+		dao = new MemberDAO_android();
 	}
 	
-	public MemberVO_Android getMember(String mem_no) {
+	public MemberVO_android getMember(String mem_no) {
 		
 		return dao.findByPrimaryKey(mem_no);
 		

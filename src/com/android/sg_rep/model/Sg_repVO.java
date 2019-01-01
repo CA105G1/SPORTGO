@@ -2,14 +2,15 @@ package com.android.sg_rep.model;
 
 import java.io.Serializable;
 
+//揪團檢舉
 public class Sg_repVO implements Serializable{
 	
 	private String rep_no;
 	private String sg_no;
 	private String mem_no;
-	private String rep_type;
-	private String rep_cont;
-	private String rep_status;
+	private String rep_type;//類型
+	private String rep_cont;//說明
+	private String rep_status;//狀態
 	
 	public Sg_repVO() {
 		super();

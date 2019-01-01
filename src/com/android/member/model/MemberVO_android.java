@@ -1,7 +1,7 @@
 package com.android.member.model;
 
 
-public class MemberVO_Android implements java.io.Serializable{
+public class MemberVO_android implements java.io.Serializable{
 	
 	private static final long serialVersionUID = 88L;
 	
@@ -18,12 +18,12 @@ public class MemberVO_Android implements java.io.Serializable{
 	private String mem_card; //卡號
 	private String mem_expiry; //信用卡到期日
 	
-	public MemberVO_Android() {
+	public MemberVO_android() {
 	
 	}
 	
 	//for insert
-	public MemberVO_Android(String mem_name,String mem_account,String mem_pswd,
+	public MemberVO_android(String mem_name,String mem_account,String mem_pswd,
 			String mem_email,String mem_phone) {
 		setMem_name(mem_name);
 		setMem_account(mem_account);
@@ -33,7 +33,7 @@ public class MemberVO_Android implements java.io.Serializable{
 	}
 	
 	//for update privacy
-	public MemberVO_Android(String mem_no,String mem_name,String mem_nick,
+	public MemberVO_android(String mem_no,String mem_name,String mem_nick,
 			String mem_email,String mem_phone,String mem_emgc, String mem_emgcphone) {
 		setMem_no(mem_no);
 		setMem_name(mem_name);
@@ -45,14 +45,14 @@ public class MemberVO_Android implements java.io.Serializable{
 	}
 	
 	//for update credit card
-	public MemberVO_Android(String mem_no,String mem_card, String mem_expiry) {
+	public MemberVO_android(String mem_no,String mem_card, String mem_expiry) {
 		setMem_no(mem_no);
 		setMem_card(mem_card);
 		setMem_expiry(mem_expiry);
 	}
 	
 	//for update password
-	public MemberVO_Android(String mem_no, String mem_password) {
+	public MemberVO_android(String mem_no, String mem_password) {
 		setMem_no(mem_no);
 		setMem_pswd(mem_password);
 	}

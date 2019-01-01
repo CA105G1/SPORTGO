@@ -6,22 +6,23 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.android.member.model.MemberService_Android;
-import com.android.member.model.MemberVO_Android;
+import com.android.member.model.MemberService_android;
+import com.android.member.model.MemberVO_android;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.sg_info.controller.ImageUtil;
 
-//@WebServlet("/MemberServlet_Android")
-public class MemberServlet_Android extends HttpServlet {
+@WebServlet("/MemberServlet_android.do")
+public class MemberServlet_android extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final static String CONTENT_TYPE = "text/html; charset=UTF-8";
 
-    public MemberServlet_Android() {
+    public MemberServlet_android() {
         super();
     }
 
@@ -42,7 +43,7 @@ public class MemberServlet_Android extends HttpServlet {
 		}
 		
 		System.out.println("input: " + jsonIn);
-		MemberService_Android service = new MemberService_Android();
+		MemberService_android service = new MemberService_android();
 		JsonObject jsonObject = gson.fromJson(jsonIn.toString(), JsonObject.class);
 		String action = jsonObject.get("action").getAsString();
 
@@ -53,7 +54,7 @@ public class MemberServlet_Android extends HttpServlet {
 			writeText(res, String.valueOf(service.isMember(mem_account, mem_pswd)));
 		} else if ("getMember".equals(action)) {
 			String mem_no = jsonObject.get("mem_no").getAsString();
-			MemberVO_Android member = service.getMember(mem_no);
+			MemberVO_android member = service.getMember(mem_no);
 			writeText(res, member == null ? "" : gson.toJson(member));
 		} else if ("getPic".equals(action)) {
 			OutputStream os = res.getOutputStream();
