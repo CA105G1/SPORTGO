@@ -118,6 +118,15 @@
     <url-pattern>/Sg_info/Sg_info.do</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>MapLocLoad</servlet-name>
+    <servlet-class>com.sg_info.controller.MapLocLoad</servlet-class>
+    <load-on-startup>10</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MapLocLoad</servlet-name>
+    <url-pattern>/Sg_info/MapLocLoad.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>Sg_infoImgServlet</servlet-name>
     <servlet-class>com.sg_info.controller.Sg_infoImgServlet</servlet-class>
   </servlet>

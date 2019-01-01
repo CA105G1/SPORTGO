@@ -418,7 +418,7 @@ System.out.println("vo2="+vo);
 	   			position: loc,
 	   			map: map,
 	   			animation: google.maps.Animation.DROP,
-	   			draggable: true
+	   			draggable: false
 	   		});
 		}else{
 			// 載入路線服務與路線顯示圖層 Directions API
