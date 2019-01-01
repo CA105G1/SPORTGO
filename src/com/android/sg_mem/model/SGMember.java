@@ -2,13 +2,13 @@ package com.android.sg_mem.model;
 
 import java.io.Serializable;
 
-public class Sg_mem extends Sg_memVO_Android implements Serializable{
+public class SGMember extends Sg_memVO_android implements Serializable{
 
 	//Join後得到的欄位
 	private String sg_name;
 	private String mem_name;
 	
-	public Sg_mem() {
+	public SGMember() {
 	}
 	
 	public String getSg_name() {

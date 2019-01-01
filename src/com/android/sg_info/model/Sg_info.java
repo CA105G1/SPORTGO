@@ -3,12 +3,14 @@ package com.android.sg_info.model;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class Sg_info extends Sg_infoVO_Android implements Serializable{
+public class Sg_info extends Sg_infoVO_android implements Serializable{
 
 	//Join後得到的欄位
 	private String mem_name;
 	private String sp_name;
 	private String v_name;
+	private Double v_lat;
+	private Double v_long;
 	
 	public Sg_info() {
 		
@@ -32,5 +34,23 @@ public class Sg_info extends Sg_infoVO_Android implements Serializable{
 	public void setV_name(String v_name) {
 		this.v_name = v_name;
 	}
+
+	public Double getV_lat() {
+		return v_lat;
+	}
+
+	public void setV_lat(Double v_lat) {
+		this.v_lat = v_lat;
+	}
+
+	public Double getV_long() {
+		return v_long;
+	}
+
+	public void setV_long(Double v_long) {
+		this.v_long = v_long;
+	}
+	
+	
 	
 }

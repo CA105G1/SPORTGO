@@ -9,7 +9,7 @@ import javax.sql.DataSource;
 
 import java.sql.*;
 
-public class Sg_likeDAO_Android implements Sg_likeDAO_interface_Android{
+public class Sg_likeDAO_android implements Sg_likeDAO_interface_android{
 	
 	private static DataSource ds = null;
 	static {
@@ -27,14 +27,14 @@ public class Sg_likeDAO_Android implements Sg_likeDAO_interface_Android{
 	private static final String LIKE_WHICH_SG = "SELECT SG_NO FROM SG_LIKE WHERE MEM_NO = ?";
 	
 	//constructor
-	public Sg_likeDAO_Android() {
+	public Sg_likeDAO_android() {
 	}
 	
 	
 	//push like button use insert
 	//when member push like SG button, insert a new data into SG_LIKE 
 	@Override
-	public void insert(Sg_likeVO_Android sg_like) {
+	public void insert(Sg_likeVO_android sg_like) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
@@ -72,7 +72,7 @@ public class Sg_likeDAO_Android implements Sg_likeDAO_interface_Android{
 	//when member push the dislike button, delete the original data from SG_LIKE
 	//warning : if member push dislike SG button before push like button, it may have SQLException
 	@Override
-	public void delete(Sg_likeVO_Android sg_like) {
+	public void delete(Sg_likeVO_android sg_like) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
@@ -109,8 +109,8 @@ public class Sg_likeDAO_Android implements Sg_likeDAO_interface_Android{
 	
 	//get all people who like this SG
 	@Override
-	public List<Sg_likeVO_Android> Sg_getAll(String sg_no) {
-		List<Sg_likeVO_Android> likelist = new ArrayList<>();
+	public List<Sg_likeVO_android> Sg_getAll(String sg_no) {
+		List<Sg_likeVO_android> likelist = new ArrayList<>();
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -123,7 +123,7 @@ public class Sg_likeDAO_Android implements Sg_likeDAO_interface_Android{
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				Sg_likeVO_Android sg_like = new Sg_likeVO_Android();
+				Sg_likeVO_android sg_like = new Sg_likeVO_android();
 				sg_like.setMem_no(rs.getString("mem_no"));
 				likelist.add(sg_like);
 			}
@@ -161,8 +161,8 @@ public class Sg_likeDAO_Android implements Sg_likeDAO_interface_Android{
 	
 	//get member likes SG list
 	@Override
-	public List<Sg_likeVO_Android> Mem_getAll(String mem_no) {
-		List<Sg_likeVO_Android> likelist = new ArrayList<>();
+	public List<Sg_likeVO_android> Mem_getAll(String mem_no) {
+		List<Sg_likeVO_android> likelist = new ArrayList<>();
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -174,7 +174,7 @@ public class Sg_likeDAO_Android implements Sg_likeDAO_interface_Android{
 			pstmt.setString(1, mem_no);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
-				Sg_likeVO_Android memlike = new Sg_likeVO_Android();
+				Sg_likeVO_android memlike = new Sg_likeVO_android();
 				memlike.setSg_no(rs.getString("sg_no"));
 				likelist.add(memlike);
 			}

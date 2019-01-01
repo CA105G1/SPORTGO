@@ -6,14 +6,14 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.android.sg_info.model.Sg_infoJDBCDAO_Android;
-import com.android.sg_info.model.Sg_infoVO_Android;
+import com.android.sg_info.model.Sg_infoJDBCDAO_android;
+import com.android.sg_info.model.Sg_infoVO_android;
 
 public class Test {
 
 	public static void main(String[] args) throws IOException {
 		
-		Sg_infoJDBCDAO_Android dao = new Sg_infoJDBCDAO_Android();
+		Sg_infoJDBCDAO_android dao = new Sg_infoJDBCDAO_android();
 		
 		
 		
@@ -91,7 +91,7 @@ public class Test {
 //		
 ////findByPk測試		
 		List<Sg_info> list = dao.findBySp("SP003");
-		for(Sg_infoVO_Android vo2 : list) {
+		for(Sg_infoVO_android vo2 : list) {
 		System.out.println(vo2.getSg_no());
 		System.out.println(vo2.getMem_no());
 		System.out.println(vo2.getSg_name());
@@ -108,10 +108,8 @@ public class Test {
 		System.out.println(vo2.getSg_chkno());
 		System.out.println(vo2.getSg_extrainfo());
 		System.out.println(vo2.getSg_status());
-		System.out.println(vo2.getLoc_start_lat());
-		System.out.println(vo2.getLoc_start_lng());
-		System.out.println(vo2.getLoc_end_lat());
-		System.out.println(vo2.getLoc_end_lng());
+		System.out.println(vo2.getLoc_start());
+		System.out.println(vo2.getLoc_end());
 		System.out.println("--------------------------------------");
 	}
 //		

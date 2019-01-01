@@ -76,7 +76,7 @@
 							</div>
 						<!-- 查一個 -->
 							<div class="tab-pane" id="one">
-								<form method="post" action="MemManager.do">
+								<form method="post" action="<%=request.getContextPath()%>/front-end/memberlist/MemManager.do">
 								<b>選擇會員編號：</b>
 									<select size="1" name="mem_no">
 										<c:forEach var="MemVO" items="${MemSvc.allMem}">

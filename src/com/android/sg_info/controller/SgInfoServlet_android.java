@@ -13,19 +13,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.android.sg_info.model.Sg_info;
-import com.android.sg_info.model.Sg_infoService_Android;
+import com.android.sg_info.model.Sg_infoService_android;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.sg_info.controller.ImageUtil;
 
-@WebServlet("/SgInfoServlet_Android")
-public class SgInfoServlet_Android extends HttpServlet {
+@WebServlet("/SgInfoServlet_android.do")
+public class SgInfoServlet_android extends HttpServlet {
 	
 	private final static String CONTENT_TYPE = "text/html; charset=UTF-8";
 	private static final long serialVersionUID = 1L;
        
-    public SgInfoServlet_Android() {
+    public SgInfoServlet_android() {
         super();
     }
 
@@ -36,7 +36,7 @@ public class SgInfoServlet_Android extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
 		req.setCharacterEncoding("UTF-8");
-		Sg_infoService_Android service = new Sg_infoService_Android();
+		Sg_infoService_android service = new Sg_infoService_android();
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 		
 		BufferedReader br = req.getReader();
@@ -59,6 +59,12 @@ public class SgInfoServlet_Android extends HttpServlet {
 			String sp_no = jsonObject.get("sp_no").getAsString();
 			List<Sg_info> sgList = service.getBySP(sp_no);
 			writeText(res, gson.toJson(sgList));
+			
+		} else if ("findByMem".equals(action)) {
+			String mem_no = jsonObject.get("mem_no").getAsString();
+			List<Sg_info> sgList = service.getByMem(mem_no);
+			writeText(res, gson.toJson(sgList));
+			
 		} else if ("getPic".equals(action)) {
 			OutputStream os = res.getOutputStream();
 			String sg_no = jsonObject.get("pk").getAsString();
