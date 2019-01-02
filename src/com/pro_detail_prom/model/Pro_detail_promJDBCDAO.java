@@ -8,7 +8,7 @@ import java.util.List;
 public class Pro_detail_promJDBCDAO implements Pro_detail_prom_interface{
 	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
 	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
-	private static final String USER = "test";
+	private static final String USER = "CA105G1";
 	private static final String PASSWORD = "123456";
 	//新增
 	private static final String INSERT = "Insert into PRO_DETAIL_PROM(PROM_PROJECT_ID,PRO_NO,PRO_SALE) values (?,?,?)";

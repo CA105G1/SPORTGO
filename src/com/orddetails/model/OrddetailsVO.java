@@ -7,7 +7,16 @@ public class OrddetailsVO {
 	private Integer ord_probonuns;
 	private Integer pro_count;
 	
-	
+	public OrddetailsVO() {
+		super();
+	}
+	public OrddetailsVO( String pro_no, Integer ord_probonuns, Integer pro_count) {
+		super();
+		
+		this.pro_no = pro_no;
+		this.ord_probonuns = ord_probonuns;
+		this.pro_count = pro_count;
+	}
 	public String getOrd_no() {
 		return ord_no;
 	}

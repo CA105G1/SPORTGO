@@ -8,7 +8,7 @@ public class PromotionJDBCDAO implements PromotionDAO_interface{
 	
 	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
 	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
-	private static final String USER = "test";
+	private static final String USER = "CA105G1";
 	private static final String PASSWORD = "123456";
 	//新增
 	private static final String INSERT = "Insert into PROMOTION (PROM_PROJECT_ID,PROM_PROJECT_NAME,PROM_PROJECT_SDATE,PROM_PROJECT_EDATE) values ('PR'||LPAD(to_char(PROMOTION_SEQ.NEXTVAL), 3, '0'),?,?,?)";

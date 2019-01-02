@@ -174,4 +174,43 @@
     <servlet-name>MapLocLoad</servlet-name>
     <url-pattern>/Sg_info/MapLocLoad.do</url-pattern>
   </servlet-mapping>
+  
+   <servlet>
+		<servlet-name>ShoppingCartServlet</servlet-name>
+		<servlet-class>com.shoppingcart.controller.ShoppingCartServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ShoppingCartServlet</servlet-name>
+		<url-pattern>/shoppingCartServlet/shoppingCartServlet.do</url-pattern>
+	</servlet-mapping>
+
+  
+  <servlet>
+		<servlet-name>OrdServlet</servlet-name>
+		<servlet-class>com.ord.controller.OrdServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>OrdServlet</servlet-name>
+		<url-pattern>/ord/ord.do</url-pattern>
+	</servlet-mapping>
+
+  <servlet>
+		<servlet-name>ProServlet</servlet-name>
+		<servlet-class>com.pro.controller.ProServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ProServlet</servlet-name>
+		<url-pattern>/pro/pro.do</url-pattern>
+	</servlet-mapping>
+	
+  <servlet>
+		<servlet-name>ProductImgServlet</servlet-name>
+		<servlet-class>com.pro.controller.ProductImgServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ProductImgServlet</servlet-name>
+		<url-pattern>/pro/proImg.do</url-pattern>
+	</servlet-mapping>  
+  
+  
 </web-app>

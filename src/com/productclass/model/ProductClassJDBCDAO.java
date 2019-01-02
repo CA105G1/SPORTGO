@@ -7,7 +7,7 @@ import java.util.List;
 public class ProductClassJDBCDAO implements ProductClassDAO_interface{
 	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
 	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
-	private static final String USER = "test";
+	private static final String USER = "CA105G1";
 	private static final String PASSWORD = "123456";
 	//新增
 	private static final String INSERT = "Insert into PRODUCTCLASS(PRO_CLASSID,PRO_CLASSNAME) values ('PT'||LPAD(to_char(PRODUCTCLASS_SEQ.NEXTVAL), 3, '0'),?)";
@@ -17,7 +17,7 @@ public class ProductClassJDBCDAO implements ProductClassDAO_interface{
 	private static final String DELETE_CHILDREN_PROM = "Delete FROM PRO_DETAIL_PROM WHERE PROM_PROJECT_ID = ?";
 	private static final String DELETE_CHILDREN_ORDDETAILS = "Delete FROM ORDDETAILS WHERE ORD_NO = ?";
 	private static final String DELETE_CHILDREN_PRODUCT = "Delete From PRODUCT where PRO_NO = ?";
-	private static final String DELETE_CHILDREN_PRODUCTCLASS = "Delete FROM PRODUCTCLASS WHERE PRO_CLASSID = ?";
+	private static final String DELETE = "Delete FROM PRODUCTCLASS WHERE PRO_CLASSID = ?";
 	//單筆查詢
 	private static final String SELECT_FINDBYPK = "SELECT * FROM PRODUCTCLASS WHERE PRO_CLASSID = ?";
 	//全部查詢
@@ -104,8 +104,45 @@ public class ProductClassJDBCDAO implements ProductClassDAO_interface{
 		}
 		return count;
 	}
+	
+	//刪除
+		@Override
+		public int delete(String pro_classid) {
+			Connection con = null;
+			PreparedStatement ps = null;
+			int count = 0;
+			
+			try {
+				con = DriverManager.getConnection(URL, USER, PASSWORD);
+				ps = con.prepareStatement(DELETE);
+				ps.setString(1,pro_classid );
+				count = ps.executeUpdate();
 
-    //刪除
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally { 
+				if (ps != null) {
+					try {
+						ps.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+			return count ;
+		}
+
+    //刪除 多筆刪除
 	@Override
 	public int delete(String prom_project_id , String ord_no , String pro_no , String pro_classid) {
 		Connection con = null;
@@ -126,7 +163,7 @@ public class ProductClassJDBCDAO implements ProductClassDAO_interface{
 			ps.setString(1, pro_no);
 			ps.executeUpdate();
 			
-			ps = con.prepareStatement(DELETE_CHILDREN_PRODUCTCLASS);
+			ps = con.prepareStatement(DELETE);
 			ps.setString(1, pro_classid);
 			count = ps.executeUpdate();
 			
