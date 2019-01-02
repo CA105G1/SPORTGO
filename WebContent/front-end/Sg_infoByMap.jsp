@@ -44,7 +44,7 @@ function myLoc(pos){
 	//畫圓
 	var circle = new google.maps.Circle({
 	  center: loc,
-	  radius: 500,
+	  radius: 2000,
 	  strokeOpacity: 0,
 	  fillColor: '#f00',
 	  fillOpacity: 0.35,
@@ -63,7 +63,7 @@ function myLoc(pos){
 		           new google.maps.LatLng(sg_infoLoc)
 		         )
 		console.log(dist);
-		if(dist < 500){
+		if(dist < 2000){
 			var marker = new google.maps.Marker({
 				position: sg_infoLoc,
 				map: map,

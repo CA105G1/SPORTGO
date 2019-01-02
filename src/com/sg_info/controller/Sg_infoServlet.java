@@ -278,7 +278,6 @@ public class Sg_infoServlet extends HttpServlet {
 				
 				
 				
-				
 				String mem_no = req.getParameter("mem_no").trim();
 				String sg_pic_ext = req.getParameter("sg_pic_ext").trim();
 				String sg_per = req.getParameter("sg_per").trim();
@@ -286,8 +285,8 @@ public class Sg_infoServlet extends HttpServlet {
 				String v_no = req.getParameter("v_no").trim();
 				Integer sg_ttlapl = new Integer(req.getParameter("sg_ttlapl").trim());
 				String sg_extrainfo = req.getParameter("sg_info4").trim();
-				String loc_start = new String(req.getParameter("sg_info5").trim());
-				String loc_end = new String(req.getParameter("sg_info6").trim());
+				String loc_start = req.getParameter("loc_start");
+				String loc_end = req.getParameter("loc_end");
 				
 				
 				//準備VO，若有錯誤就原封不動把VO再跟著錯誤送回去
@@ -314,7 +313,7 @@ public class Sg_infoServlet extends HttpServlet {
 				//若有錯誤訊息，將VO跟錯誤訊息回傳
 				if(!errorMsg.isEmpty()) {
 					req.setAttribute("Sg_infoVO", sg_infoVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Sg_info/Sg_infoGetByPk.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Sg_info/Sg_infoGetByPkForHead.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -323,14 +322,15 @@ public class Sg_infoServlet extends HttpServlet {
 				sg_infoVO = svc.updateSg_info(sg_no, mem_no, sg_name, sg_date, apl_start, apl_end, sg_fee, sg_pic, sg_pic_ext, sg_per, sp_no, v_no, sg_maxno, sg_minno, sg_ttlapl, sg_extrainfo, loc_start, loc_end);
 				
 				req.setAttribute("Sg_infoVO", sg_infoVO);
-				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/Sg_info/Sg_infoGetByPk.jsp");
+				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/Sg_info/Sg_infoGetByPkForHead.jsp");
 				dispatcher.forward(req, res);
 				
 				/////////其他錯誤處理/////////
 			}catch(Exception e){
+				e.getStackTrace();
 				errorMsg.add("修改資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/front-end/Sg_info/Sg_infoGetByPk.jsp");
+						.getRequestDispatcher("/front-end/Sg_info/Sg_infoGetByPkForHead.jsp");
 				failureView.forward(req, res);
 			}
 		}

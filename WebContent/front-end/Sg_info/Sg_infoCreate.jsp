@@ -127,11 +127,16 @@
 									</c:forEach>   
 								</select>
 							</td>
-						</tr> 
+						</tr>
+						<jsp:useBean id="venueSvc" scope="page" class="com.venue.model.VenueService"/> 
 						<tr>
 							<th>場地名稱</th> <!-- 下拉選單 -->
-							<td>	
-								<input type="text" name="v_no" value="V000003">
+							<td>
+							<select name='v_no'>
+								<c:forEach var='venueVO' items='${venueSvc.all}' > 
+									<option value='${venueVO.v_no}' ${(param.v_no == venueVO.v_no)? 'selected':'' }>${venueVO.v_name}
+								</c:forEach>
+							</select>	
 							</td>
 						</tr> 
 						<tr>
@@ -373,7 +378,7 @@
 
         }, false);
         
-   	}
+   	} //myLoc
    	
     
 	

@@ -11,7 +11,6 @@ List<Sg_infoVO> list = null;
 list = (List<Sg_infoVO>)request.getAttribute("list");
 //若沒有值就代表是第一次載入頁面，直接getAll
 if(list == null){
-System.out.print(request.getAttribute("list"));
 	Sg_infoService svc = new Sg_infoService(); 
 	list = svc.getAll();
 	pageContext.setAttribute("list",list);

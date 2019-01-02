@@ -59,6 +59,7 @@ public class MapLocLoad extends HttpServlet {
 						Double v_lat = venuevo.getV_lat();
 						Double v_long = venuevo.getV_long();
 						mapLoc.put(vo.getSg_no(), "{\"lat\":"+v_lat+",\"lng\":"+v_long+"}");
+//System.out.println("{\"lat\":"+v_lat+",\"lng\":"+v_long+"}");
 					}
 				}
 				

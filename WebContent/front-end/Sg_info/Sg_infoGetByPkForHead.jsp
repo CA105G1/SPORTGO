@@ -7,7 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
-<title>Sg_infoGetByPk</title>
+<title>Sg_infoGetByPkForHead</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -45,23 +45,10 @@
 
 
 <% 
-	
-	Boolean isLoginRedirect = (Boolean)session.getAttribute("isLoginRedirect");
-	Sg_infoVO vo = null;
-System.out.println(isLoginRedirect);
-	if(isLoginRedirect == null || isLoginRedirect == false){
-		vo = (Sg_infoVO)request.getAttribute("Sg_infoVO");
-System.out.println("vo1= "+vo);
-	}else{
-		//經由登入畫面重導
-		vo = (Sg_infoVO)session.getAttribute("Sg_infoVO_Session");
-		session.setAttribute("isLoginRedirect", false);
-System.out.println("vo2= "+vo);
-	}
+// 	Sg_infoVO vo = (Sg_infoVO)request.getAttribute("Sg_infoVO");
+	Sg_infoService svc = new Sg_infoService();
+	Sg_infoVO vo = svc.GetByPK("S001");
     pageContext.setAttribute("Sg_infoVO", vo);
-    
-    MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("MemberlistVO");
-System.out.println("memberlistVO= "+memberlistVO);
 %>
 
 <%-- 錯誤表列 --%>
@@ -99,7 +86,7 @@ System.out.println("memberlistVO= "+memberlistVO);
 								<i class="glyphicon glyphicon-circle-arrow-left icon-large brown backToList"></i>  <!-- 返回按鍵 -->
 								<a href="<%= request.getContextPath()%>/front-end/Sg_info/SgHome.jsp" display="none" id="linkBack">回到揪團首頁</a>
 								
-								<caption class="text-center">我是Sg_infoGetByPk</caption>
+								<caption class="text-center">我是Sg_infoGetByPkForHead</caption>
 								<tbody>
 									<tr>  <!-------- 照片 -------->
 										<td colspan="2">
@@ -167,22 +154,24 @@ System.out.println("memberlistVO= "+memberlistVO);
 										<th>團長的話</th>
 										<td class="writable">${Sg_infoVO.sg_extrainfo}</td> <!-- sg_info4 -->
 									</tr>  
-									<tr><th>-路線起點座標</th><td class="writable"><%= vo.getLoc_start() %></td></tr> <!-- sg_info5 -->
-									<tr><th>-路線終點座標</th><td class="writable"><%= vo.getLoc_end() %></td></tr> <!-- sg_info6 -->
+<%-- 									<tr><th>-路線起點座標</th><td class="writable"><%= vo.getLoc_start() %></td></tr> <!-- sg_info5 --> --%>
+<%-- 									<tr><th>-路線終點座標</th><td class="writable"><%= vo.getLoc_end() %></td></tr> <!-- sg_info6 --> --%>
 								</tbody>
 							</table>
 							<!-------------GOOGLE地圖 -------------->
-								<div class="panel panel-default">
-									<div class="panel-heading">
-										<h4 class="panel-title text-center">
-											顯示地圖
-										</h4>
+								<div id="mapSetting" style="display:none">
+									<div>
+										起點：<input type="text" name="startAddr" id="startAddr">
+								        <input type="button" name="startSearchBtn" value="查詢" id="startSearchBtn">
+										終點：<input type="text" name="endAddr" id="endAddr">
+								        <input type="button" name="endSearchBtn" value="查詢" id="endSearchBtn">
 									</div>
 									<div>
-											<div id="map"></div>
-											<div id="distance"></div>
+								        <input type="button" name="road" id="road" value="規劃路線">
 									</div>
 								</div>
+								<div id="distance"></div>
+								<div id="map"></div>
 							
 							
 							<input type="button" id="update" value="編輯" class="btn btn-info btn-block" align="center" style="display: ">
@@ -191,8 +180,9 @@ System.out.println("memberlistVO= "+memberlistVO);
 							<input type="hidden" name="sg_no" value="<%= vo.getSg_no()%>" >
 							<input type="hidden" name="mem_no" value="<%= vo.getMem_no()%>" >
 							<input type="hidden" name="sg_pic_ext" value="<%= vo.getSg_pic_ext()%>" >
-<%-- 							<input type="hidden" name="v_no" value="<%= vo.getV_no()%>" > --%>
 							<input type="hidden" name="sg_ttlapl" value="<%= vo.getSg_ttlapl()%>" >
+							<input type="hidden" name="loc_start" id="loc_start">
+							<input type="hidden" name="loc_end" id="loc_end">	
 							<input type="hidden" name="action" value="update">
 						</form>
 						<form id="deleteForm">
@@ -215,40 +205,6 @@ System.out.println("memberlistVO= "+memberlistVO);
 
 
 
-
-<div class="container">
-	<div class="row">
-		<div class="col-xs-12 col-sm-3">
-		</div>
-		<div class="col-xs-12 col-sm-6" id="btnGroup">
-			<div class="btn like" id="likebtn" style="display:none">
-				<img src="<%= request.getContextPath()%>/img/love.png" id="like">
-				加入收藏
-			</div>
-			<div class="btn like" id="dislikebtn" style="display:">
-				<img src="<%= request.getContextPath()%>/img/love_white.png" id="dislike">
-				加入收藏
-			</div>
-			
-			<div class="btn" id="joinbtn">
-				<img src="<%= request.getContextPath()%>/img/add.png">
-				加入揪團
-			</div>
-			
-			<div class="btn" id="sharebtn">
-				<img src="<%= request.getContextPath()%>/img/share.png">
-				分享給好友
-			</div>
-			
-			<div class="btn" id="repbtn">
-				<img src="<%= request.getContextPath()%>/img/warning.png">
-				檢舉
-			</div>
-		</div>
-		<div class="col-xs-12 col-sm-3">
-		</div>
-	</div>
-</div>
 
 <%@ include file="/front-end/CA105G1_footer.file" %>
 
@@ -283,13 +239,21 @@ System.out.println("memberlistVO= "+memberlistVO);
 		    });
 	    //編輯運動種類
     	 $("#sp_no").html(function(index, content){
- 		    return "<select name='sp_no'><c:forEach var='sportVO' items='${sportSvc.all}' > <option value='${sportVO.sp_no}'>${sportVO.sp_name}</c:forEach></select>";
+ 		    return "<select name='sp_no' id='sp_no'><c:forEach var='sportVO' items='${sportSvc.all}' > <option value='${sportVO.sp_no}'>${sportVO.sp_name}</c:forEach></select>";
  		    });
     	//編輯場地
     	 $("#v_no").html(function(index, content){
  		    return "<select name='v_no'><c:forEach var='venueVO' items='${venueSvc.all}' > <option value='${venueVO.v_no}'>${venueVO.v_name}</c:forEach></select>";
  		    });
-	    
+    	//篩選只有慢跑及自行車可以編輯地圖
+    	$("#sp_no").change(function(){
+    		var value = $("#sp_no option:selected").val();
+    		if(value == "SP006" || value == "SP007"){
+    			$("#mapSetting").css("display","");
+    		}else{
+    			$("#mapSetting").css("display","none");
+    		}
+    	});
 	    	   
 	
 	    
@@ -368,6 +332,104 @@ System.out.println("memberlistVO= "+memberlistVO);
 			}
 		}
 	    
+		
+		
+		
+		
+		
+		
+		// 地圖查詢定位 Geocoding API
+        var geocoder = new google.maps.Geocoder();
+        var startSearchBtn = document.getElementById("startSearchBtn");
+        var endSearchBtn = document.getElementById("endSearchBtn");
+		//起點座標查詢
+        startSearchBtn.addEventListener("click", function(){
+            var startAddr = document.getElementById("startAddr").value;
+            //重置地圖座標
+        	map = new google.maps.Map(document.getElementById('map'), {
+       			center: loc,
+       			zoom: 16
+       		});
+            geocoder.geocode({'address': startAddr}, function(results, status){
+                if(status == 'OK'){
+                    var loc = results[0].geometry.location;
+                    map.setCenter(loc);
+                    //將座標JSON物件轉成字串
+					$("#loc_start").val(JSON.stringify(results[0].geometry.location));
+                    var markerRoute = new google.maps.Marker({
+                        position: loc,
+                        map: map
+                    });
+					loc_start = loc;
+                }else{
+                    console.log(status);
+                }
+            });
+        }, false);
+      //終點座標查詢
+        endSearchBtn.addEventListener("click", function(){
+            var endAddr = document.getElementById("endAddr").value;
+            //重置地圖座標
+        	map = new google.maps.Map(document.getElementById('map'), {
+       			center: loc,
+       			zoom: 16
+       		});
+            geocoder.geocode({'address': endAddr}, function(results, status){
+                if(status == 'OK'){
+                    var loc = results[0].geometry.location;
+                    map.setCenter(loc);
+                  	//將座標JSON物件轉成字串
+					$("#loc_end").val(JSON.stringify(results[0].geometry.location));
+                    var markerRoute = new google.maps.Marker({
+                        position: loc,
+                        map: map
+                    });
+                    loc_end = loc;
+                }else{
+                    console.log(status);
+                }
+            });
+        }, false);
+
+
+
+        // 載入路線服務與路線顯示圖層 Directions API
+        directionsService = new google.maps.DirectionsService();
+        directionsDisplay = new google.maps.DirectionsRenderer();
+
+        var road = document.getElementById("road");
+        road.addEventListener("click", function(){
+        // 放置路線圖層
+	        directionsDisplay.setMap(map);
+	        // 路線相關設定
+	        var request = {
+	         origin: loc_start,
+	         destination: loc_end,
+	         travelMode: 'WALKING' //腳踏車模式無法使用?
+	        };
+	        
+	        // 繪製路線
+	        directionsService.route(request,function(result, status){
+	         if(status == 'OK'){
+	             directionsDisplay.setDirections(result);
+	             //顯示路線距離
+	             $("#distance").text("總距離為： "+result.routes[0].legs[0].distance.text);
+	         }else{
+	             console.log(status);
+	         }
+	        });
+
+        }, false);
+        
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	  });  //update click
 	  
 		
@@ -381,32 +443,16 @@ System.out.println("memberlistVO= "+memberlistVO);
 	  });
 	  
 	  
-	  //點擊收藏按鍵變換愛心
-// 	  var like = false;
-// 	  $("#likebtn").click(function(){
-// 		  if(like){
-// 			 $("#dislike").css("display","");
-// 			 $("#like").css("display","none");
-// 			 like = false;
-// 		  }else{
-// 			 $("#like").css("display","");
-// 			 $("#dislike").css("display","none");
-// 			 like = true;
-// 		  }
-// 	  });
-	  
-	  
-
-	
 	  
 	//google map設定
 	var map;
+	var loc;
 	function initMap(){
 		navigator.geolocation.getCurrentPosition(myLoc);
 	}
 	function myLoc(pos){
 	
-		var loc = {lat: pos.coords.latitude, lng: pos.coords.longitude};
+		loc = {lat: pos.coords.latitude, lng: pos.coords.longitude};
 	
 		map = new google.maps.Map(document.getElementById('map'), {
 			center: loc,
@@ -414,6 +460,7 @@ System.out.println("memberlistVO= "+memberlistVO);
 		});
 		//取得座標(JSON字串)
 		var loc_start = <%= vo.getLoc_start()%>;
+		console.log(loc_start);
 		var loc_end = <%= vo.getLoc_end()%>;
 		if(loc_start == null || loc_end == null){
 			//若沒有路線資料則設定本機定位(之後改成場館位置)////////////////////////////////////////////////////////////////
@@ -450,153 +497,13 @@ System.out.println("memberlistVO= "+memberlistVO);
 	        });
 		}
 		
+		
+		
+		 
+		
+		
 	} //myLoc
 	  
-	///////4按鍵若尚未登入之設定//////////
-	<%if(memberlistVO == null){
-		session.setAttribute("location", request.getRequestURI());%>
-		$(".like").click(function(){
-			<%session.setAttribute("isLoginRedirect", true); //設定旗標
-	 		session.setAttribute("Sg_infoVO_Session", vo);%> //原頁面VO由session帶著去跟回
-			document.location.href="<%= request.getContextPath()%>/front-end/memberlist/Login.jsp";
-			return;
-		});
-		$("#joinbtn").click(function(){
-			<%session.setAttribute("isLoginRedirect", true); //設定旗標
-	 		session.setAttribute("Sg_infoVO_Session", vo);%> //原頁面VO由session帶著去跟回
-			document.location.href="<%= request.getContextPath()%>/front-end/memberlist/Login.jsp";
-			return;
-		});
-		$("#sharebtn").click(function(){
-			document.location.href="<%= request.getContextPath()%>/front-end/memberlist/Login.jsp";
-		});
-		$("#repbtn").click(function(){
-			<%session.setAttribute("isLoginRedirect", true); //設定旗標
-	 		session.setAttribute("Sg_infoVO_Session", vo);%> //原頁面VO由session帶著去跟回
-			document.location.href="<%= request.getContextPath()%>/front-end/memberlist/Login.jsp";
-			return;
-		});
-	<%}else{%>
-		/////////////////收藏按鍵設定////////////////////////
-		//若該會員有收藏該揪團則顯示實心
-		<% Sg_likeService likesvc = new Sg_likeService();%>
-		if(<%= likesvc.isLike(vo.getSg_no(), memberlistVO.getMem_no())%>){  
-			$("#likebtn").css("display","");
-			$("#dislikebtn").css("display","none");
-		}else{
-			$("#likebtn").css("display","none");
-			$("#dislikebtn").css("display","");
-		}
-		$("#likebtn").click(function(){
-			 $("#dislikebtn").css("display","");
-			 $("#likebtn").css("display","none");
-			$.ajax({
-				type: "POST",
-				url: "<%= request.getContextPath()%>/Sg_like/Sg_like.do",
-				data: {"action" : "delete", "sg_no" : "<%= vo.getSg_no()%>", "mem_no" : "<%= memberlistVO.getMem_no()%>"},
-				dataType: "json",
-				error: function(){
-					alert("發生錯誤!");
-				},
-				success: function(data){
-					alert("取消收藏");
-				}
-			});
-		});
-		
-		$("#dislikebtn").click(function(){
-			 $("#likebtn").css("display","");
-			 $("#dislikebtn").css("display","none");
-			$.ajax({
-				type: "POST",
-				url: "<%= request.getContextPath()%>/Sg_like/Sg_like.do",
-				data: {"action" : "insert", "sg_no" : "<%= vo.getSg_no()%>", "mem_no" : "<%= memberlistVO.getMem_no()%>"},
-				dataType: "json",
-				error: function(){
-					alert("發生錯誤!");
-				},
-				success: function(data){
-					alert("成功加入收藏");
-				}
-			});
-		});
-		//////////////////加入揪團按鍵設定///////////////////////////
-		//重複加入的錯誤處理還沒做////////////////////////////////////
-		$("#joinbtn").click(function(){
-			swal({
-			  title: "成功加入!", html: "馬上到我的揪團查看", type: "success", showCancelButton: true, showCloseButton: true,
-			}).then(
-				function (result) {
-				if(result){
-					document.location.href="https://sweetalert.js.org/guides/#advanced-examples";
-				}
-			});
-			$.ajax({
-				type: "POST",
-				url: "<%= request.getContextPath()%>/Sg_mem/Sg_mem.do",
-				data: {"action" : "insert", "sg_no" : "<%= vo.getSg_no()%>", "mem_no" : "<%= memberlistVO.getMem_no()%>"},
-				dataType: "json",
-				error: function(){
-					alert("發生錯誤!");
-				},
-				success: function(data){
-					
-				}
-			});
-		});
-		
-		
-		$("#repbtn").click(function(){
-			swal({
-				title: '正義之士就是你!',type: "warning",showCancelButton: true, showCloseButton: true,
-				html:
-	    			'<form>' +
-	    			  '<div class="form-group">' +
-	    			    '<label class="pull-left">檢舉原因：</label>' +
-	    			    '<select id="rep_type" class="form-control">' +
-	    			    '<option value="不雅言語">不雅言語</option>'+
-					    '<option value="廣告推銷">廣告推銷</option>'+
-					    '<option value="其他">其他</option>'+
-					    '</select>'+
-	    			  '</div>' +
-	    			  '<div class="form-group">' +
-	    			    '<label for="rep_cont" class="pull-left">其他原因說明：</label>' +
-	    			    '<textarea id="rep_cont" style="resize:none;height:100px;width:100%;"></textarea>' +
-	    			  '</div>' +
-	    			'</form>',	
-			}).then(
-				function (result) {
-					if(result){
-						var dataStr = {};
-						dataStr.action = "insert";
-						dataStr.sg_no = "<%= vo.getSg_no()%>";
-						dataStr.mem_no = "<%= memberlistVO.getMem_no()%>";
-						dataStr.rep_type = $("#rep_type").val().trim();
-						dataStr.rep_cont = $("#rep_cont").val().trim();
-						$.ajax({
-							type: "POST",
-							url: "<%= request.getContextPath()%>/Sg_rep/Sg_rep.do",
-							data: dataStr,
-							dataType: "json",
-							error: function(){
-								alert("發生錯誤!");
-							},
-							success: function(data){
-								
-							}
-						});
-					};
-				});
-		}); //repbtn click
-		
-		
-		
-	<%}%> //else
-	
-	
-	
-	
-
 </script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAb2lDof7yMn-TTXwt2hwVm4y92t1AqvyU&callback=initMap&libraries=places"

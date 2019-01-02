@@ -31,7 +31,7 @@ public class SportService {
 		dao.delete(sp_no);
 	}
 	
-	public SportVO GetByPK(String sp_no) {
+	public SportVO getByPK(String sp_no) {
 		return dao.findByPk(sp_no);
 	}
 	
