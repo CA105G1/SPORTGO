@@ -3,16 +3,30 @@ package com.android.member.model;
 import java.sql.*;
 import java.util.*;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-import com.util.lang.*;
 
-public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
+public class MemberDAO_android implements MemberDAO_interface_android  {
 
-	public MemberJDBCDAO_Android(){
+	public MemberDAO_android(){
 
 	}
+	
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/CA105G1");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}	
 	
 	private static final String INSERT_STMT = 
 			"INSERT INTO memberlist (MEM_NO,MEM_NAME,MEM_ACCOUNT,MEM_PSWD,MEM_EMAIL,MEM_PHONE)"
@@ -34,16 +48,18 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 			"SELECT * FROM memberlist where MEM_NO = ? ";
 	private static final String CHECK_ID_EXIST = 
 			"SELECT * FROM memberlist WHERE mem_account = ? AND mem_pswd = ?";
+	private static final String GET_PROFILE_PIC =
+			"SELECT MEM_PIC FROM MEMBERLIST WHERE MEM_NO = ?";
 		
 	
 	@Override
-	public void insert(MemberVO_Android member) {
+	public void insert(MemberVO_android member) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
 		try {
-			Class.forName(Util.DRIVER);
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 			pstmt.setString(1, member.getMem_name());
 			pstmt.setString(2, member.getMem_account());
@@ -52,13 +68,12 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 			pstmt.setString(5, member.getMem_phone());
 			
 			pstmt.executeUpdate();
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load the database driver. "
-														+e.getMessage());
+			
 		} catch (SQLException se) {
 			throw new RuntimeException("Database errors occured. "
 														+se.getMessage());
 		} finally {
+			
 			if(pstmt!=null) {
 				try {
 					pstmt.close();
@@ -66,6 +81,7 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 					e.printStackTrace(System.err);
 				}
 			}
+			
 			if(con!=null) {
 				try {
 					con.close();
@@ -77,13 +93,12 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 	}
 
 	@Override
-	public void updatePrivacy(MemberVO_Android member) {
+	public void updatePrivacy(MemberVO_android member) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
 		try {
-			Class.forName(Util.DRIVER);
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_PRIVACY);
 			System.out.println(member.getMem_emgcphone());
 			pstmt.setString(1, member.getMem_name());
@@ -95,13 +110,11 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 			pstmt.setString(7, member.getMem_no());
 			
 			pstmt.executeUpdate();
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load the database driver. "
-														+e.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("Database errors occured. "
 														+se.getMessage());
 		} finally {
+			
 			if(pstmt!=null) {
 				try {
 					pstmt.close();
@@ -109,6 +122,7 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 					e.printStackTrace(System.err);
 				}
 			}
+			
 			if(con!=null) {
 				try {
 					con.close();
@@ -125,8 +139,7 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 		PreparedStatement pstmt = null;
 		
 		try {
-			Class.forName(Util.DRIVER);
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_STATUS);
 			
 			pstmt.setString(1, mem_status);
@@ -134,13 +147,11 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 			
 			pstmt.executeUpdate();
 			
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load the database driver. "
-														+e.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("Database errors occured" 
 														+se.getMessage());
 		} finally {
+			
 			if(pstmt!=null) {
 				try {
 					pstmt.close();
@@ -148,6 +159,7 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 					e.printStackTrace(System.err);
 				}
 			}
+			
 			if(con!=null) {
 				try {
 					con.close();
@@ -161,26 +173,23 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 
 
 	@Override
-	public void updatePassword(MemberVO_Android member) {
+	public void updatePassword(MemberVO_android member) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
 		try {
-			Class.forName(Util.DRIVER);
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_PASSWORD);
 			
 			pstmt.setString(1, member.getMem_pswd());
 			pstmt.setString(2, member.getMem_no());
 			
 			pstmt.executeUpdate();
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load the database driver. "
-														+e.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("Database errors occured. "
 														+se.getMessage());
 		} finally {
+			
 			if(pstmt!=null) {
 				try {
 					pstmt.close();
@@ -188,6 +197,7 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 					e.printStackTrace(System.err);
 				}
 			}
+			
 			if(con!=null) {
 				try {
 					con.close();
@@ -238,12 +248,11 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 //	}
 
 	@Override
-	public void updateCraditcard(MemberVO_Android member) {
+	public void updateCraditcard(MemberVO_android member) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
-			Class.forName(Util.DRIVER);
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_CRADITCARD);
 			
 			pstmt.setString(1, member.getMem_card());
@@ -251,13 +260,11 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 			pstmt.setString(3, member.getMem_no());
 			
 			pstmt.executeUpdate();
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load the database driver. "
-														+e.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("Database errors occured. "
 														+se.getMessage());
 		} finally {
+			
 			if(pstmt!=null) {
 				try {
 					pstmt.close();
@@ -265,6 +272,7 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 					e.printStackTrace(System.err);
 				}
 			}
+			
 			if(con!=null) {
 				try {
 					con.close();
@@ -275,26 +283,23 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 		}
 	}
 	
-	
-	
 	@Override
-	public MemberVO_Android findByPrimaryKey(String memno) {
+	public MemberVO_android findByPrimaryKey(String memno) {
 		
-		MemberVO_Android member = null;
+		MemberVO_android member = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
 		try {
-			Class.forName(Util.DRIVER);
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 			pstmt.setString(1, memno);
 			
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				member = new MemberVO_Android();
+				member = new MemberVO_android();
 				member.setMem_name(rs.getString("mem_name"));
 				member.setMem_nick(rs.getString("mem_nick"));
 				member.setMem_account(rs.getString("mem_account"));
@@ -307,10 +312,6 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 				member.setMem_card(rs.getString("mem_card"));
 				member.setMem_expiry(rs.getString("mem_expiry"));
 			}
-			
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load the database driver. "
-														+e.getMessage());
 			
 		} catch (SQLException se) {
 			throw new RuntimeException("Database errors occured. "
@@ -350,22 +351,21 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 	}
 
 	@Override
-	public List<MemberVO_Android> getAll() {
-		List<MemberVO_Android> list = new ArrayList<MemberVO_Android>();
-		MemberVO_Android mem = null;
+	public List<MemberVO_android> getAll() {
+		List<MemberVO_android> list = new ArrayList<MemberVO_android>();
+		MemberVO_android mem = null;
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
 		try {
-			Class.forName(Util.DRIVER);
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				mem = new MemberVO_Android();
+				mem = new MemberVO_android();
 				mem.setMem_no(rs.getString("mem_no"));
 				mem.setMem_name(rs.getString("mem_name"));
 				mem.setMem_nick(rs.getString("mem_nick"));
@@ -380,13 +380,10 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 				mem.setMem_expiry(rs.getString("mem_expiry"));
 				list.add(mem);
 			}
-		}catch(ClassNotFoundException e) {
-				throw new RuntimeException("Couldn't load the database driver. "
-															+e.getMessage());
-			}catch(SQLException se) {
+		} catch(SQLException se) {
 				throw new RuntimeException("Database errors occured. "
 															+se.getMessage());
-		}finally {
+		} finally {
 			if(rs!=null) {
 				try {
 					rs.close();
@@ -394,6 +391,7 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 					e.printStackTrace(System.err);
 				}
 			}
+			
 			if(pstmt!=null) {
 				try {
 					pstmt.close();
@@ -401,6 +399,7 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 					e.printStackTrace(System.err);
 				}
 			}
+			
 			if(con!=null) {
 				try {
 					con.close();
@@ -412,25 +411,24 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 		return list;
 	}
 	
+	@Override
 	public String isMember(String mem_account, String mem_pswd) {
 		
-		Connection conn = null;
+		Connection con = null;
 		PreparedStatement ps = null;
 		JsonObject jobj = new JsonObject();
 		
 		try {
-			Class.forName(Util.DRIVER);
-			conn = DriverManager.getConnection(Util.URL, Util.USER,
-					Util.PASSWORD);
 			
-			ps = conn.prepareStatement(CHECK_ID_EXIST);
+			con = ds.getConnection();
+			ps = con.prepareStatement(CHECK_ID_EXIST);
 			ps.setString(1, mem_account);
 			ps.setString(2, mem_pswd);
 			ResultSet rs = ps.executeQuery();
 			
 			while (rs.next()) {
-				MemberVO_Android mem = new MemberVO_Android();
-				mem = new MemberVO_Android();
+				MemberVO_android mem = new MemberVO_android();
+				mem = new MemberVO_android();
 				mem.setMem_no(rs.getString("mem_no"));
 				mem.setMem_name(rs.getString("mem_name"));
 				mem.setMem_nick(rs.getString("mem_nick"));
@@ -449,10 +447,6 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 				jobj.addProperty("isMember", true);
 			}
 			
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load the database driver. "
-					+e.getMessage());
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			
@@ -464,8 +458,8 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 					ps.close();
 				}
 				
-				if (conn != null) {
-					conn.close();
+				if (con != null) {
+					con.close();
 				}
 				
 			} catch (SQLException e) {
@@ -478,7 +472,50 @@ public class MemberJDBCDAO_Android implements MemberDAO_interface_Android  {
 
 	@Override
 	public byte[] getImage(String mem_no) {
-		// TODO Auto-generated method stub
-		return null;
+		byte[] mem_pic = null;
+		Connection con = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = ds.getConnection();
+			psmt = con.prepareStatement(GET_PROFILE_PIC);
+			
+			psmt.setString(1, mem_no);
+			
+			rs = psmt.executeQuery();
+			
+			if (rs.next()) {
+				mem_pic = rs.getBytes(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			if (psmt != null) {
+				try {
+					psmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+		return mem_pic;
 	}
 }

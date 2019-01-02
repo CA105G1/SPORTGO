@@ -1,16 +1,16 @@
 package com.android.sg_like.model;
 
-public class Sg_likeVO_Android implements java.io.Serializable{
+public class Sg_likeVO_android implements java.io.Serializable{
 	
 	private String sg_no;
 	private String sg_name;
 	private String mem_no;
 	private String mem_name;
 	
-	public Sg_likeVO_Android() {
+	public Sg_likeVO_android() {
 	}
 
-	public Sg_likeVO_Android(String sg_no, String mem_no) {
+	public Sg_likeVO_android(String sg_no, String mem_no) {
 		this.sg_no = sg_no;
 		this.mem_no = mem_no;
 	}
