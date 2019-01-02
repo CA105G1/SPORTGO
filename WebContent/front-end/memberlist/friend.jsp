@@ -1,12 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import = "com.memberlist.model.*" %>
-
-<% 
-	String action = (String) request.getAttribute("action");
-// 	if(action == null)
-// 		pageContext.setAttribute("action", "");
-// 	else
-		pageContext.setAttribute("action", action);
+<%@ page import = "com.friend.model.*" %>
+<%@ page import = "java.util.*" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+	MemberlistService service = new MemberlistService();
+	List<FriendVO> friendlist =(List<FriendVO>)request.getAttribute("friendlist");
+	List<MemberlistVO> memberlist = service.getAllMem();
+	if(friendlist==null)
+		response.sendRedirect("Login.jsp");
+	pageContext.setAttribute("friendlist",friendlist);
+	pageContext.setAttribute("memberlist",memberlist);
 %>
 <!DOCTYPE html>
 <html lang="">
@@ -39,44 +43,37 @@
 				</div>
 				<div class="col-xs-12 col-sm-9 tab-content">
 				<!-- 好友管理 -->
-				好友
-				
-				
-				
+					<c:forEach var="friend" items="${friendlist}">
+						<c:forEach var="member" items="${memberlist}">
+							<c:if test="${memberlistVO.mem_no eq friend.mem1_no}">
+								<c:if test="${friend.mem2_no eq member.mem_no}" >
+									<a href="public_Member_page.jsp?mem_no=${member.mem_no}">
+									<img src="<%=request.getContextPath()%>
+									/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"
+									style="max-width:100px;max-height:100px;">
+									${member.mem_name}
+									</a>
+								</c:if>
+							</c:if>
+							<c:if test="${memberlistVO.mem_no eq friend.mem2_no}">
+								<c:if test="${friend.mem1_no eq member.mem_no}" >
+									<a href="public_Member_page.jsp?mem_no=${member.mem_no}">
+									<img src="<%=request.getContextPath()%>
+									/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"
+									style="max-width:100px;max-height:100px;">
+									${member.mem_name}
+									</a>
+								</c:if>
+							</c:if>
+						</c:forEach>
+						<br>
+					</c:forEach>
 				</div>	
 			</div>
 		</div>
 	<jsp:include page="/front-end/SportyGo_Footer.html"/>
 	<script>
-	var action = "${action}";
 	
-	$(function(){
-	    $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
-	        localStorage.setItem('activeTab', $(e.target).attr('href'));
-	    })
-
-	    var hash = window.location.hash;
-	    var activeTab = localStorage.getItem('activeTab');
-
-	    if(hash){
-	          $('#project-tabs  a[href="' + hash + '"]').tab('show');   
-	    }else if (activeTab){
-	        $('#project-tabs a[href="' + activeTab + '"]').tab('show');
-	    }
-	    
-	    changePage();
-	});
-	
-	function changePage(){
-		console.log(action);
-		if(action === 'Member_renew'){
-			$('#myTab').find('a[href="#renew"]').trigger('click');
-		} else if(action === ''){
-			
-		} else {
-			$('#myTab').find('a[href="#mem"]').trigger('click');
-		}
-	}
 	</script>
 	</body>
 </html>

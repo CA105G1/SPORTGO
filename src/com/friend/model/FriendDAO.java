@@ -1,17 +1,29 @@
 package com.friend.model;
 
 import java.util.*;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import java.sql.*;
 
-public class FriendJDBCDAO implements FriendDAO_interface{
+public class FriendDAO implements FriendDAO_interface{
 
-	public FriendJDBCDAO() {
+	public FriendDAO() {
 	}
-
-	private String driver = "oracle.jdbc.driver.OracleDriver";
-	private String url = "jdbc:oracle:thin:@10.37.129.3:1521:xe";
-	private String user = "AARON";
-	private String password = "123456";
+	private static DataSource ds = null;
+	static {
+		Context ctx;
+		try {
+			ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/CA105G1DB");
+		} catch (NamingException e) {
+			e.printStackTrace(System.err);
+		}
+		
+	}
 	
 	private static final String INSERT = 
 			"INSERT INTO FRIEND (MEM1_NO,MEM2_NO) VALUES (?,?)";
@@ -40,16 +52,12 @@ public class FriendJDBCDAO implements FriendDAO_interface{
 		PreparedStatement pstmt =null;
 		
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, user, password);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT);
 			pstmt.setString(1, mem1_no);
 			pstmt.setString(2, mem2_no);
 			
 			pstmt.executeUpdate();
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load the database driver. "
-														+e.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("Database errors occured. "
 														+se.getMessage()); 
@@ -77,8 +85,7 @@ public class FriendJDBCDAO implements FriendDAO_interface{
 		PreparedStatement pstmt = null;
 		
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, user, password);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(DELETE);
 			pstmt.setString(1, mem1_no);
 			pstmt.setString(2, mem2_no);
@@ -86,41 +93,37 @@ public class FriendJDBCDAO implements FriendDAO_interface{
 			pstmt.setString(4, mem1_no);
 			
 			pstmt.executeUpdate();
-			} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load the database driver. "
-														+e.getMessage());
-		} catch (SQLException se) {
+			} catch (SQLException se) {
 			throw new RuntimeException("Database errors occured. "
 														+se.getMessage());
-		} finally {
-			if(pstmt!=null) {
-				try {
-					pstmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace(System.err);
+			} finally {
+				if(pstmt!=null) {
+					try {
+						pstmt.close();
+					} catch (SQLException e) {
+						e.printStackTrace(System.err);
+					}
 				}
-			}
-			if(con!=null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					e.printStackTrace(System.err);
+				if(con!=null) {
+					try {
+						con.close();
+					} catch (SQLException e) {
+						e.printStackTrace(System.err);
+					}
 				}
 			}
 		}
-	}
 
 	@Override
 	public List<FriendVO> findMyFriend(String mem_no) {
 		List<FriendVO> list = new ArrayList<>();
-		FriendVO friend = new FriendVO();
+		FriendVO friend = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, user, password);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(FIND_FRIEND);
 			
 			pstmt.setString(1, mem_no);
@@ -128,6 +131,7 @@ public class FriendJDBCDAO implements FriendDAO_interface{
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
+				friend = new FriendVO();
 				friend.setMem1_no(rs.getString("mem1_no"));
 				friend.setMem2_no(rs.getString("mem2_no"));
 				friend.setFriend_status(rs.getString("friend_status"));
@@ -136,9 +140,6 @@ public class FriendJDBCDAO implements FriendDAO_interface{
 				list.add(friend);
 			}
 				
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load the database driver"
-														+e.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("Database errors occured. "
 														+se.getMessage());
@@ -174,8 +175,7 @@ public class FriendJDBCDAO implements FriendDAO_interface{
 		PreparedStatement pstmt = null;
 		
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, user, password);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_STATUS);
 			pstmt.setString(1, status);
 			pstmt.setString(2, mem1_no);
@@ -183,9 +183,6 @@ public class FriendJDBCDAO implements FriendDAO_interface{
 			pstmt.setString(4, mem2_no);
 			pstmt.setString(5, mem1_no);
 			pstmt.executeUpdate();
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load the database driver. "
-														+e.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("Database errors occured. "
 														+se.getMessage());
@@ -213,8 +210,7 @@ public class FriendJDBCDAO implements FriendDAO_interface{
 		PreparedStatement pstmt = null;
 		
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, user, password);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_RELATIONSHIP);
 			pstmt.setString(1, relationship);
 			pstmt.setString(2, mem1_no);
@@ -222,9 +218,6 @@ public class FriendJDBCDAO implements FriendDAO_interface{
 			pstmt.setString(4, mem2_no);
 			pstmt.setString(5, mem1_no);
 			pstmt.executeUpdate();
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load the database driver. "
-														+e.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("Database errors occured. "
 														+se.getMessage());
@@ -244,14 +237,5 @@ public class FriendJDBCDAO implements FriendDAO_interface{
 				}
 			}
 		}
-	}
-	public static void main(String[] args) {
-		FriendVO friend = new FriendVO();
-		friend.setMem1_no("M003");
-		friend.setMem2_no("M001");
-		friend.setFriend_status("好友");
-		FriendJDBCDAO jdbc = new FriendJDBCDAO();
-		jdbc.updateStatus("M001","M003","好友");
-		System.out.println("update completed.");
 	}
 }

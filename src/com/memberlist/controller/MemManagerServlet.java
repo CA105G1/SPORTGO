@@ -37,7 +37,7 @@ public class MemManagerServlet extends HttpServlet {
 		req.setAttribute("errorMsgs", errorMsgs);
 		/****可能登入時間過長出現取不到會員相關資訊,重導回到登入畫面****/
 		try {
-			memberlistVO = (MemberlistVO)session.getAttribute("MemberlistVO");	
+			memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO");	
 		} catch (Exception e) {
 			errorMsgs.put("loginerror", "請重新登入");
 			res.sendRedirect("Login.jsp");
@@ -48,7 +48,7 @@ public class MemManagerServlet extends HttpServlet {
 		/****後台管理員只查一筆會員資料****/
 		if("getOne_For_Display".equals(action)) {
 			MemberlistVO memberlist = service.getOneMem(mem_no);
-			req.setAttribute("MemberlistVO", memberlist);
+			req.setAttribute("memberlistVO", memberlist);
 			RequestDispatcher listall = req.getRequestDispatcher("/back-end/memberlist/getOneMem.jsp");
 			listall.forward(req, res);
 			return;
@@ -108,21 +108,16 @@ public class MemManagerServlet extends HttpServlet {
 				}
 			}
 			if(!errorMsgs.isEmpty()) {
-//				res.sendRedirect("Member_page.jsp#renew");
-//				req.setAttribute("data-target", "#renew");
-//				RequestDispatcher error = req.getRequestDispatcher("Member_page.jsp#renew");
-//				error.forward(req, res);
-				
 				req.setAttribute("mem_name", name);
-				req.setAttribute("mem_password", password);
+				req.setAttribute("mem_pswd", password);
 				req.setAttribute("mem_email", email);
 				req.setAttribute("mem_phone", phone);
 				req.setAttribute("mem_nick", nick);
 				req.setAttribute("mem_emgc", emgc);
 				req.setAttribute("mem_emgcphone", emgcphone);
 				req.setAttribute("action", "Member_renew");
-				RequestDispatcher donothing = req.getRequestDispatcher("Member_page.jsp");
-				donothing.forward(req, res);
+				RequestDispatcher error = req.getRequestDispatcher("Member_renew.jsp");
+				error.forward(req, res);
 			}
 			try {
 				/*******永續層存取,更新會員資料*******/
@@ -142,7 +137,7 @@ public class MemManagerServlet extends HttpServlet {
 			/*****更新完成,準備轉交******/
 			if(errorMsgs.isEmpty()) {
 				memberlistVO = service.getOneMem(mem_no);
-				session.setAttribute("MemberlistVO", memberlistVO);
+				session.setAttribute("memberlistVO", memberlistVO);
 				RequestDispatcher donothing = req.getRequestDispatcher("Member_page.jsp");
 				donothing.forward(req, res);
 			}

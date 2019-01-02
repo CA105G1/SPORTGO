@@ -35,7 +35,7 @@ public class Login_pageFilter implements Filter {
 		HttpServletResponse res = (HttpServletResponse) response;
 		HttpSession session = req.getSession();
 		String mem_no = (String) session.getAttribute("mem_no");
-		MemberlistVO memberlistVO = (MemberlistVO) session.getAttribute("MemberlistVO");
+		MemberlistVO memberlistVO = (MemberlistVO) session.getAttribute("memberlistVO");
 		if(mem_no!=null||memberlistVO!=null) {
 //			String location = (String)session.getAttribute("location");
 //			if(location == null) {

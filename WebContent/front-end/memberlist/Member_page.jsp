@@ -2,11 +2,11 @@
 <%@ page import = "com.memberlist.model.*" %>
 
 <% 
-	String action = (String) request.getAttribute("action");
-// 	if(action == null)
-// 		pageContext.setAttribute("action", "");
-// 	else
-		pageContext.setAttribute("action", action);
+// 	String action = (String) request.getAttribute("action");
+//  	if(action == null)
+//  		pageContext.setAttribute("action", "");
+//  	else
+// 		pageContext.setAttribute("action", action);
 %>
 <!DOCTYPE html>
 <html lang="">
@@ -45,10 +45,13 @@
 				font-size: xx-large;
 				color: red;
 			}
+			img{
+				max-width:300px;
+				max-height:300px;
+			}
 		</style>
 	</head>
 	<body>
-
 		<nav class="navbar navbar" role="navigation" style="background-color: black;">
 			<div class="container">
 				<div class="navbar-header">
@@ -64,7 +67,7 @@
 				<div class="collapse navbar-collapse navbar-ex1-collapse">
 					
 						<ul class="nav navbar-nav navbar-right" >
-								<li><a href="#" style="color:yellow;">${MemberlistVO.mem_name} 您好</a></li>
+								<li><a href="#" style="color:yellow;">${memberlistVO.mem_name} 您好</a></li>
 								<li><a href="logout.do" style="color:yellow;">登出</a></li>
 						</ul>
 				</div>
@@ -77,7 +80,7 @@
 		</div>
 
 		<!-- 右選單 -->
-		<div class="container">
+		<div class="container-fulid">
 			<div class="row">
 				<div class="col-xs-12 col-sm-3">
 <!-- 				原版 -->
@@ -97,39 +100,15 @@
 				<div class="col-xs-12 col-sm-9 tab-content">
 				<!-- 個人頁面 -->
 					<div class="tab-pane active" id="mem">
-						<img src="<%=request.getContextPath()%>/front-end/memberlist/showPicture.do?mem_no=${MemberlistVO.mem_no}">
+						<img src="<%=request.getContextPath()%>/front-end/memberlist/showPicture.do?mem_no=${memberlistVO.mem_no}">
 						<ul class="list">
-							<li>姓名 : ${MemberlistVO.mem_name}</li>
-							<li>暱稱 : ${MemberlistVO.mem_nick}</li>
-							<li>Email : ${MemberlistVO.mem_email}</li>
-							<li>電話 : ${MemberlistVO.mem_phone}</li>
-							<li>緊急聯絡人 : ${MemberlistVO.mem_emgc}</li>
-							<li>緊急聯絡人電話 : ${MemberlistVO.mem_emgcphone}</li>
+							<li>姓名 : ${memberlistVO.mem_name}</li>
+							<li>暱稱 : ${memberlistVO.mem_nick}</li>
+							<li>Email : ${memberlistVO.mem_email}</li>
+							<li>電話 : ${memberlistVO.mem_phone}</li>
+							<li>緊急聯絡人 : ${memberlistVO.mem_emgc}</li>
+							<li>緊急聯絡人電話 : ${memberlistVO.mem_emgcphone}</li>
 						</ul>
-					</div>
-					<!-- 行事曆 -->
-					<div class="tab-pane" id="calendar">
-					</div>
-					<!-- 修改個人資料 -->
-					<div class="tab-pane" id="renew">
-						<jsp:include page="Member_renew.jsp">
-							<jsp:param name="mem_no" value="${MemberlistVO.mem_no}"/>
-						</jsp:include>
-					</div>
-					<!-- 揪團管理 -->
-					<div class="tab-pane" id="sg">
-					</div>
-					<!-- 社團管理 -->
-					<div class="tab-pane" id="club">
-					</div>
-					<!-- 好友管理 -->
-					<div class="tab-pane" id="friend">
-					</div>
-					<!-- 訂單管理 -->
-					<div class="tab-pane" id="order">
-					</div>
-					<!-- 最愛商品管理 -->
-					<div class="tab-pane" id="prolike">
 					</div>
 				</div>	
 			</div>

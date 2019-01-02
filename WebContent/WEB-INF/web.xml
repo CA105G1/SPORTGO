@@ -23,19 +23,6 @@
     <servlet-name>Login</servlet-name>
     <url-pattern>/front-end/memberlist/login.do</url-pattern>
   </servlet-mapping>
-  <!--   <filter> -->
-<!--     <filter-name>Login_pageFilter</filter-name> -->
-<!--     <filter-class>com.memberlist.controller.Login_pageFilter</filter-class> -->
-<!--   </filter> -->
-<!--   <filter-mapping> -->
-<!--     <filter-name>Login_pageFilter</filter-name> -->
-<!--     <url-pattern>/front-end/memberlist/Login.jsp</url-pattern> -->
-<!--     <dispatcher>REQUEST</dispatcher> -->
-<!--     <dispatcher>FORWARD</dispatcher> -->
-<!--     <dispatcher>INCLUDE</dispatcher> -->
-<!--     <dispatcher>ERROR</dispatcher> -->
-<!--     <dispatcher>ASYNC</dispatcher> -->
-<!--   </filter-mapping> -->
   <filter>
     <filter-name>LoginFilter</filter-name>
     <filter-class>com.memberlist.controller.LoginFilter</filter-class>
@@ -81,6 +68,14 @@
     <url-pattern>/front-end/memberlist/MemManager.do</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>Friend</servlet-name>
+    <servlet-class>com.friend.controller.FriendServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Friend</servlet-name>
+    <url-pattern>/front-end/memberlist/Friend.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>showPicture</servlet-name>
     <servlet-class>com.memberlist.controller.showPicture</servlet-class>
   </servlet>
@@ -89,6 +84,8 @@
     <url-pattern>/front-end/memberlist/showPicture.do</url-pattern>
   </servlet-mapping>
   <servlet>
+  
+  
     <servlet-name>MemberServlet_Android</servlet-name>
     <servlet-class>com.android.member.controller.MemberServlet_Android</servlet-class>
   </servlet>

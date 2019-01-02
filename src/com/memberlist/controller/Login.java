@@ -82,7 +82,7 @@ public class Login extends HttpServlet {
 				RequestDispatcher error = req.getRequestDispatcher("Login.jsp");
 				error.forward(req, res);
 			}else {
-				session.setAttribute("MemberlistVO", service.getOneMem(mem_no));
+				session.setAttribute("memberlistVO", service.getOneMem(mem_no));
 				try{
 					String location = (String) session.getAttribute("location");
 					if(location!=null) {

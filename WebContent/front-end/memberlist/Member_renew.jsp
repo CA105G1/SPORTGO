@@ -14,6 +14,9 @@
   		max-width:300px;
   		max-higth:300px;
   	}
+  	.error{
+  		color:red;
+  	}
   </style>
 </head>
 <body>
@@ -31,57 +34,105 @@
 		  	<img class="preview" src="<%=request.getContextPath()%>/img/mem_no.jpg">
 		  </div>
 		  <br>
+<!-- 		  錯誤時的畫面 -->
 		  	<c:if test="${not empty errorMsgs}">
 				<ul class="error">
 					<c:forEach var="message" items="${errorMsgs}">
 						<li>${message.value}</li>
 					</c:forEach>
 				</ul>
+				<div class="form-group">
+			      <label class="control-label col-sm-2" for="name">姓名</label>
+			      <div class="col-sm-10">
+			        <input type="text" class="form-control" id="name" value="${mem_name}" name="name">
+			      </div>
+			    </div>
+			    <div class="form-group">
+			      <label class="control-label col-sm-2" for="nick">暱稱</label>
+			      <div class="col-sm-10">          
+			        <input type="text" class="form-control" id="nick" value="${mem_nick}" name="nick">
+			      </div>
+			    </div>
+			    <div class="form-group">
+			      <label class="control-label col-sm-2" for="password">密碼</label>
+			      <div class="col-sm-10">          
+			        <input type="password" class="form-control" id="password" value="${mem_pswd}" name="password">
+			      </div>
+			    </div>
+			    <div class="form-group">
+			      <label class="control-label col-sm-2" for="email">電子郵件</label>
+			      <div class="col-sm-10">          
+			        <input type="email" class="form-control" id="email" value="${mem_email}" name="email">
+			      </div>
+			    </div>
+			    <div class="form-group">
+			      <label class="control-label col-sm-2" for="phone">電話</label>
+			      <div class="col-sm-10">          
+			        <input type="text" class="form-control" id="phone" value="${mem_phone}" name="phone">
+			      </div>
+			    </div>
+			    <div class="form-group">
+			      <label class="control-label col-sm-2" for="emgc">緊急聯絡人</label>
+			      <div class="col-sm-10">          
+			        <input type="text" class="form-control" id="emgc" value="${mem_emgc}" name="emgc">
+			      </div>
+			    </div>
+			    <div class="form-group">        
+			      <div class="col-sm-offset-2 col-sm-10">
+			      	<input type="hidden" name="action" value="Member_renew">
+			      	<input type="hidden" name="action" value="renewpicture">
+			        <button type="submit" class="btn btn-info">修改</button>
+			        <button type="submit" class="btn btn-info" name="action" value="cancel">取消</button>
+			      </div>
+		    	</div>
 			</c:if>
-		    <div class="form-group">
-		      <label class="control-label col-sm-2" for="name">姓名</label>
-		      <div class="col-sm-10">
-		        <input type="text" class="form-control" id="name" value="${mem_name}" name="name">
-		      </div>
-		    </div>
-		    <div class="form-group">
-		      <label class="control-label col-sm-2" for="nick">暱稱</label>
-		      <div class="col-sm-10">          
-		        <input type="text" class="form-control" id="nick" value="${mem_nick}" name="nick">
-		      </div>
-		    </div>
-		    <div class="form-group">
-		      <label class="control-label col-sm-2" for="password">密碼</label>
-		      <div class="col-sm-10">          
-		        <input type="password" class="form-control" id="password" value="${mem_pswd}" name="password">
-		      </div>
-		    </div>
-		    <div class="form-group">
-		      <label class="control-label col-sm-2" for="email">電子郵件</label>
-		      <div class="col-sm-10">          
-		        <input type="email" class="form-control" id="email" value="${mem_email}" name="email">
-		      </div>
-		    </div>
-		    <div class="form-group">
-		      <label class="control-label col-sm-2" for="phone">電話</label>
-		      <div class="col-sm-10">          
-		        <input type="text" class="form-control" id="phone" value="${mem_phone}" name="phone">
-		      </div>
-		    </div>
-		    <div class="form-group">
-		      <label class="control-label col-sm-2" for="emgc">緊急聯絡人</label>
-		      <div class="col-sm-10">          
-		        <input type="text" class="form-control" id="emgc" value="${mem_emgc}" name="emgc">
-		      </div>
-		    </div>
-		    <div class="form-group">        
-		      <div class="col-sm-offset-2 col-sm-10">
-		      	<input type="hidden" name="action" value="Member_renew">
-		      	<input type="hidden" name="action" value="renewpicture">
-		        <button type="submit" class="btn btn-info">修改</button>
-		        <button type="submit" class="btn btn-info" name="action" value="cancel">取消</button>
-		      </div>
-		    </div>
+<!-- 			剛進入的畫面 帶入原本的值 -->
+			<c:if test="${empty errorMsgs}">
+			    <div class="form-group">
+			      <label class="control-label col-sm-2" for="name">姓名</label>
+			      <div class="col-sm-10">
+			        <input type="text" class="form-control" id="name" value="${memberlistVO.mem_name}" name="name">
+			      </div>
+			    </div>
+			    <div class="form-group">
+			      <label class="control-label col-sm-2" for="nick">暱稱</label>
+			      <div class="col-sm-10">          
+			        <input type="text" class="form-control" id="nick" value="${memberlistVO.mem_nick}" name="nick">
+			      </div>
+			    </div>
+			    <div class="form-group">
+			      <label class="control-label col-sm-2" for="password">密碼</label>
+			      <div class="col-sm-10">          
+			        <input type="password" class="form-control" id="password" value="${memberlistVO.mem_pswd}" name="password">
+			      </div>
+			    </div>
+			    <div class="form-group">
+			      <label class="control-label col-sm-2" for="email">電子郵件</label>
+			      <div class="col-sm-10">          
+			        <input type="email" class="form-control" id="email" value="${memberlistVO.mem_email}" name="email">
+			      </div>
+			    </div>
+			    <div class="form-group">
+			      <label class="control-label col-sm-2" for="phone">電話</label>
+			      <div class="col-sm-10">          
+			        <input type="text" class="form-control" id="phone" value="${memberlistVO.mem_phone}" name="phone">
+			      </div>
+			    </div>
+			    <div class="form-group">
+			      <label class="control-label col-sm-2" for="emgc">緊急聯絡人</label>
+			      <div class="col-sm-10">          
+			        <input type="text" class="form-control" id="emgc" value="${memberlistVO.mem_emgc}" name="emgc">
+			      </div>
+			    </div>
+			    <div class="form-group">        
+			      <div class="col-sm-offset-2 col-sm-10">
+			      	<input type="hidden" name="action" value="Member_renew">
+			      	<input type="hidden" name="action" value="renewpicture">
+			        <button type="submit" class="btn btn-info">修改</button>
+			        <button type="submit" class="btn btn-info" name="action" value="cancel">取消</button>
+			      </div>
+			    </div>
+		    </c:if>
 		  </form>
 		</div>
 	</div>

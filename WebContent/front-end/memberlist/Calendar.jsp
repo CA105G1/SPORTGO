@@ -22,7 +22,7 @@
 		</style>
 	</head>
 	<body>
-		<jsp:include page="/front-end/SportyGo_Header.html"/>
+		<%@ include file="/front-end/CA105G1_header.file" %>
 		
 		<!-- 右選單 -->
 		<div class="container-fluid">

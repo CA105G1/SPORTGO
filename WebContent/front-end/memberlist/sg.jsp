@@ -48,7 +48,7 @@
 				</div>
 				<div class="col-xs-12 col-sm-9 tab-content">
 				<!-- 揪團管理 -->
-					<h1>${MemberlistVO.mem_name}</h1>
+					<h1>${memberlistVO.mem_name}</h1>
 					<div class="container">
 						<div class="row">
 							<h1>已參加的揪團</h1>
@@ -59,9 +59,9 @@
 								<div class="col-xs-12 col-sm-8">
 									<div class="list-group" id="myTab">
 										<c:forEach var="sgVO" items="${sgall}">
-											<c:if test="${sgall.sg_no==sg_memVO.sg_no}">
-												<a href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp" 
-												class="list-group-item">${sgall.sg_name}</a>
+											<c:if test="${sgVO.sg_no eq sg_memVO.sg_no}">
+												<a href="<%=request.getContextPath()%>/Sg_info/Sg_info.do?sg_no=${sgVO.sg_no}&action=getByPK" 
+												class="list-group-item">${sgVO.sg_name}</a>
 											</c:if>
 										</c:forEach>
 									</div>

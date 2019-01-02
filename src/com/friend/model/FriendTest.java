@@ -7,7 +7,7 @@ public class FriendTest {
 	}
 
 	public static void main(String[] args) {
-		FriendJDBCDAO jdbc = new FriendJDBCDAO();
+		FriendDAO jdbc = new FriendDAO();
 		jdbc.updateStatus("M001","M003","好友");
 		System.out.println("update completed.");
 	
