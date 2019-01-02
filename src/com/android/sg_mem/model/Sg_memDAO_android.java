@@ -22,9 +22,9 @@ public class Sg_memDAO_android implements Sg_memDAO_interface_android{
 	private static final String DELETE =
 			"DELETE FROM sg_mem WHERE sg_no=? and mem_no=?";
 	private static final String FIND_BY_SG =
-			"  ;";
+			"SELECT SGM.* , SG.SG_NAME , M.MEM_NAME FROM SG_MEM SGM LEFT JOIN SG_INFO SG ON SGM.SG_NO = SG.SG_NO LEFT JOIN MEMBERLIST M ON SGM.MEM_NO = M.MEM_NO WHERE SGM.SG_NO =? ORDER BY SGM.MEM_NO";
 	private static final String FIND_BY_MEM =
-			"SELECT SGM.* , SG.SG_NAME , M.MEM_NAME FROM SG_MEM SGM LEFT JOIN SG_INFO SG ON SGM.SG_NO = SG.SG_NO LEFT JOIN MEMBERLIST M ON SGM.MEM_NO = M.MEM_NO WHERE SGM.MEM_NO =? ORDER BY SGM.MEM_NO;";
+			"SELECT SGM.* , SG.SG_NAME , M.MEM_NAME FROM SG_MEM SGM LEFT JOIN SG_INFO SG ON SGM.SG_NO = SG.SG_NO LEFT JOIN MEMBERLIST M ON SGM.MEM_NO = M.MEM_NO WHERE SGM.MEM_NO =? ORDER BY SGM.SG_NO";
 
 	private static DataSource ds = null;
 	

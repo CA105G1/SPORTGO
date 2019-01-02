@@ -1,10 +1,9 @@
-package com.android.sg_mem.controller;
+package com.android.member.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,19 +12,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.android.member.model.MemberService_android;
-import com.android.sg_mem.model.SGMember;
-import com.android.sg_mem.model.Sg_memService_android;
-import com.android.sg_mem.model.Sg_memVO_android;
+import com.android.member.model.MemberVO_android;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.android.sg_info.model.*;
+import com.sg_info.controller.ImageUtil;
 
-@WebServlet("/Sg_memServlet_android.do")
-public class Sg_memServlet_android extends HttpServlet {
+@WebServlet("/MemberServlet_android.do")
+public class MemberServlet_android extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final static String CONTENT_TYPE = "text/html; charset=UTF-8";
-       
-    public Sg_memServlet_android() {
+
+    public MemberServlet_android() {
+        super();
     }
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -35,6 +33,7 @@ public class Sg_memServlet_android extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		
+		//將從手機傳來的Json轉成Gson
 		Gson gson = new Gson();
 		BufferedReader br = req.getReader();
 		StringBuilder jsonIn = new StringBuilder();
@@ -42,41 +41,37 @@ public class Sg_memServlet_android extends HttpServlet {
 		while ((line = br.readLine()) != null) {
 			jsonIn.append(line);
 		}
+		
 		System.out.println("input: " + jsonIn);
-		Sg_memService_android service = new Sg_memService_android();
+		MemberService_android service = new MemberService_android();
 		JsonObject jsonObject = gson.fromJson(jsonIn.toString(), JsonObject.class);
 		String action = jsonObject.get("action").getAsString();
-		
-		if("getMemberSG".equals(action)) {
-			//取得會員的揪團名單
+
+		//驗證登入並取得登入會員資料
+		if ("isMember".equals(action)) {
+			String mem_account = jsonObject.get("mem_account").getAsString();
+			String mem_pswd = jsonObject.get("mem_pswd").getAsString();
+			writeText(res, String.valueOf(service.isMember(mem_account, mem_pswd)));
+		} else if ("getMember".equals(action)) {
 			String mem_no = jsonObject.get("mem_no").getAsString();
-			writeText(res, gson.toJson(service.getMemberSG(mem_no)));
+			MemberVO_android member = service.getMember(mem_no);
+			writeText(res, member == null ? "" : gson.toJson(member));
+		} else if ("getPic".equals(action)) {
+			OutputStream os = res.getOutputStream();
+			String mem_no = jsonObject.get("pk").getAsString();
+			int imageSize = jsonObject.get("imageSize").getAsInt();
+			byte[] image = service.getProfilePic(mem_no);
 			
-		} else if("getSGmember".equals(action)) {
-			//取得揪團的會員名單
-			String sg_no = jsonObject.get("sg_no").getAsString();
-			writeText(res, String.valueOf(service.getSGMember(sg_no)));
-			
-		} else if("joinSG".equals(action)) {
-			//加入揪團
-			Sg_memVO_android vo = new Sg_memVO_android();
-			vo.setSg_no(jsonObject.get("sg_no").getAsString());
-			vo.setMem_no(jsonObject.get("mem_no").getAsString());
-			try {
-				service.insertSGMember(vo);
-				writeText(res, "參加成功！");
-			} catch (SQLException e) {
-				if (e instanceof java.sql.SQLIntegrityConstraintViolationException) {
-					writeText(res, "已在揪團名單！");
-				}
-				else {
-					e.printStackTrace();
-				}
+			if(image != null) {
+				image = ImageUtil.shrink(image, imageSize);
+				res.setContentType("image/jpeg");
+				res.setContentLength(image.length);
 			}
+			os.write(image);
 		}
-		
 	}
 	
+	//傳回請求端、並在console輸出結果
 	private void writeText(HttpServletResponse res, String outText) throws IOException {
 		res.setContentType(CONTENT_TYPE);
 		PrintWriter out = res.getWriter();
@@ -85,4 +80,5 @@ public class Sg_memServlet_android extends HttpServlet {
 		System.out.println("outText: " + outText);
 
 	}
+
 }
