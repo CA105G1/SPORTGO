@@ -134,7 +134,7 @@
 	    changePage();
 	});
 	
-	function changePage(){
+	window.onload = function changePage(){
 		console.log(action);
 		if(action === 'Member_renew'){
 			$('#myTab').find('a[href="#renew"]').trigger('click');

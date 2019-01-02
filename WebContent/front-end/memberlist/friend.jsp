@@ -50,7 +50,7 @@
 									<a href="public_Member_page.jsp?mem_no=${member.mem_no}">
 									<img src="<%=request.getContextPath()%>
 									/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"
-									style="max-width:100px;max-height:100px;">
+									style="width:80px;height:80px;border-radius:50%;">
 									${member.mem_name}
 									</a>
 								</c:if>
@@ -60,7 +60,7 @@
 									<a href="public_Member_page.jsp?mem_no=${member.mem_no}">
 									<img src="<%=request.getContextPath()%>
 									/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"
-									style="max-width:100px;max-height:100px;">
+									style="width:80px;height:80px;border-radius:50%">
 									${member.mem_name}
 									</a>
 								</c:if>
