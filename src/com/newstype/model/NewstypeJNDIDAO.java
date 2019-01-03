@@ -12,7 +12,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 
-public class NewstypeDAO implements NewstypeDAO_interface{
+public class NewstypeJNDIDAO implements NewstypeDAO_interface{
 
 	private static DataSource dataSource = null;
 	static {

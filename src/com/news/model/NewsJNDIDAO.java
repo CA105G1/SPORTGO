@@ -11,7 +11,7 @@ import java.util.List;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class NewsDAO implements NewsDAO_interface{
+public class NewsJNDIDAO implements NewsDAO_interface{
 
 	private static DataSource dataSource= null;
 	static {

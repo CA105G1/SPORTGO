@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.sql.Date;
 
 public class EmpVO implements Serializable{
-	private static final long serialVersionUID = -7688369730611579322L;
 	
 	private String emp_no;
 	private String emp_name;

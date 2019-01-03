@@ -16,7 +16,8 @@ public class mainAllimageIntoDB {
 	public static void main(String[] args) {
 		
 		// 請設定pull到本地端的路徑，如--->C:\Users\wenshock\git\SPORTGO\InitDB\image
-		String rootPath = "C:\\Users\\kevin_000\\School_project\\Project\\img";
+//		String rootPath = "C:\\Users\\kevin_000\\School_project\\Project\\img";
+		String rootPath = "C:\\Users\\wenshock\\git\\SPORTGO\\InitDB\\image";
 		
 		File file = new File(rootPath);
 		if(!file.isDirectory()) {

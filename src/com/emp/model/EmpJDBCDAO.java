@@ -51,7 +51,7 @@ public class EmpJDBCDAO implements EmpDAO_interface{
 	}
 	
 	@Override
-	public void insert(EmpVO empVO) {
+	public EmpVO insert(EmpVO empVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -117,6 +117,7 @@ public class EmpJDBCDAO implements EmpDAO_interface{
 				}
 			}
 		}
+		return empVO;
 	}
 
 	@Override
@@ -290,6 +291,67 @@ public class EmpJDBCDAO implements EmpDAO_interface{
 			}
 		}
 		return list;
+	}
+	
+	private static final String FIND_EMP_BY_ACCOUNT_SQL = ""
+			+ "SELECT * FROM emp WHERE emp_account=?";
+	
+	@Override
+	public EmpVO checkEmpAccountByAccount(String emp_account, String input_psw) {
+		EmpVO empVO = null;
+		Connection connection= null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try {
+			connection = DriverManager.getConnection(URL, USER, PASSWORD);
+			preparedStatement = connection.prepareStatement(FIND_EMP_BY_ACCOUNT_SQL);
+			preparedStatement.setString(1, emp_account);
+			resultSet = preparedStatement.executeQuery();
+			if(resultSet.next()) {
+				if(resultSet.getString("EMP_PSW").equals(Util_Password.encodePassword(input_psw))) {
+					empVO = new EmpVO();
+					empVO.setEmp_no(resultSet.getString("EMP_NO"));
+					empVO.setEmp_name(resultSet.getString("EMP_NAME"));
+					empVO.setEmp_auth(resultSet.getString("EMP_AUTH"));
+					empVO.setEmp_phone(resultSet.getString("EMP_PHONE"));
+					empVO.setEmp_email(resultSet.getString("EMP_EMAIL"));
+					empVO.setEmp_account(resultSet.getString("EMP_ACCOUNT"));
+					empVO.setEmp_psw(resultSet.getString("EMP_PSW"));
+					empVO.setHiredate(resultSet.getDate("HIREDATE"));
+					empVO.setLeavedate(resultSet.getDate("LEAVEDATE"));
+				}else {
+					empVO = new EmpVO();
+					empVO.setEmp_account(resultSet.getString("EMP_ACCOUNT"));
+					empVO.setEmp_auth("");
+				}
+			}
+		} catch (SQLException e) {
+			empVO = null;
+			throw new RuntimeException("A database error occured. "+e.getMessage());
+		} finally {
+			if(resultSet!=null) {
+				try {
+					resultSet.close();
+				}catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(preparedStatement!=null) {
+				try {
+					preparedStatement.close();
+				}catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(connection!=null) {
+				try {
+					connection.close();
+				}catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return empVO;
 	}
 
 	@Override

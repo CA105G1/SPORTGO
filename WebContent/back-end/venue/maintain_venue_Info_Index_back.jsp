@@ -35,8 +35,9 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-xs-12 col-sm-3">
-					<h1>後台共用區</h1>
-					<h2>here need include file</h2>
+<!-- 					<h1>後台共用區</h1> -->
+<!-- 					<h2>here need include file</h2> -->
+					<jsp:include page="/back-end/left_side_field.jsp"/>
 				</div>
 				<div class="col-xs-12 col-sm-9">
 					<h1>場地資料查詢</h1>
@@ -61,11 +62,12 @@
 					        	<%-- 查詢面板  --%>
 					        	<div class="panel panel-info">
 									<div class="panel-heading">
-						        		<div class="panel-title" role="button" data-toggle="collapse" href="#cc1" aria-expanded="false" aria-controls="#cc1">
+						        		<div class="panel-title" role="button" data-toggle="collapse" href="#cc1" aria-expanded="true" aria-controls="#cc1">
 										    快速查詢
 										</div>
 									</div>
-									<div class="collapse in" id="cc1">
+<!-- 									<div class="collapse in" id="cc1"> -->
+									<div class="collapse" id="cc1">
 									  	<div class="panel-body">
 									  		<form method="post" action="<%=request.getContextPath()%>/venue/venue.do">
 												<div class="label label-default label-text">查詢全部場地</div>
@@ -89,7 +91,8 @@
 										    詳細查詢
 										</div>
 									</div>
-									<div class="collapse in" id="cc2">
+<!-- 									<div class="collapse in" id="cc2"> -->
+									<div class="collapse" id="cc2">
 										<div class="panel-body">
 											<div class="h1">預計放from表單---萬用</div>
 											<form method="get" action="<%=request.getContextPath()%>/venue/venue.do">

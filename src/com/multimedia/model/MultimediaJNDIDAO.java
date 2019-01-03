@@ -11,7 +11,7 @@ import java.util.List;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class MultimediaDAO implements MultimediaDAO_interface{
+public class MultimediaJNDIDAO implements MultimediaDAO_interface{
 
 	private static DataSource dataSource = null;
 	static {

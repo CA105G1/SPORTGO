@@ -11,7 +11,7 @@ import java.util.List;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class EmpDAO implements EmpDAO_interface{
+public class EmpJNDIDAO implements EmpDAO_interface{
 
 	private static DataSource dataSource;
 	

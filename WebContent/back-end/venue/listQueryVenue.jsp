@@ -169,7 +169,7 @@
 <!-- 							</div> -->
 							<p>DB</p>
 							<div>
-								<img src="<%=request.getContextPath()%>/vunue/venueImg.do?v_no=${venueVO.v_no}" class="img-responsive img-rounded" alt="WTF"/>
+								<img src="<%=request.getContextPath()%>/venue/venueImg.do?v_no=${venueVO.v_no}" class="img-responsive img-rounded" alt="WTF"/>
 							<div>
 						</div>
 					</div>
@@ -187,6 +187,6 @@
 	<br>
 	<br>
 	<script src="https://code.jquery.com/jquery.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 	</body>
 </html>
