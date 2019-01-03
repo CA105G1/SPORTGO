@@ -257,6 +257,23 @@ public class Sg_infoServlet extends HttpServlet {
 					errorMsg.add("報名費請填數字");
 				}
 				
+				//運動種類與場館檢查
+				String sp_no = req.getParameter("sp_no").trim();
+				String loc_start = req.getParameter("loc_start");
+				String loc_end = req.getParameter("loc_end");
+				String v_no = req.getParameter("v_no").trim();
+				//若運動種類不是慢跑也不是自行車，則將路線規劃座標取消，並檢查有無選擇場館
+				if(sp_no.equals("SP006") || sp_no.equals("SP007")) {
+					//若是選擇慢跑或自行車則將場館資料清除
+					v_no = null;
+				}else {
+					loc_start =null;
+					loc_end = null;
+					if(v_no == null || v_no.trim().length() == 0) {
+						errorMsg.add("請選擇場館");
+					}
+				}
+				
 				//人數上限檢查
 				Integer sg_maxno = null;
 				try {
@@ -281,12 +298,10 @@ public class Sg_infoServlet extends HttpServlet {
 				String mem_no = req.getParameter("mem_no").trim();
 				String sg_pic_ext = req.getParameter("sg_pic_ext").trim();
 				String sg_per = req.getParameter("sg_per").trim();
-				String sp_no = req.getParameter("sp_no").trim();
-				String v_no = req.getParameter("v_no").trim();
+				
 				Integer sg_ttlapl = new Integer(req.getParameter("sg_ttlapl").trim());
 				String sg_extrainfo = req.getParameter("sg_info4").trim();
-				String loc_start = req.getParameter("loc_start");
-				String loc_end = req.getParameter("loc_end");
+				
 				
 				
 				//準備VO，若有錯誤就原封不動把VO再跟著錯誤送回去
@@ -393,6 +408,29 @@ public class Sg_infoServlet extends HttpServlet {
 			}catch(Exception e) {
 				errorMsg.add(e.getMessage());
 				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/Sg_info/SgHome.jsp");
+				dispatcher.forward(req, res);
+			}
+		}
+		
+		
+		
+		if("dismiss".equals(action)) {
+			List<String> errorMsg = new LinkedList<String>();
+			req.setAttribute("errorMsg", errorMsg);
+			
+			try {
+				String sg_no = req.getParameter("sg_no");
+				String sg_status = req.getParameter("sg_status");
+				
+				Sg_infoService svc = new Sg_infoService();
+				svc.updateStatus(sg_no, sg_status);
+				
+				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/memberlist/sg.jsp");
+				dispatcher.forward(req, res);
+				
+			}catch(Exception e) {
+				errorMsg.add(e.getMessage());
+				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/memberlist/sg.jsp");
 				dispatcher.forward(req, res);
 			}
 		}

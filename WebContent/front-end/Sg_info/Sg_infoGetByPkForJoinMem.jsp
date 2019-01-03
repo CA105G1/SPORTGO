@@ -7,7 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
-<title>Sg_infoGetByPk</title>
+<title>Sg_infoGetByPkForJoinMem</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -45,22 +45,14 @@
 
 
 <% 
-	Sg_infoVO vo = (Sg_infoVO)request.getAttribute("Sg_infoVO");	
-	if(vo == null){vo = (Sg_infoVO)session.getAttribute("Sg_infoVO");}
-    
-    MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO");
-System.out.println("memberlistVO= "+memberlistVO);
-%>
+// Sg_infoService svc = new Sg_infoService();
+// Sg_infoVO vo = svc.GetByPK("S002");
 
-<%-- 錯誤表列 --%>
-<c:if test="${not empty errorMsg}">
-	<font style="color:red">請修正以下錯誤:</font>
-	<ul>
-		<c:forEach var="message" items="${errorMsg}">
-			<li style="color:red">${message}</li>
-		</c:forEach>
-	</ul>
-</c:if>
+
+	Sg_infoVO vo = (Sg_infoVO)request.getAttribute("Sg_infoVO");
+	pageContext.setAttribute("Sg_infoVO", vo);
+	MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO");
+%>
 
 <div class="container">
 	<div class="row">
@@ -87,12 +79,11 @@ System.out.println("memberlistVO= "+memberlistVO);
 								<i class="glyphicon glyphicon-circle-arrow-left icon-large brown backToList"></i>  <!-- 返回按鍵 -->
 								<a href="<%= request.getContextPath()%>/front-end/Sg_info/SgHome.jsp" display="none" id="linkBack">回到揪團首頁</a>
 								
-								<caption class="text-center">我是Sg_infoGetByPk</caption>
+								<caption class="text-center">我是Sg_infoGetByPkForJoinMem</caption>
 								<tbody>
 									<tr>  <!-------- 照片 -------->
 										<td colspan="2">
 											<img id="showPic" class="img-responsive" src="<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${Sg_infoVO.sg_no}">
-											<div class="uploadPic"></div><br>
 										</td>
 									</tr>
 									<tr>
@@ -155,8 +146,6 @@ System.out.println("memberlistVO= "+memberlistVO);
 										<th>團長的話</th>
 										<td class="writable">${Sg_infoVO.sg_extrainfo}</td> <!-- sg_info4 -->
 									</tr>  
-									<tr><th>-路線起點座標</th><td class="writable">${Sg_infoVO.loc_start}</td></tr> <!-- sg_info5 -->
-									<tr><th>-路線終點座標</th><td class="writable">${Sg_infoVO.loc_end}</td></tr> <!-- sg_info6 -->
 								</tbody>
 							</table>
 							<!-------------GOOGLE地圖 -------------->
@@ -172,21 +161,6 @@ System.out.println("memberlistVO= "+memberlistVO);
 									</div>
 								</div>
 							
-							
-							<input type="button" id="update" value="編輯" class="btn btn-info btn-block" align="center" style="display: ">
-							<input type="submit" id="done" value="完成" class="btn btn-info btn-block" align="center" style="display: none">
-							
-							<input type="hidden" name="sg_no" value="${Sg_infoVO.sg_no}" >
-							<input type="hidden" name="mem_no" value="${Sg_infoVO.mem_no}" >
-							<input type="hidden" name="sg_pic_ext" value="${Sg_infoVO.sg_pic_ext}" >
-<%-- 							<input type="hidden" name="v_no" value="<%= vo.getV_no()%>" > --%>
-							<input type="hidden" name="sg_ttlapl" value="${Sg_infoVO.sg_ttlapl}" >
-							<input type="hidden" name="action" value="update">
-						</form>
-						<form id="deleteForm">
-							<input type="button" class="btn btn-danger btn-block" id="delete" value="刪除" >
-							<input type="hidden" name="action" value="delete">
-							<input type="hidden" name="sg_no" value="${Sg_infoVO.sg_no}">
 						</form>
 			        </div>
 			        <div role="tabpanel" class="tab-pane" id="msgBoard">
@@ -244,148 +218,6 @@ System.out.println("memberlistVO= "+memberlistVO);
 <script type="text/javascript">
 		
 		
-	  $("#update").click(function(){
-		//編輯照片
-		$(".uploadPic").html(function(index, content){
-			return "<input type='file' id='sg_pic' class='img-responsive' name='sg_pic'>"
-		});
-		//開始編輯
-	    $(".writable").html(function(index, content){
-	    return "<input type='text' id='content"+ index + "' name='sg_info"+index + "' value='"+content+"'>";
-	    });
-	    //編輯活動時間
-	    $("#sg_date").html(function(index, content){
-		    return "<input type='text' id='sg_date2' name='sg_date' value='"+content+"'>";
-		    });
-	    //編輯報名開始日期
-	    $("#apl_start").html(function(index, content){
-		    return "<input type='text' id='apl_start2' name='apl_start' value='"+content+"'>";
-		    });
-	    //編輯報名結束日期
-	    $("#apl_end").html(function(index, content){
-		    return "<input type='text' id='apl_end2' name='apl_end' value='"+content+"'>";
-		    });
-	    //編輯權限
-	    $("#sg_per").html(function(index, content){
-		    return "<select name='sg_per'><option value='公開'>公開</option><option value='僅限社團'>僅限社團</option></select>";
-		    });
-	    //編輯運動種類
-    	 $("#sp_no").html(function(index, content){
- 		    return "<select name='sp_no'><c:forEach var='sportVO' items='${sportSvc.all}' > <option value='${sportVO.sp_no}'>${sportVO.sp_name}</c:forEach></select>";
- 		    });
-    	//編輯場地
-    	 $("#v_no").html(function(index, content){
- 		    return "<select name='v_no'><c:forEach var='venueVO' items='${venueSvc.all}' > <option value='${venueVO.v_no}'>${venueVO.v_name}</c:forEach></select>";
- 		    });
-	    
-	    	   
-	
-	    
-	    
-	    //設定活動時間表
-	    var sg_date = new Date();
-        $('#sg_date2').datetimepicker({
-        	timepicker: true,
-        	format: 'Y-m-d H:i',
-            beforeShowDay: function(date) {
-          	  if (  date.getYear() <  sg_date.getYear() || 
-   		           (date.getYear() == sg_date.getYear() && date.getMonth() <  sg_date.getMonth()) || 
-   		           (date.getYear() == sg_date.getYear() && date.getMonth() == sg_date.getMonth() && date.getDate() < sg_date.getDate())
-                ) {
-                     return [false, ""]
-                }
-                return [true, ""];
-        }});
-        
-      //設定報名開始日期表
-	    var apl_start = new Date();
-        $('#apl_start2').datetimepicker({
-        	timepicker: false,
-        	format: 'Y-m-d',
-            beforeShowDay: function(date) {
-          	  if (  date.getYear() <  apl_start.getYear() || 
-   		           (date.getYear() == apl_start.getYear() && date.getMonth() <  apl_start.getMonth()) || 
-   		           (date.getYear() == apl_start.getYear() && date.getMonth() == apl_start.getMonth() && date.getDate() < apl_start.getDate())
-                ) {
-                     return [false, ""]
-                }
-                return [true, ""];
-        }});
-        
-        //設定報名結束日期表@@@@@@@@@@@@@@@@@@@@@@@@開始日期抓不到!!!!!!!!!
-        var startDay = new Date($('#apl_start2').val());
-             var endDay = new Date($('#sg_date2').val());
-             $('#apl_end2').datetimepicker({
-            	 timepicker: false,
-             	format: 'Y-m-d',
-                 beforeShowDay: function(date) {
-               	  if (  date.getYear() <  startDay.getYear() || 
-        		           (date.getYear() == startDay.getYear() && date.getMonth() <  startDay.getMonth()) || 
-        		           (date.getYear() == startDay.getYear() && date.getMonth() == startDay.getMonth() && date.getDate() < startDay.getDate())
-        		             ||
-        		            date.getYear() >  endDay.getYear() || 
-        		           (date.getYear() == endDay.getYear() && date.getMonth() >  endDay.getMonth()) || 
-        		           (date.getYear() == endDay.getYear() && date.getMonth() == endDay.getMonth() && date.getDate() > endDay.getDate())
-                     ) {
-                          return [false, ""]
-                     }
-                     return [true, ""];
-             }});
-	    
-	    
-	    $("#update").css("display","none");
-	    $("#done").css("display","");
-	    
-	    
-	    
-	  //照片預覽
-		$("#sg_pic").change(function(){
-			readURL(this);
-		});
-		function readURL(input){
-			if(input.files && input.files[0]){
-				var reader = new FileReader();
-				reader.onload = function(e){
-					var showPic = document.getElementById("showPic");
-					showPic.src=e.target.result;
-//	 				showPic.height=100;
-//	 				showPic.width=200;
-					
-				}
-				reader.readAsDataURL(input.files[0]);
-			}
-		}
-	    
-	  });  //update click
-	  
-		
-	  // Double check是否刪除
-	  $("#delete").click(function(){
-		  if (confirm("確定刪除嗎!")) {
-			$("#deleteForm").submit();
-		  } else {
-		    
-		  }
-	  });
-	  
-	  
-	  //點擊收藏按鍵變換愛心
-// 	  var like = false;
-// 	  $("#likebtn").click(function(){
-// 		  if(like){
-// 			 $("#dislike").css("display","");
-// 			 $("#like").css("display","none");
-// 			 like = false;
-// 		  }else{
-// 			 $("#like").css("display","");
-// 			 $("#dislike").css("display","none");
-// 			 like = true;
-// 		  }
-// 	  });
-	  
-	  
-
-	
 	  
 	//google map設定
 	var map;
@@ -405,9 +237,15 @@ System.out.println("memberlistVO= "+memberlistVO);
 		var loc_start = <%=vo.getLoc_start()%>;
 		var loc_end = <%=vo.getLoc_end()%>;
 		if(loc_start == null || loc_end == null){
-			//若沒有路線資料則設定本機定位(之後改成場館位置)////////////////////////////////////////////////////////////////
+			//若沒有路線資料則設定場館位置
+			var v_lat = parseFloat("${venueSvc.getOneVenue(Sg_infoVO.v_no).v_lat}");
+			var v_long = parseFloat("${venueSvc.getOneVenue(Sg_infoVO.v_no).v_long}");
+			map = new google.maps.Map(document.getElementById('map'), {
+				center: {lat: v_lat, lng: v_long},
+				zoom:14
+			});
 			var marker = new google.maps.Marker({
-	   			position: loc,
+	   			position: {lat: v_lat, lng: v_long},
 	   			map: map,
 	   			animation: google.maps.Animation.DROP,
 	   			draggable: false
@@ -424,7 +262,7 @@ System.out.println("memberlistVO= "+memberlistVO);
 	        var request = {
 	         origin: loc_start,
 	         destination: loc_end,
-	         travelMode: 'DRIVING' //腳踏車模式無法使用?
+	         travelMode: 'WALKING' //腳踏車模式無法使用?
 	        };
 	        // 繪製路線
 	        directionsService.route(request,function(result, status){
@@ -441,34 +279,6 @@ System.out.println("memberlistVO= "+memberlistVO);
 		
 	} //myLoc
 	  
-	///////4按鍵若尚未登入之設定//////////
-	<%if(memberlistVO == null){
-		session.setAttribute("location", request.getRequestURI());%>
-		$(".like").click(function(){
-			<%
-// 			session.setAttribute("isLoginRedirect", true); //設定旗標
-	 		session.setAttribute("Sg_infoVO", vo);%> //原頁面VO由session帶著去跟回
-			document.location.href="<%= request.getContextPath()%>/front-end/memberlist/Login.jsp";
-			return;
-		});
-		$("#joinbtn").click(function(){
-			<%
-// 			session.setAttribute("isLoginRedirect", true); //設定旗標
-	 		session.setAttribute("Sg_infoVO", vo);%> //原頁面VO由session帶著去跟回
-			document.location.href="<%= request.getContextPath()%>/front-end/memberlist/Login.jsp";
-			return;
-		});
-		$("#sharebtn").click(function(){
-			document.location.href="<%= request.getContextPath()%>/front-end/memberlist/Login.jsp";
-		});
-		$("#repbtn").click(function(){
-			<%
-// 			session.setAttribute("isLoginRedirect", true); //設定旗標
-	 		session.setAttribute("Sg_infoVO", vo);%> //原頁面VO由session帶著去跟回
-			document.location.href="<%= request.getContextPath()%>/front-end/memberlist/Login.jsp";
-			return;
-		});
-	<%}else{%>
 		/////////////////收藏按鍵設定////////////////////////
 		//若該會員有收藏該揪團則顯示實心
 		<% Sg_likeService likesvc = new Sg_likeService();%>
@@ -583,9 +393,6 @@ System.out.println("memberlistVO= "+memberlistVO);
 		
 		
 		
-	<%}%> //else
-	
-	
 	
 	
 

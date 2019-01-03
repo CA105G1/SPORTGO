@@ -24,6 +24,8 @@ public class Sg_infoDAO implements Sg_infoDAO_interface{
 	private static final String updateClientStmt =
 			"UPDATE sg_info SET mem_no=?, sg_name=?, sg_date=?, apl_start=?, apl_end=?, sg_fee=?, sg_pic=?, sg_pic_ext=?, sg_per=?, sp_no=?, v_no=?, sg_maxno=?, sg_minno=?, sg_ttlapl=?, sg_extrainfo=?, loc_start=?, loc_end=? WHERE sg_no=?";
 			//sg_chkno, sg_status還沒設定進去，mem_no不能改
+	private static final String updateStatusStmt = 
+			"UPDATE sg_info SET sg_status=? WHERE sg_no=?";
 	private static final String deleteStmt =
 			"DELETE FROM sg_info WHERE sg_no=?";
 	private static final String findByPkStmt =
@@ -403,6 +405,39 @@ System.out.println("sqlStr="+sqlStr);
 		}
 		
 		return list;
+	}
+
+	@Override
+	public void updateStatus(String sg_no, String sg_status) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(updateStatusStmt);
+			
+			pstmt.setString(1, sg_status);
+			pstmt.setString(2, sg_no);
+			pstmt.executeUpdate();
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 }

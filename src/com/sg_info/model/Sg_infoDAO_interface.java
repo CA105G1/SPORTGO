@@ -10,4 +10,6 @@ public interface Sg_infoDAO_interface {
 	public List<Sg_infoVO> getAll();
 	//複合式查詢
 	public List<Sg_infoVO> getAll(Map<String, String[]> map);
+	//狀態變更
+	public void updateStatus(String sg_no, String sg_status);
 }

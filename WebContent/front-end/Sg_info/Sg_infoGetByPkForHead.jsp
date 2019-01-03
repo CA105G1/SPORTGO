@@ -45,9 +45,12 @@
 
 
 <% 
-// 	Sg_infoVO vo = (Sg_infoVO)request.getAttribute("Sg_infoVO");
 	Sg_infoService svc = new Sg_infoService();
-	Sg_infoVO vo = svc.GetByPK("S001");
+	Sg_infoVO vo = svc.GetByPK("S002");
+	
+	
+	
+// 	Sg_infoVO vo = (Sg_infoVO)request.getAttribute("Sg_infoVO");
     pageContext.setAttribute("Sg_infoVO", vo);
 %>
 
@@ -154,8 +157,6 @@
 										<th>團長的話</th>
 										<td class="writable">${Sg_infoVO.sg_extrainfo}</td> <!-- sg_info4 -->
 									</tr>  
-<%-- 									<tr><th>-路線起點座標</th><td class="writable"><%= vo.getLoc_start() %></td></tr> <!-- sg_info5 --> --%>
-<%-- 									<tr><th>-路線終點座標</th><td class="writable"><%= vo.getLoc_end() %></td></tr> <!-- sg_info6 --> --%>
 								</tbody>
 							</table>
 							<!-------------GOOGLE地圖 -------------->
@@ -181,13 +182,14 @@
 							<input type="hidden" name="mem_no" value="<%= vo.getMem_no()%>" >
 							<input type="hidden" name="sg_pic_ext" value="<%= vo.getSg_pic_ext()%>" >
 							<input type="hidden" name="sg_ttlapl" value="<%= vo.getSg_ttlapl()%>" >
-							<input type="hidden" name="loc_start" id="loc_start">
-							<input type="hidden" name="loc_end" id="loc_end">	
+							<input type="hidden" name="loc_start" id="loc_start" value=<%= vo.getLoc_start() %>>
+							<input type="hidden" name="loc_end" id="loc_end" value=<%= vo.getLoc_end() %>>	
 							<input type="hidden" name="action" value="update">
 						</form>
-						<form id="deleteForm">
-							<input type="button" class="btn btn-danger btn-block" id="delete" value="刪除" >
-							<input type="hidden" name="action" value="delete">
+						<form id="dismissForm">
+							<input type="button" class="btn btn-danger btn-block" id="dismiss" value="解散" >
+							<input type="hidden" name="action" value="dismiss">
+							<input type="hidden" name="sg_status" value="解散">
 							<input type="hidden" name="sg_no" value="<%= vo.getSg_no()%>">
 						</form>
 			        </div>
@@ -238,12 +240,13 @@
 		    return "<select name='sg_per'><option value='公開'>公開</option><option value='僅限社團'>僅限社團</option></select>";
 		    });
 	    //編輯運動種類
+	    ////////////////////////////////////////下拉選單值帶不回來//////////////////////////////////////
     	 $("#sp_no").html(function(index, content){
- 		    return "<select name='sp_no' id='sp_no'><c:forEach var='sportVO' items='${sportSvc.all}' > <option value='${sportVO.sp_no}'>${sportVO.sp_name}</c:forEach></select>";
+ 		    return "<select name='sp_no' id='sp_no'><c:forEach var='sportVO' items='${sportSvc.all}' > <option value='${sportVO.sp_no}' ${(Sg_infoVO.sp_no == sportVO.sp_no)? 'selected' : ''}>${sportVO.sp_name}</c:forEach></select>";
  		    });
     	//編輯場地
     	 $("#v_no").html(function(index, content){
- 		    return "<select name='v_no'><c:forEach var='venueVO' items='${venueSvc.all}' > <option value='${venueVO.v_no}'>${venueVO.v_name}</c:forEach></select>";
+ 		    return "<select name='v_no' id='v_no'><option value=''>無<c:forEach var='venueVO' items='${venueSvc.all}' > <option value='${venueVO.v_no}' ${(Sg_infoVO.v_no == venueVO.v_no)? 'selected' : ''}>${venueVO.v_name}</c:forEach></select>";
  		    });
     	//篩選只有慢跑及自行車可以編輯地圖
     	$("#sp_no").change(function(){
@@ -338,7 +341,7 @@
 		
 		
 		
-		// 地圖查詢定位 Geocoding API
+		// 編輯時地圖查詢定位 Geocoding API
         var geocoder = new google.maps.Geocoder();
         var startSearchBtn = document.getElementById("startSearchBtn");
         var endSearchBtn = document.getElementById("endSearchBtn");
@@ -390,9 +393,6 @@
                 }
             });
         }, false);
-
-
-
         // 載入路線服務與路線顯示圖層 Directions API
         directionsService = new google.maps.DirectionsService();
         directionsDisplay = new google.maps.DirectionsRenderer();
@@ -420,12 +420,6 @@
 	        });
 
         }, false);
-        
-		
-		
-		
-		
-		
 		
 		
 		
@@ -434,17 +428,16 @@
 	  
 		
 	  // Double check是否刪除
-	  $("#delete").click(function(){
-		  if (confirm("確定刪除嗎!")) {
-			$("#deleteForm").submit();
+	  $("#dismiss").click(function(){
+		  if (confirm("確定解散嗎!")) {
+			$("#dismissForm").submit();
 		  } else {
-		    
 		  }
 	  });
 	  
 	  
 	  
-	//google map設定
+	//載入時google map設定
 	var map;
 	var loc;
 	function initMap(){
@@ -460,12 +453,17 @@
 		});
 		//取得座標(JSON字串)
 		var loc_start = <%= vo.getLoc_start()%>;
-		console.log(loc_start);
 		var loc_end = <%= vo.getLoc_end()%>;
 		if(loc_start == null || loc_end == null){
-			//若沒有路線資料則設定本機定位(之後改成場館位置)////////////////////////////////////////////////////////////////
+			//若沒有路線資料則設定場館位置
+			var v_lat = parseFloat("${venueSvc.getOneVenue(Sg_infoVO.v_no).v_lat}");
+			var v_long = parseFloat("${venueSvc.getOneVenue(Sg_infoVO.v_no).v_long}");
+			map = new google.maps.Map(document.getElementById('map'), {
+				center: {lat: v_lat, lng: v_long},
+				zoom:14
+			});
 			var marker = new google.maps.Marker({
-	   			position: loc,
+	   			position: {lat: v_lat, lng: v_long},
 	   			map: map,
 	   			animation: google.maps.Animation.DROP,
 	   			draggable: false
@@ -482,7 +480,7 @@
 	        var request = {
 	         origin: loc_start,
 	         destination: loc_end,
-	         travelMode: 'DRIVING' //腳踏車模式無法使用?
+	         travelMode: 'WALKING' //腳踏車模式無法使用?
 	        };
 	        // 繪製路線
 	        directionsService.route(request,function(result, status){

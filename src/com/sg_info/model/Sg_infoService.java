@@ -91,5 +91,9 @@ public class Sg_infoService {
 		return dao.getAll(map);
 	}
 	
+	public void updateStatus(String sg_no, String sg_status) {
+		dao.updateStatus(sg_no, sg_status);
+	}
+	
 	
 }
