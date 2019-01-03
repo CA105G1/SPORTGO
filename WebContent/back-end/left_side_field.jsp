@@ -120,7 +120,8 @@
 		</div>
 		
 		<script src="https://code.jquery.com/jquery.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<!-- 多下行會有重複載入的問題 -->
+<!-- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 		
 		<script type="text/javascript">
 			$(".panel-heading").parent('.myGroup').on( "mouseenter",
@@ -135,7 +136,6 @@
 			
 		</script>
 		
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <!-- 
 		<script type="text/javascript">
 			$(".panel-heading").parent('.panel').hover(
