@@ -5,7 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%
-session.setAttribute("mem_no","M001");
+
 	ProductService proSvc = new ProductService();
 	List<ProductVO> list = new ArrayList<ProductVO>();
 	if ("findBy".equals(request.getAttribute("findBy"))) {

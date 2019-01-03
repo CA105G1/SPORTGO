@@ -13,11 +13,14 @@
 	OrdService ordSvc = new OrdService();
     List<OrdVO> listAll = ordSvc.getAll();
     pageContext.setAttribute("listAll",listAll);
+   
     
     
 %>
 <jsp:useBean id="proclassSvc" scope="page" class="com.productclass.model.ProductClassService" />
+<jsp:useBean id="proSvc" scope="page" class="com.product.model.ProductService" />
 <jsp:useBean id="memSvc" scope="page" class="com.memberlist.model.MemberlistService" />
+<jsp:useBean id="orddetailsSvc" scope="page" class="com.orddetails.model.OrddetailsService" />
 <!DOCTYPE html> 
 <html lang="">
 
@@ -335,9 +338,9 @@
 															<th class="thwidth">商品名稱圖片</th>
 															<th>商品編號</th>
 															<th>買家應付金額</th>
-															<th>數量</th>
+															<th>買家購買數量</th>
 															<th>訂單狀態</th>
-															<th>商品庫存</th>
+															<th>商品當前庫存</th>
 															<th>操作</th>
 														</tr>
 														<tr>
@@ -347,45 +350,13 @@
 									style="max-width:40px;max-height:40px;">
 																${memSvc.getOneMem(ordListVO.mem_no).mem_name}
 															</th>
+															<th>${ordListVO.mem_no}</th>
+															<th>${ordListVO.ord_no}</th>
 															<th></th>
+															<th><div id="${ordListVO.ord_no}">${ordListVO.ord_status}</div></th>
 															<th></th>
-															<th></th>
-															<th></th>
-															<th></th>
-															<th></th>
-														</tr>
-													</thead>
-													<tbody>
-														
-														<c:forEach var="orddetails" items="${orddetailsSvc.getOneOrd(ordSvc.getOneOrd(ordListVO.ord_no).getOrd_no())}" >
-															<tr>
-																<!-- 商品圖片名稱 -->
-																<td style="text-align: left;">
-																	<div style="height: 80px">
-																		
-																	</div>
-																</td>
-																<!-- 商品編號 -->
-																<td>test</td>
-																<!-- 商品類別 -->
-																<td>
-																	test
-																</td>
-																<!-- 商品單價 -->
-																<td>
-																	stet
-																</td>
-																<!-- 商品庫存 -->
-																<td>
-																	test
-																</td>
-																<!-- 商品狀態 -->
-																<td>
-																	test
-																</td>
-																<!-- 下拉式按鈕 -->
-																<td>
-																	<div class="btn-group">
+															<th>
+															    <div class="btn-group">
 																		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 																			<i class="fa fa-pencil-square">
 																				編輯
@@ -404,10 +375,10 @@
 <!-- 																				</FORM> -->
 																			</li>
 																			<li>
-																				<a href="#">上架</a>
+																				<button type="button" class="ok" value="${ordListVO.ord_no}">完成訂單</button>
 																			</li>
 																			<li>
-																				<a href="#">下架</a>
+																				<button type="button" class="cancel" value="${ordListVO.ord_no}">取消訂單</button>
 																			</li>
 																			<li class="divider"></li>
 																			<li>
@@ -415,6 +386,41 @@
 																			</li>
 																		</ul>
 																	</div>
+															</th>
+														</tr>
+													</thead>
+													<tbody>
+														
+														<c:forEach var="orddetails" items="${orddetailsSvc.getOneOrd(ordListVO.ord_no)}" >
+															<tr>
+																<!-- 商品圖片名稱 -->
+																<td style="text-align: left;">
+																	<div style="height: 80px">
+																		<img class="imgsize" src="<%=request.getContextPath()%>/pro/proImg.do?pro_no=${proSvc.getOneProduct(orddetails.pro_no).pro_no}">
+																		${proSvc.getOneProduct(orddetails.pro_no).pro_name}
+																	</div>
+																</td>
+																<!-- 商品編號 -->
+																<td>${orddetails.pro_no }</td>
+																<!-- 買家應付金額 -->
+																<td>
+																	${orddetails.ord_probonuns *orddetails.pro_count}
+																</td>
+																<!-- 買家購買數量 -->
+																<td>
+																	${orddetails.pro_count }
+																</td>
+																<!-- 商品狀態 -->
+																<td>
+																	${proSvc.getOneProduct(orddetails.pro_no).pro_shelve}
+																</td>
+																<!-- 商品庫存 -->
+																<td>
+																	${proSvc.getOneProduct(orddetails.pro_no).pro_stock}
+																</td>
+																<!-- 下拉式按鈕 -->
+																<td>
+																	
 																</td>
 															</tr>
 														</c:forEach>
@@ -442,6 +448,50 @@
 			<script src="https://code.jquery.com/jquery.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 			<script type="text/javascript">
+				$(document).ready(function(){
+					$('.ok').each( function() {
+						$(this).click( function() {
+							var val = $(this).val();
+							$.ajax({
+								 type: "POST",
+								 url: "<%= request.getContextPath()%>/ord/ord.do",
+								 data: creatQueryOK(val),
+								 dataType: "json",
+								 success: function (data){
+									 $('#'+data.ord_no).html('完成');
+							     },
+							     error: function(){alert("AJAX-class發生錯誤囉!")}
+					         })
+						})
+					})
+					$('.cancel').each( function() {
+						$(this).click( function() {
+							var val = $(this).val();
+							$.ajax({
+								 type: "POST",
+								 url: "<%= request.getContextPath()%>/ord/ord.do",
+								 data: creatQuerycancel(val),
+								 dataType: "json",
+								 success: function (data){
+									 alert('cancel');
+									 $('#'+data.ord_no).html('取消');
+							     },
+							     error: function(){alert("AJAX-class發生錯誤囉!")}
+					         })
+						})
+					})
+					
+				})
+				function creatQueryOK(ord_no){
+					
+					var queryString= {"action":"ok", "ord_no":ord_no , "ord_status" :"完成"};
+					console.log(queryString);
+					return queryString;
+				}
+				function creatQuerycancel(ord_no){
+					var queryString= {"action":"ok", "ord_no":ord_no , "ord_status" :"取消"};
+					return queryString;
+				}					
 				// document.getElementById("display").style.display = 'none';
 				//    $(function() {  //將圖片預覽
 				//    	$('input[type=file]').change(function() {

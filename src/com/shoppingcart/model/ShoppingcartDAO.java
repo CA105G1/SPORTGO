@@ -68,16 +68,26 @@ public class ShoppingcartDAO implements Shoppingcart_interface{
 		
 	}
 	
+	@Override
+	public Integer findByCount(String mem_no, String pro_no) {
+		Jedis jedis = new Jedis(HOST, PORT);
+		jedis.auth(AUTH);
+		Integer count = 0;
+		
+		count = Integer.parseInt(jedis.hget(mem_no, pro_no));
+		return count;
+	}
+	
 	public static void main(String[] args) {
 		
 		ShoppingcartDAO cartDAO = new ShoppingcartDAO();
 		
 		//放入
 		ShoppingcartVO cartVO = new ShoppingcartVO();
-		cartVO.setMem_no("M001");
-		cartVO.setPro_no("P006");
-		cartVO.setPro_count(999000);
-		cartDAO.insert(cartVO);
+//		cartVO.setMem_no("M001");
+//		cartVO.setPro_no("P006");
+//		cartVO.setPro_count(999000);
+//		cartDAO.insert(cartVO);
 		
 //		//取出
 //		List<ProductVO> proVOList = new ArrayList<>();
@@ -113,6 +123,11 @@ public class ShoppingcartDAO implements Shoppingcart_interface{
 //		String pro_no = "P001";
 //		cartDAO.delete(mem_no, pro_no);
 		
+		//查詢單筆
+//		String mem_no = "M001";
+//		String pro_no = "P006";
+//		cartDAO.findByCount(mem_no, pro_no);
 	}
+	
 	
 }

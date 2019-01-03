@@ -9,6 +9,9 @@ import javax.servlet.*;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.*;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.ord.model.OrdJDBCDAO;
 import com.ord.model.OrdService;
 import com.ord.model.OrdVO;
@@ -19,6 +22,7 @@ import com.product.model.ProductVO;
 import com.productclass.model.ProductClassService;
 import com.productclass.model.ProductClassVO;
 import com.shoppingcart.model.ShoppingcartDAO;
+import com.shoppingcart.model.ShoppingcartVO;
 
 
 
@@ -48,7 +52,7 @@ public class OrdServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-
+		System.out.println("action :" + action);
 if ("insert".equals(action)) { //來自shoppingcart_front.jsp的請求
 			
 			List<String> errorMsgs = new LinkedList<String>();
@@ -142,6 +146,8 @@ if ("insert".equals(action)) { //來自shoppingcart_front.jsp的請求
 //				} catch (NumberFormatException e) {
 //					errorMsgs.add("退貨金額請勿空白");
 //				}
+				//數量
+//				String[] pro_count = req.getParameterValues("pro_count"); 
 				
 				/***************************2.開始新增資料***************************************/
 
@@ -149,16 +155,18 @@ if ("insert".equals(action)) { //來自shoppingcart_front.jsp的請求
 				/*訂單有一些會是null與0的情況
 				 * 前端部分因為有兩個form表單的問題，所以刪除按鈕可能需要用ajax處理
 				 */
+				
 				ProductService proSvc1 = new ProductService();
 				List<OrddetailsVO> testList = new ArrayList<OrddetailsVO>(); // 準備置入訂單數量
 				if(pro_no == null) {
 					errorMsgs.add("未選擇商品");
 				} else {
 					for(int i = 0 ; i < pro_no.length ; i ++) {
+						ShoppingcartDAO cartDAO = new ShoppingcartDAO();
 	                	Integer pro_bonus = proSvc1.getOneProduct(pro_no[i]).getPro_bonus();
+	                	Integer pro_count = cartDAO.findByCount(mem_no, pro_no[i]);
 	                	ord_amount += pro_bonus;
-						testList.add(i, new OrddetailsVO(pro_no[i] , pro_bonus,666));
-	        			ShoppingcartDAO cartDAO = new ShoppingcartDAO();
+						testList.add(i, new OrddetailsVO(pro_no[i] , pro_bonus,pro_count));
 	        			cartDAO.delete(mem_no, pro_no[i]);
 	                }
 					for(int i = 0 ; i < testList.size() ; i ++) {
@@ -228,6 +236,58 @@ if ("getAll_display".equals(action)) { //來自shoppingcart_front.jsp的請求
 			req.setAttribute("errorMsgs", errorMsgs);
 		}
 
+if ("ok".equals(action)) { //來自shoppingcart_front.jsp的請求
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			String ord_no = req.getParameter("ord_no");
+			String ord_status = req.getParameter("ord_status");
+
+			OrdService ordSvc = new OrdService();
+
+			int i = ordSvc.updataStatus(ord_no, ord_status);
+			System.out.println("更新比數" + i);
+			
+			PrintWriter out = res.getWriter();
+			String return_ord_no = "{\"ord_no\":"+ord_no+"}";
+			try {
+
+			String job = new JSONObject(return_ord_no).toString();//需要回傳不然ajax會出錯
+			out.write(job);
+			out.flush();
+			out.close();
+			
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        }
+if ("cancel".equals(action)) { //來自shoppingcart_front.jsp的請求
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			String ord_no = req.getParameter("ord_no");
+			String ord_status = req.getParameter("ord_status");
+		
+			OrdService ordSvc = new OrdService();
+		
+			int i = ordSvc.updataStatus(ord_no, ord_status);
+			System.out.println("更新比數" + i);
+			
+			PrintWriter out = res.getWriter();
+			String return_ord_no = "{\"ord_no\":"+ord_no+"}";
+			try {
+
+			String job = new JSONObject(return_ord_no).toString();//需要回傳不然ajax會出錯
+			out.write(job);
+			out.flush();
+			out.close();
+			
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
     public static byte[] Photo (InputStream in) {  //將inputStream to byte[]

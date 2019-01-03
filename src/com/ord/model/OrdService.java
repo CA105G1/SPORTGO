@@ -40,6 +40,10 @@ public class OrdService {
 		return ordDAO.getAll();
 	}
 	
+	public int updataStatus (String ord_no ,String ord_status) {
+		return ordDAO.updataStatus(ord_no, ord_status);
+	}
+	
 //	public OrdDAO addOrd(String Mem_no ,)
 
 }

@@ -20,4 +20,7 @@ public interface OrdDAO_interface {
 	
 	//同時新增部門與員工 (實務上並不常用, 但,可用在訂單主檔與明細檔一次新增成功)
     public String insertWithOrdds( OrdVO ordVO , List<OrddetailsVO> list);
+    
+    //更新狀態
+    public abstract int updataStatus (String ord_no,String ord_status);
 }

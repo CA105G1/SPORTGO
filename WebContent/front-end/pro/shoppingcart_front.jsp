@@ -391,7 +391,7 @@
 						    alert(val);
 							$.ajax({
 								 type: "POST",
-								 url: "shoppingCartServlet.do",
+								 url: "<%= request.getContextPath()%>/shoppingCartServlet/shoppingCartServlet.do",
 								 data: creatQueryString(val, ""),
 								 dataType: "json",
 								 success: function (data){

@@ -23,6 +23,8 @@ public class OrdJDBCDAO implements OrdDAO_interface{
 	private static final String SELECT = "SELECT * FROM ORD WHERE ORD_NO = ?";
 	//全部查詢
 	private static final String SELECT_ALL = "SELECT * FROM ORD";
+	//狀態修改
+	private static final String UPDATA_STATUS = "UPDATE ORD SET   ORD_STATUS = ? WHERE ORD_NO = ?";
 	
     static {
     	try {
@@ -282,6 +284,56 @@ public class OrdJDBCDAO implements OrdDAO_interface{
 		}
 		return ordVOList;
 	}
+	
+	@Override
+	public int updataStatus(String ord_no,String ord_status) {
+		Connection con = null; 
+		PreparedStatement ps = null;
+		int count = 0;
+		Statement stmt = null;
+		try {
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			System.out.println("ord_no" + ord_no);
+			System.out.println("ord_status" +ord_status);
+			System.out.println("有近來");
+			ps = con.prepareStatement(UPDATA_STATUS);
+			ps.setString(1, ord_status);
+			ps.setString(2, ord_no);
+			
+			count = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}finally {
+			if(ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return count;
+	}
+	
 	@Override
 	public String insertWithOrdds(OrdVO ordVO, List<OrddetailsVO> list) {
 		
@@ -381,33 +433,34 @@ public class OrdJDBCDAO implements OrdDAO_interface{
 		}
 	    return next_ord_no;
 	}
-	public static void main (String[] args) {
-		OrdJDBCDAO ordDAO = new OrdJDBCDAO();
-		
-		//新增
-		OrdVO ordVO = new OrdVO();
-		//ordVO.setOrd_no(ord_no); 自動
-		ordVO.setMem_no("M001");//需要抓取會員編號
-		//ordVO.setOrd_date(new java.sql.Timestamp); 自動 
-		ordVO.setOrd_deldate(null);
-		ordVO.setOrd_status("待出貨");
-		ordVO.setOrd_backdeldate(null);
-		ordVO.setOrd_amount(9999);
-		ordVO.setOrd_backamount(10);
-
-		
-		List<OrddetailsVO> testList = new ArrayList<OrddetailsVO>(); // 準備置入訂單數量
-		OrddetailsVO orddetailsVO_1 = new OrddetailsVO();
-		orddetailsVO_1.setPro_no("P001");//需要抓取商品編號
-		orddetailsVO_1.setOrd_probonuns(666);
-		orddetailsVO_1.setPro_count(777);
-		
-		testList.add(orddetailsVO_1);
-		
-		ordDAO.insertWithOrdds( ordVO, testList);
-		
-
-	}
+//	public static void main (String[] args) {
+//		OrdJDBCDAO ordDAO = new OrdJDBCDAO();
+//		
+//		//新增
+//		OrdVO ordVO = new OrdVO();
+//		//ordVO.setOrd_no(ord_no); 自動
+//		ordVO.setMem_no("M001");//需要抓取會員編號
+//		//ordVO.setOrd_date(new java.sql.Timestamp); 自動 
+//		ordVO.setOrd_deldate(null);
+//		ordVO.setOrd_status("待出貨");
+//		ordVO.setOrd_backdeldate(null);
+//		ordVO.setOrd_amount(9999);
+//		ordVO.setOrd_backamount(10);
+//
+//		
+//		List<OrddetailsVO> testList = new ArrayList<OrddetailsVO>(); // 準備置入訂單數量
+//		OrddetailsVO orddetailsVO_1 = new OrddetailsVO();
+//		orddetailsVO_1.setPro_no("P001");//需要抓取商品編號
+//		orddetailsVO_1.setOrd_probonuns(666);
+//		orddetailsVO_1.setPro_count(777);
+//		
+//		testList.add(orddetailsVO_1);
+//		
+//		ordDAO.insertWithOrdds( ordVO, testList);
+//		
+//
+//	}
+	
     
     
 }
