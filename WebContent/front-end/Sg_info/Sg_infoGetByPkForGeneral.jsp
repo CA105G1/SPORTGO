@@ -7,7 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
-<title>Sg_infoGetByPkForJoinMem</title>
+<title>Sg_infoGetByPkForGeneral</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -48,15 +48,11 @@
 
 
 <% 
-Sg_infoService svc = new Sg_infoService();
-Sg_infoVO vo = svc.GetByPK("S002");
-MemberlistService memsvc = new MemberlistService();
-MemberlistVO memberlistVO = memsvc.getOneMem("M002");
-
-
-// 	Sg_infoVO vo = (Sg_infoVO)request.getAttribute("Sg_infoVO");
-	pageContext.setAttribute("Sg_infoVO", vo);
-// 	MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO");
+	Sg_infoVO vo = (Sg_infoVO)request.getAttribute("Sg_infoVO");	
+	if(vo == null){vo = (Sg_infoVO)session.getAttribute("Sg_infoVO");}
+    
+    MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO");
+System.out.println("memberlistVO= "+memberlistVO);
 %>
 
 <div class="container">
@@ -84,11 +80,12 @@ MemberlistVO memberlistVO = memsvc.getOneMem("M002");
 								<i class="glyphicon glyphicon-circle-arrow-left icon-large brown backToList"></i>  <!-- 返回按鍵 -->
 								<a href="<%= request.getContextPath()%>/front-end/Sg_info/SgHome.jsp" display="none" id="linkBack">回到揪團首頁</a>
 								
-								<caption class="text-center">我是Sg_infoGetByPkForJoinMem</caption>
+								<caption class="text-center">我是Sg_infoGetByPkForGeneral</caption>
 								<tbody>
 									<tr>  <!-------- 照片 -------->
 										<td colspan="2">
 											<img id="showPic" class="img-responsive" src="<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${Sg_infoVO.sg_no}">
+											<div class="uploadPic"></div><br>
 										</td>
 									</tr>
 									<tr>
@@ -193,9 +190,9 @@ MemberlistVO memberlistVO = memsvc.getOneMem("M002");
 				加入收藏
 			</div>
 			
-			<div class="btn" id="outbtn">
-				<img src="<%= request.getContextPath()%>/img/exit.png">
-				退出揪團
+			<div class="btn" id="joinbtn">
+				<img src="<%= request.getContextPath()%>/img/add.png">
+				加入揪團
 			</div>
 			
 			<div class="btn" id="sharebtn">
@@ -219,7 +216,6 @@ MemberlistVO memberlistVO = memsvc.getOneMem("M002");
 <script type="text/javascript">
 		
 		
-	  
 	//google map設定
 	var map;
 	function initMap(){
@@ -238,15 +234,9 @@ MemberlistVO memberlistVO = memsvc.getOneMem("M002");
 		var loc_start = <%=vo.getLoc_start()%>;
 		var loc_end = <%=vo.getLoc_end()%>;
 		if(loc_start == null || loc_end == null){
-			//若沒有路線資料則設定場館位置
-			var v_lat = parseFloat("${venueSvc.getOneVenue(Sg_infoVO.v_no).v_lat}");
-			var v_long = parseFloat("${venueSvc.getOneVenue(Sg_infoVO.v_no).v_long}");
-			map = new google.maps.Map(document.getElementById('map'), {
-				center: {lat: v_lat, lng: v_long},
-				zoom:14
-			});
+			//若沒有路線資料則設定本機定位(之後改成場館位置)////////////////////////////////////////////////////////////////
 			var marker = new google.maps.Marker({
-	   			position: {lat: v_lat, lng: v_long},
+	   			position: loc,
 	   			map: map,
 	   			animation: google.maps.Animation.DROP,
 	   			draggable: false
@@ -263,7 +253,7 @@ MemberlistVO memberlistVO = memsvc.getOneMem("M002");
 	        var request = {
 	         origin: loc_start,
 	         destination: loc_end,
-	         travelMode: 'WALKING' //腳踏車模式無法使用?
+	         travelMode: 'DRIVING' //腳踏車模式無法使用?
 	        };
 	        // 繪製路線
 	        directionsService.route(request,function(result, status){
@@ -280,6 +270,34 @@ MemberlistVO memberlistVO = memsvc.getOneMem("M002");
 		
 	} //myLoc
 	  
+	///////4按鍵若尚未登入之設定//////////
+	<%if(memberlistVO == null){
+		session.setAttribute("location", request.getRequestURI());%>
+		$(".like").click(function(){
+			<%
+// 			session.setAttribute("isLoginRedirect", true); //設定旗標
+	 		session.setAttribute("Sg_infoVO", vo);%> //原頁面VO由session帶著去跟回
+			document.location.href="<%= request.getContextPath()%>/front-end/memberlist/Login.jsp";
+			return;
+		});
+		$("#joinbtn").click(function(){
+			<%
+// 			session.setAttribute("isLoginRedirect", true); //設定旗標
+	 		session.setAttribute("Sg_infoVO", vo);%> //原頁面VO由session帶著去跟回
+			document.location.href="<%= request.getContextPath()%>/front-end/memberlist/Login.jsp";
+			return;
+		});
+		$("#sharebtn").click(function(){
+			document.location.href="<%= request.getContextPath()%>/front-end/memberlist/Login.jsp";
+		});
+		$("#repbtn").click(function(){
+			<%
+// 			session.setAttribute("isLoginRedirect", true); //設定旗標
+	 		session.setAttribute("Sg_infoVO", vo);%> //原頁面VO由session帶著去跟回
+			document.location.href="<%= request.getContextPath()%>/front-end/memberlist/Login.jsp";
+			return;
+		});
+	<%}else{%>
 		/////////////////收藏按鍵設定////////////////////////
 		//若該會員有收藏該揪團則顯示實心
 		<% Sg_likeService likesvc = new Sg_likeService();%>
@@ -325,25 +343,25 @@ MemberlistVO memberlistVO = memsvc.getOneMem("M002");
 		});
 		//////////////////加入揪團按鍵設定///////////////////////////
 		//重複加入的錯誤處理還沒做////////////////////////////////////
-		$("#outbtn").click(function(){
+		$("#joinbtn").click(function(){
 			swal({
-			  title: "確定退出?", type: "warning", showCancelButton: true, showCloseButton: true,
+			  title: "成功加入!", html: "馬上到我的揪團查看", type: "success", showCancelButton: true, showCloseButton: true,
 			}).then(
 				function (result) {
 				if(result){
 					document.location.href="https://sweetalert.js.org/guides/#advanced-examples";
-					$.ajax({
-						type: "POST",
-						url: "<%= request.getContextPath()%>/Sg_mem/Sg_mem.do",
-						data: {"action" : "delete", "sg_no" : "<%= vo.getSg_no()%>", "mem_no" : "<%= memberlistVO.getMem_no()%>"},
-						dataType: "json",
-						error: function(){
-							alert("發生錯誤!");
-						},
-						success: function(data){
-							
-						}
-					});
+				}
+			});
+			$.ajax({
+				type: "POST",
+				url: "<%= request.getContextPath()%>/Sg_mem/Sg_mem.do",
+				data: {"action" : "insert", "sg_no" : "<%= vo.getSg_no()%>", "mem_no" : "<%= memberlistVO.getMem_no()%>"},
+				dataType: "json",
+				error: function(){
+					alert("發生錯誤!");
+				},
+				success: function(data){
+					
 				}
 			});
 		});
@@ -394,6 +412,9 @@ MemberlistVO memberlistVO = memsvc.getOneMem("M002");
 		
 		
 		
+	<%}%> //else
+	
+	
 	
 	
 

@@ -379,7 +379,7 @@ public class Sg_infoServlet extends HttpServlet {
 				Sg_infoVO vo = svc.GetByPK(sg_no);
 				
 				req.setAttribute("Sg_infoVO", vo);
-				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/Sg_info/Sg_infoGetByPk.jsp");
+				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/Sg_info/Sg_infoGetByPkForGeneral.jsp");
 				dispatcher.forward(req, res);
 				
 			}catch(Exception e) {

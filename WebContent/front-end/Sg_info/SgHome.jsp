@@ -43,6 +43,8 @@ if(list == null){
     	cursor: pointer;
     	box-shadow: 0 3px #999;
     	background-color: lightpink;
+    	width:100%;
+    	height:240px;
     }
     .sg_infoList:active {
 	  	box-shadow: 0 1px #666;

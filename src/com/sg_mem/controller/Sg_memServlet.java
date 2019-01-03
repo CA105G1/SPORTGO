@@ -28,15 +28,12 @@ public class Sg_memServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		PrintWriter pw = res.getWriter();
 		
-System.out.println("11111");
 		if("insert".equals(action)) {
 			Map<String, String> errorMsg = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsg", errorMsg);
 			
 			String sg_no = req.getParameter("sg_no");
 			String mem_no = req.getParameter("mem_no");
-System.out.println("sg_no="+sg_no);
-System.out.println("mem_no="+mem_no);
 			
 			Sg_memService svc = new Sg_memService();
 			svc.insertSg_mem(sg_no, mem_no);
@@ -50,6 +47,29 @@ System.out.println("mem_no="+mem_no);
 			}
 			pw.write(obj.toString());
 		}
+		
+		
+		
+		if("delete".equals(action)) {
+			Map<String, String> errorMsg = new LinkedHashMap<String, String>();
+			req.setAttribute("errorMsg", errorMsg);
+			
+			String sg_no = req.getParameter("sg_no");
+			String mem_no = req.getParameter("mem_no");
+			
+			Sg_memService svc = new Sg_memService();
+			svc.deleteSg_mem(sg_no, mem_no);
+			
+			JSONObject obj = new JSONObject();
+			try {
+				obj.put("answer", "OK!");
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			pw.write(obj.toString());
+		}
+		
 		
 		
 		

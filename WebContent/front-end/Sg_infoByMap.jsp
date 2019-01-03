@@ -46,7 +46,7 @@ function myLoc(pos){
 	  center: loc,
 	  radius: 2000,
 	  strokeOpacity: 0,
-	  fillColor: '#f00',
+	  fillColor: '#76A2DC',
 	  fillOpacity: 0.35,
 	  map: map
 	});

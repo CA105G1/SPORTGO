@@ -22,6 +22,9 @@
 	th{
 		text-align:center;
 	}
+	td{
+		width: 65%;
+	}
 	.backToList{
 		cursor: pointer;
 	}
