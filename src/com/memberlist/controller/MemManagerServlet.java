@@ -32,6 +32,7 @@ public class MemManagerServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		HttpSession session = req.getSession();
 		MemberlistVO memberlistVO = null;
+		String mem_no = null;
 		MemberlistService service = new MemberlistService();
 		Map<String,String> errorMsgs = new LinkedHashMap<>();
 		req.setAttribute("errorMsgs", errorMsgs);
@@ -43,7 +44,7 @@ public class MemManagerServlet extends HttpServlet {
 			res.sendRedirect("Login.jsp");
 		}
 		String action = req.getParameter("action");
-		String mem_no = memberlistVO.getMem_no();
+		mem_no = memberlistVO.getMem_no();
 		
 		/****後台管理員只查一筆會員資料****/
 		if("getOne_For_Display".equals(action)) {
@@ -53,6 +54,8 @@ public class MemManagerServlet extends HttpServlet {
 			listall.forward(req, res);
 			return;
 		}
+		
+		/****前台更新會員資料****/
 		if("Member_renew".equals(action)) {
 			/****接受請求參數,錯誤驗證****/
 			/****修改會員照片****/
@@ -143,7 +146,60 @@ public class MemManagerServlet extends HttpServlet {
 			}
 		} 
 	
+		/****前台更新信用卡資料****/
+		if("renew_Card".equals(action)){
+			/*****接受請求參數 錯誤驗證******/
+		String card	= (String) req.getParameter("card");
+		String expiry1 = (String) req.getParameter("expiry1");
+		String expiry2 = (String) req.getParameter("expiry2");
+		if(card==null||expiry1==null||expiry2==null) {
+			res.sendRedirect("Creditcard.jsp");
+		}
+		if("".equals(card)||(card.trim()).length()==0) {
+			errorMsgs.put(card, "卡號欄位必填");
+		}
+		if(card.length()!=16) {
+			errorMsgs.put(card, "卡號長度不符");
+		}
+		if("".equals(expiry1)||(expiry1.trim()).length()==0){
+			errorMsgs.put(expiry1,"到期年份必填");
+		}
+		if("".equals(expiry2)||(expiry2.trim()).length()==0){
+			errorMsgs.put(expiry2,"到期月份必填");
+		}
 		
+		if(!errorMsgs.isEmpty()) {
+			req.setAttribute("mem_card", card);
+			req.setAttribute("expiry1", expiry1);
+			req.setAttribute("expiry2", expiry2);
+			RequestDispatcher error = req.getRequestDispatcher("Creditcard.jsp");
+			error.forward(req, res);
+			return;
+		}
+		
+		/****永續層存取,更新信用卡資料****/
+		if(card!=null&&expiry1!=null&&expiry2!=null) {
+			String expiry = expiry1+expiry2;
+			try {
+				service.renewCard(mem_no, card, expiry);
+				System.out.println("信用卡新增成功");
+			}catch(RuntimeException re) {
+				re.printStackTrace(System.err);
+				errorMsgs.put("creditcard", "輸入的卡號有誤");
+				RequestDispatcher donothing = req.getRequestDispatcher("Creditcard.jsp");
+				donothing.forward(req, res);
+			}
+		}
+		/****更新完成準備轉交****/
+		if(errorMsgs.isEmpty()) {
+			memberlistVO = service.getOneMem(mem_no);
+			session.setAttribute("memberlistVO", memberlistVO);
+			RequestDispatcher dosomething = req.getRequestDispatcher("Creditcard.jsp");
+			dosomething.forward(req, res);
+		}
+		
+		
+		}
 	
 	}
 }

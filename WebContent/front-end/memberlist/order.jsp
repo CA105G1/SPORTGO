@@ -2,11 +2,6 @@
 <%@ page import = "com.memberlist.model.*" %>
 
 <% 
-	String action = (String) request.getAttribute("action");
-// 	if(action == null)
-// 		pageContext.setAttribute("action", "");
-// 	else
-		pageContext.setAttribute("action", action);
 %>
 <!DOCTYPE html>
 <html lang="">
@@ -29,7 +24,7 @@
 		</style>
 	</head>
 	<body>
-		<jsp:include page="/front-end/SportyGo_Header.html"/>
+		<%@ include file="/front-end/CA105G1_header.file"%>
 		
 		<!-- 右選單 -->
 		<div class="container-fluid">
@@ -39,7 +34,8 @@
 				</div>
 				<div class="col-xs-12 col-sm-9 tab-content">
 				<!-- 訂單管理 -->
-				訂單
+				<a class="btn btn-info" href="Creditcard.jsp">信用卡</a>
+				
 				
 				
 				
@@ -48,35 +44,6 @@
 		</div>
 	<jsp:include page="/front-end/SportyGo_Footer.html"/>
 	<script>
-	var action = "${action}";
-	
-	$(function(){
-	    $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
-	        localStorage.setItem('activeTab', $(e.target).attr('href'));
-	    })
-
-	    var hash = window.location.hash;
-	    var activeTab = localStorage.getItem('activeTab');
-
-	    if(hash){
-	          $('#project-tabs  a[href="' + hash + '"]').tab('show');   
-	    }else if (activeTab){
-	        $('#project-tabs a[href="' + activeTab + '"]').tab('show');
-	    }
-	    
-	    changePage();
-	});
-	
-	function changePage(){
-		console.log(action);
-		if(action === 'Member_renew'){
-			$('#myTab').find('a[href="#renew"]').trigger('click');
-		} else if(action === ''){
-			
-		} else {
-			$('#myTab').find('a[href="#mem"]').trigger('click');
-		}
-	}
 	</script>
 	</body>
 </html>
