@@ -51,18 +51,18 @@
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="#"><i class="glyphicon glyphicon-shopping-cart"></i> 商城 </a></li>
 					<li>
-						<c:if test="${MemberlistVO==null || MemberlistVO.mem_pswd==null}">
+						<c:if test="${memberlistVO==null}">
 							<a href="#">訪客，您好</a>
 						</c:if>
-						<c:if test="${!(MemberlistVO==null || MemberlistVO.mem_pswd==null)}">
-							<a href="#">${MemberlistVO.mem_name}，您好</a>
+						<c:if test="${!(memberlistVO==null)}">
+							<a href="#">${memberlistVO.mem_name}，您好</a>
 						</c:if>
 					</li>
 					<li>
-						<c:if test="${MemberlistVO==null || MemberlistVO.mem_pswd==null}">
+						<c:if test="${memberlistVO==null}">
 							<a href="<%=request.getContextPath()%>/front-end/memberlist/Login.jsp">登入/註冊</a>
 						</c:if>
-						<c:if test="${!(MemberlistVO==null || MemberlistVO.mem_pswd==null)}">
+						<c:if test="${!(memberlistVO==null)}">
 							<a href="<%=request.getContextPath()%>/front-end/memberlist/logout.do">登出</a>
 						</c:if>
 					</li>
