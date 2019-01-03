@@ -66,8 +66,8 @@ public class Sg_infoService_android {
 		return vo;
 	}
 	
-	public void deleteSg_info(String sg_no) {
-		dao.delete(sg_no);
+	public void cancelSG(String sg_no) {
+		dao.cancel(sg_no);
 	}
 	
 	
@@ -83,6 +83,11 @@ public class Sg_infoService_android {
 	
 	public List<Sg_info> getByMem(String mem_no) {
 		return dao.findByMem(mem_no);
+		
+	}
+	
+	public List<Sg_info> getByLike(String mem_no) {
+		return dao.findByLike(mem_no);
 		
 	}
 	

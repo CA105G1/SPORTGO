@@ -20,7 +20,7 @@ public class Sg_memDAO_android implements Sg_memDAO_interface_android{
 	private static final String UPDATE =
 			"UPDATE sg_mem SET ch_status=? where sg_no=? and mem_no=?";
 	private static final String DELETE =
-			"DELETE FROM sg_mem WHERE sg_no=? and mem_no=?";
+			"DELETE FROM SG_MEM WHERE SG_NO=? and MEM_NO=?";
 	private static final String FIND_BY_SG =
 			"SELECT SGM.* , SG.SG_NAME , M.MEM_NAME FROM SG_MEM SGM LEFT JOIN SG_INFO SG ON SGM.SG_NO = SG.SG_NO LEFT JOIN MEMBERLIST M ON SGM.MEM_NO = M.MEM_NO WHERE SGM.SG_NO =? ORDER BY SGM.MEM_NO";
 	private static final String FIND_BY_MEM =
@@ -31,7 +31,7 @@ public class Sg_memDAO_android implements Sg_memDAO_interface_android{
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource)ctx.lookup("java:comp/env/jdbc/CA105G1");
+			ds = (DataSource)ctx.lookup("java:comp/env/jdbc/CA105G1DB");
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

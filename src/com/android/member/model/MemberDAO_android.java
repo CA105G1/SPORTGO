@@ -22,7 +22,7 @@ public class MemberDAO_android implements MemberDAO_interface_android  {
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/CA105G1");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/CA105G1DB");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}

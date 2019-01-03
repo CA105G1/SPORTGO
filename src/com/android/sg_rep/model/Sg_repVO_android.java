@@ -3,7 +3,7 @@ package com.android.sg_rep.model;
 import java.io.Serializable;
 
 //揪團檢舉
-public class Sg_repVO implements Serializable{
+public class Sg_repVO_android implements Serializable{
 	
 	private String rep_no;
 	private String sg_no;
@@ -12,9 +12,19 @@ public class Sg_repVO implements Serializable{
 	private String rep_cont;//說明
 	private String rep_status;//狀態
 	
-	public Sg_repVO() {
-		super();
+	public Sg_repVO_android() {
+		
 	}
+
+	public Sg_repVO_android(String sg_no, String mem_no, String rep_type, String rep_cont) {
+		super();
+		this.sg_no = sg_no;
+		this.mem_no = mem_no;
+		this.rep_type = rep_type;
+		this.rep_cont = rep_cont;
+	}
+
+
 
 	public String getRep_no() {
 		return rep_no;

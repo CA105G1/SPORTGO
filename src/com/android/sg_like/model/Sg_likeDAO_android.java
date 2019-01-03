@@ -15,16 +15,16 @@ public class Sg_likeDAO_android implements Sg_likeDAO_interface_android{
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/CA105G1");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/CA105G1DB");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}	
 	
-	private static final String PUSH_LIKE = "INSERT INTO SG_LIKE VALUES (?,?)";
-	private static final String PUSH_DISLIKE = "DELETE FROM SG_LIKE WHERE MEM_NO = ? AND SG_NO = ?";
-	private static final String SG_WHO_LIKE = "SELECT MEM_NO FROM SG_LIKE WHERE SG_NO = ?";
-	private static final String LIKE_WHICH_SG = "SELECT SG_NO FROM SG_LIKE WHERE MEM_NO = ?";
+	private static final String LIKE = "INSERT INTO SG_LIKE VALUES (?,?)";
+	private static final String DISLIKE = "DELETE FROM SG_LIKE WHERE MEM_NO = ? AND SG_NO = ?";
+	private static final String	FIND_BY_SG = "SELECT * FROM SG_LIKE WHERE SG_NO = ?";
+	private static final String FIND_BY_MEM = "SELECT * FROM SG_LIKE WHERE MEM_NO = ?";
 	
 	//constructor
 	public Sg_likeDAO_android() {
@@ -40,7 +40,7 @@ public class Sg_likeDAO_android implements Sg_likeDAO_interface_android{
 		
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(PUSH_LIKE);
+			pstmt = con.prepareStatement(LIKE);
 			
 			pstmt.setString(1, sg_like.getSg_no());
 			pstmt.setString(2, sg_like.getMem_no());
@@ -78,7 +78,7 @@ public class Sg_likeDAO_android implements Sg_likeDAO_interface_android{
 		
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(PUSH_DISLIKE);
+			pstmt = con.prepareStatement(DISLIKE);
 			
 			pstmt.setString(1, sg_like.getMem_no());
 			pstmt.setString(2, sg_like.getSg_no());
@@ -109,7 +109,7 @@ public class Sg_likeDAO_android implements Sg_likeDAO_interface_android{
 	
 	//get all people who like this SG
 	@Override
-	public List<Sg_likeVO_android> Sg_getAll(String sg_no) {
+	public List<Sg_likeVO_android> findBySg(String sg_no) {
 		List<Sg_likeVO_android> likelist = new ArrayList<>();
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -117,7 +117,7 @@ public class Sg_likeDAO_android implements Sg_likeDAO_interface_android{
 		
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(SG_WHO_LIKE);
+			pstmt = con.prepareStatement(FIND_BY_SG);
 			pstmt.setString(1, sg_no);
 			
 			rs = pstmt.executeQuery();
@@ -161,7 +161,7 @@ public class Sg_likeDAO_android implements Sg_likeDAO_interface_android{
 	
 	//get member likes SG list
 	@Override
-	public List<Sg_likeVO_android> Mem_getAll(String mem_no) {
+	public List<Sg_likeVO_android> findByMem(String mem_no) {
 		List<Sg_likeVO_android> likelist = new ArrayList<>();
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -169,13 +169,15 @@ public class Sg_likeDAO_android implements Sg_likeDAO_interface_android{
 		
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(LIKE_WHICH_SG);
+			pstmt = con.prepareStatement(FIND_BY_MEM);
 			
 			pstmt.setString(1, mem_no);
 			rs = pstmt.executeQuery();
+			
 			while(rs.next()) {
 				Sg_likeVO_android memlike = new Sg_likeVO_android();
 				memlike.setSg_no(rs.getString("sg_no"));
+				memlike.setMem_no(rs.getString("Mem_no"));
 				likelist.add(memlike);
 			}
 			

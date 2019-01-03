@@ -55,6 +55,11 @@ public class SgInfoServlet_android extends HttpServlet {
 			List<Sg_info> sgList = service.getAll();
 			writeText(res, gson.toJson(sgList));
 			
+		} else if ("deleteSG".equals(action)) {
+			String sg_no = jsonObject.get("sg_no").getAsString();
+			service.cancelSG(sg_no);
+			writeText(res, "ok");
+			
 		} else if ("findBySp".equals(action)) {
 			String sp_no = jsonObject.get("sp_no").getAsString();
 			List<Sg_info> sgList = service.getBySP(sp_no);
@@ -63,6 +68,11 @@ public class SgInfoServlet_android extends HttpServlet {
 		} else if ("findByMem".equals(action)) {
 			String mem_no = jsonObject.get("mem_no").getAsString();
 			List<Sg_info> sgList = service.getByMem(mem_no);
+			writeText(res, gson.toJson(sgList));
+			
+		} else if ("findByLike".equals(action)) {
+			String mem_no = jsonObject.get("mem_no").getAsString();
+			List<Sg_info> sgList = service.getByLike(mem_no);
 			writeText(res, gson.toJson(sgList));
 			
 		} else if ("getPic".equals(action)) {
