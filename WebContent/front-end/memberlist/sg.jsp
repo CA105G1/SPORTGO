@@ -56,16 +56,20 @@
 							  pageContext.getAttribute("sgall");
 							%>
 							<c:forEach var="sg_memVO" items="${sg_mem}">
-								<div class="col-xs-12 col-sm-8">
-									<div class="list-group" id="myTab">
-										<c:forEach var="sgVO" items="${sgall}">
-											<c:if test="${sgVO.sg_no eq sg_memVO.sg_no}">
+								<c:forEach var="sgVO" items="${sgall}">
+									<c:if test="${sgVO.sg_no eq sg_memVO.sg_no}">
+										<div class="col-xs-12 col-sm-2">
+											<img src="<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${SgVO.sg_no}"
+											style="height:100%;width:100%;border-radius:50%;">
+										</div>
+										<div class="col-xs-12 col-sm-6">
+											<div class="list-group" id="myTab">
 												<a href="<%=request.getContextPath()%>/Sg_info/Sg_info.do?sg_no=${sgVO.sg_no}&action=getByPK" 
 												class="list-group-item">${sgVO.sg_name}</a>
-											</c:if>
-										</c:forEach>
-									</div>
-								</div>
+											</div>
+										</div>
+									</c:if>
+								</c:forEach>
 								<div class="col-xs-12 col-sm-2">
 									<div class="list-group" id="myTab">
 										<a href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp" class="list-group-item">評價</a>
@@ -85,7 +89,11 @@
 							<h1>已創建的揪團</h1>
 							<%pageContext.getAttribute("sglist");%>
 							<c:forEach var="sg_infoVO" items="${sglist}">
-								<div class="col-xs-12 col-sm-8">
+								<div class="col-xs-12 col-sm-2">
+									<img src="<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${sg_infoVO.sg_no}"
+									style="height:100%;width:100%;border-radius:50%;">
+								</div>
+								<div class="col-xs-12 col-sm-6">
 									<div class="list-group" id="myTab">
 										<a href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp" class="list-group-item">${sg_infoVO.sg_name}</a>
 									</div>

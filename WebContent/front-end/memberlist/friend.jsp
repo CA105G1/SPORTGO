@@ -30,6 +30,12 @@
 				font-size: xx-large;
 				color: red;
 			}
+			.grid-container{
+				grid-template-columns:auto auto auto auto auto;
+			}
+			.grid-item{
+			text-align:center;
+			}
 		</style>
 	</head>
 	<body>
@@ -41,32 +47,41 @@
 				<div class="col-xs-12 col-sm-3">
 					<jsp:include page="list_group.jsp"/>
 				</div>
-				<div class="col-xs-12 col-sm-9 tab-content">
+				<div class="col-xs-12 col-sm-9 grid-container" style="display:grid;">
 				<!-- 好友管理 -->
 					<c:forEach var="friend" items="${friendlist}">
 						<c:forEach var="member" items="${memberlist}">
 							<c:if test="${memberlistVO.mem_no eq friend.mem1_no}">
 								<c:if test="${friend.mem2_no eq member.mem_no}" >
+									<form method="post" action="Friend.do"  class="grid-item">
 									<a href="public_Member_page.jsp?mem_no=${member.mem_no}">
 									<img src="<%=request.getContextPath()%>
 									/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"
-									style="width:80px;height:80px;border-radius:50%;">
-									${member.mem_name}
+									style="width:80px;height:80px;border-radius:50%;"><br>
+									<label>${member.mem_name}</label><br>
+									<input type="hidden" name="action" value="delete_Friend">
+									<input type="hidden" name="mem2_no" value="${member.mem_no}">
+									<button type="submit" class="btn btn-danger">超堵爛你</button>
 									</a>
+									</form>
 								</c:if>
 							</c:if>
 							<c:if test="${memberlistVO.mem_no eq friend.mem2_no}">
 								<c:if test="${friend.mem1_no eq member.mem_no}" >
+									<form method="post" action="Friend.do"  class="grid-item">
 									<a href="public_Member_page.jsp?mem_no=${member.mem_no}">
 									<img src="<%=request.getContextPath()%>
 									/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"
-									style="width:80px;height:80px;border-radius:50%">
-									${member.mem_name}
+									style="width:80px;height:80px;border-radius:50%"><br>
+									<label>${member.mem_name}</label><br>
+									<input type="hidden" name="action" value="delete_Friend">
+									<input type="hidden" name="mem2_no" value="${member.mem_no}">
+									<button type="submit" class="btn btn-danger">超堵爛你</button>
 									</a>
+									</form>
 								</c:if>
 							</c:if>
 						</c:forEach>
-						<br>
 					</c:forEach>
 				</div>	
 			</div>

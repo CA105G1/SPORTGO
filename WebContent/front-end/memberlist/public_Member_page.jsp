@@ -69,7 +69,7 @@
 							<input type="hidden" name="action" value="add_Friend">
 							<input type="hidden" name="mem2_no" value="${member.mem_no}">
 							<input type="submit" class="btn btn-info"
-							 value="好友加加" >
+							 value="好友加加">
 						</form>
 					</div>
 					<div class="col-xs-12 col-sm-2">
