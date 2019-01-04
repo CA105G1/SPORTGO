@@ -67,6 +67,18 @@ public class MemberlistService {
 		return dao.findSgByMem(mem_no);
 	}
 	
+	public List<Sg_infoVO> getHisSgHostByMem(String mem_no) {
+		return dao.findHisSgByMem(mem_no);
+	}
+	
+	public List<Sg_infoVO> getAllHisSg() {
+		return dao.findAllHisSg();
+	}
+	
+	public List<Sg_infoVO> getAllSg() {
+		return dao.findAllSg();
+	}
+	
 	public List<Sg_memVO> getSgPartByMem(String mem_no) {
 		return dao.findPartByMem(mem_no);
 	}

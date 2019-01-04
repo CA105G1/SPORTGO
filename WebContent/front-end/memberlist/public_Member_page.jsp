@@ -51,7 +51,7 @@
 		</style>
 	</head>
 	<body>
-		<%@ include file="/front-end/CA105G1_header.file"%>
+<%-- 		<%@ include file="/front-end/CA105G1_header.file"%> --%>
 		<div class="container-fluid">
 		</div>
 

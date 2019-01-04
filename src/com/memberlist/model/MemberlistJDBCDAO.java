@@ -513,5 +513,23 @@ public class MemberlistJDBCDAO implements MemberlistDAO_interface  {
 		return null;
 	}
 
+	@Override
+	public List<Sg_infoVO> findHisSgByMem(String mem_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Sg_infoVO> findAllSg() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Sg_infoVO> findAllHisSg() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }

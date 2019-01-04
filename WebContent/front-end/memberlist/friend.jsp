@@ -6,6 +6,8 @@
 <%
 	MemberlistService service = new MemberlistService();
 	List<FriendVO> friendlist =(List<FriendVO>)request.getAttribute("friendlist");
+	List<FriendVO> possiblefriend =(List<FriendVO>)request.getAttribute("possiblefriend");
+	List<FriendVO> whoaddme =(List<FriendVO>)request.getAttribute("whoaddme");
 	List<MemberlistVO> memberlist = service.getAllMem();
 	if(friendlist==null)
 		response.sendRedirect("Login.jsp");
@@ -31,7 +33,7 @@
 				color: red;
 			}
 			.grid-container{
-				grid-template-columns:auto auto auto auto auto;
+				grid-template-columns:repeat(8,12.5%);
 			}
 			.grid-item{
 			text-align:center;
@@ -47,45 +49,92 @@
 				<div class="col-xs-12 col-sm-3">
 					<jsp:include page="list_group.jsp"/>
 				</div>
-				<div class="col-xs-12 col-sm-9 grid-container" style="display:grid;">
+				<div class="col-xs-12 col-sm-9">
 				<!-- 好友管理 -->
+				<h1>我的捧油</h1><br>
+				<div class="grid-container" style="display:grid;">
 					<c:forEach var="friend" items="${friendlist}">
 						<c:forEach var="member" items="${memberlist}">
 							<c:if test="${memberlistVO.mem_no eq friend.mem1_no}">
 								<c:if test="${friend.mem2_no eq member.mem_no}" >
 									<form method="post" action="Friend.do"  class="grid-item">
-									<a href="public_Member_page.jsp?mem_no=${member.mem_no}">
-									<img src="<%=request.getContextPath()%>
-									/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"
-									style="width:80px;height:80px;border-radius:50%;"><br>
-									<label>${member.mem_name}</label><br>
-									<input type="hidden" name="action" value="delete_Friend">
-									<input type="hidden" name="mem2_no" value="${member.mem_no}">
-									<button type="submit" class="btn btn-danger">超堵爛你</button>
-									</a>
+										<a href="public_Member_page.jsp?mem_no=${member.mem_no}">
+											<img src="<%=request.getContextPath()%>
+											/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"
+											style="width:80px;height:80px;border-radius:50%;"><br>
+											<label>${member.mem_name}</label><br>
+											<input type="hidden" name="action" value="delete_Friend">
+											<input type="hidden" name="mem2_no" value="${member.mem_no}">
+											<button type="submit" class="btn btn-danger">超堵爛你</button>
+										</a>
 									</form>
 								</c:if>
 							</c:if>
 							<c:if test="${memberlistVO.mem_no eq friend.mem2_no}">
 								<c:if test="${friend.mem1_no eq member.mem_no}" >
 									<form method="post" action="Friend.do"  class="grid-item">
-									<a href="public_Member_page.jsp?mem_no=${member.mem_no}">
-									<img src="<%=request.getContextPath()%>
-									/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"
-									style="width:80px;height:80px;border-radius:50%"><br>
-									<label>${member.mem_name}</label><br>
-									<input type="hidden" name="action" value="delete_Friend">
-									<input type="hidden" name="mem2_no" value="${member.mem_no}">
-									<button type="submit" class="btn btn-danger">超堵爛你</button>
-									</a>
+										<a href="public_Member_page.jsp?mem_no=${member.mem_no}">
+											<img src="<%=request.getContextPath()%>
+											/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"
+											style="width:80px;height:80px;border-radius:50%"><br>
+											<label>${member.mem_name}</label><br>
+											<input type="hidden" name="action" value="delete_Friend">
+											<input type="hidden" name="mem2_no" value="${member.mem_no}">
+											<button type="submit" class="btn btn-danger">超堵爛你</button>
+										</a>
 									</form>
 								</c:if>
 							</c:if>
 						</c:forEach>
 					</c:forEach>
-				</div>	
-			</div>
+				</div>
+				<h1>捧油拜託加加</h1><br>
+				<div class="grid-container" style="display:grid;">
+					<c:forEach var="friend" items="${possiblefriend}">
+						<c:forEach var="member" items="${memberlist}">
+							<c:if test="${memberlistVO.mem_no eq friend.mem1_no}">
+								<c:if test="${friend.mem2_no eq member.mem_no}" >
+									<form method="post" action="Friend.do"  class="grid-item">
+										<a href="public_Member_page.jsp?mem_no=${member.mem_no}">
+											<img src="<%=request.getContextPath()%>
+											/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"
+											style="width:80px;height:80px;border-radius:50%;"><br>
+											<label>${member.mem_name}</label><br>
+											<input type="hidden" name="action" value="delete_Friend">
+											<input type="hidden" name="mem2_no" value="${member.mem_no}">
+											<button type="submit" class="btn btn-danger">超堵爛你</button>
+										</a>
+									</form>
+								</c:if>
+							</c:if>
+						</c:forEach>
+					</c:forEach>
+				</div>
+				<h1>哪些捧油誰想加我呀</h1><br>
+				<div class="grid-container" style="display:grid;">
+					<c:forEach var="friend" items="${whoaddme}">
+						<c:forEach var="member" items="${memberlist}">
+							<c:if test="${memberlistVO.mem_no eq friend.mem2_no}">
+								<c:if test="${friend.mem1_no eq member.mem_no}" >
+									<form method="post" action="Friend.do"  class="grid-item">
+										<a href="public_Member_page.jsp?mem_no=${member.mem_no}">
+											<img src="<%=request.getContextPath()%>
+											/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"
+											style="width:80px;height:80px;border-radius:50%;"><br>
+											<label>${member.mem_name}</label><br>
+											<input type="hidden" name="action" value="update_Friend">
+											<input type="hidden" name="mem2_no" value="${member.mem_no}">
+											<button type="submit" class="btn btn-info">來～加加</button>
+										</a>
+									</form>
+								</c:if>
+							</c:if>
+						</c:forEach>
+					</c:forEach>
+				</div>
+			</div>	
 		</div>
+	</div>
 	<jsp:include page="/front-end/SportyGo_Footer.html"/>
 	<script>
 	

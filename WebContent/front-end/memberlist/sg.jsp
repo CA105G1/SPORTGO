@@ -5,18 +5,9 @@
 <%@ page import = "java.util.*" %>
 <%@ taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core"%>
 <%
-	MemberlistService service = new MemberlistService();
-	Sg_infoService sgservice = new Sg_infoService();
-	session = request.getSession();
-	String mem_no = (String)session.getAttribute("mem_no");
-	List<Sg_infoVO> sglist = service.getSgHostByMem(mem_no);
-	pageContext.setAttribute("sglist",sglist);
-	List<Sg_memVO> sgmemlist = service.getSgPartByMem(mem_no);
-	pageContext.setAttribute("sg_mem",sgmemlist);
-	List<Sg_infoVO> sgall = sgservice.getAll();
-	pageContext.setAttribute("sgall",sgall);
 	session.setAttribute("loaction",request.getRequestURI());
 %>
+<jsp:useBean id="memberlistService" class="com.memberlist.model.MemberlistService"/>
 <!DOCTYPE html>
 <html lang="">
 	<head>
@@ -35,6 +26,12 @@
 				font-size: xx-large;
 				color: red;
 			}
+			.grid-container{
+				grid-template-columns:20% 40% 20%;
+				grid-gap:20px;
+				padding:15px;
+				text-algin:center;
+			}
 		</style>
 	</head>
 	<body>
@@ -46,69 +43,94 @@
 				<div class="col-xs-12 col-sm-3">
 					<jsp:include page="list_group.jsp"/>
 				</div>
-				<div class="col-xs-12 col-sm-9 tab-content">
+				<div class="col-xs-12 col-sm-9">
 				<!-- 揪團管理 -->
 					<h1>${memberlistVO.mem_name}</h1>
 					<div class="container">
 						<div class="row">
-							<h1>已參加的揪團</h1>
-							<%pageContext.getAttribute("sg_mem");
-							  pageContext.getAttribute("sgall");
-							%>
-							<c:forEach var="sg_memVO" items="${sg_mem}">
-								<c:forEach var="sgVO" items="${sgall}">
-									<c:if test="${sgVO.sg_no eq sg_memVO.sg_no}">
-										<div class="col-xs-12 col-sm-2">
-											<img src="<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${SgVO.sg_no}"
-											style="height:100%;width:100%;border-radius:50%;">
-										</div>
-										<div class="col-xs-12 col-sm-6">
-											<div class="list-group" id="myTab">
-												<a href="<%=request.getContextPath()%>/Sg_info/Sg_info.do?sg_no=${sgVO.sg_no}&action=getByPK" 
-												class="list-group-item">${sgVO.sg_name}</a>
-											</div>
-										</div>
-									</c:if>
+							<h1>即將到來的揪團</h1>
+							<div class="grid-container" style="display:grid;">
+								<c:forEach var="sg_memVO" items="${sg_mem}">
+									<c:forEach var="sg_infoVO" items="${sgall}">
+											<c:if test="${sg_infoVO.sg_no eq sg_memVO.sg_no}">
+												<img src="<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${sg_infoVO.sg_no}"
+												style="height:100%;width:100%;border-radius:50%;">
+												<a href="<%=request.getContextPath()%>/Sg_info/Sg_info.do?sg_no=${sg_infoVO.sg_no}&action=getByPK" 
+												class="list-group-item" style="display:flex;">
+												${sg_infoVO.sg_name}<br>
+											 	團長：${memberlistService.getOneMem(sg_infoVO.mem_no).mem_name}<br>
+											 	時間：${sg_infoVO.sg_date}<br>
+												</a>
+												<a href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp"
+												class="list-group-item" style="display:flex;">評價</a>
+											</c:if>
+									</c:forEach>
 								</c:forEach>
-								<div class="col-xs-12 col-sm-2">
-									<div class="list-group" id="myTab">
-										<a href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp" class="list-group-item">評價</a>
-									</div>
-								</div>
-								<div class="col-xs-12 col-sm-2">
-									<div class="list-group" id="myTab">
-										<a href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp" class="list-group-item">檢舉</a>
-									</div>
-								</div>
-							</c:forEach>
+							</div>
 						</div>
 					</div>
 					
 					<div class="container">
 						<div class="row">
-							<h1>已創建的揪團</h1>
-							<%pageContext.getAttribute("sglist");%>
-							<c:forEach var="sg_infoVO" items="${sglist}">
-								<div class="col-xs-12 col-sm-2">
-									<img src="<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${sg_infoVO.sg_no}"
-									style="height:100%;width:100%;border-radius:50%;">
-								</div>
-								<div class="col-xs-12 col-sm-6">
-									<div class="list-group" id="myTab">
-										<a href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp" class="list-group-item">${sg_infoVO.sg_name}</a>
-									</div>
-								</div>
-								<div class="col-xs-12 col-sm-2">
-									<div class="list-group" id="myTab">
-										<a href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp" class="list-group-item">評價</a>
-									</div>
-								</div>
-								<div class="col-xs-12 col-sm-2">
-									<div class="list-group" id="myTab">
-										<a href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp" class="list-group-item">檢舉</a>
-									</div>
-								</div>
-							</c:forEach>
+							<h1>即將到來的我的揪團</h1>
+							<div class="grid-container" style="display:grid;">
+								<c:forEach var="sg_infoVO" items="${sglist}">
+										<img src="<%= request.getContextPath()%>
+										/Sg_info/Sg_infoImg.do?sg_no=${sg_infoVO.sg_no}" style="height:100%;width:100%;border-radius:50%;">
+										<a href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp"
+										 class="list-group-item" style="display:flex;">
+										 ${sg_infoVO.sg_name}<br>
+										 團長：${memberlistService.getOneMem(sg_infoVO.mem_no).mem_name}<br>
+										 時間：${sg_infoVO.sg_date}<br>
+										</a>
+										<a href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp"
+										class="list-group-item" style="display:flex;">評價</a>
+								</c:forEach>
+							</div>
+						</div>
+					</div>
+					
+					<div class="container">
+						<div class="row">
+							<h1>我參加過的揪團</h1>
+							<div class="grid-container" style="display:grid;">
+								<c:forEach var="sg_memVO" items="${sg_mem}">
+									<c:forEach var="sg_infoVO" items="${sghisall}">
+											<c:if test="${sg_infoVO.sg_no eq sg_memVO.sg_no}">
+												<img src="<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${sg_infoVO.sg_no}"
+												style="height:100%;width:100%;border-radius:50%;">
+												<a href="<%=request.getContextPath()%>/Sg_info/Sg_info.do?sg_no=${sg_infoVO.sg_no}&action=getByPK" 
+												 class="list-group-item" style="display:flex;">
+												${sg_infoVO.sg_name}<br>
+										 		團長：${memberlistService.getOneMem(sg_infoVO.mem_no).mem_name}<br>
+										 		時間：${sg_infoVO.sg_date}<br>
+												</a>
+												<a href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp"
+												class="list-group-item" style="display:flex;">評價</a>
+											</c:if>
+									</c:forEach>
+								</c:forEach>
+							</div>
+						</div>
+					</div>
+					
+					<div class="container">
+						<div class="row">
+							<h1>我舉辦過的揪團</h1>
+							<div class="grid-container" style="display:grid;">
+								<c:forEach var="sg_infoVO" items="${sghislist}">
+									<img src="<%= request.getContextPath()%>
+									/Sg_info/Sg_infoImg.do?sg_no=${sg_infoVO.sg_no}" style="height:100%;width:100%;border-radius:50%;">
+									<a href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp"
+									class="list-group-item" style="display:flex;">
+									${sg_infoVO.sg_name}<br>
+									團長：${memberlistService.getOneMem(sg_infoVO.mem_no).mem_name}<br>
+									時間：${sg_infoVO.sg_date}<br>
+									</a>
+									<a href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp"
+									class="list-group-item"  style="display:flex;">評價</a>
+								</c:forEach>
+							</div>
 						</div>
 					</div>
 					

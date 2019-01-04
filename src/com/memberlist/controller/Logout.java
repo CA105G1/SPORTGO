@@ -23,11 +23,11 @@ public class Logout extends HttpServlet {
 			throws ServletException, IOException {
 		
 		HttpSession session = req.getSession();
-		session.removeAttribute("MemberlistVO");
+		session.removeAttribute("memberlistVO");
 //		session.invalidate();
 		String url ="Login.jsp";
 		res.sendRedirect(url);
-		System.out.println(session.getAttribute("MemberlistVO"));
+		System.out.println(session.getAttribute("memberlistVO"));
 	}
 
 }
