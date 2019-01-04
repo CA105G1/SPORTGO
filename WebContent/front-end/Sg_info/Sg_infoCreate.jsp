@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="com.sg_info.model.*"%>
+<%@ page import="com.memberlist.model.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
@@ -36,6 +37,15 @@
 <body>
 <%@ include file="/front-end/CA105G1_header.file" %>
 
+<%
+MemberlistService memsvc = new MemberlistService();
+MemberlistVO memberlistVO = memsvc.getOneMem("M002");
+
+
+// 	MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO"); 
+%>
+
+
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsg}">
 	<font style="color:red">請修正以下錯誤:</font>
@@ -70,7 +80,8 @@
 						<tr>
 							<th>團長</th>
 							<td>
-								<input type="text" name="mem_no" value="M001">
+								<%=memberlistVO.getMem_name()%>
+								<input type="hidden" name="mem_no" value="<%=memberlistVO.getMem_no()%>">
 							</td>
 						</tr>
 						<tr>
@@ -121,7 +132,7 @@
 						<tr>
 							<th>運動種類</th> <!-- 下拉選單 -->
 							<td>
-								<select size="1" name="sp_no">
+								<select size="1" name="sp_no" id='sp_no'>
 									<c:forEach var="sportVO" items="${sportSvc.all}" > 
 										<option value="${sportVO.sp_no}" ${(param.sp_no == sportVO.sp_no)? 'selected':'' }>${sportVO.sp_name}
 									</c:forEach>   
@@ -133,6 +144,7 @@
 							<th>場地名稱</th> <!-- 下拉選單 -->
 							<td>
 							<select name='v_no'>
+								<option value=''>請選擇場地
 								<c:forEach var='venueVO' items='${venueSvc.all}' > 
 									<option value='${venueVO.v_no}' ${(param.v_no == venueVO.v_no)? 'selected':'' }>${venueVO.v_name}
 								</c:forEach>
@@ -164,16 +176,18 @@
 					</tbody>
 				</table>
 				<!-------------GOOGLE地圖 -------------->
-				<div>
-					起點：<input type="text" name="startAddr" id="startAddr">
-			        <input type="button" name="startSearchBtn" value="查詢" id="startSearchBtn">
-					終點：<input type="text" name="endAddr" id="endAddr">
-			        <input type="button" name="endSearchBtn" value="查詢" id="endSearchBtn">
+				<div id="mapSetting" style="display:none">
+					<div>
+						起點：<input type="text" name="startAddr" id="startAddr">
+				        <input type="button" name="startSearchBtn" value="查詢" id="startSearchBtn">
+						終點：<input type="text" name="endAddr" id="endAddr">
+				        <input type="button" name="endSearchBtn" value="查詢" id="endSearchBtn">
+					</div>
+					<div>
+				        <input type="button" name="road" id="road" value="規劃路線">
+					</div>
 				</div>
-				<div>
-			        <input type="button" name="road" id="road" value="規劃路線">
-			        <div id="distance"></div>
-				</div>
+				<div id="distance"></div>
 				<div id="map"></div>
 				
 				<input type="submit" value="送出" class="btn btn-success btn-block">
@@ -267,6 +281,25 @@
                  }
                  return [true, ""];
          }});
+         
+         
+        
+         
+   	//篩選只有慢跑及自行車可以編輯地圖
+   	//載入時判斷
+   	var value = $("#sp_no option:selected").val();
+	if(value == "SP006" || value == "SP007"){
+		$("#mapSetting").css("display","");
+	}
+	//選取時判斷
+   	$("#sp_no").change(function(){
+   		var value = $("#sp_no option:selected").val();
+   		if(value == "SP006" || value == "SP007"){
+   			$("#mapSetting").css("display","");
+   		}else{
+   			$("#mapSetting").css("display","none");
+   		}
+   	});     
          
          
    	//google map設定

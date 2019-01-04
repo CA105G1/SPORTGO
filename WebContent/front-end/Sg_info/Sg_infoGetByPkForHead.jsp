@@ -249,7 +249,7 @@
  		    });
     	//編輯場地
     	 $("#v_no").html(function(index, content){
- 		    return "<select name='v_no' id='v_no'><option value=''>無<c:forEach var='venueVO' items='${venueSvc.all}' > <option value='${venueVO.v_no}' ${(Sg_infoVO.v_no == venueVO.v_no)? 'selected' : ''}>${venueVO.v_name}</c:forEach></select>";
+ 		    return "<select name='v_no' id='v_no'><option value=''>請選擇場地<c:forEach var='venueVO' items='${venueSvc.all}' > <option value='${venueVO.v_no}' ${(Sg_infoVO.v_no == venueVO.v_no)? 'selected' : ''}>${venueVO.v_name}</c:forEach></select>";
  		    });
     	//篩選只有慢跑及自行車可以編輯地圖
     	$("#sp_no").change(function(){
