@@ -15,12 +15,12 @@ public class CompositeQuery_Sg_info {
 
 		String aCondition = null;
 
-		if ("sp_no".equals(columnName) || "v_no".equals(columnName)) // 用於sg_info有的欄位
+		if ("sp_no".equals(columnName) || "v_no".equals(columnName) || "sg_per".equals(columnName)) // 用於sg_info有的欄位
 			aCondition = "sg_info."+columnName + " like '%" + value + "%'";
 		else if("reg_no".equals(columnName))  // 用於venue有的欄位
 			aCondition = "venue."+columnName + " like '%" + value + "%'";
-		else if ("sg_date".equals(columnName))                          // 用於Oracle的date
-			aCondition = "to_char(" + "sg_info." + columnName + ",'yyyy-mm-dd')='" + value + "'";
+		else if ("sg_date".equals(columnName))  // 用於Oracle的date
+			aCondition = "to_char(" + "sg_info." + columnName + ",'yyyy-mm-dd')<='" + value + "'";
 		else if("keyword".equals(columnName)) //關鍵字查詢
 			aCondition = "sg_info.sg_name" + " like '%" + value + "%'";
 			
@@ -37,9 +37,9 @@ public class CompositeQuery_Sg_info {
 				count++;
 				String aCondition = get_aCondition_For_Oracle(key, value.trim());
 
-				if (count == 1)
-					whereCondition.append(" where " + aCondition);
-				else
+//				if (count == 1)
+//					whereCondition.append(" where " + aCondition);
+//				else
 					whereCondition.append(" and " + aCondition);
 
 				System.out.println("有送出查詢資料的欄位數count = " + count);

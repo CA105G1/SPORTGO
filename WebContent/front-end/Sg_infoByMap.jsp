@@ -51,8 +51,9 @@ function myLoc(pos){
 	  map: map
 	});
 
-
 	
+	var markerArray = [];
+	var infowindow = new google.maps.InfoWindow();
 	<%
 	Map<String, String> mapLoc = (Map<String, String>) getServletContext().getAttribute("mapLoc");
 	Set<String> keys = mapLoc.keySet();
@@ -63,16 +64,29 @@ function myLoc(pos){
 		           new google.maps.LatLng(sg_infoLoc)
 		         )
 		console.log(dist);
-		if(dist < 2000){
+		var i = 0;
+// 		if(dist < 2000){
+			
 			var marker = new google.maps.Marker({
 				position: sg_infoLoc,
 				map: map,
 				animation: google.maps.Animation.DROP,
 				draggable: false
 			});
+			 markerArray.push(marker);
+			 
+			google.maps.event.addListener(marker, 'click', function(){
+			  msg = "<%=key%>";
+			  infowindow.setContent(msg);
+		      infowindow.open(map, this);
+			});
 			
-		}
+			
+			
+// 		}
 	<%}%>
+	
+	
 	
 } //myLoc
 </script>
