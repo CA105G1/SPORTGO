@@ -14,6 +14,9 @@ public interface MemberlistDAO_interface {
 	public void updateStatus(String mem_no,String mem_status);
 	public MemberlistVO findByPrimaryKey(String mem_no);
 	public List<Sg_infoVO> findSgByMem(String mem_no);
+	public List<Sg_infoVO> findHisSgByMem(String mem_no);
+	public List<Sg_infoVO> findAllSg();
+	public List<Sg_infoVO> findAllHisSg();
 	public List<Sg_memVO> findPartByMem(String mem_no);
 	public String findByAccount(String account);
 	public List<MemberlistVO> getAll();

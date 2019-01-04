@@ -37,7 +37,7 @@
 					<a href="Member_page.jsp" class="list-group-item">個人頁面</a>
 					<a href="Calendar.jsp" class="list-group-item">行事曆</a>
 					<a href="Member_renew.jsp" class="list-group-item">個人頁面管理</a>
-					<a href="sg.jsp" class="list-group-item">個人揪團管理</a>
+					<a href="MemManager.do?action=Member_Sg" class="list-group-item">個人揪團管理</a>
 					<a href="club.jsp" class="list-group-item">個人社團管理</a>
 					<a href="Friend.do?action=find_My_Friend" class="list-group-item">好友管理</a>
 					<a href="order.jsp" class="list-group-item">訂單管理</a>

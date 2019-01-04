@@ -45,7 +45,13 @@ public class MemberlistDAO implements MemberlistDAO_interface{
 	private static final String GET_ONE_STMT_FROM_ACCOUNT = 
 			"SELECT * FROM Memberlist WHERE MEM_ACCOUNT = ? ";
 	private static final String GET_MEM_SG = 
-			"SELECT * FROM SG_INFO WHERE MEM_NO = ?";
+			"SELECT * FROM SG_INFO WHERE MEM_NO = ? AND SG_DATE>SYSDATE ORDER BY SG_DATE";
+	private static final String GET_MEM_SG_HISTORY = 
+			"SELECT * FROM SG_INFO WHERE MEM_NO = ? AND SG_DATE<SYSDATE ORDER BY SG_DATE";
+	private static final String GET_ALL_SG_HISTORY = 
+			"SELECT * FROM SG_INFO WHERE SG_DATE<SYSDATE ORDER BY SG_DATE";
+	private static final String GET_ALL_SG = 
+			"SELECT * FROM SG_INFO WHERE SG_DATE>SYSDATE ORDER BY SG_DATE";
 	private static final String GET_MEM_SG_PARTICIPATE = 
 			"SELECT * FROM SG_MEM WHERE MEM_NO = ?";
 	
@@ -523,6 +529,211 @@ public class MemberlistDAO implements MemberlistDAO_interface{
 				vo.setSg_no(rs.getString("sg_no"));
 				vo.setMem_no(mem_no);
 				vo.setCh_status(rs.getString("ch_status"));
+				list.add(vo);
+			}
+			
+		} catch (SQLException e) {
+			throw new RuntimeException("Database errors occured. "
+					+e.getMessage());
+		}finally {
+			if(rs!=null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if(con!=null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<Sg_infoVO> findHisSgByMem(String mem_no) {
+			List<Sg_infoVO> list = new ArrayList<Sg_infoVO>();
+			Sg_infoVO vo = null;
+
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			try {
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(GET_MEM_SG_HISTORY);
+				pstmt.setString(1, mem_no);
+				rs = pstmt.executeQuery();
+				while(rs.next()) {
+					vo = new Sg_infoVO();
+					vo.setSg_no(rs.getString("sg_no"));
+					vo.setMem_no(rs.getString("mem_no"));
+					vo.setSg_name(rs.getString("sg_name"));
+					vo.setSg_date(rs.getTimestamp("sg_date"));
+					vo.setApl_start(rs.getTimestamp("apl_start"));
+					vo.setApl_end(rs.getTimestamp("apl_end"));
+					vo.setSg_fee(rs.getInt("sg_fee"));
+					vo.setSg_pic(rs.getBytes("sg_pic"));
+					vo.setSg_pic_ext(rs.getString("sg_pic_ext"));
+					vo.setSg_per(rs.getString("sg_per"));
+					vo.setSp_no(rs.getString("sp_no"));
+					vo.setV_no(rs.getString("v_no"));
+					vo.setSg_maxno(rs.getInt("sg_maxno"));
+					vo.setSg_minno(rs.getInt("sg_minno"));
+					vo.setSg_ttlapl(rs.getInt("sg_ttlapl"));
+					vo.setSg_chkno(rs.getInt("sg_chkno"));
+					vo.setSg_extrainfo(rs.getString("sg_extrainfo"));
+					vo.setSg_status(rs.getString("sg_status"));
+					vo.setLoc_start(rs.getString("loc_start"));
+					vo.setLoc_end(rs.getString("loc_end"));
+
+					list.add(vo);
+				}
+				
+			} catch (SQLException e) {
+				throw new RuntimeException("Database errors occured. "
+						+e.getMessage());
+			}finally {
+				if(rs!=null) {
+					try {
+						rs.close();
+					} catch (SQLException e) {
+						e.printStackTrace(System.err);
+					}
+				}
+				if(pstmt!=null) {
+					try {
+						pstmt.close();
+					} catch (SQLException e) {
+						e.printStackTrace(System.err);
+					}
+				}
+				if(con!=null) {
+					try {
+						con.close();
+					} catch (SQLException e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			return list;
+	}
+
+	@Override
+	public List<Sg_infoVO> findAllSg() {
+		List<Sg_infoVO> list = new ArrayList<Sg_infoVO>();
+		Sg_infoVO vo = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ALL_SG);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				vo = new Sg_infoVO();
+				vo.setSg_no(rs.getString("sg_no"));
+				vo.setMem_no(rs.getString("mem_no"));
+				vo.setSg_name(rs.getString("sg_name"));
+				vo.setSg_date(rs.getTimestamp("sg_date"));
+				vo.setApl_start(rs.getTimestamp("apl_start"));
+				vo.setApl_end(rs.getTimestamp("apl_end"));
+				vo.setSg_fee(rs.getInt("sg_fee"));
+				vo.setSg_pic(rs.getBytes("sg_pic"));
+				vo.setSg_pic_ext(rs.getString("sg_pic_ext"));
+				vo.setSg_per(rs.getString("sg_per"));
+				vo.setSp_no(rs.getString("sp_no"));
+				vo.setV_no(rs.getString("v_no"));
+				vo.setSg_maxno(rs.getInt("sg_maxno"));
+				vo.setSg_minno(rs.getInt("sg_minno"));
+				vo.setSg_ttlapl(rs.getInt("sg_ttlapl"));
+				vo.setSg_chkno(rs.getInt("sg_chkno"));
+				vo.setSg_extrainfo(rs.getString("sg_extrainfo"));
+				vo.setSg_status(rs.getString("sg_status"));
+				vo.setLoc_start(rs.getString("loc_start"));
+				vo.setLoc_end(rs.getString("loc_end"));
+
+				list.add(vo);
+			}
+			
+		} catch (SQLException e) {
+			throw new RuntimeException("Database errors occured. "
+					+e.getMessage());
+		}finally {
+			if(rs!=null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if(con!=null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<Sg_infoVO> findAllHisSg() {
+		List<Sg_infoVO> list = new ArrayList<Sg_infoVO>();
+		Sg_infoVO vo = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ALL_SG_HISTORY);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				vo = new Sg_infoVO();
+				vo.setSg_no(rs.getString("sg_no"));
+				vo.setMem_no(rs.getString("mem_no"));
+				vo.setSg_name(rs.getString("sg_name"));
+				vo.setSg_date(rs.getTimestamp("sg_date"));
+				vo.setApl_start(rs.getTimestamp("apl_start"));
+				vo.setApl_end(rs.getTimestamp("apl_end"));
+				vo.setSg_fee(rs.getInt("sg_fee"));
+				vo.setSg_pic(rs.getBytes("sg_pic"));
+				vo.setSg_pic_ext(rs.getString("sg_pic_ext"));
+				vo.setSg_per(rs.getString("sg_per"));
+				vo.setSp_no(rs.getString("sp_no"));
+				vo.setV_no(rs.getString("v_no"));
+				vo.setSg_maxno(rs.getInt("sg_maxno"));
+				vo.setSg_minno(rs.getInt("sg_minno"));
+				vo.setSg_ttlapl(rs.getInt("sg_ttlapl"));
+				vo.setSg_chkno(rs.getInt("sg_chkno"));
+				vo.setSg_extrainfo(rs.getString("sg_extrainfo"));
+				vo.setSg_status(rs.getString("sg_status"));
+				vo.setLoc_start(rs.getString("loc_start"));
+				vo.setLoc_end(rs.getString("loc_end"));
+
 				list.add(vo);
 			}
 			

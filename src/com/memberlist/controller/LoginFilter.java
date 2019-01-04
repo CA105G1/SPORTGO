@@ -34,9 +34,8 @@ public class LoginFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest)request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		HttpSession session = req.getSession();
-		String mem_no = (String)session.getAttribute("mem_no");
 		MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO");
-		if(mem_no==null || memberlistVO==null) {
+		if(memberlistVO==null) {
 			session.setAttribute("location", req.getRequestURL());
 			res.sendRedirect(req.getContextPath()+"/front-end/memberlist/Login.jsp");
 			return;

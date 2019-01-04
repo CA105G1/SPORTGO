@@ -40,7 +40,11 @@ public class FriendServlet extends HttpServlet {
 			}
 			String mem_no = memberlistVO.getMem_no();
 			List<FriendVO> myfriend = service.findMyFriend(mem_no);
+			List<FriendVO> mypossiblefriend = service.findMyPossibleFriend(mem_no);
+			List<FriendVO> whoaddme = service.findWhoAdd(mem_no);
 			req.setAttribute("friendlist", myfriend);
+			req.setAttribute("possiblefriend", mypossiblefriend);
+			req.setAttribute("whoaddme", whoaddme);
 			memberlistVO = null;
 			RequestDispatcher listgo = req.getRequestDispatcher("friend.jsp");
 			listgo.forward(req, res);
@@ -111,7 +115,7 @@ public class FriendServlet extends HttpServlet {
 			String mem1_no = memberlistVO.getMem_no();
 			String mem2_no = (String) req.getParameter("mem2_no");
 			System.out.println(mem1_no+","+mem2_no);
-			List<FriendVO> friendlist = service.findMyFriend(mem1_no);
+			List<FriendVO> friendlist = service.getAll();
 			if(mem1_no==null || mem2_no==null) {
 				req.setAttribute("status", "false");
 				RequestDispatcher go = req.getRequestDispatcher("Friend.do?action=find_My_Friend");
@@ -135,14 +139,71 @@ public class FriendServlet extends HttpServlet {
 				}
 			}
 			if(isfriend) {
-				service.deleteFriend(mem1_no, mem2_no);
-				System.out.println("刪除好友成功");
+				try {
+					service.deleteFriend(mem1_no, mem2_no);
+					System.out.println("刪除好友成功");
+				} catch (RuntimeException re) {
+					re.printStackTrace(System.err);
+					System.out.println("資料庫刪除不成功");
+				}
 			}else {
 				req.setAttribute("status", "false");
 				RequestDispatcher go = req.getRequestDispatcher("Friend.do?action=find_My_Friend");
 				go.forward(req, res);
 				System.out.println("無法刪除");
 				return;
+			}
+			memberlistVO = null;
+			req.setAttribute("status", "succeed");
+			RequestDispatcher go = req.getRequestDispatcher("Friend.do?action=find_My_Friend");
+			go.forward(req, res);
+			return;
+		}
+		
+		/****更新好友狀態****/
+		if("update_Friend".equals(action)) {
+			/****接受請求參數 錯誤驗證****/
+			memberlistVO = (MemberlistVO) session.getAttribute("memberlistVO");
+			if(memberlistVO==null) {
+				res.sendRedirect("Login.jsp");
+				return;
+			}
+			String mem1_no = memberlistVO.getMem_no();
+			String mem2_no = (String) req.getParameter("mem2_no");
+			System.out.println(mem1_no+","+mem2_no);
+			List<FriendVO> friendlist = service.getAll();
+			if(mem1_no==null || mem2_no==null) {
+				req.setAttribute("status", "false");
+				RequestDispatcher go = req.getRequestDispatcher("Friend.do?action=find_My_Friend");
+				go.forward(req, res);
+				System.out.println("找不到號碼");
+				return;
+			}
+			Boolean isfriend=false;
+			for(FriendVO list : friendlist) {
+				if(list.getMem1_no().equals(mem1_no)) {
+					if(list.getMem2_no().equals(mem2_no)) {
+						isfriend=true;
+						break;
+					}
+				}
+				else if(list.getMem1_no().equals(mem2_no)) {
+					if(list.getMem2_no().equals(mem1_no)) {
+						isfriend=true;
+						break;
+					}
+				}
+			}
+			if(isfriend) {
+				try{
+					service.changeStatus(mem1_no, mem2_no, "好友");
+					System.out.println("更新好友成功");
+				}catch(RuntimeException re) {
+					re.printStackTrace(System.err);
+					System.out.println("資料庫刪除不成功");
+				}
+			}else {
+				System.out.println("無法更新好友");
 			}
 			memberlistVO = null;
 			req.setAttribute("status", "succeed");
