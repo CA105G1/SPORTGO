@@ -100,7 +100,7 @@
 				<div class="col-xs-12 col-sm-9 tab-content">
 				<!-- 個人頁面 -->
 					<div class="tab-pane active" id="mem">
-						<img src="<%=request.getContextPath()%>/front-end/memberlist/showPicture.do?mem_no=${memberlistVO.mem_no}">
+						<img src="showPicture.do?mem_no=${memberlistVO.mem_no}">
 						<ul class="list">
 							<li>姓名 : ${memberlistVO.mem_name}</li>
 							<li>暱稱 : ${memberlistVO.mem_nick}</li>

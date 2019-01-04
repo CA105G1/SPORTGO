@@ -7,6 +7,7 @@ import java.util.Map;
 public class mainAllimageIntoDB {
 	
 	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
+//	private static final String URL = "jdbc:oracle:thin:@10.37.129.3:1521:xe";
 	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
 	// pls. set your user in DB
 	private static final String USER = "CA105G1";
@@ -17,6 +18,7 @@ public class mainAllimageIntoDB {
 		
 		// 請設定pull到本地端的路徑，如--->C:\Users\wenshock\git\SPORTGO\InitDB\image
 //		String rootPath = "C:\\Users\\kevin_000\\School_project\\Project\\img";
+//		String rootPath = "/Users/ChengChih-Ren/git/SPORTGOG1/WebContent/InitDB/image";
 		String rootPath = "C:\\Users\\wenshock\\git\\SPORTGO\\WebContent\\InitDB\\image";
 		String pathContant = "\\"; // microsoft "\\" mac "/"
 		File file = new File(rootPath);

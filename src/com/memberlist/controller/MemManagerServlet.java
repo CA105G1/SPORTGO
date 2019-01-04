@@ -56,6 +56,10 @@ public class MemManagerServlet extends HttpServlet {
 			listall.forward(req, res);
 			return;
 		}
+		if("cancel".equals(action)) {
+			res.sendRedirect("Member_page.jsp");
+			return;
+		}
 		
 		/****前台更新會員資料****/
 		if("Member_renew".equals(action)) {
@@ -146,7 +150,7 @@ public class MemManagerServlet extends HttpServlet {
 				RequestDispatcher donothing = req.getRequestDispatcher("Member_page.jsp");
 				donothing.forward(req, res);
 			}
-		} 
+		}
 	
 		/****前台更新信用卡資料****/
 		if("renew_Card".equals(action)){

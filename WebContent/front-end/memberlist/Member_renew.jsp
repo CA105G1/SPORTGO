@@ -31,7 +31,7 @@
 		  <form method="post" class="form-horizontal" enctype="multipart/form-data" action="MemManager.do">
 		  		<input type="file" name="picture" class="upl">
 		  <div>
-		  	<img class="preview" src="<%=request.getContextPath()%>/img/mem_no.jpg">
+		  	<img class="preview" src="showPicture.do?mem_no=${memberlistVO.mem_no}">
 		  </div>
 		  <br>
 <!-- 		  錯誤時的畫面 -->
@@ -79,9 +79,7 @@
 			    </div>
 			    <div class="form-group">        
 			      <div class="col-sm-offset-2 col-sm-10">
-			      	<input type="hidden" name="action" value="Member_renew">
-			      	<input type="hidden" name="action" value="renewpicture">
-			        <button type="submit" class="btn btn-info">修改</button>
+			        <button type="submit" class="btn btn-info" name="action" value="Member_renew">修改</button>
 			        <button type="submit" class="btn btn-info" name="action" value="cancel">取消</button>
 			      </div>
 		    	</div>
@@ -126,9 +124,7 @@
 			    </div>
 			    <div class="form-group">        
 			      <div class="col-sm-offset-2 col-sm-10">
-			      	<input type="hidden" name="action" value="Member_renew">
-			      	<input type="hidden" name="action" value="renewpicture">
-			        <button type="submit" class="btn btn-info">修改</button>
+			        <button type="submit" class="btn btn-info" name="action" value="Member_renew">修改</button>
 			        <button type="submit" class="btn btn-info" name="action" value="cancel">取消</button>
 			      </div>
 			    </div>
