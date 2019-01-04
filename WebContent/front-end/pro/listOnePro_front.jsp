@@ -313,7 +313,11 @@
 					// setTotal();
 				})
 				$("#min").click(function(){
-					t.val(parseInt(t.val())-1)
+					if (parseInt(t.val())>1) {                     //判斷數量值大于1時才可以減少
+		                t.val(parseInt(t.val())-1)
+		                }else{
+		                $("#min").attr("disabled","disabled")        //當$("#min")為1時，$("#min")不可讀狀態
+		               }
 					// setTotal();
 				})
 				$("#num").keyup(function(){

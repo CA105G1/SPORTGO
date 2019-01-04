@@ -473,7 +473,6 @@
 								 data: creatQuerycancel(val),
 								 dataType: "json",
 								 success: function (data){
-									 alert('cancel');
 									 $('#'+data.ord_no).html('取消');
 							     },
 							     error: function(){alert("AJAX-class發生錯誤囉!")}
