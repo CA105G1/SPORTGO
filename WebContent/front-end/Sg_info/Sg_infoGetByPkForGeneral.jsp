@@ -84,7 +84,7 @@ System.out.println("memberlistVO= "+memberlistVO);
 								<tbody>
 									<tr>  <!-------- 照片 -------->
 										<td colspan="2">
-											<img id="showPic" class="img-responsive" src="<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${Sg_infoVO.sg_no}">
+											<img id="showPic" style="width:100%" class="img-responsive" src="<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${Sg_infoVO.sg_no}">
 											<div class="uploadPic"></div><br>
 										</td>
 									</tr>

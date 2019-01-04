@@ -242,7 +242,7 @@
 																<div class="container-fluid warpwidth">
 																	<div class="row">
 																		<div>
-																			<h2 class="fontsize">?件商品</h2>
+																			<h2 class="fontsize">購物車</h2>
 																		</div>
 																		<!-- 關鍵字搜尋 -->
 																			<div class="container">
@@ -288,7 +288,7 @@
 																							<tr>
 																								<td>
 																								<!-- 核取方塊大小 -->
-																									<input type="checkbox" name="pro_no" value="${proVO.pro_no}">
+																									<input type="checkbox" name="pro_no" value="${proVO.pro_no}" class="box">
 
 																								</td>
 																								<!-- 商品圖片名稱 -->
@@ -304,22 +304,19 @@
 																								</td>
 																								<!-- 商品數量 -->
 																								<td>
-																									${hAll[proVO.pro_no]}
+																				                    <input type="button" name="name" value="-" class="reduce" />
+																					                <input type="text" name="name" value="${hAll[proVO.pro_no]}" class="textNum" style="text-align:center;" size="1"/>
+																					                <input type="button" name="name" value="+" class="add" />
+																					                <input type="text" class="return_mem_no" value="<%=session.getAttribute("mem_no")%>" style="display: none;"/>
+																					                <input type="text" class="return_pro_no" value="${proVO.pro_no}" style="display: none;"/>
 																								</td>
 																								<!-- 商品總計 -->
 																								<td>
 																									${hAll[proVO.pro_no] * proVO.pro_bonus}
-																									
-																									
 																								</td>
 																								<!-- 下拉式按鈕 -->
 																								<td>
 																								    <button type="button" class="deletedata" value="${proVO.pro_no}"  >刪除</button>
-<%-- 																									<FORM METHOD="post" ACTION="<%= request.getContextPath()%>/shoppingCartServlet/shoppingCartServlet.do" name="form1" enctype="multipart/form-data"> --%>
-<%-- 																										<input type="hidden" name="pro_no" value="${proVO.pro_no}"> --%>
-<!-- 																										<input type="submit" value="刪除"> -->
-<!-- 																										<input type="hidden" name="action" value="delete"> -->
-<!-- 																									</FORM> -->
 																								</td>
 																							</tr>
 																						</c:forEach>
@@ -328,9 +325,11 @@
 																					</tbody>
 																				</table>
 																				    <div>
-																				    	
+																				    	<h3>總計金額<input type="text" name="name" value="" id="heji" style="width:100px;" /></h3>
 																				    </div>
 																					<div>
+																					    <input type="button" name="name" value="全選" id="allSelect" />
+                												    					<input type="button" name="name" value="取消全選" id="notSelect" />
 																						<input type="submit" value="去買單">
 																						<input type="hidden" name="ord_amount" value="test"> 
 																						<input type="hidden" name="action" value="insert">
@@ -358,6 +357,7 @@
 																</div>
 																<!-- 關鍵字搜尋 -->
 																<div>
+
 																	<input type="submit" value="去買單">
 																	
 																	<input type="hidden" name="ord_amount" value="test"> 
@@ -380,22 +380,101 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 			<script type="text/javascript">
 				$(document).ready(function(){
-					$('#testid').click(function(){
-						
-						console.log("hi");
-					})
+
+					//計算總價，編寫總價方法(尚未用到)
+		            function totalPrice() {
+		                var zong = 0;
+		                $(".xiaoji").each(function () {
+		                    var all = parseInt($(this).text());
+		                    zong += all;
+		                })
+		                $("#heji").val(zong);
+		            };
+
+		            //設置數量框不可手動填寫（此處為避免不必要的操作失誤）
+		            $(".textNum").prop("disabled", true);
+
+		            //減號邏輯
+		            $(".reduce").click(function () {
+		                var num = $(this).siblings(".textNum").val();  //獲取數量框裏的數值
+		                var mem_no = $(this).siblings(".return_mem_no").val();//獲取session的當前編號
+		                var pro_no =  $(this).siblings(".return_pro_no").val();//獲取pro_no選擇的商品
+		                num--;  //單擊“-”減號時，數量遞減
+		                $(this).siblings(".textNum").val(num); //把數量變化後的新值放入數量框中
+		                
+			                $.ajax({
+								 type: "POST",
+								 url: "<%= request.getContextPath()%>/shoppingCartServlet/shoppingCartServlet.do",
+								 data: subtraction(mem_no,pro_no,num),
+								 dataType: "json",
+								 success: function (data){
+									console.log("成功");
+							     },
+							     error: function(){alert("AJAX-class發生錯誤囉!")}
+					         })
+		                
+		                if (num <= 1) {
+		                    $(this).prop("disabled", true); //當輸入框內數值為0時，使“-”減號處於不可用狀態。
+		                };
+		                var danjia = $(this).siblings(".danjia").text(); //獲取單價
+		                var xiaoji = danjia * num; //用單價乘以數量計算得到單個小計的值
+		                $(this).siblings(".xiaoji").text(xiaoji); //把得到的小計值放入數量框中顯示
+		                totalPrice();//調用“總價”方法，使每點擊減號，數量變化時，總價跟着變化
+		            })
+
+		            //加號邏輯（邏輯如同減號的邏輯差不多）
+		            $(".add").click(function () {
+		                var num = $(this).siblings(".textNum").val();
+		                var mem_no = $(this).siblings(".return_mem_no").val();//獲取session的當前編號
+		                var pro_no =  $(this).siblings(".return_pro_no").val();//獲取pro_no選擇的商品
+		                num++;
+		                $(this).siblings(".textNum").val(num);
+		                
+			                $.ajax({
+								 type: "POST",
+								 url: "<%= request.getContextPath()%>/shoppingCartServlet/shoppingCartServlet.do",
+								 data: subtraction(mem_no,pro_no,num),
+								 dataType: "json",
+								 success: function (data){
+									console.log("成功");
+							     },
+							     error: function(){alert("AJAX-class發生錯誤囉!")}
+					         })
+		                
+		                if (num > 0) {
+		                    $(this).siblings(".reduce").prop("disabled", false); //判斷當輸入框內數值大於0，使“-”減號處於解封可用狀態。
+		                };
+		                var danjia = $(this).siblings(".danjia").text();
+		                var xiaoji = danjia * num;
+		                $(this).siblings(".xiaoji").text(xiaoji);
+		                totalPrice();
+		            })
+				            
+		            //全選
+		            $("#allSelect").click(function () {
+		                $(".box").prop("checked", true);
+		            })
+		
+		            //取消全選
+		            $("#notSelect").click(function () {
+		                $(".box").prop("checked", false);
+		            });		            
+		            
+		            
+					
+					//-------------------------------------------------------------------------
 					$('.deletedata').each( function() {
 						$(this).click( function() {
 	// 						var imgsrc = $(this).attr("value");
 							var val = $(this).val();
-						    alert(val);
+						  
 							$.ajax({
 								 type: "POST",
 								 url: "<%= request.getContextPath()%>/shoppingCartServlet/shoppingCartServlet.do",
 								 data: creatQueryString(val, ""),
 								 dataType: "json",
 								 success: function (data){
-									 alert("<%= request.getContextPath()%>/shoppingcart_front.jsp")
+									
 									 window.location.replace("<%= request.getContextPath()%>/shoppingCartServlet/shoppingCartServlet.do?action=getAll_For_Display"); 
 							     },
 							     error: function(){alert("AJAX-class發生錯誤囉!")}
@@ -405,10 +484,17 @@
                     
                     
 				})
+				function subtraction(mem_no,pro_no,num){  //數量加減時帶回去controller處理
+					var queryString= {"action":"insert","mem_no":mem_no, "pro_no":pro_no,"pro_count":num};
+					console.log(queryString);
+					return queryString;
+				}
+				
+				
 				function creatQueryString(buttonid){
 					
 					var queryString= {"action":"delete", "pro_no":buttonid};
-					console.log(queryString);
+					
 					return queryString;
 				}
 			</script>							

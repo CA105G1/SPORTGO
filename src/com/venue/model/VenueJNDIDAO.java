@@ -83,7 +83,7 @@ public class VenueJNDIDAO implements VenueDAO_interface {
 			+ " vt_no=?, v_inout=?, reg_no=?, v_address=?, v_phoneno=?, v_lat=?, v_long=?, "
 			+ " v_fitall=?, v_fitinter=?,"
 			+ " open_state=?, open_time=?, "
-			+ " openday_mon=?, openday_tue=?, , openday_wed=?, openday_thu=?, "
+			+ " openday_mon=?, openday_tue=?, openday_wed=?, openday_thu=?, "
 			+ "	openday_fri=?, openday_sat=?, openday_sun=?, "
 			+ " v_photo1=?, v_photo1_ext=?, v_photo2=?, v_photo2_ext=?, "
 			+ " v_photo1_url=?, v_photo2_url=?, v_display=? "
