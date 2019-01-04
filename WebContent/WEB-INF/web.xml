@@ -92,6 +92,16 @@
     <servlet-name>MemberServlet_Android</servlet-name>
     <url-pattern>/MemberServlet_Android.do</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>AddressServlet</servlet-name>
+    <servlet-class>com.address.controller.AddressServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddressServlet</servlet-name>
+    <url-pattern>/front-end/pro/Address.do</url-pattern>
+  </servlet-mapping>
+  
   <servlet>
     <servlet-name>ClubServlet</servlet-name>
     <servlet-class>com.club.controller.ClubServlet</servlet-class>
@@ -124,13 +134,13 @@
     <servlet-name>VenueImgServlet</servlet-name>
     <url-pattern>/vunue/venueImg.do</url-pattern>
   </servlet-mapping>
-    <servlet>
-  	<servlet-name>EmpServlet</servlet-name>
-  	<servlet-class>com.emp.controller.EmpServlet</servlet-class>
+  <servlet>
+    <servlet-name>EmpServlet</servlet-name>
+    <servlet-class>com.emp.controller.EmpServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>EmpServlet</servlet-name>
-  	<url-pattern>/emp/emp.do</url-pattern>
+    <servlet-name>EmpServlet</servlet-name>
+    <url-pattern>/emp/emp.do</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>Sg_infoServlet</servlet-name>
@@ -181,43 +191,36 @@
     <servlet-name>MapLocLoad</servlet-name>
     <url-pattern>/Sg_info/MapLocLoad.do</url-pattern>
   </servlet-mapping>
-  
-   <servlet>
-		<servlet-name>ShoppingCartServlet</servlet-name>
-		<servlet-class>com.shoppingcart.controller.ShoppingCartServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ShoppingCartServlet</servlet-name>
-		<url-pattern>/shoppingCartServlet/shoppingCartServlet.do</url-pattern>
-	</servlet-mapping>
-
-  
   <servlet>
-		<servlet-name>OrdServlet</servlet-name>
-		<servlet-class>com.ord.controller.OrdServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>OrdServlet</servlet-name>
-		<url-pattern>/ord/ord.do</url-pattern>
-	</servlet-mapping>
-
+    <servlet-name>ShoppingCartServlet</servlet-name>
+    <servlet-class>com.shoppingcart.controller.ShoppingCartServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ShoppingCartServlet</servlet-name>
+    <url-pattern>/shoppingCartServlet/shoppingCartServlet.do</url-pattern>
+  </servlet-mapping>
   <servlet>
-		<servlet-name>ProServlet</servlet-name>
-		<servlet-class>com.pro.controller.ProServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ProServlet</servlet-name>
-		<url-pattern>/pro/pro.do</url-pattern>
-	</servlet-mapping>
-	
+    <servlet-name>OrdServlet</servlet-name>
+    <servlet-class>com.ord.controller.OrdServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>OrdServlet</servlet-name>
+    <url-pattern>/ord/ord.do</url-pattern>
+  </servlet-mapping>
   <servlet>
-		<servlet-name>ProductImgServlet</servlet-name>
-		<servlet-class>com.pro.controller.ProductImgServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ProductImgServlet</servlet-name>
-		<url-pattern>/pro/proImg.do</url-pattern>
-	</servlet-mapping>  
-  
-  
+    <servlet-name>ProServlet</servlet-name>
+    <servlet-class>com.pro.controller.ProServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProServlet</servlet-name>
+    <url-pattern>/pro/pro.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ProductImgServlet</servlet-name>
+    <servlet-class>com.pro.controller.ProductImgServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProductImgServlet</servlet-name>
+    <url-pattern>/pro/proImg.do</url-pattern>
+  </servlet-mapping>
 </web-app>
