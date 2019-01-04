@@ -39,11 +39,10 @@ public class MemManagerServlet extends HttpServlet {
 		Map<String,String> errorMsgs = new LinkedHashMap<>();
 		req.setAttribute("errorMsgs", errorMsgs);
 		/****可能登入時間過長出現取不到會員相關資訊,重導回到登入畫面****/
-		try {
-			memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO");	
-		} catch (Exception e) {
-			errorMsgs.put("loginerror", "請重新登入");
+		memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO");	
+		if(memberlistVO==null) {
 			res.sendRedirect("Login.jsp");
+			return;
 		}
 		String action = req.getParameter("action");
 		mem_no = memberlistVO.getMem_no();
