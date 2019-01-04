@@ -50,7 +50,7 @@ public class ShoppingCartServlet extends HttpServlet{
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 //			try {
-			
+			 
 			HttpSession session = req.getSession();
 			
 			String mem_no = session.getAttribute("mem_no").toString();//********需要把listAllPro_front.jsp中的session拿掉接正式版的會員********
