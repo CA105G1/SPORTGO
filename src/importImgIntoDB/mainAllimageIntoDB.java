@@ -17,8 +17,8 @@ public class mainAllimageIntoDB {
 		
 		// 請設定pull到本地端的路徑，如--->C:\Users\wenshock\git\SPORTGO\InitDB\image
 //		String rootPath = "C:\\Users\\kevin_000\\School_project\\Project\\img";
-		String rootPath = "C:\\Users\\wenshock\\git\\SPORTGO\\InitDB\\image";
-		
+		String rootPath = "C:\\Users\\wenshock\\git\\SPORTGO\\WebContent\\InitDB\\image";
+		String pathContant = "\\"; // microsoft "\\" mac "/"
 		File file = new File(rootPath);
 		if(!file.isDirectory()) {
 			System.out.println("There are no directory");
@@ -56,7 +56,7 @@ public class mainAllimageIntoDB {
 		
 		String[] divArray = file.list();
 		for(int i = 0 ; i < divArray.length ; i++) {
-			File subFile = new File(rootPath+"\\"+divArray[i]);
+			File subFile = new File(rootPath+pathContant+divArray[i]);
 			System.out.println(subFile.getName());
 			System.out.println("subFile.isDirectory() : "+subFile.isDirectory());
 			if(subFile.isDirectory()) {
@@ -64,7 +64,7 @@ public class mainAllimageIntoDB {
 					System.out.println("--------------"+subFile.getName().toLowerCase());
 					continue;
 				}
-				String divPath = rootPath+"\\"+subFile.getName();
+				String divPath = rootPath+pathContant+subFile.getName();
 				String primaryKeyColnName = map.get(subFile.getName().toUpperCase())[0];
 				String pictureColnName = map.get(subFile.getName().toUpperCase())[1];
 				String pic_extensionColName = map.get(subFile.getName().toUpperCase())[2];
