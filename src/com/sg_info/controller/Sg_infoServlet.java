@@ -128,20 +128,39 @@ public class Sg_infoServlet extends HttpServlet {
 					errorMsg.put("sg_minno","人數下限請填數字");
 				}
 				
-				//路線座標檢查
+				
+				
+				//運動種類與場館檢查
 				String sp_no = req.getParameter("sp_no").trim();
 				String loc_start = req.getParameter("loc_start");
 				String loc_end = req.getParameter("loc_end");
+				String v_no = req.getParameter("v_no").trim();
+				//若運動種類不是慢跑也不是自行車，則將路線規劃座標取消，並檢查有無選擇場館
 				if("SP006".equals(sp_no) || "SP007".equals(sp_no)) {
-					if(loc_start == null || loc_end == null) {
+					if(loc_start.length() == 0 || loc_end.length() == 0) {
 						errorMsg.put("loc","請規劃路線");
 					}
+					//若是選擇慢跑或自行車則將場館資料清除
+					v_no = null;
+				}else {
+					loc_start =null;
+					loc_end = null;
+					if(v_no == null || v_no.trim().length() == 0) {
+						errorMsg.put("v_no","請選擇場館");
+					}
 				}
+				
+//				//路線座標檢查
+//				if("SP006".equals(sp_no) || "SP007".equals(sp_no)) {
+//					if(loc_start == null || loc_end == null) {
+//						errorMsg.put("loc","請規劃路線");
+//					}
+//				}
 				
 				
 				String mem_no = req.getParameter("mem_no").trim();
 				String sg_per = req.getParameter("sg_per").trim();
-				String v_no = req.getParameter("v_no").trim();
+//				String v_no = req.getParameter("v_no").trim();
 				String sg_extrainfo = req.getParameter("sg_extrainfo").trim();
 				
 				
@@ -263,7 +282,7 @@ public class Sg_infoServlet extends HttpServlet {
 				String loc_end = req.getParameter("loc_end");
 				String v_no = req.getParameter("v_no").trim();
 				//若運動種類不是慢跑也不是自行車，則將路線規劃座標取消，並檢查有無選擇場館
-				if(sp_no.equals("SP006") || sp_no.equals("SP007")) {
+				if("SP006".equals(sp_no) || "SP007".equals(sp_no)) {
 					//若是選擇慢跑或自行車則將場館資料清除
 					v_no = null;
 				}else {
