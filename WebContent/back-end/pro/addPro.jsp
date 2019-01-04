@@ -326,7 +326,7 @@
 		                                                	<div class="valuesize">
 		                                                		<input type="TEXT" name="pro_stock" size="45" value="<%= (proVO==null)? "" : proVO.getPro_stock()%>" />
 		                                                	</div>
-		                                                	<!-- 商品安全庫存量 -->
+		                                                	<!-- 商品安全庫存量 --> 
 		                                                	<div class="valuesize">
 		                                                		<input type="TEXT" name="pro_safestock" size="45" value="<%= (proVO==null)? "" : proVO.getPro_safestock()%>" />
 		                                                	</div>
