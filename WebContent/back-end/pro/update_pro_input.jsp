@@ -248,9 +248,9 @@
 											    					<div class="fontsize_s">
 											    						商品名稱 :				    						
 											    					</div>
-											    					<div class="fontsize_s">
-											    						照片副檔名 :			    						
-											    					</div>
+<!-- 											    					<div class="fontsize_s"> -->
+<!-- 											    						照片副檔名 :			    						 -->
+<!-- 											    					</div> -->
 											    					<div class="fontsize_s">
 											    						商品規格 :				    						
 											    					</div>
@@ -277,9 +277,8 @@
 					                                                		<input type="TEXT" name="ename" size="45" value="<%= proVO.getPro_name()%>" />
 					                                                	</div>
 				                                                	<!-- 照片副檔名 -->
-					                                                	<div class="valuesize">
-					                                                		<input type="TEXT" name="pic_ext" size="45" value="<%= proVO.getPro_pic_ext()%>" />
-					                                                	</div>
+					                                                		<input type="hidden" name="pic_ext" size="45" value="<%= proVO.getPro_pic_ext()%>" />
+					                                                	
 				                                                	<!-- 商品規格 -->
 					                                                	<div class="valuesize">
 					                                                		<input type="TEXT" name="format" size="45" value="<%=  proVO.getPro_format()%>" />

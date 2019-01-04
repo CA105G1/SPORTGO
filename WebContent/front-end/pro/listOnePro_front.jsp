@@ -239,6 +239,7 @@
 								    							</div>
 								    							<!-- 商品單價 -->
 								    							<div class="fontsize_s">
+								    							    <input type="hidden"  id="pro_bonus" value="<%=proVO.getPro_bonus()%>"/>
 								    								<%=proVO.getPro_bonus()%>
 								    							</div>
 								    							<!-- 商品規格 -->
@@ -307,6 +308,7 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script type="text/javascript"> 
 			$(function(){
+
 				var t = $(".text_box");
 				$("#add").click(function(){		
 					t.val(parseInt(t.val())+1)
@@ -326,10 +328,11 @@
 				
 				//****************************************
 				$("#btn1").on('click', function () {
+					console.log($("#pro_bonus").val());
 					$.ajax({
 						 type: "POST",
 						 url: "<%= request.getContextPath()%>/shoppingCartServlet/shoppingCartServlet.do",
-						 data: creatQueryString($(this).val(), $('#num').val()),
+						 data: creatQueryString($(this).val(), $('#num').val() , $('#pro_bonus').val()),
 						 dataType: "json",
 						 success: function (data){
 							 
@@ -351,9 +354,9 @@
 		            		
 			        });
 			    });
-				function creatQueryString(buttonid,pro_count){
+				function creatQueryString(buttonid,pro_count,pro_bonus){
 					
-					var queryString= {"action":"insert", "pro_no":buttonid, "pro_count":pro_count};
+					var queryString= {"action":"insert", "pro_no":buttonid, "pro_count":pro_count ,"pro_bonus":pro_bonus};
 					console.log(queryString);
 					return queryString;
 				}
