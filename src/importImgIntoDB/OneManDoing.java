@@ -69,7 +69,7 @@ public class OneManDoing {
 			}
 		}else {
 			System.out.println("idiot, your saveDir, "+saveDir.getName()+", is not directory");
-		}
+		} 
 //		int i = 0; // record current row number by index
 //		for(File file : imgFiles) {
 		for(int i = 0;i<imgFiles.size();i++) {
