@@ -324,7 +324,7 @@
 			<script type="text/javascript">
 			$(document).ready(function(){
 				$('.cancel').each( function() {
-					$(this).click( function() {
+					$(this).click( function() { 
 						var val = $(this).val();
 						$.ajax({
 							 type: "POST",
