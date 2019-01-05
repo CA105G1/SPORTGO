@@ -1,5 +1,4 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
 <style type="text/css">
 	.navbar-brand {
 		padding: 0px; /* firefox bug fix */
@@ -34,9 +33,7 @@
 		<div class="collapse navbar-collapse navbar-ex1-collapse">
 			<!-- 左選單 -->
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="#">SportyGo!</a></li>
-				<li><a href="#">揪團去</a></li>
-				<li><a href="#">社團</a></li>
+				<li class="active"><a href="<%=request.getContextPath()%>/index.jsp">SportGo! 前台首頁 </a></li>
 			</ul>
 		
 			<!-- 搜尋表單 -->
@@ -49,7 +46,7 @@
 		
 			<!-- 右選單 -->
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="#"><i class="glyphicon glyphicon-shopping-cart"></i> 商城 </a></li>
+				<li><a href="<%=request.getContextPath()%>/backEndIndex.jsp"> 後台首頁 </a></li>
 				<li>
 					<c:if test="${empVO==null || empVO.emp_psw==null}">
 						<a href="#">訪客，您好</a>
@@ -60,14 +57,15 @@
 				</li>
 				<li>
 					<c:if test="${empVO==null || empVO.emp_psw==null}">
-						<a href="<%=request.getContextPath()%>/backEndIndex.jsp">後台:登入</a>
+						<%@ include file="/back-end/emp/loginfile/checkHasLogin.file" %>
 					</c:if>
 					<c:if test="${!(empVO==null || empVO.emp_psw==null)}">
 						<a href="<%=request.getContextPath()%>/emp/emp.do?action=emp_logout">後台:登出</a>
 					</c:if>
-				</li>
-				
+				</li>			
 			</ul>
+			
+			
 		</div>
 		<!-- 手機隱藏選單區結束 -->
 	</div>
