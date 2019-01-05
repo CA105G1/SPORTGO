@@ -298,15 +298,14 @@
 																								<td>
 																									${proSvc.getOneProduct(orddetails.pro_no).pro_shelve}
 																								</td>
-																								<!-- 下拉式按鈕 -->
-																								<td>
-																									<input type="submit" value="查看">
-																								</td>
+																								<!-- 下拉式按鈕(目前無) -->
 																							</tr>
 																						</c:forEach>
 																					</tbody>
 																				</table>
-																				
+																				<div align="right">
+																				   <button type="button" value="cancel" class="btn btn-danger">取消訂單</button> 
+																				</div>
 																	</div>
 																</div>
 															</div>
@@ -323,6 +322,24 @@
 			<script src="https://code.jquery.com/jquery.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 			<script type="text/javascript">
+			$(document).ready(function(){
+				$('.cancel').each( function() {
+					$(this).click( function() {
+						var val = $(this).val();
+						$.ajax({
+							 type: "POST",
+							 url: "<%= request.getContextPath()%>/ord/ord.do",
+							 data: creatQuerycancel(val),
+							 dataType: "json",
+							 success: function (data){
+								 $('#'+data.ord_no).html('取消');
+						     },
+						     error: function(){alert("AJAX-class發生錯誤囉!")}
+				         })
+					})
+				})
+			})
+			
 				// document.getElementById("display").style.display = 'none';
 				//    $(function() {  //將圖片預覽
 				//    	$('input[type=file]').change(function() {

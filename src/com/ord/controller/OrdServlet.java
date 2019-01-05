@@ -12,6 +12,7 @@ import javax.servlet.http.*;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.address.model.AddressService;
 import com.ord.model.OrdJDBCDAO;
 import com.ord.model.OrdService;
 import com.ord.model.OrdVO;
@@ -60,7 +61,42 @@ if ("insert".equals(action)) { //來自shoppingcart_front.jsp的請求
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 			try {
-				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
+				HttpSession session = req.getSession();
+				//會員編號
+				String mem_no = session.getAttribute("mem_no").toString();
+//				if(mem_no == null || mem_no.trim().length() == 0) {
+//					errorMsgs.add("未登入會員");
+//				}
+				/***********************1.接收請求參數 - 輸入格式的錯誤處理(收貨地址)*************************/
+				
+				String receiver = req.getParameter("receiver");
+				String phone = req.getParameter("phone");
+				String country = req.getParameter("country");
+				String city = req.getParameter("city");
+				String detail = req.getParameter("detail");
+				String zip = req.getParameter("zip");
+				
+				if("".equals(receiver)||(receiver.trim()).length()==0) {
+					errorMsgs.add("收件人欄位必填");
+				}
+				if("".equals(phone)||(phone.trim()).length()==0) {
+					errorMsgs.add("電話欄位必填");
+				}
+				if("".equals(country)||(country.trim()).length()==0) {
+					errorMsgs.add("國家欄位必填");
+				}
+				if("".equals(city)||(city.trim()).length()==0) {
+					errorMsgs.add("城市欄位必填");
+				}
+				if("".equals(detail)||(detail.trim()).length()==0) {
+					errorMsgs.add("地址欄位必填");
+				}
+				if("".equals(zip)||(zip.trim()).length()==0) {
+					errorMsgs.add("郵遞區號欄位必填");
+				}
+
+				
+				/***********************1.接收請求參數 - 輸入格式的錯誤處理(購物車成訂單)*************************/
 				String integerReg = "([0-9]{0,7})";
 				String[] pro_no = req.getParameterValues("pro_no");
 				
@@ -81,12 +117,7 @@ if ("insert".equals(action)) { //來自shoppingcart_front.jsp的請求
 				//拿取網頁資料
 		
 
-				HttpSession session = req.getSession();
-				//會員編號
-				String mem_no = session.getAttribute("mem_no").toString();//********需要把listAllPro_front.jsp中的session拿掉接正式版的會員********
-//				if(mem_no == null || mem_no.trim().length() == 0) {
-//					errorMsgs.add("未登入會員");
-//				}
+
 				//下單日期(sql自動)
 //				java.sql.Timestamp ord_date = null;
 //				try {
@@ -174,6 +205,9 @@ if ("insert".equals(action)) { //來自shoppingcart_front.jsp的請求
 					}
 				}
 				
+				
+
+				
 				/****訂單項目測試***/
 				OrdJDBCDAO ordDAO = new OrdJDBCDAO();
 				System.out.println("沒有exception");
@@ -212,6 +246,15 @@ if ("insert".equals(action)) { //來自shoppingcart_front.jsp的請求
 				}
 				
 				
+				/****永續層存取(收貨地址)****/
+				AddressService addressSvc = new AddressService();
+				try {
+					addressSvc.addNewAddress(mem_no, receiver, phone, country, city, detail, zip);
+					System.out.println("新增地址成功");
+				} catch (RuntimeException e) {
+					System.out.println("新增資料錯誤"+e.getMessage());
+					log(e.getMessage());
+				}
 
 				
 				
@@ -236,7 +279,7 @@ if ("getAll_display".equals(action)) { //來自shoppingcart_front.jsp的請求
 			req.setAttribute("errorMsgs", errorMsgs);
 		}
 
-if ("ok".equals(action)) { //來自shoppingcart_front.jsp的請求
+if ("ok_cancel".equals(action)) { //來自shoppingcart_front.jsp的請求
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.

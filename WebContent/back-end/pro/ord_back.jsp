@@ -483,12 +483,12 @@
 				})
 				function creatQueryOK(ord_no){
 					
-					var queryString= {"action":"ok", "ord_no":ord_no , "ord_status" :"完成"};
+					var queryString= {"action":"ok_cancel", "ord_no":ord_no , "ord_status" :"完成"};
 					console.log(queryString);
 					return queryString;
 				}
 				function creatQuerycancel(ord_no){
-					var queryString= {"action":"ok", "ord_no":ord_no , "ord_status" :"取消"};
+					var queryString= {"action":"ok_cancel", "ord_no":ord_no , "ord_status" :"取消"};
 					return queryString;
 				}					
 				// document.getElementById("display").style.display = 'none';

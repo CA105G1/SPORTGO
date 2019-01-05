@@ -222,15 +222,7 @@
 					</div>
 				</div>
 
-				<%-- 錯誤表列 --%>
-					<c:if test="${not empty errorMsgs}">
-						<font style="color:red">請修正以下錯誤:</font>
-						<ul>
-							<c:forEach var="message" items="${errorMsgs}">
-								<li style="color:red">${message}</li>
-							</c:forEach>
-						</ul>
-					</c:if>
+
 
 					                  <FORM METHOD="post" ACTION="<%= request.getContextPath()%>/ord/ord.do" name="form1" enctype="multipart/form-data">
 										<div class="container-fluid">
@@ -241,6 +233,15 @@
 																<!-- 容器區 -->
 																<div class="container-fluid warpwidth">
 																	<div class="row">
+<%--  -----------------------------------------------------------------------------錯誤表列--------%>
+																		<c:if test="${not empty errorMsgs}">
+																			<font style="color:red">請修正以下錯誤:</font>
+																			<ul>
+																				<c:forEach var="message" items="${errorMsgs}">
+																					<li style="color:red">${message}</li>
+																				</c:forEach>
+																			</ul>
+																		</c:if>
 																		<div>
 																			<h2 class="fontsize">購物車</h2>
 																		</div>
@@ -268,7 +269,7 @@
 																				</div>
 																			</div>
 																		
-																				<!-- 所有商品 -->
+<!--  -------------------------------------------------------------------------所有商品 -->
 																				
 																				<table class="table table-hover ">
 																					<thead>
@@ -326,16 +327,62 @@
                                                                                     
 																					</tbody>
 																				</table>
-																				    <div>
-																				    	<h3>總計金額<div id="testnum" ></div></h3>
-																				    </div>
-																					<div>
-																					    <input type="button" name="name" value="全選" id="allSelect" />
-                												    					<input type="button" name="name" value="取消全選" id="notSelect" />
-																						<input type="submit" value="去買單">
-																						<input type="hidden" name="ord_amount" value="test">
-																						<input type="hidden" name="action" value="insert">
-																					</div>
+																				
+																				<div class="col-xs-12 col-sm-6 col-sm-offset-3">
+																						<h1 align="center">送貨地址</h1>
+																						<div class="form-group">
+																							<label for="receiver">收件人姓名</label>
+																							<input type="text" name="receiver" 
+																							class="form-control" value="${param.receiver}">
+																						</div>
+																						<div class="form-group">
+																							<label for="phone">收件人電話</label>
+																							<input type="text" name="phone" 
+																							class="form-control" value="${param.phone}">
+																						</div>
+																						<div class="form-group">
+																							<label for="country">國家</label>
+																							<input type="text" name="country" 
+																							class="form-control" value="${param.country}">
+																						</div>
+																						<div class="form-group">
+																							<label for="city">城市</label>
+																							<input type="text" name="city" 
+																							class="form-control" value="${param.city}">
+																						</div>
+																						<div class="form-group">
+																							<label for="detail">地址</label>
+																							<input type="text" name="detail" 
+																							class="form-control" value="${param.detail}">
+																						</div>
+																						<div class="form-group">
+																							<label for="zip">郵遞區號</label>
+																							<input type="text" name="zip" 
+																							class="form-control" value="${param.zip}">
+																						</div>
+<!-- 																						<div class="col-xs-12 col-sm-6"> -->
+<%-- 																							<center> --%>
+<!-- 																								<button type="submit" name="action" -->
+<!-- 																								value="add_address" class="btn btn-info">新增</button> -->
+<%-- 																							</center> --%>
+<!-- 																						</div> -->
+<!-- 																						<div class="col-xs-12 col-sm-6"> -->
+<%-- 																							<center> --%>
+<!-- 																								<button type="submit" name="action" -->
+<!-- 																								value="cancel" class="btn btn-info">取消</button> -->
+<%-- 																							</center> --%>
+<!-- 																						</div> -->
+																						<div>
+																							<center><h3>總計金額<div id="testnum" ></div></h3></center>
+																					    </div>
+																						<div>
+																						    <center><input type="button" class="btn btn-info" name="name" value="全選" id="allSelect" />
+																	    					<input type="button" class="btn btn-info" name="name" value="取消全選" id="notSelect" />
+																							<input type="submit" class="btn btn-info" value="去買單"></center>
+																							<input type="hidden" name="ord_amount" value="test">
+																							<input type="hidden" name="action" value="insert">
+																						</div>
+																				</div>
 																				
 																	</div>
 																</div>

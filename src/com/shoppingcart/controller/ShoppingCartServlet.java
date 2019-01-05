@@ -154,7 +154,7 @@ if ("getAll_For_Display".equals(action)) { //來自listOnePro_front.jsp的請求
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交lisOnePro_front.jsp
 			successView.forward(req, res);	
 		}
-		if("delete".equals(action)) {
+if("delete".equals(action)) {
 			System.out.println("有近來");
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to

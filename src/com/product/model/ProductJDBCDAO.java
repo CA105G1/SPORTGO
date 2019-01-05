@@ -348,7 +348,7 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 				proVO.setPro_all_assessman(rs.getInt("PRO_ALL_ASSESSMAN"));
 				
 			}
-			
+//			con.commit();//測試
 		} catch (SQLException  e) {
 			// TODO Auto-generated catch block
 			throw new RuntimeException(e.getMessage());
