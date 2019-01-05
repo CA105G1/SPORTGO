@@ -42,4 +42,8 @@ public class Sg_memService {
 		return dao.getAll();
 	}
 	
+	public List<Sg_memVO> getAllBySg_no(String sg_no) {
+		return dao.getAllBySg_no(sg_no);
+	}
+	
 }
