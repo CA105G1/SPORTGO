@@ -39,7 +39,32 @@
 		display:flex;
 		justify-content: space-between;
 	}
-	
+	.panel-title{
+		text-align: center;
+    	text-align-last: center;
+	}
+	.list-group-item{
+		text-align: center;
+    	text-align-last: center;
+	}
+	#sg_memList{
+		background-color: #FFC8B4;
+		border-radius: 10px;
+    	cursor: pointer;
+    	box-shadow: 0 3px #999;
+    	width:80%;
+    	text-align: center;
+    	text-align-last: center;
+	}
+	#sg_memList:active {
+	  	box-shadow: 0 1px #666;
+	  	transform: translateY(1px);
+	}
+	#sg_memPic{
+		width:50px;
+		border-radius: 50px;
+		padding:3px;
+	}
 </style>
  
 </head>
@@ -57,7 +82,27 @@ System.out.println("memberlistVO= "+memberlistVO);
 
 <div class="container">
 	<div class="row">
-		<div class="col-xs-12 col-sm-3"></div>
+		<div class="col-xs-12 col-sm-3">
+			<div class="panel panel-success">
+				<div class="panel-heading">
+					<h3 class="panel-title">團員列表</h3>
+				</div>
+				<div class="list-group">
+					<jsp:useBean id="sg_memSvc" scope="page" class="com.sg_mem.model.Sg_memService" />
+					<%pageContext.setAttribute("sg_no", vo.getSg_no());%>
+					<c:forEach var="sg_memVO" items="${sg_memSvc.getAllBySg_no(sg_no)}" > 
+						<div class="list-group-item">
+							<div id="sg_memList">
+								<jsp:useBean id="memberlistSvc" scope="page" class="com.memberlist.model.MemberlistService"/>
+								<img id="sg_memPic" src="<%= request.getContextPath()%>/front-end/memberlist/showPicture.do?mem_no=${sg_memVO.mem_no}">
+								${memberlistSvc.getOneMem(sg_memVO.mem_no).mem_name}
+							</div>
+						</div>
+					</c:forEach>
+				</div>
+			</div>
+			
+		</div>
 		<div class="col-xs-12 col-sm-6">
 		
 			<div role="tabpanel">
@@ -89,13 +134,7 @@ System.out.println("memberlistVO= "+memberlistVO);
 										</td>
 									</tr>
 									<tr>
-										<th>揪團編號</th>
-										
-										<td>${Sg_infoVO.sg_no}</td>
-									</tr>
-									<tr>
 										<th>團長</th>
-										<jsp:useBean id="memberlistSvc" scope="page" class="com.memberlist.model.MemberlistService"/>
 										<td>${memberlistSvc.getOneMem(Sg_infoVO.mem_no).mem_name}</td>
 									</tr>
 									<tr>
@@ -127,14 +166,6 @@ System.out.println("memberlistVO= "+memberlistVO);
 										<th>場地名稱</th>
 										<jsp:useBean id="venueSvc" scope="page" class="com.venue.model.VenueService"/>
 										<td id="v_no">${venueSvc.getOneVenue(Sg_infoVO.v_no).v_name}</td> <!-- 下拉選單 -->
-									</tr> 
-									<tr>
-										<th>人數上限</th>
-										<td class="writable">${Sg_infoVO.sg_maxno}</td>  <!-- sg_info2 -->
-									</tr> 
-									<tr>
-										<th>人數下限</th>
-										<td class="writable">${Sg_infoVO.sg_minno}</td> <!-- sg_info3 -->
 									</tr> 
 									<tr>
 										<th>目前報名人數</th>

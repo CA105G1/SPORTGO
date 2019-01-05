@@ -8,5 +8,6 @@ public interface Sg_memDAO_interface {
 	public void delete(String sg_no, String mem_no);
 	public Sg_memVO findByPk(String sg_no, String mem_no);
 	public List<Sg_memVO> getAll();
+	public List<Sg_memVO> getAllBySg_no(String sg_no);
 
 }

@@ -67,6 +67,10 @@ if(list == null){
 		text-align: center;
     	text-align-last: center;
 	}
+	.panel-title{
+		text-align: center;
+    	text-align-last: center;
+	}
 	.sg_picDiv{
 		padding:0px;
 	}

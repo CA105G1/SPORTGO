@@ -24,6 +24,8 @@ public class Sg_memJDBCDAO implements Sg_memDAO_interface{
 			"SELECT * FROM sg_mem WHERE sg_no=? and mem_no=?";
 	private static final String getAllStmt =
 			"SELECT * FROM sg_mem ORDER BY sg_no";
+	private static final String getAllBySg_no =
+			"SELECT * FROM sg_mem WHERE sg_no=?";
 	
 	//連線池版
 //	private static DataSource ds = null;
@@ -234,6 +236,60 @@ public class Sg_memJDBCDAO implements Sg_memDAO_interface{
 			con = DriverManager.getConnection(url, user, psw);
 			pstmt = con.prepareStatement(getAllStmt);
 			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				vo = new Sg_memVO();
+				vo.setSg_no(rs.getString("sg_no"));
+				vo.setMem_no(rs.getString("mem_no"));
+				vo.setCh_status(rs.getString("ch_status"));
+				
+				list.add(vo);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			if(rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<Sg_memVO> getAllBySg_no(String sg_no) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Sg_memVO vo = null;
+		List<Sg_memVO> list = new ArrayList<Sg_memVO>();;
+		
+		try {
+			//連線池版
+			con = DriverManager.getConnection(url, user, psw);
+			pstmt = con.prepareStatement(getAllBySg_no);
+			
+			pstmt.setString(1, sg_no);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
