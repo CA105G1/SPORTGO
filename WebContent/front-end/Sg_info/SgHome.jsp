@@ -214,6 +214,7 @@ if(list == null){
 			<c:forEach var="Sg_infoVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 			
 				<label for="${Sg_infoVO.sg_no}">
+                    <!-- 	判斷時間是否正在揪團 -->
 					<%pageContext.setAttribute("date", new Date());%>
 					<c:if test="${Sg_infoVO.sg_date > date}">
 					<div class="btn sg_infoList" style="background-color: #FFC8B4">
@@ -228,7 +229,10 @@ if(list == null){
 							<table class="table text-center" background="1" style="border-color:#FF0000">
 								<thead >
 									<tr>
-										<th colspan="2" class="text-center">${Sg_infoVO.sg_name }</th>
+										<th colspan="2" class="text-center">
+											<img src="<%= request.getContextPath()%>/img/volleyball.svg" style="width:20px; height:auto;">
+											${Sg_infoVO.sg_name }
+										</th>
 									</tr>
 								</thead>
 								<tbody>

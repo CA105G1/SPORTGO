@@ -22,16 +22,19 @@ public class Sg_infoDAO implements Sg_infoDAO_interface{
 	private static final String insertStmt = 
 			"INSERT INTO sg_info VALUES('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default, ?, ?)";
 	private static final String updateClientStmt =
-			"UPDATE sg_info SET mem_no=?, sg_name=?, sg_date=?, apl_start=?, apl_end=?, sg_fee=?, sg_pic=?, sg_pic_ext=?, sg_per=?, sp_no=?, v_no=?, sg_maxno=?, sg_minno=?, sg_ttlapl=?, sg_extrainfo=?, loc_start=?, loc_end=? WHERE sg_no=?";
+			"UPDATE sg_info SET mem_no=?, sg_name=?, sg_date=?, apl_start=?, apl_end=?, sg_fee=?, sg_pic=?, sg_pic_ext=?, sg_per=?, sp_no=?, v_no=?, sg_maxno=?, sg_minno=?, sg_extrainfo=?, loc_start=?, loc_end=? WHERE sg_no=?";
 			//sg_chkno, sg_status還沒設定進去，mem_no不能改
 	private static final String updateStatusStmt = 
 			"UPDATE sg_info SET sg_status=? WHERE sg_no=?";
+	private static final String updateTtlaplStmt =
+			"UPDATE sg_info SET sg_ttlapl=? WHERE sg_no=?";
 	private static final String deleteStmt =
 			"DELETE FROM sg_info WHERE sg_no=?";
 	private static final String findByPkStmt =
 			"SELECT * FROM sg_info WHERE sg_no=?";
 	private static final String getAllStmt =
 			"SELECT * FROM sg_info WHERE (sg_status='揪團中' or sg_status='成團' or sg_status='流團') AND sg_per='公開' ORDER BY sg_date DESC";
+	
 	
 	private static DataSource ds = null;
 	
@@ -132,11 +135,10 @@ public class Sg_infoDAO implements Sg_infoDAO_interface{
 			pstmt.setString(11, sg_infoVO.getV_no());
 			pstmt.setInt(12, sg_infoVO.getSg_maxno());
 			pstmt.setInt(13, sg_infoVO.getSg_minno());
-			pstmt.setInt(14, sg_infoVO.getSg_ttlapl());
-			pstmt.setString(15, sg_infoVO.getSg_extrainfo());
-			pstmt.setString(16, sg_infoVO.getLoc_start());
-			pstmt.setString(17, sg_infoVO.getLoc_end());
-			pstmt.setString(18, sg_infoVO.getSg_no());
+			pstmt.setString(14, sg_infoVO.getSg_extrainfo());
+			pstmt.setString(15, sg_infoVO.getLoc_start());
+			pstmt.setString(16, sg_infoVO.getLoc_end());
+			pstmt.setString(17, sg_infoVO.getSg_no());
 			
 			pstmt.executeUpdate();
 			
@@ -439,6 +441,40 @@ System.out.println("sqlStr="+sqlStr);
 				}
 			}
 		}
+	}
+
+	@Override
+	public void updateTtlapl(String sg_no, String sg_ttlapl) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(updateTtlaplStmt);
+			
+			pstmt.setString(1, sg_ttlapl);
+			pstmt.setString(2, sg_no);
+			pstmt.executeUpdate();
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
 	}
 
 }
