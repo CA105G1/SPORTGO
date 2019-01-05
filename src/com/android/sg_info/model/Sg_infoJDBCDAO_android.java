@@ -552,4 +552,10 @@ public class Sg_infoJDBCDAO_android implements Sg_infoDAO_interface_android{
 		return null;
 	}
 
+	@Override
+	public List<Sg_info> findByMaster(String mem_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

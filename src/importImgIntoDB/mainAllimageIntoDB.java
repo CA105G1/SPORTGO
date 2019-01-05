@@ -19,7 +19,8 @@ public class mainAllimageIntoDB {
 		// 請設定pull到本地端的路徑，如--->C:\Users\wenshock\git\SPORTGO\InitDB\image
 //		String rootPath = "C:\\Users\\kevin_000\\School_project\\Project\\img";
 //		String rootPath = "/Users/ChengChih-Ren/git/SPORTGOG1/WebContent/InitDB/image";
-		String rootPath = "C:\\Users\\wenshock\\git\\SPORTGO\\WebContent\\InitDB\\image";
+//		String rootPath = "C:\\Users\\wenshock\\git\\SPORTGO\\WebContent\\InitDB\\image";
+		String rootPath = "C:\\Users\\coolbee333\\git\\SPORTGO\\WebContent\\InitDB\\image";
 		String pathContant = "\\"; // microsoft "\\" mac "/"
 		File file = new File(rootPath);
 		if(!file.isDirectory()) {
