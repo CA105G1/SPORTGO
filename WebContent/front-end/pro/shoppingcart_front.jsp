@@ -232,7 +232,7 @@
 						</ul>
 					</c:if>
 
-					
+					                  <FORM METHOD="post" ACTION="<%= request.getContextPath()%>/ord/ord.do" name="form1" enctype="multipart/form-data">
 										<div class="container-fluid">
 											<div class="row">
 													<!-- 表單 -->
@@ -269,7 +269,7 @@
 																			</div>
 																		
 																				<!-- 所有商品 -->
-																				<FORM METHOD="post" ACTION="<%= request.getContextPath()%>/ord/ord.do" name="form1" enctype="multipart/form-data">
+																				
 																				<table class="table table-hover ">
 																					<thead>
 																						<tr class="tablebgc">
@@ -336,7 +336,7 @@
 																						<input type="hidden" name="ord_amount" value="test">
 																						<input type="hidden" name="action" value="insert">
 																					</div>
-																				</FORM>
+																				
 																	</div>
 																</div>
 															</div>
@@ -346,7 +346,7 @@
 												
 											</div>
 										</div>
-
+                                      </FORM>
 										<div class="container-fluid">
 											<div class="row">
 												<div class="container-fluid warp">
