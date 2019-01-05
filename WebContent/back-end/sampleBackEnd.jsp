@@ -22,7 +22,10 @@
 		</style>
 	</head>
 	<body>
+		<%-- include header --%>
 		<%@ include file="/back-end/CA105G1_header_back.file" %>
+		<%-- include show_loginBox--%>
+		<%@ include file="/back-end/emp/loginfile/showLoginBackEnd.file" %>
 		
 		<div class="container-fluid">
 			<div class="row">
