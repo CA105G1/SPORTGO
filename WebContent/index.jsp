@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.news.model.NewsVO"%>
+<%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html lang="">
 	<head>
@@ -14,56 +16,41 @@
 		<![endif]-->
 		<style>
 		
-		
 		</style>
-		
-		
+
 	</head>
 	<body>
 		<%-- header目前尚缺連結點 --%>
-		<%@ include file="front-end/CA105G1_header.file" %>
+		<%@ include file="/front-end/CA105G1_header.file" %>
+		<%  List<NewsVO> newsVOList = (List<NewsVO>)getServletContext().getAttribute("newsVOList"); 
+		  	pageContext.setAttribute("newsVOList", newsVOList); %>
 
+<%-- 		<div class="container-fluid">${newsVOList.size()}</div> --%>
 		<%-- 最新消息---跑馬燈 --%>
 		<div class="container-fluid">
 			<div id="carousel-id" class="carousel slide" data-ride="carousel">
 			    <!-- 幻燈片小圓點區 -->
 			    <ol class="carousel-indicators">
-			        <li data-target="#carousel-id" data-slide-to="0" class=""></li>
-			        <li data-target="#carousel-id" data-slide-to="1" class=""></li>
-			        <li data-target="#carousel-id" data-slide-to="2" class="active"></li>
+			        <% for(int carousel_item = 0 ; carousel_item<newsVOList.size();carousel_item++){ %>
+			        	<li data-target="#carousel-id" data-slide-to="2" class="<%=carousel_item==0? "active":"" %>"></li>
+			    	<% } %>
 			    </ol>
 			    <!-- 幻燈片主圖區 -->
-			    <div class="carousel-inner">
-			        <div class="item">
-			            <img src="https://api.fnkr.net/testimg/2800x700/aaaaaa" alt="">
-			            <div class="container">
-			                <div class="carousel-caption">
-			                    <h1>CSS可樂好喝超爽快</h1>
-			                    <p>你喝過了嗎？</p>
-			                    <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
-			                </div>
-			            </div>
-			        </div>
-			        <div class="item">
-			            <img src="https://api.fnkr.net/testimg/2800x700/aaaaaa" alt="">
-			            <div class="container">
-			                <div class="carousel-caption">
-			                    <h1>CSS可樂的外掛真方便</h1>
-			                    <p>你安裝了嗎？</p>
-			                    <p><a class="btn btn-lg btn-primary" href="#" role="button">更多</a></p>
-			                </div>
-			            </div>
-			        </div>
-			        <div class="item active">
-			            <img src="https://api.fnkr.net/testimg/2800x700/aaaaaa" alt="">
-			            <div class="container">
-			                <div class="carousel-caption">
-			                    <h1>我是標題喔～自己改文案吧</h1>
-			                    <p>我是內文喔，你可以把字打在這裡呦</p>
-			                    <p><a class="btn btn-lg btn-primary" href="#" role="button">詳細內容</a></p>
-			                </div>
-			            </div>
-			        </div>
+			    <div class="carousel-inner">			    
+			        <% for(int carousel_item = 0 ; carousel_item<newsVOList.size();carousel_item++){   %>
+				    <% 		NewsVO newsVO = newsVOList.get(carousel_item);							   %>
+				        <div class="item <%=carousel_item==0? "active":"" %>">
+				            <img src="<%=request.getContextPath()%>/news/newsImg.do?news_no=<%=newsVO.getNews_no()%>" 
+				            class="img-responsive img-rounded center-block" alt="" style="width:1000px; height:500px"/>
+				            <div class="container">
+				                <div class="carousel-caption">
+				                    <h1>我是標題喔～自己改文案吧</h1>
+				                    <p><%=newsVO.getNews_stutas() %></p>
+				                    <p><a class="btn btn-lg btn-primary" href="#" role="button">詳細內容</a></p>
+				                </div>
+				            </div>
+				        </div>
+			    	<% } %>
 			    </div>
 			    <!-- 上下頁控制區 -->
 			    <a class="left carousel-control" href="#carousel-id" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
