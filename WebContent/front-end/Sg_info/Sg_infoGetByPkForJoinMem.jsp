@@ -48,15 +48,16 @@
 
 
 <% 
+String sg_no = (String)request.getAttribute("Sg_no");
 Sg_infoService svc = new Sg_infoService();
-Sg_infoVO vo = svc.GetByPK("S002");
-MemberlistService memsvc = new MemberlistService();
-MemberlistVO memberlistVO = memsvc.getOneMem("M002");
+Sg_infoVO vo = svc.GetByPK(sg_no);
+// MemberlistService memsvc = new MemberlistService();
+// MemberlistVO memberlistVO = memsvc.getOneMem("M002");
 
 
 // 	Sg_infoVO vo = (Sg_infoVO)request.getAttribute("Sg_infoVO");
 	pageContext.setAttribute("Sg_infoVO", vo);
-// 	MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO");
+ 	MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO");
 %>
 
 <div class="container">

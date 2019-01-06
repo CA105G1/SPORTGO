@@ -33,7 +33,11 @@ public class Sg_infoDAO implements Sg_infoDAO_interface{
 	private static final String findByPkStmt =
 			"SELECT * FROM sg_info WHERE sg_no=?";
 	private static final String getAllStmt =
+			"SELECT * FROM sg_info ORDER BY sg_date DESC";
+	private static final String getAllForPublic =
 			"SELECT * FROM sg_info WHERE (sg_status='揪團中' or sg_status='成團' or sg_status='流團') AND sg_per='公開' ORDER BY sg_date DESC";
+	private static final String getAllForGruop =
+			"SELECT * FROM sg_info WHERE (sg_status='揪團中' or sg_status='成團' or sg_status='流團') AND sg_per='限社團' ORDER BY sg_date DESC";
 	
 	
 	private static DataSource ds = null;
@@ -476,5 +480,75 @@ System.out.println("sqlStr="+sqlStr);
 		}
 		
 	}
+	
+	
+	public List<Sg_infoVO> getAllForPublic() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Sg_infoVO vo = null;
+		List<Sg_infoVO> list = new ArrayList<Sg_infoVO>();
+		
+		try {
+			con = ds.getConnection();
+//			con = DriverManager.getConnection(url, user, psw);
+			pstmt = con.prepareStatement(getAllForPublic);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				vo = new Sg_infoVO();
+				vo.setSg_no(rs.getString("sg_no"));
+				vo.setMem_no(rs.getString("mem_no"));
+				vo.setSg_name(rs.getString("sg_name"));
+				vo.setSg_date(rs.getTimestamp("sg_date"));
+				vo.setApl_start(rs.getTimestamp("apl_start"));
+				vo.setApl_end(rs.getTimestamp("apl_end"));
+				vo.setSg_fee(rs.getInt("sg_fee"));
+				vo.setSg_pic(rs.getBytes("sg_pic"));
+				vo.setSg_pic_ext(rs.getString("sg_pic_ext"));
+				vo.setSg_per(rs.getString("sg_per"));
+				vo.setSp_no(rs.getString("sp_no"));
+				vo.setV_no(rs.getString("v_no"));
+				vo.setSg_maxno(rs.getInt("sg_maxno"));
+				vo.setSg_minno(rs.getInt("sg_minno"));
+				vo.setSg_ttlapl(rs.getInt("sg_ttlapl"));
+				vo.setSg_chkno(rs.getInt("sg_chkno"));
+				vo.setSg_extrainfo(rs.getString("sg_extrainfo"));
+				vo.setSg_status(rs.getString("sg_status"));
+				vo.setLoc_start(rs.getString("loc_start"));
+				vo.setLoc_end(rs.getString("loc_end"));
+
+				list.add(vo);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			if(rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return list;
+	}
+	
+	
 
 }

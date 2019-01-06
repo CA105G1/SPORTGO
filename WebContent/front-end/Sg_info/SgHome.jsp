@@ -12,7 +12,7 @@ list = (List<Sg_infoVO>)request.getAttribute("list");
 //若沒有值就代表是第一次載入頁面，直接getAll
 if(list == null){
 	Sg_infoService svc = new Sg_infoService(); 
-	list = svc.getAll();
+	list = svc.getAllForPublic();
 	pageContext.setAttribute("list",list);
 }
 	
@@ -234,7 +234,7 @@ if(list == null){
 								<thead >
 									<tr>
 										<th colspan="2" class="text-center">
-											<img src="<%= request.getContextPath()%>/img/volleyball.svg" style="width:20px; height:auto;">
+											<img src="<%= request.getContextPath()%>/img/sporticons/${Sg_infoVO.sp_no}.svg" style="width:20px; height:auto;">
 											${Sg_infoVO.sg_name }
 										</th>
 									</tr>

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>
+<%@page import="com.sg_info.model.*"%>
+<%@page import="com.venue.model.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,36 +56,40 @@ function myLoc(pos){
 	
 	var markerArray = [];
 	var infowindow = new google.maps.InfoWindow();
+	
 	<%
-	Map<String, String> mapLoc = (Map<String, String>) getServletContext().getAttribute("mapLoc");
-	Set<String> keys = mapLoc.keySet();
-	for(String key : keys){%>
-		var sg_infoLoc = <%=mapLoc.get(key)%>;
-		var dist = google.maps.geometry.spherical.computeDistanceBetween(
-		           new google.maps.LatLng(loc),
-		           new google.maps.LatLng(sg_infoLoc)
-		         )
-		console.log(dist);
-		var i = 0;
-// 		if(dist < 2000){
-			
-			var marker = new google.maps.Marker({
-				position: sg_infoLoc,
-				map: map,
-				animation: google.maps.Animation.DROP,
-				draggable: false
-			});
-			 markerArray.push(marker);
-			 
-			google.maps.event.addListener(marker, 'click', function(){
-			  msg = "<%=key%>";
-			  infowindow.setContent(msg);
-		      infowindow.open(map, this);
-			});
-			
-			
-			
-// 		}
+	Sg_infoService sg_infosvc = new Sg_infoService();
+	VenueService venuesvc = new VenueService();
+	List<Sg_infoVO> list = sg_infosvc.getAll();
+	for(Sg_infoVO sg_infovo : list){
+		if(sg_infovo.getV_no() != null) {
+			VenueVO venuevo =venuesvc.getOneVenue(sg_infovo.getV_no());
+			Double v_lat = venuevo.getV_lat();
+			Double v_long = venuevo.getV_long();%>
+			var sg_infoLoc = <%="{\"lat\":"+v_lat+",\"lng\":"+v_long+"}"%>;
+			var dist = google.maps.geometry.spherical.computeDistanceBetween(
+			           new google.maps.LatLng(loc),
+			           new google.maps.LatLng(sg_infoLoc)
+			         )
+console.log(dist);
+	// 		if(dist < 2000){
+				
+				var marker = new google.maps.Marker({
+					position: sg_infoLoc,
+					map: map,
+					animation: google.maps.Animation.DROP,
+					draggable: false
+				});
+				 markerArray.push(marker);
+				 
+				google.maps.event.addListener(marker, 'click', function(){
+				  msg = "<%=sg_infovo.getSg_no()%>";
+				  infowindow.setContent(msg);
+			      infowindow.open(map, this);
+				});
+				
+	// 		}
+		<%}%>
 	<%}%>
 	
 	

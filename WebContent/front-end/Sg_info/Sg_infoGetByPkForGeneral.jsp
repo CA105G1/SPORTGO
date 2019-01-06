@@ -47,21 +47,22 @@
 		text-align: center;
     	text-align-last: center;
 	}
-	#sg_memList{
-		background-color: #FFC8B4;
-		border-radius: 10px;
-    	cursor: pointer;
-    	box-shadow: 0 3px #999;
-    	width:80%;
-    	text-align: center;
-    	text-align-last: center;
-	}
+ 	#sg_memList{ 
+ 		background-color: #FFFFE0; 
+		border-radius: 10px; 
+    	cursor: pointer; 
+     	box-shadow: 0 2px #999; 
+    	width:80%; 
+     	text-align: center; 
+     	text-align-last: center; 
+ 	} 
 	#sg_memList:active {
 	  	box-shadow: 0 1px #666;
 	  	transform: translateY(1px);
 	}
 	#sg_memPic{
 		width:50px;
+		height:50px;
 		border-radius: 50px;
 		padding:3px;
 	}
@@ -92,11 +93,13 @@ System.out.println("memberlistVO= "+memberlistVO);
 					<%pageContext.setAttribute("sg_no", vo.getSg_no());%>
 					<c:forEach var="sg_memVO" items="${sg_memSvc.getAllBySg_no(sg_no)}" > 
 						<div class="list-group-item">
+							<a href="<%=request.getContextPath()%>/front-end/memberlist/public_Member_page.jsp?mem_no=${sg_memVO.mem_no}">
 							<div id="sg_memList">
 								<jsp:useBean id="memberlistSvc" scope="page" class="com.memberlist.model.MemberlistService"/>
 								<img id="sg_memPic" src="<%= request.getContextPath()%>/front-end/memberlist/showPicture.do?mem_no=${sg_memVO.mem_no}">
 								${memberlistSvc.getOneMem(sg_memVO.mem_no).mem_name}
 							</div>
+							</a>
 						</div>
 					</c:forEach>
 				</div>
