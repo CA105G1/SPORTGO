@@ -22,7 +22,6 @@ public class FriendDAO implements FriendDAO_interface{
 		} catch (NamingException e) {
 			e.printStackTrace(System.err);
 		}
-		
 	}
 	
 	private static final String INSERT = 

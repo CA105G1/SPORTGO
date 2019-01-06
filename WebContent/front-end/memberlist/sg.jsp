@@ -5,7 +5,7 @@
 <%@ page import = "java.util.*" %>
 <%@ taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core"%>
 <%
-	session.setAttribute("loaction",request.getRequestURI());
+	//session.setAttribute("loaction",request.getRequestURI());
 %>
 <jsp:useBean id="memberlistService" class="com.memberlist.model.MemberlistService"/>
 <!DOCTYPE html>
@@ -55,13 +55,13 @@
 											<c:if test="${sg_infoVO.sg_no eq sg_memVO.sg_no}">
 												<img src="<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${sg_infoVO.sg_no}"
 												style="height:100%;width:100%;border-radius:50%;">
-												<a href="<%=request.getContextPath()%>/Sg_info/Sg_info.do?sg_no=${sg_infoVO.sg_no}&action=getByPK" 
+												<a href="<%=request.getContextPath()%>/front-end/Sg_info/Sg_infoGetByPkForJoinMem.jsp?Sg_no=${sg_infoVO.sg_no}" 
 												class="list-group-item" style="display:flex;">
 												${sg_infoVO.sg_name}<br>
 											 	團長：${memberlistService.getOneMem(sg_infoVO.mem_no).mem_name}<br>
 											 	時間：${sg_infoVO.sg_date}<br>
 												</a>
-												<a href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp"
+												<a href=""
 												class="list-group-item" style="display:flex;">評價</a>
 											</c:if>
 									</c:forEach>
@@ -77,13 +77,15 @@
 								<c:forEach var="sg_infoVO" items="${sglist}">
 										<img src="<%= request.getContextPath()%>
 										/Sg_info/Sg_infoImg.do?sg_no=${sg_infoVO.sg_no}" style="height:100%;width:100%;border-radius:50%;">
-										<a href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp"
+										
+										<a href="<%=request.getContextPath()%>/front-end/Sg_info/Sg_infoGetByPkForHead.jsp?Sg_no=${sg_infoVO.sg_no}"
 										 class="list-group-item" style="display:flex;">
 										 ${sg_infoVO.sg_name}<br>
 										 團長：${memberlistService.getOneMem(sg_infoVO.mem_no).mem_name}<br>
 										 時間：${sg_infoVO.sg_date}<br>
+										
 										</a>
-										<a href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp"
+										<a href=""
 										class="list-group-item" style="display:flex;">評價</a>
 								</c:forEach>
 							</div>
@@ -97,15 +99,15 @@
 								<c:forEach var="sg_memVO" items="${sg_mem}">
 									<c:forEach var="sg_infoVO" items="${sghisall}">
 											<c:if test="${sg_infoVO.sg_no eq sg_memVO.sg_no}">
-												<img src="<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${sg_infoVO.sg_no}"
+												<img src="<%= request.getContextPath()%>/Sg_info/Sg_infoGetByPkForJoinMem.jsp?sg_no=${sg_infoVO.sg_no}"
 												style="height:100%;width:100%;border-radius:50%;">
-												<a href="<%=request.getContextPath()%>/Sg_info/Sg_info.do?sg_no=${sg_infoVO.sg_no}&action=getByPK" 
+												<a href="<%=request.getContextPath()%>/Sg_info/Sg_info.do?sg_no=${sg_infoVO.sg_no}" 
 												 class="list-group-item" style="display:flex;">
 												${sg_infoVO.sg_name}<br>
 										 		團長：${memberlistService.getOneMem(sg_infoVO.mem_no).mem_name}<br>
 										 		時間：${sg_infoVO.sg_date}<br>
 												</a>
-												<a href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp"
+												<a href=""
 												class="list-group-item" style="display:flex;">評價</a>
 											</c:if>
 									</c:forEach>
@@ -121,13 +123,13 @@
 								<c:forEach var="sg_infoVO" items="${sghislist}">
 									<img src="<%= request.getContextPath()%>
 									/Sg_info/Sg_infoImg.do?sg_no=${sg_infoVO.sg_no}" style="height:100%;width:100%;border-radius:50%;">
-									<a href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp"
+									<a href="<%=request.getContextPath()%>/front-end/Sg_info/Sg_infoGetByPkForHead.jsp?Sg_no=${sg_infoVO.sg_no}"
 									class="list-group-item" style="display:flex;">
 									${sg_infoVO.sg_name}<br>
 									團長：${memberlistService.getOneMem(sg_infoVO.mem_no).mem_name}<br>
 									時間：${sg_infoVO.sg_date}<br>
 									</a>
-									<a href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp"
+									<a href=""
 									class="list-group-item"  style="display:flex;">評價</a>
 								</c:forEach>
 							</div>

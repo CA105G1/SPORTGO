@@ -92,7 +92,6 @@
     <servlet-name>MemberServlet_Android</servlet-name>
     <url-pattern>/MemberServlet_Android.do</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>AddressServlet</servlet-name>
     <servlet-class>com.address.controller.AddressServlet</servlet-class>
@@ -101,7 +100,6 @@
     <servlet-name>AddressServlet</servlet-name>
     <url-pattern>/front-end/pro/Address.do</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>ClubServlet</servlet-name>
     <servlet-class>com.club.controller.ClubServlet</servlet-class>
