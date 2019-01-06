@@ -73,7 +73,7 @@
 					<!------------ 圖片上傳 ------------>
 						<tr>
 							<td colspan="2" class="uploadPicTd">
-								<img src="<%= request.getContextPath()%>/img/no-image.PNG" id="showPic">
+								<img src="<%= request.getContextPath()%>/img/no-image.PNG" style="width:100%"  id="showPic">
 								<input type="file" id="sg_pic" name="sg_pic"><br>
 							</td>
 						</tr>

@@ -6,10 +6,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <% 
+Sg_infoVO vo = (Sg_infoVO)request.getAttribute("Sg_infoVO");	
+if(vo == null){
 	String sg_no = (String)request.getParameter("Sg_no");
 	Sg_infoService svc = new Sg_infoService();
-	Sg_infoVO vo = svc.GetByPK(sg_no);
+	vo = svc.GetByPK(sg_no);
     pageContext.setAttribute("Sg_infoVO", vo);
+}
 %>
 
 <html>
@@ -53,21 +56,6 @@
 <body>
 <%@ include file="/front-end/CA105G1_header.file" %>
 
-<<<<<<< HEAD
-
-<% 
-	String sg_no = (String)request.getParameter("Sg_no");
-	Sg_infoService svc = new Sg_infoService();
-	Sg_infoVO vo = svc.GetByPK(sg_no);
-	
-	
-	
-// 	Sg_infoVO vo = (Sg_infoVO)request.getAttribute("Sg_infoVO");
-    pageContext.setAttribute("Sg_infoVO", vo);
-%>
-
-=======
->>>>>>> branch 'master' of https://github.com/CA105G1/SPORTGO.git
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsg}">
 	<font style="color:red">請修正以下錯誤:</font>
@@ -416,6 +404,7 @@
 	  $("#dismiss").click(function(){
 		  if (confirm("確定解散嗎!")) {
 			$("#dismissForm").submit();
+			document.location.href="<%= request.getContextPath()%>/front-end/memberlist/sg.jsp";
 		  } else {
 		  }
 	  });

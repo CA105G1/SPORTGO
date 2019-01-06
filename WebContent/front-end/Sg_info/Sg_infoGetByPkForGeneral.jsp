@@ -137,8 +137,9 @@ System.out.println("memberlistVO= "+memberlistVO);
 										</td>
 									</tr>
 									<tr>
-										<th>團長</th>
-										<td>${memberlistSvc.getOneMem(Sg_infoVO.mem_no).mem_name}</td>
+										<th>團長${Sg_infoVO.mem_no }</th>
+										<jsp:useBean id="memberlistSvc2" scope="page" class="com.memberlist.model.MemberlistService"/>
+										<td>${memberlistSvc2.getOneMem(Sg_infoVO.mem_no).mem_name}</td>
 									</tr>
 									<tr>
 										<th>團名</th>
