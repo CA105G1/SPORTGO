@@ -85,6 +85,9 @@ public class Sg_infoService {
 	public List<Sg_infoVO> getAll(){
 		return dao.getAll();
 	}
+	public List<Sg_infoVO> getAllForPublic(){
+		return dao.getAllForPublic();
+	}
 	
 	public List<Sg_infoVO> getAllByQuery(Map<String,String[]> map){
 		return dao.getAll(map);

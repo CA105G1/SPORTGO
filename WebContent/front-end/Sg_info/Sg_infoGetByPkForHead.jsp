@@ -48,8 +48,9 @@
 
 
 <% 
+	String sg_no = (String)request.getAttribute("Sg_no");
 	Sg_infoService svc = new Sg_infoService();
-	Sg_infoVO vo = svc.GetByPK("S002");
+	Sg_infoVO vo = svc.GetByPK(sg_no);
 	
 	
 	
