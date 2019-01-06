@@ -85,6 +85,14 @@ public class FriendServlet extends HttpServlet {
 						return;
 					}
 				}
+				else if(list.getMem2_no().equals(mem1_no)) {
+					if(list.getMem1_no().equals(mem2_no)) {
+						req.setAttribute("status", "duplicate");
+						RequestDispatcher go = req.getRequestDispatcher("public_Member_page.jsp?mem_no="+mem2_no);
+						go.forward(req, res);
+						return;
+					}
+				}
 			}
 			/****永續層存取 新增好友****/
 			try {

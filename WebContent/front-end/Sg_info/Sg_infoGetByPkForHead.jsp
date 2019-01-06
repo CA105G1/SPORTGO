@@ -5,6 +5,13 @@
 <%@ page import="com.memberlist.model.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<% 
+	String sg_no = (String)request.getParameter("Sg_no");
+	Sg_infoService svc = new Sg_infoService();
+	Sg_infoVO vo = svc.GetByPK(sg_no);
+    pageContext.setAttribute("Sg_infoVO", vo);
+%>
+
 <html>
 <head>
 <title>Sg_infoGetByPkForHead</title>
@@ -46,6 +53,7 @@
 <body>
 <%@ include file="/front-end/CA105G1_header.file" %>
 
+<<<<<<< HEAD
 
 <% 
 	String sg_no = (String)request.getParameter("Sg_no");
@@ -58,6 +66,8 @@
     pageContext.setAttribute("Sg_infoVO", vo);
 %>
 
+=======
+>>>>>>> branch 'master' of https://github.com/CA105G1/SPORTGO.git
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsg}">
 	<font style="color:red">請修正以下錯誤:</font>

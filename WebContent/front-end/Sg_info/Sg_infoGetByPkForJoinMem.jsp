@@ -48,7 +48,7 @@
 
 
 <% 
-String sg_no = (String)request.getAttribute("Sg_no");
+String sg_no = (String)request.getParameter("Sg_no");
 Sg_infoService svc = new Sg_infoService();
 Sg_infoVO vo = svc.GetByPK(sg_no);
 // MemberlistService memsvc = new MemberlistService();
