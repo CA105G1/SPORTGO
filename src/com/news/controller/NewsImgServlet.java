@@ -17,6 +17,7 @@ public class NewsImgServlet extends HttpServlet {
 	       
 	    public NewsImgServlet() {
 	        super();
+	        
 	    }
 
 		protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
