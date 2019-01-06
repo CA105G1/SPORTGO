@@ -1,4 +1,4 @@
----SportyGo_ver_0_2_0_create_1227------
+---SportyGo_ver_0_2_5_create_0107------
 --------------------------
 ------drop sequence-------
 --------------------------
@@ -209,7 +209,7 @@ CREATE TABLE SG_INFO(
     MEM_NO varchar2(7) not null,
     SG_NAME varchar2(50) not null,
     SG_DATE timestamp not null,
-    APL_START timestamp not null,
+    APL_START timestamp,
     APL_END timestamp not null,
     SG_FEE number(6,0),
     SG_PIC blob,
