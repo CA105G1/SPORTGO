@@ -86,6 +86,10 @@ public class Sg_infoService_android {
 		
 	}
 	
+	public List<Sg_info> getByMaster(String mem_no) {
+		return dao.findByMaster(mem_no);
+	}
+	
 	public List<Sg_info> getByLike(String mem_no) {
 		return dao.findByLike(mem_no);
 		

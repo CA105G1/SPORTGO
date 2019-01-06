@@ -118,81 +118,81 @@
 	</style>
 	</head>
 	<body>
-		
+<%@ include file="/front-end/CA105G1_header.file" %>
 		<div class="container-fluid backgc">
 			<div class="row">
 				
 
                 <!-- navbar -->
-				<div class="container-fluid ">
-					<div class="row">
-						<nav class="navbar navbar-default" role="navigation">
-							<div class="container">
-								<div class="navbar-header">
-									<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-										<span class="sr-only">選單切換</span>
-										<span class="icon-bar"></span>
-										<span class="icon-bar"></span>
-										<span class="icon-bar"></span>
-									</button>
-									<a class="navbar-brand" href="#">SPORTGO</a>
-								</div>
+<!-- 				<div class="container-fluid "> -->
+<!-- 					<div class="row"> -->
+<!-- 						<nav class="navbar navbar-default" role="navigation"> -->
+<!-- 							<div class="container"> -->
+<!-- 								<div class="navbar-header"> -->
+<!-- 									<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"> -->
+<!-- 										<span class="sr-only">選單切換</span> -->
+<!-- 										<span class="icon-bar"></span> -->
+<!-- 										<span class="icon-bar"></span> -->
+<!-- 										<span class="icon-bar"></span> -->
+<!-- 									</button> -->
+<!-- 									<a class="navbar-brand" href="#">SPORTGO</a> -->
+<!-- 								</div> -->
 
-								<!-- 手機隱藏選單區 -->
-								<div class="collapse navbar-collapse navbar-ex1-collapse ">
-									<!-- 左選單 -->
-									<ul class="nav navbar-nav">
-										<li class="active">
-											<a href="#">我的商品</a>
-										</li>
-										<li>
-											<a href="#">我的賣場分類</a>
-										</li>
-										<li>
-											<a href="#">我的銷售</a>
-										</li>
-										<li>
-											<a href="#">我的行銷活動</a>
-										</li>
-										<li>
-											<a href="#">我的進帳</a>
-										</li>
-										<li>
-											<a href="#">我的錢包</a>
-										</li>
-										<li>
-											<a href="#">賣場設定</a>
-										</li>
-									</ul>
-									<!-- 右選單 -->
-									<ul class="nav navbar-nav navbar-right">
+<!-- 								手機隱藏選單區 -->
+<!-- 								<div class="collapse navbar-collapse navbar-ex1-collapse "> -->
+<!-- 									左選單 -->
+<!-- 									<ul class="nav navbar-nav"> -->
+<!-- 										<li class="active"> -->
+<!-- 											<a href="#">我的商品</a> -->
+<!-- 										</li> -->
+<!-- 										<li> -->
+<!-- 											<a href="#">我的賣場分類</a> -->
+<!-- 										</li> -->
+<!-- 										<li> -->
+<!-- 											<a href="#">我的銷售</a> -->
+<!-- 										</li> -->
+<!-- 										<li> -->
+<!-- 											<a href="#">我的行銷活動</a> -->
+<!-- 										</li> -->
+<!-- 										<li> -->
+<!-- 											<a href="#">我的進帳</a> -->
+<!-- 										</li> -->
+<!-- 										<li> -->
+<!-- 											<a href="#">我的錢包</a> -->
+<!-- 										</li> -->
+<!-- 										<li> -->
+<!-- 											<a href="#">賣場設定</a> -->
+<!-- 										</li> -->
+<!-- 									</ul> -->
+<!-- 									右選單 -->
+<!-- 									<ul class="nav navbar-nav navbar-right"> -->
 
-										<li>
-											<a href="#"></a>
-										</li>
-										<li>
-											<a href="#">個人設定</a>
-										</li>
-										<li class="dropdown">
-											<a href="#" class="dropdown-toggle" data-toggle="dropdown">繁體中文
-												<b class="caret"></b>
-											</a>
-											<ul class="dropdown-menu">
-												<li>
-													<a href="#">切換成買家</a>
-												</li>
-												<li>
-													<a href="#">登出</a>
-												</li>
-											</ul>
-										</li>
-									</ul>
-								</div>
-								<!-- 手機隱藏選單區結束 -->
-							</div>
-						</nav>
-					</div>
-				</div>
+<!-- 										<li> -->
+<!-- 											<a href="#"></a> -->
+<!-- 										</li> -->
+<!-- 										<li> -->
+<!-- 											<a href="#">個人設定</a> -->
+<!-- 										</li> -->
+<!-- 										<li class="dropdown"> -->
+<!-- 											<a href="#" class="dropdown-toggle" data-toggle="dropdown">繁體中文 -->
+<!-- 												<b class="caret"></b> -->
+<!-- 											</a> -->
+<!-- 											<ul class="dropdown-menu"> -->
+<!-- 												<li> -->
+<!-- 													<a href="#">切換成買家</a> -->
+<!-- 												</li> -->
+<!-- 												<li> -->
+<!-- 													<a href="#">登出</a> -->
+<!-- 												</li> -->
+<!-- 											</ul> -->
+<!-- 										</li> -->
+<!-- 									</ul> -->
+<!-- 								</div> -->
+<!-- 								手機隱藏選單區結束 -->
+<!-- 							</div> -->
+<!-- 						</nav> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
 
 
 
@@ -248,9 +248,9 @@
 											    					<div class="fontsize_s">
 											    						商品名稱 :				    						
 											    					</div>
-											    					<div class="fontsize_s">
-											    						照片副檔名 :			    						
-											    					</div>
+<!-- 											    					<div class="fontsize_s"> -->
+<!-- 											    						照片副檔名 :			    						 -->
+<!-- 											    					</div> -->
 											    					<div class="fontsize_s">
 											    						商品規格 :				    						
 											    					</div>
@@ -277,9 +277,8 @@
 					                                                		<input type="TEXT" name="ename" size="45" value="<%= proVO.getPro_name()%>" />
 					                                                	</div>
 				                                                	<!-- 照片副檔名 -->
-					                                                	<div class="valuesize">
-					                                                		<input type="TEXT" name="pic_ext" size="45" value="<%= proVO.getPro_pic_ext()%>" />
-					                                                	</div>
+					                                                		<input type="hidden" name="pic_ext" size="45" value="<%= proVO.getPro_pic_ext()%>" />
+					                                                	
 				                                                	<!-- 商品規格 -->
 					                                                	<div class="valuesize">
 					                                                		<input type="TEXT" name="format" size="45" value="<%=  proVO.getPro_format()%>" />
@@ -377,7 +376,7 @@
 						</div>
 					</FORM>
 
-
+<%@ include file="/front-end/CA105G1_footer.file" %>
 			</div>
 		</div>
 		

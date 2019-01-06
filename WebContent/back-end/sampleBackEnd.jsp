@@ -1,9 +1,6 @@
-<%@page import="com.region.model.RegService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="com.venue.model.VenueVO"%>
-<%@page import="com.region.model.RegVO"%>
-<%@page import="java.util.List"%>
+<%@ page import="java.util.List"%>
 
 <!DOCTYPE html>
 <html lang="">
@@ -25,7 +22,10 @@
 		</style>
 	</head>
 	<body>
+		<%-- include header --%>
 		<%@ include file="/back-end/CA105G1_header_back.file" %>
+		<%-- include show_loginBox--%>
+		<%@ include file="/back-end/emp/loginfile/showLoginBackEnd.file" %>
 		
 		<div class="container-fluid">
 			<div class="row">

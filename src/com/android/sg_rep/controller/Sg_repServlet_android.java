@@ -57,7 +57,7 @@ public class Sg_repServlet_android extends HttpServlet {
 				e.printStackTrace();
 			}
 			writeText(res, "OK");
-		} else if ("getRep".equals(action)) {
+		} else if ("getMemRep".equals(action)) {
 			String mem_no = jsonObject.get("mem_no").getAsString();
 			List<Sg_rep> list = service.findByMem(mem_no);
 			writeText(res, gson.toJson(list));

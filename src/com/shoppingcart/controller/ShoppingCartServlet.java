@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.product.model.ProductService;
@@ -44,7 +45,7 @@ public class ShoppingCartServlet extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		System.out.println("action:"+action);
-		if ("insert".equals(action)) { //來自listOnePro_front.jsp的請求
+if ("insert".equals(action)) { //來自listOnePro_front.jsp的請求
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
@@ -62,7 +63,8 @@ public class ShoppingCartServlet extends HttpServlet{
 				errorMsgs.add("未購買商品");
 			}
 			Integer pro_count = new Integer(req.getParameter("pro_count"));//未驗證
-			
+			Integer pro_bonus = new Integer(req.getParameter("pro_bonus"));
+			Integer count = pro_count * pro_bonus;
 			
 			System.out.println("mem_no :" + mem_no);
 			System.out.println("pro_no :" + pro_no);
@@ -87,11 +89,19 @@ public class ShoppingCartServlet extends HttpServlet{
 			req.setAttribute("proVO", proVO);               // 存入req
 			res.setContentType("text/plain");
 			res.setCharacterEncoding("UTF-8");
+			
 			PrintWriter out = res.getWriter();
-			String job = new JSONObject().toString();//需要回傳不然ajax會出錯
+			String return_pro_bonus = "{\"pro_bonus\":"+count+",\"pro_no\":"+pro_no+"}";
+			try {
+			String job = new JSONObject(return_pro_bonus).toString();//需要回傳不然ajax會出錯
 			out.write(job);
 			out.flush();
 			out.close();
+			
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			/***************************4.新增完成,準備轉交(Send the Success view)***********/
 //			String url = PATH_LISTONEPRO_FRONT;
 //			RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交lisOnePro_front.jsp
@@ -113,7 +123,7 @@ public class ShoppingCartServlet extends HttpServlet{
 //			}
 			
 		}
-		if ("getAll_For_Display".equals(action)) { //來自listOnePro_front.jsp的請求
+if ("getAll_For_Display".equals(action)) { //來自listOnePro_front.jsp的請求
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
@@ -144,7 +154,7 @@ public class ShoppingCartServlet extends HttpServlet{
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交lisOnePro_front.jsp
 			successView.forward(req, res);	
 		}
-		if("delete".equals(action)) {
+if("delete".equals(action)) {
 			System.out.println("有近來");
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to

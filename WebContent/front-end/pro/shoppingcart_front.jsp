@@ -147,7 +147,7 @@
 	</head>
 
 	<body>
-
+<%@ include file="/front-end/CA105G1_header.file" %>
 		<div class="container-fluid backgc">
 			<div class="row">
 
@@ -222,17 +222,9 @@
 					</div>
 				</div>
 
-				<%-- 錯誤表列 --%>
-					<c:if test="${not empty errorMsgs}">
-						<font style="color:red">請修正以下錯誤:</font>
-						<ul>
-							<c:forEach var="message" items="${errorMsgs}">
-								<li style="color:red">${message}</li>
-							</c:forEach>
-						</ul>
-					</c:if>
 
-					
+
+					                  <FORM METHOD="post" ACTION="<%= request.getContextPath()%>/ord/ord.do" name="form1" enctype="multipart/form-data">
 										<div class="container-fluid">
 											<div class="row">
 													<!-- 表單 -->
@@ -241,6 +233,15 @@
 																<!-- 容器區 -->
 																<div class="container-fluid warpwidth">
 																	<div class="row">
+<%--  -----------------------------------------------------------------------------錯誤表列--------%>
+																		<c:if test="${not empty errorMsgs}">
+																			<font style="color:red">請修正以下錯誤:</font>
+																			<ul>
+																				<c:forEach var="message" items="${errorMsgs}">
+																					<li style="color:red">${message}</li>
+																				</c:forEach>
+																			</ul>
+																		</c:if>
 																		<div>
 																			<h2 class="fontsize">購物車</h2>
 																		</div>
@@ -268,8 +269,8 @@
 																				</div>
 																			</div>
 																		
-																				<!-- 所有商品 -->
-																				<FORM METHOD="post" ACTION="<%= request.getContextPath()%>/ord/ord.do" name="form1" enctype="multipart/form-data">
+<!--  -------------------------------------------------------------------------所有商品 -->
+																				
 																				<table class="table table-hover ">
 																					<thead>
 																						<tr class="tablebgc">
@@ -309,10 +310,12 @@
 																					                <input type="button" name="name" value="+" class="add" />
 																					                <input type="text" class="return_mem_no" value="<%=session.getAttribute("mem_no")%>" style="display: none;"/>
 																					                <input type="text" class="return_pro_no" value="${proVO.pro_no}" style="display: none;"/>
+																					                <input type="text" class="return_pro_bonus" value="${proVO.pro_bonus}" style="display: none;"/>
+																					                <input class="danjia" value="" style="display: none;"/>
 																								</td>
 																								<!-- 商品總計 -->
 																								<td>
-																									${hAll[proVO.pro_no] * proVO.pro_bonus}
+																									<div id="${proVO.pro_no}" class="sumTheNumber">${hAll[proVO.pro_no] * proVO.pro_bonus}</div>
 																								</td>
 																								<!-- 下拉式按鈕 -->
 																								<td>
@@ -324,17 +327,60 @@
                                                                                     
 																					</tbody>
 																				</table>
-																				    <div>
-																				    	<h3>總計金額<input type="text" name="name" value="" id="heji" style="width:100px;" /></h3>
-																				    </div>
-																					<div>
-																					    <input type="button" name="name" value="全選" id="allSelect" />
-                												    					<input type="button" name="name" value="取消全選" id="notSelect" />
-																						<input type="submit" value="去買單">
-																						<input type="hidden" name="ord_amount" value="test"> 
-																						<input type="hidden" name="action" value="insert">
-																					</div>
-																				</FORM>
+
+<!-- ---------------------------------------------------收貨地址 -->
+											<div class="container">
+												<div class="row">
+													<div class="col-xs-12 col-sm-6">
+															<div class="form-group col-lg-6">
+																<label for="receiver">收件人姓名</label>
+																<input type="text" name="receiver" 
+																class="form-control" value="${param.receiver}">
+															</div>
+															<div class="form-group col-lg-6">
+																<label for="phone">收件人電話</label>
+																<input type="text" name="phone" 
+																class="form-control col-lg-1" size="20" value="${param.phone}">
+															</div>
+															<div class="form-group col-lg-6">
+																<label for="country">國家</label>
+																<input type="text" name="country" 
+																class="form-control" value="${param.country}">
+															</div>
+															<div class="form-group col-lg-6">
+																<label for="city">城市</label>
+																<input type="text" name="city" 
+																class="form-control" value="${param.city}">
+															</div>
+															<div class="form-group col-lg-6">
+																<label for="detail">地址</label>
+																<input type="text" name="detail" 
+																class="form-control" value="${param.detail}">
+															</div>
+															<div class="form-group col-lg-6">
+																<label for="zip">郵遞區號</label>
+																<input type="text" name="zip" 
+																class="form-control" value="${param.zip}">
+															</div>
+
+													</div>
+													<div class="col-xs-12 col-sm-6">
+														<div>
+															<center><h3>總計金額<div id="testnum" ></div></h3></center>
+													    </div>
+														<div>
+														    <center><input type="button" class="btn btn-info" name="name" value="全選" id="allSelect" />
+									    					<input type="button" class="btn btn-danger" name="name" value="取消全選" id="notSelect" />
+															<input type="submit" class="btn btn-info" value="去買單"></center>
+															<input type="hidden" name="ord_amount" value="test">
+															<input type="hidden" name="action" value="insert">
+														</div>
+													</div>
+												</div>
+											</div>
+																				
+																					
+																				
 																	</div>
 																</div>
 															</div>
@@ -344,34 +390,11 @@
 												
 											</div>
 										</div>
+										
+                                      </FORM>
+								
 
-										<div class="container-fluid">
-											<div class="row">
-												<div class="container-fluid warp">
-													<div class="row">
-														<!-- 容器區 -->
-														<div class="container-fluid warpwidth">
-															<div class="row">
-																<div>
-																	<h2 class="fontsize">?件商品</h2>
-																</div>
-																<!-- 關鍵字搜尋 -->
-																<div>
-
-																	<input type="submit" value="去買單">
-																	
-																	<input type="hidden" name="ord_amount" value="test"> 
-																	<input type="hidden" name="action" value="insert">
-																	
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-
-
+<%@ include file="/front-end/CA105G1_footer.file" %>
 			</div>
 		</div>
 
@@ -380,7 +403,8 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 			<script type="text/javascript">
 				$(document).ready(function(){
-
+					//用遍歷計算總價
+					getTotals();
 					//計算總價，編寫總價方法(尚未用到)
 		            function totalPrice() {
 		                var zong = 0;
@@ -399,16 +423,19 @@
 		                var num = $(this).siblings(".textNum").val();  //獲取數量框裏的數值
 		                var mem_no = $(this).siblings(".return_mem_no").val();//獲取session的當前編號
 		                var pro_no =  $(this).siblings(".return_pro_no").val();//獲取pro_no選擇的商品
+		                var pro_bonus = $(this).siblings(".return_pro_bonus").val();//獲取pro_bonus商品單價
+		                
 		                num--;  //單擊“-”減號時，數量遞減
 		                $(this).siblings(".textNum").val(num); //把數量變化後的新值放入數量框中
 		                
 			                $.ajax({
 								 type: "POST",
 								 url: "<%= request.getContextPath()%>/shoppingCartServlet/shoppingCartServlet.do",
-								 data: subtraction(mem_no,pro_no,num),
+								 data: subtraction(mem_no,pro_no,num,pro_bonus),
 								 dataType: "json",
 								 success: function (data){
-									console.log("成功");
+									 $('#'+data.pro_no).html(data.pro_bonus);
+									 getTotals();
 							     },
 							     error: function(){alert("AJAX-class發生錯誤囉!")}
 					         })
@@ -420,6 +447,7 @@
 		                var xiaoji = danjia * num; //用單價乘以數量計算得到單個小計的值
 		                $(this).siblings(".xiaoji").text(xiaoji); //把得到的小計值放入數量框中顯示
 		                totalPrice();//調用“總價”方法，使每點擊減號，數量變化時，總價跟着變化
+		                
 		            })
 
 		            //加號邏輯（邏輯如同減號的邏輯差不多）
@@ -427,16 +455,18 @@
 		                var num = $(this).siblings(".textNum").val();
 		                var mem_no = $(this).siblings(".return_mem_no").val();//獲取session的當前編號
 		                var pro_no =  $(this).siblings(".return_pro_no").val();//獲取pro_no選擇的商品
+		                var pro_bonus = $(this).siblings(".return_pro_bonus").val();//獲取pro_bonus商品單價
 		                num++;
 		                $(this).siblings(".textNum").val(num);
 		                
 			                $.ajax({
 								 type: "POST",
 								 url: "<%= request.getContextPath()%>/shoppingCartServlet/shoppingCartServlet.do",
-								 data: subtraction(mem_no,pro_no,num),
+								 data: subtraction(mem_no,pro_no,num,pro_bonus),
 								 dataType: "json",
 								 success: function (data){
-									console.log("成功");
+									 $('#'+data.pro_no).html(data.pro_bonus);
+									 getTotals();
 							     },
 							     error: function(){alert("AJAX-class發生錯誤囉!")}
 					         })
@@ -448,6 +478,7 @@
 		                var xiaoji = danjia * num;
 		                $(this).siblings(".xiaoji").text(xiaoji);
 		                totalPrice();
+		                
 		            })
 				            
 		            //全選
@@ -474,29 +505,33 @@
 								 data: creatQueryString(val, ""),
 								 dataType: "json",
 								 success: function (data){
-									
 									 window.location.replace("<%= request.getContextPath()%>/shoppingCartServlet/shoppingCartServlet.do?action=getAll_For_Display"); 
 							     },
 							     error: function(){alert("AJAX-class發生錯誤囉!")}
 					         })
 						})
 					})
-                    
-                    
+                                   
 				})
-				function subtraction(mem_no,pro_no,num){  //數量加減時帶回去controller處理
-					var queryString= {"action":"insert","mem_no":mem_no, "pro_no":pro_no,"pro_count":num};
-					console.log(queryString);
+				function subtraction(mem_no,pro_no,num,pro_bonus){  //數量加減時帶回去controller處理
+					var queryString= {"action":"insert","mem_no":mem_no, "pro_no":pro_no,"pro_count":num,"pro_bonus":pro_bonus};
 					return queryString;
 				}
 				
-				
-				function creatQueryString(buttonid){
-					
+				function creatQueryString(buttonid){  //刪除
 					var queryString= {"action":"delete", "pro_no":buttonid};
-					
 					return queryString;
 				}
+				
+				var total = 0;
+				function getTotals(){  //總計的計算用遍歷的方式
+					$(".sumTheNumber").each(function(e){
+						total += parseInt($(this).text());
+						$('#testnum').html(total)
+					});
+				}
+				
+				
 			</script>							
 	</body>						
 </html>						

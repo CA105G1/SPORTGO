@@ -132,81 +132,81 @@
 	</style>
 	</head>
 	<body>
-		
+<%@ include file="/front-end/CA105G1_header.file" %>
 		<div class="container-fluid backgc">
 			<div class="row">
 				
 
                 <!-- navbar -->
-				<div class="container-fluid ">
-					<div class="row">
-						<nav class="navbar navbar-default" role="navigation">
-							<div class="container">
-								<div class="navbar-header">
-									<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-										<span class="sr-only">選單切換</span>
-										<span class="icon-bar"></span>
-										<span class="icon-bar"></span>
-										<span class="icon-bar"></span>
-									</button>
-									<a class="navbar-brand" href="#">SPORTGO</a>
-								</div>
+<!-- 				<div class="container-fluid "> -->
+<!-- 					<div class="row"> -->
+<!-- 						<nav class="navbar navbar-default" role="navigation"> -->
+<!-- 							<div class="container"> -->
+<!-- 								<div class="navbar-header"> -->
+<!-- 									<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"> -->
+<!-- 										<span class="sr-only">選單切換</span> -->
+<!-- 										<span class="icon-bar"></span> -->
+<!-- 										<span class="icon-bar"></span> -->
+<!-- 										<span class="icon-bar"></span> -->
+<!-- 									</button> -->
+<!-- 									<a class="navbar-brand" href="#">SPORTGO</a> -->
+<!-- 								</div> -->
 
-								<!-- 手機隱藏選單區 -->
-								<div class="collapse navbar-collapse navbar-ex1-collapse ">
-									<!-- 左選單 -->
-									<ul class="nav navbar-nav">
-										<li class="active">
-											<a href="#">我的商品</a>
-										</li>
-										<li>
-											<a href="#">我的賣場分類</a>
-										</li>
-										<li>
-											<a href="#">我的銷售</a>
-										</li>
-										<li>
-											<a href="#">我的行銷活動</a>
-										</li>
-										<li>
-											<a href="#">我的進帳</a>
-										</li>
-										<li>
-											<a href="#">我的錢包</a>
-										</li>
-										<li>
-											<a href="#">賣場設定</a>
-										</li>
-									</ul>
-									<!-- 右選單 -->
-									<ul class="nav navbar-nav navbar-right">
+<!-- 								手機隱藏選單區 -->
+<!-- 								<div class="collapse navbar-collapse navbar-ex1-collapse "> -->
+<!-- 									左選單 -->
+<!-- 									<ul class="nav navbar-nav"> -->
+<!-- 										<li class="active"> -->
+<!-- 											<a href="#">我的商品</a> -->
+<!-- 										</li> -->
+<!-- 										<li> -->
+<!-- 											<a href="#">我的賣場分類</a> -->
+<!-- 										</li> -->
+<!-- 										<li> -->
+<!-- 											<a href="#">我的銷售</a> -->
+<!-- 										</li> -->
+<!-- 										<li> -->
+<!-- 											<a href="#">我的行銷活動</a> -->
+<!-- 										</li> -->
+<!-- 										<li> -->
+<!-- 											<a href="#">我的進帳</a> -->
+<!-- 										</li> -->
+<!-- 										<li> -->
+<!-- 											<a href="#">我的錢包</a> -->
+<!-- 										</li> -->
+<!-- 										<li> -->
+<!-- 											<a href="#">賣場設定</a> -->
+<!-- 										</li> -->
+<!-- 									</ul> -->
+<!-- 									右選單 -->
+<!-- 									<ul class="nav navbar-nav navbar-right"> -->
 
-										<li>
-											<a href="#"></a>
-										</li>
-										<li>
-											<a href="#">個人設定</a>
-										</li>
-										<li class="dropdown">
-											<a href="#" class="dropdown-toggle" data-toggle="dropdown">繁體中文
-												<b class="caret"></b>
-											</a>
-											<ul class="dropdown-menu">
-												<li>
-													<a href="#">切換成買家</a>
-												</li>
-												<li>
-													<a href="#">登出</a>
-												</li>
-											</ul>
-										</li>
-									</ul>
-								</div>
-								<!-- 手機隱藏選單區結束 -->
-							</div>
-						</nav>
-					</div>
-				</div>
+<!-- 										<li> -->
+<!-- 											<a href="#"></a> -->
+<!-- 										</li> -->
+<!-- 										<li> -->
+<!-- 											<a href="#">個人設定</a> -->
+<!-- 										</li> -->
+<!-- 										<li class="dropdown"> -->
+<!-- 											<a href="#" class="dropdown-toggle" data-toggle="dropdown">繁體中文 -->
+<!-- 												<b class="caret"></b> -->
+<!-- 											</a> -->
+<!-- 											<ul class="dropdown-menu"> -->
+<!-- 												<li> -->
+<!-- 													<a href="#">切換成買家</a> -->
+<!-- 												</li> -->
+<!-- 												<li> -->
+<!-- 													<a href="#">登出</a> -->
+<!-- 												</li> -->
+<!-- 											</ul> -->
+<!-- 										</li> -->
+<!-- 									</ul> -->
+<!-- 								</div> -->
+<!-- 								手機隱藏選單區結束 -->
+<!-- 							</div> -->
+<!-- 						</nav> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
 
 
 
@@ -239,6 +239,7 @@
 								    							</div>
 								    							<!-- 商品單價 -->
 								    							<div class="fontsize_s">
+								    							    <input type="hidden"  id="pro_bonus" value="<%=proVO.getPro_bonus()%>"/>
 								    								<%=proVO.getPro_bonus()%>
 								    							</div>
 								    							<!-- 商品規格 -->
@@ -297,7 +298,7 @@
 
 
 
-
+<%@ include file="/front-end/CA105G1_footer.file" %>
 
 			</div>
 		</div>
@@ -307,6 +308,7 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script type="text/javascript"> 
 			$(function(){
+
 				var t = $(".text_box");
 				$("#add").click(function(){		
 					t.val(parseInt(t.val())+1)
@@ -326,10 +328,11 @@
 				
 				//****************************************
 				$("#btn1").on('click', function () {
+					console.log($("#pro_bonus").val());
 					$.ajax({
 						 type: "POST",
 						 url: "<%= request.getContextPath()%>/shoppingCartServlet/shoppingCartServlet.do",
-						 data: creatQueryString($(this).val(), $('#num').val()),
+						 data: creatQueryString($(this).val(), $('#num').val() , $('#pro_bonus').val()),
 						 dataType: "json",
 						 success: function (data){
 							 
@@ -351,9 +354,9 @@
 		            		
 			        });
 			    });
-				function creatQueryString(buttonid,pro_count){
+				function creatQueryString(buttonid,pro_count,pro_bonus){
 					
-					var queryString= {"action":"insert", "pro_no":buttonid, "pro_count":pro_count};
+					var queryString= {"action":"insert", "pro_no":buttonid, "pro_count":pro_count ,"pro_bonus":pro_bonus};
 					console.log(queryString);
 					return queryString;
 				}

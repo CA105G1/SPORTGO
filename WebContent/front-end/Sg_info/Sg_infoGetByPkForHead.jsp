@@ -48,8 +48,9 @@
 
 
 <% 
+	String sg_no = (String)request.getAttribute("Sg_no");
 	Sg_infoService svc = new Sg_infoService();
-	Sg_infoVO vo = svc.GetByPK("S002");
+	Sg_infoVO vo = svc.GetByPK(sg_no);
 	
 	
 	
@@ -184,7 +185,6 @@
 							<input type="hidden" name="sg_no" value="<%= vo.getSg_no()%>" >
 							<input type="hidden" name="mem_no" value="<%= vo.getMem_no()%>" >
 							<input type="hidden" name="sg_pic_ext" value="<%= vo.getSg_pic_ext()%>" >
-							<input type="hidden" name="sg_ttlapl" value="<%= vo.getSg_ttlapl()%>" >
 							<input type="hidden" name="loc_start" id="loc_start" value=<%= vo.getLoc_start() %>>
 							<input type="hidden" name="loc_end" id="loc_end" value=<%= vo.getLoc_end() %>>	
 							<input type="hidden" name="action" value="update">

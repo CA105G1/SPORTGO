@@ -70,6 +70,10 @@ public class SgInfoServlet_android extends HttpServlet {
 			List<Sg_info> sgList = service.getByMem(mem_no);
 			writeText(res, gson.toJson(sgList));
 			
+		} else if ("findByMaster".equals(action)) {
+			String mem_no = jsonObject.get("mem_no").getAsString();
+			List<Sg_info> sgList = service.getByMaster(mem_no);
+			writeText(res, gson.toJson(sgList));
 		} else if ("findByLike".equals(action)) {
 			String mem_no = jsonObject.get("mem_no").getAsString();
 			List<Sg_info> sgList = service.getByLike(mem_no);

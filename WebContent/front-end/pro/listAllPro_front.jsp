@@ -145,81 +145,81 @@ overflow: hidden;
 	</style>
 </head>
 <body>
-
+<%@ include file="/front-end/CA105G1_header.file" %>
 	<div class="container-fluid">
 		<div class="row">
 
 			<!-- navbar -->
-				<nav class="navbar navbar-default" role="navigation">
-					<div class="container">
-						<div class="navbar-header">
-							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-								<span class="sr-only">選單切換</span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-							</button>
-							<a class="navbar-brand" href="#">CSS可樂</a>
-						</div>
+<!-- 				<nav class="navbar navbar-default" role="navigation"> -->
+<!-- 					<div class="container"> -->
+<!-- 						<div class="navbar-header"> -->
+<!-- 							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"> -->
+<!-- 								<span class="sr-only">選單切換</span> -->
+<!-- 								<span class="icon-bar"></span> -->
+<!-- 								<span class="icon-bar"></span> -->
+<!-- 								<span class="icon-bar"></span> -->
+<!-- 							</button> -->
+<!-- 							<a class="navbar-brand" href="#">CSS可樂</a> -->
+<!-- 						</div> -->
 
-						<!-- 手機隱藏選單區 -->
-						<div class="collapse navbar-collapse navbar-ex1-collapse">
-							<!-- 左選單 -->
-							<ul class="nav navbar-nav">
-								<li class="active">
-									<a href="#">關於CSS可樂</a>
-								</li>
-								<li>
-									<a href="#">CSS教學</a>
-								</li>
-								<li>
-									<a href="#">CSS範例</a>
-								</li>
-								<li>
-									<a href="#">原創CSS</a>
-								</li>
-							</ul>
+<!-- 						手機隱藏選單區 -->
+<!-- 						<div class="collapse navbar-collapse navbar-ex1-collapse"> -->
+<!-- 							左選單 -->
+<!-- 							<ul class="nav navbar-nav"> -->
+<!-- 								<li class="active"> -->
+<!-- 									<a href="#">關於CSS可樂</a> -->
+<!-- 								</li> -->
+<!-- 								<li> -->
+<!-- 									<a href="#">CSS教學</a> -->
+<!-- 								</li> -->
+<!-- 								<li> -->
+<!-- 									<a href="#">CSS範例</a> -->
+<!-- 								</li> -->
+<!-- 								<li> -->
+<!-- 									<a href="#">原創CSS</a> -->
+<!-- 								</li> -->
+<!-- 							</ul> -->
 
-							<!-- 搜尋表單 -->
-							<form class="navbar-form navbar-left" role="search">
-								<div class="form-group">
-									<input type="text" class="form-control" placeholder="請輸入關鍵字">
-								</div>
-								<button type="submit" class="btn btn-default">搜尋</button>
-							</form>
+<!-- 							搜尋表單 -->
+<!-- 							<form class="navbar-form navbar-left" role="search"> -->
+<!-- 								<div class="form-group"> -->
+<!-- 									<input type="text" class="form-control" placeholder="請輸入關鍵字"> -->
+<!-- 								</div> -->
+<!-- 								<button type="submit" class="btn btn-default">搜尋</button> -->
+<!-- 							</form> -->
 
-							<!-- 右選單 -->
-							<ul class="nav navbar-nav navbar-right">
-								<li>
-									<a href="#">Amos 您好</a>
-								</li>
-								<li>
-									<a href="#">登出</a>
-								</li>
-								<li>
-									<a href="#">個人設定</a>
-								</li>
-								<li class="dropdown">
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown">繁體中文
-										<b class="caret"></b>
-									</a>
-									<ul class="dropdown-menu">
-										<li>
-											<a href="#">繁體中文</a>
-										</li>
-										<li>
-											<a href="#">English</a>
-										</li>
-										<li>
-											<a href="#">日本語</a>
-										</li>
-									</ul>
-								</li>
-							</ul>
-						</div>
-						<!-- 手機隱藏選單區結束 -->
-					</div>
-				</nav>
+<!-- 							右選單 -->
+<!-- 							<ul class="nav navbar-nav navbar-right"> -->
+<!-- 								<li> -->
+<!-- 									<a href="#">Amos 您好</a> -->
+<!-- 								</li> -->
+<!-- 								<li> -->
+<!-- 									<a href="#">登出</a> -->
+<!-- 								</li> -->
+<!-- 								<li> -->
+<!-- 									<a href="#">個人設定</a> -->
+<!-- 								</li> -->
+<!-- 								<li class="dropdown"> -->
+<!-- 									<a href="#" class="dropdown-toggle" data-toggle="dropdown">繁體中文 -->
+<!-- 										<b class="caret"></b> -->
+<!-- 									</a> -->
+<!-- 									<ul class="dropdown-menu"> -->
+<!-- 										<li> -->
+<!-- 											<a href="#">繁體中文</a> -->
+<!-- 										</li> -->
+<!-- 										<li> -->
+<!-- 											<a href="#">English</a> -->
+<!-- 										</li> -->
+<!-- 										<li> -->
+<!-- 											<a href="#">日本語</a> -->
+<!-- 										</li> -->
+<!-- 									</ul> -->
+<!-- 								</li> -->
+<!-- 							</ul> -->
+<!-- 						</div> -->
+<!-- 						手機隱藏選單區結束 -->
+<!-- 					</div> -->
+<!-- 				</nav> -->
 			<!-- 幻燈片 -->
 				<div id="carousel-id" class="carousel slide" data-ride="carousel">
 					<!-- 幻燈片小圓點區 -->
@@ -367,7 +367,17 @@ overflow: hidden;
 									    	</tbody>
 									    </table>
 									    <%@ include file="page/page2_ByCompositeQuery.file" %>
+									    
 	                        </div>
+	                        
+	                </div>
+	            </div>
+<%@ include file="/front-end/CA105G1_footer.file" %>
+    </div>
+</div>
+
+
+
 
 
 

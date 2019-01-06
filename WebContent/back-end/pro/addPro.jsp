@@ -117,81 +117,81 @@
 </head>
 
 <body>
-
+<%@ include file="/front-end/CA105G1_header.file" %>
 	<div class="container-fluid backgc">
 		<div class="row">
 
 
             <!-- navbar -->
-				<div class="container-fluid ">
-					<div class="row">
-						<nav class="navbar navbar-default" role="navigation">
-							<div class="container">
-								<div class="navbar-header">
-									<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-										<span class="sr-only">選單切換</span>
-										<span class="icon-bar"></span>
-										<span class="icon-bar"></span>
-										<span class="icon-bar"></span>
-									</button>
-									<a class="navbar-brand" href="#">SPORTGO</a>
-								</div>
+<!-- 				<div class="container-fluid "> -->
+<!-- 					<div class="row"> -->
+<!-- 						<nav class="navbar navbar-default" role="navigation"> -->
+<!-- 							<div class="container"> -->
+<!-- 								<div class="navbar-header"> -->
+<!-- 									<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"> -->
+<!-- 										<span class="sr-only">選單切換</span> -->
+<!-- 										<span class="icon-bar"></span> -->
+<!-- 										<span class="icon-bar"></span> -->
+<!-- 										<span class="icon-bar"></span> -->
+<!-- 									</button> -->
+<!-- 									<a class="navbar-brand" href="#">SPORTGO</a> -->
+<!-- 								</div> -->
 
-								<!-- 手機隱藏選單區 -->
-								<div class="collapse navbar-collapse navbar-ex1-collapse ">
-									<!-- 左選單 -->
-									<ul class="nav navbar-nav">
-										<li class="active">
-											<a href="#">我的商品</a>
-										</li>
-										<li>
-											<a href="#">我的賣場分類</a>
-										</li>
-										<li>
-											<a href="#">我的銷售</a>
-										</li>
-										<li>
-											<a href="#">我的行銷活動</a>
-										</li>
-										<li>
-											<a href="#">我的進帳</a>
-										</li>
-										<li>
-											<a href="#">我的錢包</a>
-										</li>
-										<li>
-											<a href="#">賣場設定</a>
-										</li>
-									</ul>
-									<!-- 右選單 -->
-									<ul class="nav navbar-nav navbar-right">
+<!-- 								手機隱藏選單區 -->
+<!-- 								<div class="collapse navbar-collapse navbar-ex1-collapse "> -->
+<!-- 									左選單 -->
+<!-- 									<ul class="nav navbar-nav"> -->
+<!-- 										<li class="active"> -->
+<!-- 											<a href="#">我的商品</a> -->
+<!-- 										</li> -->
+<!-- 										<li> -->
+<!-- 											<a href="#">我的賣場分類</a> -->
+<!-- 										</li> -->
+<!-- 										<li> -->
+<!-- 											<a href="#">我的銷售</a> -->
+<!-- 										</li> -->
+<!-- 										<li> -->
+<!-- 											<a href="#">我的行銷活動</a> -->
+<!-- 										</li> -->
+<!-- 										<li> -->
+<!-- 											<a href="#">我的進帳</a> -->
+<!-- 										</li> -->
+<!-- 										<li> -->
+<!-- 											<a href="#">我的錢包</a> -->
+<!-- 										</li> -->
+<!-- 										<li> -->
+<!-- 											<a href="#">賣場設定</a> -->
+<!-- 										</li> -->
+<!-- 									</ul> -->
+<!-- 									右選單 -->
+<!-- 									<ul class="nav navbar-nav navbar-right"> -->
 
-										<li>
-											<a href="#"></a>
-										</li>
-										<li>
-											<a href="#">個人設定</a>
-										</li>
-										<li class="dropdown">
-											<a href="#" class="dropdown-toggle" data-toggle="dropdown">繁體中文
-												<b class="caret"></b>
-											</a>
-											<ul class="dropdown-menu">
-												<li>
-													<a href="#">切換成買家</a>
-												</li>
-												<li>
-													<a href="#">登出</a>
-												</li>
-											</ul>
-										</li>
-									</ul>
-								</div>
-								<!-- 手機隱藏選單區結束 -->
-							</div>
-						</nav>
-					</div>
-				</div>
+<!-- 										<li> -->
+<!-- 											<a href="#"></a> -->
+<!-- 										</li> -->
+<!-- 										<li> -->
+<!-- 											<a href="#">個人設定</a> -->
+<!-- 										</li> -->
+<!-- 										<li class="dropdown"> -->
+<!-- 											<a href="#" class="dropdown-toggle" data-toggle="dropdown">繁體中文 -->
+<!-- 												<b class="caret"></b> -->
+<!-- 											</a> -->
+<!-- 											<ul class="dropdown-menu"> -->
+<!-- 												<li> -->
+<!-- 													<a href="#">切換成買家</a> -->
+<!-- 												</li> -->
+<!-- 												<li> -->
+<!-- 													<a href="#">登出</a> -->
+<!-- 												</li> -->
+<!-- 											</ul> -->
+<!-- 										</li> -->
+<!-- 									</ul> -->
+<!-- 								</div> -->
+<!-- 								手機隱藏選單區結束 -->
+<!-- 							</div> -->
+<!-- 						</nav> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
  
 			<!-- 表單 -->
 				<FORM METHOD="post" ACTION="<%= request.getContextPath()%>/pro/pro.do" name="form1" enctype="multipart/form-data">
@@ -213,20 +213,20 @@
 						    			<img id="pre01" src="<%= request.getContextPath()%>/img/no-image.PNG">
 						    		</div>
 						    		    <!-- 文字表格1 -->
-						    			<div class="container-fluid ff">
+						    			<div class="container-fluid ">
 							    			<div class="row">
 							    				<div class="fontsize">
 							    					基本資訊 :
 							    				</div>
 							    				<!-- 左空白 -->
-							    				<div class="col-xs-12 col-sm-1 bb">
+							    				<div class="col-xs-12 col-sm-1 ">
 							    				    <div class="row">
 								    				    	左
 							    				    </div>
 							    				</div>
 							    				<!-- 內容詳情 -->
-							    				<div class="col-xs-12 col-sm-10 aa">
-	                                                <div class="col-xs-12 col-sm-2 bb">
+							    				<div class="col-xs-12 col-sm-10 ">
+	                                                <div class="col-xs-12 col-sm-2 ">
 								    					<div class="fontsize_s">
 								    						商品類別 : 用選的				    						
 								    					</div>
@@ -247,7 +247,7 @@
 								    					</div>
 
 	                                                </div>
-	                                                <div class="col-xs-12 col-sm-8 aa">
+	                                                <div class="col-xs-12 col-sm-8 ">
 	                                                	<!-- 商品類別 -->
 	                                                    <div class="valuesize">
 	                                                    	<select size="1" name="pro_classid">
@@ -258,49 +258,49 @@
 	                                                    </div>
 	                                                	<!-- 商品名稱 -->
 	                                                	<div class="valuesize">
-	                                                		<input type="TEXT" name="ename" size="45" value="<%= (proVO==null)? "吳永志" : proVO.getPro_name()%>" />
+	                                                		<input type="TEXT" name="ename" size="45" value="<%= (proVO==null)? "" : proVO.getPro_name()%>" />
 	                                                	</div>
 	                                                	<!-- 照片副檔名 -->
 	                                                	<div class="valuesize">
-	                                                		<input type="TEXT" name="pic_ext" size="45" value="<%= (proVO==null)? "MANAGER" : proVO.getPro_pic_ext()%>" />
+	                                                		<input type="TEXT" name="pic_ext" size="45" value="<%= (proVO==null)? "" : proVO.getPro_pic_ext()%>" />
 	                                                	</div>
 	                                                	<!-- 商品規格 -->
 	                                                	<div class="valuesize">
-	                                                		<input type="TEXT" name="format" size="45" value="<%= (proVO==null)? "MANAGER" : proVO.getPro_format()%>" />
+	                                                		<input type="TEXT" name="format" size="45" value="<%= (proVO==null)? "" : proVO.getPro_format()%>" />
 	                                                	</div>
 	                                                	<!-- 商品詳述 -->
 	                                                	<div class="valuesize">
-	                                                		<input type="TEXT" name="details" size="45" value="<%= (proVO==null)? "MANAGER" : proVO.getPro_details()%>" />
+	                                                		<input type="TEXT" name="details" size="45" value="<%= (proVO==null)? "" : proVO.getPro_details()%>" />
 	                                                	</div>
 	                                                	<!-- 商品狀態 -->
 	                                                	<div class="valuesize">
 	                                                		<input type="TEXT" name="shelve" size="45" value="<%= (proVO==null)? "MANAGER" : proVO.getPro_shelve()%>" />
 	                                                	</div>
 	                                                </div>
-	                                                <div class="col-xs-12 col-sm-2 bb">
+	                                                <div class="col-xs-12 col-sm-2 ">
 	                                                </div>
 							    				</div>
 							    				<!-- 右空白 -->
-							    				<div class="col-xs-12 col-sm-1 ee">
+							    				<div class="col-xs-12 col-sm-1 ">
 							    					右
 							    				</div>
 							    			</div>
 						    			</div>
 						    			<!-- 文字表格2 -->
-							    			<div class="container-fluid ff">
+							    			<div class="container-fluid ">
 								    			<div class="row">
 								    				<div class="fontsize">
 								    					商品單價及庫存 :
 								    				</div>
 								    				<!-- 左空白 -->
-								    				<div class="col-xs-12 col-sm-1 bb">
+								    				<div class="col-xs-12 col-sm-1 ">
 								    				    <div class="row">
 									    				    	左
 								    				    </div>
 								    				</div>
 								    				<!-- 內容詳情 -->
-								    				<div class="col-xs-12 col-sm-10 aa">
-		                                                <div class="col-xs-12 col-sm-2 bb">
+								    				<div class="col-xs-12 col-sm-10 ">
+		                                                <div class="col-xs-12 col-sm-2 ">
 									    					<div class="fontsize_s">
 									    						商品單價 : 				    						
 									    					</div>
@@ -317,33 +317,33 @@
 									    						商品評價總人數 :				    						
 									    					</div>
 		                                                </div>
-		                                                <div class="col-xs-12 col-sm-8 aa">
+		                                                <div class="col-xs-12 col-sm-8 ">
 		                                                	<!-- 商品單價 -->
 		                                                    <div class="valuesize">
-		                                                    	<input type="TEXT" name="pro_bonus" size="45" value="<%= (proVO==null)? "123" : proVO.getPro_bonus()%>" />
+		                                                    	<input type="TEXT" name="pro_bonus" size="45" value="<%= (proVO==null)? "" : proVO.getPro_bonus()%>" />
 		                                                    </div>
 		                                                	<!-- 商品庫存量 -->
 		                                                	<div class="valuesize">
-		                                                		<input type="TEXT" name="pro_stock" size="45" value="<%= (proVO==null)? "123" : proVO.getPro_stock()%>" />
+		                                                		<input type="TEXT" name="pro_stock" size="45" value="<%= (proVO==null)? "" : proVO.getPro_stock()%>" />
 		                                                	</div>
-		                                                	<!-- 商品安全庫存量 -->
+		                                                	<!-- 商品安全庫存量 -->  
 		                                                	<div class="valuesize">
-		                                                		<input type="TEXT" name="pro_safestock" size="45" value="<%= (proVO==null)? "123" : proVO.getPro_safestock()%>" />
+		                                                		<input type="TEXT" name="pro_safestock" size="45" value="<%= (proVO==null)? "" : proVO.getPro_safestock()%>" />
 		                                                	</div>
 		                                                	<!-- 商品總評價 -->
 		                                                	<div class="valuesize">
-		                                                		<input type="TEXT" name="pro_all_assess" size="45" value="<%= (proVO==null)? "123" : proVO.getPro_all_assess()%>" />
+		                                                		<input type="TEXT" name="pro_all_assess" size="45" value="<%= (proVO==null)? "" : proVO.getPro_all_assess()%>" />
 		                                                	</div>
 		                                                	<!-- 商品評價總人數 -->
 		                                                	<div class="valuesize">
-		                                                		<input type="TEXT" name="pro_all_assessman" size="45" value="<%= (proVO==null)? "123" : proVO.getPro_all_assessman()%>" />
+		                                                		<input type="TEXT" name="pro_all_assessman" size="45" value="<%= (proVO==null)? "" : proVO.getPro_all_assessman()%>" />
 		                                                	</div>
 		                                                </div>
-		                                                <div class="col-xs-12 col-sm-2 bb">
+		                                                <div class="col-xs-12 col-sm-2 ">
 		                                                </div>
 								    				</div>
 								    				<!-- 右空白 -->
-								    				<div class="col-xs-12 col-sm-1 ee">
+								    				<div class="col-xs-12 col-sm-1 ">
 								    					右
 								    				</div>
 								    			</div>
@@ -359,7 +359,7 @@
 									    		
 								    			<!-- 取消按鈕 -->
 									    		
-									    			<button>取消</button>
+									    			<button type="button" onclick="tuchback()">取消</button>
 									    		</div>
 		                                    </div>
 						    	</div>
@@ -368,7 +368,7 @@
 					</div>
 				</FORM>
 
-
+<%@ include file="/front-end/CA105G1_footer.file" %>
 		</div>
 	</div>
 
@@ -377,17 +377,21 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 		$(function() {  //將圖片預覽
-		    	$('input[type=file]').change(function() {
-		      	var input = $(this);
-		      	if(!!this.files && !!this.files[0]) {
-		        	var reader = new FileReader();
-		          reader.onload = function(e) {
-		          	$('#pre' + input.prop('id').substr(4,2)).prop('src', e.target.result);
-		          }
-		          reader.readAsDataURL(this.files[0]);
-		        }
-		      });
-		    });
+	    	$('input[type=file]').change(function() {
+	      	var input = $(this);
+	      	if(!!this.files && !!this.files[0]) {
+	        	var reader = new FileReader();
+	          reader.onload = function(e) {
+	          	$('#pre' + input.prop('id').substr(4,2)).prop('src', e.target.result);
+	          }
+	          reader.readAsDataURL(this.files[0]);
+	        }
+	      });
+	    });
+		function tuchback(){
+			console.log("123");
+			window.location.replace("<%= request.getContextPath()%>/back-end/pro/listAllPro.jsp"); 
+		}
 	</script>
 </body>
 

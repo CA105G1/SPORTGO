@@ -318,7 +318,6 @@ public class Sg_infoServlet extends HttpServlet {
 				String sg_pic_ext = req.getParameter("sg_pic_ext").trim();
 				String sg_per = req.getParameter("sg_per").trim();
 				
-				Integer sg_ttlapl = new Integer(req.getParameter("sg_ttlapl").trim());
 				String sg_extrainfo = req.getParameter("sg_info4").trim();
 				
 				
@@ -339,7 +338,6 @@ public class Sg_infoServlet extends HttpServlet {
 				sg_infoVO.setV_no(v_no);
 				sg_infoVO.setSg_maxno(sg_maxno);
 				sg_infoVO.setSg_minno(sg_minno);
-				sg_infoVO.setSg_ttlapl(sg_ttlapl);
 				sg_infoVO.setSg_extrainfo(sg_extrainfo);
 				sg_infoVO.setLoc_start(loc_start);
 				sg_infoVO.setLoc_end(loc_end);
@@ -353,7 +351,7 @@ public class Sg_infoServlet extends HttpServlet {
 				}
 				
 				///////////////////開始UPDATE資料//////////////////////////
-				sg_infoVO = svc.updateSg_info(sg_no, mem_no, sg_name, sg_date, apl_start, apl_end, sg_fee, sg_pic, sg_pic_ext, sg_per, sp_no, v_no, sg_maxno, sg_minno, sg_ttlapl, sg_extrainfo, loc_start, loc_end);
+				sg_infoVO = svc.updateSg_info(sg_no, mem_no, sg_name, sg_date, apl_start, apl_end, sg_fee, sg_pic, sg_pic_ext, sg_per, sp_no, v_no, sg_maxno, sg_minno, sg_extrainfo, loc_start, loc_end);
 				
 				req.setAttribute("Sg_infoVO", sg_infoVO);
 				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/Sg_info/Sg_infoGetByPkForHead.jsp");

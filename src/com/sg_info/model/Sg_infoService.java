@@ -46,7 +46,7 @@ public class Sg_infoService {
 	
 	public Sg_infoVO updateSg_info(String sg_no, String mem_no, String sg_name, Timestamp sg_date, Timestamp apl_start, Timestamp apl_end, 
 			Integer sg_fee, byte[] sg_pic, String sg_pic_ext, String sg_per, String sp_no, String v_no, 
-			Integer sg_maxno, Integer sg_minno, Integer sg_ttlapl, String sg_extrainfo, String loc_start, 
+			Integer sg_maxno, Integer sg_minno, String sg_extrainfo, String loc_start, 
 			String loc_end) {
 		
 		Sg_infoVO vo = new Sg_infoVO();
@@ -65,7 +65,6 @@ public class Sg_infoService {
 		vo.setV_no(v_no);
 		vo.setSg_maxno(sg_maxno);
 		vo.setSg_minno(sg_minno);
-		vo.setSg_ttlapl(sg_ttlapl);
 		vo.setSg_extrainfo(sg_extrainfo);
 		vo.setLoc_start(loc_start);
 		vo.setLoc_end(loc_end);
@@ -86,6 +85,9 @@ public class Sg_infoService {
 	public List<Sg_infoVO> getAll(){
 		return dao.getAll();
 	}
+	public List<Sg_infoVO> getAllForPublic(){
+		return dao.getAllForPublic();
+	}
 	
 	public List<Sg_infoVO> getAllByQuery(Map<String,String[]> map){
 		return dao.getAll(map);
@@ -93,6 +95,10 @@ public class Sg_infoService {
 	
 	public void updateStatus(String sg_no, String sg_status) {
 		dao.updateStatus(sg_no, sg_status);
+	}
+	
+	public void updateTtlapl(String sg_no, String sg_ttlapl) {
+		dao.updateStatus(sg_no, sg_ttlapl);
 	}
 	
 	

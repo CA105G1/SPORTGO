@@ -126,7 +126,6 @@ public class OneManDoing {
 			int iii = pstmt.executeUpdate();
 		System.out.println("success number : "+iii);
 			//initConnection();
-			i++;
 		}
 	}
 	

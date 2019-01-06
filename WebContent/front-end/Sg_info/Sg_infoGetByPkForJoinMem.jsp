@@ -48,15 +48,16 @@
 
 
 <% 
+String sg_no = (String)request.getAttribute("Sg_no");
 Sg_infoService svc = new Sg_infoService();
-Sg_infoVO vo = svc.GetByPK("S002");
-MemberlistService memsvc = new MemberlistService();
-MemberlistVO memberlistVO = memsvc.getOneMem("M002");
+Sg_infoVO vo = svc.GetByPK(sg_no);
+// MemberlistService memsvc = new MemberlistService();
+// MemberlistVO memberlistVO = memsvc.getOneMem("M002");
 
 
 // 	Sg_infoVO vo = (Sg_infoVO)request.getAttribute("Sg_infoVO");
 	pageContext.setAttribute("Sg_infoVO", vo);
-// 	MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO");
+ 	MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO");
 %>
 
 <div class="container">
@@ -92,18 +93,13 @@ MemberlistVO memberlistVO = memsvc.getOneMem("M002");
 										</td>
 									</tr>
 									<tr>
-										<th>揪團編號</th>
-										
-										<td>${Sg_infoVO.sg_no}</td>
-									</tr>
-									<tr>
 										<th>團長</th>
 										<jsp:useBean id="memberlistSvc" scope="page" class="com.memberlist.model.MemberlistService"/>
 										<td>${memberlistSvc.getOneMem(Sg_infoVO.mem_no).mem_name}</td>
 									</tr>
 									<tr>
 										<th>團名</th>
-										<td class="writable">${Sg_infoVO.sg_name }</td>  <!-- sg_info0 -->
+										<td class="writable">${Sg_infoVO.sg_name }</td>  
 									</tr>
 									<tr>
 										<th>活動時間</th>
@@ -119,25 +115,17 @@ MemberlistVO memberlistVO = memsvc.getOneMem("M002");
 									</tr>
 									<tr>
 										<th>報名費用</th>
-										<td class="writable">${Sg_infoVO.sg_fee}</td> <!-- sg_info1 -->
+										<td class="writable">${Sg_infoVO.sg_fee}</td> 
 									</tr> 
 									<tr>
 										<th>運動種類</th>
 										<jsp:useBean id="sportSvc" scope="page" class="com.sport.model.SportService"/>
-										<td id="sp_no">${sportSvc.getByPK(Sg_infoVO.sp_no).sp_name}</td> <!-- 下拉選單 -->
+										<td id="sp_no">${sportSvc.getByPK(Sg_infoVO.sp_no).sp_name}</td> 
 									</tr> 
 									<tr>
 										<th>場地名稱</th>
 										<jsp:useBean id="venueSvc" scope="page" class="com.venue.model.VenueService"/>
-										<td id="v_no">${venueSvc.getOneVenue(Sg_infoVO.v_no).v_name}</td> <!-- 下拉選單 -->
-									</tr> 
-									<tr>
-										<th>人數上限</th>
-										<td class="writable">${Sg_infoVO.sg_maxno}</td>  <!-- sg_info2 -->
-									</tr> 
-									<tr>
-										<th>人數下限</th>
-										<td class="writable">${Sg_infoVO.sg_minno}</td> <!-- sg_info3 -->
+										<td id="v_no">${venueSvc.getOneVenue(Sg_infoVO.v_no).v_name}</td> 
 									</tr> 
 									<tr>
 										<th>目前報名人數</th>
@@ -145,7 +133,7 @@ MemberlistVO memberlistVO = memsvc.getOneMem("M002");
 									</tr> 
 									<tr>
 										<th>團長的話</th>
-										<td class="writable">${Sg_infoVO.sg_extrainfo}</td> <!-- sg_info4 -->
+										<td class="writable">${Sg_infoVO.sg_extrainfo}</td> 
 									</tr>  
 								</tbody>
 							</table>

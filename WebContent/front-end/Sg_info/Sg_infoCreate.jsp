@@ -38,11 +38,11 @@
 <%@ include file="/front-end/CA105G1_header.file" %>
 
 <%
-MemberlistService memsvc = new MemberlistService();
-MemberlistVO memberlistVO = memsvc.getOneMem("M002");
+// MemberlistService memsvc = new MemberlistService();
+// MemberlistVO memberlistVO = memsvc.getOneMem("M002");
 
 
-// 	MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO"); 
+	MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO"); 
 %>
 
 
@@ -124,7 +124,7 @@ MemberlistVO memberlistVO = memsvc.getOneMem("M002");
 							<td>
 								<select name="sg_per">
 									<option value="公開">公開</option>
-									<option value="僅限社團">僅限社團</option>
+									<option value="限社團">限社團</option>
 								</select>
 							</td>
 						</tr>

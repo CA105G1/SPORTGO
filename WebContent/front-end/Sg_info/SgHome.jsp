@@ -12,7 +12,7 @@ list = (List<Sg_infoVO>)request.getAttribute("list");
 //若沒有值就代表是第一次載入頁面，直接getAll
 if(list == null){
 	Sg_infoService svc = new Sg_infoService(); 
-	list = svc.getAll();
+	list = svc.getAllForPublic();
 	pageContext.setAttribute("list",list);
 }
 	
@@ -42,7 +42,6 @@ if(list == null){
     	border-radius: 30px;
     	cursor: pointer;
     	box-shadow: 0 3px #999;
-    	background-color: lightpink;
     	width:700px;
     	height:240px;
     }
@@ -65,6 +64,10 @@ if(list == null){
 	}
 	select{
 		width:100%;
+		text-align: center;
+    	text-align-last: center;
+	}
+	.panel-title{
 		text-align: center;
     	text-align-last: center;
 	}
@@ -174,6 +177,7 @@ if(list == null){
 					      			<!-------- 送出查詢 --------->
 						      			<tr>
 						      				<input type="hidden" name="action" value="sg_infoCompositeQuery">
+						      				<input type="hidden" name="sg_per" value="公開">
 						      				<td><input type="submit" value="送出查詢" class="btn btn-primary"></td>
 						      			</tr>
 						      			
@@ -214,18 +218,33 @@ if(list == null){
 			<c:forEach var="Sg_infoVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 			
 				<label for="${Sg_infoVO.sg_no}">
-					<div class="btn sg_infoList">
+                    <!-- 	判斷時間是否正在揪團 -->
+					<%pageContext.setAttribute("date", new Date());%>
+					<c:if test="${Sg_infoVO.sg_date > date}">
+					<div class="btn sg_infoList" style="background-color: #FFC8B4">
+					</c:if>
+					<c:if test="${Sg_infoVO.sg_date < date}">
+					<div class="btn sg_infoList" style="background-color: #DDDDDD">
+					</c:if>
 						<div class="col-xs-12 col-sm-6 sg_picDiv">
 							<img src="<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${Sg_infoVO.sg_no}" class="sg_pic img-responsive img-rounded">
 						</div>
 						<div class="col-xs-12 col-sm-6">
-							<table class="table table-hover text-center" >
+							<table class="table text-center" background="1" style="border-color:#FF0000">
 								<thead >
 									<tr>
-										<th colspan="2" class="text-center">${Sg_infoVO.sg_name }</th>
+										<th colspan="2" class="text-center">
+											<img src="<%= request.getContextPath()%>/img/sporticons/${Sg_infoVO.sp_no}.svg" style="width:20px; height:auto;">
+											${Sg_infoVO.sg_name }
+										</th>
 									</tr>
 								</thead>
 								<tbody>
+									<tr>
+										<td>團長:</td>
+										<jsp:useBean id="memberlistSvc" scope="page" class="com.memberlist.model.MemberlistService"/>
+										<td>${memberlistSvc.getOneMem(Sg_infoVO.mem_no).mem_name}</td>
+									</tr>
 									<tr>
 										<td>活動時間:</td>
 										<td><fmt:formatDate value="${Sg_infoVO.sg_date}" pattern="yyyy-MM-dd HH:mm"/></td>

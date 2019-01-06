@@ -22,8 +22,8 @@ public class EmpServlet extends HttpServlet {
         super();
     }
 
-//    private static final String BACK_END_INDEX_PATH = "/backEndIndex.jsp";
-    private static final String BACK_END_INDEX_PATH = "/backEndIndex_fortest.jsp";
+    private static final String BACK_END_INDEX_PATH = "/backEndIndex.jsp";
+//    private static final String BACK_END_INDEX_PATH = "/backEndIndex_fortest.jsp";
     
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -49,7 +49,7 @@ public class Sg_likeServlet_android extends HttpServlet {
 			List<Sg_likeVO_android> sgList = service.findBySg(sg_no);
 			writeText(res, gson.toJson(sgList));
 			
-		} else if("findByMem".equals(action)) {
+		} else if("getMemLike".equals(action)) {
 			String mem_no = jsonObject.get("mem_no").getAsString();
 			List<Sg_likeVO_android> sgList = service.findByMem(mem_no);
 			writeText(res, gson.toJson(sgList));
