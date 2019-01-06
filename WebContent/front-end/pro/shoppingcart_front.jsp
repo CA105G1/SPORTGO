@@ -147,7 +147,7 @@
 	</head>
 
 	<body>
-
+<%@ include file="/front-end/CA105G1_header.file" %>
 		<div class="container-fluid backgc">
 			<div class="row">
 
@@ -327,62 +327,59 @@
                                                                                     
 																					</tbody>
 																				</table>
+
+<!-- ---------------------------------------------------收貨地址 -->
+											<div class="container">
+												<div class="row">
+													<div class="col-xs-12 col-sm-6">
+															<div class="form-group col-lg-6">
+																<label for="receiver">收件人姓名</label>
+																<input type="text" name="receiver" 
+																class="form-control" value="${param.receiver}">
+															</div>
+															<div class="form-group col-lg-6">
+																<label for="phone">收件人電話</label>
+																<input type="text" name="phone" 
+																class="form-control col-lg-1" size="20" value="${param.phone}">
+															</div>
+															<div class="form-group col-lg-6">
+																<label for="country">國家</label>
+																<input type="text" name="country" 
+																class="form-control" value="${param.country}">
+															</div>
+															<div class="form-group col-lg-6">
+																<label for="city">城市</label>
+																<input type="text" name="city" 
+																class="form-control" value="${param.city}">
+															</div>
+															<div class="form-group col-lg-6">
+																<label for="detail">地址</label>
+																<input type="text" name="detail" 
+																class="form-control" value="${param.detail}">
+															</div>
+															<div class="form-group col-lg-6">
+																<label for="zip">郵遞區號</label>
+																<input type="text" name="zip" 
+																class="form-control" value="${param.zip}">
+															</div>
+
+													</div>
+													<div class="col-xs-12 col-sm-6">
+														<div>
+															<center><h3>總計金額<div id="testnum" ></div></h3></center>
+													    </div>
+														<div>
+														    <center><input type="button" class="btn btn-info" name="name" value="全選" id="allSelect" />
+									    					<input type="button" class="btn btn-danger" name="name" value="取消全選" id="notSelect" />
+															<input type="submit" class="btn btn-info" value="去買單"></center>
+															<input type="hidden" name="ord_amount" value="test">
+															<input type="hidden" name="action" value="insert">
+														</div>
+													</div>
+												</div>
+											</div>
 																				
-																				<div class="col-xs-12 col-sm-6 col-sm-offset-3">
-																						<h1 align="center">送貨地址</h1>
-																						<div class="form-group">
-																							<label for="receiver">收件人姓名</label>
-																							<input type="text" name="receiver" 
-																							class="form-control" value="${param.receiver}">
-																						</div>
-																						<div class="form-group">
-																							<label for="phone">收件人電話</label>
-																							<input type="text" name="phone" 
-																							class="form-control" value="${param.phone}">
-																						</div>
-																						<div class="form-group">
-																							<label for="country">國家</label>
-																							<input type="text" name="country" 
-																							class="form-control" value="${param.country}">
-																						</div>
-																						<div class="form-group">
-																							<label for="city">城市</label>
-																							<input type="text" name="city" 
-																							class="form-control" value="${param.city}">
-																						</div>
-																						<div class="form-group">
-																							<label for="detail">地址</label>
-																							<input type="text" name="detail" 
-																							class="form-control" value="${param.detail}">
-																						</div>
-																						<div class="form-group">
-																							<label for="zip">郵遞區號</label>
-																							<input type="text" name="zip" 
-																							class="form-control" value="${param.zip}">
-																						</div>
-<!-- 																						<div class="col-xs-12 col-sm-6"> -->
-<%-- 																							<center> --%>
-<!-- 																								<button type="submit" name="action" -->
-<!-- 																								value="add_address" class="btn btn-info">新增</button> -->
-<%-- 																							</center> --%>
-<!-- 																						</div> -->
-<!-- 																						<div class="col-xs-12 col-sm-6"> -->
-<%-- 																							<center> --%>
-<!-- 																								<button type="submit" name="action" -->
-<!-- 																								value="cancel" class="btn btn-info">取消</button> -->
-<%-- 																							</center> --%>
-<!-- 																						</div> -->
-																						<div>
-																							<center><h3>總計金額<div id="testnum" ></div></h3></center>
-																					    </div>
-																						<div>
-																						    <center><input type="button" class="btn btn-info" name="name" value="全選" id="allSelect" />
-																	    					<input type="button" class="btn btn-info" name="name" value="取消全選" id="notSelect" />
-																							<input type="submit" class="btn btn-info" value="去買單"></center>
-																							<input type="hidden" name="ord_amount" value="test">
-																							<input type="hidden" name="action" value="insert">
-																						</div>
-																				</div>
+																					
 																				
 																	</div>
 																</div>
@@ -393,32 +390,11 @@
 												
 											</div>
 										</div>
+										
                                       </FORM>
-										<div class="container-fluid">
-											<div class="row">
-												<div class="container-fluid warp">
-													<div class="row">
-														<!-- 容器區 -->
-														<div class="container-fluid warpwidth">
-															<div class="row">
-																<div>
-																	<h2 class="fontsize">?件商品</h2>
-																</div>
-																<!-- 關鍵字搜尋 -->
-																<div>
+								
 
-																	<input type="submit" value="去買單">
-																	<input type="hidden" name="action" value="insert">
-																	
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-
-
+<%@ include file="/front-end/CA105G1_footer.file" %>
 			</div>
 		</div>
 

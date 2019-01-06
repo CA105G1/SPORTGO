@@ -189,8 +189,12 @@ if ("insert".equals(action)) { //來自shoppingcart_front.jsp的請求
 				
 				ProductService proSvc1 = new ProductService();
 				List<OrddetailsVO> testList = new ArrayList<OrddetailsVO>(); // 準備置入訂單數量
-				if(pro_no == null) {
-					errorMsgs.add("未選擇商品");
+				OrdJDBCDAO ordDAO = new OrdJDBCDAO();
+				String ord_no = null;
+				if(!errorMsgs.isEmpty() || pro_no == null ) {
+					if(pro_no == null) {
+						errorMsgs.add("未選擇商品");
+					}
 				} else {
 					for(int i = 0 ; i < pro_no.length ; i ++) {
 						ShoppingcartDAO cartDAO = new ShoppingcartDAO();
@@ -200,6 +204,19 @@ if ("insert".equals(action)) { //來自shoppingcart_front.jsp的請求
 						testList.add(i, new OrddetailsVO(pro_no[i] , pro_bonus,pro_count));
 	        			cartDAO.delete(mem_no, pro_no[i]);
 	                }
+					/****訂單項目***/
+					
+					System.out.println("沒有exception");
+					OrdVO ordVO = new OrdVO();
+					//ordVO.setOrd_no(ord_no); jdbc以用sql自動  
+					ordVO.setMem_no(mem_no);
+//					ordVO.setOrd_date(ord_date);  jdbc以用sql自動  
+					ordVO.setOrd_deldate(ord_deldate);
+					ordVO.setOrd_status(ord_status);
+					ordVO.setOrd_backdeldate(ord_backdeldate);
+					ordVO.setOrd_amount(ord_amount);
+					ordVO.setOrd_backamount(ord_backamount);
+					 ord_no = ordDAO.insertWithOrdds(ordVO, testList);
 					for(int i = 0 ; i < testList.size() ; i ++) {
 						System.out.println(testList.get(i).getPro_no());
 					}
@@ -208,19 +225,7 @@ if ("insert".equals(action)) { //來自shoppingcart_front.jsp的請求
 				
 
 				
-				/****訂單項目測試***/
-				OrdJDBCDAO ordDAO = new OrdJDBCDAO();
-				System.out.println("沒有exception");
-				OrdVO ordVO = new OrdVO();
-				//ordVO.setOrd_no(ord_no); jdbc以用sql自動  
-				ordVO.setMem_no(mem_no);
-//				ordVO.setOrd_date(ord_date);  jdbc以用sql自動  
-				ordVO.setOrd_deldate(ord_deldate);
-				ordVO.setOrd_status(ord_status);
-				ordVO.setOrd_backdeldate(ord_backdeldate);
-				ordVO.setOrd_amount(ord_amount);
-				ordVO.setOrd_backamount(ord_backamount);
-				String ord_no = ordDAO.insertWithOrdds(ordVO, testList);
+
 
 
 
@@ -261,7 +266,7 @@ if ("insert".equals(action)) { //來自shoppingcart_front.jsp的請求
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				String url = PATH_ORD_FRONT;
 				req.setAttribute("ord_no", ord_no);
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllPro.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交ord_front.jsp
 				successView.forward(req, res);				
 				
 				/***************************其他可能的錯誤處理**********************************/
@@ -311,7 +316,7 @@ if ("cancel".equals(action)) { //來自shoppingcart_front.jsp的請求
 			// send the ErrorPage view.
 			String ord_no = req.getParameter("ord_no");
 			String ord_status = req.getParameter("ord_status");
-		
+		System.out.println("刪除訂單");
 			OrdService ordSvc = new OrdService();
 		
 			int i = ordSvc.updataStatus(ord_no, ord_status);
