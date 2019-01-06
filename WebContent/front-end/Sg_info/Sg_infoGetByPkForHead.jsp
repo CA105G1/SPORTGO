@@ -48,7 +48,7 @@
 
 
 <% 
-	String sg_no = (String)request.getAttribute("Sg_no");
+	String sg_no = (String)request.getParameter("Sg_no");
 	Sg_infoService svc = new Sg_infoService();
 	Sg_infoVO vo = svc.GetByPK(sg_no);
 	
@@ -118,10 +118,6 @@
 									<tr>
 										<th>活動時間</th>
 										<td id="sg_date"><fmt:formatDate value="${Sg_infoVO.sg_date}" pattern="yyyy-MM-dd HH:mm"/></td>
-									</tr>
-									<tr>
-										<th>報名開始日期</th>
-										<td id="apl_start"><fmt:formatDate value="${Sg_infoVO.apl_start}" pattern="yyyy-MM-dd"/></td>
 									</tr>
 									<tr>
 										<th>報名截止日期</th>
@@ -230,10 +226,6 @@
 	    $("#sg_date").html(function(index, content){
 		    return "<input type='text' id='sg_date2' name='sg_date' value='"+content+"'>";
 		    });
-	    //編輯報名開始日期
-	    $("#apl_start").html(function(index, content){
-		    return "<input type='text' id='apl_start2' name='apl_start' value='"+content+"'>";
-		    });
 	    //編輯報名結束日期
 	    $("#apl_end").html(function(index, content){
 		    return "<input type='text' id='apl_end2' name='apl_end' value='"+content+"'>";
@@ -279,40 +271,20 @@
                 return [true, ""];
         }});
         
-      //設定報名開始日期表
-	    var apl_start = new Date();
-        $('#apl_start2').datetimepicker({
-        	timepicker: false,
-        	format: 'Y-m-d',
-            beforeShowDay: function(date) {
-          	  if (  date.getYear() <  apl_start.getYear() || 
-   		           (date.getYear() == apl_start.getYear() && date.getMonth() <  apl_start.getMonth()) || 
-   		           (date.getYear() == apl_start.getYear() && date.getMonth() == apl_start.getMonth() && date.getDate() < apl_start.getDate())
-                ) {
-                     return [false, ""]
-                }
-                return [true, ""];
-        }});
-        
-        //設定報名結束日期表@@@@@@@@@@@@@@@@@@@@@@@@開始日期抓不到!!!!!!!!!
-        var startDay = new Date($('#apl_start2').val());
-             var endDay = new Date($('#sg_date2').val());
-             $('#apl_end2').datetimepicker({
-            	 timepicker: false,
-             	format: 'Y-m-d',
-                 beforeShowDay: function(date) {
-               	  if (  date.getYear() <  startDay.getYear() || 
-        		           (date.getYear() == startDay.getYear() && date.getMonth() <  startDay.getMonth()) || 
-        		           (date.getYear() == startDay.getYear() && date.getMonth() == startDay.getMonth() && date.getDate() < startDay.getDate())
-        		             ||
-        		            date.getYear() >  endDay.getYear() || 
-        		           (date.getYear() == endDay.getYear() && date.getMonth() >  endDay.getMonth()) || 
-        		           (date.getYear() == endDay.getYear() && date.getMonth() == endDay.getMonth() && date.getDate() > endDay.getDate())
-                     ) {
-                          return [false, ""]
-                     }
-                     return [true, ""];
-             }});
+      //設定報名結束日期表
+        var somedate2 = new Date($('#sg_date').val());
+           $('#apl_end').datetimepicker({
+        	   timepicker: false,
+        	   format: 'Y-m-d',
+               beforeShowDay: function(date) {
+             	  if (  date.getYear() >  somedate2.getYear() || 
+      		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
+      		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
+                   ) {
+                        return [false, ""]
+                   }
+                   return [true, ""];
+           }});
 	    
 	    
 	    $("#update").css("display","none");

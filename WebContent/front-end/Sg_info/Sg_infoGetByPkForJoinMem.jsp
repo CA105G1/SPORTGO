@@ -106,10 +106,6 @@ Sg_infoVO vo = svc.GetByPK(sg_no);
 										<td id="sg_date"><fmt:formatDate value="${Sg_infoVO.sg_date}" pattern="yyyy-MM-dd HH:mm"/></td>
 									</tr>
 									<tr>
-										<th>報名開始日期</th>
-										<td id="apl_start"><fmt:formatDate value="${Sg_infoVO.apl_start}" pattern="yyyy-MM-dd"/></td>
-									</tr>
-									<tr>
 										<th>報名截止日期</th>
 										<td id="apl_end"><fmt:formatDate value="${Sg_infoVO.apl_end}" pattern="yyyy-MM-dd"/></td>
 									</tr>

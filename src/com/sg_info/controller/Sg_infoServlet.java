@@ -81,15 +81,15 @@ public class Sg_infoServlet extends HttpServlet {
 					sg_date= new Timestamp(date.getTime());
 					
 					SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-					Date date2 = sdf2.parse(req.getParameter("apl_start").trim());
-					apl_start= new Timestamp(date2.getTime());
+//					Date date2 = sdf2.parse(req.getParameter("apl_start").trim());
+//					apl_start= new Timestamp(date2.getTime());
 					
 					Date date3 = sdf2.parse(req.getParameter("apl_end").trim());
 					apl_end= new Timestamp(date3.getTime());
 					
 				}catch(Exception e) {
 					sg_date = new Timestamp(System.currentTimeMillis());
-					apl_start = new Timestamp(System.currentTimeMillis());
+//					apl_start = new Timestamp(System.currentTimeMillis());
 					apl_end = new Timestamp(System.currentTimeMillis());
 					errorMsg.put("date","請輸入日期!");
 				}
@@ -254,15 +254,15 @@ public class Sg_infoServlet extends HttpServlet {
 					sg_date= new Timestamp(date.getTime());
 					
 					SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-					Date date2 = sdf2.parse(req.getParameter("apl_start").trim());
-					apl_start= new Timestamp(date2.getTime());
+//					Date date2 = sdf2.parse(req.getParameter("apl_start").trim());
+//					apl_start= new Timestamp(date2.getTime());
 					
 					Date date3 = sdf2.parse(req.getParameter("apl_end").trim());
 					apl_end= new Timestamp(date3.getTime());
 					
 				}catch(IllegalArgumentException e) {
 					sg_date = new Timestamp(System.currentTimeMillis());
-					apl_start = new Timestamp(System.currentTimeMillis());
+//					apl_start = new Timestamp(System.currentTimeMillis());
 					apl_end = new Timestamp(System.currentTimeMillis());
 					errorMsg.add("請輸入日期!");
 				}
