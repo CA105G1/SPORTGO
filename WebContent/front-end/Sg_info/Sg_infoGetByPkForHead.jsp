@@ -5,6 +5,13 @@
 <%@ page import="com.memberlist.model.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<% 
+	String sg_no = (String)request.getParameter("Sg_no");
+	Sg_infoService svc = new Sg_infoService();
+	Sg_infoVO vo = svc.GetByPK(sg_no);
+    pageContext.setAttribute("Sg_infoVO", vo);
+%>
+
 <html>
 <head>
 <title>Sg_infoGetByPkForHead</title>
@@ -45,18 +52,6 @@
 </head>
 <body>
 <%@ include file="/front-end/CA105G1_header.file" %>
-
-
-<% 
-	String sg_no = (String)request.getAttribute("Sg_no");
-	Sg_infoService svc = new Sg_infoService();
-	Sg_infoVO vo = svc.GetByPK(sg_no);
-	
-	
-	
-// 	Sg_infoVO vo = (Sg_infoVO)request.getAttribute("Sg_infoVO");
-    pageContext.setAttribute("Sg_infoVO", vo);
-%>
 
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsg}">
