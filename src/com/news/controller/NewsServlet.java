@@ -89,11 +89,22 @@ public class NewsServlet extends HttpServlet {
 		case "update_news":
 			
 			break;
+		case "listNewsByCompositeQuery":
+			doActionListNewsByCompositeQuery(request,response);
+			break;
 			
 		default:
 			break;
 		}
 		
 	}
-
+	
+	private void doActionListNewsByCompositeQuery(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException{
+		//listNewsByCompositeQuery
+		
+		
+	}
+	
+	
+	
 }

@@ -1,4 +1,4 @@
----SportyGo_ver_0_2_2_create_0103------
+---SportyGo_ver_0_2_5_create_0107------
 --------------------------
 ------drop sequence-------
 --------------------------
@@ -209,7 +209,7 @@ CREATE TABLE SG_INFO(
     MEM_NO varchar2(7) not null,
     SG_NAME varchar2(50) not null,
     SG_DATE timestamp not null,
-    APL_START timestamp not null,
+    APL_START timestamp,
     APL_END timestamp not null,
     SG_FEE number(6,0),
     SG_PIC blob,
@@ -653,14 +653,14 @@ CREATE SEQUENCE NEWSTYPE_SEQ
 ---------------------------------20181209
 CREATE TABLE NEWS
     (NEWS_NO        VARCHAR2(7)     PRIMARY KEY,
-    NEWS_TYPENO     VARCHAR2(7),
+    NEWSTYPE_NO     VARCHAR2(7),
     NEWS_SCRIPT     CLOB,
     PIC_EXTENSION   VARCHAR2(30),
     NEWS_PICTURE    BLOB,
     NEWS_STUTAS     VARCHAR2(12)    DEFAULT '未發布',
     NEWS_RELEASE_DATE TIMESTAMP,
     NEWS_LAST_DATE  TIMESTAMP,
-    FOREIGN KEY (NEWS_TYPENO) REFERENCES NEWSTYPE(NEWSTYPE_NO)
+    FOREIGN KEY (NEWSTYPE_NO) REFERENCES NEWSTYPE(NEWSTYPE_NO)
 );
 CREATE SEQUENCE NEWS_SEQ 
     INCREMENT BY 1 
