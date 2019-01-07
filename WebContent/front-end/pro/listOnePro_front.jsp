@@ -3,10 +3,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%
-    ProductService proSvc = new ProductService();
-	ProductVO proVO = (ProductVO) request.getAttribute("proVO"); //EmpServlet.java(Concroller), 存入req的empVO物件
+	ProductService proSvc = new ProductService();
+	//	ProductVO proVO = (ProductVO) request.getAttribute("proVO"); //EmpServlet.java(Concroller), 存入req的empVO物件
+	ProductVO proVO = (ProductVO)session.getAttribute("proVO");
 	List<ProductVO> list = proSvc.getAll();
-    pageContext.setAttribute("list",list);
+	pageContext.setAttribute("list",list);
 %>
 <jsp:useBean id="proclassSvc" scope="page" class="com.productclass.model.ProductClassService" />
 
@@ -327,8 +328,23 @@
 				})
 				
 				//****************************************
+				var proVO = "<%= session.getAttribute("proVO")%>";
+				var mem_no_login = "<%= session.getAttribute("memberlistVO")%>";
+				
 				$("#btn1").on('click', function () {
-					console.log($("#pro_bonus").val());
+					if(mem_no_login == "null"){
+						<%session.setAttribute("location", request.getRequestURI());%>  
+						swal({
+						    title: '尚未登入',
+						    text: '請先登入會員。'
+						}).then(
+						    function () {
+						    console.log("<%= request.getContextPath()%>/front-end/memberlist/Login.jsp");
+ 					    	window.location.replace("<%= request.getContextPath()%>/front-end/memberlist/Login.jsp");
+						    }
+						)
+						
+					} else {
 					$.ajax({
 						 type: "POST",
 						 url: "<%= request.getContextPath()%>/shoppingCartServlet/shoppingCartServlet.do",
@@ -353,6 +369,7 @@
 		            }, function(dismiss) { // dismiss can be "cancel" | "overlay" | "esc" | "cancel" | "timer"
 		            		
 			        });
+					}
 			    });
 				function creatQueryString(buttonid,pro_count,pro_bonus){
 					

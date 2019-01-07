@@ -199,19 +199,21 @@ if ("insert".equals(action)) { //來自shoppingcart_front.jsp的請求
 					for(int i = 0 ; i < pro_no.length ; i ++) {
 						ShoppingcartDAO cartDAO = new ShoppingcartDAO();
 	                	Integer pro_bonus = proSvc1.getOneProduct(pro_no[i]).getPro_bonus();
+	                	System.out.println("負數:" + pro_bonus);
 	                	Integer pro_count = cartDAO.findByCount(mem_no, pro_no[i]);
-	                	ord_amount += pro_bonus;
+	                	ord_amount += pro_bonus*pro_count;
 						testList.add(i, new OrddetailsVO(pro_no[i] , pro_bonus,pro_count));
 	        			cartDAO.delete(mem_no, pro_no[i]);
+	        			System.out.println("加總的:" + ord_amount);
 	                }
 					/****訂單項目***/
 					
-					System.out.println("沒有exception");
+					System.out.println("沒有ord_amount:"+ord_amount);
 					OrdVO ordVO = new OrdVO();
 					//ordVO.setOrd_no(ord_no); jdbc以用sql自動  
 					ordVO.setMem_no(mem_no);
 //					ordVO.setOrd_date(ord_date);  jdbc以用sql自動  
-					ordVO.setOrd_deldate(ord_deldate);
+					ordVO.setOrd_deldate(ord_deldate); 
 					ordVO.setOrd_status(ord_status);
 					ordVO.setOrd_backdeldate(ord_backdeldate);
 					ordVO.setOrd_amount(ord_amount);
