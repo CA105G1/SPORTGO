@@ -21,11 +21,51 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 	<title>購物車</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://code.jquery.com/jquery.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<!--[if lt IE 9]>
 	    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
 	    <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
 	<![endif]-->
+	
+<!-- 信用卡 -->
+<link href="<%=request.getContextPath() %>/front-end/pro/card/card-js.min.css" rel="stylesheet" type="text/css" />
+<script src="<%=request.getContextPath() %>/front-end/pro/card/card-js.min.js"></script>
 	<style type="text/css">
+    .panel {
+      background-color: #F5F5F7;
+      border: 1px solid #ddd;
+      padding: 20px;
+      display: block;
+      width: 270px;
+      border-radius: 6px;
+      box-shadow: 0 2px 4px rgba(0,0,0,.1);
+    }
+    .btncard {
+      background: rgb(68,175,231); /* Old browsers */
+      background: -moz-linear-gradient(top, rgba(68,175,231,1) 0%, rgba(49,152,223,1) 100%); /* FF3.6-15 */
+      background: -webkit-linear-gradient(top, rgba(68,175,231,1) 0%,rgba(49,152,223,1) 100%); /* Chrome10-25,Safari5.1-6 */
+      background: linear-gradient(to bottom, rgba(68,175,231,1) 0%,rgba(49,152,223,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#44afe7', endColorstr='#3198df',GradientType=0 );
+      color: #fff;
+      display: block;
+      width: 100%;
+      border: 1px solid rgba(46, 86, 153, 0.0980392);
+      border-bottom-color: rgba(46, 86, 153, 0.4);
+      border-top: 0;
+      border-radius: 4px;
+      font-size: 17px;
+      text-shadow: rgba(46, 86, 153, 0.298039) 0px -1px 0px;
+      line-height: 34px;
+      -webkit-font-smoothing: antialiased;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    .btn:hover {
+      cursor: pointer;
+    }
+/*************************************************/
 		.aa {
 			background-color: #faa;
 		}
@@ -152,75 +192,75 @@
 			<div class="row">
 
 				<!-- navbar -->
-				<div class="container-fluid ">
-					<div class="row">
-						<nav class="navbar navbar-default" role="navigation">
-							<div class="container">
-								<div class="navbar-header">
-									<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-										<span class="sr-only">選單切換</span>
-										<span class="icon-bar"></span>
-										<span class="icon-bar"></span>
-										<span class="icon-bar"></span>
-									</button>
-									<a class="navbar-brand" href="#">SPORTGO</a>
-								</div>
+<!-- 				<div class="container-fluid "> -->
+<!-- 					<div class="row"> -->
+<!-- 						<nav class="navbar navbar-default" role="navigation"> -->
+<!-- 							<div class="container"> -->
+<!-- 								<div class="navbar-header"> -->
+<!-- 									<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"> -->
+<!-- 										<span class="sr-only">選單切換</span> -->
+<!-- 										<span class="icon-bar"></span> -->
+<!-- 										<span class="icon-bar"></span> -->
+<!-- 										<span class="icon-bar"></span> -->
+<!-- 									</button> -->
+<!-- 									<a class="navbar-brand" href="#">SPORTGO</a> -->
+<!-- 								</div> -->
 
-								<!-- 手機隱藏選單區 -->
-								<div class="collapse navbar-collapse navbar-ex1-collapse ">
-									<!-- 左選單 -->
-									<ul class="nav navbar-nav">
-										<li class="active">
-											<a href="#">我的商品</a>
-										</li>
-										<li>
-											<a href="#">我的賣場分類</a>
-										</li>
-										<li>
-											<a href="#">我的銷售</a>
-										</li>
-										<li>
-											<a href="#">我的行銷活動</a>
-										</li>
-										<li>
-											<a href="#">我的進帳</a>
-										</li>
-										<li>
-											<a href="#">我的錢包</a>
-										</li>
-										<li>
-											<a href="#">賣場設定</a>
-										</li>
-									</ul>
-									<!-- 右選單 -->
-									<ul class="nav navbar-nav navbar-right">
+<!-- 								手機隱藏選單區 -->
+<!-- 								<div class="collapse navbar-collapse navbar-ex1-collapse "> -->
+<!-- 									左選單 -->
+<!-- 									<ul class="nav navbar-nav"> -->
+<!-- 										<li class="active"> -->
+<!-- 											<a href="#">我的商品</a> -->
+<!-- 										</li> -->
+<!-- 										<li> -->
+<!-- 											<a href="#">我的賣場分類</a> -->
+<!-- 										</li> -->
+<!-- 										<li> -->
+<!-- 											<a href="#">我的銷售</a> -->
+<!-- 										</li> -->
+<!-- 										<li> -->
+<!-- 											<a href="#">我的行銷活動</a> -->
+<!-- 										</li> -->
+<!-- 										<li> -->
+<!-- 											<a href="#">我的進帳</a> -->
+<!-- 										</li> -->
+<!-- 										<li> -->
+<!-- 											<a href="#">我的錢包</a> -->
+<!-- 										</li> -->
+<!-- 										<li> -->
+<!-- 											<a href="#">賣場設定</a> -->
+<!-- 										</li> -->
+<!-- 									</ul> -->
+<!-- 									右選單 -->
+<!-- 									<ul class="nav navbar-nav navbar-right"> -->
 
-										<li>
-											<a href="#"></a>
-										</li>
-										<li>
-											<a href="#">個人設定</a>
-										</li>
-										<li class="dropdown">
-											<a href="#" class="dropdown-toggle" data-toggle="dropdown">繁體中文
-												<b class="caret"></b>
-											</a>
-											<ul class="dropdown-menu">
-												<li>
-													<a href="#">切換成買家</a>
-												</li>
-												<li>
-													<a href="#">登出</a>
-												</li>
-											</ul>
-										</li>
-									</ul>
-								</div>
-								<!-- 手機隱藏選單區結束 -->
-							</div>
-						</nav>
-					</div>
-				</div>
+<!-- 										<li> -->
+<!-- 											<a href="#"></a> -->
+<!-- 										</li> -->
+<!-- 										<li> -->
+<!-- 											<a href="#">個人設定</a> -->
+<!-- 										</li> -->
+<!-- 										<li class="dropdown"> -->
+<!-- 											<a href="#" class="dropdown-toggle" data-toggle="dropdown">繁體中文 -->
+<!-- 												<b class="caret"></b> -->
+<!-- 											</a> -->
+<!-- 											<ul class="dropdown-menu"> -->
+<!-- 												<li> -->
+<!-- 													<a href="#">切換成買家</a> -->
+<!-- 												</li> -->
+<!-- 												<li> -->
+<!-- 													<a href="#">登出</a> -->
+<!-- 												</li> -->
+<!-- 											</ul> -->
+<!-- 										</li> -->
+<!-- 									</ul> -->
+<!-- 								</div> -->
+<!-- 								手機隱藏選單區結束 -->
+<!-- 							</div> -->
+<!-- 						</nav> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
 
 
 
@@ -327,7 +367,20 @@
                                                                                     
 																					</tbody>
 																				</table>
-
+																				<div class="container">
+																					<div class="row">
+																						<div class="col-xs-12 col-sm-6"></div>
+																						<div class="col-xs-12 col-sm-6">
+																							<center>
+																								<h3 style="margin-top: 0px;">商品
+																						            <input type="button" class="btn btn-info" name="name" value="全選" id="allSelect" />
+																		    						<input type="button" class="btn btn-danger" name="name" value="取消全選" id="notSelect" />
+																					            </h3>
+																				            </center>
+																						</div>
+																					</div>
+																				</div>
+                                                                      
 <!-- ---------------------------------------------------收貨地址 -->
 											<div class="container">
 												<div class="row">
@@ -365,15 +418,19 @@
 
 													</div>
 													<div class="col-xs-12 col-sm-6">
+													    <br>
 														<div>
-															<center><h3>總計金額<div id="testnum" ></div></h3></center>
-													    </div>
-														<div>
-														    <center><input type="button" class="btn btn-info" name="name" value="全選" id="allSelect" />
-									    					<input type="button" class="btn btn-danger" name="name" value="取消全選" id="notSelect" />
-															<input type="submit" class="btn btn-info" value="去買單"></center>
-															<input type="hidden" name="ord_amount" value="test">
-															<input type="hidden" name="action" value="insert">
+															<center>														
+															  <div class="panel">
+<!-- 															    <form id="subscription-form"> -->
+															
+															      <div class="card-js stripe" data-stripe="true"></div>
+															      <button type"submit" class="btncard" value="Pay $"><div id="testnum" ></div></button>
+															      <input type="hidden" name="ord_amount" value="test">
+																  <input type="hidden" name="action" value="insert">
+<!-- 															    </form> -->
+															  </div>
+															</center>
 														</div>
 													</div>
 												</div>
@@ -399,8 +456,7 @@
 		</div>
 
 
-			<script src="https://code.jquery.com/jquery.js"></script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 			<script type="text/javascript">
 				$(document).ready(function(){
 					//用遍歷計算總價

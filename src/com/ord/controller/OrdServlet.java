@@ -13,6 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.address.model.AddressService;
+import com.memberlist.model.MemberlistService;
 import com.ord.model.OrdJDBCDAO;
 import com.ord.model.OrdService;
 import com.ord.model.OrdVO;
@@ -67,6 +68,11 @@ if ("insert".equals(action)) { //來自shoppingcart_front.jsp的請求
 //				if(mem_no == null || mem_no.trim().length() == 0) {
 //					errorMsgs.add("未登入會員");
 //				}
+				/***********************1.接收請求參數 - 輸入格式的錯誤處理(信用卡)*************************/
+				String card = req.getParameter("card-number");
+				card = remove_Multi_Spaces(card);
+				String expirydate = req.getParameter("expirydate");
+				expirydate = remove_Multi_Spaces(expirydate);
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理(收貨地址)*************************/
 				
 				String receiver = req.getParameter("receiver");
@@ -253,10 +259,16 @@ if ("insert".equals(action)) { //來自shoppingcart_front.jsp的請求
 				}
 				
 				
-				/****永續層存取(收貨地址)****/
+				/****永續層存取(收貨地址,信用卡)****/
 				AddressService addressSvc = new AddressService();
+				MemberlistService service = new MemberlistService();
+				System.out.println("mem_noxxxxxxx"+ mem_no);
+				System.out.println("carddddddddd" + card);
+				System.out.println("expirytdeeeeeeeeeee" + expirydate);
+				service.renewCard(mem_no, "5555555555555555", "05/55");
 				try {
 					addressSvc.addNewAddress(mem_no, receiver, phone, country, city, detail, zip);
+					
 					System.out.println("新增地址成功");
 				} catch (RuntimeException e) {
 					System.out.println("新增資料錯誤"+e.getMessage());
@@ -356,4 +368,13 @@ if ("cancel".equals(action)) { //來自shoppingcart_front.jsp的請求
 		
     	return data;
     }
+	public static String remove_Multi_Spaces(String text) {
+		java.util.StringTokenizer st = new java.util.StringTokenizer(text, " ");
+        StringBuffer sb = new StringBuffer();
+        while(st.hasMoreElements()){
+        	String nextString = (String)st.nextElement();
+            sb.append(nextString);
+        }
+		return sb.toString().trim();
+	}
 }

@@ -356,7 +356,6 @@ overflow: hidden;
 																		<input type="submit" value="詳情">
 																		<input type="hidden" name="pro_no" value="${proVO.pro_no}">
 																		<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
-																		<%= request.getParameter("requestURL") %>
 																		<input type="hidden" name="action" value="getOne_For_Display_front">
 																	</FORM>
 														    	</div>
