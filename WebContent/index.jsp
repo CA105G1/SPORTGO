@@ -52,7 +52,7 @@
 				                <div class="carousel-caption">
 				                	<h1>
 				                		<c:forEach var="newstypeVO" items="${newsTypeVOList}">
-				                    		${newstypeVO.newstype_no==newsVO.news_typeno?newstypeVO.newstype_name:""}
+				                    		${newstypeVO.newstype_no==newsVO.newstype_no?newstypeVO.newstype_name:""}
 				                    	</c:forEach>
 				                    </h1>
 				                    <p><%=newsVO.getNews_script() %></p>
