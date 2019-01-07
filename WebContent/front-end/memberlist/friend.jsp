@@ -207,7 +207,7 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 	<script src="https://use.fontawesome.com/1c6f725ec5.js"></script>
 	</head>
 	<body>
-		<jsp:include page="/front-end/SportyGo_Header.html"/>
+		<jsp:include page="/front-end/CA105G1_header.jsp"/>
 		
 		<!-- 右選單 -->
 		<div class="container-fluid">
@@ -359,7 +359,7 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 	<script src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script><script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 		
 	</div>
-	<jsp:include page="/front-end/SportyGo_Footer.html"/>
+	<jsp:include page="/front-end/CA105G1_footer.jsp"/>
 	<script>
 		var userName = '${memberlistVO.mem_name}';
 		var MemPoint = '/MemChatServer'+'/'+userName;

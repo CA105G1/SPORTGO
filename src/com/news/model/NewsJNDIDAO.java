@@ -27,7 +27,7 @@ public class NewsJNDIDAO implements NewsDAO_interface{
 	
 	private static final String INSERT_SQL = 
 			"INSERT INTO news"
-			+ "(news_no, news_typeno, news_script, "
+			+ "(news_no, newstype_no, news_script, "
 			+ "pic_extension, news_picture, news_stutas, "
 			+ "news_release_date, news_last_date) "
 			+ "VALUES('N'||LPAD(TO_CHAR(news_seq.NEXTVAL),3,'0'),?,?,"
@@ -35,7 +35,7 @@ public class NewsJNDIDAO implements NewsDAO_interface{
 			+ "?,?)";
 
 	private static final String UPDATE_SQL =
-			"UPDATE news SET news_typeno=?, news_script=?, "
+			"UPDATE news SET newstype_no=?, news_script=?, "
 			+ "pic_exetension=?, news_picture=?, news_stutas=?, "
 			+ "news_release_date=?, news_last_date=? WHERE news_no=?";
 	private static final String UPDATE_STUTAS_BY_NO_SQL =
@@ -50,7 +50,7 @@ public class NewsJNDIDAO implements NewsDAO_interface{
 	
 	
 	private static final String GET_NEWS_BY_NEWSTYPE = 
-	"SELECT * FROM news WHERE news_typeno=?";
+	"SELECT * FROM news WHERE newstype_no=?";
 
 	@Override
 	public void insert(NewsVO newsVO) {
@@ -62,7 +62,7 @@ public class NewsJNDIDAO implements NewsDAO_interface{
 			String[] cols = {"news_no"};
 			pstmt = con.prepareStatement(INSERT_SQL,cols);
 			
-			pstmt.setString(1, newsVO.getNews_typeno());
+			pstmt.setString(1, newsVO.getNewstype_no());
 			pstmt.setString(2, newsVO.getNews_script());
 			pstmt.setString(3, newsVO.getPic_extension());
 			pstmt.setBytes(4, newsVO.getNews_picture());
@@ -125,7 +125,7 @@ public class NewsJNDIDAO implements NewsDAO_interface{
 			con = dataSource.getConnection();
 			pstmt = con.prepareStatement(UPDATE_SQL);
 			
-			pstmt.setString(1, newsVO.getNews_typeno());
+			pstmt.setString(1, newsVO.getNewstype_no());
 			pstmt.setString(2, newsVO.getNews_script());
 			pstmt.setString(3, newsVO.getPic_extension());
 			pstmt.setBytes(4, newsVO.getNews_picture());
@@ -240,7 +240,7 @@ public class NewsJNDIDAO implements NewsDAO_interface{
 			if(rs.next()) {
 				newsVO = new NewsVO();
 				newsVO.setNews_no(news_no);
-				newsVO.setNews_typeno(rs.getString("news_typeno"));
+				newsVO.setNewstype_no(rs.getString("newstype_no"));
 				newsVO.setNews_script(rs.getString("news_script"));
 				newsVO.setPic_extension(rs.getString("pic_extension"));
 				newsVO.setNews_picture(rs.getBytes("news_picture"));
@@ -405,7 +405,7 @@ public class NewsJNDIDAO implements NewsDAO_interface{
 	
 	private static final String GET_DEFAULT_NEWS_SQL = ""
 			+ "Select * from  news "
-			+ " where News_Typeno = ("
+			+ " where NewsType_no = ("
 			+ "Select newstype_no from newstype where newstype_name = '公告'"
 			+ ") order by news_release_date DESC";
 	
@@ -547,7 +547,7 @@ public class NewsJNDIDAO implements NewsDAO_interface{
 		while(rs.next()) {
 			NewsVO newsVO = new NewsVO();
 			newsVO.setNews_no(rs.getString("news_no"));
-			newsVO.setNews_typeno(rs.getString("news_typeno"));
+			newsVO.setNewstype_no(rs.getString("newstype_no"));
 			newsVO.setNews_script(rs.getString("news_script"));
 			newsVO.setPic_extension(rs.getString("pic_extension"));
 			newsVO.setNews_picture(rs.getBytes("news_picture"));

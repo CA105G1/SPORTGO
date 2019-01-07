@@ -51,7 +51,7 @@
 		</style>
 	</head>
 	<body>
-<%-- 		<%@ include file="/front-end/CA105G1_header.file"%> --%>
+		<jsp:include page="/front-end/CA105G1_header.jsp"/>
 		<div class="container-fluid">
 		</div>
 
@@ -77,7 +77,7 @@
 				</div>	
 			</div>
 		</div>
-	<jsp:include page="/front-end/CA105G1_footer.file"/>
+	<jsp:include page="/front-end/CA105G1_footer.jsp"/>
 	<script>
 	var status = "${status}";
 	$(function(){

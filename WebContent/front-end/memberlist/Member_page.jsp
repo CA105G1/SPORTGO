@@ -46,29 +46,29 @@
 		</style>
 	</head>
 	<body>
-		<nav class="navbar navbar" role="navigation" style="background-color: black;">
-			<div class="container">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-						<span class="sr-only">選單切換</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="https://localhost:8081/index.html"style="color:yellow;">SPORTGO 運動揪揪</a>
-				</div>
+<!-- 		<nav class="navbar navbar" role="navigation" style="background-color: black;"> -->
+<!-- 			<div class="container"> -->
+<!-- 				<div class="navbar-header"> -->
+<!-- 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"> -->
+<!-- 						<span class="sr-only">選單切換</span> -->
+<!-- 						<span class="icon-bar"></span> -->
+<!-- 						<span class="icon-bar"></span> -->
+<!-- 						<span class="icon-bar"></span> -->
+<!-- 					</button> -->
+<!-- 					<a class="navbar-brand" href="https://localhost:8081/index.html"style="color:yellow;">SPORTGO 運動揪揪</a> -->
+<!-- 				</div> -->
 				
-				<div class="collapse navbar-collapse navbar-ex1-collapse">
+<!-- 				<div class="collapse navbar-collapse navbar-ex1-collapse"> -->
 					
-						<ul class="nav navbar-nav navbar-right" >
-								<li><a href="#" style="color:yellow;">${memberlistVO.mem_name} 您好</a></li>
-								<li><a href="logout.do" style="color:yellow;">登出</a></li>
-						</ul>
-				</div>
-			</div>
-		</nav>
+<!-- 						<ul class="nav navbar-nav navbar-right" > -->
+<%-- 								<li><a href="#" style="color:yellow;">${memberlistVO.mem_name} 您好</a></li> --%>
+<!-- 								<li><a href="logout.do" style="color:yellow;">登出</a></li> -->
+<!-- 						</ul> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 		</nav> -->
 		
-<%-- 		<jsp:include page="/front-end/CA105G1_header.file"/> --%>
+		<jsp:include page="/front-end/CA105G1_header.jsp"/>
 		
 		<div class="container-fluid">
 		</div>
@@ -108,7 +108,7 @@
 				</div>	
 			</div>
 		</div>
-	<jsp:include page="/front-end/CA105G1_footer.file"/>
+	<jsp:include page="/front-end/CA105G1_footer.jsp"/>
 	<script type="text/javascript">
 		var MemPoint = "/MemEchoServer";
 		var host = window.location.host;
@@ -117,7 +117,6 @@
 		var endPointURL = "ws://"+host+webCtx+MemPoint;
 		
 		var webSocket;
-// 		var statusOutput = document.getElementById("statusOutput");
 		
 		$(function(){
 			connect();
@@ -146,8 +145,6 @@
 			webSocket.send('${memberlistVO.mem_name}');
 			console.log('${memberlistVO.mem_name}');
 		}
-
-	
 	</script>
 	<script>
 // 	var action = "${action}";

@@ -10,7 +10,7 @@ public class NewsVO implements Serializable{
 	public static final String STUTAS_DEFAULT = "未發布";
 	
 	private String news_no;
-	private String news_typeno;
+	private String newstype_no;
 	private String news_script;
 	private String pic_extension;
 	private byte[] news_picture;
@@ -28,12 +28,12 @@ public class NewsVO implements Serializable{
 		this.news_no = news_no;
 	}
 
-	public String getNews_typeno() {
-		return news_typeno;
+	public String getNewstype_no() {
+		return newstype_no;
 	}
 
-	public void setNews_typeno(String news_typeno) {
-		this.news_typeno = news_typeno;
+	public void setNewstype_no(String newstype_no) {
+		this.newstype_no = newstype_no;
 	}
 
 	public String getNews_script() {
@@ -86,10 +86,14 @@ public class NewsVO implements Serializable{
 
 	@Override
 	public String toString() {
-		return "NewsVO [news_no=" + news_no + ", news_typeno=" + news_typeno + ", news_script=" + news_script
-				+ ", pic_extension=" + pic_extension + ", news_picture=" + Arrays.toString(news_picture)
-				+ ", news_stutas=" + news_stutas + ", news_release_date=" + news_release_date + ", news_last_date="
-				+ news_last_date + "]";
+		return "NewsVO [news_no=" + news_no + 
+				", newstype_no=" + newstype_no + 
+				", news_script=" + news_script + 
+				", pic_extension=" + pic_extension + 
+				//", news_picture=" + Arrays.toString(news_picture) + 
+				", news_stutas=" + news_stutas + 
+				", news_release_date=" + news_release_date + 
+				", news_last_date="+ news_last_date + "]";
 	}
 	
 	

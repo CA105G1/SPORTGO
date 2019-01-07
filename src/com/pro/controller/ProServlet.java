@@ -573,10 +573,76 @@ if ("pro_ByCompositeQuery".equals(action)) { //來自listAllPro的複合查詢�
 				e.printStackTrace();
 			}
 		}
-//if("returnTotal".equals(action)) {  購物車取值
-//	System.out.println("value"+req.getParameter("returntest"));
-//	System.out.println("hi");
-//}
+if ("getOne_For_Display_front".equals(action)) { //來自select_page.jsp的請求
+
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+			String requestURL = req.getParameter("requestURL");  //來源的路徑請求
+			try {
+				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+				String str = req.getParameter("pro_no");
+				
+		
+				if (str == null || (str.trim()).length() == 0) {
+					errorMsgs.add("請輸入商品編號");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher(PATH_LIST_ONE_PRO);
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
+				String pro_no = null;
+				pro_no = str;
+		
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher(PATH_LIST_ONE_PRO);
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
+				/***************************2.開始查詢資料*****************************************/
+				ProductService proSvc = new ProductService();
+				ProductVO proVO = proSvc.getOneProduct(pro_no);
+				if (proVO == null) {
+					errorMsgs.add("查無資料");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher(PATH_LIST_ONE_PRO);
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
+				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
+				HttpSession session = req.getSession();
+				session.setAttribute("proVO", proVO);
+		//		req.setAttribute("proVO", proVO); // 資料庫取出的proVO物件,存入req
+				String url = null;
+				if(PATH_FRONT_LIST_ALL_PRO.equals(requestURL)) {  //前端與後端的導向不同
+					url = PATH_FRONT_LIST_ONE_PRO;
+				}else {
+					url = PATH_LIST_ONE_PRO;
+				}
+				
+				
+				RequestDispatcher successView = req.getRequestDispatcher(url); // ���\��� listOnePro.jsp
+				successView.forward(req, res);
+		
+				/***************************其他可能的錯誤處理*************************************/
+			} catch (Exception e) {
+				errorMsgs.add("無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher(PATH_LIST_ONE_PRO);
+				failureView.forward(req, res);
+			}
+		}
 
 
 

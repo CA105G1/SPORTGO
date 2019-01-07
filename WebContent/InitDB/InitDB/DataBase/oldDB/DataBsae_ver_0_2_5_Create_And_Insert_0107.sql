@@ -1,7 +1,7 @@
----SportyGo_ver_0_2_2_create_and_insert_0103------
------insert into venue 249data only 桃園市
+---SportyGo_ver_0_2_5_create_and_insert_0107------
+-----insert into news data
 
----SportyGo_ver_0_2_2_create_0103------
+---SportyGo_ver_0_2_5_create_0107------
 --------------------------
 ------drop sequence-------
 --------------------------
@@ -212,7 +212,7 @@ CREATE TABLE SG_INFO(
     MEM_NO varchar2(7) not null,
     SG_NAME varchar2(50) not null,
     SG_DATE timestamp not null,
-    APL_START timestamp not null,
+    APL_START timestamp,
     APL_END timestamp not null,
     SG_FEE number(6,0),
     SG_PIC blob,
@@ -1961,7 +1961,7 @@ VALUES(
 INSERT INTO NEWSTYPE(
 	NEWSTYPE_NO, NEWSTYPE_NAME)
 VALUES(
-	'NT'||LPAD(TO_CHAR(NEWSTYPE_SEQ.NEXTVAL),3,'0'),'促銷商品'
+	'NT'||LPAD(TO_CHAR(NEWSTYPE_SEQ.NEXTVAL),3,'0'),'人氣商品'
 );
 
 
@@ -1975,8 +1975,36 @@ INSERT INTO NEWS(
 	NEWS_RELEASE_DATE,NEWS_LAST_DATE)
 VALUES(
 	'N'||LPAD(TO_CHAR(NEWS_SEQ.NEXTVAL),3,'0'),'NT001','測試公告----ABCD1234',
-	NULL,NULL,'未發布',
-	NULL,NULL
+	NULL,NULL,'發布中',
+	to_timestamp('2019-01-01','YYYY-MM-DD'),to_timestamp('2019-01-31','YYYY-MM-DD')
+);
+INSERT INTO NEWS(
+	NEWS_NO,NEWS_TYPENO,NEWS_SCRIPT,
+	PIC_EXTENSION,NEWS_PICTURE,NEWS_STUTAS,
+	NEWS_RELEASE_DATE,NEWS_LAST_DATE)
+VALUES(
+	'N'||LPAD(TO_CHAR(NEWS_SEQ.NEXTVAL),3,'0'),'NT001','測試公告2----ABCD1234',
+	NULL,NULL,'發布中',
+	to_timestamp('2019-01-01','YYYY-MM-DD'),to_timestamp('2019-01-6','YYYY-MM-DD')
+);
+INSERT INTO NEWS(
+	NEWS_NO,NEWS_TYPENO,NEWS_SCRIPT,
+	PIC_EXTENSION,NEWS_PICTURE,NEWS_STUTAS,
+	NEWS_RELEASE_DATE,NEWS_LAST_DATE)
+VALUES(
+	'N'||LPAD(TO_CHAR(NEWS_SEQ.NEXTVAL),3,'0'),'NT001','測試公告3----ABCD1234',
+	NULL,NULL,'發布中',
+	null,to_timestamp('2019-01-6','YYYY-MM-DD')
+);
+
+INSERT INTO NEWS(
+	NEWS_NO,NEWS_TYPENO,NEWS_SCRIPT,
+	PIC_EXTENSION,NEWS_PICTURE,NEWS_STUTAS,
+	NEWS_RELEASE_DATE,NEWS_LAST_DATE)
+VALUES(
+	'N'||LPAD(TO_CHAR(NEWS_SEQ.NEXTVAL),3,'0'),'NT001','測試公告4----ABCD1234',
+	NULL,NULL,'發布中',
+	to_timestamp('2019-01-01','YYYY-MM-DD'),null
 );
 INSERT INTO NEWS(
 	NEWS_NO,NEWS_TYPENO,NEWS_SCRIPT,
@@ -1984,17 +2012,17 @@ INSERT INTO NEWS(
 	NEWS_RELEASE_DATE,NEWS_LAST_DATE)
 VALUES(
 	'N'||LPAD(TO_CHAR(NEWS_SEQ.NEXTVAL),3,'0'),'NT002','測試重大賽事資訊----<BR>ABCD1234',
-	NULL,NULL,'未發布',
-	NULL,NULL
+	NULL,NULL,'發布中',
+	to_timestamp('2019-01-01','YYYY-MM-DD'),to_timestamp('2019-01-31','YYYY-MM-DD')
 );
 INSERT INTO NEWS(
 	NEWS_NO,NEWS_TYPENO,NEWS_SCRIPT,
 	PIC_EXTENSION,NEWS_PICTURE,NEWS_STUTAS,
 	NEWS_RELEASE_DATE,NEWS_LAST_DATE)
 VALUES(
-	'N'||LPAD(TO_CHAR(NEWS_SEQ.NEXTVAL),3,'0'),'NT003','測試促銷商品----ABCD1234',
-	NULL,NULL,'未發布',
-	NULL,NULL
+	'N'||LPAD(TO_CHAR(NEWS_SEQ.NEXTVAL),3,'0'),'NT003','測試人氣商品----ABCD1234',
+	NULL,NULL,'發布中',
+	to_timestamp('2019-01-01','YYYY-MM-DD'),to_timestamp('2019-01-31','YYYY-MM-DD')
 );
 
 

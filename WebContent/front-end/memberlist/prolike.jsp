@@ -29,7 +29,7 @@
 		</style>
 	</head>
 	<body>
-		<jsp:include page="/front-end/SportyGo_Header.html"/>
+		<jsp:include page="/front-end/CA105G1_header.jsp"/>
 		
 		<!-- 右選單 -->
 		<div class="container-fluid">
@@ -46,7 +46,7 @@
 				</div>	
 			</div>
 		</div>
-	<jsp:include page="/front-end/SportyGo_Footer.html"/>
+	<jsp:include page="/front-end/CA105G1_footer.jsp"/>
 	<script>
 	var action = "${action}";
 	

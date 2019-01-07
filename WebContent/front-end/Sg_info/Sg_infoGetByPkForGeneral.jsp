@@ -138,19 +138,16 @@ System.out.println("memberlistVO= "+memberlistVO);
 									</tr>
 									<tr>
 										<th>團長</th>
-										<td>${memberlistSvc.getOneMem(Sg_infoVO.mem_no).mem_name}</td>
+										<jsp:useBean id="memberlistSvc2" scope="page" class="com.memberlist.model.MemberlistService"/>
+										<td>${memberlistSvc2.getOneMem(Sg_infoVO.mem_no).mem_name}</td>
 									</tr>
 									<tr>
 										<th>團名</th>
-										<td class="writable">${Sg_infoVO.sg_name }</td>  <!-- sg_info0 -->
+										<td>${Sg_infoVO.sg_name }</td>
 									</tr>
 									<tr>
 										<th>活動時間</th>
 										<td id="sg_date"><fmt:formatDate value="${Sg_infoVO.sg_date}" pattern="yyyy-MM-dd HH:mm"/></td>
-									</tr>
-									<tr>
-										<th>報名開始日期</th>
-										<td id="apl_start"><fmt:formatDate value="${Sg_infoVO.apl_start}" pattern="yyyy-MM-dd"/></td>
 									</tr>
 									<tr>
 										<th>報名截止日期</th>
@@ -287,7 +284,7 @@ System.out.println("memberlistVO= "+memberlistVO);
 	        var request = {
 	         origin: loc_start,
 	         destination: loc_end,
-	         travelMode: 'DRIVING' //腳踏車模式無法使用?
+	         travelMode: 'DRIVING' //腳踏車模式無法使用
 	        };
 	        // 繪製路線
 	        directionsService.route(request,function(result, status){
@@ -309,14 +306,12 @@ System.out.println("memberlistVO= "+memberlistVO);
 		session.setAttribute("location", request.getRequestURI());%>
 		$(".like").click(function(){
 			<%
-// 			session.setAttribute("isLoginRedirect", true); //設定旗標
 	 		session.setAttribute("Sg_infoVO", vo);%> //原頁面VO由session帶著去跟回
 			document.location.href="<%= request.getContextPath()%>/front-end/memberlist/Login.jsp";
 			return;
 		});
 		$("#joinbtn").click(function(){
 			<%
-// 			session.setAttribute("isLoginRedirect", true); //設定旗標
 	 		session.setAttribute("Sg_infoVO", vo);%> //原頁面VO由session帶著去跟回
 			document.location.href="<%= request.getContextPath()%>/front-end/memberlist/Login.jsp";
 			return;
@@ -326,7 +321,6 @@ System.out.println("memberlistVO= "+memberlistVO);
 		});
 		$("#repbtn").click(function(){
 			<%
-// 			session.setAttribute("isLoginRedirect", true); //設定旗標
 	 		session.setAttribute("Sg_infoVO", vo);%> //原頁面VO由session帶著去跟回
 			document.location.href="<%= request.getContextPath()%>/front-end/memberlist/Login.jsp";
 			return;
@@ -376,34 +370,80 @@ System.out.println("memberlistVO= "+memberlistVO);
 			});
 		});
 		//////////////////加入揪團按鍵設定///////////////////////////
-		//重複加入的錯誤處理還沒做////////////////////////////////////
 		$("#joinbtn").click(function(){
 			swal({
-			  title: "成功加入!", html: "馬上到我的揪團查看", type: "success", showCancelButton: true, showCloseButton: true,
-			}).then(
-				function (result) {
-				if(result){
-					document.location.href="https://sweetalert.js.org/guides/#advanced-examples";
-				}
-			});
-			$.ajax({
-				type: "POST",
-				url: "<%= request.getContextPath()%>/Sg_mem/Sg_mem.do",
-				data: {"action" : "insert", "sg_no" : "<%= vo.getSg_no()%>", "mem_no" : "<%= memberlistVO.getMem_no()%>"},
-				dataType: "json",
-				error: function(){
-					alert("發生錯誤!");
-				},
-				success: function(data){
-					
-				}
-			});
-		});
+				  title: "請確認付款資訊", showCancelButton: true, showCloseButton: true,confirmButtonText: "確定",cancelButtonText: "取消",
+				  html:	'<form>' +
+				  			'<div><img src="<%= request.getContextPath()%>/img/credit_card.svg" style="width:auto; height:200px"></div><br>'+
+						  	'<div class="form-group" style="display:flex;justify-content:center;">'+
+						       	'<label class="control-label col-xs-12 col-sm-5" for="card" style="padding:0px">信用卡卡號</label>'+
+						       	'<div class="col-xs-12 col-sm-5" style="padding:0px">'+
+						       		'<input type="text" class="form-control" id="card" value="" name="card" readonly>'+
+						       	'</div>'+
+			   			   	'</div>'+
+							'<div class="form-group" style="display:flex;justify-content:center;">'+
+							    '<label class="control-label col-xs-12 col-sm-5" style="padding:0px" for="expiry">信用卡到期日</label>'+
+							    '<div class="col-xs-12 col-sm-5" style="display:flex;justify-content:space-between;padding:0px">'+
+								    '<input type="text" class="form-control" id="expiry1" value="" name="expiry1" style="width:40%" readonly>'+
+								    '<label style="text-align:center;">年</label>'+
+								    '<input type="text" class="form-control" id="expiry2" value="" name="expiry2" style="width:40%" readonly>'+
+								    '<label>月</label>'+
+							    '</div>'+
+				   			'</div>'+
+				   			'<a href"#">修改付款資料</a>'+
+			   			'</form>', 
+				}).then(
+					function (result) {
+					if(result){
+						$.ajax({
+							type: "POST",
+							url: "<%= request.getContextPath()%>/Sg_mem/Sg_mem.do",
+							data: {"action" : "insert", "sg_no" : "<%= vo.getSg_no()%>", "mem_no" : "<%= memberlistVO.getMem_no()%>"},
+							dataType: "json",
+							error: function(){
+								alert("發生錯誤!");
+							},
+							success: function(data){
+								if(data.answer){
+									swal({
+										  title: "成功加入!", html: "馬上到我的揪團查看", type: "success", showCancelButton: true, showCloseButton: true,confirmButtonText: "前往",cancelButtonText: "取消"
+										}).then(
+											function (result) {
+											if(result){
+												document.location.href="<%= request.getContextPath()%>/front-end/memberlist/MemManager.do?action=Member_Sg";
+											}
+											},function(dismiss) {
+												location.reload();
+											});
+								}else{
+									swal({
+									  title: "您已重複報名", html: "馬上到我的揪團查看", type: "error", showCancelButton: true, showCloseButton: true,confirmButtonText: "前往",cancelButtonText: "取消"
+									}).then(
+										function (result) {
+											if(result){
+												document.location.href="<%= request.getContextPath()%>/front-end/memberlist/MemManager.do?action=Member_Sg";
+											}
+											},function(dismiss) {
+												location.reload();
+											
+										});
+								};
+							}
+						}); //ajax
+						
+					}
+					},function(dismiss) {
+						location.reload();
+					});
+			
+			
+			
+		}); //joinbtn click
 		
 		
 		$("#repbtn").click(function(){
 			swal({
-				title: '正義之士就是你!',type: "warning",showCancelButton: true, showCloseButton: true,
+				title: '正義之士就是你!',type: "warning",showCancelButton: true, showCloseButton: true,confirmButtonText: "送出",cancelButtonText: "取消",
 				html:
 	    			'<form>' +
 	    			  '<div class="form-group">' +

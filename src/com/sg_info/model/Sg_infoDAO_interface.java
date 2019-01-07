@@ -15,5 +15,5 @@ public interface Sg_infoDAO_interface {
 	//狀態變更
 	public void updateStatus(String sg_no, String sg_status);
 	//報名人數變更
-	public void updateTtlapl(String sg_no, String sg_ttlapl);
+	public void updateTtlapl(String sg_no, Integer sg_ttlapl);
 }

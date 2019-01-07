@@ -14,10 +14,7 @@
 	</head>
 	<body> 
 	<!-- pressure test -->
-	
-	
-	
-	
+	<jsp:include page="/front-end/CA105G1_header.jsp"/>
 	<form METHOD="post" ACTION="login.do">
 		<div class="container">
 			<div class="row">
@@ -56,7 +53,7 @@
 			</div>
 		</div>
 	</form>
-		
+	<jsp:include page="/front-end/CA105G1_footer.jsp"/>
 		
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>

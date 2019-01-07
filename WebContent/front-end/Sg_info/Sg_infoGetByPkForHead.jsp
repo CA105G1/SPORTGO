@@ -6,10 +6,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <% 
+Sg_infoVO vo = (Sg_infoVO)request.getAttribute("Sg_infoVO");	
+if(vo == null){
 	String sg_no = (String)request.getParameter("Sg_no");
 	Sg_infoService svc = new Sg_infoService();
-	Sg_infoVO vo = svc.GetByPK(sg_no);
+	vo = svc.GetByPK(sg_no);
     pageContext.setAttribute("Sg_infoVO", vo);
+}
 %>
 
 <html>
@@ -115,10 +118,6 @@
 										<td id="sg_date"><fmt:formatDate value="${Sg_infoVO.sg_date}" pattern="yyyy-MM-dd HH:mm"/></td>
 									</tr>
 									<tr>
-										<th>報名開始日期</th>
-										<td id="apl_start"><fmt:formatDate value="${Sg_infoVO.apl_start}" pattern="yyyy-MM-dd"/></td>
-									</tr>
-									<tr>
 										<th>報名截止日期</th>
 										<td id="apl_end"><fmt:formatDate value="${Sg_infoVO.apl_end}" pattern="yyyy-MM-dd"/></td>
 									</tr>
@@ -184,7 +183,7 @@
 							<input type="hidden" name="loc_end" id="loc_end" value=<%= vo.getLoc_end() %>>	
 							<input type="hidden" name="action" value="update">
 						</form>
-						<form id="dismissForm">
+		 				<form action="<%= request.getContextPath()%>/Sg_info/Sg_info.do" method="post" id="dismissForm">
 							<input type="button" class="btn btn-danger btn-block" id="dismiss" value="解散" >
 							<input type="hidden" name="action" value="dismiss">
 							<input type="hidden" name="sg_status" value="解散">
@@ -224,10 +223,6 @@
 	    //編輯活動時間
 	    $("#sg_date").html(function(index, content){
 		    return "<input type='text' id='sg_date2' name='sg_date' value='"+content+"'>";
-		    });
-	    //編輯報名開始日期
-	    $("#apl_start").html(function(index, content){
-		    return "<input type='text' id='apl_start2' name='apl_start' value='"+content+"'>";
 		    });
 	    //編輯報名結束日期
 	    $("#apl_end").html(function(index, content){
@@ -274,40 +269,20 @@
                 return [true, ""];
         }});
         
-      //設定報名開始日期表
-	    var apl_start = new Date();
-        $('#apl_start2').datetimepicker({
-        	timepicker: false,
-        	format: 'Y-m-d',
-            beforeShowDay: function(date) {
-          	  if (  date.getYear() <  apl_start.getYear() || 
-   		           (date.getYear() == apl_start.getYear() && date.getMonth() <  apl_start.getMonth()) || 
-   		           (date.getYear() == apl_start.getYear() && date.getMonth() == apl_start.getMonth() && date.getDate() < apl_start.getDate())
-                ) {
-                     return [false, ""]
-                }
-                return [true, ""];
-        }});
-        
-        //設定報名結束日期表@@@@@@@@@@@@@@@@@@@@@@@@開始日期抓不到!!!!!!!!!
-        var startDay = new Date($('#apl_start2').val());
-             var endDay = new Date($('#sg_date2').val());
-             $('#apl_end2').datetimepicker({
-            	 timepicker: false,
-             	format: 'Y-m-d',
-                 beforeShowDay: function(date) {
-               	  if (  date.getYear() <  startDay.getYear() || 
-        		           (date.getYear() == startDay.getYear() && date.getMonth() <  startDay.getMonth()) || 
-        		           (date.getYear() == startDay.getYear() && date.getMonth() == startDay.getMonth() && date.getDate() < startDay.getDate())
-        		             ||
-        		            date.getYear() >  endDay.getYear() || 
-        		           (date.getYear() == endDay.getYear() && date.getMonth() >  endDay.getMonth()) || 
-        		           (date.getYear() == endDay.getYear() && date.getMonth() == endDay.getMonth() && date.getDate() > endDay.getDate())
-                     ) {
-                          return [false, ""]
-                     }
-                     return [true, ""];
-             }});
+      //設定報名結束日期表
+        var somedate2 = new Date($('#sg_date').val());
+           $('#apl_end').datetimepicker({
+        	   timepicker: false,
+        	   format: 'Y-m-d',
+               beforeShowDay: function(date) {
+             	  if (  date.getYear() >  somedate2.getYear() || 
+      		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
+      		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
+                   ) {
+                        return [false, ""]
+                   }
+                   return [true, ""];
+           }});
 	    
 	    
 	    $("#update").css("display","none");
@@ -427,10 +402,16 @@
 		
 	  // Double check是否刪除
 	  $("#dismiss").click(function(){
-		  if (confirm("確定解散嗎!")) {
-			$("#dismissForm").submit();
-		  } else {
-		  }
+		  swal({
+			  title: "確定解散嗎!", type: "warning", showCancelButton: true, showCloseButton: true,confirmButtonText: "確定",cancelButtonText: "取消"
+			}).then(
+				function (result) {
+					if(result){
+						$("#dismissForm").submit();
+					}
+				},function(dismiss) {
+					
+				});
 	  });
 	  
 	  

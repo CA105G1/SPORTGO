@@ -20,7 +20,7 @@
   </style>
 </head>
 <body>
-	<jsp:include page="/front-end/SportyGo_Header.html"/>
+	<jsp:include page="/front-end/CA105G1_header.jsp"/>
 	<div class="container-fluid">
 		<div class="col-xs-12 col-sm-3">
 			<jsp:include page="list_group.jsp"/>
@@ -132,7 +132,7 @@
 		  </form>
 		</div>
 	</div>
-	<jsp:include page="/front-end/SportyGo_Footer.html"/>
+	<jsp:include page="/front-end/CA105G1_footer.jsp"/>
 <script>
 $(function (){
 	function format_float(num, pos){

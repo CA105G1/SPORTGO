@@ -97,8 +97,8 @@ public class Sg_infoService {
 		dao.updateStatus(sg_no, sg_status);
 	}
 	
-	public void updateTtlapl(String sg_no, String sg_ttlapl) {
-		dao.updateStatus(sg_no, sg_ttlapl);
+	public void updateTtlapl(String sg_no, Integer sg_ttlapl) {
+		dao.updateTtlapl(sg_no, sg_ttlapl);
 	}
 	
 	

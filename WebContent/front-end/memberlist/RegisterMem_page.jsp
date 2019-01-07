@@ -19,6 +19,7 @@
 		</style>
 </head>
 <body>
+	<jsp:include page="/front-end/CA105G1_header.jsp"/>
 	<form method="post" enctype="multipart/form-data" action="Register.do">
 		<div class="container">
 			<div class="row">
@@ -95,7 +96,7 @@
 
 		</div>
 	</form>	
-	
+	<jsp:include page="/front-end/CA105G1_footer.jsp"/>
 	
 <script>
 $(function (){

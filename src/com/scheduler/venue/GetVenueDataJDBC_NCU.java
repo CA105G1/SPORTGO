@@ -162,7 +162,7 @@ public class GetVenueDataJDBC_NCU {
 	//		venueVO.setV_photo1("Photo1");
 	//		venueVO.setV_photo2_ext("Photo2");
 			venueVOCollectionMap.put(venueVO.getV_name()+venueVO.getVt_no(), venueVO);
-			System.out.println("............第"+kkk+"筆成功轉換為物件........................");
+			System.out.println("............第"+kkk+"筆成功轉換為物件....map : "+venueVOCollectionMap.size()+"....................");
 		}
 	}
 	
