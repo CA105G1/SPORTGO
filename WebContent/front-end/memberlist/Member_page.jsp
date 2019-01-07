@@ -1,13 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import = "com.memberlist.model.*" %>
 
-<% 
-// 	String action = (String) request.getAttribute("action");
-//  	if(action == null)
-//  		pageContext.setAttribute("action", "");
-//  	else
-// 		pageContext.setAttribute("action", action);
-%>
+<% %>
 <!DOCTYPE html>
 <html lang="">
 	<head>
@@ -109,41 +103,68 @@
 							<li>緊急聯絡人 : ${memberlistVO.mem_emgc}</li>
 							<li>緊急聯絡人電話 : ${memberlistVO.mem_emgcphone}</li>
 						</ul>
+						<button onclick="sendMessage();">點擊</button>
 					</div>
 				</div>	
 			</div>
 		</div>
 	<jsp:include page="/front-end/CA105G1_footer.file"/>
-	<script>
-	var action = "${action}";
-	
-	$(function(){
-	    $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
-	        localStorage.setItem('activeTab', $(e.target).attr('href'));
-	    })
-
-	    var hash = window.location.hash;
-	    var activeTab = localStorage.getItem('activeTab');
-
-	    if(hash){
-	          $('#project-tabs  a[href="' + hash + '"]').tab('show');   
-	    }else if (activeTab){
-	        $('#project-tabs a[href="' + activeTab + '"]').tab('show');
-	    }
-	    
-	    changePage();
-	});
-	
-	window.onload = function changePage(){
-		console.log(action);
-		if(action === 'Member_renew'){
-			$('#myTab').find('a[href="#renew"]').trigger('click');
-		} else if(action === ''){
+	<script type="text/javascript">
+		var MemPoint = "/MemEchoServer";
+		var host = window.location.host;
+		var path = window.location.pathname;
+		var webCtx = path.substring(0,path.indexOf('/',1));
+		var endPointURL = "ws://"+host+webCtx+MemPoint;
+		
+		var webSocket;
+// 		var statusOutput = document.getElementById("statusOutput");
+		
+		$(function(){
+			connect();
+		})
+		function connect(){
+			webSocket = new WebSocket(endPointURL);
+			console.log(webSocket);
 			
-		} else {
-			$('#myTab').find('a[href="#mem"]').trigger('click');
+			webSocket.onopen = function(event){
+				//alert(event.data);
+				console.log("WebSocket connected successful");
+			};
+			
+			webSocket.onmessage = function(event){
+				console.log(event.data);
+				alert(event.data);
+			};
+			
+			webSocket.onclose = function(event){
+				webSocket.close();
+				console.log("WebSocket disconnected");
+			};
 		}
-	}
+		
+		function sendMessage(){
+			webSocket.send('${memberlistVO.mem_name}');
+			console.log('${memberlistVO.mem_name}');
+		}
+
+	
+	</script>
+	<script>
+// 	var action = "${action}";
+// 	$(function(){
+// 	    changePage();
+// 	});
+	
+// 	window.onload = function changePage(){
+// 		console.log(action);
+// 		if(action === 'Member_renew'){
+// 			$('#myTab').find('a[href="#renew"]').trigger('click');
+// 		} else if(action === ''){
+			
+// 		} else {
+// 			$('#myTab').find('a[href="#mem"]').trigger('click');
+// 		}
+// 	}
 	</script>
 	</body>
 </html>
