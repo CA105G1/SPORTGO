@@ -523,10 +523,12 @@
 					return queryString;
 				}
 				
-				var total = 0;
+				
 				function getTotals(){  //總計的計算用遍歷的方式
+					var total = 0;
 					$(".sumTheNumber").each(function(e){
 						total += parseInt($(this).text());
+						console.log(parseInt($(this).text()));
 						$('#testnum').html(total)
 					});
 				}
