@@ -58,7 +58,7 @@
 				
 					<!-- 右選單 -->
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="<%=request.getContextPath()%>/front-end/pro/listOnePro_front.jsp"><i class="glyphicon glyphicon-shopping-cart"></i> 商城 </a></li>
+						<li><a href="<%=request.getContextPath()%>/front-end/pro/listAllPro_front.jsp"><i class="glyphicon glyphicon-shopping-cart"></i> 商城 </a></li>
 						<li>
 							<c:if test="${memberlistVO==null}">
 								<a href="#">訪客，您好</a>
