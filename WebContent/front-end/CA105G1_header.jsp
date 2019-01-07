@@ -34,8 +34,8 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand myNoWrap" href="#">
-						<img src="<%=request.getContextPath()%>/img/logo_SportyGo_2_light.png" alt="SportyGo!"/>
+					<a class="navbar-brand myNoWrap" href="<%=request.getContextPath()%>/index.jsp">
+						<img src="<%=request.getContextPath()%>/img/logo_SportyGo_2_light.png" alt="SportGo!"/>
 					</a>
 				</div>
 					
@@ -43,8 +43,8 @@
 				<div class="collapse navbar-collapse navbar-ex1-collapse">
 					<!-- 左選單 -->
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="#">SportyGo!</a></li>
-						<li><a href="#">揪團去</a></li>
+						<li class="active"><a href="<%=request.getContextPath()%>/index.jsp">SportyGo!</a></li>
+						<li><a href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp">揪團去</a></li>
 						<li><a href="#">社團</a></li>
 					</ul>
 				
@@ -58,7 +58,7 @@
 				
 					<!-- 右選單 -->
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="#"><i class="glyphicon glyphicon-shopping-cart"></i> 商城 </a></li>
+						<li><a href="<%=request.getContextPath()%>/front-end/pro/listOnePro_front.jsp"><i class="glyphicon glyphicon-shopping-cart"></i> 商城 </a></li>
 						<li>
 							<c:if test="${memberlistVO==null}">
 								<a href="#">訪客，您好</a>
@@ -155,6 +155,6 @@
 	</div>
 			
 		<script src="https://code.jquery.com/jquery.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 	</body>
 </html>

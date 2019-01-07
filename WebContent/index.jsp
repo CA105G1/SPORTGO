@@ -22,7 +22,8 @@
 	</head>
 	<body>
 		<%-- header目前尚缺連結點 --%>
-		<%@ include file="/front-end/CA105G1_header.file" %>
+<%-- 	<%@ include file="/front-end/CA105G1_header.file" %> <!--請更正成下一行--> --%>
+		<jsp:include page="/front-end/CA105G1_header.jsp" />
 		<%  List<NewsVO> newsVOList = (List<NewsVO>)getServletContext().getAttribute("newsVOList"); 
 		  	pageContext.setAttribute("newsVOList", newsVOList); 
 		  	List<NewstypeVO> newsTypeVOList = (List<NewstypeVO>)getServletContext().getAttribute("newsTypeVOList");
@@ -133,7 +134,8 @@
 		</div>
 		
 		<%-- footer目前尚缺連結點 --%>
-		<%@ include file="front-end/CA105G1_footer.file" %>
+<%-- 		<%@ include file="front-end/CA105G1_footer.file" %> <!--請更正成下一行-->--%>
+		<jsp:include page="/front-end/CA105G1_footer.jsp" />
 		
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
