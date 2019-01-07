@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.news.model.NewsVO"%>
+<%@ page import="com.newstype.model.NewstypeVO"%>
 <%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html lang="">
@@ -23,30 +24,38 @@
 		<%-- header目前尚缺連結點 --%>
 		<%@ include file="/front-end/CA105G1_header.file" %>
 		<%  List<NewsVO> newsVOList = (List<NewsVO>)getServletContext().getAttribute("newsVOList"); 
-		  	pageContext.setAttribute("newsVOList", newsVOList); %>
+		  	pageContext.setAttribute("newsVOList", newsVOList); 
+		  	List<NewstypeVO> newsTypeVOList = (List<NewstypeVO>)getServletContext().getAttribute("newsTypeVOList");
+		  	pageContext.setAttribute("newsTypeVOList", newsTypeVOList); %>
 
 <%-- 		<div class="container-fluid">${newsVOList.size()}</div> --%>
 		<%-- 最新消息---跑馬燈 --%>
+<%-- 		<div>--------${newsTypeVOList}</div> --%>
 		<div class="container-fluid">
 			<div id="carousel-id" class="carousel slide" data-ride="carousel">
 			    <!-- 幻燈片小圓點區 -->
 			    <ol class="carousel-indicators">
-			        <% for(int carousel_item = 0 ; carousel_item<newsVOList.size();carousel_item++){ %>
-			        	<li data-target="#carousel-id" data-slide-to="2" class="<%=carousel_item==0? "active":"" %>"></li>
+			        <% for(int carousel_item = 0 ; carousel_item < newsVOList.size();carousel_item++){ %>
+			        	<li data-target="#carousel-id" data-slide-to="4" class="<%=carousel_item==0? "active":"" %>"></li>
 			    	<% } %>
 			    </ol>
 			    <!-- 幻燈片主圖區 -->
 			    <div class="carousel-inner">			    
-			        <% for(int carousel_item = 0 ; carousel_item<newsVOList.size();carousel_item++){   %>
+			        <% for(int carousel_item = 0 ; carousel_item < newsVOList.size();carousel_item++){   %>
 				    <% 		NewsVO newsVO = newsVOList.get(carousel_item);							   %>
+				    <% 		request.setAttribute("newsVO", newsVO);									   %>
 				        <div class="item <%=carousel_item==0? "active":"" %>">
 				            <img src="<%=request.getContextPath()%>/news/newsImg.do?news_no=<%=newsVO.getNews_no()%>" 
 				            class="img-responsive img-rounded center-block" alt="" style="width:1000px; height:500px"/>
 				            <div class="container">
 				                <div class="carousel-caption">
-				                    <h1>我是標題喔～自己改文案吧</h1>
-				                    <p><%=newsVO.getNews_stutas() %></p>
-				                    <p><a class="btn btn-lg btn-primary" href="#" role="button">詳細內容</a></p>
+				                	<h1>
+				                		<c:forEach var="newstypeVO" items="${newsTypeVOList}">
+				                    		${newstypeVO.newstype_no==newsVO.news_typeno?newstypeVO.newstype_name:""}
+				                    	</c:forEach>
+				                    </h1>
+				                    <p><%=newsVO.getNews_script() %></p>
+<!-- 				   <p><a class="btn btn-lg btn-primary" href="#" role="button">詳細內容</a></p> -->
 				                </div>
 				            </div>
 				        </div>

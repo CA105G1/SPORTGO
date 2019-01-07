@@ -8,6 +8,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.Vector;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,19 +17,23 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.news.model.NewsService;
 import com.news.model.NewsVO;
+import com.newstype.model.NewstypeService;
+import com.newstype.model.NewstypeVO;
 
 public class NewsServlet extends HttpServlet {
 	private Timer myTimer;
-	public static List<NewsVO> theNewsList = new ArrayList<>();
+	public static List<NewsVO> theNewsVOList ;
+	public static List<NewstypeVO> theNewstypeVOList ;
 	
 	@Override
 	public void init() throws ServletException {
-		super.init();
+		//super.init();
 		myTimer = new Timer();
 		TimerTask task = new TimerTask() {	
 			@Override
 			public void run() {
 				chargeNewsStutas();
+				updateTheNewsTypeList();
 				updateTheNewsList();
 			}
 		};
@@ -47,18 +52,23 @@ public class NewsServlet extends HttpServlet {
 	public void destroy() {
 		myTimer.cancel();
 	}
-	
-	private void updateTheNewsList() {
-		NewsService service = new NewsService();
-		theNewsList = service.getReleaseNews(new Timestamp(System.currentTimeMillis()));
-		getServletContext().setAttribute("newsVOList", theNewsList);
-	}
-	
+
 	private void chargeNewsStutas() {
 		NewsService service = new NewsService();
 		service.chargeNewsStutas();
 	}
 	
+	private void updateTheNewsList() {
+		NewsService service = new NewsService();
+		theNewsVOList = service.getReleaseNews(new Timestamp(System.currentTimeMillis()));
+		getServletContext().setAttribute("newsVOList", theNewsVOList);
+	}
+	
+	private void updateTheNewsTypeList() {
+		NewstypeService service = new NewstypeService();
+		theNewstypeVOList = service.getAll();
+		getServletContext().setAttribute("newsTypeVOList", theNewstypeVOList);
+	}
 	
     public NewsServlet() {
         super();
@@ -72,10 +82,17 @@ public class NewsServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
 		
-		
-		
-		
-		
+		switch (action) {
+		case "insert_news":
+			
+			break;
+		case "update_news":
+			
+			break;
+			
+		default:
+			break;
+		}
 		
 	}
 

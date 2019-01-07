@@ -187,7 +187,6 @@ public class VenueJDBCDAO implements VenueDAO_interface {
 			preparedStatement.setString(9, venueVO.getV_phoneno());
 			preparedStatement.setDouble(10, venueVO.getV_lat());
 			preparedStatement.setDouble(11, venueVO.getV_long());
-//			preparedStatement.setString(12, venueVO.getV_public_transport());
 			preparedStatement.setString(12, venueVO.getV_fitall());
 			preparedStatement.setString(13, venueVO.getV_fitinter());
 			preparedStatement.setString(14, venueVO.getOpen_state());
@@ -211,6 +210,7 @@ public class VenueJDBCDAO implements VenueDAO_interface {
 			preparedStatement.executeUpdate();
 			
 		}catch (SQLException e) {
+			e.printStackTrace();
 			throw new RuntimeException("A database error occured. "+e.getMessage());
 		}finally {
 			if(preparedStatement!=null) {

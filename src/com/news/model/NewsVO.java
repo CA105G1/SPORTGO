@@ -86,10 +86,14 @@ public class NewsVO implements Serializable{
 
 	@Override
 	public String toString() {
-		return "NewsVO [news_no=" + news_no + ", news_typeno=" + news_typeno + ", news_script=" + news_script
-				+ ", pic_extension=" + pic_extension + ", news_picture=" + Arrays.toString(news_picture)
-				+ ", news_stutas=" + news_stutas + ", news_release_date=" + news_release_date + ", news_last_date="
-				+ news_last_date + "]";
+		return "NewsVO [news_no=" + news_no + 
+				", news_typeno=" + news_typeno + 
+				", news_script=" + news_script + 
+				", pic_extension=" + pic_extension + 
+				//", news_picture=" + Arrays.toString(news_picture) + 
+				", news_stutas=" + news_stutas + 
+				", news_release_date=" + news_release_date + 
+				", news_last_date="+ news_last_date + "]";
 	}
 	
 	

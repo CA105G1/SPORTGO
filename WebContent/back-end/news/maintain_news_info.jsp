@@ -44,26 +44,20 @@
 			<!-- 標籤面板：標籤區 -->
 					    <ul class="nav nav-tabs" role="tablist">
 					        <li role="presentation" class="active">
-					            <a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">標題一</a>
+					            <a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">查詢、更新</a>
 					        </li>
 					        <li role="presentation" class="">
-					            <a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">標題二</a>
-					        </li>
-					        <li role="presentation">
-					            <a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">標題三</a>
+					            <a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">新增</a>
 					        </li>
 					    </ul>
 					
 			<!-- 標籤面板：內容區 -->
 					    <div class="tab-content">
 					        <div role="tabpanel" class="tab-pane active" id="tab1">
-					        	<h1>標題一內容</h1>
+					        	<h1>查詢、更新</h1>
 					        </div>
 					        <div role="tabpanel" class="tab-pane" id="tab2">
-					        	<h1>標題二內容</h1>
-					        </div>
-					        <div role="tabpanel" class="tab-pane" id="tab3">
-					        	<h1>標題三內容</h1>
+					        	<h1>新增</h1>
 					        </div>
 					    </div>
 					</div>
