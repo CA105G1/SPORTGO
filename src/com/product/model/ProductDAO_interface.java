@@ -20,5 +20,7 @@ public interface ProductDAO_interface {
     public abstract List<ProductVO> getAll();
     //複合查詢
     public abstract List<ProductVO> getAll(Map<String, String[]> map);
+    //更新狀態
+    public abstract int updateShelve(String pro_no ,String pro_shelve);
 
 }

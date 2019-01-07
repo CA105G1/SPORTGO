@@ -82,4 +82,8 @@ public class ProductService {
 		proDAO.delete(pro_no);
 	}
 	
+	public void updateShelve(String pro_no,String pro_shelve) {
+		proDAO.updateShelve(pro_no, pro_shelve);
+	}
+	
 }

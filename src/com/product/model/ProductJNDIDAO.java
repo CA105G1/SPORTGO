@@ -458,6 +458,11 @@ public class ProductJNDIDAO implements ProductDAO_interface{
 		
 		return list;
 	}
+	@Override
+	public int updateShelve(String pro_no, String shelve) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 
 	

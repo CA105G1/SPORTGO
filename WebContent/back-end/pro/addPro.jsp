@@ -201,6 +201,14 @@
 						<!-- 容器區 -->
 						    <div class="container-fluid warpwidth">
 						    	<div class="row">
+						    	    <c:if test="${not empty errorMsgs}">
+										<font style="color:red">請修正以下錯誤:</font>
+										<ul>
+											<c:forEach var="message" items="${errorMsgs}">
+												<li style="color:red">${message}</li>
+											</c:forEach>
+										</ul>
+									</c:if>
 						    		<div>
 						    			<h2 class="fontsize">編輯商品照片</h2>
 						    		</div>
@@ -233,9 +241,9 @@
 								    					<div class="fontsize_s">
 								    						商品名稱 :				    						
 								    					</div>
-								    					<div class="fontsize_s">
-								    						照片副檔名 :			    						
-								    					</div>
+<!-- 								    					<div class="fontsize_s"> -->
+<!-- 								    						照片副檔名 :			    						 -->
+<!-- 								    					</div> -->
 								    					<div class="fontsize_s">
 								    						商品規格 :				    						
 								    					</div>
@@ -250,7 +258,7 @@
 	                                                <div class="col-xs-12 col-sm-8 ">
 	                                                	<!-- 商品類別 -->
 	                                                    <div class="valuesize">
-	                                                    	<select size="1" name="pro_classid">
+	                                                    	<select size="1" name="pro_classid" class="form-control" style="width:300px;">
 																<c:forEach var="productClassVO" items="${productClassSvc.all}">
 																	<option value="${productClassVO.pro_classid}" ${(productClassVO.pro_classid==productClassVO.pro_classid)?'selected':'' } >${productClassVO.pro_classname}
 																</c:forEach>
@@ -258,23 +266,27 @@
 	                                                    </div>
 	                                                	<!-- 商品名稱 -->
 	                                                	<div class="valuesize">
-	                                                		<input type="TEXT" name="ename" size="45" value="<%= (proVO==null)? "" : proVO.getPro_name()%>" />
+	                                                		<input type="TEXT" class="form-control" name="ename" size="45" value="<%= (proVO==null)? "" : proVO.getPro_name()%>" />
 	                                                	</div>
 	                                                	<!-- 照片副檔名 -->
-	                                                	<div class="valuesize">
-	                                                		<input type="TEXT" name="pic_ext" size="45" value="<%= (proVO==null)? "" : proVO.getPro_pic_ext()%>" />
-	                                                	</div>
+<!-- 	                                                	<div class="valuesize"> -->
+<%-- 	                                                		<input type="TEXT" class="form-control" name="pic_ext" size="45" value="<%= (proVO==null)? "" : proVO.getPro_pic_ext()%>" /> --%>
+<!-- 	                                                	</div> -->
 	                                                	<!-- 商品規格 -->
 	                                                	<div class="valuesize">
-	                                                		<input type="TEXT" name="format" size="45" value="<%= (proVO==null)? "" : proVO.getPro_format()%>" />
+	                                                		<input type="TEXT" class="form-control" name="format" size="45" value="<%= (proVO==null)? "" : proVO.getPro_format()%>" />
 	                                                	</div>
 	                                                	<!-- 商品詳述 -->
 	                                                	<div class="valuesize">
-	                                                		<input type="TEXT" name="details" size="45" value="<%= (proVO==null)? "" : proVO.getPro_details()%>" />
+	                                                		<input type="TEXT" class="form-control" name="details" size="45" value="<%= (proVO==null)? "" : proVO.getPro_details()%>" />
 	                                                	</div>
 	                                                	<!-- 商品狀態 -->
 	                                                	<div class="valuesize">
-	                                                		<input type="TEXT" name="shelve" size="45" value="<%= (proVO==null)? "MANAGER" : proVO.getPro_shelve()%>" />
+<%-- 	                                                		<input type="TEXT" class="form-control" name="shelve" size="45" value="<%= (proVO==null)? "MANAGER" : proVO.getPro_shelve()%>" /> --%>
+	                                                		<select name="shelve"  class="form-control" style="width:150px;">
+																<option value="上架">上架</option>
+																<option value="下架">下架</option>
+															</select>
 	                                                	</div>
 	                                                </div>
 	                                                <div class="col-xs-12 col-sm-2 ">
@@ -320,23 +332,23 @@
 		                                                <div class="col-xs-12 col-sm-8 ">
 		                                                	<!-- 商品單價 -->
 		                                                    <div class="valuesize">
-		                                                    	<input type="TEXT" name="pro_bonus" size="45" value="<%= (proVO==null)? "" : proVO.getPro_bonus()%>" />
+		                                                    	<input type="TEXT" class="form-control"  name="pro_bonus" size="45" value="<%= (proVO==null)? "" : proVO.getPro_bonus()%>" />
 		                                                    </div>
 		                                                	<!-- 商品庫存量 -->
 		                                                	<div class="valuesize">
-		                                                		<input type="TEXT" name="pro_stock" size="45" value="<%= (proVO==null)? "" : proVO.getPro_stock()%>" />
+		                                                		<input type="TEXT" class="form-control" name="pro_stock" size="45" value="<%= (proVO==null)? "" : proVO.getPro_stock()%>" />
 		                                                	</div>
 		                                                	<!-- 商品安全庫存量 -->  
 		                                                	<div class="valuesize">
-		                                                		<input type="TEXT" name="pro_safestock" size="45" value="<%= (proVO==null)? "" : proVO.getPro_safestock()%>" />
+		                                                		<input type="TEXT" class="form-control" name="pro_safestock" size="45" value="<%= (proVO==null)? "" : proVO.getPro_safestock()%>" />
 		                                                	</div>
 		                                                	<!-- 商品總評價 -->
 		                                                	<div class="valuesize">
-		                                                		<input type="TEXT" name="pro_all_assess" size="45" value="<%= (proVO==null)? "" : proVO.getPro_all_assess()%>" />
+		                                                		<input type="TEXT" class="form-control" name="pro_all_assess" size="45" value="<%= (proVO==null)? "" : proVO.getPro_all_assess()%>" />
 		                                                	</div>
 		                                                	<!-- 商品評價總人數 -->
 		                                                	<div class="valuesize">
-		                                                		<input type="TEXT" name="pro_all_assessman" size="45" value="<%= (proVO==null)? "" : proVO.getPro_all_assessman()%>" />
+		                                                		<input type="TEXT" class="form-control" name="pro_all_assessman" size="45" value="<%= (proVO==null)? "" : proVO.getPro_all_assessman()%>" />
 		                                                	</div>
 		                                                </div>
 		                                                <div class="col-xs-12 col-sm-2 ">

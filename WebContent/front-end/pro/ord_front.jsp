@@ -254,8 +254,9 @@
 																	<div class="row">
 																		<div>
 																			<h2 class="fontsize">訂單詳情</h2>
+																			<input type="button" class="btn btn-success" onclick="returnpath()" value="回商城"/>
 																		</div>
-										
+										                                
 																		
 																				<!-- 所有商品 -->
 																				<table class="table table-hover ">
@@ -343,6 +344,9 @@
 			function creatQuerycancel(ord_no){
 				var queryString= {"action":"cancel", "ord_no":ord_no , "ord_status" :"取消"};
 				return queryString;
+			}
+			function returnpath(){
+				window.location.replace("<%= request.getContextPath()%>/front-end/pro/listAllPro_front.jsp"); 
 			}
 			
 				// document.getElementById("display").style.display = 'none';

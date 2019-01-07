@@ -7,6 +7,8 @@ import javax.servlet.*;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.*;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.product.model.ProductService;
 import com.product.model.ProductVO;
@@ -365,10 +367,11 @@ if ("insert".equals(action)) { //來自addPro.jsp的請求
 				if (pro_name == null || pro_name.trim().length() == 0) {
 					errorMsgs.add("名稱請勿空白");
 				}
-				String pic_ext = req.getParameter("pic_ext");
-				if (pic_ext == null || pic_ext.trim().length() == 0) {
-					errorMsgs.add("副檔名請勿空白");
-				}
+				String pic_ext = null;//沒有用的欄位
+//				String pic_ext = req.getParameter("pic_ext");
+//				if (pic_ext == null || pic_ext.trim().length() == 0) {
+//					errorMsgs.add("副檔名請勿空白");
+//				}
 				String pro_format = req.getParameter("format");
 				if (pro_format == null || pro_format.trim().length() == 0) {
 					errorMsgs.add("商品規格請勿空白");
@@ -644,7 +647,28 @@ if ("getOne_For_Display_front".equals(action)) { //來自select_page.jsp的請�
 			}
 		}
 
-
+if ("ok_cancel".equals(action)) {
+				List<String> errorMsgs = new LinkedList<String>();
+				// Store this set in the request scope, in case we need to
+				// send the ErrorPage view.
+				String pro_no = req.getParameter("pro_no");
+				String pro_shelve = req.getParameter("pro_shelve");
+				System.out.println(pro_shelve);
+				ProductService proSvc = new ProductService();
+				proSvc.updateShelve(pro_no, pro_shelve);
+				PrintWriter out = res.getWriter();
+				
+//				try {
+					String return_pro_no = null;
+					String job = new JSONObject().toString();//需要回傳不然ajax會出錯
+					out.write(job);
+					out.flush();
+					out.close();
+//				} catch (JSONException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+		}
 
 	}
 

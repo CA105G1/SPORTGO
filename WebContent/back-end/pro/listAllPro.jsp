@@ -223,15 +223,7 @@
 <!-- 					</div> -->
 <!-- 				</div> -->
 
-				<%-- 錯誤表列 --%>
-					<c:if test="${not empty errorMsgs}">
-						<font style="color:red">請修正以下錯誤:</font>
-						<ul>
-							<c:forEach var="message" items="${errorMsgs}">
-								<li style="color:red">${message}</li>
-							</c:forEach>
-						</ul>
-					</c:if>
+
 										<div class="container-fluid">
 											<div class="row">
 												<!-- 複合查詢 -->
@@ -294,6 +286,15 @@
 																<!-- 容器區 -->
 																<div class="container-fluid warpwidth">
 																	<div class="row">
+													    				<%-- 錯誤表列 --%>
+																		<c:if test="${not empty errorMsgs}">
+																			<font style="color:red">請修正以下錯誤:</font>
+																			<ul>
+																				<c:forEach var="message" items="${errorMsgs}">
+																					<li style="color:red">${message}</li>
+																				</c:forEach>
+																			</ul>
+																		</c:if>
 																		<div>
 																			<h2 class="fontsize">?件商品</h2>
 																		</div>
@@ -365,7 +366,7 @@
 																								</td>
 																								<!-- 商品狀態 -->
 																								<td>
-																									${proVO.pro_shelve}
+																									<div id="${proVO.pro_no}">${proVO.pro_shelve}</div>
 																								</td>
 																								<!-- 下拉式按鈕 -->
 																								<td>
@@ -388,7 +389,8 @@
 																												</FORM>
 																											</li>
 																											<li>
-																												<a href="#">上架</a>
+																												<button type="button" class="ok" value="${proVO.pro_no}">上架</a>
+<%-- 																												<button type="button" class="ok" value="${ordListVO.ord_no}">完成訂單</button> --%>
 																											</li>
 																											<li>
 																												<a href="#">下架</a>
@@ -424,6 +426,50 @@
 			<script src="https://code.jquery.com/jquery.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 			<script type="text/javascript">
+			$(document).ready(function(){
+				$('.ok').each( function() {
+					$(this).click( function() {
+						var val = $(this).val();
+						console.log($(this).val());
+						$.ajax({
+							 type: "POST",
+							 url: "<%= request.getContextPath()%>/pro/pro.do",
+							 data: creatQueryOK(val),
+							 dataType: "json",
+							 success: function (data){
+								 $('#'+data.pro_no).html('完成');
+						     },
+						     error: function(){alert("AJAX-class發生錯誤囉!")}
+				         })
+					})
+				})
+				$('.cancel').each( function() {
+					$(this).click( function() {
+						var val = $(this).val();
+						$.ajax({
+							 type: "POST",
+							 url: "<%= request.getContextPath()%>/pro/pro.do",
+							 data: creatQuerycancel(val),
+							 dataType: "json",
+							 success: function (data){
+								 $('#'+data.pro_no).html('取消');
+						     },
+						     error: function(){alert("AJAX-class發生錯誤囉!")}
+				         })
+					})
+				})
+				
+			})
+			function creatQueryOK(pro_no){
+				
+				var queryString= {"action":"ok_cancel", "pro_no":pro_no , "pro_shelve" :"上架"};
+				console.log(queryString);
+				return queryString;
+			}
+			function creatQuerycancel(ord_no){
+				var queryString= {"action":"ok_cancel", "pro_no":ord_no , "pro_shelve" :"取消"};
+				return queryString;
+			}
 				// document.getElementById("display").style.display = 'none';
 				//    $(function() {  //將圖片預覽
 				//    	$('input[type=file]').change(function() {

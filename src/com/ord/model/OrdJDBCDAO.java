@@ -290,12 +290,8 @@ public class OrdJDBCDAO implements OrdDAO_interface{
 		Connection con = null; 
 		PreparedStatement ps = null;
 		int count = 0;
-		Statement stmt = null;
 		try {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
-			System.out.println("ord_no" + ord_no);
-			System.out.println("ord_status" +ord_status);
-			System.out.println("有近來");
 			ps = con.prepareStatement(UPDATA_STATUS);
 			ps.setString(1, ord_status);
 			ps.setString(2, ord_no);

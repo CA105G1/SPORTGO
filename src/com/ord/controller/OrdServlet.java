@@ -262,14 +262,9 @@ if ("insert".equals(action)) { //來自shoppingcart_front.jsp的請求
 				/****永續層存取(收貨地址,信用卡)****/
 				AddressService addressSvc = new AddressService();
 				MemberlistService service = new MemberlistService();
-				System.out.println("mem_noxxxxxxx"+ mem_no);
-				System.out.println("carddddddddd" + card);
-				System.out.println("expirytdeeeeeeeeeee" + expirydate);
-				service.renewCard(mem_no, "5555555555555555", "05/55");
 				try {
 					addressSvc.addNewAddress(mem_no, receiver, phone, country, city, detail, zip);
-					
-					System.out.println("新增地址成功");
+					service.renewCard(mem_no, card, expirydate);
 				} catch (RuntimeException e) {
 					System.out.println("新增資料錯誤"+e.getMessage());
 					log(e.getMessage());

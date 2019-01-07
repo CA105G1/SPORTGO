@@ -24,7 +24,8 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 	private static final String DELETE_CHILDREN_PROM = "Delete FROM PRO_DETAIL_PROM WHERE PROM_PROJECT_ID = ?";
 	private static final String DELETE_CHILDREN_ORDDETAILS = "Delete FROM ORDDETAILS WHERE ORD_NO = ?";
 	private static final String DELETE = "Delete FROM PRODUCT WHERE PRO_NO = ?";
-	
+	//更新狀態
+	private static final String UPDATE_PRO_SHELVE = "UPDATE PRODUCT SET   PRO_SHELVE = ? WHERE PRO_NO = ?";
 	
 	static {
 		try {
@@ -455,6 +456,52 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 		
 		
 		return list;
+	}
+	//更新狀態
+	@Override
+	public int updateShelve(String pro_no, String pro_shelve) {
+		Connection con = null; 
+		PreparedStatement ps = null;
+		int count = 0;
+		
+		try {
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			ps = con.prepareStatement(UPDATE_PRO_SHELVE);
+			System.out.println(pro_no + ":" +pro_shelve);
+			ps.setString(1, pro_shelve);
+			ps.setString(2, pro_no);
+			count = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}finally {
+			if(ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return count;
 	}
 	
 
