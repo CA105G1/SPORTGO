@@ -308,14 +308,13 @@ Sg_infoVO vo = svc.GetByPK(sg_no);
 			});
 		});
 		//////////////////加入揪團按鍵設定///////////////////////////
-		//重複加入的錯誤處理還沒做////////////////////////////////////
 		$("#outbtn").click(function(){
 			swal({
 			  title: "確定退出?", type: "warning", showCancelButton: true, showCloseButton: true,
 			}).then(
 				function (result) {
 				if(result){
-					document.location.href="https://sweetalert.js.org/guides/#advanced-examples";
+					document.location.href="<%= request.getContextPath()%>/front-end/memberlist/MemManager.do?action=Member_Sg";
 					$.ajax({
 						type: "POST",
 						url: "<%= request.getContextPath()%>/Sg_mem/Sg_mem.do",

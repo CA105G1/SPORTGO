@@ -183,7 +183,7 @@ if(vo == null){
 							<input type="hidden" name="loc_end" id="loc_end" value=<%= vo.getLoc_end() %>>	
 							<input type="hidden" name="action" value="update">
 						</form>
-						<form id="dismissForm">
+		 				<form action="<%= request.getContextPath()%>/Sg_info/Sg_info.do" method="post" id="dismissForm">
 							<input type="button" class="btn btn-danger btn-block" id="dismiss" value="解散" >
 							<input type="hidden" name="action" value="dismiss">
 							<input type="hidden" name="sg_status" value="解散">
@@ -402,11 +402,16 @@ if(vo == null){
 		
 	  // Double check是否刪除
 	  $("#dismiss").click(function(){
-		  if (confirm("確定解散嗎!")) {
-			$("#dismissForm").submit();
-			document.location.href="<%= request.getContextPath()%>/front-end/memberlist/sg.jsp";
-		  } else {
-		  }
+		  swal({
+			  title: "確定解散嗎!", type: "warning", showCancelButton: true, showCloseButton: true,confirmButtonText: "確定",cancelButtonText: "取消"
+			}).then(
+				function (result) {
+					if(result){
+						$("#dismissForm").submit();
+					}
+				},function(dismiss) {
+					
+				});
 	  });
 	  
 	  

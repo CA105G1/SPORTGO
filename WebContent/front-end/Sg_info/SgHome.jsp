@@ -195,14 +195,6 @@ if(list == null){
 				      </h4>
 				    </div>
 				  </div>
-<!---------------------------- 歷史揪團紀錄 ------------------------------->
-				  <div class="panel panel-info">
-				    <div class="panel-heading">
-				      <h4 class="panel-title">
-			          	 <a href="#">歷史揪團紀錄</a>
-				      </h4>
-				    </div>
-				  </div>
 				  
 				  
 				</div>

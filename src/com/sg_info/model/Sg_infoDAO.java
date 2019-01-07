@@ -448,7 +448,7 @@ System.out.println("sqlStr="+sqlStr);
 	}
 
 	@Override
-	public void updateTtlapl(String sg_no, String sg_ttlapl) {
+	public void updateTtlapl(String sg_no, Integer sg_ttlapl) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
@@ -456,7 +456,7 @@ System.out.println("sqlStr="+sqlStr);
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(updateTtlaplStmt);
 			
-			pstmt.setString(1, sg_ttlapl);
+			pstmt.setInt(1, sg_ttlapl);
 			pstmt.setString(2, sg_no);
 			pstmt.executeUpdate();
 			
