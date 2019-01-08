@@ -98,13 +98,6 @@
 									value="${param.sg_date }">
 							</td>
 						</tr>
-<!-- 						<tr> -->
-<!-- 							<th>報名開始日期</th> -->
-<!-- 							<td> -->
-<!-- 								<input type="text" id="apl_start" name="apl_start"  -->
-<%-- 									value="${param.apl_start }"> --%>
-<!-- 							</td> -->
-<!-- 						</tr> -->
 						<tr>
 							<th>報名截止日期</th>
 							<td>
@@ -177,15 +170,33 @@
 				</table>
 				<!-------------GOOGLE地圖 -------------->
 				<div id="mapSetting" style="display:none">
-					<div>
-						起點：<input type="text" name="startAddr" id="startAddr">
-				        <input type="button" name="startSearchBtn" value="查詢" id="startSearchBtn">
-						終點：<input type="text" name="endAddr" id="endAddr">
-				        <input type="button" name="endSearchBtn" value="查詢" id="endSearchBtn">
-					</div>
-					<div>
-				        <input type="button" name="road" id="road" value="規劃路線">
-					</div>
+					<table style="text-align:center; width:100%">
+						<tr>
+							<td>
+								<div class="input-group">
+									<label class="input-group-addon">起點</label>
+									<input type="text" class="form-control" name="startAddr" id="startAddr">
+									<div class="input-group-btn">
+										<input type="button" class="btn btn-info" name="startSearchBtn" value="查詢" id="startSearchBtn">
+									</div>
+								</div>
+							</td>
+							<td rowspan="2" align="center">
+								<input type="button" class="btn btn-success" name="road" id="road" value="規劃路線" style="width:80px; height:60px">
+							</td>
+						</tr>
+						<tr><td>
+							<div class="input-group" style="text-align:center; width:100%">
+						        <div class="input-group">
+						        	<label class="input-group-addon">終點</label>
+									<input type="text" class="form-control" name="endAddr" id="endAddr">
+									<div class="input-group-btn">
+						        		<input type="button" class="btn btn-info" name="endSearchBtn" value="查詢" id="endSearchBtn">
+					        		</div>
+				        		</div>
+							</div>
+						</td></tr>
+					</table>
 				</div>
 				<div id="distance"></div>
 				<div id="map"></div>

@@ -8,7 +8,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
-<title>Sg_infoGetByPkForJoinMem</title>
+<title>Sg_infoGetByPkForRep</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -72,17 +72,11 @@
 
 
 <% 
-String sg_no = (String)request.getParameter("Sg_no");
-Sg_infoService svc = new Sg_infoService();
-Sg_infoVO vo = svc.GetByPK(sg_no);
-//測試用
-// MemberlistService memsvc = new MemberlistService();
-// MemberlistVO memberlistVO = memsvc.getOneMem("M002");
-
-
-// 	Sg_infoVO vo = (Sg_infoVO)request.getAttribute("Sg_infoVO");
+	String rep_no = (String)request.getParameter("rep_no");
+	String sg_no = (String)request.getParameter("sg_no");
+	Sg_infoService svc = new Sg_infoService();
+	Sg_infoVO vo = svc.GetByPK(sg_no);
 	pageContext.setAttribute("Sg_infoVO", vo);
- 	MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO");
 %>
 
 <div class="container">
@@ -114,7 +108,7 @@ Sg_infoVO vo = svc.GetByPK(sg_no);
 			
 				<table class="table table-hover">
 					<i class="glyphicon glyphicon-circle-arrow-left icon-large brown backToList"></i>  <!-- 返回按鍵 -->
-					<a href="<%= request.getContextPath()%>/front-end/Sg_info/SgHome.jsp" display="none" id="linkBack">回到揪團首頁</a>
+					<a href="<%= request.getContextPath()%>/back-end/sg_info/sg_infoBackEnd.jsp" display="none" id="linkBack">回到後台</a>
 					
 					<caption style="text-align:center">
 						<h3>
@@ -190,8 +184,20 @@ Sg_infoVO vo = svc.GetByPK(sg_no);
 								<div id="distance"></div>
 						</div>
 					</div>
-				
 			</form>
+			<form action="<%= request.getContextPath()%>/Sg_rep/Sg_rep.do">
+				<input type="hidden" name="sg_no" value="<%= sg_no%>" >
+				<input type="hidden" name="rep_no" value="<%= rep_no%>" >
+				<input type="hidden" name="action" value="update" >
+				<input type="submit" id="update" name="rep_status" value="無違規" class="btn btn-info btn-block" align="center">
+				<input type="submit" id="update" name="rep_status" value="封鎖" class="btn btn-danger btn-block" align="center">
+			</form>
+<%-- 			<form action="<%= request.getContextPath()%>/Sg_rep/Sg_rep.do"> --%>
+<%-- 				<input type="hidden" name="sg_no" value="<%= sg_no%>" > --%>
+<%-- 				<input type="hidden" name="rep_no" value="<%= rep_no%>" > --%>
+<!-- 				<input type="hidden" name="action" value="updateBlock" > -->
+<!-- 				<input type="submit" id="update" value="封鎖" class="btn btn-danger btn-block" align="center"> -->
+<!-- 			</form> -->
 		</div> <!-- col-sm-6 -->
 		<div class="col-xs-12 col-sm-3">
 			<div class="panel panel-danger">
@@ -207,49 +213,14 @@ Sg_infoVO vo = svc.GetByPK(sg_no);
 </div>
 
 
-
-
-<div class="container">
-	<div class="row">
-		<div class="col-xs-12 col-sm-3">
-		</div>
-		<div class="col-xs-12 col-sm-6" id="btnGroup">
-			<div class="btn like" id="likebtn" style="display:none">
-				<img src="<%= request.getContextPath()%>/img/love.png" id="like">
-				加入收藏
-			</div>
-			<div class="btn like" id="dislikebtn" style="display:">
-				<img src="<%= request.getContextPath()%>/img/love_white.png" id="dislike">
-				加入收藏
-			</div>
-			
-			<div class="btn" id="outbtn">
-				<img src="<%= request.getContextPath()%>/img/exit.png">
-				退出揪團
-			</div>
-			
-			<div class="btn" id="sharebtn">
-				<img src="<%= request.getContextPath()%>/img/share.png">
-				分享給好友
-			</div>
-			
-			<div class="btn" id="repbtn">
-				<img src="<%= request.getContextPath()%>/img/warning.png">
-				檢舉
-			</div>
-		</div>
-		<div class="col-xs-12 col-sm-3">
-		</div>
-	</div>
-</div>
-
 <%@ include file="/front-end/CA105G1_footer.file" %>
+
+
+
 
 
 <script type="text/javascript">
 		
-		
-	  
 	//google map設定
 	var map;
 	function initMap(){
@@ -310,125 +281,6 @@ Sg_infoVO vo = svc.GetByPK(sg_no);
 		
 	} //myLoc
 	  
-		/////////////////收藏按鍵設定////////////////////////
-		//若該會員有收藏該揪團則顯示實心
-		<% Sg_likeService likesvc = new Sg_likeService();%>
-		if(<%= likesvc.isLike(vo.getSg_no(), memberlistVO.getMem_no())%>){  
-			$("#likebtn").css("display","");
-			$("#dislikebtn").css("display","none");
-		}else{
-			$("#likebtn").css("display","none");
-			$("#dislikebtn").css("display","");
-		}
-		$("#likebtn").click(function(){
-			 $("#dislikebtn").css("display","");
-			 $("#likebtn").css("display","none");
-			$.ajax({
-				type: "POST",
-				url: "<%= request.getContextPath()%>/Sg_like/Sg_like.do",
-				data: {"action" : "delete", "sg_no" : "<%= vo.getSg_no()%>", "mem_no" : "<%= memberlistVO.getMem_no()%>"},
-				dataType: "json",
-				error: function(){
-					alert("發生錯誤!");
-				},
-				success: function(data){
-					swal({
-						  title: "取消收藏!", type: "error", timer: 1000, showConfirmButton: false
-					})
-				}
-			});
-		});
-		
-		$("#dislikebtn").click(function(){
-			 $("#likebtn").css("display","");
-			 $("#dislikebtn").css("display","none");
-			$.ajax({
-				type: "POST",
-				url: "<%= request.getContextPath()%>/Sg_like/Sg_like.do",
-				data: {"action" : "insert", "sg_no" : "<%= vo.getSg_no()%>", "mem_no" : "<%= memberlistVO.getMem_no()%>"},
-				dataType: "json",
-				error: function(){
-					alert("發生錯誤!");
-				},
-				success: function(data){
-					swal({
-						  title: "成功加入收藏!", type: "success", timer: 1000, showConfirmButton: false
-					})
-				}
-			});
-		});
-		//////////////////加入揪團按鍵設定///////////////////////////
-		$("#outbtn").click(function(){
-			swal({
-			  title: "確定退出?", type: "warning", showCancelButton: true, showCloseButton: true,
-			}).then(
-				function (result) {
-				if(result){
-					document.location.href="<%= request.getContextPath()%>/front-end/memberlist/MemManager.do?action=Member_Sg";
-					$.ajax({
-						type: "POST",
-						url: "<%= request.getContextPath()%>/Sg_mem/Sg_mem.do",
-						data: {"action" : "delete", "sg_no" : "<%= vo.getSg_no()%>", "mem_no" : "<%= memberlistVO.getMem_no()%>"},
-						dataType: "json",
-						error: function(){
-							alert("發生錯誤!");
-						},
-						success: function(data){
-							
-						}
-					});
-				}
-			});
-		});
-		
-		
-		$("#repbtn").click(function(){
-			swal({
-				title: '正義之士就是你!',type: "warning",showCancelButton: true, showCloseButton: true,
-				html:
-	    			'<form>' +
-	    			  '<div class="form-group">' +
-	    			    '<label class="pull-left">檢舉原因：</label>' +
-	    			    '<select id="rep_type" class="form-control">' +
-	    			    '<option value="不雅言語">不雅言語</option>'+
-					    '<option value="廣告推銷">廣告推銷</option>'+
-					    '<option value="其他">其他</option>'+
-					    '</select>'+
-	    			  '</div>' +
-	    			  '<div class="form-group">' +
-	    			    '<label for="rep_cont" class="pull-left">其他原因說明：</label>' +
-	    			    '<textarea id="rep_cont" style="resize:none;height:100px;width:100%;"></textarea>' +
-	    			  '</div>' +
-	    			'</form>',	
-			}).then(
-				function (result) {
-					if(result){
-						var dataStr = {};
-						dataStr.action = "insert";
-						dataStr.sg_no = "${Sg_infoVO.sg_no}";
-						dataStr.mem_no = "<%= memberlistVO.getMem_no()%>";
-						dataStr.rep_type = $("#rep_type").val().trim();
-						dataStr.rep_cont = $("#rep_cont").val().trim();
-						$.ajax({
-							type: "POST",
-							url: "<%= request.getContextPath()%>/Sg_rep/Sg_rep.do",
-							data: dataStr,
-							dataType: "json",
-							error: function(){
-								alert("發生錯誤!");
-							},
-							success: function(data){
-								
-							}
-						});
-					};
-				});
-		}); //repbtn click
-		
-		
-		
-	
-	
 
 </script>
 

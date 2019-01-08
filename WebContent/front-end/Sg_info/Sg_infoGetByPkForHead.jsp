@@ -49,6 +49,29 @@ if(vo == null){
 		display:flex;
 		justify-content: space-between;
 	}
+	.panel-title{
+		text-align: center;
+    	text-align-last: center;
+	}
+	#sg_memList{ 
+ 		background-color: #FFFFE0; 
+		border-radius: 10px; 
+    	cursor: pointer; 
+     	box-shadow: 0 2px #999; 
+    	width:80%; 
+     	text-align: center; 
+     	text-align-last: center; 
+ 	} 
+	#sg_memList:active {
+	  	box-shadow: 0 1px #666;
+	  	transform: translateY(1px);
+	}
+	#sg_memPic{
+		width:50px;
+		height:50px;
+		border-radius: 50px;
+		padding:3px;
+	}
 	
 </style>
  
@@ -68,137 +91,162 @@ if(vo == null){
 
 <div class="container">
 	<div class="row">
-		<div class="col-xs-12 col-sm-3"></div>
+		<div class="col-xs-12 col-sm-3">
+			<div class="panel panel-success">
+				<div class="panel-heading">
+					<h3 class="panel-title">團員列表</h3>
+				</div>
+				<div class="list-group">
+					<jsp:useBean id="sg_memSvc" scope="page" class="com.sg_mem.model.Sg_memService" />
+					<%pageContext.setAttribute("sg_no", vo.getSg_no());%>
+					<c:forEach var="sg_memVO" items="${sg_memSvc.getAllBySg_no(sg_no)}" > 
+						<div class="list-group-item">
+							<a href="<%=request.getContextPath()%>/front-end/memberlist/public_Member_page.jsp?mem_no=${sg_memVO.mem_no}">
+							<div id="sg_memList">
+								<jsp:useBean id="memberlistSvc" scope="page" class="com.memberlist.model.MemberlistService"/>
+								<img id="sg_memPic" src="<%= request.getContextPath()%>/front-end/memberlist/showPicture.do?mem_no=${sg_memVO.mem_no}">
+								${memberlistSvc.getOneMem(sg_memVO.mem_no).mem_name}
+							</div>
+							</a>
+						</div>
+					</c:forEach>
+				</div>
+			</div>
+		</div>
 		<div class="col-xs-12 col-sm-6">
-		
-			<div role="tabpanel">
-	<!------------- 標籤面板：標籤區 ------------------->
-			    <ul class="nav nav-tabs" role="tablist">
-			        <li role="presentation" class="active">
-			            <a href="#sg_info" aria-controls="sg_info" role="tab" data-toggle="tab">揪團資訊</a>
-			        </li>
-			        <li role="presentation">
-			            <a href="#msgBoard" aria-controls="msgBoard" role="tab" data-toggle="tab">留言板</a>
-			        </li>
-			    </ul>
-    <!------------------ 標籤面板：內容區 ------------------------->
-			    <div class="tab-content">
-			        <div role="tabpanel" class="tab-pane active" id="sg_info">
-			        	<div class="pic"><img src=""></div>
-						<form action="<%= request.getContextPath()%>/Sg_info/Sg_info.do" method="post" enctype="multipart/form-data">
+				<form action="<%= request.getContextPath()%>/Sg_info/Sg_info.do" method="post" enctype="multipart/form-data">
+				
+					<table class="table table-hover table-striped table-bordered text-center">
+						<!-- 返回按鍵 -->
+						<i class="glyphicon glyphicon-circle-arrow-left icon-large brown backToList"></i>  
+						<a href="<%= request.getContextPath()%>/front-end/Sg_info/SgHome.jsp" display="none" id="linkBack">回到揪團首頁</a>
 						
-							<table class="table table-hover table-striped table-bordered text-center">
-								<i class="glyphicon glyphicon-circle-arrow-left icon-large brown backToList"></i>  <!-- 返回按鍵 -->
-								<a href="<%= request.getContextPath()%>/front-end/Sg_info/SgHome.jsp" display="none" id="linkBack">回到揪團首頁</a>
+						<caption class="text-center">
+							<h3>
+								<!-- 團名 -->
+								<img src="<%= request.getContextPath()%>/img/sporticons/${Sg_infoVO.sp_no}.svg" style="width:20px; height:auto;">
+								<span class="writable">${Sg_infoVO.sg_name }</span>
+								<!-- 團長 -->
+								<span style="font-size: 0.5em;margin-left: 15px;">
+								<i class="glyphicon glyphicon-user" style="padding-right:5px"></i>
+								<jsp:useBean id="memberlistSvc2" scope="page" class="com.memberlist.model.MemberlistService"/>
+								${memberlistSvc2.getOneMem(Sg_infoVO.mem_no).mem_name}
+							</span>
+							</h3>
+						</caption>
+						<tbody>
+							<tr>  <!-------- 照片 -------->
+								<td colspan="2">
+									<img id="showPic" style="width:90%; display:block; margin:auto;" class="img-responsive" src="<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${Sg_infoVO.sg_no}">
+									<div class="uploadPic"></div><br>
+								</td>
+							</tr>
+							<tr>
+								<th>揪團編號</th>
 								
-								<caption class="text-center">我是Sg_infoGetByPkForHead</caption>
-								<tbody>
-									<tr>  <!-------- 照片 -------->
-										<td colspan="2">
-											<img id="showPic" class="img-responsive" src="<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${Sg_infoVO.sg_no}">
-											<div class="uploadPic"></div><br>
-										</td>
-									</tr>
-									<tr>
-										<th>揪團編號</th>
-										
-										<td>${Sg_infoVO.sg_no}</td>
-									</tr>
-									<tr>
-										<th>團長</th>
-										<jsp:useBean id="memberlistSvc" scope="page" class="com.memberlist.model.MemberlistService"/>
-										<td>${memberlistSvc.getOneMem(Sg_infoVO.mem_no).mem_name}</td>
-									</tr>
-									<tr>
-										<th>團名</th>
-										<td class="writable">${Sg_infoVO.sg_name }</td>  <!-- sg_info0 -->
-									</tr>
-									<tr>
-										<th>活動時間</th>
-										<td id="sg_date"><fmt:formatDate value="${Sg_infoVO.sg_date}" pattern="yyyy-MM-dd HH:mm"/></td>
-									</tr>
-									<tr>
-										<th>報名截止日期</th>
-										<td id="apl_end"><fmt:formatDate value="${Sg_infoVO.apl_end}" pattern="yyyy-MM-dd"/></td>
-									</tr>
-									<tr>
-										<th>報名費用</th>
-										<td class="writable">${Sg_infoVO.sg_fee}</td> <!-- sg_info1 -->
-									</tr> 
-									<tr>
-										<th>權限</th>
-										<td id="sg_per">${Sg_infoVO.sg_per}</td> <!-- 下拉選單 -->
-									</tr>  
-									<tr>
-										<th>運動種類</th>
-										<jsp:useBean id="sportSvc" scope="page" class="com.sport.model.SportService"/>
-										<td id="sp_no">${sportSvc.getByPK(Sg_infoVO.sp_no).sp_name}</td> <!-- 下拉選單 -->
-									</tr> 
-									<tr>
-										<th>場地名稱</th>
-										<jsp:useBean id="venueSvc" scope="page" class="com.venue.model.VenueService"/>
-										<td id="v_no">${venueSvc.getOneVenue(Sg_infoVO.v_no).v_name}</td> <!-- 下拉選單 -->
-									</tr> 
-									<tr>
-										<th>人數上限</th>
-										<td class="writable">${Sg_infoVO.sg_maxno}</td>  <!-- sg_info2 -->
-									</tr> 
-									<tr>
-										<th>人數下限</th>
-										<td class="writable">${Sg_infoVO.sg_minno}</td> <!-- sg_info3 -->
-									</tr> 
-									<tr>
-										<th>目前報名人數</th>
-										<td>${Sg_infoVO.sg_ttlapl}</td> <!-- 之後動態增加 -->
-									</tr> 
-									<tr>
-										<th>團長的話</th>
-										<td class="writable">${Sg_infoVO.sg_extrainfo}</td> <!-- sg_info4 -->
-									</tr>  
-								</tbody>
+								<td>${Sg_infoVO.sg_no}</td>
+							</tr>
+							<tr>
+								<th>活動時間</th>
+								<td id="sg_date"><fmt:formatDate value="${Sg_infoVO.sg_date}" pattern="yyyy-MM-dd HH:mm"/></td>
+							</tr>
+							<tr>
+								<th>報名截止日期</th>
+								<td id="apl_end"><fmt:formatDate value="${Sg_infoVO.apl_end}" pattern="yyyy-MM-dd"/></td>
+							</tr>
+							<tr>
+								<th>報名費用</th>
+								<td class="writable">${Sg_infoVO.sg_fee}</td> <!-- sg_info1 -->
+							</tr> 
+							<tr>
+								<th>權限</th>
+								<td id="sg_per">${Sg_infoVO.sg_per}</td> <!-- 下拉選單 -->
+							</tr>  
+							<tr>
+								<th>運動種類</th>
+								<jsp:useBean id="sportSvc" scope="page" class="com.sport.model.SportService"/>
+								<td id="sp_no">${sportSvc.getByPK(Sg_infoVO.sp_no).sp_name}</td> <!-- 下拉選單 -->
+							</tr> 
+							<tr>
+								<th>場地名稱</th>
+								<jsp:useBean id="venueSvc" scope="page" class="com.venue.model.VenueService"/>
+								<td id="v_no">${venueSvc.getOneVenue(Sg_infoVO.v_no).v_name}</td> <!-- 下拉選單 -->
+							</tr> 
+							<tr>
+								<th>人數上限</th>
+								<td class="writable">${Sg_infoVO.sg_maxno}</td>  <!-- sg_info2 -->
+							</tr> 
+							<tr>
+								<th>人數下限</th>
+								<td class="writable">${Sg_infoVO.sg_minno}</td> <!-- sg_info3 -->
+							</tr> 
+							<tr>
+								<th>團長的話</th>
+								<td class="writable">${Sg_infoVO.sg_extrainfo}</td> <!-- sg_info4 -->
+							</tr>  
+						</tbody>
+					</table>
+					<!-------------GOOGLE地圖 -------------->
+						<div id="mapSetting" style="display:none">
+							<table style="text-align:center; width:100%">
+								<tr>
+									<td>
+										<div class="input-group">
+											<label class="input-group-addon">起點</label>
+											<input type="text" class="form-control" name="startAddr" id="startAddr">
+											<div class="input-group-btn">
+												<input type="button" class="btn btn-info" name="startSearchBtn" value="查詢" id="startSearchBtn">
+											</div>
+										</div>
+									</td>
+									<td rowspan="2" align="center">
+										<input type="button" class="btn btn-success" name="road" id="road" value="規劃路線" style="width:80px; height:60px">
+									</td>
+								</tr>
+								<tr><td>
+									<div class="input-group" style="text-align:center; width:100%">
+								        <div class="input-group">
+								        	<label class="input-group-addon">終點</label>
+											<input type="text" class="form-control" name="endAddr" id="endAddr">
+											<div class="input-group-btn">
+								        		<input type="button" class="btn btn-info" name="endSearchBtn" value="查詢" id="endSearchBtn">
+							        		</div>
+						        		</div>
+									</div>
+								</td></tr>
 							</table>
-							<!-------------GOOGLE地圖 -------------->
-								<div id="mapSetting" style="display:none">
-									<div>
-										起點：<input type="text" name="startAddr" id="startAddr">
-								        <input type="button" name="startSearchBtn" value="查詢" id="startSearchBtn">
-										終點：<input type="text" name="endAddr" id="endAddr">
-								        <input type="button" name="endSearchBtn" value="查詢" id="endSearchBtn">
-									</div>
-									<div>
-								        <input type="button" name="road" id="road" value="規劃路線">
-									</div>
-								</div>
-								<div id="distance"></div>
-								<div id="map"></div>
-							
-							
-							<input type="button" id="update" value="編輯" class="btn btn-info btn-block" align="center" style="display: ">
-							<input type="submit" id="done" value="完成" class="btn btn-info btn-block" align="center" style="display: none">
-							
-							<input type="hidden" name="sg_no" value="<%= vo.getSg_no()%>" >
-							<input type="hidden" name="mem_no" value="<%= vo.getMem_no()%>" >
-							<input type="hidden" name="sg_pic_ext" value="<%= vo.getSg_pic_ext()%>" >
-							<input type="hidden" name="loc_start" id="loc_start" value=<%= vo.getLoc_start() %>>
-							<input type="hidden" name="loc_end" id="loc_end" value=<%= vo.getLoc_end() %>>	
-							<input type="hidden" name="action" value="update">
-						</form>
-		 				<form action="<%= request.getContextPath()%>/Sg_info/Sg_info.do" method="post" id="dismissForm">
-							<input type="button" class="btn btn-danger btn-block" id="dismiss" value="解散" >
-							<input type="hidden" name="action" value="dismiss">
-							<input type="hidden" name="sg_status" value="解散">
-							<input type="hidden" name="sg_no" value="<%= vo.getSg_no()%>">
-						</form>
-			        </div>
-			        <div role="tabpanel" class="tab-pane" id="msgBoard">
-			        	<textarea id="showMsg" readonly style="resize:none;height:300px;width:100%;"> 132 </textarea>
-			        	<input type="text" name="sg_msg">
-			        	<input type="button" class="btn" value="送出">
-			        </div>
-			    </div> <!-- tab-content -->
-			</div> <!-- tabpanel -->
+						</div>
+						<div id="distance"></div>
+						<div id="map"></div>
+					
+					
+					<input type="button" id="update" value="編輯" class="btn btn-info btn-block" align="center" style="display: ">
+					<input type="submit" id="done" value="完成" class="btn btn-info btn-block" align="center" style="display: none">
+					
+					<input type="hidden" name="sg_no" value="<%= vo.getSg_no()%>" >
+					<input type="hidden" name="mem_no" value="<%= vo.getMem_no()%>" >
+					<input type="hidden" name="sg_pic_ext" value="<%= vo.getSg_pic_ext()%>" >
+					<input type="hidden" name="loc_start" id="loc_start" value=<%= vo.getLoc_start() %>>
+					<input type="hidden" name="loc_end" id="loc_end" value=<%= vo.getLoc_end() %>>	
+					<input type="hidden" name="action" value="update">
+				</form>
+ 				<form action="<%= request.getContextPath()%>/Sg_info/Sg_info.do" method="post" id="dismissForm">
+					<input type="button" class="btn btn-danger btn-block" id="dismiss" value="解散" >
+					<input type="hidden" name="action" value="dismiss">
+					<input type="hidden" name="sg_status" value="解散">
+					<input type="hidden" name="sg_no" value="<%= vo.getSg_no()%>">
+				</form>
 		</div> <!-- col-sm-6 -->
-		<div class="col-xs-12 col-sm-3"></div>
+		<div class="col-xs-12 col-sm-3">
+			<div class="panel panel-danger">
+				<div class="panel-heading">
+					<h3 class="panel-title">報名人數</h3>
+				</div>
+				<div class="list-group text-center" style="font-size:2em; font-weight:bold;">
+					${Sg_infoVO.sg_ttlapl}
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 

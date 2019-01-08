@@ -1,5 +1,7 @@
 package com.sg_rep.model;
 
+import java.util.List;
+
 public class Sg_repService {
 	private Sg_repDAO_interface dao = null;
 	
@@ -17,4 +19,18 @@ public class Sg_repService {
 		
 		return vo;
 	}
+	
+	public List<Sg_repVO> getAll(){
+		return dao.getAll();
+	}
+	
+	public Sg_repVO update(String rep_no, String rep_status) {
+		Sg_repVO vo = new  Sg_repVO();
+		vo.setRep_no(rep_no);
+		vo.setRep_status(rep_status);
+		dao.update(vo);
+		
+		return vo;
+	}
+	
 }

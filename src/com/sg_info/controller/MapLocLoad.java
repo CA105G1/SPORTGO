@@ -49,7 +49,7 @@ public class MapLocLoad extends HttpServlet {
 					if(vo.getApl_end().getTime() < new Date().getTime()) {
 						if(vo.getSg_ttlapl() < vo.getSg_minno()) {
 							sg_infosvc.updateStatus(vo.getSg_no(), "流團");
-						}else {
+						}else if(vo.getSg_ttlapl() > vo.getSg_minno()){
 							sg_infosvc.updateStatus(vo.getSg_no(), "成團");
 						}
 					}

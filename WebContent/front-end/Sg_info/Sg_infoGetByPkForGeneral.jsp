@@ -19,11 +19,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
 
 <style type="text/css">
-	th{
-		text-align:center;
+	#infoSpan{
+		margin-left:30%;
 	}
-	td{
-		width: 65%;
+	.table>tbody>tr>th{
+		border-top:0px;
 	}
 	.backToList{
 		cursor: pointer;
@@ -107,100 +107,100 @@ System.out.println("memberlistVO= "+memberlistVO);
 			
 		</div>
 		<div class="col-xs-12 col-sm-6">
-		
-			<div role="tabpanel">
-	<!------------- 標籤面板：標籤區 ------------------->
-			    <ul class="nav nav-tabs" role="tablist">
-			        <li role="presentation" class="active">
-			            <a href="#sg_info" aria-controls="sg_info" role="tab" data-toggle="tab">揪團資訊</a>
-			        </li>
-			        <li role="presentation">
-			            <a href="#msgBoard" aria-controls="msgBoard" role="tab" data-toggle="tab">留言板</a>
-			        </li>
-			    </ul>
-    <!------------------ 標籤面板：內容區 ------------------------->
-			    <div class="tab-content">
-			        <div role="tabpanel" class="tab-pane active" id="sg_info">
-			        	<div class="pic"><img src=""></div>
-						<form action="<%= request.getContextPath()%>/Sg_info/Sg_info.do" method="post" enctype="multipart/form-data">
-						
-							<table class="table table-hover table-striped table-bordered text-center">
-								<i class="glyphicon glyphicon-circle-arrow-left icon-large brown backToList"></i>  <!-- 返回按鍵 -->
-								<a href="<%= request.getContextPath()%>/front-end/Sg_info/SgHome.jsp" display="none" id="linkBack">回到揪團首頁</a>
-								
-								<caption class="text-center">我是Sg_infoGetByPkForGeneral</caption>
-								<tbody>
-									<tr>  <!-------- 照片 -------->
-										<td colspan="2">
-											<img id="showPic" style="width:100%" class="img-responsive" src="<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${Sg_infoVO.sg_no}">
-											<div class="uploadPic"></div><br>
-										</td>
-									</tr>
-									<tr>
-										<th>團長</th>
-										<jsp:useBean id="memberlistSvc2" scope="page" class="com.memberlist.model.MemberlistService"/>
-										<td>${memberlistSvc2.getOneMem(Sg_infoVO.mem_no).mem_name}</td>
-									</tr>
-									<tr>
-										<th>團名</th>
-										<td>${Sg_infoVO.sg_name }</td>
-									</tr>
-									<tr>
-										<th>活動時間</th>
-										<td id="sg_date"><fmt:formatDate value="${Sg_infoVO.sg_date}" pattern="yyyy-MM-dd HH:mm"/></td>
-									</tr>
-									<tr>
-										<th>報名截止日期</th>
-										<td id="apl_end"><fmt:formatDate value="${Sg_infoVO.apl_end}" pattern="yyyy-MM-dd"/></td>
-									</tr>
-									<tr>
-										<th>報名費用</th>
-										<td class="writable">${Sg_infoVO.sg_fee}</td> <!-- sg_info1 -->
-									</tr> 
-									<tr>
-										<th>運動種類</th>
-										<jsp:useBean id="sportSvc" scope="page" class="com.sport.model.SportService"/>
-										<td id="sp_no">${sportSvc.getByPK(Sg_infoVO.sp_no).sp_name}</td> <!-- 下拉選單 -->
-									</tr> 
-									<tr>
-										<th>場地名稱</th>
-										<jsp:useBean id="venueSvc" scope="page" class="com.venue.model.VenueService"/>
-										<td id="v_no">${venueSvc.getOneVenue(Sg_infoVO.v_no).v_name}</td> <!-- 下拉選單 -->
-									</tr> 
-									<tr>
-										<th>目前報名人數</th>
-										<td>${Sg_infoVO.sg_ttlapl}</td> <!-- 之後動態增加 -->
-									</tr> 
-									<tr>
-										<th>團長的話</th>
-										<td class="writable">${Sg_infoVO.sg_extrainfo}</td> <!-- sg_info4 -->
-									</tr>  
-								</tbody>
-							</table>
-							<!-------------GOOGLE地圖 -------------->
-								<div class="panel panel-default">
-									<div class="panel-heading">
-										<h4 class="panel-title text-center">
-											位置資訊
-										</h4>
-									</div>
-									<div>
-											<div id="map"></div>
-											<div id="distance"></div>
-									</div>
+        	<div class="pic"><img src=""></div>
+			<form action="<%= request.getContextPath()%>/Sg_info/Sg_info.do" method="post" enctype="multipart/form-data">
+			
+				<table class="table table-hover">
+					<i class="glyphicon glyphicon-circle-arrow-left icon-large brown backToList"></i>  <!-- 返回按鍵 -->
+					<a href="<%= request.getContextPath()%>/front-end/Sg_info/SgHome.jsp" display="none" id="linkBack">回到揪團首頁</a>
+					
+					<caption style="text-align:center">
+						<h3>
+							<!-- 團名 -->
+							<img src="<%= request.getContextPath()%>/img/sporticons/${Sg_infoVO.sp_no}.svg" style="width:20px; height:auto;">
+							${Sg_infoVO.sg_name }
+							<!-- 團長 -->
+							<span style="font-size: 0.5em;margin-left: 15px;">
+								<i class="glyphicon glyphicon-user" style="padding-right:5px"></i>
+								<jsp:useBean id="memberlistSvc2" scope="page" class="com.memberlist.model.MemberlistService"/>
+								${memberlistSvc2.getOneMem(Sg_infoVO.mem_no).mem_name}
+							</span>
+						</h3>
+					</caption>
+					<tbody>
+						<tr>  <!-- 照片 -->
+							<td>
+								<img id="showPic" style="width:90%; display:block; margin:auto;" class="img-responsive" src="<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${Sg_infoVO.sg_no}">
+								<div class="uploadPic"></div><br>
+							</td>
+						</tr>
+						<tr>
+							<!-- 活動時間 -->
+							<th style="border-top: 1px solid #ddd;">
+								<span id="infoSpan">
+									<i class="glyphicon glyphicon-calendar" style="padding-right:5px"></i>
+									<fmt:formatDate value="${Sg_infoVO.sg_date}" pattern="yyyy-MM-dd HH:mm"/>
+								</span>
+								<!-- 報名費用 -->
+								<span style="margin-left:20px">
+									<i class="glyphicon glyphicon-usd"></i>
+									${Sg_infoVO.sg_fee}元
+								</span>
+							</th>
+						</tr>
+						<tr>
+							<!-- 地點 -->
+							<jsp:useBean id="venueSvc" scope="page" class="com.venue.model.VenueService"/>
+							<th>
+								<span id="infoSpan">
+									<i class="glyphicon glyphicon-map-marker"></i>
+									${venueSvc.getOneVenue(Sg_infoVO.v_no).v_name}
+								</span>
+							</th>
+						</tr>
+						<tr>
+							<th>
+								<span id="infoSpan">
+									報名截止日期
+									<fmt:formatDate value="${Sg_infoVO.apl_end}" pattern="yyyy-MM-dd"/>
+								</span>
+							</th>
+						</tr> 
+						<tr>
+							<th style="border-top: 1px solid #ddd;">
+								<div class="form-group text-center">
+									<label for="exampleFormControlTextarea3">團長的話</label>
+									<textarea readonly class="form-control" id="exampleFormControlTextarea3" style="resize:none;" rows="7">${Sg_infoVO.sg_extrainfo}</textarea>
 								</div>
-							
-						</form>
-			        </div>
-			        <div role="tabpanel" class="tab-pane" id="msgBoard">
-			        	<textarea id="showMsg" readonly style="resize:none;height:300px;width:100%;"> 132 </textarea>
-			        	<input type="text" name="sg_msg">
-			        	<input type="button" class="btn" value="送出">
-			        </div>
-			    </div> <!-- tab-content -->
-			</div> <!-- tabpanel -->
+							</th>
+						</tr>  
+					</tbody>
+				</table>
+				<!-------------GOOGLE地圖 -------------->
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<h4 class="panel-title text-center">
+								位置資訊
+							</h4>
+						</div>
+						<div>
+								<div id="map"></div>
+								<div id="distance"></div>
+						</div>
+					</div>
+				
+			</form>
 		</div> <!-- col-sm-6 -->
-		<div class="col-xs-12 col-sm-3"></div>
+		<div class="col-xs-12 col-sm-3">
+			<div class="panel panel-danger">
+				<div class="panel-heading">
+					<h3 class="panel-title">報名人數</h3>
+				</div>
+				<div class="list-group text-center" style="font-size:2em; font-weight:bold;">
+					${Sg_infoVO.sg_ttlapl}
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 
@@ -284,7 +284,7 @@ System.out.println("memberlistVO= "+memberlistVO);
 	        var request = {
 	         origin: loc_start,
 	         destination: loc_end,
-	         travelMode: 'DRIVING' //腳踏車模式無法使用
+	         travelMode: 'WALKING' //腳踏車模式無法使用
 	        };
 	        // 繪製路線
 	        directionsService.route(request,function(result, status){
@@ -348,7 +348,9 @@ System.out.println("memberlistVO= "+memberlistVO);
 					alert("發生錯誤!");
 				},
 				success: function(data){
-					alert("取消收藏");
+					swal({
+						  title: "取消收藏!", type: "error", timer: 1000, showConfirmButton: false
+					})
 				}
 			});
 		});
@@ -365,7 +367,9 @@ System.out.println("memberlistVO= "+memberlistVO);
 					alert("發生錯誤!");
 				},
 				success: function(data){
-					alert("成功加入收藏");
+					swal({
+						  title: "成功加入收藏!", type: "success", timer: 1000, showConfirmButton: false
+					})
 				}
 			});
 		});
