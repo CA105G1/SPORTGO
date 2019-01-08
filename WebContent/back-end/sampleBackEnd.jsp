@@ -25,7 +25,7 @@
 <%-- 		<%@ include file="/back-end/emp/loginfile/showLoginBackEnd.file" %> --%>
 		
 <%-- 如果反映有問題，再處理使用這方式	<jsp:include page="XXXX.jsp" /> --%>
-		
+		<!-- 2019-01-08 join temp -->
 		<jsp:include page="/back-end/CA105G1_header_back.jsp"/>
 		
 		<div class="container-fluid">
