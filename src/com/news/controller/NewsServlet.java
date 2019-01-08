@@ -25,7 +25,6 @@ import com.news.model.NewsVO;
 import com.news.model.Util_Check_News_Parameter;
 import com.newstype.model.NewstypeService;
 import com.newstype.model.NewstypeVO;
-import com.sun.corba.se.impl.presentation.rmi.StubFactoryFactoryStaticImpl;
 import com.venue.model.Util_Check_Venue_Parameter;
 import com.venue.model.VenueService;
 import com.venue.model.VenueVO;
