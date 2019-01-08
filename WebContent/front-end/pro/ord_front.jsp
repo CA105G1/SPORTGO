@@ -11,7 +11,11 @@
 <%
 	OrdService ordSvc = new OrdService();
 	OrddetailsService orddetailsSvc = new OrddetailsService();
-	List<OrddetailsVO> list = orddetailsSvc.getOneOrd(ordSvc.getOneOrd(request.getAttribute("ord_no").toString()).getOrd_no());
+	System.out.print("test"+request.getParameter("ord_no"));
+	String ord_no = request.getParameter("ord_no");
+	if(ord_no==null)
+		ord_no = (String)request.getAttribute("ord_no");
+	List<OrddetailsVO> list = orddetailsSvc.getOneOrd(ordSvc.getOneOrd(ord_no).getOrd_no());
 	pageContext.setAttribute("list",list);
 	
 // 	List<ProductVO> list = new ArrayList<ProductVO>();

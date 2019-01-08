@@ -26,6 +26,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 	<title>我的商品</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<!-- sweetalert-link -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
 	<!--[if lt IE 9]>
 	    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
 	    <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -147,7 +150,7 @@
 		</style>
 	</head>
 
-	<body>
+	<body onload="connect();" onunload="disconnect();">
 <%@ include file="/front-end/CA105G1_header.file" %>
 		<div class="container-fluid backgc">
 			<div class="row">
@@ -286,15 +289,15 @@
 																<!-- 容器區 -->
 																<div class="container-fluid warpwidth">
 																	<div class="row">
-													    				<%-- 錯誤表列 --%>
-																		<c:if test="${not empty errorMsgs}">
-																			<font style="color:red">請修正以下錯誤:</font>
-																			<ul>
-																				<c:forEach var="message" items="${errorMsgs}">
-																					<li style="color:red">${message}</li>
-																				</c:forEach>
-																			</ul>
-																		</c:if>
+<%-- 													    				錯誤表列 --%>
+<%-- 																		<c:if test="${not empty errorMsgs}"> --%>
+<!-- 																			<font style="color:red">請修正以下錯誤:</font> -->
+<!-- 																			<ul> -->
+<%-- 																				<c:forEach var="message" items="${errorMsgs}"> --%>
+<%-- 																					<li style="color:red">${message}</li> --%>
+<%-- 																				</c:forEach> --%>
+<!-- 																			</ul> -->
+<%-- 																		</c:if> --%>
 																		<div>
 																			<h2 class="fontsize">?件商品</h2>
 																		</div>
@@ -337,7 +340,8 @@
 																							<th>商品單價</th>
 																							<th>商品庫存</th>
 																							<th>商品狀態</th>
-																							<th>操作</th>
+																							<th colspan="2">操作</th>
+																							<th></th>
 																						</tr>
 																					</thead>
 																					<tbody>
@@ -370,36 +374,21 @@
 																								</td>
 																								<!-- 下拉式按鈕 -->
 																								<td>
-																									<div class="btn-group">
-																										<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-																											<i class="fa fa-pencil-square">
-																												編輯
-																											</i>
-																											<span class="caret"></span>
-																										</button>
-																										<ul class="dropdown-menu" role="menu">
-																											<li>
-																												<a href="#"></a>
-																											</li>
-																											<li>
-																												<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/pro/pro.do" style="margin-bottom: 0px;">
-																													<input type="submit" value="修改">
-																													<input type="hidden" name="pro_no" value="${proVO.pro_no}">
-																													<input type="hidden" name="action" value="getOne_For_Update">
-																												</FORM>
-																											</li>
-																											<li>
-																												<button type="button" class="ok" value="${proVO.pro_no}">上架</a>
-<%-- 																												<button type="button" class="ok" value="${ordListVO.ord_no}">完成訂單</button> --%>
-																											</li>
-																											<li>
-																												<a href="#">下架</a>
-																											</li>
-																											<li class="divider"></li>
-																											<li>
-																												<a href="#">未設置</a>
-																											</li>
-																										</ul>
+																									<div align="right">
+																										<select name=""  class="form-control select_change" style="width:90px;">
+																												<option value="${proVO.pro_no}">上架中</option>
+																												<option value="${proVO.pro_no}">下架</option>
+																										</select>
+																									</div>
+																								</td>
+																								<!-- 修改按鈕 -->
+																								<td>
+																								    <div>
+																										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/pro/pro.do" style="margin-bottom: 0px;">
+																											<input type="submit" value="修改" class="btn btn-primary">
+																											<input type="hidden" name="pro_no" value="${proVO.pro_no}">
+																											<input type="hidden" name="action" value="getOne_For_Update">
+																										</FORM>
 																									</div>
 																								</td>
 																							</tr>
@@ -407,7 +396,11 @@
 
 																					</tbody>
 																				</table>
-																				<%@ include file="page/page2_ByCompositeQuery.file" %>
+																				<div>
+																				    <center>
+																					<%@ include file="page/page2_ByCompositeQuery.file" %>
+																				    </center>
+																				</div>
 																	</div>
 																</div>
 															</div>
@@ -425,51 +418,34 @@
 
 			<script src="https://code.jquery.com/jquery.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+			<script src="<%=request.getContextPath() %>/back-end/pro/tool/websock_client.js"></script>
 			<script type="text/javascript">
 			$(document).ready(function(){
-				$('.ok').each( function() {
-					$(this).click( function() {
-						var val = $(this).val();
-						console.log($(this).val());
-						$.ajax({
-							 type: "POST",
-							 url: "<%= request.getContextPath()%>/pro/pro.do",
-							 data: creatQueryOK(val),
-							 dataType: "json",
-							 success: function (data){
-								 $('#'+data.pro_no).html('完成');
-						     },
-						     error: function(){alert("AJAX-class發生錯誤囉!")}
-				         })
-					})
-				})
-				$('.cancel').each( function() {
-					$(this).click( function() {
-						var val = $(this).val();
-						$.ajax({
-							 type: "POST",
-							 url: "<%= request.getContextPath()%>/pro/pro.do",
-							 data: creatQuerycancel(val),
-							 dataType: "json",
-							 success: function (data){
-								 $('#'+data.pro_no).html('取消');
-						     },
-						     error: function(){alert("AJAX-class發生錯誤囉!")}
-				         })
-					})
-				})
-				
+				$('.select_change').change(function(){
+					$.ajax({
+						 type: "POST",
+						 url: "<%= request.getContextPath()%>/pro/pro.do",
+						 data: creatQuerySelect($(this).val(),$("option:selected", this).text()),
+						 dataType: "json",
+						 success: function (data){
+							 console.log(data.pro_no+'A');
+							 $('#'+data.pro_no).html(data.pro_shelve);
+							 $('#'+data.pro_no+'A').html(data.pro_shelve);//測試
+					     },
+					     error: function(){alert("AJAX-class發生錯誤囉!")}
+			         })
+				})	
 			})
-			function creatQueryOK(pro_no){
+			//*************
+			function creatQuerySelect(pro_no,pro_shelve){
 				
-				var queryString= {"action":"ok_cancel", "pro_no":pro_no , "pro_shelve" :"上架"};
+				var queryString= {"action":"ok_cancel", "pro_no":pro_no , "pro_shelve" :pro_shelve};
 				console.log(queryString);
 				return queryString;
 			}
-			function creatQuerycancel(ord_no){
-				var queryString= {"action":"ok_cancel", "pro_no":ord_no , "pro_shelve" :"取消"};
-				return queryString;
-			}
+			
+			//*************
+
 				// document.getElementById("display").style.display = 'none';
 				//    $(function() {  //將圖片預覽
 				//    	$('input[type=file]').change(function() {

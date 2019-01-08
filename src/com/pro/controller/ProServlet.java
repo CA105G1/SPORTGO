@@ -37,6 +37,7 @@ public class ProServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		req.setCharacterEncoding("UTF-8");
+		
 		String action = req.getParameter("action");
 		
 		System.out.println("action:" +action);
@@ -155,7 +156,7 @@ if ("update".equals(action)) { // 來自update_pro_input.jsp的請求
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 		    
-			try {
+//			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				String integerReg = "([0-9]{0,7})";
 				String pro_no = req.getParameter("pro_no");
@@ -329,12 +330,12 @@ if ("update".equals(action)) { // 來自update_pro_input.jsp的請求
 				successView.forward(req, res);
 
 				/***************************其他可能的錯誤處理*************************************/
-			} catch (Exception e) {
-				errorMsgs.add("修改資料失敗:"+e.getMessage());
-				System.out.println(errorMsgs);
-				RequestDispatcher failureView = req.getRequestDispatcher(PATH_UPDATE_PRO_INPUT);
-				failureView.forward(req, res);
-			}
+//			} catch (Exception e) {
+//				errorMsgs.add("修改資料失敗:"+e.getMessage());
+//				System.out.println(errorMsgs);
+//				RequestDispatcher failureView = req.getRequestDispatcher(PATH_UPDATE_PRO_INPUT);
+//				failureView.forward(req, res);
+//			}
 				
 		}
 
@@ -653,21 +654,30 @@ if ("ok_cancel".equals(action)) {
 				// send the ErrorPage view.
 				String pro_no = req.getParameter("pro_no");
 				String pro_shelve = req.getParameter("pro_shelve");
-				System.out.println(pro_shelve);
+				
+				/*****永續存取*****/
 				ProductService proSvc = new ProductService();
 				proSvc.updateShelve(pro_no, pro_shelve);
+				/*****轉交需要設定這三行不然JSON會有亂碼*******/
+				res.setContentType("text/xml;charset=UTF-8");
+				res.setHeader("Cache-Control", "no-cache");
+				res.setCharacterEncoding("UTF-8");
 				PrintWriter out = res.getWriter();
-				
-//				try {
-					String return_pro_no = null;
-					String job = new JSONObject().toString();//需要回傳不然ajax會出錯
-					out.write(job);
+//				String return_pro_no = "{\"pro_no\":"+pro_no+",\"pro_shelve\":'"+pro_shelve+"'}";
+//				System.out.println(return_pro_no);
+				try {
+//					String job = new JSONObject(return_pro_no).toString();//需要回傳不然ajax會出錯
+					JSONObject obj = new JSONObject();
+					obj.put("pro_no", pro_no); 
+					obj.put("pro_shelve", pro_shelve);
+					
+					out.write(obj.toString());
 					out.flush();
 					out.close();
-//				} catch (JSONException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		}
 
 	}

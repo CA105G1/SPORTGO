@@ -17,6 +17,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 	<title>新增商品</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<!-- sweetalert-link -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
 	<!--[if lt IE 9]>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -116,7 +119,7 @@
 	</style>
 </head>
 
-<body>
+<body onload="connect();" onunload="disconnect();">
 <%@ include file="/front-end/CA105G1_header.file" %>
 	<div class="container-fluid backgc">
 		<div class="row">
@@ -194,7 +197,7 @@
 <!-- 				</div> -->
  
 			<!-- 表單 -->
-				<FORM METHOD="post" ACTION="<%= request.getContextPath()%>/pro/pro.do" name="form1" enctype="multipart/form-data">
+				<FORM METHOD="post" ACTION="<%= request.getContextPath()%>/pro/pro.do" name="form1" enctype="multipart/form-data" id="formSubmit">
 					<jsp:useBean id="productClassSvc" scope="page" class="com.productclass.model.ProductClassService" />
 					<div class="container-fluid warp">
 		                <div class="row">
@@ -266,7 +269,7 @@
 	                                                    </div>
 	                                                	<!-- 商品名稱 -->
 	                                                	<div class="valuesize">
-	                                                		<input type="TEXT" class="form-control" name="ename" size="45" value="<%= (proVO==null)? "" : proVO.getPro_name()%>" />
+	                                                		<input type="TEXT" id="productname" class="form-control" name="ename" size="45" value="<%= (proVO==null)? "" : proVO.getPro_name()%>" />
 	                                                	</div>
 	                                                	<!-- 照片副檔名 -->
 <!-- 	                                                	<div class="valuesize"> -->
@@ -367,8 +370,8 @@
 		                                    	<!-- 送出按鈕 -->
 									    		<div style="text-align: center;">
 									    			<input type="hidden" name="action" value="insert">
-													<input type="submit" value="送出新增">
-									    		
+													<input type="button" value="送出新增" onclick="starWebsock()">
+									    		    
 								    			<!-- 取消按鈕 -->
 									    		
 									    			<button type="button" onclick="tuchback()">取消</button>
@@ -379,7 +382,6 @@
 		                </div>
 					</div>
 				</FORM>
-
 <%@ include file="/front-end/CA105G1_footer.file" %>
 		</div>
 	</div>
@@ -387,6 +389,8 @@
 
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<%-- 	<script src="<%=request.getContextPath() %>/back-end/pro/tool/websock.js"></script> --%>
+	<script src="<%=request.getContextPath() %>/back-end/pro/tool/websock_serviec.js"></script>
 	<script type="text/javascript">
 		$(function() {  //將圖片預覽
 	    	$('input[type=file]').change(function() {
@@ -401,9 +405,10 @@
 	      });
 	    });
 		function tuchback(){
-			console.log("123");
 			window.location.replace("<%= request.getContextPath()%>/back-end/pro/listAllPro.jsp"); 
 		}
+
+
 	</script>
 </body>
 

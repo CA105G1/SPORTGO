@@ -5,9 +5,8 @@
 
 <%
 	ProductVO proVO = (ProductVO) request.getAttribute("proVO"); //EmpServlet.java (Concroller) 存入req的proVO物件 (包括幫忙取出的proVO, 也包括輸入資料錯誤時的proVO物件)
-    
+	pageContext.setAttribute("proVO",proVO);
 %> 
-
 <!DOCTYPE html>
 <html lang="">
 	<head>
@@ -243,7 +242,7 @@
 										    				<div class="col-xs-12 col-sm-10 ">
 				                                                <div class="col-xs-12 col-sm-2 ">
 											    					<div class="fontsize_s">
-											    						商品類別 : 用選的				    						
+											    						商品類別 :			    						
 											    					</div>
 											    					<div class="fontsize_s">
 											    						商品名稱 :				    						
@@ -266,7 +265,7 @@
 				                                                	<!-- 商品類別 -->
 				                                                	    <jsp:useBean id="productClassSvc" scope="page" class="com.productclass.model.ProductClassService" />
 					                                                    <div class="valuesize">
-					                                                    	<select size="1" name="pro_classid">
+					                                                    	<select size="1" name="pro_classid" class="form-control">
 																				<c:forEach var="productClassVO" items="${productClassSvc.all}">
 																					<option value="${productClassVO.pro_classid}" ${(productClassVO.pro_classid==productClassVO.pro_classid)?'selected':'' } >${productClassVO.pro_classname}
 																				</c:forEach>
@@ -274,22 +273,26 @@
 					                                                    </div>
 				                                                	<!-- 商品名稱 -->
 					                                                	<div class="valuesize">
-					                                                		<input type="TEXT" name="ename" size="45" value="<%= proVO.getPro_name()%>" />
+					                                                		<input type="TEXT" class="form-control" size="45" name="ename" size="45" value="<%= proVO.getPro_name()%>" />
 					                                                	</div>
 				                                                	<!-- 照片副檔名 -->
 					                                                		<input type="hidden" name="pic_ext" size="45" value="<%= proVO.getPro_pic_ext()%>" />
 					                                                	
 				                                                	<!-- 商品規格 -->
 					                                                	<div class="valuesize">
-					                                                		<input type="TEXT" name="format" size="45" value="<%=  proVO.getPro_format()%>" />
+					                                                		<input type="TEXT" class="form-control" size="45" name="format" size="45" value="<%=  proVO.getPro_format()%>" />
 					                                                	</div>
 				                                                	<!-- 商品詳述 -->
 					                                                	<div class="valuesize">
-					                                                		<input type="TEXT" name="pro_details" size="45" value="<%=  proVO.getPro_details()%>" />
+					                                                		<input type="TEXT" class="form-control" size="45" name="pro_details" size="45" value="<%=  proVO.getPro_details()%>" />
 					                                                	</div>
 				                                                	<!-- 商品狀態 -->
 					                                                	<div class="valuesize">
-					                                                		<input type="TEXT" name="pro_shelve" size="45" value="<%=  proVO.getPro_shelve()%>" />
+<%-- 					                                                		<input type="TEXT" class="form-control" size="45" name="pro_shelve" size="45" value="<%=  proVO.getPro_shelve()%>" /> --%>
+                   															<select name="pro_shelve"  class="form-control select_change" style="width:90px;">
+																				<option value="上架中">上架中</option>
+																				<option value="下架">下架</option>
+																			</select>
 					                                                	</div>
 				                                                </div>
 				                                                <div class="col-xs-12 col-sm-2 ">
@@ -325,33 +328,33 @@
 											    					<div class="fontsize_s">
 											    						商品安全庫存量 :			    						
 											    					</div>
-											    					<div class="fontsize_s">
-											    						商品總評價 :				    						
-											    					</div>
-											    					<div class="fontsize_s">
-											    						商品評價總人數 :				    						
-											    					</div>
+<!-- 											    					<div class="fontsize_s"> -->
+<!-- 											    						商品總評價 :				    						 -->
+<!-- 											    					</div> -->
+<!-- 											    					<div class="fontsize_s"> -->
+<!-- 											    						商品評價總人數 :				    						 -->
+<!-- 											    					</div> -->
 				                                                </div>
 				                                                <div class="col-xs-12 col-sm-8 ">
 				                                                	<!-- 商品單價 -->
 					                                                    <div class="valuesize">
-					                                                    	<input type="TEXT" name="pro_bonus" size="45" value="<%= proVO.getPro_bonus()%>" />
+					                                                    	<input type="TEXT" class="form-control" size="45" name="pro_bonus" size="45" value="<%= proVO.getPro_bonus()%>" />
 					                                                    </div>
 				                                                	<!-- 商品庫存量 -->
 					                                                	<div class="valuesize">
-					                                                		<input type="TEXT" name="pro_stock" size="45" value="<%= proVO.getPro_stock()%>" />
+					                                                		<input type="TEXT" class="form-control" size="45" name="pro_stock" size="45" value="<%= proVO.getPro_stock()%>" />
 					                                                	</div>
 				                                                	<!-- 商品安全庫存量 -->
 					                                                	<div class="valuesize">
-					                                                		<input type="TEXT" name="pro_safestock" size="45" value="<%= proVO.getPro_safestock()%>" />
+					                                                		<input type="TEXT" class="form-control" size="45" name="pro_safestock" size="45" value="<%= proVO.getPro_safestock()%>" />
 					                                                	</div>
 				                                                	<!-- 商品總評價 -->
 					                                                	<div class="valuesize">
-					                                                		<input type="TEXT" name="pro_all_assess" size="45" value="<%= proVO.getPro_all_assess()%>" />
+					                                                		<input type="hidden" class="form-control" size="45" name="pro_all_assess" size="45" value="<%= proVO.getPro_all_assess()%>" />
 					                                                	</div>
 				                                                	<!-- 商品評價總人數 -->
 					                                                	<div class="valuesize">
-					                                                		<input type="TEXT" name="pro_all_assessman" size="45" value="<%= proVO.getPro_all_assessman()%>" />
+					                                                		<input type="hidden" class="form-control" size="45" name="pro_all_assessman" size="45" value="<%= proVO.getPro_all_assessman()%>" />
 					                                                	</div>
 				                                                </div>
 				                                                <div class="col-xs-12 col-sm-2 ">
@@ -398,7 +401,27 @@
 		          reader.readAsDataURL(this.files[0]);
 		        }
 		      });
-		    });	    
+		    
+// 				$('.select_change').change(function(){
+// 					creatQuerySelect($(this).val(),$("option:selected", this).text());
+// 					$.ajax({
+// 						 type: "POST",
+<%-- 						 url: "<%= request.getContextPath()%>/pro/pro.do", --%>
+// 						 data: creatQuerySelect($(this).val(),$("option:selected", this).text()),
+// 						 dataType: "json",
+// 						 success: function (data){
+// 							 console.log(data.pro_shelve);
+// 							 $('#'+data.pro_no).html(data.pro_shelve);
+// 					     },
+// 					     error: function(){alert("AJAX-class發生錯誤囉!")}
+// 			         })
+// 				})
+		    });	
+// 			function creatQuerySelect(pro_no,pro_shelve){
+// 				var queryString= {"action":"ok_cancel", "pro_no":pro_no , "pro_shelve" :pro_shelve};
+// 				console.log(queryString);
+// 				return queryString;
+// 			}
 		</script>
 	</body>
 </html>

@@ -357,7 +357,7 @@
 																								<td>
 																									<div id="${proVO.pro_no}" class="sumTheNumber">${hAll[proVO.pro_no] * proVO.pro_bonus}</div>
 																								</td>
-																								<!-- 下拉式按鈕 -->
+																								<!-- 按鈕 -->
 																								<td>
 																								    <button type="button" class="deletedata" value="${proVO.pro_no}"  >刪除</button>
 																								</td>

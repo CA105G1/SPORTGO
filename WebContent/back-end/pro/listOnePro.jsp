@@ -5,8 +5,8 @@
 <%
     ProductService proSvc = new ProductService();
 	ProductVO proVO = (ProductVO) request.getAttribute("proVO"); //EmpServlet.java(Concroller), 存入req的empVO物件
-	List<ProductVO> list = proSvc.getAll();
-    pageContext.setAttribute("list",list);
+// 	List<ProductVO> list = proSvc.getAll();
+    pageContext.setAttribute("proVO",proVO);
 %>
 <jsp:useBean id="proclassSvc" scope="page" class="com.productclass.model.ProductClassService" />
 
@@ -144,18 +144,10 @@
 			</head>
 
 			<body>
-							<%-- 錯誤表列 --%>
-					<c:if test="${not empty errorMsgs}">
-						<font style="color:red">請修正以下錯誤:</font>
-						<ul>
-							<c:forEach var="message" items="${errorMsgs}">
-								<li style="color:red">${message}</li>
-							</c:forEach>
-						</ul>
-					</c:if>
 
 
-				<c:forEach var="proVO" items="${list}">
+
+				<c:forEach var="proVO" items="${proVO}">
 
 				
 						<!-- 容器區 -->
@@ -171,7 +163,8 @@
 											<th>商品單價</th>
 											<th>商品庫存</th>
 											<th>商品狀態</th>
-											<th>操作</th>
+											<th colspan="2">操作</th>
+											<th></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -198,39 +191,57 @@
 												</td>
 												<!-- 商品狀態 -->
 												<td>
-													<%=proVO.getPro_shelve()%>
+													<div id="${proVO.pro_no}+A"><%=proVO.getPro_shelve()%></div><!--*****測試**** -->
 												</td>
 												<!-- 下拉式按鈕 -->
+<!-- 												<td> -->
+<!-- 													<div class="btn-group"> -->
+<!-- 														<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"> -->
+<!-- 															<i class="fa fa-pencil-square"> -->
+<!-- 																編輯 -->
+<!-- 															</i> -->
+<!-- 															<span class="caret"></span> -->
+<!-- 														</button> -->
+<!-- 														<ul class="dropdown-menu" role="menu"> -->
+<!-- 															<li> -->
+<!-- 																<a href="#"></a> -->
+<!-- 															</li> -->
+<!-- 															<li> -->
+<%-- 																<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/pro/pro.do" style="margin-bottom: 0px;"> --%>
+<!-- 																	<input type="submit" value="修改"> -->
+<%-- 																	<input type="hidden" name="pro_no" value="<%=proVO.getPro_no()%>"> --%>
+<!-- 																	<input type="hidden" name="action" value="getOne_For_Update"> -->
+<!-- 																</FORM> -->
+<!-- 															</li> -->
+<!-- 															<li> -->
+<!-- 																<a href="#">上架</a> -->
+<!-- 															</li> -->
+<!-- 															<li> -->
+<!-- 																<a href="#">下架</a> -->
+<!-- 															</li> -->
+<!-- 															<li class="divider"></li> -->
+<!-- 															<li> -->
+<!-- 																<a href="#">未設置</a> -->
+<!-- 															</li> -->
+<!-- 														</ul> -->
+<!-- 													</div> -->
+<!-- 												</td> -->
 												<td>
-													<div class="btn-group">
-														<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-															<i class="fa fa-pencil-square">
-																編輯
-															</i>
-															<span class="caret"></span>
-														</button>
-														<ul class="dropdown-menu" role="menu">
-															<li>
-																<a href="#"></a>
-															</li>
-															<li>
-																<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/pro/pro.do" style="margin-bottom: 0px;">
-																	<input type="submit" value="修改">
-																	<input type="hidden" name="pro_no" value="<%=proVO.getPro_no()%>">
-																	<input type="hidden" name="action" value="getOne_For_Update">
-																</FORM>
-															</li>
-															<li>
-																<a href="#">上架</a>
-															</li>
-															<li>
-																<a href="#">下架</a>
-															</li>
-															<li class="divider"></li>
-															<li>
-																<a href="#">未設置</a>
-															</li>
-														</ul>
+													<div align="right">
+														<select name=""  class="form-control select_change" style="width:90px;">
+																<option value="${proVO.pro_no}">上架中</option>
+																<option value="${proVO.pro_no}">下架</option>
+														</select>
+													</div>
+												</td>
+												<!-- 修改按鈕 -->
+												<td>
+												    <div>
+														<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/pro/pro.do" style="margin-bottom: 0px;">
+															<input type="submit" value="修改" class="btn btn-primary">
+															<input type="hidden" name="pro_no" value="${proVO.pro_no}">
+															<input type="hidden" name="action" value="getOne_For_Update">
+														</FORM>
 													</div>
 												</td>
 											</tr>
@@ -240,5 +251,5 @@
 						</div>
 					</c:forEach>
 			</body>
-
+            
 			</html>
