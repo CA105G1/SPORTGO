@@ -1,6 +1,8 @@
 package com.news.model;
 
 import java.util.List;
+import java.util.Map;
+
 import java.sql.Timestamp;
 
 public interface NewsDAO_interface {
@@ -11,6 +13,7 @@ public interface NewsDAO_interface {
     public void delete(String news_no);
     public NewsVO findByPrimaryKey(String news_no);
     public List<NewsVO> getAll();
+    public List<NewsVO> getAll(Map<String, String[]> map);
     public List<NewsVO> getNewsByNewtype(String newstype_no);
 	public List<NewsVO> getReleaseNews(Timestamp nowTime);
 	public List<NewsVO> getDefaultNews();

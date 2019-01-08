@@ -2,6 +2,7 @@ package com.news.model;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 public class NewsService {
 
@@ -14,6 +15,11 @@ public class NewsService {
 	public List<NewsVO> getAll(){
 		return newsDAO.getAll();
 	}
+	
+	public List<NewsVO> getAll(Map<String, String[]> map){
+		return newsDAO.getAll(map);
+	}
+	
 	public List<NewsVO> getReleaseNews(Timestamp nowTime){
 		List<NewsVO> list = newsDAO.getReleaseNews(nowTime);
 		if(list.size()==0) {
@@ -53,4 +59,7 @@ public class NewsService {
 	public NewsVO getOneNews(String news_no) {
 		return newsDAO.findByPrimaryKey(news_no);
 	}
+	
+	
+	
 }

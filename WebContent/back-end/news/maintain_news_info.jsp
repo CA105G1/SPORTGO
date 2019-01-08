@@ -1,9 +1,7 @@
-<%@page import="com.region.model.RegService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="com.venue.model.VenueVO"%>
-<%@page import="com.region.model.RegVO"%>
-<%@page import="java.util.List"%>
+<%@ page import="com.news.model.NewsVO" %>
+<%@ page import="java.util.List"%>
 
 <!DOCTYPE html>
 <html lang="">
@@ -25,10 +23,11 @@
 		</style>
 	</head>
 	<body>
-		<%-- include header --%>
-		<%@ include file="/back-end/CA105G1_header_back.file" %>
-		<%-- include show_loginBox--%>
-		<%@ include file="/back-end/emp/loginfile/showLoginBackEnd.file" %>
+ 		<%-- include header --%> 
+<%-- 		<%@ include file="/back-end/CA105G1_header_back.file" %> --%>
+ 		<%-- include show_loginBox--%> 
+<%-- 		<%@ include file="/back-end/emp/loginfile/showLoginBackEnd.file" %> --%>
+		<jsp:include page="/back-end/CA105G1_header_back.jsp"/>
 		
 		<div class="container-fluid">
 			<div class="row">
@@ -36,6 +35,7 @@
 <!-- <h1>後台共用區</h1> -->
 <!-- <h2>here need include left_side_field.jsp</h2> -->
 					<jsp:include page="/back-end/left_side_field.jsp"/>
+					
 				</div>
 				<div class="col-xs-12 col-sm-9">
 					<h1>最新消息管理</h1>
@@ -55,9 +55,72 @@
 					    <div class="tab-content">
 					        <div role="tabpanel" class="tab-pane active" id="tab1">
 					        	<h1>查詢、更新</h1>
+					        	<div class="panel panel-info">
+									<div class="panel-heading">
+										<h3 class="panel-title">最新消息管理</h3>
+									</div>
+									<div class="panel-body">
+										<div class="h1">預計放from表單---萬用</div>
+										<form method="post" action="<%=request.getContextPath()%>/news/news.do">
+											<div class="label label-default label-text">請輸入消息編號 : (N001)</div>
+											<% 
+													Object tempObjectVO = (NewsVO)request.getAttribute("NewsVO");
+													NewsVO tempVO = null;
+													if(tempObjectVO!=null){
+														tempVO=(NewsVO)tempObjectVO;
+													}
+											%>
+											<input type="text" name="news_no" value="<%=tempVO==null? "":tempVO.getNews_no()%>"/>
+											<br>
+											
+											<div class="label label-default label-text">請選擇消息種類:</div>							
+											<jsp:useBean id="newstypeService" scope="session" class="com.newstype.model.NewstypeService" />
+											<select size="1" name="newstype_no" class="text-center">
+												<option value=""></option>
+												<c:forEach var="newstypeVO" items="${newstypeService.all}">
+													<option value="${newstypeVO.newstype_no}" ${(param.newtype_no==newstypeVO.newstype_no)?'selected':''}>${newstypeVO.newstype_name}</option>
+												</c:forEach>
+											</select>
+											<br>
+											
+											<input type="hidden" name="action" value="listNewsByCompositeQuery" /><br>
+											<input type="submit" value="submit_composite_query" class="btn-primary"/>
+										</form>
+									</div>
+									<%-- 錯誤表列 --%>
+									<c:if test="${not empty errorMsgs}">
+										<ul>
+											<c:forEach var="message" items="${errorMsgs}">
+												<li style="color:red">${message}</li>
+											</c:forEach>
+										</ul>
+									</c:if>	
+						        	<%-- 查詢回應區--%>
+						        	<div class="panel panel-info">
+						        		<% if(null==request.getParameter("action")){ %>
+<%-- 						<a id="fistTimeShow" href="<%=request.getContextPath()%>/news/news.do?action=listNewsByCompositeQuery" >123</a> --%>
+			<%-- 			<jsp:include page="listQueryNews.jsp" flush="true" />	 --%>
+						        		<% }else if("listNewsByCompositeQuery".equals(request.getParameter("action"))){%>
+											<jsp:include page="listQueryNews.jsp" flush="true" />	
+<%-- 										<% }else if("listVenueByCompositeQuery".equals(request.getParameter("action"))){%> --%>
+<%-- 											<jsp:include page="listQueryVenue.jsp"/> --%>
+<%-- 										<% } %> --%>
+										<% } %>
+						        	</div>
+									
+									
+									
+									
+									
+								</div>
 					        </div>
 					        <div role="tabpanel" class="tab-pane" id="tab2">
 					        	<h1>新增</h1>
+<%-- 					        	<jsp:include page="/back-end/news/add_one_news.jsp" /> --%>
+					        	
+					        	
+					        	
+					        	
 					        </div>
 					    </div>
 					</div>
@@ -74,5 +137,19 @@
 		
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script type="text/javascript">
+			$('#fistTimeShow').click();
+// 			$(document).ready(function(){
+// 				$('ul.nav-tabs li a').on("click",function(){
+// 					var My_Test = $(this);
+// 					console.log(My_Test);
+// 					var My_Test_XXX = $(this.context);
+// 					console.log(My_Test_XXX);
+// 					var bingo = $(this.context.href);
+// 					console.log(bingo);
+// 				})
+// 			})
+		</script>
+	
 	</body>
 </html>

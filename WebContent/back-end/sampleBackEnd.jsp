@@ -1,9 +1,6 @@
-<%@page import="com.region.model.RegService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="com.venue.model.VenueVO"%>
-<%@page import="com.region.model.RegVO"%>
-<%@page import="java.util.List"%>
+<%@ page import="java.util.List"%>
 
 <!DOCTYPE html>
 <html lang="">
@@ -19,16 +16,17 @@
 		<![endif]-->
 		
 		<style>
-		input{
-			height:30px
-		}
 		</style>
 	</head>
 	<body>
 		<%-- include header --%>
-		<%@ include file="/back-end/CA105G1_header_back.file" %>
-		<%-- include show_loginBox--%>
-		<%@ include file="/back-end/emp/loginfile/showLoginBackEnd.file" %>
+<%-- 		<%@ include file="/back-end/CA105G1_header_back.file" %> --%>
+		<%-- include show_loginBox --%>
+<%-- 		<%@ include file="/back-end/emp/loginfile/showLoginBackEnd.file" %> --%>
+		
+<%-- 如果反映有問題，再處理使用這方式	<jsp:include page="XXXX.jsp" /> --%>
+		
+		<jsp:include page="/back-end/CA105G1_header_back.jsp"/>
 		
 		<div class="container-fluid">
 			<div class="row">
@@ -76,7 +74,6 @@
 
 
 		<%@ include file="/back-end/CA105G1_footer_back.file" %>
-		
 		
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>

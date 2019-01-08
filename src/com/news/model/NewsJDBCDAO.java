@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class NewsJDBCDAO implements NewsDAO_interface{
 
@@ -306,6 +307,54 @@ public class NewsJDBCDAO implements NewsDAO_interface{
 			if(con!=null) {
 				try {
 					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return list;
+	}
+	
+	@Override
+	public List<NewsVO> getAll(Map<String, String[]> map) {
+		List<NewsVO> list = new ArrayList<NewsVO>();
+		
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try {
+			connection = DriverManager.getConnection(URL, USER, PASSWORD);
+			String finalSQL = "Select * from news "
+					+ Util_JDBC_CompositeQuery_News.get_WhereCondition(map)
+					+ " order by news_no";
+			
+			preparedStatement = connection.prepareStatement(finalSQL);
+			System.out.println("+++FinalSQL(by JDBCDAO) = "+finalSQL);
+			resultSet = preparedStatement.executeQuery();
+			list = collectNewsVO(resultSet);
+			
+			
+		}catch (SQLException e) {
+			list = new ArrayList<>();
+			throw new RuntimeException("A database error occured. "+e.getMessage());
+		}finally {
+			if(resultSet!=null) {
+				try {
+					resultSet.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(preparedStatement!=null) {
+				try {
+					preparedStatement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(connection!=null) {
+				try {
+					connection.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}

@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.naming.NamingException;
 import javax.sql.DataSource;
@@ -44,7 +45,7 @@ public class NewsJNDIDAO implements NewsDAO_interface{
 			"DELETE FROM news WHERE news_no=?";
 	
 	private static final String FIND_BY_PK_SQL=
-	"SELECT * FROM news WHERE news_no=?";
+			"SELECT * FROM news WHERE news_no=?";
 	private static final String GET_ALL = 
 			"SELECT * FROM news ORDER BY news_no ASC";
 	
@@ -135,9 +136,9 @@ public class NewsJNDIDAO implements NewsDAO_interface{
 			pstmt.setString(8, newsVO.getNews_no());
 			
 			if(pstmt.executeUpdate()==1) {
-				System.out.println("---成功更新---編號: "+newsVO.getNews_no());
+//				System.out.println("---成功更新---編號: "+newsVO.getNews_no());
 			}else {
-				System.out.println("---更新失敗---編號: "+newsVO.getNews_no());
+//				System.out.println("---更新失敗---編號: "+newsVO.getNews_no());
 			}
 		} catch(SQLException e) {
 			throw new RuntimeException("A database error occured. "+e.getMessage());
@@ -161,6 +162,7 @@ public class NewsJNDIDAO implements NewsDAO_interface{
 
 	@Override
 	public void updateStutasByNewsNo(String news_no ,String news_stutas) {
+		//"UPDATE news SET news_stutas=? WHERE news_no=?";
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -169,10 +171,11 @@ public class NewsJNDIDAO implements NewsDAO_interface{
 			pstmt.setString(1, news_stutas);
 			pstmt.setString(2, news_no);
 			if(pstmt.executeUpdate()==1) {
-				System.out.println("---成功更新狀態---");
+//				System.out.println("---成功更新狀態---"+news_no);
 			}else {
-				System.out.println("---更新狀態失敗---");
+//				System.out.println("---更新狀態失敗---"+news_no);
 			}
+			con.commit();
 		} catch(SQLException e) {
 			throw new RuntimeException("A database error occured. "+e.getMessage());
 		} finally {
@@ -317,6 +320,56 @@ public class NewsJNDIDAO implements NewsDAO_interface{
 	}
 	
 	@Override
+	public List<NewsVO> getAll(Map<String, String[]> map) {
+		List<NewsVO> list = new ArrayList<NewsVO>();
+		
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try {
+			connection = dataSource.getConnection();
+			String finalSQL = "Select * from news "
+					+ Util_JDBC_CompositeQuery_News.get_WhereCondition(map)
+					+ " order by news_no";
+			
+			preparedStatement = connection.prepareStatement(finalSQL);
+			System.out.println("+++FinalSQL(by JDBCDAO) = "+finalSQL);
+			resultSet = preparedStatement.executeQuery();
+			list = collectNewsVO(resultSet);
+			
+			
+		}catch (SQLException e) {
+			list = new ArrayList<>();
+			throw new RuntimeException("A database error occured. "+e.getMessage());
+		}finally {
+			if(resultSet!=null) {
+				try {
+					resultSet.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(preparedStatement!=null) {
+				try {
+					preparedStatement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(connection!=null) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return list;
+	}
+	
+	
+	
+	@Override
 	public List<NewsVO> getNewsByNewtype(String newstype_no) {
 		List<NewsVO> list = new ArrayList<>();
 		Connection con = null;
@@ -357,8 +410,9 @@ public class NewsJNDIDAO implements NewsDAO_interface{
 	}
 	
 	private static final String GET_RELEASE_NEWS_SQL = ""
-			+ "Select * from news where ? "
-			+ " between news_release_date and news_last_date "
+			+ "Select * from news "
+			+ " where "
+			+ " (news_release_date < ? or news_last_date > ?)"
 			+ " and news_stutas='發布中' "
 			+ " order by news_release_date DESC";
 	
@@ -372,6 +426,7 @@ public class NewsJNDIDAO implements NewsDAO_interface{
 			connection = dataSource.getConnection();
 			preparedStatement = connection.prepareStatement(GET_RELEASE_NEWS_SQL);
 			preparedStatement.setTimestamp(1, nowTime);
+			preparedStatement.setTimestamp(2, nowTime);
 			resultSet = preparedStatement.executeQuery();
 			list = collectNewsVO(resultSet);
 		} catch(SQLException e) {
@@ -458,7 +513,7 @@ public class NewsJNDIDAO implements NewsDAO_interface{
 			" or (news_last_date >=sysdate and news_release_date is null) ";
 
 	@Override
-	public List<NewsVO> getNeedToReleaseListNews() {
+	synchronized public List<NewsVO> getNeedToReleaseListNews() {
 		List<NewsVO> list = new ArrayList<NewsVO>();
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -502,7 +557,7 @@ public class NewsJNDIDAO implements NewsDAO_interface{
 			+ " Select * from news where news_last_date < sysdate";
 	
 	@Override
-	public List<NewsVO> getNeedToDiscontinueListNews() {
+	synchronized public List<NewsVO> getNeedToDiscontinueListNews() {
 		List<NewsVO> list = new ArrayList<NewsVO>();
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
