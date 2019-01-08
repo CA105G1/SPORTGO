@@ -28,11 +28,17 @@
 	<title>商城</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<!-- sweetalert-link -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
 	<!--[if lt IE 9]>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
 	<style type="text/css">
+		.swal-wide{
+		    width:850px !important;
+		}
 		.aa {
 			height: 300px;
 			background-color: #faa;
@@ -144,7 +150,7 @@ overflow: hidden;
 
 	</style>
 </head>
-<body>
+<body onload="connect();" onunload="disconnect();">
 <%@ include file="/front-end/CA105G1_header.file" %>
 	<div class="container-fluid">
 		<div class="row">
@@ -383,7 +389,7 @@ overflow: hidden;
                 
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+<script src="<%=request.getContextPath() %>/back-end/pro/tool/websock_client.js"></script>
 <script type="text/javascript">
 	
 $(function() {

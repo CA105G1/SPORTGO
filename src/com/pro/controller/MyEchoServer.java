@@ -14,6 +14,9 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
+import com.product.model.ProductService;
+import com.product.model.ProductVO;
+
 @ServerEndpoint("/MyEchoServer")
 public class MyEchoServer {
 	
@@ -29,10 +32,18 @@ public class MyEchoServer {
 	
 	@OnMessage                   
 	public void onMessage(Session userSession, String message) {
+		StringBuffer sbuf =new StringBuffer();
+		sbuf.append(message);
+		sbuf.deleteCharAt(sbuf.length()-1);
+		
+		ProductService proSvc = new ProductService();
+		ProductVO proVO = proSvc.getLastProduct();
+		sbuf.append(",\"pro_no\":\""+proVO.getPro_no()+"\"}");
+		
 		for (Session session : allSessions) {
 			if (session.isOpen())
 				      //用非同步
-				session.getAsyncRemote().sendText(message);//傳播給大家
+				session.getAsyncRemote().sendText(sbuf.toString());//傳播給大家
 			          //也可以用getBasicRemote()
 		}
 		System.out.println("Message received: " + message);

@@ -647,6 +647,24 @@ if ("getOne_For_Display_front".equals(action)) { //來自select_page.jsp的請�
 				failureView.forward(req, res);
 			}
 		}
+if ("herf_Display".equals(action)) { //來自websock的請求
+				List<String> errorMsgs = new LinkedList<String>();
+				// Store this set in the request scope, in case we need to
+				// send the ErrorPage view.
+				String pro_no = req.getParameter("pro_no");
+				/*******永續層存取*********/
+				ProductService proSvc = new ProductService();
+				ProductVO proVO = proSvc.getOneProduct(pro_no);
+				HttpSession session = req.getSession();
+				session.setAttribute("proVO", proVO);
+				/*******詢完成,準備轉交*****/
+				String url = PATH_FRONT_LIST_ONE_PRO;
+				System.out.println("準備轉交");
+				RequestDispatcher successView = req.getRequestDispatcher(url); 
+				successView.forward(req, res);
+		}
+
+
 
 if ("ok_cancel".equals(action)) {
 				List<String> errorMsgs = new LinkedList<String>();

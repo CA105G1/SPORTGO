@@ -463,6 +463,11 @@ public class ProductJNDIDAO implements ProductDAO_interface{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	@Override
+	public ProductVO getLastVO() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 
 	

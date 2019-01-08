@@ -504,6 +504,69 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 		return count;
 	}
 	
+	//查詢最後一筆
+	@Override
+	public ProductVO getLastVO() {
+		ProductVO proVO = null;
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			con =  DriverManager.getConnection(URL, USER, PASSWORD);
+			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			rs = stmt.executeQuery(SELECT_ALL);
+			rs.last();
+
+			proVO = new ProductVO();
+			proVO.setPro_no(rs.getString("PRO_NO"));
+			proVO.setPro_classid(rs.getString("PRO_CLASSID"));
+			proVO.setPro_name(rs.getString("PRO_NAME"));
+			proVO.setPro_pic(rs.getBytes("PRO_PIC"));
+			proVO.setPro_pic_ext(rs.getString("PRO_PIC_EXT"));
+			proVO.setPro_format(rs.getString("PRO_FORMAT"));
+			proVO.setPro_bonus(rs.getInt("PRO_BONUS"));
+			proVO.setPro_stock(rs.getInt("PRO_STOCK"));
+			proVO.setPro_safestock(rs.getInt("PRO_SAFESTOCK"));
+			proVO.setPro_details(rs.getString("PRO_DETAILS"));
+			proVO.setPro_shelve(rs.getString("PRO_SHELVE"));
+			proVO.setPro_all_assess(rs.getInt("PRO_ALL_ASSESS"));
+			proVO.setPro_all_assessman(rs.getInt("PRO_ALL_ASSESSMAN"));
+				
+
+//			con.commit();//測試
+		} catch (SQLException  e) {
+			// TODO Auto-generated catch block
+			throw new RuntimeException(e.getMessage());
+			
+		} finally {
+			if(rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}		   
+		return proVO;
+	}
+	
 
 	
 

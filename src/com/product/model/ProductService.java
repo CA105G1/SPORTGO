@@ -86,4 +86,7 @@ public class ProductService {
 		proDAO.updateShelve(pro_no, pro_shelve);
 	}
 	
+	public ProductVO getLastProduct() {
+		return proDAO.getLastVO();
+	}
 }

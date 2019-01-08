@@ -8,7 +8,7 @@
     var statusOutput  = document.getElementById("statusOutput");
     var statusPublish = document.getElementById("statusPublish");
 	var webSocket;
-	
+	document.write("<script type=\"text/javascript\" src=\"sweetalert2.css\"></script>");
 	function connect() {
 		// 建立 websocket 物件
 		console.log('host:'+host);
@@ -24,7 +24,9 @@
 		webSocket.onmessage = function(event) {
 			var obj = eval("(" + event.data + ")");
 			console.log(obj)
-			getReload(obj.pro_name);
+			console.log(obj.pro_no);
+			console.log(obj.pro_name);
+			getReload(obj.pro_no);
 //			var test = 'helloworld';
 //			test.scrollTop = test.scrollHeight;
 		};
@@ -45,24 +47,22 @@
 	}
 	function getReload(data){
 		swal({
-   			html: $("<div>")         .text('請注意，有新品，上市囉!'),
+   			html: $("<div>").text('全新商品上架囉!'),
+   			background : 'url(/CA105G1/back-end/pro/tool/test3.jpg)',
+   			customClass: 'swal-wide',
    			showCancelButton : true,
    			confirmButtonColor : '#3085d6',
    			cancelButtonColor : '#d33',
    			confirmButtonText : 'Yes, 馬上搶購去!',
-   			cancelButtonText : 'No, 等會再買!',
+   			cancelButtonText : '等會再買!',
    			closeOnConfirm : false,
    			closeOnCancel : false
    		}).then(function() {
-   			swal(
-	   		     '已删除！',
-	   		     '你的文件已经被删除。',
-	   		     'success'
-   		    ); 
+   			window.location.replace("/CA105G1/pro/pro.do?action=herf_Display&pro_no="+data);
    		 }, function(dismiss) {
 				swal({
 					  title: "~錯過可惜~",   
-					  html:     '<b>如果後悔，按以下連結</b>' + '<br><a >電 子 商 店 EShop</a>' + '<br>仍可搶購新品~',
+					  html:     '<b>如果後悔，按以下連結</b>' + '<br><a href="/CA105G1/pro/pro.do?action=herf_Display&pro_no='+data+'" color:rgb(240,94,157)">電 子 商 店 EShop</a>' + '<br>仍可搶購新品~',
 					  width: 300,
 					  padding: 20, 
 					  showConfirmButton: true,
