@@ -50,6 +50,7 @@
 		<tr>
 			<th>消息編號</th>
 			<th>消息類型編號</th>
+			<th>消息類型名稱</th>
 			<th>文字內容</th>
 			<th>圖片附檔名</th>			
 			<th>圖片內容</th>
@@ -64,6 +65,7 @@
 			<tr>
 				<td>${newsVO.news_no}</td>
 				<td>${newsVO.newstype_no}</td>
+				<td>${newstypeService.getOneNewsType(newsVO.getNewstype_no()).getNewstype_name()}</td>
 				<td>${newsVO.news_script}</td>
 				<td>${newsVO.pic_extension}</td>
 				<td><img src="<%=request.getContextPath()%>/news/newsImg.do?news_no=${newsVO.news_no}" /></td>

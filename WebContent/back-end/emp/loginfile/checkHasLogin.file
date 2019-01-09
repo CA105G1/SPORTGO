@@ -2,12 +2,12 @@
 <% 	Object object = session.getAttribute("empVO"); %>
 <%  com.emp.model.EmpVO empVO = null; %>
 <%	if(object==null){ %>
-		<c:set var="empHasLogin" value="false" scope="page" />
+<%--		<c:set var="empHasLogin" value="false" scope="page" />    --%>
 		<a href='#myModalId' data-toggle="modal"> 後台 : 登入 </a>
 <%	}else { 
  		empVO = (com.emp.model.EmpVO)object;
 		if(empVO.getEmp_psw()==null){ %>
-			<c:set var="empHasLogin" value="false" scope="page" />
+<%--			<c:set var="empHasLogin" value="false" scope="page" />    --%>
 			<a href='#myModalId' data-toggle="modal"> 後台 : 登入 </a>
 <%		}else { %>
 			<h1>${empVO.emp_name}</h1>

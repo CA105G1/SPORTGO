@@ -16,11 +16,6 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
 		
-		<style>
-		input{
-			height:30px
-		}
-		</style>
 	</head>
 	<body>
  		<%-- include header --%> 
@@ -43,17 +38,19 @@
 					<div role="tabpanel">
 			<!-- 標籤面板：標籤區 -->
 					    <ul class="nav nav-tabs" role="tablist">
-					        <li role="presentation" class="active">
+							<!-- 使用request.getAttribute("whichtab")來分辨，哪個class is active -->
+					        <li role="presentation" class="${whichTab=='tab1'?'active':'' }">
 					            <a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">查詢、更新</a>
 					        </li>
-					        <li role="presentation" class="">
+					        <li role="presentation" class="${whichTab=='tab2'?'active':'' }">
 					            <a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">新增</a>
 					        </li>
 					    </ul>
 					
 			<!-- 標籤面板：內容區 -->
 					    <div class="tab-content">
-					        <div role="tabpanel" class="tab-pane active" id="tab1">
+					    	<!-- 使用request.getAttribute("whichtab")來分辨，哪個class is active -->
+					        <div role="tabpanel" class="tab-pane ${whichTab=='tab1'?'active':'' }" id="tab1">
 					        	<h1>查詢、更新</h1>
 					        	<div class="panel panel-info">
 									<div class="panel-heading">
@@ -108,19 +105,18 @@
 										<% } %>
 						        	</div>
 									
-									
+									<div>
+
+									</div>
 									
 									
 									
 								</div>
 					        </div>
-					        <div role="tabpanel" class="tab-pane" id="tab2">
-					        	<h1>新增</h1>
-<%-- 					        	<jsp:include page="/back-end/news/add_one_news.jsp" /> --%>
-					        	
-					        	
-					        	
-					        	
+					        
+					 <%-- <%=request.getContextPath()%>/back-end/news/maintain_news_info.jsp#tab2 --%>       
+					        <div role="tabpanel" class="tab-pane ${whichTab=='tab2'?'active':'' }" id="tab2">
+					        	<jsp:include page="/back-end/news/add_one_news.jsp" />
 					        </div>
 					    </div>
 					</div>
@@ -137,19 +133,6 @@
 		
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<script type="text/javascript">
-			$('#fistTimeShow').click();
-// 			$(document).ready(function(){
-// 				$('ul.nav-tabs li a').on("click",function(){
-// 					var My_Test = $(this);
-// 					console.log(My_Test);
-// 					var My_Test_XXX = $(this.context);
-// 					console.log(My_Test_XXX);
-// 					var bingo = $(this.context.href);
-// 					console.log(bingo);
-// 				})
-// 			})
-		</script>
 	
 	</body>
 </html>
