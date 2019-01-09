@@ -13,4 +13,9 @@ public class NewstypeService {
 		return this.newstypeDAO.getAll();
 	}
 	
+	public NewstypeVO getOneNewsType(String newstype_no) {
+		return this.newstypeDAO.findByPrimaryKey(newstype_no);
+	}
+	
+	
 }

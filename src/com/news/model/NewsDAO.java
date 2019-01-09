@@ -72,9 +72,9 @@ public class NewsDAO implements NewsDAO_interface{
 			pstmt.setTimestamp(7, newsVO.getNews_last_date());
 			
 			if(pstmt.executeUpdate()==1) {
-				System.out.println("---成功輸入---");
+				System.out.println("---news成功輸入---");
 			}else {
-				System.out.println("---輸入失敗---");
+				System.out.println("---news輸入失敗---");
 			}
 			
 			rs = pstmt.getGeneratedKeys();
@@ -84,7 +84,7 @@ public class NewsDAO implements NewsDAO_interface{
 				do {
 					for (int i = 1; i <= columnCount; i++) {
 						newsVO.setNews_no(rs.getString(i));
-						System.out.println("自增主鍵值 = " + newsVO.getNews_no() +"(剛新增成功的newstype_no)");
+//						System.out.println("自增主鍵值 = " + newsVO.getNews_no() +"(剛新增成功的news_no)");
 					}
 				} while (rs.next());
 			} else {
