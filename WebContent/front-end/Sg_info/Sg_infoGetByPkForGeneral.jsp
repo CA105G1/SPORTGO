@@ -18,6 +18,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
 
+
 <style type="text/css">
 	#infoSpan{
 		margin-left:30%;
@@ -138,12 +139,14 @@ System.out.println("memberlistVO= "+memberlistVO);
 							<!-- 活動時間 -->
 							<th style="border-top: 1px solid #ddd;">
 								<span id="infoSpan">
-									<i class="glyphicon glyphicon-calendar" style="padding-right:5px"></i>
+<!-- 									<i class="glyphicon glyphicon-calendar" style="padding-right:5px"></i> -->
+									<img src="<%= request.getContextPath()%>/img/calendar.svg" style="width:20px; height:auto;">
 									<fmt:formatDate value="${Sg_infoVO.sg_date}" pattern="yyyy-MM-dd HH:mm"/>
 								</span>
 								<!-- 報名費用 -->
 								<span style="margin-left:20px">
-									<i class="glyphicon glyphicon-usd"></i>
+<!-- 									<i class="glyphicon glyphicon-usd"></i> -->
+									<img src="<%= request.getContextPath()%>/img/coin.svg" style="width:20px; height:auto;">
 									${Sg_infoVO.sg_fee}元
 								</span>
 							</th>
@@ -153,15 +156,17 @@ System.out.println("memberlistVO= "+memberlistVO);
 							<jsp:useBean id="venueSvc" scope="page" class="com.venue.model.VenueService"/>
 							<th>
 								<span id="infoSpan">
-									<i class="glyphicon glyphicon-map-marker"></i>
+<!-- 									<i class="glyphicon glyphicon-map-marker"></i> -->
+									<img src="<%= request.getContextPath()%>/img/location.svg" style="width:20px; height:auto;">	
 									${venueSvc.getOneVenue(Sg_infoVO.v_no).v_name}
 								</span>
 							</th>
 						</tr>
 						<tr>
 							<th>
+								<!-- 報名截止日期 -->
 								<span id="infoSpan">
-									報名截止日期
+									<img src="<%= request.getContextPath()%>/img/time.svg" style="width:20px; height:auto;">
 									<fmt:formatDate value="${Sg_infoVO.apl_end}" pattern="yyyy-MM-dd"/>
 								</span>
 							</th>
@@ -377,25 +382,27 @@ System.out.println("memberlistVO= "+memberlistVO);
 		$("#joinbtn").click(function(){
 			swal({
 				  title: "請確認付款資訊", showCancelButton: true, showCloseButton: true,confirmButtonText: "確定",cancelButtonText: "取消",
-				  html:	'<form>' +
+				  html:	
+					  	'<form>' +
 				  			'<div><img src="<%= request.getContextPath()%>/img/credit_card.svg" style="width:auto; height:200px"></div><br>'+
 						  	'<div class="form-group" style="display:flex;justify-content:center;">'+
 						       	'<label class="control-label col-xs-12 col-sm-5" for="card" style="padding:0px">信用卡卡號</label>'+
 						       	'<div class="col-xs-12 col-sm-5" style="padding:0px">'+
-						       		'<input type="text" class="form-control" id="card" value="" name="card" readonly>'+
+						       		'<input type="text" class="form-control" id="card" value="" name="card">'+
 						       	'</div>'+
 			   			   	'</div>'+
 							'<div class="form-group" style="display:flex;justify-content:center;">'+
 							    '<label class="control-label col-xs-12 col-sm-5" style="padding:0px" for="expiry">信用卡到期日</label>'+
 							    '<div class="col-xs-12 col-sm-5" style="display:flex;justify-content:space-between;padding:0px">'+
-								    '<input type="text" class="form-control" id="expiry1" value="" name="expiry1" style="width:40%" readonly>'+
+								    '<input type="text" class="form-control" id="expiry1" value="" name="expiry1" style="width:40%">'+
 								    '<label style="text-align:center;">年</label>'+
-								    '<input type="text" class="form-control" id="expiry2" value="" name="expiry2" style="width:40%" readonly>'+
+								    '<input type="text" class="form-control" id="expiry2" value="" name="expiry2" style="width:40%">'+
 								    '<label>月</label>'+
 							    '</div>'+
 				   			'</div>'+
 				   			'<a href"#">修改付款資料</a>'+
-			   			'</form>', 
+			   			'</form>',
+
 				}).then(
 					function (result) {
 					if(result){
@@ -497,7 +504,9 @@ System.out.println("memberlistVO= "+memberlistVO);
 	
 
 </script>
-
+<!-- 信用卡 -->
+<link href="<%=request.getContextPath() %>/front-end/pro/card/card-js.min.css" rel="stylesheet" type="text/css" />
+<script src="<%=request.getContextPath() %>/front-end/pro/card/card-js.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAb2lDof7yMn-TTXwt2hwVm4y92t1AqvyU&callback=initMap&libraries=places"
         async defer></script>
 

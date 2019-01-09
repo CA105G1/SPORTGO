@@ -140,12 +140,14 @@ Sg_infoVO vo = svc.GetByPK(sg_no);
 							<!-- 活動時間 -->
 							<th style="border-top: 1px solid #ddd;">
 								<span id="infoSpan">
-									<i class="glyphicon glyphicon-calendar" style="padding-right:5px"></i>
+<!-- 									<i class="glyphicon glyphicon-calendar" style="padding-right:5px"></i> -->
+									<img src="<%= request.getContextPath()%>/img/calendar.svg" style="width:20px; height:auto;">
 									<fmt:formatDate value="${Sg_infoVO.sg_date}" pattern="yyyy-MM-dd HH:mm"/>
 								</span>
 								<!-- 報名費用 -->
 								<span style="margin-left:20px">
-									<i class="glyphicon glyphicon-usd"></i>
+<!-- 									<i class="glyphicon glyphicon-usd"></i> -->
+									<img src="<%= request.getContextPath()%>/img/coin.svg" style="width:20px; height:auto;">
 									${Sg_infoVO.sg_fee}元
 								</span>
 							</th>
@@ -155,15 +157,17 @@ Sg_infoVO vo = svc.GetByPK(sg_no);
 							<jsp:useBean id="venueSvc" scope="page" class="com.venue.model.VenueService"/>
 							<th>
 								<span id="infoSpan">
-									<i class="glyphicon glyphicon-map-marker"></i>
+<!-- 									<i class="glyphicon glyphicon-map-marker"></i> -->
+									<img src="<%= request.getContextPath()%>/img/location.svg" style="width:20px; height:auto;">	
 									${venueSvc.getOneVenue(Sg_infoVO.v_no).v_name}
 								</span>
 							</th>
 						</tr>
 						<tr>
 							<th>
+								<!-- 報名截止日期 -->
 								<span id="infoSpan">
-									報名截止日期
+									<img src="<%= request.getContextPath()%>/img/time.svg" style="width:20px; height:auto;">
 									<fmt:formatDate value="${Sg_infoVO.apl_end}" pattern="yyyy-MM-dd"/>
 								</span>
 							</th>
