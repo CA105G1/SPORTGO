@@ -17,6 +17,9 @@
   	.error{
   		color:red;
   	}
+  	.container{
+  		align:center;
+  	}
   </style>
 </head>
 <body>
@@ -26,13 +29,14 @@
 			<jsp:include page="list_group.jsp"/>
 		</div>
 		<div class="col-xs-12 col-sm-9">
+		<div class="container" style="display:flex;flex-direction:column;text-align:center;width:60%;">
+		
 		  <h2>修改個人資訊</h2>
-		  <h1>更換大頭貼</h1>
 		  <form method="post" class="form-horizontal" enctype="multipart/form-data" action="MemManager.do">
-		  		<input type="file" name="picture" class="upl">
-		  <div>
-		  	<img class="preview" src="showPicture.do?mem_no=${memberlistVO.mem_no}">
-		  </div>
+		  		
+			  <div style="text-align:center;">
+			  	<img class="preview" src="showPicture.do?mem_no=${memberlistVO.mem_no}">
+			  </div>
 		  <br>
 <!-- 		  錯誤時的畫面 -->
 		  	<c:if test="${not empty errorMsgs}">
@@ -42,43 +46,49 @@
 					</c:forEach>
 				</ul>
 				<div class="form-group">
+			      <label class="control-label col-sm-2" for="picture">更換大頭貼</label>
+			      <div class="col-sm-10">
+					<input type="file" name="picture" class="upl">
+			      </div>
+			    </div>
+				<div class="form-group">
 			      <label class="control-label col-sm-2" for="name">姓名</label>
 			      <div class="col-sm-10">
-			        <input type="text" class="form-control" id="name" value="${mem_name}" name="name">
+			        <input type="text" class="form-control" size="30" id="name" value="${mem_name}" name="name">
 			      </div>
 			    </div>
 			    <div class="form-group">
 			      <label class="control-label col-sm-2" for="nick">暱稱</label>
 			      <div class="col-sm-10">          
-			        <input type="text" class="form-control" id="nick" value="${mem_nick}" name="nick">
+			        <input type="text" class="form-control" size="30" id="nick" value="${mem_nick}" name="nick">
 			      </div>
 			    </div>
 			    <div class="form-group">
 			      <label class="control-label col-sm-2" for="password">密碼</label>
 			      <div class="col-sm-10">          
-			        <input type="password" class="form-control" id="password" value="${mem_pswd}" name="password">
+			        <input type="password" class="form-control" size="30" id="password" value="${mem_pswd}" name="password">
 			      </div>
 			    </div>
 			    <div class="form-group">
 			      <label class="control-label col-sm-2" for="email">電子郵件</label>
 			      <div class="col-sm-10">          
-			        <input type="email" class="form-control" id="email" value="${mem_email}" name="email">
+			        <input type="email" class="form-control" size="30" id="email" value="${mem_email}" name="email">
 			      </div>
 			    </div>
 			    <div class="form-group">
 			      <label class="control-label col-sm-2" for="phone">電話</label>
 			      <div class="col-sm-10">          
-			        <input type="text" class="form-control" id="phone" value="${mem_phone}" name="phone">
+			        <input type="text" class="form-control" size="30" id="phone" value="${mem_phone}" name="phone">
 			      </div>
 			    </div>
 			    <div class="form-group">
 			      <label class="control-label col-sm-2" for="emgc">緊急聯絡人</label>
 			      <div class="col-sm-10">          
-			        <input type="text" class="form-control" id="emgc" value="${mem_emgc}" name="emgc">
+			        <input type="text" class="form-control" size="30" id="emgc" value="${mem_emgc}" name="emgc">
 			      </div>
 			    </div>
 			    <div class="form-group">        
-			      <div class="col-sm-offset-2 col-sm-10">
+			      <div class="col-sm-12">
 			        <button type="submit" class="btn btn-info" name="action" value="Member_renew">修改</button>
 			        <button type="submit" class="btn btn-info" name="action" value="cancel">取消</button>
 			      </div>
@@ -86,50 +96,57 @@
 			</c:if>
 <!-- 			剛進入的畫面 帶入原本的值 -->
 			<c:if test="${empty errorMsgs}">
-			    <div class="form-group">
+				<div class="form-group">
+			      <label class="control-label col-sm-2" for="picture">更換大頭貼</label>
+			      <div class="col-sm-10">
+					<input type="file" name="picture" class="upl">
+			      </div>
+			    </div>
+			    <div class="form-group" size="10">
 			      <label class="control-label col-sm-2" for="name">姓名</label>
 			      <div class="col-sm-10">
-			        <input type="text" class="form-control" id="name" value="${memberlistVO.mem_name}" name="name">
+			        <input type="text" class="form-control" size="30" id="name" value="${memberlistVO.mem_name}" name="name">
 			      </div>
 			    </div>
 			    <div class="form-group">
 			      <label class="control-label col-sm-2" for="nick">暱稱</label>
 			      <div class="col-sm-10">          
-			        <input type="text" class="form-control" id="nick" value="${memberlistVO.mem_nick}" name="nick">
+			        <input type="text" class="form-control" size="30" id="nick" value="${memberlistVO.mem_nick}" name="nick">
 			      </div>
 			    </div>
 			    <div class="form-group">
 			      <label class="control-label col-sm-2" for="password">密碼</label>
 			      <div class="col-sm-10">          
-			        <input type="password" class="form-control" id="password" value="${memberlistVO.mem_pswd}" name="password">
+			        <input type="password" class="form-control" size="30" id="password" value="${memberlistVO.mem_pswd}" name="password">
 			      </div>
 			    </div>
 			    <div class="form-group">
 			      <label class="control-label col-sm-2" for="email">電子郵件</label>
 			      <div class="col-sm-10">          
-			        <input type="email" class="form-control" id="email" value="${memberlistVO.mem_email}" name="email">
+			        <input type="email" class="form-control" size="30" id="email" value="${memberlistVO.mem_email}" name="email">
 			      </div>
 			    </div>
 			    <div class="form-group">
 			      <label class="control-label col-sm-2" for="phone">電話</label>
 			      <div class="col-sm-10">          
-			        <input type="text" class="form-control" id="phone" value="${memberlistVO.mem_phone}" name="phone">
+			        <input type="text" class="form-control" size="30" id="phone" value="${memberlistVO.mem_phone}" name="phone">
 			      </div>
 			    </div>
 			    <div class="form-group">
 			      <label class="control-label col-sm-2" for="emgc">緊急聯絡人</label>
 			      <div class="col-sm-10">          
-			        <input type="text" class="form-control" id="emgc" value="${memberlistVO.mem_emgc}" name="emgc">
+			        <input type="text" class="form-control" size="30" id="emgc" value="${memberlistVO.mem_emgc}" name="emgc">
 			      </div>
 			    </div>
 			    <div class="form-group">        
-			      <div class="col-sm-offset-2 col-sm-10">
+			      <div class="col-sm-12">
 			        <button type="submit" class="btn btn-info" name="action" value="Member_renew">修改</button>
 			        <button type="submit" class="btn btn-info" name="action" value="cancel">取消</button>
 			      </div>
 			    </div>
 		    </c:if>
 		  </form>
+		  </div>
 		</div>
 	</div>
 	<jsp:include page="/front-end/CA105G1_footer.jsp"/>

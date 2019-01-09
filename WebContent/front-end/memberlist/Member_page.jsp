@@ -93,18 +93,18 @@
 				</div>
 				<div class="col-xs-12 col-sm-9 tab-content">
 				<!-- 個人頁面 -->
-					<div class="tab-pane active" id="mem">
-						<img src="showPicture.do?mem_no=${memberlistVO.mem_no}">
-						<ul class="list">
-							<li>姓名 : ${memberlistVO.mem_name}</li>
-							<li>暱稱 : ${memberlistVO.mem_nick}</li>
-							<li>Email : ${memberlistVO.mem_email}</li>
-							<li>電話 : ${memberlistVO.mem_phone}</li>
-							<li>緊急聯絡人 : ${memberlistVO.mem_emgc}</li>
-							<li>緊急聯絡人電話 : ${memberlistVO.mem_emgcphone}</li>
-						</ul>
-						<button onclick="sendMessage();">點擊</button>
-					</div>
+				<jsp:include page="public_Member_page.jsp"></jsp:include>
+<!-- 					<div class="tab-pane active" id="mem"> -->
+<%-- 						<img src="showPicture.do?mem_no=${memberlistVO.mem_no}"> --%>
+<!-- 						<ul class="list"> -->
+<%-- 							<li>姓名 : ${memberlistVO.mem_name}</li> --%>
+<%-- 							<li>暱稱 : ${memberlistVO.mem_nick}</li> --%>
+<%-- 							<li>Email : ${memberlistVO.mem_email}</li> --%>
+<%-- 							<li>電話 : ${memberlistVO.mem_phone}</li> --%>
+<%-- 							<li>緊急聯絡人 : ${memberlistVO.mem_emgc}</li> --%>
+<%-- 							<li>緊急聯絡人電話 : ${memberlistVO.mem_emgcphone}</li> --%>
+<!-- 						</ul> -->
+<!-- 					</div> -->
 				</div>	
 			</div>
 		</div>

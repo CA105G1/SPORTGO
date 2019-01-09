@@ -56,7 +56,7 @@ public class MemManagerServlet extends HttpServlet {
 			return;
 		}
 		if("cancel".equals(action)) {
-			res.sendRedirect("Member_page.jsp");
+			res.sendRedirect("public_Member_page.jsp");
 			return;
 		}
 		
@@ -111,7 +111,7 @@ public class MemManagerServlet extends HttpServlet {
 				} catch (RuntimeException re) {
 					errorMsgs.put("picture", "輸入的照片有誤");
 					re.printStackTrace();
-					RequestDispatcher donothing = req.getRequestDispatcher("Member_page.jsp");
+					RequestDispatcher donothing = req.getRequestDispatcher("public_Member_page.jsp");
 					donothing.forward(req, res);
 				}
 			}
@@ -146,7 +146,7 @@ public class MemManagerServlet extends HttpServlet {
 			if(errorMsgs.isEmpty()) {
 				memberlistVO = service.getOneMem(mem_no);
 				session.setAttribute("memberlistVO", memberlistVO);
-				RequestDispatcher donothing = req.getRequestDispatcher("Member_page.jsp");
+				RequestDispatcher donothing = req.getRequestDispatcher("public_Member_page.jsp");
 				donothing.forward(req, res);
 			}
 		}
@@ -203,6 +203,7 @@ public class MemManagerServlet extends HttpServlet {
 				dosomething.forward(req, res);
 			}
 		}
+		
 	
 		if("Member_Sg".equals(action)) {
 			List<Sg_infoVO> sglist = service.getSgHostByMem(mem_no);

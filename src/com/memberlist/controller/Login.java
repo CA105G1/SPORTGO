@@ -93,7 +93,7 @@ public class Login extends HttpServlet {
 				}catch(Exception e) {
 					e.printStackTrace();
 				}
-				res.sendRedirect("Member_page.jsp");
+				res.sendRedirect("public_Member_page.jsp");
 			}
 		}
 	}
