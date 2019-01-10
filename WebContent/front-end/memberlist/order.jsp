@@ -1,7 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import = "com.memberlist.model.*" %>
+<%@ page import = "com.ord.model.*" %>
 
 <% 
+	MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO");
+	if(memberlistVO==null){
+		response.sendRedirect("Login.jsp");
+		return;
+	}
+	String mem_no = memberlistVO.getMem_no();
+	OrdService ordservice = new OrdService();
+	
+
 %>
 <!DOCTYPE html>
 <html lang="">

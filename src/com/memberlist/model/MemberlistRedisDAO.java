@@ -1,16 +1,19 @@
 package com.memberlist.model;
 
+import java.util.List;
+
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 public class MemberlistRedisDAO implements MemberlistRedisDAO_interface {
 
-	private static final String HOST = "localhost";
-	private static final Integer PORT = 6379;
+	private static JedisPool pool = null;
 	private static final String AUTH = "123456";
-	private Jedis jedis = null;
+	private static Jedis jedis;
 	public MemberlistRedisDAO() {
 		super();
-		jedis = new Jedis(HOST,PORT);
+		pool = JedisUtil.getJedisPool();
+		jedis = pool.getResource();
 		jedis.auth(AUTH);
 	}
 
@@ -21,14 +24,18 @@ public class MemberlistRedisDAO implements MemberlistRedisDAO_interface {
 	}
 
 	@Override
-	public void appendRedis(String key, String value) {
-		jedis.append(key, value);
+	public void appendRedis(String mem_no, String element) {
+		jedis.lpush(mem_no, element);//List<String>
 		jedis.close();
 	}
 	
 	@Override
-	public void deleteRedis(String key) {
-		jedis.del(key);
+	public void deleteRedis(String mem_no,String mem_name) {
+		List<String> value = jedis.lrange(mem_no, 0, jedis.llen(mem_no)-1);
+		for(String list : value) {
+			if(list==mem_name) {}
+				
+		}
 		jedis.close();
 	}
 
@@ -39,17 +46,38 @@ public class MemberlistRedisDAO implements MemberlistRedisDAO_interface {
 		return value;
 	}
 
+	@Override
+	public List<String> getHistoryMsg(String sender, String receiver) {
+		String key = new StringBuilder(sender).append(":").append(receiver).toString();
+		List<String> historyData = jedis.lrange(key, 0, jedis.llen(key)-1);
+		jedis.close();
+		return historyData;
+	}
 
-	public static void main(String[]args) {
-		MemberlistRedisDAO dao = new MemberlistRedisDAO();
-		dao.insertRedis("Hello", "Redis");
-		System.out.println("safed completed");
-		
-		String value = dao.getValue("Hello");
-		System.out.println(value);
+	@Override
+	public void saveChatMessage(String sender, String receiver, String message) {
+		String senderKey = new StringBuilder(sender).append(":").append(receiver).toString();
+		String receiverKey = new StringBuilder(receiver).append(":").append(sender).toString();
+		jedis.rpush(senderKey, message);
+		jedis.rpush(receiverKey, message);
+		jedis.close();
+	}
+
+	@Override
+	public List<String> getNotationMsg(String mem_no) {
+		List<String> natation = jedis.lrange(mem_no, 0, jedis.llen(mem_no)-1);
+		return natation;
+	}
+
+//	public static void main(String[]args) {
+//		MemberlistRedisDAO dao = new MemberlistRedisDAO();
+//		dao.insertRedis("Hello", "Redis");
+//		System.out.println("safed completed");
+//		
+//		String value = dao.getValue("Hello");
+//		System.out.println(value);
 //		
 //		dao.deleteRedis("Hello");
 //		System.out.println("deleted completed");
-	}
-
+//	}
 }
