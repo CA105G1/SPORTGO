@@ -9,7 +9,7 @@ public class Sg_infoVO implements Serializable{
 	private String mem_no;
 	private String sg_name;
 	private Timestamp sg_date;
-	private Timestamp apl_start;
+	private String club_no;
 	private Timestamp apl_end;
 	private Integer sg_fee;
 	private byte[] sg_pic;
@@ -25,6 +25,7 @@ public class Sg_infoVO implements Serializable{
 	private String sg_status;
 	private String loc_start;
 	private String loc_end;
+
 	
 	public Sg_infoVO() {
 		super();
@@ -60,14 +61,6 @@ public class Sg_infoVO implements Serializable{
 
 	public void setSg_date(Timestamp sg_date) {
 		this.sg_date = sg_date;
-	}
-
-	public Timestamp getApl_start() {
-		return apl_start;
-	}
-
-	public void setApl_start(Timestamp apl_start) {
-		this.apl_start = apl_start;
 	}
 
 	public Timestamp getApl_end() {
@@ -190,6 +183,14 @@ public class Sg_infoVO implements Serializable{
 
 	public void setLoc_end(String loc_end) {
 		this.loc_end = loc_end;
+	}
+
+	public String getClub_no() {
+		return club_no;
+	}
+
+	public void setClub_no(String club_no) {
+		this.club_no = club_no;
 	};
 	
 }

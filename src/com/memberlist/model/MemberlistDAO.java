@@ -461,7 +461,7 @@ public class MemberlistDAO implements MemberlistDAO_interface{
 				vo.setMem_no(rs.getString("mem_no"));
 				vo.setSg_name(rs.getString("sg_name"));
 				vo.setSg_date(rs.getTimestamp("sg_date"));
-				vo.setApl_start(rs.getTimestamp("apl_start"));
+				vo.setClub_no(rs.getString("club_no"));
 				vo.setApl_end(rs.getTimestamp("apl_end"));
 				vo.setSg_fee(rs.getInt("sg_fee"));
 				vo.setSg_pic(rs.getBytes("sg_pic"));
@@ -581,7 +581,7 @@ public class MemberlistDAO implements MemberlistDAO_interface{
 					vo.setMem_no(rs.getString("mem_no"));
 					vo.setSg_name(rs.getString("sg_name"));
 					vo.setSg_date(rs.getTimestamp("sg_date"));
-					vo.setApl_start(rs.getTimestamp("apl_start"));
+					vo.setClub_no(rs.getString("club_no"));
 					vo.setApl_end(rs.getTimestamp("apl_end"));
 					vo.setSg_fee(rs.getInt("sg_fee"));
 					vo.setSg_pic(rs.getBytes("sg_pic"));
@@ -649,7 +649,7 @@ public class MemberlistDAO implements MemberlistDAO_interface{
 				vo.setMem_no(rs.getString("mem_no"));
 				vo.setSg_name(rs.getString("sg_name"));
 				vo.setSg_date(rs.getTimestamp("sg_date"));
-				vo.setApl_start(rs.getTimestamp("apl_start"));
+				vo.setClub_no(rs.getString("club_no"));
 				vo.setApl_end(rs.getTimestamp("apl_end"));
 				vo.setSg_fee(rs.getInt("sg_fee"));
 				vo.setSg_pic(rs.getBytes("sg_pic"));
@@ -717,7 +717,7 @@ public class MemberlistDAO implements MemberlistDAO_interface{
 				vo.setMem_no(rs.getString("mem_no"));
 				vo.setSg_name(rs.getString("sg_name"));
 				vo.setSg_date(rs.getTimestamp("sg_date"));
-				vo.setApl_start(rs.getTimestamp("apl_start"));
+				vo.setClub_no(rs.getString("club_no"));
 				vo.setApl_end(rs.getTimestamp("apl_end"));
 				vo.setSg_fee(rs.getInt("sg_fee"));
 				vo.setSg_pic(rs.getBytes("sg_pic"));

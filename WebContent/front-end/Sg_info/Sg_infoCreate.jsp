@@ -112,15 +112,15 @@
 									value="${param.sg_fee }">
 							</td>
 						</tr>
-						<tr>
-							<th>權限</th>
-							<td>
-								<select name="sg_per">
-									<option value="公開">公開</option>
-									<option value="限社團">限社團</option>
-								</select>
-							</td>
-						</tr>
+<!-- 						<tr> -->
+<!-- 							<th>權限</th> -->
+<!-- 							<td> -->
+<!-- 								<select name="sg_per"> -->
+<!-- 									<option value="公開">公開</option> -->
+<!-- 									<option value="限社團">限社團</option> -->
+<!-- 								</select> -->
+<!-- 							</td> -->
+<!-- 						</tr> -->
 						<jsp:useBean id="sportSvc" scope="page" class="com.sport.model.SportService" />
 						<tr>
 							<th>運動種類</th> <!-- 下拉選單 -->
@@ -203,6 +203,8 @@
 				
 				<input type="submit" value="送出" class="btn btn-success btn-block">
 				<input type="hidden" name="action"value="insert">
+				<input type="hidden" name="club_no">
+				<input type="hidden" name="sg_per" value="公開">
 				<input type="hidden" name="loc_start" id="loc_start">
 				<input type="hidden" name="loc_end" id="loc_end">
 			</form>

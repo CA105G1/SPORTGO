@@ -24,8 +24,7 @@ public class Test {
 		vo3.setSg_name("來來來哩來");
 		Timestamp ts = Timestamp.valueOf("2018-12-29 16:30:00");
 		vo3.setSg_date(ts);
-		Timestamp ts2 = new Timestamp(System.currentTimeMillis());
-		vo3.setApl_start(ts2);
+		vo3.setClub_no("C0001");
 		Timestamp ts3 = Timestamp.valueOf("2018-12-20 00:00:00");
 		vo3.setApl_end(ts3);
 		vo3.setSg_fee(100);
@@ -56,8 +55,7 @@ public class Test {
 //		vo4.setSg_name("123456");
 //		Timestamp t = Timestamp.valueOf("2018-12-29 16:30:00");
 //		vo4.setSg_date(t);
-//		Timestamp t2 = new Timestamp(System.currentTimeMillis());
-//		vo4.setApl_start(t2);
+//		vo4.setClub_no("C0002");
 //		Timestamp t3 = Timestamp.valueOf("2018-12-20 00:00:00");
 //		vo4.setApl_end(t3);
 //		vo4.setSg_fee(100);
@@ -93,7 +91,7 @@ public class Test {
 //		System.out.println(vo.getMem_no());
 //		System.out.println(vo.getSg_name());
 //		System.out.println(vo.getSg_date());
-//		System.out.println(vo.getApl_start());
+//		System.out.println(vo.getClub_no());
 //		System.out.println(vo.getApl_end());
 //		System.out.println(vo.getSg_fee());
 //		System.out.println(vo.getSg_pic());
@@ -118,7 +116,7 @@ public class Test {
 //			System.out.println(vo2.getMem_no());
 //			System.out.println(vo2.getSg_name());
 //			System.out.println(vo2.getSg_date());
-//			System.out.println(vo2.getApl_start());
+//			System.out.println(vo2.getClub_no());
 //			System.out.println(vo2.getApl_end());
 //			System.out.println(vo2.getSg_fee());
 //			System.out.println(vo2.getSg_pic());

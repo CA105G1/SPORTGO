@@ -139,13 +139,11 @@ System.out.println("memberlistVO= "+memberlistVO);
 							<!-- 活動時間 -->
 							<th style="border-top: 1px solid #ddd;">
 								<span id="infoSpan">
-<!-- 									<i class="glyphicon glyphicon-calendar" style="padding-right:5px"></i> -->
 									<img src="<%= request.getContextPath()%>/img/calendar.svg" style="width:20px; height:auto;">
 									<fmt:formatDate value="${Sg_infoVO.sg_date}" pattern="yyyy-MM-dd HH:mm"/>
 								</span>
 								<!-- 報名費用 -->
 								<span style="margin-left:20px">
-<!-- 									<i class="glyphicon glyphicon-usd"></i> -->
 									<img src="<%= request.getContextPath()%>/img/coin.svg" style="width:20px; height:auto;">
 									${Sg_infoVO.sg_fee}元
 								</span>
@@ -156,7 +154,6 @@ System.out.println("memberlistVO= "+memberlistVO);
 							<jsp:useBean id="venueSvc" scope="page" class="com.venue.model.VenueService"/>
 							<th>
 								<span id="infoSpan">
-<!-- 									<i class="glyphicon glyphicon-map-marker"></i> -->
 									<img src="<%= request.getContextPath()%>/img/location.svg" style="width:20px; height:auto;">	
 									${venueSvc.getOneVenue(Sg_infoVO.v_no).v_name}
 								</span>
@@ -380,76 +377,81 @@ System.out.println("memberlistVO= "+memberlistVO);
 		});
 		//////////////////加入揪團按鍵設定///////////////////////////
 		$("#joinbtn").click(function(){
-			swal({
-				  title: "請確認付款資訊", showCancelButton: true, showCloseButton: true,confirmButtonText: "確定",cancelButtonText: "取消",
-				  html:	
-					  	'<form>' +
-				  			'<div><img src="<%= request.getContextPath()%>/img/credit_card.svg" style="width:auto; height:200px"></div><br>'+
-						  	'<div class="form-group" style="display:flex;justify-content:center;">'+
-						       	'<label class="control-label col-xs-12 col-sm-5" for="card" style="padding:0px">信用卡卡號</label>'+
-						       	'<div class="col-xs-12 col-sm-5" style="padding:0px">'+
-						       		'<input type="text" class="form-control" id="card" value="" name="card">'+
-						       	'</div>'+
-			   			   	'</div>'+
-							'<div class="form-group" style="display:flex;justify-content:center;">'+
-							    '<label class="control-label col-xs-12 col-sm-5" style="padding:0px" for="expiry">信用卡到期日</label>'+
-							    '<div class="col-xs-12 col-sm-5" style="display:flex;justify-content:space-between;padding:0px">'+
-								    '<input type="text" class="form-control" id="expiry1" value="" name="expiry1" style="width:40%">'+
-								    '<label style="text-align:center;">年</label>'+
-								    '<input type="text" class="form-control" id="expiry2" value="" name="expiry2" style="width:40%">'+
-								    '<label>月</label>'+
-							    '</div>'+
-				   			'</div>'+
-				   			'<a href"#">修改付款資料</a>'+
-			   			'</form>',
+			if(<%= vo.getSg_fee()%> != 0){
+				swal({
+					  title: "請填寫付款資訊", showCancelButton: true, showCloseButton: true,confirmButtonText: "確定付款",cancelButtonText: "取消",
+					  html:	
+						  	'<form>' +
+					  			'<div><img src="<%= request.getContextPath()%>/img/credit_card.svg" style="width:auto; height:200px"></div><br>'+
+							  	'<div class="form-group" style="display:flex;justify-content:center;">'+
+							       	'<label class="control-label col-xs-12 col-sm-5" for="card" style="padding:0px">信用卡卡號</label>'+
+							       	'<div class="col-xs-12 col-sm-5" style="padding:0px">'+
+							       		'<input type="text" class="form-control" id="card" value="123456789" name="card">'+
+							       	'</div>'+
+				   			   	'</div>'+
+								'<div class="form-group" style="display:flex;justify-content:center;">'+
+								    '<label class="control-label col-xs-12 col-sm-5" style="padding:0px" for="expiry">信用卡到期日</label>'+
+								    '<div class="col-xs-12 col-sm-5" style="display:flex;justify-content:space-between;padding:0px">'+
+									    '<input type="text" class="form-control" id="expiry1" value="21" name="expiry1" style="width:40%">'+
+									    '<label style="text-align:center;">年</label>'+
+									    '<input type="text" class="form-control" id="expiry2" value="05" name="expiry2" style="width:40%">'+
+									    '<label>月</label>'+
+								    '</div>'+
+					   			'</div>'+
+				   			'</form>',
 
-				}).then(
-					function (result) {
-					if(result){
-						$.ajax({
-							type: "POST",
-							url: "<%= request.getContextPath()%>/Sg_mem/Sg_mem.do",
-							data: {"action" : "insert", "sg_no" : "<%= vo.getSg_no()%>", "mem_no" : "<%= memberlistVO.getMem_no()%>"},
-							dataType: "json",
-							error: function(){
-								alert("發生錯誤!");
-							},
-							success: function(data){
-								if(data.answer){
-									swal({
-										  title: "成功加入!", html: "馬上到我的揪團查看", type: "success", showCancelButton: true, showCloseButton: true,confirmButtonText: "前往",cancelButtonText: "取消"
-										}).then(
-											function (result) {
-											if(result){
-												document.location.href="<%= request.getContextPath()%>/front-end/memberlist/MemManager.do?action=Member_Sg";
-											}
-											},function(dismiss) {
-												location.reload();
-											});
-								}else{
-									swal({
-									  title: "您已重複報名", html: "馬上到我的揪團查看", type: "error", showCancelButton: true, showCloseButton: true,confirmButtonText: "前往",cancelButtonText: "取消"
-									}).then(
-										function (result) {
-											if(result){
-												document.location.href="<%= request.getContextPath()%>/front-end/memberlist/MemManager.do?action=Member_Sg";
-											}
-											},function(dismiss) {
-												location.reload();
-											
-										});
-								};
+					}).then(
+						function (result) {
+							if(result){
+								join();
 							}
-						}); //ajax
-						
-					}
-					},function(dismiss) {
-						location.reload();
-					});
-			
+						},function(dismiss) {
+							location.reload();
+						});
+			}else{
+				join();
+			}
 			
 			
 		}); //joinbtn click
+		
+		function join(){
+			$.ajax({
+				type: "POST",
+				url: "<%= request.getContextPath()%>/Sg_mem/Sg_mem.do",
+				data: {"action" : "insert", "sg_no" : "<%= vo.getSg_no()%>", "mem_no" : "<%= memberlistVO.getMem_no()%>"},
+				dataType: "json",
+				error: function(){
+					alert("發生錯誤!");
+				},
+				success: function(data){
+					if(data.answer){
+						swal({
+							  title: "成功加入!", html: "馬上到我的揪團查看", type: "success", showCancelButton: true, showCloseButton: true,confirmButtonText: "前往",cancelButtonText: "取消"
+							}).then(
+								function (result) {
+								if(result){
+									document.location.href="<%= request.getContextPath()%>/front-end/memberlist/MemManager.do?action=Member_Sg";
+								}
+								},function(dismiss) {
+									location.reload();
+								});
+					}else{
+						swal({
+						  title: "您已重複報名", html: "馬上到我的揪團查看", type: "error", showCancelButton: true, showCloseButton: true,confirmButtonText: "前往",cancelButtonText: "取消"
+						}).then(
+							function (result) {
+								if(result){
+									document.location.href="<%= request.getContextPath()%>/front-end/memberlist/MemManager.do?action=Member_Sg";
+								}
+								},function(dismiss) {
+									location.reload();
+								
+							});
+					};
+				}
+			}); //ajax
+		} //function join
 		
 		
 		$("#repbtn").click(function(){

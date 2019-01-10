@@ -73,7 +73,6 @@ public class Sg_infoServlet extends HttpServlet {
 				
 				//日期檢查
 				Timestamp sg_date = null;
-				Timestamp apl_start = null;
 				Timestamp apl_end = null;
 				try {
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
@@ -81,15 +80,12 @@ public class Sg_infoServlet extends HttpServlet {
 					sg_date= new Timestamp(date.getTime());
 					
 					SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-//					Date date2 = sdf2.parse(req.getParameter("apl_start").trim());
-//					apl_start= new Timestamp(date2.getTime());
 					
 					Date date3 = sdf2.parse(req.getParameter("apl_end").trim());
 					apl_end= new Timestamp(date3.getTime());
 					
 				}catch(Exception e) {
 					sg_date = new Timestamp(System.currentTimeMillis());
-//					apl_start = new Timestamp(System.currentTimeMillis());
 					apl_end = new Timestamp(System.currentTimeMillis());
 					errorMsg.put("date","請輸入日期!");
 				}
@@ -150,18 +146,12 @@ public class Sg_infoServlet extends HttpServlet {
 					}
 				}
 				
-//				//路線座標檢查
-//				if("SP006".equals(sp_no) || "SP007".equals(sp_no)) {
-//					if(loc_start == null || loc_end == null) {
-//						errorMsg.put("loc","請規劃路線");
-//					}
-//				}
 				
 				
 				String mem_no = req.getParameter("mem_no").trim();
 				String sg_per = req.getParameter("sg_per").trim();
-//				String v_no = req.getParameter("v_no").trim();
 				String sg_extrainfo = req.getParameter("sg_extrainfo").trim();
+				String club_no = req.getParameter("club_no").trim();
 				
 				
 				//準備VO，若有錯誤就原封不動把VO再跟著錯誤送回去
@@ -169,7 +159,7 @@ public class Sg_infoServlet extends HttpServlet {
 //				sg_infoVO.setMem_no(mem_no);
 //				sg_infoVO.setSg_name(sg_name);
 //				sg_infoVO.setSg_date(sg_date);
-//				sg_infoVO.setApl_start(apl_start);
+//				sg_infoVO.setClub_no(club_no);
 //				sg_infoVO.setApl_end(apl_end);
 //				sg_infoVO.setSg_pic(sg_pic);
 //				sg_infoVO.setSg_fee(sg_fee);
@@ -190,7 +180,7 @@ public class Sg_infoServlet extends HttpServlet {
 				
 				///////////////////開始INSERT資料//////////////////////////
 				Sg_infoService svc = new Sg_infoService();
-				svc.insertSg_info(mem_no, sg_name, sg_date, apl_start, apl_end, sg_fee, sg_pic, 
+				svc.insertSg_info(mem_no, sg_name, sg_date, club_no, apl_end, sg_fee, sg_pic, 
 						null, sg_per, sp_no, v_no, sg_maxno, sg_minno, 0, 0, 
 						sg_extrainfo, loc_start, loc_end);
 						
@@ -246,7 +236,6 @@ public class Sg_infoServlet extends HttpServlet {
 				
 				//日期檢查
 				Timestamp sg_date = null;
-				Timestamp apl_start = null;
 				Timestamp apl_end = null;
 				try {
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
@@ -254,15 +243,12 @@ public class Sg_infoServlet extends HttpServlet {
 					sg_date= new Timestamp(date.getTime());
 					
 					SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-//					Date date2 = sdf2.parse(req.getParameter("apl_start").trim());
-//					apl_start= new Timestamp(date2.getTime());
 					
 					Date date3 = sdf2.parse(req.getParameter("apl_end").trim());
 					apl_end= new Timestamp(date3.getTime());
 					
 				}catch(IllegalArgumentException e) {
 					sg_date = new Timestamp(System.currentTimeMillis());
-//					apl_start = new Timestamp(System.currentTimeMillis());
 					apl_end = new Timestamp(System.currentTimeMillis());
 					errorMsg.add("請輸入日期!");
 				}
@@ -317,8 +303,8 @@ public class Sg_infoServlet extends HttpServlet {
 				String mem_no = req.getParameter("mem_no").trim();
 				String sg_pic_ext = req.getParameter("sg_pic_ext").trim();
 				String sg_per = req.getParameter("sg_per").trim();
-				
 				String sg_extrainfo = req.getParameter("sg_info4").trim();
+				String club_no = req.getParameter("club_no").trim();
 				
 				
 				
@@ -328,7 +314,7 @@ public class Sg_infoServlet extends HttpServlet {
 				sg_infoVO.setMem_no(mem_no);
 				sg_infoVO.setSg_name(sg_name);
 				sg_infoVO.setSg_date(sg_date);
-				sg_infoVO.setApl_start(apl_start);
+				sg_infoVO.setClub_no(club_no);
 				sg_infoVO.setApl_end(apl_end);
 				sg_infoVO.setSg_fee(sg_fee);
 				sg_infoVO.setSg_pic(sg_pic);
@@ -351,7 +337,7 @@ public class Sg_infoServlet extends HttpServlet {
 				}
 				
 				///////////////////開始UPDATE資料//////////////////////////
-				sg_infoVO = svc.updateSg_info(sg_no, mem_no, sg_name, sg_date, apl_start, apl_end, sg_fee, sg_pic, sg_pic_ext, sg_per, sp_no, v_no, sg_maxno, sg_minno, sg_extrainfo, loc_start, loc_end);
+				sg_infoVO = svc.updateSg_info(sg_no, mem_no, sg_name, sg_date, club_no, apl_end, sg_fee, sg_pic, sg_pic_ext, sg_per, sp_no, v_no, sg_maxno, sg_minno, sg_extrainfo, loc_start, loc_end);
 				
 				req.setAttribute("Sg_infoVO", sg_infoVO);
 				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/Sg_info/Sg_infoGetByPkForHead.jsp");

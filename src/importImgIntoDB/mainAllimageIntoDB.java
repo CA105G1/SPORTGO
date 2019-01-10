@@ -17,12 +17,12 @@ public class mainAllimageIntoDB {
 	public static void main(String[] args) {
 		
 		// 請設定pull到本地端的路徑，如--->C:\Users\wenshock\git\SPORTGO\InitDB\image
-		String rootPath = "C:\\Users\\kevin_000\\git\\SPORTGO\\WebContent\\InitDB\\image";
+//		String rootPath = "C:\\Users\\kevin_000\\git\\SPORTGO\\WebContent\\InitDB\\image";
 //		String rootPath = "/Users/ChengChih-Ren/git/SPORTGOG1/WebContent/InitDB/image";
 //		String rootPath = "C:\\Users\\wenshock\\git\\SPORTGO\\WebContent\\InitDB\\image";
 //		String rootPath = "C:\\Users\\coolbee333\\git\\SPORTGO\\WebContent\\InitDB\\image";
 //		String rootPath = "C:\\Users\\Java\\git\\SPORTGO\\WebContent\\InitDB\\image";
-//		String rootPath = "C:\\Users\\Shawn\\git\\SPORTGO\\WebContent\\InitDB\\image";
+		String rootPath = "C:\\Users\\Shawn\\git\\SPORTGO\\WebContent\\InitDB\\image";
 		String pathContant = "\\"; // microsoft "\\" mac "/"
 		File file = new File(rootPath);
 		if(!file.isDirectory()) {

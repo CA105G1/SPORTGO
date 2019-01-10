@@ -11,7 +11,7 @@ public class Sg_infoService {
 		dao = new Sg_infoDAO();
 	}
 	
-	public Sg_infoVO insertSg_info(String mem_no, String sg_name, Timestamp sg_date, Timestamp apl_start, Timestamp apl_end, 
+	public Sg_infoVO insertSg_info(String mem_no, String sg_name, Timestamp sg_date, String club_no, Timestamp apl_end, 
 			Integer sg_fee, byte[] sg_pic, String sg_pic_ext, String sg_per, String sp_no, String v_no, 
 			Integer sg_maxno, Integer sg_minno, Integer sg_ttlapl, Integer sg_chkno, String sg_extrainfo, String loc_start, 
 			String loc_end) {
@@ -21,7 +21,7 @@ public class Sg_infoService {
 		vo.setMem_no(mem_no);
 		vo.setSg_name(sg_name);
 		vo.setSg_date(sg_date);
-		vo.setApl_start(apl_start);
+		vo.setClub_no(club_no);
 		vo.setApl_end(apl_end);
 		vo.setSg_fee(sg_fee);
 		vo.setSg_pic(sg_pic);
@@ -44,7 +44,7 @@ public class Sg_infoService {
 	
 	
 	
-	public Sg_infoVO updateSg_info(String sg_no, String mem_no, String sg_name, Timestamp sg_date, Timestamp apl_start, Timestamp apl_end, 
+	public Sg_infoVO updateSg_info(String sg_no, String mem_no, String sg_name, Timestamp sg_date, String club_no, Timestamp apl_end, 
 			Integer sg_fee, byte[] sg_pic, String sg_pic_ext, String sg_per, String sp_no, String v_no, 
 			Integer sg_maxno, Integer sg_minno, String sg_extrainfo, String loc_start, 
 			String loc_end) {
@@ -55,7 +55,7 @@ public class Sg_infoService {
 		vo.setMem_no(mem_no);
 		vo.setSg_name(sg_name);
 		vo.setSg_date(sg_date);
-		vo.setApl_start(apl_start);
+		vo.setClub_no(club_no);
 		vo.setApl_end(apl_end);
 		vo.setSg_fee(sg_fee);
 		vo.setSg_pic(sg_pic);
