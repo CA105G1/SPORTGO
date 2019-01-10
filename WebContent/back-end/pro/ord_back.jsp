@@ -127,11 +127,20 @@
 
 		table {
 			border-collapse: separate;
-			border-spacing: 0 0.5rem;
-		}
+/* 			border-spacing: 0 0.5rem; */
 
+			border-bottom :0px;
+		}
+        .table>thead>tr>th {
+		    border-bottom: 0px;
+		}
 		th {
 			text-align: center;
+			border-bottom :0px;
+			
+		}
+		tr:hover {
+		    background: #000;
 		}
 
 		td {
@@ -148,6 +157,9 @@
 		.divAdd{
 			/*按鈕add靠右*/
 		}
+		div.panel{
+			display:none;
+		}
 		</style>
 	</head>
 
@@ -157,119 +169,129 @@
 
 
 
-							<!-- 表單 -->
-							<div class="container-fluid warp">
-								<div class="row">
-									<!-- 容器區 -->
-									<div class="container-fluid warpwidth">
-										<div class="row">
-											<div>
-												<h2 class="fontsize">?件商品</h2>
-											</div>
-											<!-- 關鍵字搜尋 -->
-											<div class="container">
-												<div class="row">
-													<div class="col-xs-12 col-sm-4">
-														<div class="row">
-															<!-- 搜尋表單 -->
-															<div>
-											
-															</div>
-															<div class="input-group">
-																<input type="text" class="form-control" placeholder="請輸入關鍵字">
-																<span class="input-group-btn">
-																	<button class="btn btn-info" type="button">搜尋</button>
-																</span>
-															</div>
-															<div class="divAdd">
-																<a href="<%= request.getContextPath()%>/back-end/pro/addPro.jsp">Add</a>
-															</div>
-														</div>
-													</div>
-													<div class="col-xs-12 col-sm-4"></div>
-													<div class="col-xs-12 col-sm-4"></div>
-												</div>
-											</div>
-                                            
-											
-											<!-- 所有商品 -->
-											<c:forEach var="ordListVO" items="${listAll}">
-											
-												<table class="table table-hover ">
-													<thead class="flip">
-														<tr class="tablebgc">
-															<th class="thwidth">商品名稱圖片</th>
-															<th>商品編號</th>
-															<th>買家應付金額</th>
-															<th>買家購買數量</th>
-															<th>訂單狀態</th>
-															<th>商品當前庫存</th>
-															<th>操作</th>
-														</tr>
-														<tr>
-															<th>
-															    <img src="<%=request.getContextPath()%>
-									/front-end/memberlist/showPicture.do?mem_no=${ordListVO.mem_no}"
-									style="max-width:40px;max-height:40px;">
-																${memSvc.getOneMem(ordListVO.mem_no).mem_name}
-															</th>
-															<th>${ordListVO.mem_no}</th>
-															<th>${ordListVO.ord_no}</th>
-															<th></th>
-															<th><div id="${ordListVO.ord_no}">${ordListVO.ord_status}</div></th>
-															<th></th>
-															<th>
-																<select name=""  class="form-control select_ord_change" style="width:90px;">
-																	<option value="${ordListVO.ord_no}">完成</option>
-																	<option value="${ordListVO.ord_no}">取消</option>
-																</select>
-															    
-															</th>
-														</tr>
-													</thead>
-													<tbody class="panel">
-														
-														<c:forEach var="orddetails" items="${orddetailsSvc.getOneOrd(ordListVO.ord_no)}" >
-															<tr>
-																<!-- 商品圖片名稱 -->
-																<td style="text-align: left;">
-																	<div style="height: 80px">
-																		<img class="imgsize" src="<%=request.getContextPath()%>/pro/proImg.do?pro_no=${proSvc.getOneProduct(orddetails.pro_no).pro_no}">
-																		${proSvc.getOneProduct(orddetails.pro_no).pro_name}
-																	</div>
-																</td>
-																<!-- 商品編號 -->
-																<td>${orddetails.pro_no }</td>
-																<!-- 買家應付金額 -->
-																<td>
-																	${orddetails.ord_probonuns *orddetails.pro_count}
-																</td>
-																<!-- 買家購買數量 -->
-																<td>
-																	${orddetails.pro_count }
-																</td>
-																<!-- 商品狀態 -->
-																<td>
-																	${proSvc.getOneProduct(orddetails.pro_no).pro_shelve}
-																</td>
-																<!-- 商品庫存 -->
-																<td>
-																	${proSvc.getOneProduct(orddetails.pro_no).pro_stock}
-																</td>
-																<!-- 下拉式按鈕 -->
-																<td>
-																	
-																</td>
-															</tr>
-														</c:forEach>
-
-													</tbody>
-												</table>
-											</c:forEach>		
+		<!-- 表單 -->
+		<div class="container-fluid warp">
+			<div class="row">
+				<!-- 容器區 -->
+				<div class="container-fluid warpwidth">
+					<div class="row">
+						<div>
+							<h2 class="fontsize">?件商品</h2>
+						</div>
+						<!-- 關鍵字搜尋 -->
+						<div class="container">
+							<div class="row">
+								<div class="col-xs-12 col-sm-4">
+									<div class="row">
+										<!-- 搜尋表單 -->
+										<div>
+						
+										</div>
+										<div class="input-group">
+											<input type="text" class="form-control" placeholder="請輸入關鍵字">
+											<span class="input-group-btn">
+												<button class="btn btn-info" type="button">搜尋</button>
+											</span>
+										</div>
+										<div class="divAdd">
+											<a href="<%= request.getContextPath()%>/back-end/pro/addPro.jsp">Add</a>
 										</div>
 									</div>
 								</div>
+								<div class="col-xs-12 col-sm-4"></div>
+								<div class="col-xs-12 col-sm-4"></div>
 							</div>
+						</div>
+                                       
+						
+						<!-- 所有商品 -->
+						<c:forEach var="ordListVO" items="${listAll}" varStatus="s">
+						<div>
+							<table class="table table-hover flip" style=" margin-bottom: 0px;">
+								<thead>
+								    
+									<tr class="tablebgc">
+<%-- 									<c:if test="${s.index} == '2'}" var="condition" scope="page" >  --%>
+										<th class="thwidth">商品名稱圖片</th>
+										<th>商品編號</th>
+										<th>買家應付金額</th>
+										<th>買家購買數量</th>
+										<th>訂單狀態</th>
+										<th>商品當前庫存</th>
+										<th>操作</th>
+<%-- 									</c:if> --%>
+									</tr>
+									
+									<tr>
+										<th>
+										    <img src="<%=request.getContextPath()%>/front-end/memberlist/showPicture.do?mem_no=${ordListVO.mem_no}" style="max-width:40px;max-height:40px;">
+											${memSvc.getOneMem(ordListVO.mem_no).mem_name}
+										</th>
+										<th>${ordListVO.mem_no}</th>
+										<th>${ordListVO.ord_no}</th>
+										<th></th>
+										<th><div id="${ordListVO.ord_no}">${ordListVO.ord_status}</div></th>
+										<th></th>
+										<th>
+											<select name=""  class="form-control select_ord_change" style="width:90px;">
+												<option value="${ordListVO.ord_no}">完成</option>
+												<option value="${ordListVO.ord_no}">取消</option>
+											</select>
+										    
+										</th>
+									</tr>
+								</thead>
+									<tbody>
+									</tbody>
+							</table>
+							<c:forEach var="orddetails" items="${orddetailsSvc.getOneOrd(ordListVO.ord_no)}" >
+							<div class="panel" style="margin-bottom: 0px;">
+								<table class="table table-hover">
+								    <thead>
+									    
+								    </thead>
+									<tbody>
+										<tr class="xs1">
+											<!-- 商品圖片名稱 -->
+											<td style="text-align: left; width: 249px;">
+<!-- 												<div style="height: 80px"> -->
+													<img class="imgsize" src="<%=request.getContextPath()%>/pro/proImg.do?pro_no=${proSvc.getOneProduct(orddetails.pro_no).pro_no}">
+													${proSvc.getOneProduct(orddetails.pro_no).pro_name}
+<!-- 												</div> -->
+											</td>
+											<!-- 商品編號 -->
+											<td style="width: 106px">${orddetails.pro_no }</td>
+											<!-- 買家應付金額 -->
+											<td style="width: 188px">
+												${orddetails.ord_probonuns *orddetails.pro_count}
+											</td>
+											<!-- 買家購買數量 -->
+											<td style="width: 148px">
+												${orddetails.pro_count }
+											</td>
+											<!-- 商品狀態 -->
+											<td style="width: 106px">
+												${proSvc.getOneProduct(orddetails.pro_no).pro_shelve}
+											</td>
+											<!-- 商品庫存 -->
+											<td style="width: 148px">
+												${proSvc.getOneProduct(orddetails.pro_no).pro_stock}
+											</td>
+											<!-- 下拉式按鈕 -->
+											<td>
+												
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								</div>
+							</c:forEach>
+							</div>
+						</c:forEach>		
+					</div>
+				</div>
+			</div>
+		</div>
 							
 
 
@@ -280,7 +302,7 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 			<script type="text/javascript">
 				$(document).ready(function(){
-				      $(".flip").click(function(){
+				      $(".flip").hover(function(){
 				          $(this).siblings(".panel").slideToggle("slow");
 				          $(this).siblings(".xs1").toggle();
 				          $(".xs1").toggle();

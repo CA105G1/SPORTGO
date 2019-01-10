@@ -180,10 +180,10 @@
 			<!-- 標籤面板：標籤區 -->
 					    <ul class="nav nav-tabs" role="tablist">
 					        <li role="presentation" class="active">
-					            <a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">商品管理</a>
+					            <a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">商品列表</a>
 					        </li>
 					        <li role="presentation" class="">
-					            <a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">訂單管理</a>
+					            <a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">訂單列表</a>
 					        </li>
 					        <li role="presentation">
 					            <a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">標題三</a>
