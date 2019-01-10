@@ -289,50 +289,50 @@ overflow: hidden;
 					<div class="row">
 						<div class="col-xs-12 col-sm-1"></div>
 						<!-- 複合查詢 -->
-							<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/pro/pro.do" name="form1">
-								<div class="col-xs-12 col-sm-2 aa">
-									<ul class="list-group">
-										<li class="list-group-item">
-											<div>
-												商品編號
-											</div>
-											<div>
-												<input type="text" name="pro_no">
-											</div>
-										</li>
-										<li class="list-group-item">
-											商品類別編號
-										    <select size="1" name="pro_classid" class="form-control">
+<%-- 							<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/pro/pro.do" name="form1"> --%>
+<!-- 								<div class="col-xs-12 col-sm-2 aa"> -->
+<!-- 									<ul class="list-group"> -->
+<!-- 										<li class="list-group-item"> -->
+<!-- 											<div> -->
+<!-- 												商品編號 -->
+<!-- 											</div> -->
+<!-- 											<div> -->
+<!-- 												<input type="text" name="pro_no"> -->
+<!-- 											</div> -->
+<!-- 										</li> -->
+<!-- 										<li class="list-group-item"> -->
+<!-- 											商品類別編號 -->
+<!-- 										    <select size="1" name="pro_classid" class="form-control"> -->
 											    
-										          <option value="">
-										         <c:forEach var="proclassVO" items="${proclassSvc.all}" > 
-										          <option value="${proclassVO.pro_classid}">${proclassVO.pro_classname}
-										         </c:forEach>   
+<!-- 										          <option value=""> -->
+<%-- 										         <c:forEach var="proclassVO" items="${proclassSvc.all}" >  --%>
+<%-- 										          <option value="${proclassVO.pro_classid}">${proclassVO.pro_classname} --%>
+<%-- 										         </c:forEach>    --%>
 										       
-										    </select>
-										</li>
-										<li class="list-group-item">
-											<div>
-												商品名稱
-											</div>
-											<div>
-												<input type="text" name="pro_name">
-											</div>
-										</li>
-										<li class="list-group-item">
-											<div>
-												商品單價
-											</div>
-											<div>
-												<input type="text" name="pro_bonus">
-											</div>
-										</li>
-									</ul>
-										 <input type="submit" value="送出">
-										 <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
-										 <input type="hidden" name="action" value="pro_ByCompositeQuery">
-								</div>
-							</FORM>
+<!-- 										    </select> -->
+<!-- 										</li> -->
+<!-- 										<li class="list-group-item"> -->
+<!-- 											<div> -->
+<!-- 												商品名稱 -->
+<!-- 											</div> -->
+<!-- 											<div> -->
+<!-- 												<input type="text" name="pro_name"> -->
+<!-- 											</div> -->
+<!-- 										</li> -->
+<!-- 										<li class="list-group-item"> -->
+<!-- 											<div> -->
+<!-- 												商品單價 -->
+<!-- 											</div> -->
+<!-- 											<div> -->
+<!-- 												<input type="text" name="pro_bonus"> -->
+<!-- 											</div> -->
+<!-- 										</li> -->
+<!-- 									</ul> -->
+<!-- 										 <input type="submit" value="送出"> -->
+<%-- 										 <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>"> --%>
+<!-- 										 <input type="hidden" name="action" value="pro_ByCompositeQuery"> -->
+<!-- 								</div> -->
+<!-- 							</FORM> -->
 		                
 		                <!-- 右邊區域 -->
 							<div class="col-xs-12 col-sm-9 prosize" >

@@ -163,8 +163,8 @@
 											<th>商品單價</th>
 											<th>商品庫存</th>
 											<th>商品狀態</th>
-											<th colspan="2">操作</th>
-											<th></th>
+											<th>狀態操作</th>
+											<th>詳細操作</th>
 										</tr>
 									</thead>
 									<tbody>

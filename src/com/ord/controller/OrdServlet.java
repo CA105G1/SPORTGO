@@ -299,18 +299,24 @@ if ("ok_cancel".equals(action)) { //來自shoppingcart_front.jsp的請求
 			// send the ErrorPage view.
 			String ord_no = req.getParameter("ord_no");
 			String ord_status = req.getParameter("ord_status");
-
+            
+			/*****永續存取*****/
 			OrdService ordSvc = new OrdService();
-
-			int i = ordSvc.updataStatus(ord_no, ord_status);
-			System.out.println("更新比數" + i);
+			OrdVO ordVO = ordSvc.updataStatus(ord_no, ord_status);
+			/*****轉交需要設定這三行不然JSON會有亂碼*******/
+			res.setContentType("text/xml;charset=UTF-8");
+			res.setHeader("Cache-Control", "no-cache");
+			res.setCharacterEncoding("UTF-8");
 			
 			PrintWriter out = res.getWriter();
-			String return_ord_no = "{\"ord_no\":"+ord_no+"}";
+			
+//			String return_ord_no = "{\"ord_no\":"+ord_no+"}";
 			try {
-
-			String job = new JSONObject(return_ord_no).toString();//需要回傳不然ajax會出錯
-			out.write(job);
+			JSONObject obj = new JSONObject();
+			obj.put("ord_no", ord_no); 
+			obj.put("ord_status", ord_status);
+//			String job = new JSONObject(return_ord_no).toString();//需要回傳不然ajax會出錯
+			out.write(obj.toString());
 			out.flush();
 			out.close();
 			
@@ -319,6 +325,7 @@ if ("ok_cancel".equals(action)) { //來自shoppingcart_front.jsp的請求
 				e.printStackTrace();
 			}
         }
+/*
 if ("cancel".equals(action)) { //來自shoppingcart_front.jsp的請求
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -344,7 +351,7 @@ if ("cancel".equals(action)) { //來自shoppingcart_front.jsp的請求
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
+		}*/
 	}
 
     public static byte[] Photo (InputStream in) {  //將inputStream to byte[]

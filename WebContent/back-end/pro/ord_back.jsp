@@ -28,7 +28,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-	<title>我的商品</title>
+	<title>訂單管理</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 	<!--[if lt IE 9]>
 	    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -152,147 +152,10 @@
 	</head>
 
 	<body>
-<%@ include file="/front-end/CA105G1_header.file" %>
-		<div class="container-fluid backgc">
-			<div class="row">
-
-				<!-- navbar -->
-<!-- 				<div class="container-fluid "> -->
-<!-- 					<div class="row"> -->
-<!-- 						<nav class="navbar navbar-default" role="navigation"> -->
-<!-- 							<div class="container"> -->
-<!-- 								<div class="navbar-header"> -->
-<!-- 									<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"> -->
-<!-- 										<span class="sr-only">選單切換</span> -->
-<!-- 										<span class="icon-bar"></span> -->
-<!-- 										<span class="icon-bar"></span> -->
-<!-- 										<span class="icon-bar"></span> -->
-<!-- 									</button> -->
-<!-- 									<a class="navbar-brand" href="#">SPORTGO</a> -->
-<!-- 								</div> -->
-
-<!-- 								手機隱藏選單區 -->
-<!-- 								<div class="collapse navbar-collapse navbar-ex1-collapse "> -->
-<!-- 									左選單 -->
-<!-- 									<ul class="nav navbar-nav"> -->
-<!-- 										<li class="active"> -->
-<!-- 											<a href="#">我的商品</a> -->
-<!-- 										</li> -->
-<!-- 										<li> -->
-<!-- 											<a href="#">我的賣場分類</a> -->
-<!-- 										</li> -->
-<!-- 										<li> -->
-<!-- 											<a href="#">我的銷售</a> -->
-<!-- 										</li> -->
-<!-- 										<li> -->
-<!-- 											<a href="#">我的行銷活動</a> -->
-<!-- 										</li> -->
-<!-- 										<li> -->
-<!-- 											<a href="#">我的進帳</a> -->
-<!-- 										</li> -->
-<!-- 										<li> -->
-<!-- 											<a href="#">我的錢包</a> -->
-<!-- 										</li> -->
-<!-- 										<li> -->
-<!-- 											<a href="#">賣場設定</a> -->
-<!-- 										</li> -->
-<!-- 									</ul> -->
-<!-- 									右選單 -->
-<!-- 									<ul class="nav navbar-nav navbar-right"> -->
-
-<!-- 										<li> -->
-<!-- 											<a href="#"></a> -->
-<!-- 										</li> -->
-<!-- 										<li> -->
-<!-- 											<a href="#">個人設定</a> -->
-<!-- 										</li> -->
-<!-- 										<li class="dropdown"> -->
-<!-- 											<a href="#" class="dropdown-toggle" data-toggle="dropdown">繁體中文 -->
-<!-- 												<b class="caret"></b> -->
-<!-- 											</a> -->
-<!-- 											<ul class="dropdown-menu"> -->
-<!-- 												<li> -->
-<!-- 													<a href="#">切換成買家</a> -->
-<!-- 												</li> -->
-<!-- 												<li> -->
-<!-- 													<a href="#">登出</a> -->
-<!-- 												</li> -->
-<!-- 											</ul> -->
-<!-- 										</li> -->
-<!-- 									</ul> -->
-<!-- 								</div> -->
-<!-- 								手機隱藏選單區結束 -->
-<!-- 							</div> -->
-<!-- 						</nav> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-
-				<%-- 錯誤表列 --%>
-					<c:if test="${not empty errorMsgs}">
-						<font style="color:red">請修正以下錯誤:</font>
-						<ul>
-							<c:forEach var="message" items="${errorMsgs}">
-								<li style="color:red">${message}</li>
-							</c:forEach>
-						</ul>
-					</c:if>
 
 
-				<div class="container-fluid">
-					<div class="row">
-						<!-- 複合查詢 -->
-						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/pro/pro.do" name="form1">
-							<div class="col-xs-12 col-sm-2">
-								<ul class="list-group">
-									<li class="list-group-item">
-										<div>
-											商品編號
-										</div>
-										<div>
-											<input type="text" name="pro_no">
-										</div>
-									</li>
-									<li class="list-group-item">
-										商品類別編號
-									    <select size="1" name="pro_classid" class="form-control">
-										    
-									          <option value="">
-									         <c:forEach var="proclassVO" items="${proclassSvc.all}" > 
-									          <option value="${proclassVO.pro_classid}">${proclassVO.pro_classname}
-									         </c:forEach>   
-									       
-									    </select>
-									</li>
-									<li class="list-group-item">
-										<div>
-											商品名稱
-										</div>
-										<div>
-											<input type="text" name="pro_name">
-										</div>
-									</li>
-									<li class="list-group-item">
-										<div>
-											商品單價
-										</div>
-										<div>
-											<input type="text" name="pro_bonus">
-										</div>
-									</li>
-									<li class="list-group-item">
-										<div>
-											商品狀態
-										</div>
-										<div>
-											<input type="text" name="pro_shelve">
-										</div>
-									</li>
-								</ul>
-								 <input type="submit" value="送出">
-									 <input type="hidden" name="action" value="pro_ByCompositeQuery">
-							</div>
-						</FORM>
-						<div class="col-xs-12 col-sm-9">
+
+
 
 							<!-- 表單 -->
 							<div class="container-fluid warp">
@@ -356,36 +219,11 @@
 															<th><div id="${ordListVO.ord_no}">${ordListVO.ord_status}</div></th>
 															<th></th>
 															<th>
-															    <div class="btn-group">
-																		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-																			<i class="fa fa-pencil-square">
-																				編輯
-																			</i>
-																			<span class="caret"></span>
-																		</button>
-																		<ul class="dropdown-menu" role="menu">
-																			<li>
-																				<a href="#"></a>
-																			</li>
-																			<li>
-<%-- 																				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/pro/pro.do" style="margin-bottom: 0px;"> --%>
-<!-- 																					<input type="submit" value="修改"> -->
-<%-- 																					<input type="hidden" name="pro_no" value="${proVO.pro_no}"> --%>
-<!-- 																					<input type="hidden" name="action" value="getOne_For_Update"> -->
-<!-- 																				</FORM> -->
-																			</li>
-																			<li>
-																				<button type="button" class="ok" value="${ordListVO.ord_no}">完成訂單</button>
-																			</li>
-																			<li>
-																				<button type="button" class="cancel" value="${ordListVO.ord_no}">取消訂單</button>
-																			</li>
-																			<li class="divider"></li>
-																			<li>
-																				<a href="#">未設置</a>
-																			</li>
-																		</ul>
-																	</div>
+																<select name=""  class="form-control select_ord_change" style="width:90px;">
+																	<option value="${ordListVO.ord_no}">完成</option>
+																	<option value="${ordListVO.ord_no}">取消</option>
+																</select>
+															    
 															</th>
 														</tr>
 													</thead>
@@ -435,62 +273,76 @@
 							
 
 
-						</div>
-						<div class="col-xs-12 col-sm-1"></div>
-					</div>
-				</div>
 
-<%@ include file="/front-end/CA105G1_footer.file" %>
-			</div>
-		</div>
 
 
 			<script src="https://code.jquery.com/jquery.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 			<script type="text/javascript">
 				$(document).ready(function(){
-					$('.ok').each( function() {
-						$(this).click( function() {
-							var val = $(this).val();
-							$.ajax({
-								 type: "POST",
-								 url: "<%= request.getContextPath()%>/ord/ord.do",
-								 data: creatQueryOK(val),
-								 dataType: "json",
-								 success: function (data){
-									 $('#'+data.ord_no).html('完成');
-							     },
-							     error: function(){alert("AJAX-class發生錯誤囉!")}
-					         })
-						})
-					})
-					$('.cancel').each( function() {
-						$(this).click( function() {
-							var val = $(this).val();
-							$.ajax({
-								 type: "POST",
-								 url: "<%= request.getContextPath()%>/ord/ord.do",
-								 data: creatQuerycancel(val),
-								 dataType: "json",
-								 success: function (data){
-									 $('#'+data.ord_no).html('取消');
-							     },
-							     error: function(){alert("AJAX-class發生錯誤囉!")}
-					         })
-						})
-					})
-					
+					<!--下拉狀態-->
+					$('.select_ord_change').change(function(){
+						$.ajax({
+							 type: "POST",
+							 url: "<%= request.getContextPath()%>/ord/ord.do",
+							 data: creatQueryOrdSelect($(this).val(),$("option:selected", this).text()),
+							 dataType: "json",
+							 success: function (data){
+								 console.log(data.ord_no+'A');
+								 $('#'+data.ord_no).html(data.ord_status);
+						     },
+						     error: function(){alert("AJAX-class發生錯誤囉!")}
+				         })
+					})	
 				})
-				function creatQueryOK(ord_no){
+					<!--按鈕-->
+// 					$('.ok').each( function() {
+// 						$(this).click( function() {
+// 							var val = $(this).val();
+// 							$.ajax({
+// 								 type: "POST",
+<%-- 								 url: "<%= request.getContextPath()%>/ord/ord.do", --%>
+// 								 data: creatQueryOK(val),
+// 								 dataType: "json",
+// 								 success: function (data){
+// 									 $('#'+data.ord_no).html('完成');
+// 							     },
+// 							     error: function(){alert("AJAX-class發生錯誤囉!")}
+// 					         })
+// 						})
+// 					})
+// 					$('.cancel').each( function() {
+// 						$(this).click( function() {
+// 							var val = $(this).val();
+// 							$.ajax({
+// 								 type: "POST",
+<%-- 								 url: "<%= request.getContextPath()%>/ord/ord.do", --%>
+// 								 data: creatQuerycancel(val),
+// 								 dataType: "json",
+// 								 success: function (data){
+// 									 $('#'+data.ord_no).html('取消');
+// 							     },
+// 							     error: function(){alert("AJAX-class發生錯誤囉!")}
+// 					         })
+// 						})
+// 					})
 					
-					var queryString= {"action":"ok_cancel", "ord_no":ord_no , "ord_status" :"完成"};
+// 				})
+// 				function creatQueryOK(ord_no){
+					
+// 					var queryString= {"action":"ok_cancel", "ord_no":ord_no , "ord_status" :"完成"};
+// 					console.log(queryString);
+// 					return queryString;
+// 				}
+// 				function creatQuerycancel(ord_no){
+// 					var queryString= {"action":"ok_cancel", "ord_no":ord_no , "ord_status" :"取消"};
+// 					return queryString;
+// 				}	
+				function creatQueryOrdSelect(ord_no,ord_status){
+					var queryString= {"action":"ok_cancel", "ord_no":ord_no , "ord_status" :ord_status};
 					console.log(queryString);
 					return queryString;
 				}
-				function creatQuerycancel(ord_no){
-					var queryString= {"action":"ok_cancel", "ord_no":ord_no , "ord_status" :"取消"};
-					return queryString;
-				}					
 				// document.getElementById("display").style.display = 'none';
 				//    $(function() {  //將圖片預覽
 				//    	$('input[type=file]').change(function() {

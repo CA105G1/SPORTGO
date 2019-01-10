@@ -25,6 +25,8 @@ public class OrdJDBCDAO implements OrdDAO_interface{
 	private static final String SELECT_ALL = "SELECT * FROM ORD";
 	//狀態修改
 	private static final String UPDATA_STATUS = "UPDATE ORD SET   ORD_STATUS = ? WHERE ORD_NO = ?";
+	//會員編號查詢
+	private static final String SELECT_MEM_NO = "SELECT * FROM ORD WHERE MEM_NO = ?";
 	
     static {
     	try {
@@ -286,17 +288,27 @@ public class OrdJDBCDAO implements OrdDAO_interface{
 	}
 	
 	@Override
-	public int updataStatus(String ord_no,String ord_status) {
+	public OrdVO updataStatus(String ord_no,String ord_status) {
+		OrdVO ordVO = null;
 		Connection con = null; 
 		PreparedStatement ps = null;
-		int count = 0;
+		ResultSet rs = null;
 		try {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			ps = con.prepareStatement(UPDATA_STATUS);
 			ps.setString(1, ord_status);
 			ps.setString(2, ord_no);
+			ps.executeUpdate();
 			
-			count = ps.executeUpdate();
+			ps = con.prepareStatement(SELECT);
+			ps.setString(1, ord_no);
+			rs = ps.executeQuery();
+			
+			rs.next();
+			ordVO = new OrdVO();
+			ordVO.setOrd_no(rs.getString("ORD_NO"));
+			ordVO.setOrd_status(rs.getString("ORD_STATUS"));
+			
 			
 		} catch (SQLException e) {
 			
@@ -327,7 +339,7 @@ public class OrdJDBCDAO implements OrdDAO_interface{
 				}
 			}
 		}
-		return count;
+		return ordVO;
 	}
 	
 	@Override
@@ -429,6 +441,62 @@ public class OrdJDBCDAO implements OrdDAO_interface{
 		}
 	    return next_ord_no;
 	}
+	
+	//會員查詢訂單
+	@Override
+	public List<OrdVO> getAllmem_no(String mem_no) {
+		List<OrdVO> ordVOList = new ArrayList();
+		Connection con = null; 
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			ps = con.prepareStatement(SELECT_MEM_NO);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				OrdVO ordVO = new OrdVO();
+				ordVO.setOrd_no(rs.getString("ORD_NO"));
+				ordVO.setMem_no(rs.getString("MEM_NO"));
+				ordVO.setOrd_date(rs.getTimestamp("ORD_DATE"));
+				ordVO.setOrd_deldate(rs.getTimestamp("ORD_DELDATE"));
+				ordVO.setOrd_status(rs.getString("ORD_STATUS"));
+				ordVO.setOrd_backdeldate(rs.getTimestamp("ORD_BACKDELDATE"));
+				ordVO.setOrd_amount(rs.getInt("ORD_AMOUNT"));
+				ordVO.setOrd_backamount(rs.getInt("ORD_BACKAMOUNT"));
+				ordVOList.add(ordVO);
+			}
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}finally {
+			if(ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return ordVOList;
+	}
 //	public static void main (String[] args) {
 //		OrdJDBCDAO ordDAO = new OrdJDBCDAO();
 //		
@@ -456,6 +524,7 @@ public class OrdJDBCDAO implements OrdDAO_interface{
 //		
 //
 //	}
+	
 	
     
     
