@@ -8,7 +8,7 @@
 <%@ page import="java.util.*"%>
 
 <%-- 此頁練習採用 EL 的寫法取值 --%>
-
+ 
 <%
 	OrdService ordSvc = new OrdService();
     List<OrdVO> listAll = ordSvc.getAll();
@@ -196,7 +196,7 @@
 											<c:forEach var="ordListVO" items="${listAll}">
 											
 												<table class="table table-hover ">
-													<thead>
+													<thead class="flip">
 														<tr class="tablebgc">
 															<th class="thwidth">商品名稱圖片</th>
 															<th>商品編號</th>
@@ -227,7 +227,7 @@
 															</th>
 														</tr>
 													</thead>
-													<tbody>
+													<tbody class="panel">
 														
 														<c:forEach var="orddetails" items="${orddetailsSvc.getOneOrd(ordListVO.ord_no)}" >
 															<tr>
@@ -276,10 +276,16 @@
 
 
 
-			<script src="https://code.jquery.com/jquery.js"></script>
+<!-- 			<script src="https://code.jquery.com/jquery.js"></script> -->
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 			<script type="text/javascript">
 				$(document).ready(function(){
+				      $(".flip").click(function(){
+				          $(this).siblings(".panel").slideToggle("slow");
+				          $(this).siblings(".xs1").toggle();
+				          $(".xs1").toggle();
+				          $(".xs2").toggle();
+				        });
 					<!--下拉狀態-->
 					$('.select_ord_change').change(function(){
 						$.ajax({

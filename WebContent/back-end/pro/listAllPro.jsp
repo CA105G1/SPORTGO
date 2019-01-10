@@ -368,6 +368,7 @@
 			<script type="text/javascript">
 			$(document).ready(function(){
 				$('#example').DataTable();
+				$('#example1').DataTable();
 				$('.select_change').change(function(){
 					$.ajax({
 						 type: "POST",
