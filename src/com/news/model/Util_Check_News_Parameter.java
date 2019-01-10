@@ -27,7 +27,7 @@ public class Util_Check_News_Parameter {
 		String key_newstype_no = "newstype_no";
 		if(map.containsKey(key_newstype_no)) {
 			String newstype_no = map.get(key_newstype_no)[0];
-			String newstype_noReg = "^[NT][0-9]{3}$";
+			String newstype_noReg = "^[N][T][0-9]{3}$";
 			if(newstype_no == null || newstype_no.trim().length()==0) {
 				//map.remove(key_v_no);
 			}else if(!newstype_no.trim().matches(newstype_noReg)) {

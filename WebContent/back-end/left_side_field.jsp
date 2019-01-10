@@ -57,8 +57,8 @@
 			  	</div>
 			    <div class="panel-collapse collapse" id="sgBack">
 					<div class="list-group">
-						<a href="#" class="list-group-item">揪團列表</a>
-						<a href="#" class="list-group-item">揪團檢舉列表</a>
+						<a href="<%=request.getContextPath()%>/back-end/sg_info/sg_infoBackEnd.jsp" class="list-group-item">揪團列表</a>
+						<a href="<%=request.getContextPath()%>/back-end/sg_info/Sg_infoGetByPkForRep.jsp" class="list-group-item">揪團檢舉列表</a>
 					</div>
 				</div>
 			</div>
@@ -112,7 +112,7 @@
 					<div class="list-group">
 						<a href="<%=request.getContextPath()%>/back-end/venue/maintain_venue_Info_Index_back.jsp" class="list-group-item">維護場地資訊</a>
 						<a href="#" class="list-group-item">維護賽事資訊</a>
-						<a href="#" class="list-group-item">最新消息管理</a>
+						<a href="<%=request.getContextPath()%>/back-end/news/maintain_news_info.jsp" class="list-group-item">最新消息管理</a>
 					</div>
 				</div>
 			</div>

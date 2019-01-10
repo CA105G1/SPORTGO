@@ -38,6 +38,10 @@
             vertical-align: middle;
             text-align:center
         }
+    .showSP{
+    	background-color: #FFEE99;
+    }
+        
 	</style>
 
 
@@ -57,12 +61,13 @@
 			<th>消息狀態</th>
 			<th>最初發布時間</th>
 			<th>截止時間</th>
+			<th>修改</th>
 		</tr>
 		
 		<%@ include file="pages/page1_forNews.file" %> 
 		<c:forEach var="newsVO" items="${myList}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 	
-			<tr>
+			<tr class='${newsVO.news_no==newsVO_toUpdate.news_no?"showSP":""}'>
 				<td>${newsVO.news_no}</td>
 				<td>${newsVO.newstype_no}</td>
 				<td>${newstypeService.getOneNewsType(newsVO.getNewstype_no()).getNewstype_name()}</td>
@@ -72,6 +77,17 @@
 				<td>${newsVO.news_stutas}</td>
 				<td>${newsVO.news_release_date}</td>
 				<td>${newsVO.news_last_date}</td>
+				
+				<td>
+				  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/news/news.do" style="margin-bottom: 0px;">
+				     <input type="submit" value="修改_刪除"> 
+				     <input type="hidden" name="news_no"      value="${newsVO.news_no}">
+				     <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
+				     <input type="hidden" name="whichPage"	value="<%=whichPage%>">               <!--送出當前是第幾頁給Controller-->
+<!-- 				     <input type="hidden" name="action"	    value="getOne_For_Update"> -->
+				     <input type="hidden" name="action"	    value="showOneNews">
+				  </FORM>
+				</td>
 			</tr>
 			
 		</c:forEach>
