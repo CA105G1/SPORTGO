@@ -1,7 +1,5 @@
----SportyGo_ver_0_2_5_create_and_insert_0107------
------insert into news data
-
----SportyGo_ver_0_2_5_create_0107------
+---SportyGo_ver_0_2_7_create_and_insert_0110------
+---SportyGo_ver_0_2_7_create_0110------
 --------------------------
 ------drop sequence-------
 --------------------------
@@ -54,12 +52,16 @@ DROP TABLE MULTIMEDIA;
 DROP TABLE CLUB_MEMBERLIST;
 ----
 DROP TABLE CLUB;
+-----
 DROP table SG_LIKE;
 DROP TABLE EVAOFMEM;
 DROP table SG_REP;
 DROP table SG_MEM;
 DROP table SG_MSG;
 DROP TABLE SG_INFO;
+--------------
+DROP TABLE CLUB;
+--------------
 DROP TABLE V_EVALUATION;
 DROP TABLE VENUE;
 DROP TABLE REGION;
@@ -81,7 +83,7 @@ CREATE TABLE MEMBERLIST(
     MEM_EMGC VARCHAR2(15),
     MEM_EMGCPHONE VARCHAR2(13),
     MEM_STATUS VARCHAR2(15) DEFAULT '未驗證' NOT NULL,
-    MEM_CARD NUMBER(16),
+    MEM_CARD NUMBER(19),
     MEM_EXPIRY VARCHAR2(7),
     MEM_PIC BLOB,
     MEM_PICKIND VARCHAR2(10),
@@ -204,6 +206,31 @@ CREATE TABLE V_EVALUATION (
     CONSTRAINT V_EVALUATION_MEMBER_FK FOREIGN KEY(MEM_NO) REFERENCES MEMBERLIST(MEM_NO),
     CONSTRAINT V_EVALUATION_VENUE_FK FOREIGN KEY(V_NO) REFERENCES VENUE(V_NO)
 );  
+
+
+------------14---------------------------
+------------CLUB-------------------------
+---------------------------------20181208
+CREATE TABLE CLUB (
+  CLUB_NO       VARCHAR2(7), 
+  SP_NO         VARCHAR2(7)  NOT NULL, 
+  PHOTO         BLOB,
+  PHOTO_EXT     VARCHAR2(10),
+  CLUB_STATUS   VARCHAR2(10) DEFAULT '正常' NOT NULL,
+  CLUB_NAME     VARCHAR2(20) NOT NULL,
+  CLUB_INTRO    CLOB,
+  
+  CONSTRAINT CLUB_PK PRIMARY KEY (CLUB_NO),
+  CONSTRAINT CLUB_FK FOREIGN KEY (SP_NO) REFERENCES SPORT (SP_NO)
+);
+CREATE SEQUENCE club_seq
+    INCREMENT BY 1
+    START WITH 1
+    MAXVALUE 9999
+    NOCYCLE
+    NOCACHE;
+
+
 ------------08---------------------------
 ------------SG_INFO----------------------
 ---------------------------------20181208
@@ -212,8 +239,9 @@ CREATE TABLE SG_INFO(
     MEM_NO varchar2(7) not null,
     SG_NAME varchar2(50) not null,
     SG_DATE timestamp not null,
-    APL_START timestamp,
-    APL_END timestamp not null,
+------    APL_START timestamp,
+    CLUB_NO varchar2(7),--------新增
+	APL_END timestamp not null,
     SG_FEE number(6,0),
     SG_PIC blob,
     SG_PIC_EXT varchar2(10),
@@ -236,7 +264,8 @@ CREATE TABLE SG_INFO(
     constraint SG_INFO_PK primary key (SG_NO),
     constraint FK1_SG_INFO_MEM foreign key (MEM_NO) references MEMBERLIST(MEM_NO),
     constraint FK2_SG_INFO_SPORT foreign key (SP_NO) references SPORT(SP_NO),
-    constraint FK3_SG_INFO_VEMUE foreign key (V_NO) references VENUE(V_NO)
+    constraint FK3_SG_INFO_VEMUE foreign key (V_NO) references VENUE(V_NO),
+	constraint FK3_SG_INFO_CLUB foreign key (CLUB_NO) references CLUB(CLUB_NO)-----新增
 );
 create sequence SG_INFO_SEQ
     start with 1
@@ -334,27 +363,7 @@ create table SG_LIKE(
     constraint SG_LIKE_FK2 foreign key (MEM_NO) references MEMBERLIST(MEM_NO)
 );
 
-------------14---------------------------
-------------CLUB-------------------------
----------------------------------20181208
-CREATE TABLE CLUB (
-  CLUB_NO       VARCHAR2(7), 
-  SP_NO         VARCHAR2(7)  NOT NULL, 
-  PHOTO         BLOB,
-  PHOTO_EXT     VARCHAR2(10),
-  CLUB_STATUS   VARCHAR2(10) DEFAULT '正常' NOT NULL,
-  CLUB_NAME     VARCHAR2(20) NOT NULL,
-  CLUB_INTRO    CLOB,
-  
-  CONSTRAINT CLUB_PK PRIMARY KEY (CLUB_NO),
-  CONSTRAINT CLUB_FK FOREIGN KEY (SP_NO) REFERENCES SPORT (SP_NO)
-);
-CREATE SEQUENCE club_seq
-    INCREMENT BY 1
-    START WITH 1
-    MAXVALUE 9999
-    NOCYCLE
-    NOCACHE;
+
 
 ------------15---------------------------
 ------------CLUB_MEMBERLIST------------------
@@ -656,14 +665,14 @@ CREATE SEQUENCE NEWSTYPE_SEQ
 ---------------------------------20181209
 CREATE TABLE NEWS
     (NEWS_NO        VARCHAR2(7)     PRIMARY KEY,
-    NEWS_TYPENO     VARCHAR2(7),
+    NEWSTYPE_NO     VARCHAR2(7),
     NEWS_SCRIPT     CLOB,
     PIC_EXTENSION   VARCHAR2(30),
     NEWS_PICTURE    BLOB,
     NEWS_STUTAS     VARCHAR2(12)    DEFAULT '未發布',
     NEWS_RELEASE_DATE TIMESTAMP,
     NEWS_LAST_DATE  TIMESTAMP,
-    FOREIGN KEY (NEWS_TYPENO) REFERENCES NEWSTYPE(NEWSTYPE_NO)
+    FOREIGN KEY (NEWSTYPE_NO) REFERENCES NEWSTYPE(NEWSTYPE_NO)
 );
 CREATE SEQUENCE NEWS_SEQ 
     INCREMENT BY 1 
@@ -727,8 +736,9 @@ Create table gym(
 COMMIT;
 
 
--------------------
----SportyGo_ver_0_2_0rv_insert_1227-------
+
+
+---SportyGo_ver_0_2_7_insert_into_0110------
 ------------01-INSERT--------------------
 ------------MEMBERLIST-------------------
 ---------------------------------20181210
@@ -839,6 +849,7 @@ INSERT INTO FRIEND (MEM1_NO,MEM2_NO) VALUES ('M017','M001');
 INSERT INTO FRIEND (MEM1_NO,MEM2_NO) VALUES ('M001','M007');
 INSERT INTO FRIEND (MEM1_NO,MEM2_NO) VALUES ('M001','M008');
 INSERT INTO FRIEND (MEM1_NO,MEM2_NO) VALUES ('M001','M009');
+commit;
 
 ------------03-INSERT--------------------
 ------------SPORT------------------------
@@ -1244,7 +1255,6 @@ commit;
 --中央大學附屬中壢高中籃球場
 --中央大學依仁堂
 --中央大學籃球場
-
 Insert into VENUE (V_NO,V_NAME,V_WEBURL,V_PARKTYPE,VT_NO,V_INOUT,REG_NO,V_ADDRESS,V_PHONENO,V_LAT,V_LONG,V_FITALL,V_FITINTER,OPEN_STATE,OPEN_TIME,OPENDAY_MON,OPENDAY_TUE,OPENDAY_WED,OPENDAY_THU,OPENDAY_FRI,OPENDAY_SAT,OPENDAY_SUN,V_PHOTO1_EXT,V_PHOTO2_EXT,V_PHOTO1_URL,V_PHOTO2_URL,V_DISPLAY) values ('V000001','中央大學附屬中壢高中籃球場','http://www.clhs.tyc.edu.tw',null,'VT001','室外設施',320,'桃園市中壢區三光路115號','03-4932181#34',24.9638709920322,121.210166931414,'Y','Y','免費對外開放使用','5:30-7:30','Y','Y','Y','Y','Y','Y','Y',null,null,'https://az804957.vo.msecnd.net/photofunc/20140613120609_籃球場1.JPG','https://az804957.vo.msecnd.net/photofunc/20140613120609_籃球場2.JPG','顯示');
 Insert into VENUE (V_NO,V_NAME,V_WEBURL,V_PARKTYPE,VT_NO,V_INOUT,REG_NO,V_ADDRESS,V_PHONENO,V_LAT,V_LONG,V_FITALL,V_FITINTER,OPEN_STATE,OPEN_TIME,OPENDAY_MON,OPENDAY_TUE,OPENDAY_WED,OPENDAY_THU,OPENDAY_FRI,OPENDAY_SAT,OPENDAY_SUN,V_PHOTO1_EXT,V_PHOTO2_EXT,V_PHOTO1_URL,V_PHOTO2_URL,V_DISPLAY) values ('V000002','中央大學羽球場(館)','http://www.ncu.edu.tw','無停車場','VT005','室內設施',320,'桃園市中壢區中大路300號','03-4267128',24.969189318918,121.190893650055,'Y','Y','付費對外開放使用','6:30-23:0','Y','Y','Y','Y','Y','Y','Y',null,null,'https://az804957.vo.msecnd.net/photofunc/20140709162829_羽球館全景.JPG','https://az804957.vo.msecnd.net/photofunc/20140709162829_羽球館1.JPG','顯示');
 Insert into VENUE (V_NO,V_NAME,V_WEBURL,V_PARKTYPE,VT_NO,V_INOUT,REG_NO,V_ADDRESS,V_PHONENO,V_LAT,V_LONG,V_FITALL,V_FITINTER,OPEN_STATE,OPEN_TIME,OPENDAY_MON,OPENDAY_TUE,OPENDAY_WED,OPENDAY_THU,OPENDAY_FRI,OPENDAY_SAT,OPENDAY_SUN,V_PHOTO1_EXT,V_PHOTO2_EXT,V_PHOTO1_URL,V_PHOTO2_URL,V_DISPLAY) values ('V000003','中央大學附屬中壢高中自強館','http://www.clhs.tyc.edu.tw','無停車場','VT005','室內設施',320,'桃園市中壢區三光路115號','03-4932181#34',24.9625795754056,121.211014509136,'Y','Y','付費對外開放使用','0:0-0:0','N','N','N','N','N','Y','Y',null,null,'https://az804957.vo.msecnd.net/photofunc/20140609115615_自強館1.JPG','https://az804957.vo.msecnd.net/photofunc/20140609115615_自強館2.JPG','顯示');
@@ -1498,6 +1508,8 @@ Insert into VENUE (V_NO,V_NAME,V_WEBURL,V_PARKTYPE,VT_NO,V_INOUT,REG_NO,V_ADDRES
 
 
 
+
+
 ------------07-INSERT--------------------
 ------------V_EVALUATION------------------------
 ---------------------------------20181210
@@ -1507,30 +1519,69 @@ Insert into V_EVALUATION values ('M003', 'V000003', 1);
 Insert into V_EVALUATION values ('M004', 'V000004', 5);
 
 
+------------14-INSERT--------------------
+------------CLUB-------------------------
+---------------------------------20181210
+Insert into CLUB (CLUB_NO,SP_NO,PHOTO,PHOTO_EXT,CLUB_STATUS,CLUB_NAME,CLUB_INTRO) 
+            values ('C'||LPAD(to_char(club_seq.NEXTVAL), 4, '0'),'SP006',NULL,NULL,'封鎖','跑跑跑向前跑','歡迎所有喜歡跑步的朋友一起加入跑跑跑向前跑，這邊將提供提供慢跑運動、運動飲食、體能訓練，並提供最新慢跑鞋介紹，歡迎大家一起來分享跑步與訓練心得。');
+Insert into CLUB (CLUB_NO,SP_NO,PHOTO,PHOTO_EXT,CLUB_STATUS,CLUB_NAME,CLUB_INTRO)
+            values ('C'||LPAD(to_char(club_seq.NEXTVAL), 4, '0'),'SP003',NULL,NULL,DEFAULT,'籃球組隊約戰','籃球，不要光用「看」的；更不要用「講」的。籃球，用「打」的才過癮！一起來「打」球吧！');
+Insert into CLUB (CLUB_NO,SP_NO,PHOTO,PHOTO_EXT,CLUB_STATUS,CLUB_NAME,CLUB_INTRO)
+            values ('C'||LPAD(to_char(club_seq.NEXTVAL), 4, '0'),'SP007',NULL,NULL,DEFAULT,'中央騎跡','大至國際的自行車盛事，小到YouBike的芝麻小事，讓我們從踩踏間找到生活的樂趣，中央騎跡要讓你成為全世界最幸福的車友！');
+Insert into CLUB (CLUB_NO,SP_NO,PHOTO,PHOTO_EXT,CLUB_STATUS,CLUB_NAME,CLUB_INTRO)
+            values ('C'||LPAD(to_char(club_seq.NEXTVAL), 4, '0'),'SP004',NULL,NULL,DEFAULT,'今晚打老虎','打爆你們這些嫩逼');
+Insert into CLUB (CLUB_NO,SP_NO,PHOTO,PHOTO_EXT,CLUB_STATUS,CLUB_NAME,CLUB_INTRO)
+            values ('C'||LPAD(to_char(club_seq.NEXTVAL), 4, '0'),'SP005',NULL,NULL,DEFAULT,'羽球俱樂部','不管你是新手、老手、High咖、悶騷咖，只要你是想打球的『羽球咖』，哩來，哩來，攏總來！技巧不重要，開心才重要，逗陣來打球，一起交朋友。 我們都很好相處哦，想打球的伙伴快加入我們吧！');
+Insert into CLUB (CLUB_NO,SP_NO,PHOTO,PHOTO_EXT,CLUB_STATUS,CLUB_NAME,CLUB_INTRO)
+            values ('C'||LPAD(to_char(club_seq.NEXTVAL), 4, '0'),'SP002',NULL,NULL,DEFAULT,'排球魂','排球の魂~初衷、熱血、團結、努力 ');
+Insert into CLUB (CLUB_NO,SP_NO,PHOTO,PHOTO_EXT,CLUB_STATUS,CLUB_NAME,CLUB_INTRO)
+            values ('C'||LPAD(to_char(club_seq.NEXTVAL), 4, '0'),'SP001',NULL,NULL,'封鎖','棒球樂園','歡迎來到棒球樂園 , 這裡希望能帶給大家歡樂 !');
+
+
+------------14-INSERT--------------------
+------------CLUB-------------------------
+---------------------------------20181210
+Insert into CLUB (CLUB_NO,SP_NO,PHOTO,PHOTO_EXT,CLUB_STATUS,CLUB_NAME,CLUB_INTRO) 
+            values ('C'||LPAD(to_char(club_seq.NEXTVAL), 4, '0'),'SP006',NULL,NULL,'封鎖','跑跑跑向前跑','歡迎所有喜歡跑步的朋友一起加入跑跑跑向前跑，這邊將提供提供慢跑運動、運動飲食、體能訓練，並提供最新慢跑鞋介紹，歡迎大家一起來分享跑步與訓練心得。');
+Insert into CLUB (CLUB_NO,SP_NO,PHOTO,PHOTO_EXT,CLUB_STATUS,CLUB_NAME,CLUB_INTRO)
+            values ('C'||LPAD(to_char(club_seq.NEXTVAL), 4, '0'),'SP003',NULL,NULL,DEFAULT,'籃球組隊約戰','籃球，不要光用「看」的；更不要用「講」的。籃球，用「打」的才過癮！一起來「打」球吧！');
+Insert into CLUB (CLUB_NO,SP_NO,PHOTO,PHOTO_EXT,CLUB_STATUS,CLUB_NAME,CLUB_INTRO)
+            values ('C'||LPAD(to_char(club_seq.NEXTVAL), 4, '0'),'SP007',NULL,NULL,DEFAULT,'中央騎跡','大至國際的自行車盛事，小到YouBike的芝麻小事，讓我們從踩踏間找到生活的樂趣，中央騎跡要讓你成為全世界最幸福的車友！');
+Insert into CLUB (CLUB_NO,SP_NO,PHOTO,PHOTO_EXT,CLUB_STATUS,CLUB_NAME,CLUB_INTRO)
+            values ('C'||LPAD(to_char(club_seq.NEXTVAL), 4, '0'),'SP004',NULL,NULL,DEFAULT,'今晚打老虎','打爆你們這些嫩逼');
+Insert into CLUB (CLUB_NO,SP_NO,PHOTO,PHOTO_EXT,CLUB_STATUS,CLUB_NAME,CLUB_INTRO)
+            values ('C'||LPAD(to_char(club_seq.NEXTVAL), 4, '0'),'SP005',NULL,NULL,DEFAULT,'羽球俱樂部','不管你是新手、老手、High咖、悶騷咖，只要你是想打球的『羽球咖』，哩來，哩來，攏總來！技巧不重要，開心才重要，逗陣來打球，一起交朋友。 我們都很好相處哦，想打球的伙伴快加入我們吧！');
+Insert into CLUB (CLUB_NO,SP_NO,PHOTO,PHOTO_EXT,CLUB_STATUS,CLUB_NAME,CLUB_INTRO)
+            values ('C'||LPAD(to_char(club_seq.NEXTVAL), 4, '0'),'SP002',NULL,NULL,DEFAULT,'排球魂','排球の魂~初衷、熱血、團結、努力 ');
+Insert into CLUB (CLUB_NO,SP_NO,PHOTO,PHOTO_EXT,CLUB_STATUS,CLUB_NAME,CLUB_INTRO)
+            values ('C'||LPAD(to_char(club_seq.NEXTVAL), 4, '0'),'SP001',NULL,NULL,'封鎖','棒球樂園','歡迎來到棒球樂園 , 這裡希望能帶給大家歡樂 !');
+
+
+
 ------------08-INSERT--------------------
 ------------SG_INFO----------------------
 ---------------------------------20181210
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M001', '中央大學籃球魂不滅', to_timestamp('2019-02-25 10:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-02-23 00:00:00','yyyy-mm-dd hh24:mi:ss'),0,null,null,'公開','SP003','V000001',10,3,null,null,'歡迎歡迎熱烈歡迎',default,null,null);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M002', '熱血雙城計畫', to_timestamp('2019-02-20 21:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-8 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-02-17 00:00:00','yyyy-mm-dd hh24:mi:ss'),100,null,null,'公開','SP007',null,8,5,4,null,'一起來騎卡打掐',default,'{"lat":25.0478142,"lng":121.51694880000002}','{"lat":22.639146,"lng":120.302201}');
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M001', '台北直直跑', to_timestamp('2019-02-07 17:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-11-30 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-02-04 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP006',null,5,3,5,null,'跑起來',default,'{"lat":24.968264,"lng":121.192198}','{"lat":24.959995,"lng":121.215186}');
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M001', '打排球', to_timestamp('2018-11-30 18:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-11-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-11-27 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'限社團','SP002','V000009',20,12,5,null,null,'流團',null,null);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M002', '跳樓大拍賣', to_timestamp('2019-12-30 18:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-12-27 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP004','V000012',99,3,1,null,'便宜進口包包熱賣中',default,null,null);--notice the max of SG_MAXNO is 99; 
 
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M001', '籃球火', to_timestamp('2019-01-30 10:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-01-27 00:00:00','yyyy-mm-dd hh24:mi:ss'),100,null,null,'公開','SP003','V000006',10,3,1,null,'歡迎歡迎熱烈歡迎',default,null,null);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M001', '晨間老人羽球', to_timestamp('2019-02-15 08:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-5 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-02-12 00:00:00','yyyy-mm-dd hh24:mi:ss'),100,null,null,'限社團','SP005','V000002',4,2,2,null,'來打羽球吧',default,null,null);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M006', '跑跑跑向前跑', to_timestamp('2019-02-20 21:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-8 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-02-17 00:00:00','yyyy-mm-dd hh24:mi:ss'),100,null,null,'公開','SP006',null,8,5,3,null,'來追我啊',default,'{"lat":25.001000,"lng":121.319393}','{"lat":24.998277,"lng":121.320697}');
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M005', '唯一支持戴資穎', to_timestamp('2018-12-7 17:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-11-30 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-4 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP005','V000004',5,3,5,4,'羽你一起','成團',null,null);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M005', '人妖打排球', to_timestamp('2019-02-26 18:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-11-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-02-27 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'限社團','SP002','V000009',20,12,5,null,null,default,null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M001', '中央大學籃球魂不滅', to_timestamp('2019-02-25 10:00:00','yyyy-mm-dd hh24:mi:ss'),null,to_timestamp('2019-02-23 00:00:00','yyyy-mm-dd hh24:mi:ss'),0,null,null,'公開','SP003','V000001',10,3,0,0,'歡迎歡迎熱烈歡迎',default,null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M002', '熱血雙城計畫', to_timestamp('2019-02-20 21:30:00','yyyy-mm-dd hh24:mi:ss'),null,to_timestamp('2019-02-17 00:00:00','yyyy-mm-dd hh24:mi:ss'),100,null,null,'公開','SP007',null,8,5,4,0,'一起來騎卡打掐',default,'{"lat":25.0478142,"lng":121.51694880000002}','{"lat":22.639146,"lng":120.302201}');
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M001', '台北直直跑', to_timestamp('2019-02-07 17:30:00','yyyy-mm-dd hh24:mi:ss'),null,to_timestamp('2019-02-04 00:00:00','yyyy-mm-dd hh24:mi:ss'),0,null,null,'公開','SP006',null,5,3,5,0,'跑起來',default,'{"lat":24.968264,"lng":121.192198}','{"lat":24.959995,"lng":121.215186}');
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M001', '打排球', to_timestamp('2018-11-30 18:30:00','yyyy-mm-dd hh24:mi:ss'),'C0001',to_timestamp('2018-11-27 00:00:00','yyyy-mm-dd hh24:mi:ss'),0,null,null,'限社團','SP002','V000009',20,12,5,0,null,'流團',null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M002', '跳樓大拍賣', to_timestamp('2019-12-30 18:30:00','yyyy-mm-dd hh24:mi:ss'),null,to_timestamp('2019-12-27 00:00:00','yyyy-mm-dd hh24:mi:ss'),0,null,null,'公開','SP004','V000012',99,3,1,0,'便宜進口包包熱賣中',default,null,null);--notice the max of SG_MAXNO is 99; 
 
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M007', '網球王子', to_timestamp('2019-02-10 18:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-02-14 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP004','V000005',4,3,null,null,'吃我一記外旋發球',default,null,null);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M002', '棒球大聯盟', to_timestamp('2019-02-11 15:30:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-10 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-02-08 00:00:00','yyyy-mm-dd hh24:mi:ss'),300,null,null,'公開','SP001','V000010',20,9,3,null,'沒有棒球就吃不下飯，睡不著覺的人快來唷!',default,null,null);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M012', '南崁籃球魂不滅', to_timestamp('2019-02-03 15:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-20 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-02-01 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP003','V000015',5,2,null,null,'鬥牛要不要',default,null,null);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M013', '桃園籃球魂不滅', to_timestamp('2019-02-11 19:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-15 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-02-07 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP003','V000012',10,2,null,null,'少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~',default,null,null);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M014', '台北籃球魂不滅', to_timestamp('2019-02-25 20:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-10 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-02-23 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP003','V000032',15,5,2,null,'以球會友!',default,null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M001', '籃球火', to_timestamp('2019-01-30 10:00:00','yyyy-mm-dd hh24:mi:ss'),null,to_timestamp('2019-01-27 00:00:00','yyyy-mm-dd hh24:mi:ss'),100,null,null,'公開','SP003','V000006',10,3,1,0,'歡迎歡迎熱烈歡迎',default,null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M001', '晨間老人羽球', to_timestamp('2019-02-15 08:00:00','yyyy-mm-dd hh24:mi:ss'),'C0001',to_timestamp('2019-02-12 00:00:00','yyyy-mm-dd hh24:mi:ss'),100,null,null,'限社團','SP005','V000002',4,2,2,0,'來打羽球吧',default,null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M006', '跑跑跑向前跑', to_timestamp('2019-02-20 21:30:00','yyyy-mm-dd hh24:mi:ss'),null,to_timestamp('2019-02-17 00:00:00','yyyy-mm-dd hh24:mi:ss'),100,null,null,'公開','SP006',null,8,5,3,0,'來追我啊',default,'{"lat":25.001000,"lng":121.319393}','{"lat":24.998277,"lng":121.320697}');
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M005', '唯一支持戴資穎', to_timestamp('2018-12-7 17:30:00','yyyy-mm-dd hh24:mi:ss'),null,to_timestamp('2018-12-4 00:00:00','yyyy-mm-dd hh24:mi:ss'),0,null,null,'公開','SP005','V000004',5,3,5,4,'羽你一起','成團',null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M005', '人妖打排球', to_timestamp('2019-02-26 18:30:00','yyyy-mm-dd hh24:mi:ss'),'C0002',to_timestamp('2019-02-27 00:00:00','yyyy-mm-dd hh24:mi:ss'),0,null,null,'限社團','SP002','V000009',20,12,5,0,null,default,null,null);
 
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M004', '中原大學籃球魂不滅', to_timestamp('2019-01-25 20:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-10 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-01-24 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'限社團','SP003','V000025',10,3,1,null,'單挑啊!嫩逼',default,null,null);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M008', '中壢高中籃球魂不滅', to_timestamp('2019-02-12 18:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2018-12-05 00:00:00','yyyy-mm-dd hh24:mi:ss'),to_timestamp('2019-02-10 00:00:00','yyyy-mm-dd hh24:mi:ss'),null,null,null,'公開','SP003','V000215',10,5,2,null,'教練，我想打球阿....',default,null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M007', '網球王子', to_timestamp('2019-02-10 18:30:00','yyyy-mm-dd hh24:mi:ss'),null,to_timestamp('2019-02-14 00:00:00','yyyy-mm-dd hh24:mi:ss'),0,null,null,'公開','SP004','V000005',4,3,0,0,'吃我一記外旋發球',default,null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M002', '棒球大聯盟', to_timestamp('2019-02-11 15:30:00','yyyy-mm-dd hh24:mi:ss'),null,to_timestamp('2019-02-08 00:00:00','yyyy-mm-dd hh24:mi:ss'),300,null,null,'公開','SP001','V000010',20,9,3,0,'沒有棒球就吃不下飯，睡不著覺的人快來唷!',default,null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M012', '南崁籃球魂不滅', to_timestamp('2019-02-03 15:00:00','yyyy-mm-dd hh24:mi:ss'),null,to_timestamp('2019-02-01 00:00:00','yyyy-mm-dd hh24:mi:ss'),0,null,null,'公開','SP003','V000015',5,2,0,0,'鬥牛要不要',default,null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M013', '桃園籃球魂不滅', to_timestamp('2019-02-11 19:00:00','yyyy-mm-dd hh24:mi:ss'),null,to_timestamp('2019-02-07 00:00:00','yyyy-mm-dd hh24:mi:ss'),0,null,null,'公開','SP003','V000012',10,2,0,0,'少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~少林功夫好耶~',default,null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M014', '台北籃球魂不滅', to_timestamp('2019-02-25 20:00:00','yyyy-mm-dd hh24:mi:ss'),null,to_timestamp('2019-02-23 00:00:00','yyyy-mm-dd hh24:mi:ss'),0,null,null,'公開','SP003','V000032',15,5,2,0,'以球會友!',default,null,null);
 
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M004', '中原大學籃球魂不滅', to_timestamp('2019-01-25 20:00:00','yyyy-mm-dd hh24:mi:ss'),'C0001',to_timestamp('2019-01-24 00:00:00','yyyy-mm-dd hh24:mi:ss'),0,null,null,'限社團','SP003','V000025',10,3,1,0,'單挑啊!嫩逼',default,null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M008', '中壢高中籃球魂不滅', to_timestamp('2019-02-12 18:00:00','yyyy-mm-dd hh24:mi:ss'),null,to_timestamp('2019-02-10 00:00:00','yyyy-mm-dd hh24:mi:ss'),0,null,null,'公開','SP003','V000215',10,5,2,0,'教練，我想打球阿....',default,null,null);
 
 
 ------------09-INSERT--------------------
@@ -1622,24 +1673,6 @@ insert into SG_LIKE values('S005','M004');
 insert into SG_LIKE values('S005','M010');
 insert into SG_LIKE values('S005','M013');
 
-
-------------14-INSERT--------------------
-------------CLUB-------------------------
----------------------------------20181210
-Insert into CLUB (CLUB_NO,SP_NO,PHOTO,PHOTO_EXT,CLUB_STATUS,CLUB_NAME,CLUB_INTRO) 
-            values ('C'||LPAD(to_char(club_seq.NEXTVAL), 4, '0'),'SP006',NULL,NULL,'封鎖','跑跑跑向前跑','歡迎所有喜歡跑步的朋友一起加入跑跑跑向前跑，這邊將提供提供慢跑運動、運動飲食、體能訓練，並提供最新慢跑鞋介紹，歡迎大家一起來分享跑步與訓練心得。');
-Insert into CLUB (CLUB_NO,SP_NO,PHOTO,PHOTO_EXT,CLUB_STATUS,CLUB_NAME,CLUB_INTRO)
-            values ('C'||LPAD(to_char(club_seq.NEXTVAL), 4, '0'),'SP003',NULL,NULL,DEFAULT,'籃球組隊約戰','籃球，不要光用「看」的；更不要用「講」的。籃球，用「打」的才過癮！一起來「打」球吧！');
-Insert into CLUB (CLUB_NO,SP_NO,PHOTO,PHOTO_EXT,CLUB_STATUS,CLUB_NAME,CLUB_INTRO)
-            values ('C'||LPAD(to_char(club_seq.NEXTVAL), 4, '0'),'SP007',NULL,NULL,DEFAULT,'中央騎跡','大至國際的自行車盛事，小到YouBike的芝麻小事，讓我們從踩踏間找到生活的樂趣，中央騎跡要讓你成為全世界最幸福的車友！');
-Insert into CLUB (CLUB_NO,SP_NO,PHOTO,PHOTO_EXT,CLUB_STATUS,CLUB_NAME,CLUB_INTRO)
-            values ('C'||LPAD(to_char(club_seq.NEXTVAL), 4, '0'),'SP004',NULL,NULL,DEFAULT,'今晚打老虎','打爆你們這些嫩逼');
-Insert into CLUB (CLUB_NO,SP_NO,PHOTO,PHOTO_EXT,CLUB_STATUS,CLUB_NAME,CLUB_INTRO)
-            values ('C'||LPAD(to_char(club_seq.NEXTVAL), 4, '0'),'SP005',NULL,NULL,DEFAULT,'羽球俱樂部','不管你是新手、老手、High咖、悶騷咖，只要你是想打球的『羽球咖』，哩來，哩來，攏總來！技巧不重要，開心才重要，逗陣來打球，一起交朋友。 我們都很好相處哦，想打球的伙伴快加入我們吧！');
-Insert into CLUB (CLUB_NO,SP_NO,PHOTO,PHOTO_EXT,CLUB_STATUS,CLUB_NAME,CLUB_INTRO)
-            values ('C'||LPAD(to_char(club_seq.NEXTVAL), 4, '0'),'SP002',NULL,NULL,DEFAULT,'排球魂','排球の魂~初衷、熱血、團結、努力 ');
-Insert into CLUB (CLUB_NO,SP_NO,PHOTO,PHOTO_EXT,CLUB_STATUS,CLUB_NAME,CLUB_INTRO)
-            values ('C'||LPAD(to_char(club_seq.NEXTVAL), 4, '0'),'SP001',NULL,NULL,'封鎖','棒球樂園','歡迎來到棒球樂園 , 這裡希望能帶給大家歡樂 !');
 
 
 
@@ -1961,7 +1994,7 @@ VALUES(
 INSERT INTO NEWSTYPE(
 	NEWSTYPE_NO, NEWSTYPE_NAME)
 VALUES(
-	'NT'||LPAD(TO_CHAR(NEWSTYPE_SEQ.NEXTVAL),3,'0'),'人氣商品'
+	'NT'||LPAD(TO_CHAR(NEWSTYPE_SEQ.NEXTVAL),3,'0'),'促銷商品'
 );
 
 
@@ -1970,7 +2003,7 @@ VALUES(
 ------------NEWS-------------------------
 ---------------------------------20181210
 INSERT INTO NEWS(
-	NEWS_NO,NEWS_TYPENO,NEWS_SCRIPT,
+	NEWS_NO,NEWSTYPE_NO,NEWS_SCRIPT,
 	PIC_EXTENSION,NEWS_PICTURE,NEWS_STUTAS,
 	NEWS_RELEASE_DATE,NEWS_LAST_DATE)
 VALUES(
@@ -1979,7 +2012,7 @@ VALUES(
 	to_timestamp('2019-01-01','YYYY-MM-DD'),to_timestamp('2019-01-31','YYYY-MM-DD')
 );
 INSERT INTO NEWS(
-	NEWS_NO,NEWS_TYPENO,NEWS_SCRIPT,
+	NEWS_NO,NEWSTYPE_NO,NEWS_SCRIPT,
 	PIC_EXTENSION,NEWS_PICTURE,NEWS_STUTAS,
 	NEWS_RELEASE_DATE,NEWS_LAST_DATE)
 VALUES(
@@ -1988,7 +2021,7 @@ VALUES(
 	to_timestamp('2019-01-01','YYYY-MM-DD'),to_timestamp('2019-01-6','YYYY-MM-DD')
 );
 INSERT INTO NEWS(
-	NEWS_NO,NEWS_TYPENO,NEWS_SCRIPT,
+	NEWS_NO,NEWSTYPE_NO,NEWS_SCRIPT,
 	PIC_EXTENSION,NEWS_PICTURE,NEWS_STUTAS,
 	NEWS_RELEASE_DATE,NEWS_LAST_DATE)
 VALUES(
@@ -1998,7 +2031,7 @@ VALUES(
 );
 
 INSERT INTO NEWS(
-	NEWS_NO,NEWS_TYPENO,NEWS_SCRIPT,
+	NEWS_NO,NEWSTYPE_NO,NEWS_SCRIPT,
 	PIC_EXTENSION,NEWS_PICTURE,NEWS_STUTAS,
 	NEWS_RELEASE_DATE,NEWS_LAST_DATE)
 VALUES(
@@ -2007,7 +2040,7 @@ VALUES(
 	to_timestamp('2019-01-01','YYYY-MM-DD'),null
 );
 INSERT INTO NEWS(
-	NEWS_NO,NEWS_TYPENO,NEWS_SCRIPT,
+	NEWS_NO,NEWSTYPE_NO,NEWS_SCRIPT,
 	PIC_EXTENSION,NEWS_PICTURE,NEWS_STUTAS,
 	NEWS_RELEASE_DATE,NEWS_LAST_DATE)
 VALUES(
@@ -2016,7 +2049,7 @@ VALUES(
 	to_timestamp('2019-01-01','YYYY-MM-DD'),to_timestamp('2019-01-31','YYYY-MM-DD')
 );
 INSERT INTO NEWS(
-	NEWS_NO,NEWS_TYPENO,NEWS_SCRIPT,
+	NEWS_NO,NEWSTYPE_NO,NEWS_SCRIPT,
 	PIC_EXTENSION,NEWS_PICTURE,NEWS_STUTAS,
 	NEWS_RELEASE_DATE,NEWS_LAST_DATE)
 VALUES(
@@ -2024,6 +2057,8 @@ VALUES(
 	NULL,NULL,'發布中',
 	to_timestamp('2019-01-01','YYYY-MM-DD'),to_timestamp('2019-01-31','YYYY-MM-DD')
 );
+
+
 
 
 
