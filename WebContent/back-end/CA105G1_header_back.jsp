@@ -130,6 +130,6 @@
 			</div>
 		</nav>
 		<div style="height:50px"></div>
-		<script src="https://code.jquery.com/jquery.js"></script>
+<!-- 		<script src="https://code.jquery.com/jquery.js"></script> -->
 	</body>
 </html>

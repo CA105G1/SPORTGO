@@ -1,6 +1,7 @@
 package com.memberlist.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.websocket.CloseReason;
 import javax.websocket.OnClose;
@@ -8,22 +9,30 @@ import javax.websocket.OnError;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
+import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
-@ServerEndpoint("/MemEchoServer")
+import com.memberlist.model.MemberlistRedisDAO;
+
+@ServerEndpoint("/MemEchoServer/{mem_no}")
 public class MemberEchoServer {
 
 	public MemberEchoServer() {
 	}
 	
-//	private static final Map<String, Session> sessionsMap = new ConcurrentHashMap<>();
 	Session session = null;
 	@OnOpen
-	public void onOpen(Session userSession) throws IOException {
-//		sessionsMap.put(userName, userSession);
-//		System.out.println(userName+" connected");
+	public void onOpen(@PathParam("mem_no") String mem_no, Session userSession) throws IOException {
 		session = userSession;
-		userSession.getBasicRemote().sendText("Hello ni hao from WebSocket");
+		System.out.println(mem_no+" connected");
+		MemberlistRedisDAO dao = new MemberlistRedisDAO();
+		List<String> notation = dao.getNotationMsg(mem_no);
+		if(notation!=null) {
+			for(String list : notation) {
+				System.out.println(list.toString());
+				userSession.getBasicRemote().sendText(list.toString());
+			}
+		}
 		System.out.println("WebSocket push succeed.");
 		
 	}

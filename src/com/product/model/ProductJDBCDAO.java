@@ -352,8 +352,8 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 //			con.commit();//測試
 		} catch (SQLException  e) {
 			// TODO Auto-generated catch block
-			throw new RuntimeException(e.getMessage());
-			
+//			throw new RuntimeException(e.getMessage());
+			e.printStackTrace();
 		} finally {
 			if(rs != null) {
 				try {

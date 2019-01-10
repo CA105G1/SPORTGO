@@ -1,4 +1,4 @@
----SportyGo_ver_0_2_5_create_0107------
+---SportyGo_ver_0_2_7_create_0110------
 --------------------------
 ------drop sequence-------
 --------------------------
@@ -51,12 +51,16 @@ DROP TABLE MULTIMEDIA;
 DROP TABLE CLUB_MEMBERLIST;
 ----
 DROP TABLE CLUB;
+-----
 DROP table SG_LIKE;
 DROP TABLE EVAOFMEM;
 DROP table SG_REP;
 DROP table SG_MEM;
 DROP table SG_MSG;
 DROP TABLE SG_INFO;
+--------------
+DROP TABLE CLUB;
+--------------
 DROP TABLE V_EVALUATION;
 DROP TABLE VENUE;
 DROP TABLE REGION;
@@ -78,7 +82,7 @@ CREATE TABLE MEMBERLIST(
     MEM_EMGC VARCHAR2(15),
     MEM_EMGCPHONE VARCHAR2(13),
     MEM_STATUS VARCHAR2(15) DEFAULT '未驗證' NOT NULL,
-    MEM_CARD NUMBER(16),
+    MEM_CARD NUMBER(19),
     MEM_EXPIRY VARCHAR2(7),
     MEM_PIC BLOB,
     MEM_PICKIND VARCHAR2(10),
@@ -201,6 +205,31 @@ CREATE TABLE V_EVALUATION (
     CONSTRAINT V_EVALUATION_MEMBER_FK FOREIGN KEY(MEM_NO) REFERENCES MEMBERLIST(MEM_NO),
     CONSTRAINT V_EVALUATION_VENUE_FK FOREIGN KEY(V_NO) REFERENCES VENUE(V_NO)
 );  
+
+
+------------14---------------------------
+------------CLUB-------------------------
+---------------------------------20181208
+CREATE TABLE CLUB (
+  CLUB_NO       VARCHAR2(7), 
+  SP_NO         VARCHAR2(7)  NOT NULL, 
+  PHOTO         BLOB,
+  PHOTO_EXT     VARCHAR2(10),
+  CLUB_STATUS   VARCHAR2(10) DEFAULT '正常' NOT NULL,
+  CLUB_NAME     VARCHAR2(20) NOT NULL,
+  CLUB_INTRO    CLOB,
+  
+  CONSTRAINT CLUB_PK PRIMARY KEY (CLUB_NO),
+  CONSTRAINT CLUB_FK FOREIGN KEY (SP_NO) REFERENCES SPORT (SP_NO)
+);
+CREATE SEQUENCE club_seq
+    INCREMENT BY 1
+    START WITH 1
+    MAXVALUE 9999
+    NOCYCLE
+    NOCACHE;
+
+
 ------------08---------------------------
 ------------SG_INFO----------------------
 ---------------------------------20181208
@@ -209,8 +238,9 @@ CREATE TABLE SG_INFO(
     MEM_NO varchar2(7) not null,
     SG_NAME varchar2(50) not null,
     SG_DATE timestamp not null,
-    APL_START timestamp,
-    APL_END timestamp not null,
+------    APL_START timestamp,
+    CLUB_NO varchar2(7),--------新增
+	APL_END timestamp not null,
     SG_FEE number(6,0),
     SG_PIC blob,
     SG_PIC_EXT varchar2(10),
@@ -233,7 +263,8 @@ CREATE TABLE SG_INFO(
     constraint SG_INFO_PK primary key (SG_NO),
     constraint FK1_SG_INFO_MEM foreign key (MEM_NO) references MEMBERLIST(MEM_NO),
     constraint FK2_SG_INFO_SPORT foreign key (SP_NO) references SPORT(SP_NO),
-    constraint FK3_SG_INFO_VEMUE foreign key (V_NO) references VENUE(V_NO)
+    constraint FK3_SG_INFO_VEMUE foreign key (V_NO) references VENUE(V_NO),
+	constraint FK3_SG_INFO_CLUB foreign key (CLUB_NO) references CLUB(CLUB_NO)-----新增
 );
 create sequence SG_INFO_SEQ
     start with 1
@@ -331,27 +362,7 @@ create table SG_LIKE(
     constraint SG_LIKE_FK2 foreign key (MEM_NO) references MEMBERLIST(MEM_NO)
 );
 
-------------14---------------------------
-------------CLUB-------------------------
----------------------------------20181208
-CREATE TABLE CLUB (
-  CLUB_NO       VARCHAR2(7), 
-  SP_NO         VARCHAR2(7)  NOT NULL, 
-  PHOTO         BLOB,
-  PHOTO_EXT     VARCHAR2(10),
-  CLUB_STATUS   VARCHAR2(10) DEFAULT '正常' NOT NULL,
-  CLUB_NAME     VARCHAR2(20) NOT NULL,
-  CLUB_INTRO    CLOB,
-  
-  CONSTRAINT CLUB_PK PRIMARY KEY (CLUB_NO),
-  CONSTRAINT CLUB_FK FOREIGN KEY (SP_NO) REFERENCES SPORT (SP_NO)
-);
-CREATE SEQUENCE club_seq
-    INCREMENT BY 1
-    START WITH 1
-    MAXVALUE 9999
-    NOCYCLE
-    NOCACHE;
+
 
 ------------15---------------------------
 ------------CLUB_MEMBERLIST------------------
@@ -653,14 +664,14 @@ CREATE SEQUENCE NEWSTYPE_SEQ
 ---------------------------------20181209
 CREATE TABLE NEWS
     (NEWS_NO        VARCHAR2(7)     PRIMARY KEY,
-    NEWS_TYPENO     VARCHAR2(7),
+    NEWSTYPE_NO     VARCHAR2(7),
     NEWS_SCRIPT     CLOB,
     PIC_EXTENSION   VARCHAR2(30),
     NEWS_PICTURE    BLOB,
     NEWS_STUTAS     VARCHAR2(12)    DEFAULT '未發布',
     NEWS_RELEASE_DATE TIMESTAMP,
     NEWS_LAST_DATE  TIMESTAMP,
-    FOREIGN KEY (NEWS_TYPENO) REFERENCES NEWSTYPE(NEWSTYPE_NO)
+    FOREIGN KEY (NEWSTYPE_NO) REFERENCES NEWSTYPE(NEWSTYPE_NO)
 );
 CREATE SEQUENCE NEWS_SEQ 
     INCREMENT BY 1 

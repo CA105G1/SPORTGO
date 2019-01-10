@@ -14,13 +14,16 @@ public interface OrdDAO_interface {
 	//刪除
 	public abstract int delete (String ord_no);
 	//單筆查詢
-	OrdVO findByPK(String ord_no);
+	public abstract OrdVO findByPK(String ord_no);
 	//全部查詢
-	List<OrdVO> getAll();
+	public abstract List<OrdVO> getAll();
 	
 	//同時新增部門與員工 (實務上並不常用, 但,可用在訂單主檔與明細檔一次新增成功)
-    public String insertWithOrdds( OrdVO ordVO , List<OrddetailsVO> list);
+    public abstract String insertWithOrdds( OrdVO ordVO , List<OrddetailsVO> list);
     
     //更新狀態
-    public abstract int updataStatus (String ord_no,String ord_status);
+    public abstract OrdVO updataStatus (String ord_no,String ord_status);
+    
+    //會員查詢
+    public abstract List<OrdVO> getAllmem_no(String mem_no);
 }
