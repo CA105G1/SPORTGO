@@ -398,6 +398,7 @@ System.out.println("memberlistVO= "+memberlistVO);
 									    '<label>月</label>'+
 								    '</div>'+
 					   			'</div>'+
+							    '<div>報名費用共${Sg_infoVO.sg_fee}元</div>'+
 				   			'</form>',
 
 					}).then(

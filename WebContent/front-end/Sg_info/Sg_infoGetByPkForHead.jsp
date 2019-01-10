@@ -143,7 +143,6 @@ if(vo == null){
 							</tr>
 							<tr>
 								<th>揪團編號</th>
-								
 								<td>${Sg_infoVO.sg_no}</td>
 							</tr>
 							<tr>
@@ -160,7 +159,14 @@ if(vo == null){
 							</tr> 
 							<tr>
 								<th>權限</th>
-								<td id="sg_per">${Sg_infoVO.sg_per}</td> <!-- 下拉選單 -->
+								<td id="sg_per">
+									${Sg_infoVO.sg_per}
+									<!-- 若權限為社團則顯示社團名稱 -->
+									<jsp:useBean id="clubSvc" scope="page" class="com.club.model.ClubService"/>
+									<%if("限社團".equals(vo.getSg_per())){ %>
+										<span>(${clubSvc.getOneClub(Sg_infoVO.club_no).club_name})</span>
+									<%}%>
+								</td> <!-- 下拉選單 -->
 							</tr>  
 							<tr>
 								<th>運動種類</th>
@@ -225,6 +231,8 @@ if(vo == null){
 					
 					<input type="hidden" name="sg_no" value="<%= vo.getSg_no()%>" >
 					<input type="hidden" name="mem_no" value="<%= vo.getMem_no()%>" >
+					<input type="hidden" name="sg_per" value="${Sg_infoVO.sg_per}" >
+					<input type="hidden" name="club_no" value="${Sg_infoVO.club_no}" >
 					<input type="hidden" name="sg_pic_ext" value="<%= vo.getSg_pic_ext()%>" >
 					<input type="hidden" name="loc_start" id="loc_start" value=<%= vo.getLoc_start() %>>
 					<input type="hidden" name="loc_end" id="loc_end" value=<%= vo.getLoc_end() %>>	
@@ -276,10 +284,10 @@ if(vo == null){
 	    $("#apl_end").html(function(index, content){
 		    return "<input type='text' id='apl_end2' name='apl_end' value='"+content+"'>";
 		    });
-	    //編輯權限
-	    $("#sg_per").html(function(index, content){
-		    return "<select name='sg_per'><option value='公開'>公開</option><option value='僅限社團'>僅限社團</option></select>";
-		    });
+// 	    //編輯權限
+// 	    $("#sg_per").html(function(index, content){
+// 		    return "<select name='sg_per'><option value='公開'>公開</option><option value='僅限社團'>僅限社團</option></select>";
+// 		    });
 	    //編輯運動種類
 	    ////////////////////////////////////////下拉選單值帶不回來//////////////////////////////////////
     	 $("#sp_no").html(function(index, content){

@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Sg_infoCreate</title>
+<title>Sg_infoCreateForClub</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -19,6 +19,10 @@
 <style type="text/css">
 	th{
 		text-align:center;
+	}
+	#title{
+		font-size:2em;
+		padding-right:20px;
 	}
 	#map {
 		height: 400px;  /* The height is 400 pixels */
@@ -39,6 +43,8 @@
 
 <%
 	MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO"); 
+	String club_no = request.getParameter("club_no");
+	request.setAttribute("club_no",club_no);
 %>
 
 
@@ -63,8 +69,9 @@
 		<div class="col-xs-12 col-sm-6">
 			<form action="<%= request.getContextPath()%>/Sg_info/Sg_info.do" method="post" enctype="multipart/form-data">
 				<table class="table table-hover table-striped table-bordered text-center">
+					<jsp:useBean id="clubSvc" scope="page" class="com.club.model.ClubService"/>
 					<a href="<%= request.getContextPath()%>/front-end/Sg_info/SgHome.jsp">回到揪團首頁</a>
-					<caption class="text-center">我是Sg_infoCreate</caption>
+					<caption class="text-center"><span id="title">${clubSvc.getOneClub(club_no).club_name}</span>專屬揪團</caption>
 					<tbody>
 					<!------------ 圖片上傳 ------------>
 						<tr>
@@ -199,8 +206,8 @@
 				
 				<input type="submit" value="送出" class="btn btn-success btn-block">
 				<input type="hidden" name="action"value="insert">
-				<input type="hidden" name="club_no">
-				<input type="hidden" name="sg_per" value="公開">
+				<input type="hidden" name="club_no" value="${club_no }">
+				<input type="hidden" name="sg_per" value="限社團">
 				<input type="hidden" name="loc_start" id="loc_start">
 				<input type="hidden" name="loc_end" id="loc_end">
 			</form>

@@ -36,7 +36,7 @@ public class Sg_infoDAO implements Sg_infoDAO_interface{
 			"SELECT * FROM sg_info ORDER BY sg_date DESC";
 	private static final String getAllForPublic =
 			"SELECT * FROM sg_info WHERE (sg_status='揪團中' or sg_status='成團' or sg_status='流團') AND sg_per='公開' ORDER BY sg_date DESC";
-	private static final String getAllForGruop =
+	private static final String getAllForClub =
 			"SELECT * FROM sg_info WHERE (sg_status='揪團中' or sg_status='成團' or sg_status='流團') AND sg_per='限社團' AND club_no=? ORDER BY sg_date DESC";
 	
 	
@@ -550,7 +550,7 @@ System.out.println("sqlStr="+sqlStr);
 	}
 
 	@Override
-	public List<Sg_infoVO> getAllForGroup(String club_no) {
+	public List<Sg_infoVO> getAllForClub(String club_no) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -560,7 +560,7 @@ System.out.println("sqlStr="+sqlStr);
 		try {
 			con = ds.getConnection();
 //			con = DriverManager.getConnection(url, user, psw);
-			pstmt = con.prepareStatement(getAllForPublic);
+			pstmt = con.prepareStatement(getAllForClub);
 			pstmt.setString(1, club_no);
 			rs = pstmt.executeQuery();
 			

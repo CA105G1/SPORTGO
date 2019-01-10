@@ -89,6 +89,10 @@ public class Sg_infoService {
 		return dao.getAllForPublic();
 	}
 	
+	public List<Sg_infoVO> getAllForClub(String club_no){
+		return dao.getAllForClub(club_no);
+	}
+	
 	public List<Sg_infoVO> getAllByQuery(Map<String,String[]> map){
 		return dao.getAll(map);
 	}
