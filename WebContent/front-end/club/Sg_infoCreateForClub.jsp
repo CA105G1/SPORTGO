@@ -44,7 +44,7 @@
 <%
 	MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO"); 
 	String club_no = request.getParameter("club_no");
-	request.setAttribute("club_no",club_no);
+	request.setAttribute("club_no","C0003");
 %>
 
 

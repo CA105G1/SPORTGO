@@ -173,8 +173,13 @@ public class Sg_infoServlet extends HttpServlet {
 				//若有錯誤訊息，將VO跟錯誤訊息回傳
 				if(!errorMsg.isEmpty()) {
 //					req.setAttribute("Sg_infoVO", sg_infoVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Sg_info/Sg_infoCreate.jsp");
-					failureView.forward(req, res);
+					if("限社團".equals(sg_per)) {
+						RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/club/Sg_infoCreateForClub.jsp");
+						dispatcher.forward(req, res);
+					}else {
+						RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Sg_info/Sg_infoCreate.jsp");
+						failureView.forward(req, res);
+					}
 					return;
 				}
 				
@@ -185,8 +190,14 @@ public class Sg_infoServlet extends HttpServlet {
 						sg_extrainfo, loc_start, loc_end);
 						
 //				req.setAttribute("Sg_infoVO", sg_infoVO);
-				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/Sg_info/SgHome.jsp");
-				dispatcher.forward(req, res);
+				if("限社團".equals(sg_per)) {
+					RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/club/club_page.jsp");
+					dispatcher.forward(req, res);
+				}else {
+					RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/Sg_info/SgHome.jsp");
+					dispatcher.forward(req, res);
+				}
+				
 				
 				/////////其他錯誤處理/////////
 			}catch(Exception e){
