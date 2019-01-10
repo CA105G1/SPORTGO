@@ -486,7 +486,7 @@ public class NewsServlet extends HttpServlet {
 			List<NewsVO> list = newsService.getAll(newsMap);
 			
 			
-			request.setAttribute("newsVO_toUpade", newsVO);
+			request.setAttribute("newsVO_toUpdate", newsVO);
 			request.setAttribute(WHITCH_TAB, TAB_SELECT);
 //			showNewsListAndForward(list, MAINTAIN_NEWS_INFO_INDEX_BACK_PATH, request, response);
 			showNewsListAndForward(list, QUERY_THIS_SERVLET_ACTIN_AGAIN+"?action=listNewsByCompositeQuery", request, response);
