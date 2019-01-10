@@ -45,7 +45,7 @@
 					<ul class="nav navbar-nav">
 						<li class="active"><a href="<%=request.getContextPath()%>/index.jsp">SportyGo!</a></li>
 						<li><a href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp">揪團去</a></li>
-						<li><a href="#">社團</a></li>
+						<li><a href="<%=request.getContextPath()%>/front-end/club/club_list.jsp">社團</a></li>
 					</ul>
 				
 					<!-- 搜尋表單 -->
@@ -54,6 +54,7 @@
 							<input type="text" class="form-control" placeholder="請輸入關鍵字">
 						</div>
 						<button type="submit" class="btn btn-default">搜尋</button>
+						<a href="<%=request.getContextPath()%>/backEndIndex.jsp">後台首頁</a>
 					</form>
 				
 					<!-- 右選單 -->
