@@ -9,6 +9,8 @@
 	List<ClubVO> list = clubSvc.getAll();
 	pageContext.setAttribute("list", list);
 	
+
+	//ClubVO clubVO = (ClubVO)request.getAttribute("clubVO");
 	
 %>
 
@@ -43,6 +45,13 @@
 			#club_name{
 			font-family:Microsoft JhengHei
 			}
+		
+			
+/* 			#clubphoto{ */
+/* 			max-width:600px;  */
+/* myimg:expression(onload=function(){  */
+/* this.style.width=(this.offsetWidth > 600)?"600px":"auto"}); */
+/* 			} */
 		</style>
 	</head>
 
@@ -59,15 +68,14 @@
 				
 					<div class="col-xs-12 col-sm-1" style="margin-right: -;padding-left: 5px;padding-right: 5px;">
 					<input type="hidden" name="actionfront" value="getoneclub">
-					<jsp:useBean id="clubsvc2" scope="page" class="com.club.model.ClubService" />
-					<c:forEach var="clubVO" items="${list}">
-					<h1 id="club_name" class="_19s-" name="action" value="getOneClub">
-<!-- 						<a href=""> -->
-						<a>${clubVO.club_name}</a>
-					</h1>
-					</c:forEach>
+					<h4 id="club_name" class="_19s-" >
+					<a href='<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clubVO.club_no}' >
+						${clubVO.club_name}
+					</a>
+					</h4>
+
 						<div class="list-group active">
-						<a href="#" class="list-group-item">簡介</a>
+						<a href="<%= request.getContextPath()%>/clubfront.do?actionfront=getOneClubintro&club_no=${clubVO.club_no}" display="none" id="linkBack" class="list-group-item">簡介</a>
 						<a href="#" class="list-group-item">成員</a>
 <!---建立社團--------------------------------------------------------------------------------->
 					<% Object object = request.getAttribute("errorMsgs"); %>
@@ -169,38 +177,42 @@
 				<a href="#" class="list-group-item">社團管理</a>
 				<a href="<%= request.getContextPath()%>/front-end/club/club_list.jsp" display="none" id="linkBack" class="list-group-item">返回列表</a>
 				<br>
-				<button type="button" class="btn btn-dark">退出社團</button>
+				<button type="button" class="btn btn-dark" href="<%= request.getContextPath()%>/clubmemberlist.do?action=dropoutclub&club_no=${clubVO.club_no}">
+					退出社團
+				</button>
 				<br><br>
 <%-- 				<button type="button" class="btn btn-info" href="<%= request.getContextPath()%>/front-end/club/club_list.jsp" display="none" id="linkBack">返回列表</button> --%>
-				
-				
-				
+			
 					</div>					
 					</div>
 				<div class="col-xs-12 col-sm-7">
-					
-					
-					<br>
-<!---------------------------- 貼文列表 ------------------------------------->
-					<div class="card text-center" id="post">
-  							<div class="card-body">
-    							<h5 class="card-title">貼文標題</h5>
-    							<p class="card-text">貼文內容</p>
-  							</div>
-  							<div class="card-footer text-muted">
-    						回文
-  							</div>
-					</div>
-					<br>
-<!-------------------------社團內的揪團 ------------------------------------->
-					<div class="card text-center" >
-  							<div class="card-body">
-    							<p class="card-text">社團內的揪團</p>
-  							</div>
-  							<div class="card-footer text-muted">
-  							</div>
-					</div>
-									
+							
+		<table class="table">
+  			<thead>
+    			<tr>
+      				<th scope="col">成員</th>
+      				<th scope="col">
+      					搜尋成員&nbsp;&nbsp;&nbsp;
+      					<input type="" name="searchclubmember">
+      				</th>  
+    			</tr>
+  			</thead>
+  			<tbody>
+    			<tr>
+      				<th scope="row">管理員</th>
+    			</tr>
+    			<tr>
+    				<td>管理員名字</td>	
+    			</tr>
+    			<tr>
+      				<th scope="row">所有成員</th>
+    			</tr>
+    			<tr>
+    				<td>成員名字</td>	
+    			</tr>
+  			</tbody>
+		</table>
+		
 				</div>
 					
 				<div class="col-xs-12 col-lg-2" id="xx">

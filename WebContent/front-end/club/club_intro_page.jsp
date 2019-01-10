@@ -5,11 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%
-	ClubService clubSvc = new ClubService();
-	List<ClubVO> list = clubSvc.getAll();
-	pageContext.setAttribute("list", list);
-	
-	
+ClubVO clubVO = (ClubVO)request.getAttribute("clubVO");
 %>
 
 
@@ -59,13 +55,12 @@
 				
 					<div class="col-xs-12 col-sm-1" style="margin-right: -;padding-left: 5px;padding-right: 5px;">
 					<input type="hidden" name="actionfront" value="getoneclub">
-					<jsp:useBean id="clubsvc2" scope="page" class="com.club.model.ClubService" />
-					<c:forEach var="clubVO" items="${list}">
-					<h1 id="club_name" class="_19s-" name="action" value="getOneClub">
-<!-- 						<a href=""> -->
-						<a>${clubVO.club_name}</a>
-					</h1>
-					</c:forEach>
+					<h4 id="club_name" class="_19s-" >
+					<a href='<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clubVO.club_no}' >
+						${clubVO.club_name}
+					</a>
+					</h4>
+
 						<div class="list-group active">
 						<a href="#" class="list-group-item">簡介</a>
 						<a href="#" class="list-group-item">成員</a>
@@ -178,31 +173,28 @@
 					</div>					
 					</div>
 				<div class="col-xs-12 col-sm-7">
-					
-					
 					<br>
 <!---------------------------- 貼文列表 ------------------------------------->
+<%
+
+//   ClubService clubService = new ClubService();
+// //   clubVO = clubService.getOneClub("C0001");
+
+// String club_intro = request.getParameter("club_intro");
+// clubVO = clubService.getOneClub(request.getParameter("club_no"));
+
+   System.out.print(clubVO);
+%>
+<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/clubfront.do" name="form2">
+<%-- 				<jsp:useBean id="clubSvc" scope="page" class="com.club.model.ClubService" /> --%>
 					<div class="card text-center" id="post">
+						<h3 class="card-title">關於這個社團</h3>
   							<div class="card-body">
-    							<h5 class="card-title">貼文標題</h5>
-    							<p class="card-text">貼文內容</p>
-  							</div>
-  							<div class="card-footer text-muted">
-    						回文
+  								<p><%=clubVO.getClub_intro() %></p>
   							</div>
 					</div>
-					<br>
-<!-------------------------社團內的揪團 ------------------------------------->
-					<div class="card text-center" >
-  							<div class="card-body">
-    							<p class="card-text">社團內的揪團</p>
-  							</div>
-  							<div class="card-footer text-muted">
-  							</div>
-					</div>
-									
+</FORM>
 				</div>
-					
 				<div class="col-xs-12 col-lg-2" id="xx">
 					<!-- XXXXXXXXXXXX -->
 <!-- 					<div>XXXXXXXXXXXXXXXX</div> -->
