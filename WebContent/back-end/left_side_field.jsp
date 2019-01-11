@@ -57,8 +57,8 @@
 			  	</div>
 			    <div class="panel-collapse collapse" id="sgBack">
 					<div class="list-group">
-						<a href="#" class="list-group-item">揪團列表</a>
-						<a href="#" class="list-group-item">揪團檢舉列表</a>
+						<a href="<%=request.getContextPath()%>/back-end/sg_info/sg_infoBackEnd.jsp" class="list-group-item">揪團列表</a>
+<!-- 					<a href="#" class="list-group-item">揪團檢舉列表</a> -->
 					</div>
 				</div>
 			</div>
@@ -90,11 +90,10 @@
 			  	</div>
 			    <div class="panel-collapse collapse" id="shopBack">
 					<div class="list-group">
-						<a href="#" class="list-group-item">新增商品</a>
-						<a href="#" class="list-group-item">新增商品類別</a>
-						<a href="#" class="list-group-item">商品列表</a>
-						<a href="#" class="list-group-item">商品類別列表</a>
-						<a href="#" class="list-group-item">訂單列表</a>
+						<a href="<%=request.getContextPath()%>/back-end/pro/addPro.jsp" class="list-group-item">新增商品</a>
+						<a href="<%=request.getContextPath()%>/back-end/pro/listAllPro.jsp" class="list-group-item">商品列表</a>
+<!-- 						<a href="#" class="list-group-item">商品類別列表</a> -->
+						<a href="<%=request.getContextPath()%>/back-end/pro/ord_back.jsp" class="list-group-item">訂單列表</a>
 					</div>
 				</div>
 			</div>
