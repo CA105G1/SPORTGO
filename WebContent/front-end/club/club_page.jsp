@@ -184,7 +184,7 @@
     							<h5 class="card-title" display="none" class="list-group-item">${post_infoVO.post_topic}</h5>
     							<p class="card-text">${post_infoVO.post_content}</p>
     						</c:forEach>
-  							</div>
+  							</div> 
   							<div class="card-footer text-muted">
     						回文
   							</div>
