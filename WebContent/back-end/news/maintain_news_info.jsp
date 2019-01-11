@@ -124,7 +124,7 @@
 												<jsp:include page="show_one_news.jsp" flush="true"/>
 										<% }else if("delete_this_news".equals(request.getParameter("action"))){ %>
 												<div>${newsVO.news_no}-${newsVO.news_script}--已被刪除</div>
-										<% }else if("update_news_no_stutas".equals(request.getParameter("action"))){ %>
+										<% }else if("update_news_no_stutas".equals(request.getParameter("action")) && ("tab2".equals(whichTab))){ %>
 												<jsp:include page="listQueryNews.jsp" flush="true" />
 										<% } %>
 						        	</div>

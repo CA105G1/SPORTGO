@@ -69,6 +69,8 @@
 		</div>
 		<%-- 推薦揪團區 --%>
 		<%-- 左側MAP --%>
+		
+		<jsp:include page="/front-end/Sg_infoByMap.jsp" />	
 		<div style="height:500px"></div>
 		<%-- 右側推薦揪團列表 --%>
 		<div></div>
