@@ -256,7 +256,7 @@ if(list == null){
 						<input type="submit" id="${Sg_infoVO.sg_no}"  style="display: none">
 					</form>
 			</c:forEach>
-			<%@ include file="page2.file" %>
+			<%@ include file="page2_ByCompositeQuery.file" %>
 
 
 

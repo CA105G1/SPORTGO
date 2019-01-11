@@ -191,7 +191,7 @@ System.out.println("memberlistVO= "+memberlistVO);
 								<div id="distance"></div>
 						</div>
 					</div>
-<canvas id="myChart" width="700" height="400"></canvas>
+<canvas id="myChart" width="700" height="400" style="display: none"></canvas>
 				
 			</form>
 		</div> <!-- col-sm-6 -->
@@ -326,6 +326,7 @@ System.out.println("memberlistVO= "+memberlistVO);
 	        	for (var i = 0; i < elevations.length; i++) {
 	        		meterValue.push(elevations[i].elevation);
 	              }
+	        	$("#myChart").css("display","");
 	        	drawChart(meterValue);
 	        }
 	        

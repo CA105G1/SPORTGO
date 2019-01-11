@@ -198,7 +198,7 @@
 				</div>
 				<div id="distance"></div>
 				<div id="map"></div>
-<canvas id="myChart" width="400" height="400"></canvas>
+<canvas id="myChart" width="700" height="400" style="display: none"></canvas>
 				
 				<input type="submit" value="送出" class="btn btn-success btn-block">
 				<input type="hidden" name="action"value="insert">
@@ -395,7 +395,9 @@
 	             directionsDisplay.setDirections(result);
 	          	 //顯示路線距離
 	             $("#distance").text("總距離為： "+result.routes[0].legs[0].distance.text);
-	          	 
+	           	
+	          	 //先清空path
+	          	 path=[];
 	             //抓取路線各個點座標存入path陣列供計算海拔用
 				var pathobj = result.routes[0].overview_path;
 				for(var i = 0; i < pathobj.length; i++){
@@ -426,6 +428,7 @@
 	        		meterValue.push(elevations[i].elevation);
 // 	console.log(elevations[i].elevation);
 	              }
+	        	$("#myChart").css("display","");
 	        	drawChart(meterValue);
 	        }
 
