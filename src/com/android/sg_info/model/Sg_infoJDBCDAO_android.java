@@ -60,7 +60,7 @@ public class Sg_infoJDBCDAO_android implements Sg_infoDAO_interface_android{
 			pstmt.setString(1, Sg_infoVO_android.getMem_no());
 			pstmt.setString(2, Sg_infoVO_android.getSg_name());
 			pstmt.setTimestamp(3, Sg_infoVO_android.getSg_date());
-			pstmt.setTimestamp(4, Sg_infoVO_android.getApl_start());
+			pstmt.setString(4, Sg_infoVO_android.getClub_no());
 			pstmt.setTimestamp(5, Sg_infoVO_android.getApl_end());
 			pstmt.setInt(6, Sg_infoVO_android.getSg_fee());
 			pstmt.setString(9, Sg_infoVO_android.getSg_per());
@@ -111,7 +111,7 @@ public class Sg_infoJDBCDAO_android implements Sg_infoDAO_interface_android{
 			pstmt.setString(1, Sg_infoVO_android.getMem_no());
 			pstmt.setString(2, Sg_infoVO_android.getSg_name());
 			pstmt.setTimestamp(3, Sg_infoVO_android.getSg_date());
-			pstmt.setTimestamp(4, Sg_infoVO_android.getApl_start());
+			pstmt.setString(4, Sg_infoVO_android.getClub_no());
 			pstmt.setTimestamp(5, Sg_infoVO_android.getApl_end());
 			pstmt.setInt(6, Sg_infoVO_android.getSg_fee());
 			pstmt.setString(9, Sg_infoVO_android.getSg_per());
@@ -207,7 +207,7 @@ public class Sg_infoJDBCDAO_android implements Sg_infoDAO_interface_android{
 				vo.setMem_name(rs.getString("mem_name"));
 				vo.setSg_name(rs.getString("sg_name"));
 				vo.setSg_date(rs.getTimestamp("sg_date"));
-				vo.setApl_start(rs.getTimestamp("apl_start"));
+				vo.setClub_no(rs.getString("club_no"));
 				vo.setApl_end(rs.getTimestamp("apl_end"));
 				vo.setSg_fee(rs.getInt("sg_fee"));
 				vo.setSg_per(rs.getString("sg_per"));
@@ -280,7 +280,7 @@ public class Sg_infoJDBCDAO_android implements Sg_infoDAO_interface_android{
 				vo.setMem_name(rs.getString("mem_name"));
 				vo.setSg_name(rs.getString("sg_name"));
 				vo.setSg_date(rs.getTimestamp("sg_date"));
-				vo.setApl_start(rs.getTimestamp("apl_start"));
+				vo.setClub_no(rs.getString("club_no"));
 				vo.setApl_end(rs.getTimestamp("apl_end"));
 				vo.setSg_fee(rs.getInt("sg_fee"));
 				vo.setSg_per(rs.getString("sg_per"));
@@ -352,7 +352,7 @@ public class Sg_infoJDBCDAO_android implements Sg_infoDAO_interface_android{
 				vo.setMem_name(rs.getString("mem_name"));
 				vo.setSg_name(rs.getString("sg_name"));
 				vo.setSg_date(rs.getTimestamp("sg_date"));
-				vo.setApl_start(rs.getTimestamp("apl_start"));
+				vo.setClub_no(rs.getString("club_no"));
 				vo.setApl_end(rs.getTimestamp("apl_end"));
 				vo.setSg_fee(rs.getInt("sg_fee"));
 				vo.setSg_per(rs.getString("sg_per"));
@@ -426,7 +426,7 @@ public class Sg_infoJDBCDAO_android implements Sg_infoDAO_interface_android{
 				vo.setMem_name(rs.getString("mem_name"));
 				vo.setSg_name(rs.getString("sg_name"));
 				vo.setSg_date(rs.getTimestamp("sg_date"));
-				vo.setApl_start(rs.getTimestamp("apl_start"));
+				vo.setClub_no(rs.getString("club_no"));
 				vo.setApl_end(rs.getTimestamp("apl_end"));
 				vo.setSg_fee(rs.getInt("sg_fee"));
 				vo.setSg_per(rs.getString("sg_per"));
@@ -499,7 +499,7 @@ public class Sg_infoJDBCDAO_android implements Sg_infoDAO_interface_android{
 				vo.setMem_name(rs.getString("mem_name"));
 				vo.setSg_name(rs.getString("sg_name"));
 				vo.setSg_date(rs.getTimestamp("sg_date"));
-				vo.setApl_start(rs.getTimestamp("apl_start"));
+				vo.setClub_no(rs.getString("club_no"));
 				vo.setApl_end(rs.getTimestamp("apl_end"));
 				vo.setSg_fee(rs.getInt("sg_fee"));
 				vo.setSg_per(rs.getString("sg_per"));
@@ -554,6 +554,24 @@ public class Sg_infoJDBCDAO_android implements Sg_infoDAO_interface_android{
 
 	@Override
 	public List<Sg_info> findByMaster(String mem_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Sg_info> findByHistory(String mem_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateNumber(String sg_no, int num) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<Sg_info> findBySearch(String mem_name, String venue, long start, long end) {
 		// TODO Auto-generated method stub
 		return null;
 	}

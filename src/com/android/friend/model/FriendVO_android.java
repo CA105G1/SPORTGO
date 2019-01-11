@@ -1,17 +1,17 @@
 package com.android.friend.model;
 
-public class FriendVO implements java.io.Serializable{
+public class FriendVO_android implements java.io.Serializable{
 
 	private static final long serialVersionUID = 86L;
+	public FriendVO_android() {
+		
+	}
 	
 	private String mem1_no;//apply for becoming friend
 	private String mem2_no;//who be invited for becoming friend
 	private String relationship;
 	private String friend_status;
 	private String mem_chat;
-	
-	public FriendVO() {
-	}
 	
 	public String getMem1_no() {
 		return mem1_no;

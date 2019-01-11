@@ -18,7 +18,7 @@ public class Sg_memDAO_android implements Sg_memDAO_interface_android{
 	private static final String INSERT = 
 			"INSERT INTO sg_mem VALUES(?,?,default)";
 	private static final String UPDATE =
-			"UPDATE sg_mem SET ch_status=? where sg_no=? and mem_no=?";
+			"UPDATE sg_mem SET ch_status= '已報到' where sg_no=? and mem_no=?";
 	private static final String DELETE =
 			"DELETE FROM SG_MEM WHERE SG_NO=? and MEM_NO=?";
 	private static final String FIND_BY_SG =
@@ -74,7 +74,7 @@ public class Sg_memDAO_android implements Sg_memDAO_interface_android{
 	}
 
 	@Override
-	public void update(Sg_memVO_android sg_memVO) {
+	public void update(String sg_no, String mem_no) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
@@ -82,15 +82,14 @@ public class Sg_memDAO_android implements Sg_memDAO_interface_android{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 			
-			pstmt.setString(1, sg_memVO.getCh_status());
-			pstmt.setString(2, sg_memVO.getSg_no());
-			pstmt.setString(3, sg_memVO.getMem_no());
+			pstmt.setString(1, sg_no);
+			pstmt.setString(2, mem_no);
 			
 			pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw e;
 		} finally {
 			if(pstmt != null) {
 				try {
