@@ -72,6 +72,17 @@
 								</form>
 							</div>
 							
+<!-- 							TODO: QUESSTION: why news_no is not parameter  -->
+<!-- 							<div class="col-xs-12 col-sm-4"> -->
+<%-- 								<form method="post" action="<%=request.getContextPath()%>/news/news.do"> --%>
+<%-- 									<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>" /><!--送出本網頁的路徑給Controller--> --%>
+<%-- 			     					<input type="hidden" name="whichPage"	value="${param.whichPage}" /> --%>
+<%-- 			     					<input type="hidden" name="news_no" value="${newsVO.news_no}" /> --%>
+<!-- 			     					<input type="hidden" name="action" value="listNewsByCompositeQuery" /> -->
+<!-- 									<input type="submit" value="查看" class="btn btn-success btn-block" /> -->
+<!-- 								</form> -->
+<!-- 							</div> -->
+							
 						</th>			
 					</tr>
 				</thead>

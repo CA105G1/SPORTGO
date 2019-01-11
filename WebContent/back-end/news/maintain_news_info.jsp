@@ -70,31 +70,39 @@
 									<div class="panel-body">
 										<div class="h1">預計放from表單---萬用</div>
 										<form method="post" action="<%=request.getContextPath()%>/news/news.do">
-											<div class="label label-default label-text">請輸入消息編號 : (N001)</div>
-											<% 
-													Object tempObjectVO = (NewsVO)request.getAttribute("NewsVO");
-													NewsVO tempVO = null;
-													if(tempObjectVO!=null){
-														tempVO=(NewsVO)tempObjectVO;
-													}
-											%>
-											<input type="text" name="news_no" value="<%=tempVO==null? "":tempVO.getNews_no()%>"/>
-											<br>
+											<div>
+												<div class="label label-default label-text">請輸入消息編號 : (N001)</div>
+												<div class="h1">${newsMap.get("news_no")[0]}</div>
+												<input type="text" name="news_no" value='${newsMap.get("news_no")[0]}'/>
+												
+											</div>
+											<div>
+												<div class="label label-default label-text">請選擇消息種類:</div>							
+	<%-- 											<jsp:useBean id="newstypeService" scope="session" class="com.newstype.model.NewstypeService" /> --%>
+												<select size="1" name="newstype_no" class="text-center">
+													<option value=""></option>
+													<c:forEach var="newstypeVO" items="${applicationScope.newsTypeVOList}">
+														<option value="${newstypeVO.newstype_no}" ${newsMap.get("newstype_no")[0]==newstypeVO.newstype_no?'selected':''}>
+															${newstypeVO.newstype_name}
+														</option>
+													</c:forEach>
+												</select>
+											</div>
+											<div>
+												<div class="label label-default label-text">請選擇消息狀態:</div>	
+												<select size="1" name="news_stutas" class="text-center">
+													<option value=""></option>
+													<option value="未發布" ${newsMap.get("news_stutas")[0]=='未發布'?'selected':''}> 未發布 </option>
+													<option value="發布中" ${newsMap.get('news_stutas')[0]=='發布中'?'selected':''}> 發布中 </option>
+													<option value="下架"   ${newsMap.get('news_stutas')[0]=='下架'  ?'selected':''}> 下架 </option>
+												</select>
+											</div>
 											
-											<div class="label label-default label-text">請選擇消息種類:</div>							
-											<jsp:useBean id="newstypeService" scope="session" class="com.newstype.model.NewstypeService" />
-											<select size="1" name="newstype_no" class="text-center">
-												<option value=""></option>
-												<c:forEach var="newstypeVO" items="${newstypeService.all}">
-													<option value="${newstypeVO.newstype_no}" ${(param.newtype_no==newstypeVO.newstype_no)?'selected':''}>
-													${newstypeVO.newstype_name}
-													</option>
-												</c:forEach>
-											</select>
-											<br>
 											
-											<input type="hidden" name="action" value="listNewsByCompositeQuery" /><br>
-											<input type="submit" value="submit_composite_query" class="btn-primary"/>
+											<div>
+												<input type="hidden" name="action" value="listNewsByCompositeQuery" /><br>
+												<input type="submit" value="submit_composite_query" class="btn-primary"/>
+											</div>
 										</form>
 									</div>
 									<%-- 錯誤表列 --%>

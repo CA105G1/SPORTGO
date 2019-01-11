@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,6 +24,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import com.sg_info.model.Sg_infoService;
@@ -410,12 +412,23 @@ public class Sg_infoServlet extends HttpServlet {
 			
 			try {
 				///////////將查詢資料轉為MAP///////////////////
-				Map<String, String[]> map = req.getParameterMap();
+//				Map<String, String[]> map = req.getParameterMap();
+				HttpSession session = req.getSession();
+				Map<String, String[]> map = (Map<String, String[]>)session.getAttribute("map");
+				if (req.getParameter("whichPage") == null){
+				HashMap<String, String[]> map1 = new HashMap<String, String[]>(req.getParameterMap());
+				session.setAttribute("map",map1);
+					map = map1;
+				} 
+				
 				///////////開始查詢/////////////////////
-				Sg_infoService svc = new Sg_infoService();
-				List<Sg_infoVO> list = svc.getAllByQuery(map);
-				///////////轉交資料/////////////////////
-				req.setAttribute("list", list);
+				//若抓不到map就代表不是複合查詢
+				if(map != null) {
+					Sg_infoService svc = new Sg_infoService();
+					List<Sg_infoVO> list = svc.getAllByQuery(map);
+					///////////轉交資料/////////////////////
+					req.setAttribute("list", list);
+				}
 				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/Sg_info/SgHome.jsp");
 				dispatcher.forward(req, res);
 				

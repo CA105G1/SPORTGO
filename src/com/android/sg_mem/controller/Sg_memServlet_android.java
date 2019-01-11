@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,8 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.android.member.model.MemberService_android;
-import com.android.sg_mem.model.SGMember;
 import com.android.sg_mem.model.Sg_memService_android;
 import com.android.sg_mem.model.Sg_memVO_android;
 import com.google.gson.Gson;
@@ -60,11 +57,15 @@ public class Sg_memServlet_android extends HttpServlet {
 		} else if("joinSG".equals(action)) {
 			//加入揪團
 			Sg_memVO_android vo = new Sg_memVO_android();
+			String sg_no = jsonObject.get("sg_no").getAsString();
 			vo.setSg_no(jsonObject.get("sg_no").getAsString());
 			vo.setMem_no(jsonObject.get("mem_no").getAsString());
 			try {
 				service.insertSGMember(vo);
 				writeText(res, "參加成功！");
+				//報名人數+1
+				new Sg_infoService_android().updateNumber(sg_no, 1);
+				
 			} catch (SQLException e) {
 				if (e instanceof java.sql.SQLIntegrityConstraintViolationException) {
 					writeText(res, "已在揪團名單！");
@@ -79,7 +80,20 @@ public class Sg_memServlet_android extends HttpServlet {
 			String mem_no = jsonObject.get("mem_no").getAsString();
 			
 			service.deleteSGMember(sg_no, mem_no);
+			//報名人數-1
+			new Sg_infoService_android().updateNumber(sg_no, -1);
 			writeText(res, "您已離開揪團");
+		} else if("CheckIn".equals(action)) {
+			//加入揪團
+			String sg_no = jsonObject.get("sg_no").getAsString();
+			String mem_no = jsonObject.get("mem_no").getAsString();
+			try {
+				service.checkIn(sg_no, mem_no);
+			} catch (SQLException e) {
+				e.printStackTrace();
+				writeText(res, "報到失敗");
+			}
+			writeText(res, "報到成功");
 			
 		}
 	}

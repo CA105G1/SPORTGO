@@ -222,6 +222,13 @@ public class FriendServlet extends HttpServlet {
 				try{
 					service.changeStatus(mem1_no, mem2_no, "好友");
 					System.out.println("更新好友成功");
+					/****更新Redis****/
+					MemberlistService memberService = new MemberlistService();
+					MemberlistVO member = memberService.getOneMem(mem2_no);
+					String mem_name = member.getMem_name();
+					System.out.println(mem2_no+","+mem_name);
+					dao.deleteRedis(mem1_no, mem_name);
+					System.out.println("delete data from Redis succeed.");
 				}catch(RuntimeException re) {
 					re.printStackTrace(System.err);
 					System.out.println("資料庫刪除不成功");

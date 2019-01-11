@@ -94,7 +94,7 @@
 		</div>
 		<div class="h3 navbar-myself-center">@ SportyGo! 2018</div>
 			
-		<script src="https://code.jquery.com/jquery.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- 	<script src="https://code.jquery.com/jquery.js"></script> -->
+<!-- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 	</body>
 </html>
