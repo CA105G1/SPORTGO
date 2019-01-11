@@ -157,7 +157,7 @@
 		}
 		.pagecenter{
             text-align: center;
-		}
+		} 
 		.divAdd{
 			/*按鈕add靠右*/
 		}
