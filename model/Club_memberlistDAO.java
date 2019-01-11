@@ -1,4 +1,4 @@
-package com.post_info.model;
+package com.club_memberlist.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,7 +14,8 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 
-public class Post_infoDAO  implements Post_infoDAO_interface{
+
+public class Club_memberlistDAO  implements Club_memberlistDAO_interface{
 	private static DataSource ds = null;
 	static {
 		try {
@@ -27,18 +28,17 @@ public class Post_infoDAO  implements Post_infoDAO_interface{
 	
 		
 		private static final String INSERT_STMT = 
-			"INSERT INTO post_info (post_no,club_no,mem_no,post_topic,post_content,post_date) VALUES (('P'||LPAD(to_char(post_info_seq.NEXTVAL), 4, '0')), ?, ?, ?, ?, CURRENT DATE)";
+			"INSERT INTO club_memberlist (club_no,mem_no,cmem_status,cmem_class,silence_time) VALUES (?, ?, ?, ?, ?)";
 		private static final String GET_ALL_STMT = 
-			"SELECT post_no,club_no,mem_no,post_topic,post_content,post_date FROM post_info order by post_no";
+			"SELECT club_no,mem_no,cmem_status,cmem_class,silence_time FROM club_memberlist order by club_no, mem_no";
 		private static final String GET_ONE_STMT = 
-			"SELECT post_no,club_no,mem_no,post_topic,post_content,post_date FROM post_info where post_no = ?";
+			"SELECT club_no,mem_no,cmem_status,cmem_class,silence_time FROM club_memberlist where club_no=? and mem_no=?";
 		private static final String UPDATE = 
-			"UPDATE post_info set post_no=?, club_no=?, mem_no=?, post_topic=?, post_content=?, post_date=? where post_no = ?";
-		private static final String DELETE = 
-			"DELETE FROM post_info where post_no = ?";
+			"UPDATE club_memberlist set cmem_status=?, cmem_class=?, silence_time=?  where club_no=? and mem_no=?";
+		
 		
 		@Override
-		public void insert(Post_infoVO post_infoVO) {
+		public void insert(Club_memberlistVO clubmemberlistVO) {
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			
@@ -46,12 +46,12 @@ public class Post_infoDAO  implements Post_infoDAO_interface{
 				con = ds.getConnection();
 				pstmt = con.prepareStatement(INSERT_STMT);
 				
+				pstmt.setString(1, clubmemberlistVO.getClub_no());
+				pstmt.setString (2, clubmemberlistVO.getMem_no());
+				pstmt.setString(3, clubmemberlistVO.getCmem_status());
+				pstmt.setString(4, clubmemberlistVO.getCmem_class());
+				pstmt.setTimestamp(5, clubmemberlistVO.getSilence_time());
 				
-				pstmt.setString (1, post_infoVO.getClub_no());
-				pstmt.setString(2, post_infoVO.getMem_no());
-				pstmt.setString(3, post_infoVO.getPost_topic());
-				pstmt.setString(4, post_infoVO.getPost_content());
-				pstmt.setTimestamp(5, post_infoVO.getPost_date());
 				
 				pstmt.executeUpdate();
 				
@@ -79,21 +79,19 @@ public class Post_infoDAO  implements Post_infoDAO_interface{
 		
 		
 		@Override
-		public void update(Post_infoVO post_infoVO) {
+		public void update(Club_memberlistVO clubmemberlistVO) {
 			Connection con = null;
 			PreparedStatement pstmt = null;
-			
+//			"UPDATE club_memberlist set cmem_status=?, cmem_class=?, silence_time=?  where club_no=? and mem_no=?";
 			try {
 				con = ds.getConnection();
 				pstmt = con.prepareStatement(UPDATE);
 				
-				pstmt.setString(1, post_infoVO.getPost_no());
-				pstmt.setString (2, post_infoVO.getClub_no());
-				pstmt.setString(3, post_infoVO.getMem_no());
-				pstmt.setString(4, post_infoVO.getPost_topic());
-				pstmt.setString(5, post_infoVO.getPost_content());
-				pstmt.setTimestamp(6, post_infoVO.getPost_date());
-				
+				pstmt.setString(1, clubmemberlistVO.getCmem_status());
+				pstmt.setString(2, clubmemberlistVO.getCmem_class());
+				pstmt.setTimestamp(3, clubmemberlistVO.getSilence_time());
+				pstmt.setString(4, clubmemberlistVO.getClub_no());
+				pstmt.setString (5, clubmemberlistVO.getMem_no());
 				
 				pstmt.executeUpdate();
 			} catch (SQLException se) {
@@ -121,9 +119,9 @@ public class Post_infoDAO  implements Post_infoDAO_interface{
 			
 		
 		@Override
-		public Post_infoVO findByPrimaryKey(String post_no) {
+		public Club_memberlistVO findByPrimaryKey(String club_no,String mem_no) {
 
-			Post_infoVO post_infoVO = null;
+			Club_memberlistVO clubmemberlistVO = null;
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
@@ -131,19 +129,20 @@ public class Post_infoDAO  implements Post_infoDAO_interface{
 			try {
 				con = ds.getConnection();
 				pstmt = con.prepareStatement(GET_ONE_STMT);
-				pstmt.setString(1, post_no);
+				pstmt.setString(1, club_no);
+				pstmt.setString(2, mem_no);
 				
 				rs = pstmt.executeQuery();
 				
 				while (rs.next()) {
-					post_infoVO = new Post_infoVO();
-					post_infoVO.setPost_no(rs.getString("post_no"));
-					post_infoVO.setClub_no(rs.getString("club_no"));
-					post_infoVO.setMem_no(rs.getString("mem_no"));
-					post_infoVO.setPost_topic(rs.getString("post_topic"));
-					post_infoVO.setPost_content(rs.getString("post_content"));
-					post_infoVO.setPost_date(rs.getTimestamp("post_date"));
+					clubmemberlistVO = new Club_memberlistVO();
 					
+					clubmemberlistVO.setClub_no(rs.getString("club_no"));
+					clubmemberlistVO.setMem_no(rs.getString("mem_no"));
+					clubmemberlistVO.setCmem_status(rs.getString("cmem_status"));
+					clubmemberlistVO.setCmem_class(rs.getString("cmem_class"));
+					clubmemberlistVO.setSilence_time(rs.getTimestamp("silence_time"));
+				
 				}
 				
 			} catch (SQLException se) {
@@ -172,14 +171,14 @@ public class Post_infoDAO  implements Post_infoDAO_interface{
 					}
 				}
 			}
-			return post_infoVO;
+			return clubmemberlistVO;
 		}
 		
 		
 		@Override
-		public List<Post_infoVO> getAll() {
-			List<Post_infoVO> list = new ArrayList<Post_infoVO>();
-			Post_infoVO post_infoVO = null;
+		public List<Club_memberlistVO> getAll() {
+			List<Club_memberlistVO> list = new ArrayList<Club_memberlistVO>();
+			Club_memberlistVO clubmemberlistVO = null;
 			
 			Connection con = null;
 			PreparedStatement pstmt = null;
@@ -190,15 +189,13 @@ public class Post_infoDAO  implements Post_infoDAO_interface{
 				pstmt = con.prepareStatement(GET_ALL_STMT);
 				rs = pstmt.executeQuery();
 				while(rs.next()) {
-					post_infoVO = new Post_infoVO();
-					post_infoVO.setPost_no(rs.getString("post_no"));
-					post_infoVO.setClub_no(rs.getString("club_no"));
-					post_infoVO.setMem_no(rs.getString("mem_no"));
-					post_infoVO.setPost_topic(rs.getString("post_topic"));
-					post_infoVO.setPost_content(rs.getString("post_content"));
-					post_infoVO.setPost_date(rs.getTimestamp("post_date"));
-					
-					list.add(post_infoVO);
+					clubmemberlistVO = new Club_memberlistVO();
+					clubmemberlistVO.setClub_no(rs.getString("club_no"));
+					clubmemberlistVO.setMem_no(rs.getString("mem_no"));
+					clubmemberlistVO.setCmem_status(rs.getString("cmem_status"));
+					clubmemberlistVO.setCmem_class(rs.getString("cmem_class"));
+					clubmemberlistVO.setSilence_time(rs.getTimestamp("silence_time"));
+					list.add(clubmemberlistVO);
 				}
 			
 			} catch (SQLException se) {
@@ -232,72 +229,37 @@ public class Post_infoDAO  implements Post_infoDAO_interface{
 
 
 		@Override
-		public void delete(String post_no) {
-			Connection con = null;
-			PreparedStatement pstmt = null;
-
-			try {
-
-				con = ds.getConnection();
-				pstmt = con.prepareStatement(DELETE);
-
-				pstmt.setString(1, post_no);
-
-				pstmt.executeUpdate();
-
-				// Handle any driver errors
-			} catch (SQLException se) {
-				throw new RuntimeException("A database error occured. "
-						+ se.getMessage());
-				// Clean up JDBC resources
-			} finally {
-				if (pstmt != null) {
-					try {
-						pstmt.close();
-					} catch (SQLException se) {
-						se.printStackTrace(System.err);
-					}
-				}
-				if (con != null) {
-					try {
-						con.close();
-					} catch (Exception e) {
-						e.printStackTrace(System.err);
-					}
-				}
-			}
-		}
+		public List<Club_memberlistVO> getAll(Map<String, String[]> map) {
+			List<Club_memberlistVO> list = new ArrayList<Club_memberlistVO>();
+			Club_memberlistVO clubmemberlistVO = null;
 		
-		@Override
-		public List<Post_infoVO> getAll(Map<String, String[]> map) {
-			List<Post_infoVO> list = new ArrayList<Post_infoVO>();
-			Post_infoVO post_infoVO = null;
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
-		
+			
+
 			try {
 				
 				con = ds.getConnection();
-				String finalSQL = "select * from post_info "
-			          + CompositeQuery_Post_info.get_WhereCondition(map)
-			          + "order by post_no";
+				String finalSQL = "select * from emp2 "
+			          + CompositeQuery_Clubmemberlist.get_WhereCondition(map)
+			          + "order by empno";
 				pstmt = con.prepareStatement(finalSQL);
 				System.out.println("●●finalSQL(by DAO) = "+finalSQL);
 				rs = pstmt.executeQuery();
 		
-				while(rs.next()) {
-					post_infoVO = new Post_infoVO();
-					post_infoVO.setPost_no(rs.getString("post_no"));
-					post_infoVO.setClub_no(rs.getString("club_no"));
-					post_infoVO.setMem_no(rs.getString("mem_no"));
-					post_infoVO.setPost_topic(rs.getString("post_topic"));
-					post_infoVO.setPost_content(rs.getString("post_content"));
-					post_infoVO.setPost_date(rs.getTimestamp("post_date"));
+				while (rs.next()) {
+					clubmemberlistVO = new Club_memberlistVO();
+					clubmemberlistVO.setClub_no(rs.getString("club_no"));
+					clubmemberlistVO.setMem_no(rs.getString("mem_no"));
+					clubmemberlistVO.setCmem_status(rs.getString("cmem_status"));
+					clubmemberlistVO.setCmem_class(rs.getString("cmem_class"));
+					clubmemberlistVO.setSilence_time(rs.getTimestamp("silence_time"));
 					
-					list.add(post_infoVO);
+					list.add(clubmemberlistVO); // Store the row in the List
 				}
 		
+				// Handle any SQL errors
 			} catch (SQLException se) {
 				throw new RuntimeException("A database error occured. "
 						+ se.getMessage());
@@ -327,6 +289,12 @@ public class Post_infoDAO  implements Post_infoDAO_interface{
 			return list;
 		}
 
+
+
+
+
+	
+		
 
 }
 		

@@ -1,12 +1,13 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.club.model.*"%>
+<%@ page import="com.post_info.model.*"%>
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%
-	ClubService clubSvc = new ClubService();
-	List<ClubVO> list = clubSvc.getAll();
+	Post_infoService post_infoSvc = new Post_infoService();
+	List<Post_infoVO> list = post_infoSvc.getAll();
 	pageContext.setAttribute("list", list);
 	
 
@@ -160,7 +161,7 @@
 			
 						<a href="<%= request.getContextPath()%>/front-end/club/club_list.jsp" display="none" id="linkBack" class="list-group-item">返回列表</a>
 				<br>
-						<button type="button" class="btn btn-dark" href="<%=request.getContextPath()%>/clubmemberlist.do?action=dropoutclub&club_no=${clubVO.club_no}">
+						<button type="button" class="btn btn-dark" href="<%= request.getContextPath()%>/clubmemberlist.do?action=dropoutclub&club_no=${clubVO.club_no}">
 								退出社團
 						</button>
 				<br><br>
@@ -170,20 +171,15 @@
 				<div class="col-xs-12 col-sm-7">
 					
 <!---------------------------- 貼文列表 ------------------------------------->
-<input type="text" class="form-control" placeholder="search" style="width:15em">
-  									<button class="btn btn-primary" type="button" id="postsearch">送出</button>
+
 					<div class="card text-center" id="post">
 							<div class="card-header">
-<%-- 								<img src="<%= request.getContextPath()%>/front-end/club/images/C0007.jpg" class="img-fluid" id="clubphoto" width="50%" > --%>
-  									
-  									
 							</div>
 							<br>
   							<div class="card-body">
-  							<c:forEach var="post_infoVO" items="${list}">
-    							<h5 class="card-title" display="none" class="list-group-item">${post_infoVO.post_topic}</h5>
-    							<p class="card-text">${post_infoVO.post_content}</p>
-    						</c:forEach>
+    							<h5 class="card-title" display="none" class="list-group-item">貼文主題</h5>
+    						
+    							<p class="card-text">貼文內容</p>
   							</div>
   							<div class="card-footer text-muted">
     						回文

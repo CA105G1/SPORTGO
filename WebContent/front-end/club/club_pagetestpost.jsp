@@ -30,8 +30,6 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
-		<script src="https://cdn.ckeditor.com/ckeditor5/11.2.0/classic/ckeditor.js"></script>
-		
 		<style type="text/css">
 			
 			textarea {
@@ -48,13 +46,12 @@
 			font-family:Microsoft JhengHei
 			}
 		
-			#postsearch{
-    			padding-left: 5px;
-    			padding-right: 5px;
-    			padding-top: 2px;
-    			padding-bottom: 2px;
-			}
 			
+/* 			#clubphoto{ */
+/* 			max-width:600px;  */
+/* myimg:expression(onload=function(){  */
+/* this.style.width=(this.offsetWidth > 600)?"600px":"auto"}); */
+/* 			} */
 		</style>
 	</head>
 
@@ -66,9 +63,9 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-xs-12 col-lg-2" id="xx1">
-					
+				<!-- 左邊空白 -->		
 				</div>
-				
+
 					<div class="col-xs-12 col-sm-1" style="margin-right: -;padding-left: 5px;padding-right: 5px;">
 						<input type="hidden" name="actionfront" value="getoneclub">
 							<h4 id="club_name" class="_19s-" >
@@ -80,14 +77,14 @@
 					<div class="list-group active">
 						<a href="<%= request.getContextPath()%>/clubfront.do?actionfront=getOneClubintro&club_no=${clubVO.club_no}" display="none" class="list-group-item">簡介</a>
 						<a href="#" class="list-group-item">專屬揪團</a>
-						<!---建立貼文------------------------------------------------------------------建立貼文------>
+<!---建立貼文-----------------------------------------------------------------建立貼文--------->
 	<% Object object = request.getAttribute("errorMsgs"); %>
 		<% if("insert".equals(request.getParameter("action")) && object != null){
 			List<String> errorMsgs = (List<String>)object;%>
 						<a class="list-group-item list-group-item-action" data-toggle="modal" data-target="#post_infoModalLong" 
 			   			   href="#createpost" role="tab" id="myCreatePost">建立貼文</a>
 		<%}else {%>
-						<a class="list-group-item list-group-item-action" data-toggle="modal" data-target="#post_infoModalLong" 
+						<a class="list-group-item list-group-item-action" data-toggle="modal" data-target="#post_infModalLong" 
 			               href="#createpost" role="tab">建立貼文</a>
 	 	<% }%> 
 <!---Modal------------------------------------------------------------------------------------>
@@ -114,9 +111,10 @@
 						<label class="post_content" >
 							貼文內容
 				<br>
-							<textarea name="content" id="editor" class="form-control" ></textarea>
+							<textarea name="content" id="editor" class="form-control" >
+								This is some sample content.
+							</textarea>
 						</label>
-						
 					</div>
 					<div class="form-group"  style="display:none" >
 						<label class="club_no">社團編號</label>
@@ -130,7 +128,6 @@
 						<label class="post_date">發布時間</label>
 							<textarea name="post_date"  id="post_date" class="form-control" ROWS=10 ></textarea>
 					</div>
-					
 				</div>
 				
 				<div class="modal-footer">
@@ -154,13 +151,13 @@
 	</div>
 </div>
 <!---Modal------------------------------------------------------------------------------------>
-<!---建立貼文------------------------------------------------------------------建立貼文------->
+<!---建立貼文------------------------------------------------------------------------------建立貼文--->
 						<a href="#" class="list-group-item">影音相簿</a>
 						<a href="<%= request.getContextPath()%>/clubfront.do?actionfront=getOneClubmanage&club_no=${clubVO.club_no}" display="none" class="list-group-item">社團管理</a>
 			
 						<a href="<%= request.getContextPath()%>/front-end/club/club_list.jsp" display="none" id="linkBack" class="list-group-item">返回列表</a>
 				<br>
-						<button type="button" class="btn btn-dark" href="<%=request.getContextPath()%>/clubmemberlist.do?action=dropoutclub&club_no=${clubVO.club_no}">
+						<button type="button" class="btn btn-dark" href="<%= request.getContextPath()%>/clubmemberlist.do?action=dropoutclub&club_no=${clubVO.club_no}">
 								退出社團
 						</button>
 				<br><br>
@@ -170,20 +167,14 @@
 				<div class="col-xs-12 col-sm-7">
 					
 <!---------------------------- 貼文列表 ------------------------------------->
-<input type="text" class="form-control" placeholder="search" style="width:15em">
-  									<button class="btn btn-primary" type="button" id="postsearch">送出</button>
 					<div class="card text-center" id="post">
 							<div class="card-header">
-<%-- 								<img src="<%= request.getContextPath()%>/front-end/club/images/C0007.jpg" class="img-fluid" id="clubphoto" width="50%" > --%>
-  									
-  									
+								<img src="<%= request.getContextPath()%>/front-end/club/images/C0007.jpg" class="img-fluid" id="clubphoto" width="50%" >
 							</div>
 							<br>
   							<div class="card-body">
-  							<c:forEach var="post_infoVO" items="${list}">
-    							<h5 class="card-title" display="none" class="list-group-item">${post_infoVO.post_topic}</h5>
-    							<p class="card-text">${post_infoVO.post_content}</p>
-    						</c:forEach>
+    							<h5 class="card-title">貼文主題</h5>
+    							<p class="card-text">貼文內容</p>
   							</div>
   							<div class="card-footer text-muted">
     						回文
@@ -208,17 +199,5 @@
 		<%@ include file="/front-end/CA105G1_footer.file" %>
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<script>
-			ClassicEditor
-				.create( document.querySelector( '#editor' ) )
-				.then( editor => {
-					console.log( editor );
-				} )
-				.catch( error => {
-					console.error( error );
-				} );
-		</script>
-	
-
 	</body>
 </html>
