@@ -548,12 +548,14 @@ if ("pro_ByCompositeQuery".equals(action)) { //來自listAllPro的複合查詢�
 				System.out.println(PATH_FRONT_LIST_ALL_PRO.equals(requestURL));
 				                
 				/***************************2.開始複合查詢***************************************/
+				if(map !=null) {
 				ProductService proSvc = new ProductService();
 				List<ProductVO> list  = proSvc.getAll(map);
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
 				req.setAttribute("pro_ByCompositeQuery", list); // 資料庫取出的list物件,存入request
 				req.setAttribute("findBy", "findBy");
+				}
 				String url = null;
 				System.out.println("requestURL : "+requestURL);
 				if(PATH_FRONT_LIST_ALL_PRO.equals(requestURL)) {

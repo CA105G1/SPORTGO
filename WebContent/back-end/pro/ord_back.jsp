@@ -304,9 +304,9 @@
 				$(document).ready(function(){
 				      $(".flip").hover(function(){
 				          $(this).siblings(".panel").slideToggle("slow");
-				          $(this).siblings(".xs1").toggle();
-				          $(".xs1").toggle();
-				          $(".xs2").toggle();
+// 				          $(this).siblings(".xs1").toggle();
+// 				          $(".xs1").toggle();
+// 				          $(".xs2").toggle();
 				        });
 					<!--下拉狀態-->
 					$('.select_ord_change').change(function(){
