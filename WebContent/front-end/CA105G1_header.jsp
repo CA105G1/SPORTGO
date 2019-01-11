@@ -111,7 +111,7 @@
 								<!-- <b class="caret"></b> -->
 							</a>
 							<ul class="dropdown-menu">
-								<li><a href="<%=request.getContextPath()%>/front-end/memberlist/Member_page.jsp">個人頁面</a></li>
+								<li><a href="<%=request.getContextPath()%>/front-end/memberlist/public_Member_page.jsp">個人頁面</a></li>
 								<li><a href="#">Member02</a></li>
 								<li><a href="#">Member03</a></li>
 							</ul>
