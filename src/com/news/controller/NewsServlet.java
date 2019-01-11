@@ -557,7 +557,6 @@ public class NewsServlet extends HttpServlet {
 				newsMap = getMap;
 			}
 			// 1.5 check map
-			
 			newsMap = Util_Check_News_Parameter.checkNewsMap(newsMap, errorMsgs);
 			if(!errorMsgs.isEmpty()) {
 				RequestDispatcher failureView = 

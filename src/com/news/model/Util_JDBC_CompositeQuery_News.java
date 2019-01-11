@@ -26,6 +26,7 @@ public class Util_JDBC_CompositeQuery_News {
 		int count = 0;
 		for(String key:keys) {
 			String value = map.get(key)[0];
+System.out.println("name : "+key+" ; value : "+value);
 			if(value != null && value.trim().length() != 0 && !"action".equals(key)) {
 				count++;
 				String aCondition = get_aCondition_For_Oracle(key, value.trim());
