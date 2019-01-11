@@ -5,6 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page import="java.util.*"%>
     
+    
 <% 
 List<Sg_infoVO> list = null;
 //取得複合查詢後的list
