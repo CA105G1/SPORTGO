@@ -28,6 +28,8 @@ public class Club_memberlistJDBCDAO implements Club_memberlistDAO_interface{
 			"DELETE FROM CLUB_MEMBERLIST where club_no = ? AND mem_no = ?";
 		private static final String UPDATE = 
 			"UPDATE CLUB_MEMBERLIST set cmem_status = ?,cmem_class = ?,SILENCE_TIME = ? where club_no = ? AND mem_no = ?";
+		private static final String GET_BY_MEM =
+				"SELECT * FROM club_memberList where mem_no = ? ";
 	
 		
 	@Override
@@ -213,6 +215,66 @@ public class Club_memberlistJDBCDAO implements Club_memberlistDAO_interface{
 		}
 		return clubmemberlistVO;
 	}
+	
+	@Override
+	public List<Club_memberlistVO> findByMem(String mem_no) {
+
+		List<Club_memberlistVO> list = new ArrayList<Club_memberlistVO>();
+		Club_memberlistVO clubmemberlistVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_BY_MEM);
+			pstmt.setString(1, mem_no);
+			
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				clubmemberlistVO = new Club_memberlistVO();
+				clubmemberlistVO.setClub_no(rs.getString("club_no"));
+				clubmemberlistVO.setMem_no(rs.getString("mem_no"));
+				clubmemberlistVO.setCmem_status(rs.getString("cmem_status"));
+				clubmemberlistVO.setCmem_class(rs.getString("cmem_class"));
+				clubmemberlistVO.setSilence_time(rs.getTimestamp("silence_time"));
+			
+				list.add(clubmemberlistVO);
+			}
+			
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
 
 	@Override
 	public List<Club_memberlistVO> getAll() {
@@ -307,15 +369,15 @@ public class Club_memberlistJDBCDAO implements Club_memberlistDAO_interface{
 //		System.out.println("------------------------------");
 
 //		//查詢
-//		List<ClubmemberlistVO> list = dao.getAll();
-//		for (ClubmemberlistVO aClub : list) {
-//			System.out.println(aClub.getClub_no()+ ",");
-//			System.out.println(aClub.getMem_no()+ ",");
-//			System.out.println(aClub.getCmem_status()+ ",");
-//			System.out.println(aClub.getCmem_class()+ ",");
-//			System.out.println(aClub.getSilence_time()+ ",");
-//			System.out.println();
-//		}
+		List<Club_memberlistVO> list = dao.findByMem("M001");
+		for (Club_memberlistVO aClub : list) {
+			System.out.println(aClub.getClub_no()+ ",");
+			System.out.println(aClub.getMem_no()+ ",");
+			System.out.println(aClub.getCmem_status()+ ",");
+			System.out.println(aClub.getCmem_class()+ ",");
+			System.out.println(aClub.getSilence_time()+ ",");
+			System.out.println();
+		}
 	}
 
 	@Override
@@ -323,8 +385,6 @@ public class Club_memberlistJDBCDAO implements Club_memberlistDAO_interface{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
 	
 
 }

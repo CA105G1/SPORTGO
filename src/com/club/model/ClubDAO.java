@@ -14,7 +14,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class ClubDAO  implements ClubDAO_interface{
+public class ClubDAO implements ClubDAO_interface{
 	private static DataSource ds = null;
 	static {
 		try {
