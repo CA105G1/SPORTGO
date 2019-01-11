@@ -3,20 +3,24 @@
 <%@ page import = "com.memberlist.model.*" %>
 <%@ page import = "com.sg_info.model.*" %>
 <%@ page import = "com.sg_mem.model.*" %>
+<%@ page import = "com.friend.model.*" %>
 <%@ page import = "java.util.*" %>
-<%
-	
-%>
+
 <%
 	String mem_no = (String)request.getParameter("mem_no");
 	MemberlistService service = new MemberlistService();
+	FriendService friendservice = new FriendService();
 	MemberlistVO memberlistVO = service.getOneMem(mem_no);
 	pageContext.setAttribute("type", 1);//public
 	if(memberlistVO==null){
 		memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO");
-		mem_no = memberlistVO.getMem_no();
 		pageContext.setAttribute("type", 0);//private
+		if(memberlistVO==null){
+			response.sendRedirect("Login.jsp");
+			return;
+		}
 	}
+	mem_no = memberlistVO.getMem_no();
 	pageContext.setAttribute("member", memberlistVO);
 	List<Sg_infoVO> sglist = service.getSgHostByMem(mem_no);
 	pageContext.setAttribute("sglist", sglist);
@@ -24,6 +28,10 @@
 	pageContext.setAttribute("sgall", sgall);
 	List<Sg_memVO> sg_mem = service.getSgPartByMem(mem_no);
 	pageContext.setAttribute("sg_mem",sg_mem);
+	List<FriendVO> friend = friendservice.findWhoAdd(mem_no);
+	pageContext.setAttribute("friend",friend);
+	List<MemberlistVO> memberlist = service.getAllMem();
+	pageContext.setAttribute("memberlist",memberlist);
 	
 	String status = (String)request.getAttribute("status");
 	if(status==null)
@@ -52,20 +60,39 @@
 				display: flex;
 				justify-content: space-around;
 				align-items: center;
-				
 			}
 			.center{
 				display:flex;
 				justify-content:center;
 			}
-			
 			h1{
 				text-align: center;
 			}
 			.grid-container{
 				grid-template-columns:repeat(3,33.33%);
 				grid-gap:50px;
-				
+			}
+			.alert-info {
+			    border-radius: 0;
+				background: #0061E8;
+				border: 0;
+				color: white;
+			}
+			
+			.alert-body {
+				font-size: 15px;
+			}
+			
+			.alert-title {
+				font-size: 15px;
+				font-weight: bold;
+			}
+			
+			.alert-warning {
+			    border-radius: 0;
+			    background: orange;
+				border: 0;
+				color: white;
 			}
 		</style>
 	</head>
@@ -99,7 +126,12 @@
 							<jsp:include page="list_group.jsp"></jsp:include>
 						</c:if>
 				</div>	
+				
+				
 				<div class="col-xs-12 col-sm-9" id="detail" style="padding:15px;">
+					<div class="container notation" style="width:100%;display:none;">
+	            	
+	       			</div>
 					
 						<div class=" tab-pane" style="display:flex;flex-flow:row wrap;">
 							<c:forEach var="sg_memVO" items="${sg_mem}">
@@ -126,11 +158,17 @@
 <!-- 						個人簡介 -->
 <!-- 						</div> -->
 						</div>
+						
+						
+			
+						
 				</div>
 			</div>
 		</div>
 	<script>
 	var status = "${status}";
+	var mem_no = "${mem_no}";
+	console.log(mem_no);
 	$(function(){
 		console.log(status);
 		if('succeed'===status){
@@ -142,17 +180,19 @@
 		}
 		
 	})
-	
-	var MemPoint = "/MemEchoServer";
+		var mem_no ='${mem_no}';
+		var MemPoint = "/MemEchoServer/"+mem_no;
 		var host = window.location.host;
 		var path = window.location.pathname;
 		var webCtx = path.substring(0,path.indexOf('/',1));
 		var endPointURL = "ws://"+host+webCtx+MemPoint;
+		var type = ${type};
 		
 		var webSocket;
 		
 		$(function(){
-			connect();
+			if(type==0)
+				connect();
 		})
 		function connect(){
 			webSocket = new WebSocket(endPointURL);
@@ -164,8 +204,14 @@
 			};
 			
 			webSocket.onmessage = function(event){
-				console.log(event.data);
-				alert(event.data);
+				$(".notation").show();
+				var notation = event.data;
+					console.log(notation);
+					$(".notation").append("<div class='alert alert-info alert-dismissable' role='alert'>"+
+					"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"+
+		         	"<span aria-hidden='true' style='color: white;'>再說</span></button>"+
+	            	"<p class='alert-title'>有捧油想加加</p><p class='alert-body'>"+
+	            	notation+"</p></div>");
 			};
 			
 			webSocket.onclose = function(event){

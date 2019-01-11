@@ -14,12 +14,12 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class ClubDAO  implements ClubDAO_interface{
+public class ClubDAO implements ClubDAO_interface{
 	private static DataSource ds = null;
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/CA105G1");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/CA105G1DB");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}

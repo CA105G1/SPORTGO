@@ -37,7 +37,7 @@ public class NewsDAO implements NewsDAO_interface{
 
 	private static final String UPDATE_SQL =
 			"UPDATE news SET newstype_no=?, news_script=?, "
-			+ "pic_exetension=?, news_picture=?, news_stutas=?, "
+			+ "pic_extension=?, news_picture=?, news_stutas=?, "
 			+ "news_release_date=?, news_last_date=? WHERE news_no=?";
 	private static final String UPDATE_STUTAS_BY_NO_SQL =
 			"UPDATE news SET news_stutas=? WHERE news_no=?";
@@ -126,6 +126,9 @@ public class NewsDAO implements NewsDAO_interface{
 			con = dataSource.getConnection();
 			pstmt = con.prepareStatement(UPDATE_SQL);
 			
+//			"UPDATE news SET newstype_no=?, news_script=?, "
+//			+ "pic_extension=?, news_picture=?, news_stutas=?, "
+//			+ "news_release_date=?, news_last_date=? WHERE news_no=?";
 			pstmt.setString(1, newsVO.getNewstype_no());
 			pstmt.setString(2, newsVO.getNews_script());
 			pstmt.setString(3, newsVO.getPic_extension());
@@ -141,6 +144,7 @@ public class NewsDAO implements NewsDAO_interface{
 //				System.out.println("---更新失敗---編號: "+newsVO.getNews_no());
 			}
 		} catch(SQLException e) {
+//			e.printStackTrace();
 			throw new RuntimeException("A database error occured. "+e.getMessage());
 		} finally {
 			if(pstmt!=null) {

@@ -17,6 +17,7 @@
 <script src="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
 
 <style type="text/css">
@@ -190,6 +191,7 @@ System.out.println("memberlistVO= "+memberlistVO);
 								<div id="distance"></div>
 						</div>
 					</div>
+<canvas id="myChart" width="700" height="400" style="display: none"></canvas>
 				
 			</form>
 		</div> <!-- col-sm-6 -->
@@ -278,6 +280,7 @@ System.out.println("memberlistVO= "+memberlistVO);
 			// 載入路線服務與路線顯示圖層 Directions API
 	        directionsService = new google.maps.DirectionsService();
 	        directionsDisplay = new google.maps.DirectionsRenderer();
+	        var path=[];
 	        
 	        // 放置路線圖層
 	        directionsDisplay.setMap(map);
@@ -295,13 +298,82 @@ System.out.println("memberlistVO= "+memberlistVO);
 	             //顯示路線距離
 	             $("#distance").text("總距離為： "+result.routes[0].legs[0].distance.text);
 	             
+	            //抓取路線各個點座標存入path陣列供計算海拔用
+				var pathobj = result.routes[0].overview_path;
+				for(var i = 0; i < pathobj.length; i++){
+					path.push(pathobj[i]);
+				}
+				//開始計算海拔高度
+				displayPathElevation(path,elevator);
 	         }else{
 	             console.log(status);
 	         }
 	        });
+	        
+	      //計算海拔高度
+	        var elevator = new google.maps.ElevationService;
+	        
+	        function displayPathElevation(path, elevator) {
+	          elevator.getElevationAlongPath({
+	            'path': path,
+	            'samples': 50
+	          }, plotElevation);
+	        }
+	        
+	        function plotElevation(elevations, status) {
+	        	var meterValue = [];
+	        	//抓到各個點的海拔高度(M)存入meterValue陣列
+	        	for (var i = 0; i < elevations.length; i++) {
+	        		meterValue.push(elevations[i].elevation);
+	              }
+	        	$("#myChart").css("display","");
+	        	drawChart(meterValue);
+	        }
+	        
 		}
 		
 	} //myLoc
+	
+	
+	function drawChart(meterValue){
+   		var labelArr = [];
+   	   	for(i=0;i<50;i++){
+   	   		labelArr.push("");
+   	   	}
+   	   	
+   	   	var ctx = document.getElementById("myChart").getContext('2d');
+   	   	var myChart = new Chart(ctx, {
+   	   	    type: 'line',
+   	   	    data: {
+   	   	        labels: labelArr,
+	   	   	     datasets : [
+	   	             {
+	   	                 label: "路線坡度",  //当前数据的说明
+	   	                 fill: true,  //是否要显示数据部分阴影面积块  false:不显示
+	   	                 borderColor: "rgba(75,192,192,1)",//数据曲线颜色
+	   	                 data: meterValue,  //填充的数据
+	   	              	pointRadius:0,
+	   	             }
+	   	         ]
+   	   	    },
+   	   	    options: {
+   	   	        scales: {
+   	   	            yAxes: [{
+   	   	                ticks: {
+   	   	              		callback: function(value, index, values) {
+                          	return value + "m";
+   	   	              		},
+   	   	                    beginAtZero:true
+   	   	                }
+   	   	            }]
+   	   	        }
+   	   	    }
+   	   	});
+   	}
+	
+	
+	
+	
 	  
 	///////4按鍵若尚未登入之設定//////////
 	<%if(memberlistVO == null){
@@ -398,6 +470,7 @@ System.out.println("memberlistVO= "+memberlistVO);
 									    '<label>月</label>'+
 								    '</div>'+
 					   			'</div>'+
+							    '<div>報名費用共${Sg_infoVO.sg_fee}元</div>'+
 				   			'</form>',
 
 					}).then(

@@ -5,6 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page import="java.util.*"%>
     
+    
 <% 
 List<Sg_infoVO> list = null;
 //取得複合查詢後的list
@@ -256,7 +257,7 @@ if(list == null){
 						<input type="submit" id="${Sg_infoVO.sg_no}"  style="display: none">
 					</form>
 			</c:forEach>
-			<%@ include file="page2.file" %>
+			<%@ include file="page2_ByCompositeQuery.file" %>
 
 
 

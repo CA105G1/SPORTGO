@@ -24,6 +24,7 @@
 <%-- 		<%@ include file="/back-end/emp/loginfile/showLoginBackEnd.file" %> --%>
 		<jsp:include page="/back-end/CA105G1_header_back.jsp"/>
 		
+
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-xs-12 col-sm-3">
@@ -32,6 +33,8 @@
 					<jsp:include page="/back-end/left_side_field.jsp"/>
 					
 				</div>
+				
+	<% 			String whichTab = (String)request.getAttribute("whichTab"); %>
 				<div class="col-xs-12 col-sm-9">
 					<h1>最新消息管理</h1>
 					
@@ -45,6 +48,14 @@
 					        <li role="presentation" class="${whichTab=='tab2'?'active':'' }">
 					            <a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">新增</a>
 					        </li>
+					        
+					        <% if("tab3".equals(whichTab)){ %>
+								<li role="presentation" class="${whichTab=='tab3'?'active':'' }">
+					            	<a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">更新</a>
+					      		</li>
+					      	<% } %>
+					        
+					        
 					    </ul>
 					
 			<!-- 標籤面板：內容區 -->
@@ -59,35 +70,45 @@
 									<div class="panel-body">
 										<div class="h1">預計放from表單---萬用</div>
 										<form method="post" action="<%=request.getContextPath()%>/news/news.do">
-											<div class="label label-default label-text">請輸入消息編號 : (N001)</div>
-											<% 
-													Object tempObjectVO = (NewsVO)request.getAttribute("NewsVO");
-													NewsVO tempVO = null;
-													if(tempObjectVO!=null){
-														tempVO=(NewsVO)tempObjectVO;
-													}
-											%>
-											<input type="text" name="news_no" value="<%=tempVO==null? "":tempVO.getNews_no()%>"/>
-											<br>
+											<div>
+												<div class="label label-default label-text">請輸入消息編號 : (N001)</div>
+												<div class="h1">${newsMap.get("news_no")[0]}</div>
+												<input type="text" name="news_no" value='${newsMap.get("news_no")[0]}'/>
+												
+											</div>
+											<div>
+												<div class="label label-default label-text">請選擇消息種類:</div>							
+	<%-- 											<jsp:useBean id="newstypeService" scope="session" class="com.newstype.model.NewstypeService" /> --%>
+												<select size="1" name="newstype_no" class="text-center">
+													<option value=""></option>
+													<c:forEach var="newstypeVO" items="${applicationScope.newsTypeVOList}">
+														<option value="${newstypeVO.newstype_no}" ${newsMap.get("newstype_no")[0]==newstypeVO.newstype_no?'selected':''}>
+															${newstypeVO.newstype_name}
+														</option>
+													</c:forEach>
+												</select>
+											</div>
+											<div>
+												<div class="label label-default label-text">請選擇消息狀態:</div>	
+												<select size="1" name="news_stutas" class="text-center">
+													<option value=""></option>
+													<option value="未發布" ${newsMap.get("news_stutas")[0]=='未發布'?'selected':''}> 未發布 </option>
+													<option value="發布中" ${newsMap.get('news_stutas')[0]=='發布中'?'selected':''}> 發布中 </option>
+													<option value="下架"   ${newsMap.get('news_stutas')[0]=='下架'  ?'selected':''}> 下架 </option>
+												</select>
+											</div>
 											
-											<div class="label label-default label-text">請選擇消息種類:</div>							
-											<jsp:useBean id="newstypeService" scope="session" class="com.newstype.model.NewstypeService" />
-											<select size="1" name="newstype_no" class="text-center">
-												<option value=""></option>
-												<c:forEach var="newstypeVO" items="${newstypeService.all}">
-													<option value="${newstypeVO.newstype_no}" ${(param.newtype_no==newstypeVO.newstype_no)?'selected':''}>${newstypeVO.newstype_name}</option>
-												</c:forEach>
-											</select>
-											<br>
 											
-											<input type="hidden" name="action" value="listNewsByCompositeQuery" /><br>
-											<input type="submit" value="submit_composite_query" class="btn-primary"/>
+											<div>
+												<input type="hidden" name="action" value="listNewsByCompositeQuery" /><br>
+												<input type="submit" value="submit_composite_query" class="btn-primary"/>
+											</div>
 										</form>
 									</div>
 									<%-- 錯誤表列 --%>
-									<c:if test="${not empty errorMsgs}">
+									<c:if test="${not empty errorMsgs_tab1}">
 										<ul>
-											<c:forEach var="message" items="${errorMsgs}">
+											<c:forEach var="message" items="${errorMsgs_tab1}">
 												<li style="color:red">${message}</li>
 											</c:forEach>
 										</ul>
@@ -98,16 +119,15 @@
 <%-- 						<a id="fistTimeShow" href="<%=request.getContextPath()%>/news/news.do?action=listNewsByCompositeQuery" >123</a> --%>
 			<%-- 			<jsp:include page="listQueryNews.jsp" flush="true" />	 --%>
 						        		<% }else if("listNewsByCompositeQuery".equals(request.getParameter("action"))){%>
-											<jsp:include page="listQueryNews.jsp" flush="true" />	
-<%-- 										<% }else if("listVenueByCompositeQuery".equals(request.getParameter("action"))){%> --%>
-<%-- 											<jsp:include page="listQueryVenue.jsp"/> --%>
-<%-- 										<% } %> --%>
+												<jsp:include page="listQueryNews.jsp" flush="true" />	
+										<% }else if("showOneNews".equals(request.getParameter("action"))){ %>
+												<jsp:include page="show_one_news.jsp" flush="true"/>
+										<% }else if("delete_this_news".equals(request.getParameter("action"))){ %>
+												<div>${newsVO.news_no}-${newsVO.news_script}--已被刪除</div>
+										<% }else if("update_news_no_stutas".equals(request.getParameter("action"))){ %>
+												<jsp:include page="listQueryNews.jsp" flush="true" />
 										<% } %>
 						        	</div>
-									
-									<div>
-
-									</div>
 									
 									
 									
@@ -118,6 +138,16 @@
 					        <div role="tabpanel" class="tab-pane ${whichTab=='tab2'?'active':'' }" id="tab2">
 					        	<jsp:include page="/back-end/news/add_one_news.jsp" />
 					        </div>
+					       <% if("tab3".equals(whichTab)){ %>
+								<div role="tabpanel" class="tab-pane ${whichTab=='tab3'?'active':'' }" id="tab3">
+					        		<jsp:include page="/back-end/news/update_one_news.jsp" />
+					        	</div>
+							<% } %>
+					       
+					        
+					        
+					        
+					        
 					    </div>
 					</div>
 					
@@ -135,4 +165,34 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	
 	</body>
+	
+	<script type="text/javascript">
+	
+	//照片上傳
+	var temp_My_pic;
+	var test = $(":file").change(function(){
+		temp_My_pic = "#"+$(this).context.id;
+		readURL(this);
+		if(temp_My_pic=="#news_picture_tab3"){
+			$('#hasChangePicture_tab3').val("true");
+		}
+// 	原始		<input type="hidden" name="hasChangePicture" id="hasChangePicture_tab3" value="false">
+// 			<input type="file" id="news_picture_tab3" name="news_picture" />
+	});
+	function readURL(input){
+		if(input.files && input.files[0]){
+			var reader = new FileReader();
+			reader.onload = function(e){
+				$(temp_My_pic).parent().next().empty();
+				$(temp_My_pic).parent().next().append("<img/>");
+				$(temp_My_pic).parent().next().children().attr({"src":e.target.result, "class":"img-responsive img-rounded center-block"});
+			};
+			reader.readAsDataURL(input.files[0]);
+		};
+	}
+
+	</script>
+	
+	
+	
 </html>

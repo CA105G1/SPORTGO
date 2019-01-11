@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +32,9 @@ public class Sg_infoDAO_android implements Sg_infoDAO_interface_android{
 	private static final String INSERT = 
 			"INSERT INTO sg_info VALUES('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default, ?, ?)";
 	private static final String UPDATE =
-			"UPDATE sg_info SET mem_no=?, sg_name=?, sg_date=?, apl_start=?, apl_end=?, sg_fee=?, sg_per=?, sp_no=?, v_no=?, sg_maxno=?, sg_minno=?, sg_ttlapl=?, sg_extrainfo=?, loc_start=?, loc_end=? WHERE sg_no=?";
+			"UPDATE sg_info SET mem_no=?, sg_name=?, sg_date=?, club_no=?, apl_end=?, sg_fee=?, sg_per=?, sp_no=?, v_no=?, sg_maxno=?, sg_minno=?, sg_ttlapl=?, sg_extrainfo=?, loc_start=?, loc_end=? WHERE sg_no=?";
+	private static final String UPDATE_TTLAPL =
+			"UPDATE SG_INFO SET SG_TTLAPL = ((SELECT SG_TTLAPL FROM SG_INFO WHERE SG_NO = ? ) + ?) WHERE SG_NO = ?";
 	private static final String CANCEL =
 			"UPDATE sg_info SET SG_STATUS = '解散'  WHERE sg_no=?";
 	private static final String FIND_BY_SP =
@@ -39,11 +42,15 @@ public class Sg_infoDAO_android implements Sg_infoDAO_interface_android{
 	private static final String FIND_BY_PK =
 			"SELECT SG.*, SP.sp_name, V.V_Name, M.MEM_NAME , V.V_LAT, V.V_LONG FROM sg_info SG LEFT JOIN SPORT SP on SP.sp_no = SG.sp_no LEFT JOIN VENUE V ON V.V_NO = SG.V_NO LEFT JOIN MEMBERLIST M ON SG.MEM_NO = M.MEM_NO WHERE SG.SG_NO=?";
 	private static final String FIND_BY_MASTER =
-			"SELECT SG.*, SP.sp_name, V.V_Name, M.MEM_NAME , V.V_LAT, V.V_LONG FROM sg_info SG LEFT JOIN SPORT SP on SP.sp_no = SG.sp_no LEFT JOIN VENUE V ON V.V_NO = SG.V_NO LEFT JOIN MEMBERLIST M ON SG.MEM_NO = M.MEM_NO WHERE SG.MEM_NO=?";
+			"SELECT SG.*, SP.sp_name, V.V_Name, M.MEM_NAME , V.V_LAT, V.V_LONG FROM sg_info SG LEFT JOIN SPORT SP on SP.sp_no = SG.sp_no LEFT JOIN VENUE V ON V.V_NO = SG.V_NO LEFT JOIN MEMBERLIST M ON SG.MEM_NO = M.MEM_NO WHERE SG.MEM_NO=? ORDER BY SG.SG_DATE DESC";
 	private static final String FIND_BY_MEM =
-			"SELECT SG.*, SP.sp_name, V.V_Name, M.MEM_NAME , V.V_LAT, V.V_LONG FROM SG_MEM SGM LEFT JOIN SG_INFO SG ON SGM.SG_NO = SG.SG_NO LEFT JOIN SPORT SP on SP.sp_no = SG.sp_no LEFT JOIN VENUE V ON V.V_NO = SG.V_NO LEFT JOIN MEMBERLIST M ON SG.MEM_NO = M.MEM_NO WHERE SGM.MEM_NO= ? ORDER BY SG.SG_DATE";
+			"SELECT SG.*, SP.sp_name, V.V_Name, M.MEM_NAME , V.V_LAT, V.V_LONG FROM SG_MEM SGM LEFT JOIN SG_INFO SG ON SGM.SG_NO = SG.SG_NO LEFT JOIN SPORT SP on SP.sp_no = SG.sp_no LEFT JOIN VENUE V ON V.V_NO = SG.V_NO LEFT JOIN MEMBERLIST M ON SG.MEM_NO = M.MEM_NO WHERE SGM.MEM_NO = ? AND SG.SG_STATUS = '揪團中' AND SG.SG_DATE > SYSDATE ORDER BY SG.SG_DATE";
 	private static final String FIND_BY_LIKE =
-			"SELECT SG.*, SP.sp_name, V.V_Name, M.MEM_NAME , V.V_LAT, V.V_LONG FROM SG_INFO SG LEFT JOIN SG_LIKE SL ON SG.SG_NO = SL.SG_NO LEFT JOIN SPORT SP on SP.sp_no = SG.sp_no LEFT JOIN VENUE V ON V.V_NO = SG.V_NO LEFT JOIN MEMBERLIST M ON SG.MEM_NO = M.MEM_NO WHERE SL.MEM_NO = ?";
+			"SELECT SG.*, SP.sp_name, V.V_Name, M.MEM_NAME , V.V_LAT, V.V_LONG FROM SG_INFO SG LEFT JOIN SG_LIKE SL ON SG.SG_NO = SL.SG_NO LEFT JOIN SPORT SP on SP.sp_no = SG.sp_no LEFT JOIN VENUE V ON V.V_NO = SG.V_NO LEFT JOIN MEMBERLIST M ON SG.MEM_NO = M.MEM_NO WHERE SL.MEM_NO = ? AND SG.SG_DATE > SYSDATE ORDER BY SG.SG_DATE";
+	private static final String FIND_BY_HIS =
+			"SELECT SG.*, SP.sp_name, V.V_Name, M.MEM_NAME , V.V_LAT, V.V_LONG FROM SG_MEM SGM LEFT JOIN SG_INFO SG ON SGM.SG_NO = SG.SG_NO LEFT JOIN SPORT SP on SP.sp_no = SG.sp_no LEFT JOIN VENUE V ON V.V_NO = SG.V_NO LEFT JOIN MEMBERLIST M ON SG.MEM_NO = M.MEM_NO WHERE SGM.MEM_NO = ? AND SG.SG_DATE < SYSDATE ORDER BY SG.SG_DATE";
+	private static final String FIND_BY_SEARCH =
+			"SELECT SG.*, SP.sp_name, V.V_Name, M.MEM_NAME , V.V_LAT, V.V_LONG FROM SG_MEM SGM LEFT JOIN SG_INFO SG ON SGM.SG_NO = SG.SG_NO LEFT JOIN SPORT SP on SP.sp_no = SG.sp_no LEFT JOIN VENUE V ON V.V_NO = SG.V_NO LEFT JOIN MEMBERLIST M ON SG.MEM_NO = M.MEM_NO WHERE SGM.MEM_NO = ? AND SG.SG_DATE < SYSDATE ORDER BY SG.SG_DATE";
 	private static final String GET_ALL =
 			"SELECT SG.*, SP.sp_name, V.V_Name, M.MEM_NAME , V.V_LAT, V.V_LONG FROM sg_info SG LEFT JOIN SPORT SP on SP.sp_no = SG.sp_no LEFT JOIN VENUE V ON V.V_NO = SG.V_NO LEFT JOIN MEMBERLIST M ON SG.MEM_NO = M.MEM_NO WHERE SG.SG_STATUS = '揪團中' ORDER BY SG_DATE";
 	private static final String GET_IMAGE =
@@ -64,7 +71,7 @@ public class Sg_infoDAO_android implements Sg_infoDAO_interface_android{
 			pstmt.setString(1, Sg_infoVO_android.getMem_no());
 			pstmt.setString(2, Sg_infoVO_android.getSg_name());
 			pstmt.setTimestamp(3, Sg_infoVO_android.getSg_date());
-			pstmt.setTimestamp(4, Sg_infoVO_android.getApl_start());
+			pstmt.setString(4, Sg_infoVO_android.getClub_no());
 			pstmt.setTimestamp(5, Sg_infoVO_android.getApl_end());
 			pstmt.setInt(6, Sg_infoVO_android.getSg_fee());
 			pstmt.setString(9, Sg_infoVO_android.getSg_per());
@@ -115,7 +122,7 @@ public class Sg_infoDAO_android implements Sg_infoDAO_interface_android{
 			pstmt.setString(1, Sg_infoVO_android.getMem_no());
 			pstmt.setString(2, Sg_infoVO_android.getSg_name());
 			pstmt.setTimestamp(3, Sg_infoVO_android.getSg_date());
-			pstmt.setTimestamp(4, Sg_infoVO_android.getApl_start());
+			pstmt.setString(4, Sg_infoVO_android.getClub_no());
 			pstmt.setTimestamp(5, Sg_infoVO_android.getApl_end());
 			pstmt.setInt(6, Sg_infoVO_android.getSg_fee());
 			pstmt.setString(9, Sg_infoVO_android.getSg_per());
@@ -128,6 +135,45 @@ public class Sg_infoDAO_android implements Sg_infoDAO_interface_android{
 			pstmt.setString(17, Sg_infoVO_android.getLoc_start());
 			pstmt.setString(18, Sg_infoVO_android.getLoc_end());
 			pstmt.setString(20, Sg_infoVO_android.getSg_no());
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			if(con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+	}
+	
+	@Override
+	public void updateNumber(String sg_no, int num) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATE_TTLAPL);
+			
+			pstmt.setString(1, sg_no);
+			pstmt.setInt(2, num);
+			pstmt.setString(3, sg_no);
 			
 			pstmt.executeUpdate();
 			
@@ -211,7 +257,7 @@ public class Sg_infoDAO_android implements Sg_infoDAO_interface_android{
 				vo.setMem_name(rs.getString("mem_name"));
 				vo.setSg_name(rs.getString("sg_name"));
 				vo.setSg_date(rs.getTimestamp("sg_date"));
-				vo.setApl_start(rs.getTimestamp("apl_start"));
+				vo.setClub_no(rs.getString("club_no"));
 				vo.setApl_end(rs.getTimestamp("apl_end"));
 				vo.setSg_fee(rs.getInt("sg_fee"));
 				vo.setSg_per(rs.getString("sg_per"));
@@ -286,7 +332,7 @@ public class Sg_infoDAO_android implements Sg_infoDAO_interface_android{
 				vo.setMem_name(rs.getString("mem_name"));
 				vo.setSg_name(rs.getString("sg_name"));
 				vo.setSg_date(rs.getTimestamp("sg_date"));
-				vo.setApl_start(rs.getTimestamp("apl_start"));
+				vo.setClub_no(rs.getString("club_no"));
 				vo.setApl_end(rs.getTimestamp("apl_end"));
 				vo.setSg_fee(rs.getInt("sg_fee"));
 				vo.setSg_per(rs.getString("sg_per"));
@@ -360,7 +406,7 @@ public class Sg_infoDAO_android implements Sg_infoDAO_interface_android{
 				vo.setMem_name(rs.getString("mem_name"));
 				vo.setSg_name(rs.getString("sg_name"));
 				vo.setSg_date(rs.getTimestamp("sg_date"));
-				vo.setApl_start(rs.getTimestamp("apl_start"));
+				vo.setClub_no(rs.getString("club_no"));
 				vo.setApl_end(rs.getTimestamp("apl_end"));
 				vo.setSg_fee(rs.getInt("sg_fee"));
 				vo.setSg_per(rs.getString("sg_per"));
@@ -436,7 +482,7 @@ public class Sg_infoDAO_android implements Sg_infoDAO_interface_android{
 				vo.setMem_name(rs.getString("mem_name"));
 				vo.setSg_name(rs.getString("sg_name"));
 				vo.setSg_date(rs.getTimestamp("sg_date"));
-				vo.setApl_start(rs.getTimestamp("apl_start"));
+				vo.setClub_no(rs.getString("club_no"));
 				vo.setApl_end(rs.getTimestamp("apl_end"));
 				vo.setSg_fee(rs.getInt("sg_fee"));
 				vo.setSg_per(rs.getString("sg_per"));
@@ -512,7 +558,163 @@ public class Sg_infoDAO_android implements Sg_infoDAO_interface_android{
 				vo.setMem_name(rs.getString("mem_name"));
 				vo.setSg_name(rs.getString("sg_name"));
 				vo.setSg_date(rs.getTimestamp("sg_date"));
-				vo.setApl_start(rs.getTimestamp("apl_start"));
+				vo.setClub_no(rs.getString("club_no"));
+				vo.setApl_end(rs.getTimestamp("apl_end"));
+				vo.setSg_fee(rs.getInt("sg_fee"));
+				vo.setSg_per(rs.getString("sg_per"));
+				vo.setSp_no(rs.getString("sp_no"));
+				vo.setSp_name(rs.getString("sp_name"));
+				vo.setV_no(rs.getString("v_no"));
+				vo.setV_name(rs.getString("v_name"));
+				vo.setSg_maxno(rs.getInt("sg_maxno"));
+				vo.setSg_minno(rs.getInt("sg_minno"));
+				vo.setSg_ttlapl(rs.getInt("sg_ttlapl"));
+				vo.setSg_chkno(rs.getInt("sg_chkno"));
+				vo.setSg_extrainfo(rs.getString("sg_extrainfo"));
+				vo.setSg_status(rs.getString("sg_status"));
+				vo.setLoc_start(rs.getString("loc_start"));
+				vo.setLoc_end(rs.getString("loc_end"));
+				vo.setV_lat(rs.getDouble("v_lat"));
+				vo.setV_long(rs.getDouble("v_long"));
+				
+				list.add(vo);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			
+			if(rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			if(con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return list;
+	}
+	
+	@Override
+	public List<Sg_info> findByHistory(String mem_no) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Sg_info vo = null;
+		List<Sg_info> list = new ArrayList<Sg_info>();
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(FIND_BY_HIS);
+			
+			pstmt.setString(1, mem_no);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				vo = new Sg_info();
+				vo.setSg_no(rs.getString("sg_no"));
+				vo.setMem_no(rs.getString("mem_no"));
+				vo.setMem_name(rs.getString("mem_name"));
+				vo.setSg_name(rs.getString("sg_name"));
+				vo.setSg_date(rs.getTimestamp("sg_date"));
+				vo.setClub_no(rs.getString("club_no"));
+				vo.setApl_end(rs.getTimestamp("apl_end"));
+				vo.setSg_fee(rs.getInt("sg_fee"));
+				vo.setSg_per(rs.getString("sg_per"));
+				vo.setSp_no(rs.getString("sp_no"));
+				vo.setSp_name(rs.getString("sp_name"));
+				vo.setV_no(rs.getString("v_no"));
+				vo.setV_name(rs.getString("v_name"));
+				vo.setSg_maxno(rs.getInt("sg_maxno"));
+				vo.setSg_minno(rs.getInt("sg_minno"));
+				vo.setSg_ttlapl(rs.getInt("sg_ttlapl"));
+				vo.setSg_chkno(rs.getInt("sg_chkno"));
+				vo.setSg_extrainfo(rs.getString("sg_extrainfo"));
+				vo.setSg_status(rs.getString("sg_status"));
+				vo.setLoc_start(rs.getString("loc_start"));
+				vo.setLoc_end(rs.getString("loc_end"));
+				vo.setV_lat(rs.getDouble("v_lat"));
+				vo.setV_long(rs.getDouble("v_long"));
+				
+				list.add(vo);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			
+			if(rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			if(con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return list;
+	}
+	
+	@Override
+	public List<Sg_info> findBySearch(String mem_name, String venue, long start, long end) {
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Sg_info vo = null;
+		List<Sg_info> list = new ArrayList<Sg_info>();
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(FIND_BY_HIS);
+			
+			pstmt.setString(1, mem_name);
+			pstmt.setString(2, venue);
+			pstmt.setTimestamp(3, new Timestamp(start));
+			pstmt.setTimestamp(4, new Timestamp(end));
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				vo = new Sg_info();
+				vo.setSg_no(rs.getString("sg_no"));
+				vo.setMem_no(rs.getString("mem_no"));
+				vo.setMem_name(rs.getString("mem_name"));
+				vo.setSg_name(rs.getString("sg_name"));
+				vo.setSg_date(rs.getTimestamp("sg_date"));
+				vo.setClub_no(rs.getString("club_no"));
 				vo.setApl_end(rs.getTimestamp("apl_end"));
 				vo.setSg_fee(rs.getInt("sg_fee"));
 				vo.setSg_per(rs.getString("sg_per"));
@@ -587,7 +789,7 @@ public class Sg_infoDAO_android implements Sg_infoDAO_interface_android{
 				vo.setMem_name(rs.getString("mem_name"));
 				vo.setSg_name(rs.getString("sg_name"));
 				vo.setSg_date(rs.getTimestamp("sg_date"));
-				vo.setApl_start(rs.getTimestamp("apl_start"));
+				vo.setClub_no(rs.getString("club_no"));
 				vo.setApl_end(rs.getTimestamp("apl_end"));
 				vo.setSg_fee(rs.getInt("sg_fee"));
 				vo.setSg_per(rs.getString("sg_per"));

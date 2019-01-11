@@ -43,7 +43,7 @@
 					<jsp:include page="/back-end/left_side_field.jsp"/>
 				</div>
 				<div class="col-xs-12 col-sm-9">
-					<h1>後台內容，使用tabs，也可自由發揮</h1>
+					<h1>揪團專區</h1>
 					
 					<div role="tabpanel">
 			<!-- 標籤面板：標籤區 -->
@@ -76,6 +76,7 @@
             <th style="text-align:center">報名截止日</th>
             <th style="text-align:center">報名費用</th>
             <th style="text-align:center">權限</th>
+            <th style="text-align:center">社團名稱</th>
             <th style="text-align:center">運動種類</th>
             <th style="text-align:center">場地名稱</th>
             <th style="text-align:center">人數限制</th>
@@ -88,6 +89,7 @@
     <tbody>
     	<jsp:useBean id="sg_infoSvc" scope="page" class="com.sg_info.model.Sg_infoService"></jsp:useBean>
     	<jsp:useBean id="memSvc" scope="page" class="com.memberlist.model.MemberlistService"></jsp:useBean>
+    	<jsp:useBean id="clubSvc" scope="page" class="com.club.model.ClubService"/>
     	<jsp:useBean id="sportSvc" scope="page" class="com.sport.model.SportService"></jsp:useBean>
     	<jsp:useBean id="venueSvc" scope="page" class="com.venue.model.VenueService"></jsp:useBean>
     	<c:forEach var='sg_infoVO' items='${sg_infoSvc.all }'>
@@ -99,6 +101,7 @@
 	            <td><fmt:formatDate value="${sg_infoVO.apl_end}" pattern="yyyy-MM-dd"/></td>
 	            <td>${sg_infoVO.sg_fee }</td>
 	            <td>${sg_infoVO.sg_per }</td>
+	            <td>${clubSvc.getOneClub(sg_infoVO.club_no).club_name}</td>
 	            <td>${sportSvc.getByPK(sg_infoVO.sp_no).sp_name }</td>
 	            <td>${venueSvc.getOneVenue(sg_infoVO.v_no).v_name }</td>
 	            <td>${sg_infoVO.sg_minno }-${sg_infoVO.sg_maxno }人</td>

@@ -35,6 +35,8 @@ public class Club_memberlistDAO  implements Club_memberlistDAO_interface{
 			"SELECT club_no,mem_no,cmem_status,cmem_class,silence_time FROM club_memberlist where club_no=? and mem_no=?";
 		private static final String UPDATE = 
 			"UPDATE club_memberlist set cmem_status=?, cmem_class=?, silence_time=?  where club_no=? and mem_no=?";
+		private static final String GET_BY_MEM =
+				"SELECT * FROM club_memberList where mem_no = ? ";
 		
 		
 		@Override
@@ -172,6 +174,63 @@ public class Club_memberlistDAO  implements Club_memberlistDAO_interface{
 				}
 			}
 			return clubmemberlistVO;
+		}
+		
+		@Override
+		public List<Club_memberlistVO> findByMem(String mem_no) {
+
+			List<Club_memberlistVO> list = new ArrayList<Club_memberlistVO>();
+			Club_memberlistVO clubmemberlistVO = null;
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			try {
+				
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(GET_BY_MEM);
+				pstmt.setString(1, mem_no);
+				
+				rs = pstmt.executeQuery();
+				
+				while (rs.next()) {
+					clubmemberlistVO = new Club_memberlistVO();
+					clubmemberlistVO.setClub_no(rs.getString("club_no"));
+					clubmemberlistVO.setMem_no(rs.getString("mem_no"));
+					clubmemberlistVO.setCmem_status(rs.getString("cmem_status"));
+					clubmemberlistVO.setCmem_class(rs.getString("cmem_class"));
+					clubmemberlistVO.setSilence_time(rs.getTimestamp("silence_time"));
+				
+					list.add(clubmemberlistVO);
+				}
+				
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+			} finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			return list;
 		}
 		
 		
