@@ -32,10 +32,14 @@ public class MemberlistRedisDAO implements MemberlistRedisDAO_interface {
 	@Override
 	public void deleteRedis(String mem_no,String mem_name) {
 		List<String> value = jedis.lrange(mem_no, 0, jedis.llen(mem_no)-1);
+		int count = -1;
 		for(String list : value) {
-			if(list==mem_name) {}
-				
+			count++;
+			if(list==mem_name) {
+				break;
+			}
 		}
+		jedis.lrem(mem_no, count, mem_name);
 		jedis.close();
 	}
 
@@ -66,11 +70,16 @@ public class MemberlistRedisDAO implements MemberlistRedisDAO_interface {
 	@Override
 	public List<String> getNotationMsg(String mem_no) {
 		List<String> natation = jedis.lrange(mem_no, 0, jedis.llen(mem_no)-1);
+		jedis.close();
 		return natation;
 	}
 
-//	public static void main(String[]args) {
+	public static void main(String[]args) {
+		
 //		MemberlistRedisDAO dao = new MemberlistRedisDAO();
+//		dao.deleteRedis("M001", "戴資穎");
+//		jedis.lrem("M001", 2);
+//		jedis.close();
 //		dao.insertRedis("Hello", "Redis");
 //		System.out.println("safed completed");
 //		
@@ -79,5 +88,5 @@ public class MemberlistRedisDAO implements MemberlistRedisDAO_interface {
 //		
 //		dao.deleteRedis("Hello");
 //		System.out.println("deleted completed");
-//	}
+	}
 }
