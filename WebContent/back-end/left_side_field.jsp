@@ -57,8 +57,8 @@
 			  	</div>
 			    <div class="panel-collapse collapse" id="sgBack">
 					<div class="list-group">
-						<a href="<%=request.getContextPath()%>/back-end/sg_info/sg_infoBackEnd.jsp" class="list-group-item">揪團列表</a>
-						<a href="<%=request.getContextPath()%>/back-end/sg_info/Sg_infoGetByPkForRep.jsp" class="list-group-item">揪團檢舉列表</a>
+						<a href="#" class="list-group-item">揪團列表</a>
+						<a href="#" class="list-group-item">揪團檢舉列表</a>
 					</div>
 				</div>
 			</div>
@@ -119,7 +119,7 @@
 
 		</div>
 		
-		<script src="https://code.jquery.com/jquery.js"></script>
+<!-- 		<script src="https://code.jquery.com/jquery.js"></script> -->
 		<!-- 多下行會有重複載入的問題 -->
 <!-- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 		
