@@ -121,6 +121,9 @@ public class Sg_infoServlet extends HttpServlet {
 				Integer sg_minno = null;
 				try {
 					sg_minno = new Integer(req.getParameter("sg_minno").trim());
+					if(sg_minno >= sg_maxno) {
+						errorMsg.put("sg_minno","人數下限請小於人數上限");
+					}
 				} catch (NumberFormatException e) {
 					sg_minno = 0;
 					errorMsg.put("sg_minno","人數下限請填數字");
@@ -305,6 +308,9 @@ public class Sg_infoServlet extends HttpServlet {
 				Integer sg_minno = null;
 				try {
 					sg_minno = new Integer(req.getParameter("sg_info3").trim());
+					if(sg_minno >= sg_maxno) {
+						errorMsg.add("人數下限請小於人數上限");
+					}
 				} catch (NumberFormatException e) {
 					sg_minno = 0;
 					errorMsg.add("人數下限請填數字");

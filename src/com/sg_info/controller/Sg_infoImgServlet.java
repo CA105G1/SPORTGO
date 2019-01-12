@@ -26,7 +26,6 @@ public class Sg_infoImgServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		String sg_no = req.getParameter("sg_no");
-//System.out.println("SGNO = " + sg_no);
 		Sg_infoService svc = new Sg_infoService();
 		byte[] pic = svc.GetByPK(sg_no).getSg_pic();
 		pic = shrink(pic, 300);
