@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.club.model.*"%>
+<%@ page import="com.post_info.model.*"%>
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
@@ -9,8 +10,13 @@
 	List<ClubVO> list = clubSvc.getAll();
 	pageContext.setAttribute("list", list);
 	
+//    Post_infoService post_infoSvc = new Post_infoService();
+// 	Post_infoVO post_infoVO = post_infoSvc.getOnePost_info("P0001");
 
-	//ClubVO clubVO = (ClubVO)request.getAttribute("clubVO");
+ //	Post_infoVO post_infoVO = (Post_infoVO)request.getAttribute("post_infoVO");
+ 	
+ 	
+	List<Post_infoVO> postvolist=(ArrayList)request.getAttribute("postvolist");
 	
 %>
 
@@ -174,17 +180,21 @@
   									<button class="btn btn-primary" type="button" id="postsearch">送出</button>
 					<div class="card text-center" id="post">
 							<div class="card-header">
-<%-- 								<img src="<%= request.getContextPath()%>/front-end/club/images/C0007.jpg" class="img-fluid" id="clubphoto" width="50%" > --%>
-  									
-  									
-							</div>
 							<br>
   							<div class="card-body">
-  							<c:forEach var="post_infoVO" items="${list}">
-    							<h5 class="card-title" display="none" class="list-group-item">${post_infoVO.post_topic}</h5>
-    							<p class="card-text">${post_infoVO.post_content}</p>
-    						</c:forEach>
+<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/post_info.do?" name="form"> 
+<%--     							<h5 class="card-title"  class="list-group-item"><%=post_infoVO.getPost_topic()%></h5> --%>
+<%--     							<p class="card-text"><%=post_infoVO.getPost_content()%></p> --%>
+<!--     							<h5 class="card-title"  class="list-group-item">xxxxxxx</h5> -->
+<!--     							<p class="card-text">xxxxxx</p> -->
+
+								<c:forEach var="postinfo" items="${postvolist}">
+    							<h5 class="card-title"  class="list-group-item">${postinfo.post_topic}</h5>
+    							<p class="card-text">${postinfo.post_content}</p>
+    							</c:forEach>
+ </FORM>
   							</div> 
+
   							<div class="card-footer text-muted">
     						回文
   							</div>

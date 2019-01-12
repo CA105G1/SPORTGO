@@ -20,6 +20,8 @@ import javax.servlet.http.Part;
 
 import com.club.model.ClubService;
 import com.club.model.ClubVO;
+import com.post_info.model.Post_infoService;
+import com.post_info.model.Post_infoVO;
 import com.sport.model.SportService;
 
 
@@ -63,9 +65,13 @@ if ("getOneClub".equals(actionfront)) { //進入or加入社團
 	
 				ClubVO clubVO = clubSvc.getOneClub(club_no);
 				
+				Post_infoService postinfo = new Post_infoService();
+				
+				List<Post_infoVO> postvolist = postinfo.getAllfromclub(club_no);
+				
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("clubVO", clubVO); 
-				
+				req.setAttribute("postvolist", postvolist);
 				RequestDispatcher successView = req.getRequestDispatcher(CLUB_PAGE); 
 				successView.forward(req, res);
 

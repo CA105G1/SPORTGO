@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.memberlist.model.*;
+
+import redis.clients.jedis.exceptions.JedisException;
+
 import com.friend.model.*;
 
 public class FriendServlet extends HttpServlet {
@@ -121,7 +124,10 @@ public class FriendServlet extends HttpServlet {
 				go.forward(req, res);
 				return;
 			}
-			memberlistVO = null;
+			if(memberlistVO!=null)
+				memberlistVO = null;
+			if(dao!=null)
+				dao = null;
 			req.setAttribute("status", "succeed");
 			RequestDispatcher go = req.getRequestDispatcher("public_Member_page.jsp?mem_no="+mem2_no);
 			go.forward(req, res);
@@ -177,7 +183,8 @@ public class FriendServlet extends HttpServlet {
 				System.out.println("無法刪除");
 				return;
 			}
-			memberlistVO = null;
+			if(memberlistVO!=null)
+				memberlistVO = null;
 			req.setAttribute("status", "succeed");
 			RequestDispatcher go = req.getRequestDispatcher("Friend.do?action=find_My_Friend");
 			go.forward(req, res);
@@ -227,16 +234,22 @@ public class FriendServlet extends HttpServlet {
 					MemberlistVO member = memberService.getOneMem(mem2_no);
 					String mem_name = member.getMem_name();
 					System.out.println(mem2_no+","+mem_name);
-					dao.deleteRedis(mem1_no, mem_name);
-					System.out.println("delete data from Redis succeed.");
-				}catch(RuntimeException re) {
-					re.printStackTrace(System.err);
+					String name = dao.getValue(mem1_no);
+					if(name.equals(mem_name)) {
+						dao.deleteRedis(mem1_no, mem_name);
+						System.out.println("delete data from Redis succeed.");
+					}
+				}catch(RuntimeException je) {
+					je.printStackTrace(System.err);
 					System.out.println("資料庫刪除不成功");
 				}
 			}else {
 				System.out.println("無法更新好友");
 			}
-			memberlistVO = null;
+			if(memberlistVO!=null)
+				memberlistVO = null;
+			if(dao!= null)
+				dao = null;
 			req.setAttribute("status", "succeed");
 			RequestDispatcher go = req.getRequestDispatcher("Friend.do?action=find_My_Friend");
 			go.forward(req, res);

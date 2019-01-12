@@ -130,7 +130,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>Post_infoServlet</servlet-name>
-    <url-pattern>/post_infoServlet.do</url-pattern>
+    <url-pattern>/post_info.do</url-pattern>
   </servlet-mapping>
    <servlet>
    <servlet-name>ClubmemberlistServlet</servlet-name>
