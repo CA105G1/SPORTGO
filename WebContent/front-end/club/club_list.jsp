@@ -233,7 +233,7 @@
 										<div class="container_1" >
 										<div class="card" >
 											<div>
-											<img class="img-responsive card-img-top" src="<%=request.getContextPath()%>/club/clubImg.do?club_no=${clubVO.club_no}">
+											<img class="img-responsive card-img-top" src="<%=request.getContextPath()%>/clubImg.do?club_no=${clubVO.club_no}">
 											</div>
 											<div class="card-body">
 												<h4 class="card-title">${clubVO.club_name}</h4>

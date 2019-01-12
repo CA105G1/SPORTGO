@@ -66,7 +66,18 @@
 
 <div class="container">
 	<div class="row">
-		<div class="col-xs-12 col-sm-3"></div>
+<!-- 		<div class="col-xs-12 col-sm-1"></div> -->
+		<div class="col-xs-12 col-sm-3">
+			<h4 id="club_name" >
+				<a href='<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clubVO.club_no}' >
+					${clubVO.club_name}
+				</a>
+			</h4>
+			<jsp:include page="club_pageRight.jsp"/>
+			<button type="button" class="btn btn-dark" href="<%=request.getContextPath()%>/clubmemberlist.do?action=dropoutclub&club_no=${clubVO.club_no}">
+					退出社團
+			</button>							
+		</div>
 		<div class="col-xs-12 col-sm-6">
 			<form action="<%= request.getContextPath()%>/Sg_info/Sg_info.do" method="post" enctype="multipart/form-data">
 				<table class="table table-hover table-striped table-bordered text-center">
@@ -116,15 +127,6 @@
 									value="${param.sg_fee }">
 							</td>
 						</tr>
-<!-- 						<tr> -->
-<!-- 							<th>權限</th> -->
-<!-- 							<td> -->
-<!-- 								<select name="sg_per"> -->
-<!-- 									<option value="公開">公開</option> -->
-<!-- 									<option value="限社團">限社團</option> -->
-<!-- 								</select> -->
-<!-- 							</td> -->
-<!-- 						</tr> -->
 						<jsp:useBean id="sportSvc" scope="page" class="com.sport.model.SportService" />
 						<tr>
 							<th>運動種類</th> <!-- 下拉選單 -->
