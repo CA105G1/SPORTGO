@@ -125,6 +125,22 @@
     <url-pattern>/clubImg.do</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>Post_infoServlet</servlet-name>
+    <servlet-class>com.post_info.controller.Post_infoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Post_infoServlet</servlet-name>
+    <url-pattern>/post_infoServlet.do</url-pattern>
+  </servlet-mapping>
+   <servlet>
+   <servlet-name>ClubmemberlistServlet</servlet-name>
+   <servlet-class>com.clubmemberlist.controller.ClubmemberlistServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+   <servlet-name>ClubmemberlistServlet</servlet-name>
+   <url-pattern>/clubmemberlist.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>VenueServlet</servlet-name>
     <servlet-class>com.venue.controller.VenueServlet</servlet-class>
   </servlet>
