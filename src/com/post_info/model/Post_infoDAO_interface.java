@@ -9,7 +9,7 @@ public interface Post_infoDAO_interface {
     public void delete(String post_no);
     public Post_infoVO findByPrimaryKey(String post_no);
     public List<Post_infoVO> getAll();
-    
+    public List<Post_infoVO> getAllfromclub(String club_no);
     
 	public List<Post_infoVO> getAll(Map<String, String[]> map);
 }
