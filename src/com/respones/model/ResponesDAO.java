@@ -212,17 +212,19 @@ public class ResponesDAO  implements ResponesDAO_interface{
 				con = ds.getConnection();
 				pstmt = con.prepareStatement(GET_ALL_STMT);
 				rs = pstmt.executeQuery();
-				while(rs.next()) {
-					responesVO = new ResponesVO();
-					pstmt.setString(1, responesVO.getRes_no());
-					pstmt.setString (2, responesVO.getPost_no());
-					pstmt.setString(3, responesVO.getMem_no());
-					pstmt.setString(4, responesVO.getRes_content());
-					pstmt.setTimestamp(5, responesVO.getRes_date());
-					list.add(responesVO);
-				}
+				list = collectResponesVO(rs);
+//				while(rs.next()) {
+//					responesVO = new ResponesVO();
+//					responesVO.setRes_no(rs.getString("res_no"));
+//					responesVO.setPost_no(rs.getString("post_no"));
+//					responesVO.setMem_no(rs.getString("mem_no"));
+//					responesVO.setRes_content(rs.getString("res_content"));
+//					responesVO.setRes_date(rs.getTimestamp("res_date"));
+//					list.add(responesVO);
+//				}
 			
 			} catch (SQLException se) {
+se.printStackTrace();
 				throw new RuntimeException("A database error occured. "
 						+ se.getMessage());
 			}finally {
@@ -251,6 +253,20 @@ public class ResponesDAO  implements ResponesDAO_interface{
 			return list;
 		}
 
+		private List<ResponesVO> collectResponesVO(ResultSet rs) throws SQLException{
+			List<ResponesVO> list = new ArrayList<>();
+			while(rs.next()) {
+				ResponesVO responesVO = new ResponesVO();
+				responesVO.setRes_no(rs.getString("res_no"));
+				responesVO.setPost_no(rs.getString("post_no"));
+				responesVO.setMem_no(rs.getString("mem_no"));
+				responesVO.setRes_content(rs.getString("res_content"));
+				responesVO.setRes_date(rs.getTimestamp("res_date"));
+				list.add(responesVO);
+				
+			}
+			return list;
+		}
 
 		@Override
 		public void delete(String res_no) {

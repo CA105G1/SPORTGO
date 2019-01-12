@@ -17,6 +17,7 @@
  	
  	
 	List<Post_infoVO> postvolist=(ArrayList)request.getAttribute("postvolist");
+
 	
 %>
 
@@ -176,23 +177,31 @@
 				<div class="col-xs-12 col-sm-7">
 					
 <!---------------------------- 貼文列表 ------------------------------------->
-<input type="text" class="form-control" placeholder="search" style="width:15em">
-  									<button class="btn btn-primary" type="button" id="postsearch">送出</button>
+					<div>
+						<input type="text" class="form-control" placeholder="search" style="width:15em">
+	  					<button class="btn btn-primary" type="button" id="postsearch">送出</button>
+					</div>
 					<div class="card text-center" id="post">
 							<div class="card-header">
 							<br>
   							<div class="card-body">
-<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/post_info.do?" name="form"> 
-<%--     							<h5 class="card-title"  class="list-group-item"><%=post_infoVO.getPost_topic()%></h5> --%>
-<%--     							<p class="card-text"><%=post_infoVO.getPost_content()%></p> --%>
-<!--     							<h5 class="card-title"  class="list-group-item">xxxxxxx</h5> -->
-<!--     							<p class="card-text">xxxxxx</p> -->
-
+<%-- 	<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/post_info.do?" name="form">  --%>
 								<c:forEach var="postinfo" items="${postvolist}">
-    							<h5 class="card-title"  class="list-group-item">${postinfo.post_topic}</h5>
-    							<p class="card-text">${postinfo.post_content}</p>
+    								<h3 class="card-title"  class="list-group-item">主題：${postinfo.post_topic}</h3>
+    								<p class="card-text">${postinfo.post_content}</p>
+    								<!-- 回文 -->
+    								<jsp:useBean id="responesSvc" scope="page" class="com.respones.model.ResponesService" />
+									<c:forEach var="responesVO" items="${responesSvc.all}">
+    									<div class="h3">
+    										${responesVO.res_no}---
+    									</div>
+    									<div class="h3">
+    										${responesVO.res_content}
+    									</div>
+    								</c:forEach>	
+    							
     							</c:forEach>
- </FORM>
+<!--  	</FORM> -->
   							</div> 
 
   							<div class="card-footer text-muted">

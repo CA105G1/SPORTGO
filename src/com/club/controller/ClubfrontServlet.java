@@ -30,7 +30,7 @@ public class ClubfrontServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private static final String CLUB_LIST = "/front-end/club/club_list.jsp";
-	private static final String CLUB_PAGE = "/front-end/club/club_pageTest.jsp";
+	private static final String CLUB_PAGE = "/front-end/club/club_page.jsp";
 	private static final String CLUB_INTRO = "/front-end/club/club_intro_page.jsp";
 	private static final String CLUB_MANAGE = "/front-end/club_memberlist/reviewaddclub.jsp";
 	
@@ -55,7 +55,7 @@ if ("getOneClub".equals(actionfront)) { //進入or加入社團
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			String requestURL = req.getParameter("requestURL");
-
+System.out.println("requestURL : "+requestURL);///////////////////////////////////////////////
 			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				String club_no = req.getParameter("club_no");
