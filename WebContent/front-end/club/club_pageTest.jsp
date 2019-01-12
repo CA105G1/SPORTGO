@@ -60,25 +60,15 @@
 	<body>
 	
 	<%@ include file="/front-end/CA105G1_header.file" %>
-		<div class="container-fluid">
+		<div class="container">
 			<div class="row">
-				<div class="col-xs-12 col-sm-1" id="xx1">
-				</div>
 				
 					<div class="col-xs-12 col-sm-2" style="margin-right: -;padding-left: 5px;padding-right: 5px;">
-						<h4 id="club_name" class="_19s-" >
-							<a href='<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clubVO.club_no}' >
-								${clubVO.club_name}
-							</a>
-						</h4>
-						<jsp:include page="club_pageRight.jsp"/>
-						<button type="button" class="btn btn-dark" href="<%=request.getContextPath()%>/clubmemberlist.do?action=dropoutclub&club_no=${clubVO.club_no}">
-								退出社團
-						</button>							
+						<%@ include file="/front-end/club/club_pageRight.file" %>
 					</div>
-				<div class="col-xs-12 col-sm-7">
+				<div class="col-xs-12 col-sm-8">
 					<div>66666</div>
-					
+				</div>
 				<div class="col-xs-12 col-sm-2" id="xx">
 					<div>好友列表</div>
 				</div>

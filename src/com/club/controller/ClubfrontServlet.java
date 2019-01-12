@@ -64,11 +64,9 @@ if ("getOneClub".equals(actionfront)) { //進入or加入社團
 				ClubService clubSvc = new ClubService();
 	
 				ClubVO clubVO = clubSvc.getOneClub(club_no);
-				
 				Post_infoService postinfo = new Post_infoService();
 				
 				List<Post_infoVO> postvolist = postinfo.getAllfromclub(club_no);
-				
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("clubVO", clubVO); 
 				req.setAttribute("postvolist", postvolist);
