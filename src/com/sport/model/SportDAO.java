@@ -33,26 +33,26 @@ public class SportDAO implements SportDAO_interface{
 			"SELECT * FROM sport ORDER BY sp_no";
 	
 	//連線池版
-//	private static DataSource ds = null;
-//	
-//	static {
-//		try {
-//			Context ctx = new javax.naming.InitialContext();
-//			ds = (DataSource)ctx.lookup("java:comp/env/jdbc/TestDB");
-//		} catch (NamingException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
+	private static DataSource ds = null;
 	
-	//JDBC版
 	static {
 		try {
-			Class.forName(driver);
-		}catch(ClassNotFoundException ce) {
-			ce.printStackTrace();
+			Context ctx = new javax.naming.InitialContext();
+			ds = (DataSource)ctx.lookup("java:comp/env/jdbc/CA105G1DB");
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
+	
+	//JDBC版
+//	static {
+//		try {
+//			Class.forName(driver);
+//		}catch(ClassNotFoundException ce) {
+//			ce.printStackTrace();
+//		}
+//	}
 	
 	
 	@Override
@@ -62,9 +62,9 @@ public class SportDAO implements SportDAO_interface{
 		
 		try {
 			//連線池版
-//		con = ds.getConnection();
+			con = ds.getConnection();
 			//JDBC版
-			con = DriverManager.getConnection(url, user, psw);
+//			con = DriverManager.getConnection(url, user, psw);
 			pstmt = con.prepareStatement(insertStmt);
 			
 			pstmt.setString(1, sportVO.getSp_name());
@@ -99,9 +99,9 @@ public class SportDAO implements SportDAO_interface{
 		
 		try {
 			//連線池版
-//			con = ds.getConnection();
+			con = ds.getConnection();
 			//JDBC版
-			con = DriverManager.getConnection(url, user, psw);
+//			con = DriverManager.getConnection(url, user, psw);
 			pstmt = con.prepareStatement(updateName);
 			
 			pstmt.setString(1, sportVO.getSp_name());
@@ -140,9 +140,9 @@ public class SportDAO implements SportDAO_interface{
 		
 		try {
 			//連線池版
-//			con = ds.getConnection();
+			con = ds.getConnection();
 			//JDBC版
-			con = DriverManager.getConnection(url, user, psw);
+//			con = DriverManager.getConnection(url, user, psw);
 			pstmt = con.prepareStatement(deleteStmt);
 			
 			pstmt.setString(1, sp_no);
@@ -181,9 +181,9 @@ public class SportDAO implements SportDAO_interface{
 		
 		try {
 			//連線池版
-//			con = ds.getConnection();
+			con = ds.getConnection();
 			//JDBC版
-			con = DriverManager.getConnection(url, user, psw);
+//			con = DriverManager.getConnection(url, user, psw);
 			pstmt = con.prepareStatement(findByPkStmt);
 			
 			pstmt.setString(1, sp_no);
@@ -233,7 +233,9 @@ public class SportDAO implements SportDAO_interface{
 		List<SportVO> list = new ArrayList<SportVO>();
 		
 		try {
-			con = DriverManager.getConnection(url, user, psw);
+			//連線池版
+			con = ds.getConnection();
+//			con = DriverManager.getConnection(url, user, psw);
 			pstmt = con.prepareStatement(getAllStmt);
 			rs = pstmt.executeQuery();
 			

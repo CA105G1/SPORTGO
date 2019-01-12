@@ -45,7 +45,7 @@
 <%
 	MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO"); 
 	String club_no = request.getParameter("club_no");
-	request.setAttribute("club_no","C0003");
+	request.setAttribute("club_no",club_no);
 %>
 
 
@@ -68,15 +68,7 @@
 	<div class="row">
 <!-- 		<div class="col-xs-12 col-sm-1"></div> -->
 		<div class="col-xs-12 col-sm-3">
-			<h4 id="club_name" >
-				<a href='<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clubVO.club_no}' >
-					${clubVO.club_name}
-				</a>
-			</h4>
-			<jsp:include page="club_pageRight.jsp"/>
-			<button type="button" class="btn btn-dark" href="<%=request.getContextPath()%>/clubmemberlist.do?action=dropoutclub&club_no=${clubVO.club_no}">
-					退出社團
-			</button>							
+			<%@ include file="/front-end/club/club_pageRight.file" %>						
 		</div>
 		<div class="col-xs-12 col-sm-6">
 			<form action="<%= request.getContextPath()%>/Sg_info/Sg_info.do" method="post" enctype="multipart/form-data">
