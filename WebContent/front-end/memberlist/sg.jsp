@@ -56,7 +56,7 @@
 									<c:forEach var="sg_infoVO" items="${sgall}">
 											<c:if test="${sg_infoVO.sg_no eq sg_memVO.sg_no}">
 											
-												<div style="width:100%;height:0;position:relative;padding-bottom:66.66666%;overflow:hidden;border-radius:10px;">
+												<div style="width:100%;height:0;position:relative;padding-bottom:75%;overflow:hidden;border-radius:10px;">
 												<img src="<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${sg_infoVO.sg_no}"
 												style="height:100%;position:absolute;">
 												</div>
@@ -79,7 +79,7 @@
 							<h3>即將到來的我的揪團</h3>
 							<div class="grid-container" style="display:grid;align-item:center;">
 								<c:forEach var="sg_infoVO" items="${sglist}">
-										<div style="width:100%;height:0;position:relative;padding-bottom:80%;overflow:hidden;border-radius:10px;">
+										<div style="width:100%;height:0;position:relative;padding-bottom:75%;overflow:hidden;border-radius:10px;">
 										<img class="pic" src="<%= request.getContextPath()%>
 										/Sg_info/Sg_infoImg.do?sg_no=${sg_infoVO.sg_no}" style="height:100%;position:absolute;">
 										</div>
@@ -103,7 +103,7 @@
 								<c:forEach var="sg_memVO" items="${sg_mem}">
 									<c:forEach var="sg_infoVO" items="${sghisall}">
 											<c:if test="${sg_infoVO.sg_no eq sg_memVO.sg_no}">
-												<div style="width:100%;height:0;position:relative;padding-bottom:66.66666%;overflow:hidden;border-radius:10px;">
+												<div style="width:100%;height:0;position:relative;padding-bottom:75%;overflow:hidden;border-radius:10px;">
 												<img src="<%= request.getContextPath()%>/Sg_info/Sg_infoGetByPkForJoinMem.jsp?sg_no=${sg_infoVO.sg_no}"
 												style="height:100%;position:absolute;">
 												</div>
@@ -127,7 +127,7 @@
 							<h3>我舉辦過的揪團</h3>
 							<div class="grid-container" style="display:grid;align-item:center;">
 								<c:forEach var="sg_infoVO" items="${sghislist}">
-									<div style="width:100%;height:0;position:relative;padding-bottom:66.66666%;overflow:hidden;border-radius:10px;">
+									<div style="width:100%;height:0;position:relative;padding-bottom:75%;overflow:hidden;border-radius:10px;">
 									<img src="<%= request.getContextPath()%>
 									/Sg_info/Sg_infoImg.do?sg_no=${sg_infoVO.sg_no}" style="height:100%;position:absolute;">
 									</div>

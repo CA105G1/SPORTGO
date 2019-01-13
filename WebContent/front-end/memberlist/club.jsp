@@ -6,26 +6,6 @@
 <%@ page import = "com.sport.model.*" %>
 <%@ page import = "java.util.*" %>
 
-<% 
-	MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO");
-	if(memberlistVO==null){
-		response.sendRedirect("Login.jsp");
-	}
-	String mem_no = memberlistVO.getMem_no();
- 	Club_memberlistService service = new Club_memberlistService();
-	List<Club_memberlistVO> clubmember = service.getByMemPart(mem_no);
-	pageContext.setAttribute("clubmember",clubmember);
-	List<Club_memberlistVO> clubhost = service.getByMemHost(mem_no);
-	pageContext.setAttribute("clubhost",clubhost);
-	List<Club_memberlistVO> clubwait = service.getByMemPartWait(mem_no);
-	pageContext.setAttribute("clubwait",clubwait);
-	ClubService clubservice = new ClubService();
-	List<ClubVO> clublist = clubservice.getAll();
-	pageContext.setAttribute("clublist",clublist);
-	SportService sportservice = new SportService();
-	List<SportVO> sportlist = sportservice.getAll();
-	pageContext.setAttribute("sportlist", sportlist);
-%>
 <!DOCTYPE html>
 <html lang="">
 	<head>
@@ -49,7 +29,7 @@
 				color: red;
 			}
 			.grid-container{
-				grid-template-columns:1fr 2fr 1fr;
+				grid-template-columns:20% 40% 20%;
 				grid-gap:20px;
 				text-algin:center;
 			}
@@ -76,22 +56,26 @@
 								<c:forEach var="clubmember" items="${clubmember}">
 									<c:forEach var="clublist" items="${clublist}">
 										<c:if test="${clubmember.club_no eq clublist.club_no}">
-											<div style="width:100%;height:0;position:relative;padding-bottom:80%;
+											<div style="width:100%;height:0;position:relative;padding-bottom:75%;
 											overflow:hidden;border-radius:10px;">
 												<img class="img-responsive card-img-top" src="<%=request.getContextPath()%>/clubImg.do?club_no=${clublist.club_no}"
 												style="height:100%;position:absolute;">
 											</div>
 											<a href="<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clublist.club_no}"
-											class="list-group-item" style="text-align:center;display:flex;height:100%;border:0;">
-											<label class="center"><i class="fa fa-users"></i>${clublist.club_name}</label><br>
+											class="list-group-item" style="display:flex;height:100%;border:0;">
+											${clublist.club_name}<br>
 											<c:forEach var="sportlist" items="${sportlist}">
 												<c:if test="${clublist.sp_no eq sportlist.sp_no}">
-													<label class="center"><i class="fa fa-arrow-circle-o-right"></i>${sportlist.sp_name}</label><br>
-													
+													類型：${sportlist.sp_name}
 												</c:if>
 											</c:forEach>
 											</a>
-											<div></div>
+											<div>
+											<a href=""
+											class="list-group-item" style="text-align:center;display:flex;height:100%;border:0;">
+													<label>退出</label>
+												</a>
+											</div>
 										</c:if>	
 									</c:forEach>
 								</c:forEach>
@@ -108,21 +92,27 @@
 								<c:forEach var="clubhost" items="${clubhost}">
 									<c:forEach var="clublist" items="${clublist}">
 										<c:if test="${clubhost.club_no eq clublist.club_no}">
-											<div style="width:100%;height:0;position:relative;padding-bottom:80%;
+										
+											<div style="width:100%;height:0;position:relative;padding-bottom:75%;
 											overflow:hidden;border-radius:10px;">
 												<img class="img-responsive card-img-top" src="<%=request.getContextPath()%>/clubImg.do?club_no=${clublist.club_no}"
 												style="height:100%;position:absolute;">
 											</div>
 											<a href="<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clublist.club_no}"
 											class="list-group-item" style="text-align:center;display:flex;height:100%;border:0;">
-											<label class="center"><i class="fa fa-users"></i>${clublist.club_name}</label><br>
+											${clublist.club_name}<br>
 											<c:forEach var="sportlist" items="${sportlist}">
 												<c:if test="${clublist.sp_no eq sportlist.sp_no}">
-													<label class="center"><i class="fa fa-arrow-circle-o-right"></i>${sportlist.sp_name}</label><br>
+													類型：${sportlist.sp_name}<br>
 												</c:if>
 											</c:forEach>
 											</a>
-											<div></div>
+											<div>
+												<a href=""
+											class="list-group-item" style="text-align:center;display:flex;height:100%;border:0;">
+													<label>解散</label>
+												</a>
+											</div>
 										</c:if>	
 									</c:forEach>
 								</c:forEach>
@@ -137,21 +127,26 @@
 								<c:forEach var="clubwait" items="${clubwait}">
 									<c:forEach var="clublist" items="${clublist}">
 										<c:if test="${clubwait.club_no eq clublist.club_no}">
-											<div style="width:100%;height:0;position:relative;padding-bottom:80%;
+											<div style="width:100%;height:0;position:relative;padding-bottom:75%;
 											overflow:hidden;border-radius:10px;">
 												<img class="img-responsive card-img-top" src="<%=request.getContextPath()%>/clubImg.do?club_no=${clublist.club_no}"
 												style="height:100%;position:absolute;">
 											</div>
 											<a href="<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clublist.club_no}"
 											class="list-group-item" style="text-align:center;display:flex;height:100%;border:0;">
-											<label class="center"><i class="fa fa-users"></i>${clublist.club_name}</label><br>
+											${clublist.club_name}<br>
 											<c:forEach var="sportlist" items="${sportlist}">
 												<c:if test="${clublist.sp_no eq sportlist.sp_no}">
-													<label class="center"><i class="fa fa-arrow-circle-o-right"></i>${sportlist.sp_name}</label><br>
+													類型：${sportlist.sp_name}<br>
 												</c:if>
 											</c:forEach>
 											</a>
-											<div></div>
+											<div>
+												<a href=""
+											class="list-group-item" style="text-align:center;display:flex;height:100%;border:0;">
+													<label>退出</label>
+												</a>
+											</div>
 										</c:if>	
 									</c:forEach>
 								</c:forEach>
