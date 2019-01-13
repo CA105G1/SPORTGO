@@ -123,6 +123,15 @@
 <!-- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 		
 		<script type="text/javascript">
+// 			window.onload=document.getElementsByClassName("myGroup").addEventListener( "mouseenter",
+// 			  function() {
+// 			    this.getElementsByClassName("collapse").collapse('show');
+// 			    this.animate({fontSize:'1.8em'},'slow');
+// 			  }
+// // 			  , function() {
+// // 			    $(this).children('.collapse').collapse('hide');
+// // 			  }
+// 			);
 			$(".panel-heading").parent('.myGroup').on( "mouseenter",
 			  function() {
 			    $(this).children('.collapse').collapse('show');

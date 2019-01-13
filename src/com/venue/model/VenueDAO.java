@@ -1,7 +1,6 @@
 package com.venue.model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -420,8 +419,11 @@ public class VenueDAO implements VenueDAO_interface {
 		return list;
 	}
 	
+	
+	
+	
 	@Override
-	public List<VenueVO> getAll(Map<String, String[]> map) {
+	public List<VenueVO> getAll(Map<String, String[]> map, boolean isFrontEnd) {
 		List<VenueVO> list = new ArrayList<VenueVO>();
 		
 		Connection connection = null;
@@ -430,7 +432,7 @@ public class VenueDAO implements VenueDAO_interface {
 		try {
 			connection = dataSource.getConnection();
 			String finalSQL = "Select * from venue "
-					+ Util_JDBC_CompositeQuery_Venue.get_WhereCondition(map)
+					+ Util_JDBC_CompositeQuery_Venue.get_WhereCondition(map, isFrontEnd)
 					+ " order by v_no";
 			
 			preparedStatement = connection.prepareStatement(finalSQL);
@@ -466,6 +468,11 @@ public class VenueDAO implements VenueDAO_interface {
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public List<VenueVO> getAll(Map<String, String[]> map) {
+		return getAll(map, false);
 	}
 	
 }

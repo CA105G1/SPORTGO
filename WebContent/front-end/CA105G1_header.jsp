@@ -140,7 +140,7 @@
 						</li>
 						
 						<li><a href="#">　賽事　</a></li>
-						<li><a href="#">　場地　</a></li>
+						<li><a href="<%=request.getContextPath()%>/front-end/venue/venue_query_info_by_composite_front.jsp">　場地　</a></li>
 						<li class="dropdown">
 							<a href="<%=request.getContextPath()%>/front-end/pro/listAllPro_front.jsp" class="dropdown-toggle" data-toggle="dropdown">
 								　商城　

@@ -141,6 +141,7 @@
    <servlet-name>ClubmemberlistServlet</servlet-name>
    <url-pattern>/clubmemberlist.do</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <servlet-name>VenueServlet</servlet-name>
     <servlet-class>com.venue.controller.VenueServlet</servlet-class>
@@ -150,13 +151,46 @@
     <url-pattern>/venue/venue.do</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>VenueSelectServlet</servlet-name>
+    <servlet-class>com.venue.controller.VenueSelectServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>VenueSelectServlet</servlet-name>
+    <url-pattern>/venue/venueSelect.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>VenueCreateOrUpdateServlet</servlet-name>
+    <servlet-class>com.venue.controller.VenueCreateOrUpdateServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>VenueCreateOrUpdateServlet</servlet-name>
+    <url-pattern>/venue/venueCreateOrUpdate.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>VenueDeleteServlet</servlet-name>
+    <servlet-class>com.venue.controller.VenueDeleteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>VenueDeleteServlet</servlet-name>
+    <url-pattern>/venue/venueDelete.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>VenueFuncServlet</servlet-name>
+    <servlet-class>com.venue.controller.VenueFuncServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>VenueFuncServlet</servlet-name>
+    <url-pattern>/venue/venueFunc.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>VenueImgServlet</servlet-name>
     <servlet-class>com.venue.controller.VenueImgServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>VenueImgServlet</servlet-name>
-    <url-pattern>/vunue/venueImg.do</url-pattern>
+    <url-pattern>/venue/venueImg.do</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <servlet-name>EmpServlet</servlet-name>
     <servlet-class>com.emp.controller.EmpServlet</servlet-class>
