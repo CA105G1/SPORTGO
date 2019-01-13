@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.club.model.*"%>
 <%@ page import="com.post_info.model.*"%>
+<%@ page import="com.respones.model.*"%>
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
@@ -15,9 +16,17 @@
 
  //	Post_infoVO post_infoVO = (Post_infoVO)request.getAttribute("post_infoVO");
  	
- 	
+/*********************************************************************************************/	
 	List<Post_infoVO> postvolist=(ArrayList)request.getAttribute("postvolist");
-
+/*********************************************************************************************/
+	
+// 	ResponesVO responesVO = new ResponesVO();
+// 	String post_no = request.getParameter("post_no");
+	
+// 	ResponesService responesSvc = new ResponesService(); 
+	
+// 	List<ResponesVO> responeslist = responesSvc.getallfrompost(post_no);
+// 	pageContext.setAttribute("list",list);
 	
 %>
 
@@ -74,26 +83,60 @@
 			<div class="row">
 				<div class="col-xs-12 col-lg-1" id="xx1"></div>
 				
-					<div class="col-xs-12 col-sm-2" style="margin-right: -;padding-left: 5px;padding-right: 5px;">
-						<%@ include file="club_pageRight.jsp" %>
-					</div>
+				<div class="col-xs-12 col-lg-2" style="margin-right: -;padding-left: 5px;padding-right: 5px;">
+					<jsp:include page="club_pageRight.jsp" />
+				</div>
 						
-				<div class="col-xs-12 col-sm-7">
+				<div class="col-xs-12 col-lg-7">
 					
 <!---------------------------- 貼文列表 ------------------------------------->
 					<div>
-						<input type="text" class="form-control" placeholder="search" style="width:15em">
+						<input type="text" class="form-control" placeholder="search" style="width:15em" />
 	  					<button class="btn btn-primary" type="button" id="postsearch">送出</button>
 					</div>
 					<div class="card text-center" id="post">
-							<div class="card-header">
+							<div class="card-header"></div>
 							<br>
   							<div class="card-body">
-<%-- 	<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/post_info.do?" name="form">  --%>
 								<c:forEach var="postinfo" items="${postvolist}">
     								<h3 class="card-title"  class="list-group-item">主題：${postinfo.post_topic}</h3>
     								<p class="card-text">${postinfo.post_content}</p>
-    								<!-- 回文 -->
+<!--     								回文 -->
+<%--     								<jsp:useBean id="responesSvc" scope="page" class="com.respones.model.ResponesService" /> --%>
+<%-- 									<c:forEach var="responesVO" items="${responesSvc.all}"> --%>
+<!--     									<div class="h3"> -->
+<%--     										${responesVO.res_no}--- --%>
+<!--     									</div> -->
+<!--     									<div class="h3"> -->
+<%--     										${responesVO.res_content} --%>
+<!--     									</div> -->
+<%--     								</c:forEach>	 --%>
+    							</c:forEach>
+  							</div> <!-- card-body結束 -->
+<!-------------------------------------------- 留言版 --------------------------------------------------->
+  							<div class="card-footer text-muted">
+								<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/respones.do?" name="form">  
+									<div class="card" id="respones">
+							  			<div class="card-header">
+							   				留言版
+							  			</div>
+							  				<div class="card-body">
+							    			<textarea class="form-control" name="res_content" id="res_content"></textarea><!--留言區塊-->
+											<input type="hidden" name="post_no" id="post_no">
+											<input type="hidden" name="mem_no" id="mem_no">
+											<input type="hidden" name="res_date" id="res_date">
+							  				</div>
+							  				<br>
+							  			<div class="card-footer text-muted">
+							  				<input type="hidden" name="action" value="insert">
+							    			<button type="submit" class="btn btn-primary">送出</button>
+							  			</div>
+									</div>
+								</FORM> 		
+  							</div>
+<!-------------------------------------------- 留言版 ---------------------------------------------------->
+<!----------------------------------------------回文------------------------------------------------------>
+							<div class="res_content">
     								<jsp:useBean id="responesSvc" scope="page" class="com.respones.model.ResponesService" />
 									<c:forEach var="responesVO" items="${responesSvc.all}">
     									<div class="h3">
@@ -103,33 +146,17 @@
     										${responesVO.res_content}
     									</div>
     								</c:forEach>	
-    								
-    								
-    							
-    							</c:forEach>
-<!--  	</FORM> -->
-  							</div> 
-
-  							<div class="card-footer text-muted">
-    						回文
-  							</div>
-					</div>
-					<br>
-									
-				</div>
+							</div>
+<!----------------------------------------------回文------------------------------------------------------>
 					
-				<div class="col-xs-12 col-lg-2" id="xx">
-					<div>好友列表</div>
+							<div class="col-xs-12 col-lg-2" id="xx">
+								<div>好友列表</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
-		</div>
-		
-
-
-
-		
-		
-		</form>
+				
 		<%@ include file="/front-end/CA105G1_footer.file" %>
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
