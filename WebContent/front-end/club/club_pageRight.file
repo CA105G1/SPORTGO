@@ -1,0 +1,19 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+
+<h4 id="club_name" class="_19s-" >
+	<a href='<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clubVO.club_no}' >
+		${clubVO.club_name}
+	</a>
+</h4>
+<div class="list-group active">
+	<a href="<%= request.getContextPath()%>/clubfront.do?actionfront=getOneClubintro&club_no=${clubVO.club_no}" class="list-group-item">簡介</a>
+	<a href="<%= request.getContextPath()%>/front-end/club/Sg_infoCreateForClub.jsp?club_no=${clubVO.club_no}" class="list-group-item">專屬揪團</a>
+	<a href="#" class="list-group-item" role="tab" id="myCreatePost">建立貼文</a>
+	<a href="#" class="list-group-item">影音相簿</a>
+	<a href="<%= request.getContextPath()%>/clubfront.do?actionfront=getOneClubmanage&club_no=${clubVO.club_no}" class="list-group-item">社團管理</a>
+	<a href="<%= request.getContextPath()%>/front-end/club/club_list.jsp"class="list-group-item">返回列表</a>
+</div>	
+<button type="button" class="btn btn-dark" href="<%=request.getContextPath()%>/clubmemberlist.do?action=dropoutclub&club_no=${clubVO.club_no}">
+	退出社團
+</button>	

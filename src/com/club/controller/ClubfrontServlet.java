@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import org.apache.catalina.Session;
+
 import com.club.model.ClubService;
 import com.club.model.ClubVO;
 import com.post_info.model.Post_infoService;
@@ -30,7 +32,7 @@ public class ClubfrontServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private static final String CLUB_LIST = "/front-end/club/club_list.jsp";
-	private static final String CLUB_PAGE = "/front-end/club/club_pageTest.jsp";
+	private static final String CLUB_PAGE = "/front-end/club/club_page.jsp";
 	private static final String CLUB_INTRO = "/front-end/club/club_intro_page.jsp";
 	private static final String CLUB_MANAGE = "/front-end/club_memberlist/reviewaddclub.jsp";
 	
@@ -55,7 +57,7 @@ if ("getOneClub".equals(actionfront)) { //進入or加入社團
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			String requestURL = req.getParameter("requestURL");
-
+System.out.println("requestURL : "+requestURL);///////////////////////////////////////////////
 			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				String club_no = req.getParameter("club_no");
@@ -64,14 +66,14 @@ if ("getOneClub".equals(actionfront)) { //進入or加入社團
 				ClubService clubSvc = new ClubService();
 	
 				ClubVO clubVO = clubSvc.getOneClub(club_no);
-				
 				Post_infoService postinfo = new Post_infoService();
 				
 				List<Post_infoVO> postvolist = postinfo.getAllfromclub(club_no);
-				
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("clubVO", clubVO); 
 				req.setAttribute("postvolist", postvolist);
+				HttpSession session = req.getSession();
+				session.setAttribute("club_no", club_no);
 				RequestDispatcher successView = req.getRequestDispatcher(CLUB_PAGE); 
 				successView.forward(req, res);
 

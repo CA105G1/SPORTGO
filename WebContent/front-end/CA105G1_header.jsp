@@ -92,7 +92,7 @@
 			<nav class="navbar navbar-default" role="navigation">
 				<div class="navbar-myself-center">
 					<ul class="nav navbar-nav navbar-form">
-						<li ><a href="<%=request.getContextPath()%>/index.jsp">首頁</a></li>
+						<li ><a href="<%=request.getContextPath()%>/index.jsp">　首頁　</a></li>
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 								關於我們
@@ -105,53 +105,60 @@
 							</ul>
 						</li>
 						
-						<li class="dropdown">
-							<a href="<%=request.getContextPath()%>/front-end/memberlist/public_Member_page.jsp" class="dropdown-toggle" data-toggle="dropdown">
-								會員專區
-								<!-- <b class="caret"></b> -->
-							</a>
+						<li><a href="<%=request.getContextPath()%>/front-end/memberlist/public_Member_page.jsp">　會員專區　</a></li>
+<!-- 						<li class="dropdown"> -->
+<!-- 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"> -->
+<!-- 								會員專區 -->
+<!-- 								<b class="caret"></b> -->
+<!-- 							</a> -->
 <!-- 							<ul class="dropdown-menu"> -->
 <%-- 								<li><a href="<%=request.getContextPath()%>/front-end/memberlist/public_Member_page.jsp">個人頁面</a></li> --%>
 <!-- 								<li><a href="#">Member02</a></li> -->
 <!-- 								<li><a href="#">Member03</a></li> -->
 <!-- 							</ul> -->
-						</li>
-						<li class="dropdown">
-							<a href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp" class="dropdown-toggle" data-toggle="dropdown">
-								　揪團　
-								<!-- <b class="caret"></b> -->
-							</a>
+<!-- 						</li> -->
+						
+						<li><a href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp">　揪團　</a></li>
+<!-- 						<li class="dropdown"> -->
+<%-- 							<a href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp" class="dropdown-toggle" data-toggle="dropdown"> --%>
+<!-- 								　揪團　 -->
+<!-- 								<b class="caret"></b> -->
+<!-- 							</a> -->
 <!-- 							<ul class="dropdown-menu"> -->
 <!-- 								<li><a href="#">建立揪團</a></li> -->
 <!-- 								<li><a href="#">瀏覽揪團</a></li> -->
 <!-- 								<li><a href="#">list03</a></li> -->
 <!-- 							</ul> -->
-						</li>
-						<li class="dropdown">
-							<a href="<%=request.getContextPath()%>/front-end/club/club_list.jsp" class="dropdown-toggle" data-toggle="dropdown">
-								　社團　
-								<!-- <b class="caret"></b> -->
-							</a>
+<!-- 						</li> -->
+
+						<li><a href="<%=request.getContextPath()%>/front-end/club/club_list.jsp">　社團　</a></li>
+<!-- 						<li class="dropdown"> -->
+<%-- 							<a href="<%=request.getContextPath()%>/front-end/club/club_list.jsp" class="dropdown-toggle" data-toggle="dropdown"> --%>
+<!-- 								　社團　 -->
+<!-- 								<b class="caret"></b> -->
+<!-- 							</a> -->
 <!-- 							<ul class="dropdown-menu"> -->
 <!-- 								<li><a href="#">建立社團</a></li> -->
 <!-- 								<li><a href="#">瀏覽社團</a></li> -->
 <!-- 								<li><a href="#">list03</a></li> -->
 <!-- 							</ul> -->
-						</li>
+<!-- 						</li> -->
 						
 						<li><a href="#">　賽事　</a></li>
-						<li><a href="#">　場地　</a></li>
-						<li class="dropdown">
-							<a href="<%=request.getContextPath()%>/front-end/pro/listAllPro_front.jsp" class="dropdown-toggle" data-toggle="dropdown">
-								　商城　
-								<!-- <b class="caret"></b> -->
-							</a>
+						<li><a href="<%=request.getContextPath()%>/front-end/venue/venue_query_info_by_composite_front.jsp">　場地　</a></li>
+												
+						<li><a href="<%=request.getContextPath()%>/front-end/pro/listAllPro_front.jsp">　商城　</a></li>
+<!-- 						<li class="dropdown"> -->
+<%-- 							<a href="<%=request.getContextPath()%>/front-end/pro/listAllPro_front.jsp" class="dropdown-toggle" data-toggle="dropdown"> --%>
+<!-- 								　商城　 -->
+<!-- 								<b class="caret"></b> -->
+<!-- 							</a> -->
 <!-- 							<ul class="dropdown-menu"> -->
 <!-- 								<li><a href="#">list01</a></li> -->
 <!-- 								<li><a href="#">list02</a></li> -->
 <!-- 								<li><a href="#">list03</a></li> -->
 <!-- 							</ul> -->
-						</li>
+<!-- 						</li> -->
 					</ul>
 				</div>
 			</nav>

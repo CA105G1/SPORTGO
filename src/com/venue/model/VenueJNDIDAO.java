@@ -20,7 +20,7 @@ public class VenueJNDIDAO implements VenueDAO_interface {
 	static {
 		try {
 			javax.naming.Context context = new javax.naming.InitialContext();
-			dataSource = (DataSource)context.lookup(com.util.lang.Util.JNDI_DATABASE_NAME);
+			dataSource = (DataSource)context.lookup(com.util.lang.Util.JNDI_DATABASE_NAME);//java:comp/env/jdbc/CA105G1DB
 		}catch (NamingException e) {
 			e.printStackTrace();
 		}
@@ -421,7 +421,7 @@ public class VenueJNDIDAO implements VenueDAO_interface {
 	}
 	
 	@Override
-	public List<VenueVO> getAll(Map<String, String[]> map) {
+	public List<VenueVO> getAll(Map<String, String[]> map, boolean isFrontEnd) {
 		List<VenueVO> list = new ArrayList<VenueVO>();
 		
 		Connection connection = null;
@@ -430,7 +430,7 @@ public class VenueJNDIDAO implements VenueDAO_interface {
 		try {
 			connection = dataSource.getConnection();
 			String finalSQL = "Select * from venue "
-					+ Util_JDBC_CompositeQuery_Venue.get_WhereCondition(map)
+					+ Util_JDBC_CompositeQuery_Venue.get_WhereCondition(map, isFrontEnd)
 					+ " order by v_no";
 			
 			preparedStatement = connection.prepareStatement(finalSQL);
@@ -466,6 +466,11 @@ public class VenueJNDIDAO implements VenueDAO_interface {
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public List<VenueVO> getAll(Map<String, String[]> map) {
+		return getAll(map, false);
 	}
 	
 }

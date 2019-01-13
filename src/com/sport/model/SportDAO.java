@@ -63,6 +63,7 @@ public class SportDAO implements SportDAO_interface{
 		try {
 			//連線池版
 		con = ds.getConnection();
+			con = ds.getConnection();
 			//JDBC版
 //			con = DriverManager.getConnection(url, user, psw);
 			pstmt = con.prepareStatement(insertStmt);
@@ -233,6 +234,7 @@ public class SportDAO implements SportDAO_interface{
 		List<SportVO> list = new ArrayList<SportVO>();
 		
 		try {
+			//連線池版
 			con = ds.getConnection();
 //			con = DriverManager.getConnection(url, user, psw);
 			pstmt = con.prepareStatement(getAllStmt);

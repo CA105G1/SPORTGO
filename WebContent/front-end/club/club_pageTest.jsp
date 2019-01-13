@@ -2,14 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.club.model.*"%>
 <%@ page import="java.util.*"%>
+<%@ page import="com.club.model.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
-<%
-
-	ClubVO clubVO = (ClubVO)request.getAttribute("clubVO");
-	System.out.print(clubVO);
-	
-%>
 
 
 <html >
@@ -55,32 +49,26 @@
 		</style>
 	</head>
 
+
 	<!--data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" -->
 
 	<body>
-	
 	<%@ include file="/front-end/CA105G1_header.file" %>
-		<div class="container-fluid">
+<!--------- 進入前天空中已經有clubVO在session裡，club_no在req裡，以下僅測試用 --------------> 	
+club_no = ${club_no }<br>
+clubVO = ${clubVO }
+<!-- ---------------------------------------------------------------------- -->
+		<div class="container">
 			<div class="row">
-				<div class="col-xs-12 col-sm-1" id="xx1">
-				</div>
 				
 					<div class="col-xs-12 col-sm-2" style="margin-right: -;padding-left: 5px;padding-right: 5px;">
-						<h4 id="club_name" class="_19s-" >
-							<a href='<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clubVO.club_no}' >
-								${clubVO.club_name}
-							</a>
-						</h4>
-						<jsp:include page="club_pageRight.jsp"/>
-						<button type="button" class="btn btn-dark" href="<%=request.getContextPath()%>/clubmemberlist.do?action=dropoutclub&club_no=${clubVO.club_no}">
-								退出社團
-						</button>							
+						<%@ include file="/front-end/club/club_pageRight.jsp" %>
 					</div>
-				<div class="col-xs-12 col-sm-7">
-					<div>66666</div>
-					
+				<div class="col-xs-12 col-sm-8">
+					<div>club_no = ${club_no }</div>
+				</div>
 				<div class="col-xs-12 col-sm-2" id="xx">
-					<div>好友列表</div>
+					<div>clubVO = ${clubVO }</div>
 				</div>
 			</div>
 		</div>

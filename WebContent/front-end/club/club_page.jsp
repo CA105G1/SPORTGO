@@ -17,6 +17,7 @@
  	
  	
 	List<Post_infoVO> postvolist=(ArrayList)request.getAttribute("postvolist");
+
 	
 %>
 
@@ -71,128 +72,42 @@
 	<%@ include file="/front-end/CA105G1_header.file" %>
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-xs-12 col-lg-2" id="xx1">
-					
-				</div>
+				<div class="col-xs-12 col-lg-1" id="xx1"></div>
 				
-					<div class="col-xs-12 col-sm-1" style="margin-right: -;padding-left: 5px;padding-right: 5px;">
-						<input type="hidden" name="actionfront" value="getoneclub">
-							<h4 id="club_name" class="_19s-" >
-								<a href='<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clubVO.club_no}' >
-									${clubVO.club_name}
-								</a>
-							</h4>
-
-					<div class="list-group active">
-						<a href="<%= request.getContextPath()%>/clubfront.do?actionfront=getOneClubintro&club_no=${clubVO.club_no}" display="none" class="list-group-item">簡介</a>
-						<a href="#" class="list-group-item">專屬揪團</a>
-						<!---建立貼文------------------------------------------------------------------建立貼文------>
-	<% Object object = request.getAttribute("errorMsgs"); %>
-		<% if("insert".equals(request.getParameter("action")) && object != null){
-			List<String> errorMsgs = (List<String>)object;%>
-						<a class="list-group-item list-group-item-action" data-toggle="modal" data-target="#post_infoModalLong" 
-			   			   href="#createpost" role="tab" id="myCreatePost">建立貼文</a>
-		<%}else {%>
-						<a class="list-group-item list-group-item-action" data-toggle="modal" data-target="#post_infoModalLong" 
-			               href="#createpost" role="tab">建立貼文</a>
-	 	<% }%> 
-<!---Modal------------------------------------------------------------------------------------>
-<div class="modal fade" id="post_infoModalLong" tabindex="-1" role="dialog" aria-labelledby="post_infoModalLongTitle" aria-hidden="true">
-	<div class="modal-dialog  .modal-dialog-centered " role="document">
-		<div class="modal-content">
-		
-				<div class="modal-header">
-					<h4 class="modal-title" id="post_infoModalLongTitle">建立貼文</h4>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-				</div>
-				
-<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/post_info.do" name="form1" enctype='multipart/form-data'>
-				<div class="modal-body ">
-					<div class="form-group">
-						<label class="post_topic">
-							貼文主題
-							<input type="text" name="post_topic" id="post_topic" class="form-control"  size="50">
-						</label>
-				<br>
-				<br>
-						<label class="post_content" >
-							貼文內容
-				<br>
-							<textarea name="content" id="editor" class="form-control" ></textarea>
-						</label>
+					<div class="col-xs-12 col-sm-2" style="margin-right: -;padding-left: 5px;padding-right: 5px;">
+						<%@ include file="club_pageRight.jsp" %>
+					</div>
 						
-					</div>
-					<div class="form-group"  style="display:none" >
-						<label class="club_no">社團編號</label>
-							<textarea name="club_no"  id="club_no" class="form-control" ROWS=10 ></textarea>
-					</div>
-					<div class="form-group"  style="display:none" >
-						<label class="mem_no">會員編號</label>
-							<textarea name="mem_no"  id="mem_no" class="form-control" ROWS=10 ></textarea>
-					</div>
-					<div class="form-group"  style="display:none" >
-						<label class="post_date">發布時間</label>
-							<textarea name="post_date"  id="post_date" class="form-control" ROWS=10 ></textarea>
-					</div>
-					
-				</div>
-				
-				<div class="modal-footer">
-						<input type="hidden" name="action" value="insert">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-					<button type="submit" class="btn btn-primary">建立</button>
-				</div>
-				
-</FORM>
-
-<%-- 錯誤表列 --%>
-<c:if test="${not empty errorMsgs}">
-<font style="color:red">請修正以下錯誤:</font>
-<ul>
-<c:forEach var="message" items="${errorMsgs}">
-<li style="color:red">${message}</li>
-</c:forEach>
-</ul>
-</c:if>
-		</div>
-	</div>
-</div>
-<!---Modal------------------------------------------------------------------------------------>
-<!---建立貼文------------------------------------------------------------------建立貼文------->
-						<a href="#" class="list-group-item">影音相簿</a>
-						<a href="<%= request.getContextPath()%>/clubfront.do?actionfront=getOneClubmanage&club_no=${clubVO.club_no}" display="none" class="list-group-item">社團管理</a>
-			
-						<a href="<%= request.getContextPath()%>/front-end/club/club_list.jsp" display="none" id="linkBack" class="list-group-item">返回列表</a>
-				<br>
-						<button type="button" class="btn btn-dark" href="<%=request.getContextPath()%>/clubmemberlist.do?action=dropoutclub&club_no=${clubVO.club_no}">
-								退出社團
-						</button>
-				<br><br>
-				
-					</div>					
-					</div>
 				<div class="col-xs-12 col-sm-7">
 					
 <!---------------------------- 貼文列表 ------------------------------------->
-<input type="text" class="form-control" placeholder="search" style="width:15em">
-  									<button class="btn btn-primary" type="button" id="postsearch">送出</button>
+					<div>
+						<input type="text" class="form-control" placeholder="search" style="width:15em">
+	  					<button class="btn btn-primary" type="button" id="postsearch">送出</button>
+					</div>
 					<div class="card text-center" id="post">
 							<div class="card-header">
 							<br>
   							<div class="card-body">
-<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/post_info.do?" name="form"> 
-<%--     							<h5 class="card-title"  class="list-group-item"><%=post_infoVO.getPost_topic()%></h5> --%>
-<%--     							<p class="card-text"><%=post_infoVO.getPost_content()%></p> --%>
-<!--     							<h5 class="card-title"  class="list-group-item">xxxxxxx</h5> -->
-<!--     							<p class="card-text">xxxxxx</p> -->
-
+<%-- 	<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/post_info.do?" name="form">  --%>
 								<c:forEach var="postinfo" items="${postvolist}">
-    							<h5 class="card-title"  class="list-group-item">${postinfo.post_topic}</h5>
-    							<p class="card-text">${postinfo.post_content}</p>
+    								<h3 class="card-title"  class="list-group-item">主題：${postinfo.post_topic}</h3>
+    								<p class="card-text">${postinfo.post_content}</p>
+    								<!-- 回文 -->
+    								<jsp:useBean id="responesSvc" scope="page" class="com.respones.model.ResponesService" />
+									<c:forEach var="responesVO" items="${responesSvc.all}">
+    									<div class="h3">
+    										${responesVO.res_no}---
+    									</div>
+    									<div class="h3">
+    										${responesVO.res_content}
+    									</div>
+    								</c:forEach>	
+    								
+    								
+    							
     							</c:forEach>
- </FORM>
+<!--  	</FORM> -->
   							</div> 
 
   							<div class="card-footer text-muted">
