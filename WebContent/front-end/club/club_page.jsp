@@ -1,3 +1,5 @@
+<%@page import="com.memberlist.model.MemberlistService"%>
+<%@page import="com.memberlist.model.MemberlistVO"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.club.model.*"%>
@@ -11,22 +13,27 @@
 	List<ClubVO> list = clubSvc.getAll();
 	pageContext.setAttribute("list", list);
 	
-//    Post_infoService post_infoSvc = new Post_infoService();
+//  Post_infoService post_infoSvc = new Post_infoService();
 // 	Post_infoVO post_infoVO = post_infoSvc.getOnePost_info("P0001");
 
  //	Post_infoVO post_infoVO = (Post_infoVO)request.getAttribute("post_infoVO");
  	
-/*********************************************************************************************/	
+/***依照社團編號去找對應的貼文*******************************************************************/	
 	List<Post_infoVO> postvolist=(ArrayList)request.getAttribute("postvolist");
 /*********************************************************************************************/
+ 	ResponesVO responesVO = new ResponesVO();
+ 	String post_no = request.getParameter("post_no");
+ 	
+ 	
+/***回文的會員*********************************************************************************/ 	
+ 	MemberlistService memSvc = new MemberlistService();
+ 	List<MemberlistVO> list2 = memSvc.getAllMem();
+ 	pageContext.setAttribute("list2", list2);
+/*********************************************************************************************/ 
 	
-// 	ResponesVO responesVO = new ResponesVO();
-// 	String post_no = request.getParameter("post_no");
-	
-// 	ResponesService responesSvc = new ResponesService(); 
-	
-// 	List<ResponesVO> responeslist = responesSvc.getallfrompost(post_no);
-// 	pageContext.setAttribute("list",list);
+//  	ResponesService responesSvc = new ResponesService(); 
+//  	List<ResponesVO> responeslist = responesSvc.getallfrompost(post_no);
+//  	pageContext.setAttribute("list",list);
 	
 %>
 
@@ -98,9 +105,9 @@
 							<div class="card-header"></div>
 							<br>
   							<div class="card-body">
-								<c:forEach var="postinfo" items="${postvolist}">
-    								<h3 class="card-title"  class="list-group-item">主題：${postinfo.post_topic}</h3>
-    								<p class="card-text">${postinfo.post_content}</p>
+								<c:forEach var="postinfoVO" items="${postvolist}">
+    								<h3 class="card-title"  class="list-group-item">主題：${postinfoVO.post_topic}</h3>
+    								<p class="card-text">${postinfoVO.post_content}</p>
 <!--     								回文 -->
 <%--     								<jsp:useBean id="responesSvc" scope="page" class="com.respones.model.ResponesService" /> --%>
 <%-- 									<c:forEach var="responesVO" items="${responesSvc.all}"> --%>
@@ -111,20 +118,16 @@
 <%--     										${responesVO.res_content} --%>
 <!--     									</div> -->
 <%--     								</c:forEach>	 --%>
-    							</c:forEach>
-  							</div> <!-- card-body結束 -->
 <!-------------------------------------------- 留言版 --------------------------------------------------->
   							<div class="card-footer text-muted">
-								<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/respones.do?" name="form">  
+								<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/respones.do" name="form">  
 									<div class="card" id="respones">
-							  			<div class="card-header">
-							   				留言版
-							  			</div>
 							  				<div class="card-body">
-							    			<textarea class="form-control" name="res_content" id="res_content"></textarea><!--留言區塊-->
-											<input type="hidden" name="post_no" id="post_no">
-											<input type="hidden" name="mem_no" id="mem_no">
-											<input type="hidden" name="res_date" id="res_date">
+							    			<textarea class="form-control" name="res_content" id="res_content" placeholder="我要留言" row="5"></textarea>
+											<input type="hidden" name="club_no" id="club_no" value="${postinfoVO.club_no}"/>
+											<input type="hidden" name="post_no" id="post_no" value="${postinfoVO.post_no}">
+											<input type="hidden" name="mem_no" id="mem_no" value="${memberlistVO.mem_no}">
+											<input type="hidden" name="requestURL" id="requestURL" value="/front-end/club/club_page.jsp">
 							  				</div>
 							  				<br>
 							  			<div class="card-footer text-muted">
@@ -137,17 +140,23 @@
 <!-------------------------------------------- 留言版 ---------------------------------------------------->
 <!----------------------------------------------回文------------------------------------------------------>
 							<div class="res_content">
-    								<jsp:useBean id="responesSvc" scope="page" class="com.respones.model.ResponesService" />
-									<c:forEach var="responesVO" items="${responesSvc.all}">
-    									<div class="h3">
-    										${responesVO.res_no}---
-    									</div>
-    									<div class="h3">
-    										${responesVO.res_content}
-    									</div>
+    								<jsp:useBean id="responesSvc" scope="page" class="com.respones.model.ResponesService"/>
+									<c:forEach var="responesVO" items="${responesSvc.getallfrompost(postinfoVO.post_no)}">
+										<div class="container">
+											<table class="table">
+    											<tr>
+      												<td scope="col"><img src="<%=request.getContextPath()%>/memberlist/showpicture?mem_no=${memberlistVO.mem_no}" ></td>
+      												<td scope="col">${responesVO.res_content}</td>
+    											</tr>
+											</table>
+										</div>
     								</c:forEach>	
 							</div>
 <!----------------------------------------------回文------------------------------------------------------>
+    							</c:forEach>
+  							</div> <!-- card-body結束 -->
+
+
 					
 							<div class="col-xs-12 col-lg-2" id="xx">
 								<div>好友列表</div>

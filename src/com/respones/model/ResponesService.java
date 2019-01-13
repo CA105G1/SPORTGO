@@ -44,4 +44,7 @@ public class ResponesService {
 		return dao.getAll();
 	}
 	
+	public List<ResponesVO> getallfrompost(String post_no){
+		return dao.getallfrompost(post_no);
+	}
 }

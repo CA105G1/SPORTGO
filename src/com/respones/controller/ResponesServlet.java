@@ -18,7 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-
+import com.post_info.model.Post_infoService;
+import com.post_info.model.Post_infoVO;
 import com.respones.model.ResponesService;
 import com.respones.model.ResponesVO;
 
@@ -56,6 +57,7 @@ if ("getOne_For_Display".equals(action)) {
 				ResponesService responesSvc = new ResponesService();
 				
 				ResponesVO responesVO = responesSvc.getOneRespones(post_no);
+				
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("responesVO", responesVO); 
@@ -157,14 +159,17 @@ if ("insert".equals(action)) {
 
 			try {
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
+				String club_no =req.getParameter("club_no"); ///
 				String post_no = req.getParameter("post_no");
 				
 				String mem_no = req.getParameter("mem_no");
-				
-				
+				if(mem_no == null || mem_no.trim().length() == 0) {
+					errorMsgs.add("請登入");
+				}
 				String res_content = req.getParameter("res_content").trim();
+
 				if (res_content == null || res_content.trim().length() == 0) {
-					errorMsgs.add("貼文內容請勿空白");
+					errorMsgs.add("回覆內容請勿空白");
 				}	
 				
 				Timestamp res_date = new Timestamp(System.currentTimeMillis());
@@ -176,19 +181,24 @@ if ("insert".equals(action)) {
 					failureView.forward(req, res);
 					return;
 				}
-				
 				/***************************2.開始新增資料***************************************/
 				ResponesService responesSvc = new ResponesService();
 				ResponesVO responesVO = responesSvc.addRespones(post_no, mem_no, res_content, res_date);
 				
+				/// select 貼文列表
+				Post_infoService post_infoService = new Post_infoService();
+				List<Post_infoVO> postvolist = post_infoService.getAllfromclub(club_no);
+				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
+				req.setAttribute("postvolist", postvolist);
 				req.setAttribute("responesVO", responesVO);
-				String url = (POSTPAGE);
+				String url = CLUBPAGE;
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);				
-				
+//System.out.println("哈囉我在這裡呦");
 				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {
+				e.printStackTrace();
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req
 						.getRequestDispatcher(CLUBPAGE);

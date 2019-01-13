@@ -316,4 +316,9 @@ public class ResponesJDBCDAO implements ResponesDAO_interface {
 			// TODO Auto-generated method stub
 			return null;
 		}
+		@Override
+		public List<ResponesVO> getallfrompost(String post_no) {
+			// TODO Auto-generated method stub
+			return null;
+		}
 }
