@@ -26,7 +26,7 @@ public class VenueSelectServlet extends HttpServlet {
 	private static final String DB_ERROR_MSGS = "DataBaseError";
 	private static final String ERRORMSGS_NO_TAB = "errorMsgs";
 	private static final String VENUE_QUERY_INFO_BY_COMPOSTIE_FRONT = "/front-end/venue/venue_query_info_by_composite_front.jsp";
-	
+	private static final String VENUE_QUERY_INFO_BY_COMPOSITE_BACK ="/back-end/venue/maintain_venue_Info_Index_back.jsp";
 	public VenueSelectServlet() {
         super();
     }
@@ -47,12 +47,13 @@ public class VenueSelectServlet extends HttpServlet {
 			
 			break;
 		case "listVenueByCompositeQuery":
-			
+//			doActionListVenueByCompsiteQuery(request,response);
+			doActionListVenueByCompsiteQuery_FrontAndBack(request, response, VENUE_QUERY_INFO_BY_COMPOSITE_BACK);
 			break;
 		case "listVenueByCompostieQueryForFrontEnd":
-			doActionListVenueByCompsiteQueryForFrontEnd(request, response);
+//			doActionListVenueByCompsiteQueryForFrontEnd(request, response);
+			doActionListVenueByCompsiteQuery_FrontAndBack(request, response, VENUE_QUERY_INFO_BY_COMPOSTIE_FRONT);
 			break;
-
 		default:
 			break;
 		}
@@ -69,9 +70,17 @@ public class VenueSelectServlet extends HttpServlet {
 		return getErrorMsgsCollection(request,titleName,"");
 	}
 	
+//	private void doActionListVenueByCompsiteQuery(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException{
+//		//listVenueByCompositeQuery
+//		doActionListVenueByCompsiteQuery_FrontAndBack(request, response, VENUE_QUERY_INFO_BY_COMPOSITE_BACK);
+//	}
+//	
+//	private void doActionListVenueByCompsiteQueryForFrontEnd(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException{
+//		//listVenueByCompostieQueryForFrontEnd
+//		doActionListVenueByCompsiteQuery_FrontAndBack(request, response, VENUE_QUERY_INFO_BY_COMPOSTIE_FRONT);
+//	}
 	
-	private void doActionListVenueByCompsiteQueryForFrontEnd(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException{
-		//listVenueByCompostieQueryForFrontEnd
+	private void doActionListVenueByCompsiteQuery_FrontAndBack(HttpServletRequest request,HttpServletResponse response,String goToLocalUrl) throws ServletException,IOException{
 		Map<String, String> errorMsgs = getErrorMsgsCollection(request, ERRORMSGS_NO_TAB);
 		try {
 			// 1.將輸入Data轉成為MAP
@@ -90,7 +99,7 @@ public class VenueSelectServlet extends HttpServlet {
 //				RequestDispatcher failureView = 
 //						request.getRequestDispatcher(VENUE_QUERY_INFO_BY_COMPOSTIE_FRONT);
 //				failureView.forward(request, response);
-				showVenueListAndForward(list, null, null, VENUE_QUERY_INFO_BY_COMPOSTIE_FRONT, request, response);
+				showVenueListAndForward(list, null, null, goToLocalUrl, request, response);
 				return;
 			}
 			//2.
@@ -102,11 +111,11 @@ public class VenueSelectServlet extends HttpServlet {
 			Map<String, Double> scoreMap = v_evaluationService.getVenueScoreMapByVenueVO(list);
 			/// note that if scoreMap.getXX=-1 means there are no score
 			//3.
-			showVenueListAndForward(list, venueTypeVOList, scoreMap, VENUE_QUERY_INFO_BY_COMPOSTIE_FRONT, request, response);
+			showVenueListAndForward(list, venueTypeVOList, scoreMap, goToLocalUrl, request, response);
 			return;
 		}catch (Exception e) {
 			errorMsgs.put(DB_ERROR_MSGS,e.getMessage());
-			RequestDispatcher failureView = request.getRequestDispatcher(VENUE_QUERY_INFO_BY_COMPOSTIE_FRONT);
+			RequestDispatcher failureView = request.getRequestDispatcher(goToLocalUrl);
 			failureView.forward(request, response);
 			return;
 		}

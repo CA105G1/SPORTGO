@@ -1,6 +1,7 @@
 package com.news.model;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +23,23 @@ public class NewsService {
 	
 	public List<NewsVO> getAll(Map<String, String[]> map){
 		return newsDAO.getAll(map);
+	}
+	// Map<String, String>---> Map<NewsType_name, NewsType_no>
+	public List<NewsVO> getReleaseNewsAndChooseNewsType(Timestamp nowTime, Map<String,String> whatToJionNewstypeMap){
+		List<NewsVO> list = newsDAO.getReleaseNews(nowTime);
+		List<NewsVO> newList = new ArrayList<>();
+		for(int i =0 ; i<list.size(); i++) {
+			for(String key : whatToJionNewstypeMap.keySet()) {
+				if(list.get(i).getNewstype_no().equals(whatToJionNewstypeMap.get(key))) {
+					newList.add(list.get(i));
+					continue;
+				}
+			}
+		}
+		if(newList.size()==0) {
+			newList = newsDAO.getDefaultNews();
+		}
+		return newList;
 	}
 	
 	public List<NewsVO> getReleaseNews(Timestamp nowTime){
