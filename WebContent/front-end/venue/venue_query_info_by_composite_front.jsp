@@ -113,7 +113,8 @@
 					</div>
 					<div class="row">
 						<div class="h1 center-block">結果回傳區</div>
-						<% if("listVenueByCompostieQueryForFrontEnd".equals(request.getParameter("action"))){ %>
+						<% if("listVenueByCompostieQueryForFrontEnd".equals(request.getParameter("action")) || 
+								"memEvaluateVenueInFrontEnd".equals(request.getParameter("action"))){ %>
 							<jsp:include page="listQueryVenueForFront.jsp" />
 						<% } %>						
 						

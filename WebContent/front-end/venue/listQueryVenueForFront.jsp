@@ -28,8 +28,11 @@
 		width:100%;
 	}
 	
-	.myAlign{
-		vertical-align:top;
+	.myAlign-Center{
+		float:none;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 	.table > tbody > tr > th{
             vertical-align: middle;
@@ -105,10 +108,50 @@
 														<c:if test="${venueVO.openday_sun=='Y'}"> 日 </c:if>
 													</td>
 												</tr>
-												<tr>
+												<tr ${v_evaluationVO.v_no==venueVO.v_no?'style="background-color:#FFEE99"':''}>
 													<th>場地評價</th>
 													<td>${scoreMap.get(venueVO.getV_no())==-1?'尚無評價分數':scoreMap.get(venueVO.getV_no())}</td>
 												</tr>
+												<c:if test="${memberlistVO!=null}">
+													<tr>
+														<th colspan='2'>
+															<a href='#modal_id_${venueVO.v_no}' data-toggle="modal" class="btn btn-primary btn-block">評價場地</a>
+															<div class="modal fade" id="modal_id_${venueVO.v_no}">
+																<div class="modal-dialog">
+																	<div class="modal-content">
+																		<form>
+																			<div class="modal-header">
+																				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+																				<h4 class="modal-title">標題</h4>
+																			</div>
+																			<div class="modal-body">
+																				<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>" />
+																				<input type="hidden" name="whichPage" value="<%=whichPage%>" />
+																				<div class="myAlign-Center">
+																					<input type="radio" name="score" value="1" id='radio_id_${venueVO.v_no}_1'/><label for="radio_id_${venueVO.v_no}_1">一顆星</label>
+																					<input type="radio" name="score" value="2" id='radio_id_${venueVO.v_no}_2'/><label for="radio_id_${venueVO.v_no}_2">二顆星</label>
+																					<input type="radio" name="score" value="3" id='radio_id_${venueVO.v_no}_3'/><label for="radio_id_${venueVO.v_no}_3">三顆星</label>
+																					<input type="radio" name="score" value="4" id='radio_id_${venueVO.v_no}_4'/><label for="radio_id_${venueVO.v_no}_4">四顆星</label>
+																					<input type="radio" name="score" value="5" id='radio_id_${venueVO.v_no}_5'/><label for="radio_id_${venueVO.v_no}_5">五顆星</label>
+																				</div>
+<!-- 																				<input type="text" name="score" value="5" /> -->
+																				<input type="hidden" name="v_no" value="${venueVO.v_no}" />
+																				<input type="hidden" name="mem_no" value="${memberlistVO.mem_no}" />																				
+																				<input type="hidden" name="action" value="memEvaluateVenueInFrontEnd" />
+																			</div>
+																			<div class="modal-footer">
+																				<button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
+																				<button type="submit" class="btn btn-primary">Save changes</button>
+																			</div>
+																		</form>
+																	</div>
+																</div>
+															</div>
+														</th>
+													</tr>
+												</c:if>
+												
+												
 		<!-- 										<tr> -->
 		<!-- 											<th></th> -->
 		<!-- 											<td style="text-align:right"> -->
