@@ -1679,20 +1679,63 @@ insert into SG_LIKE values('S005','M013');
 ------------15-INSERT--------------------
 ------------CLUB_MEMBERLIST--------------
 ---------------------------------20181210
-Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) 
-                    values('C0001','M003','待審核',DEFAULT);
-Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS,SILENCE_TIME) 
-                    values ('C0002','M005','正常',DEFAULT,to_timestamp('2018-11-10 12:00:04','yyyy-mm-dd hh24:mi:ss'));
-Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS)
-                    values ('C0003','M001','正常',DEFAULT);
-Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS)
-                    values ('C0004','M002','正常',DEFAULT);
-Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS,SILENCE_TIME)
-                    values ('C0005','M007','正常',DEFAULT,to_timestamp('2019-01-30 00:00:00','yyyy-mm-dd hh24:mi:ss'));
-Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS)
-                    values ('C0006','M004','待審核','管理員');
-Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS)
-                    values ('C0007','M006','正常','管理員');
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0001','M001','正常','管理員');
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0001','M024','正常',DEFAULT);
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0001','M005','正常',DEFAULT);
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0001','M006','正常',DEFAULT);
+
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0002','M001','正常','管理員');
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0002','M016','正常','管理員');
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0002','M005','正常',DEFAULT);
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0002','M006','正常',DEFAULT);
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0002','M008','正常',DEFAULT);
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0002','M017','正常','待審核');
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0002','M022','正常',DEFAULT);
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0002','M023','正常',DEFAULT);
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0002','M024','正常','待審核');
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0002','M025','正常',DEFAULT);
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0002','M027','正常',DEFAULT);
+
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0003','M001','正常','管理員');
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0003','M011','正常',DEFAULT);
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0003','M012','正常',DEFAULT);
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0003','M010','正常',DEFAULT);
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0003','M014','正常',DEFAULT);
+
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0004','M002','正常','管理員');
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0004','M013','正常',DEFAULT);
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0004','M015','正常',DEFAULT);
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0004','M016','正常',DEFAULT);
+
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0005','M003','正常','管理員');
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0005','M018','正常',DEFAULT);
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0005','M019','正常',DEFAULT);
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0005','M028','正常',DEFAULT);
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0005','M020','正常',DEFAULT);
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0005','M010','正常',DEFAULT);
+
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0006','M005','正常','管理員');
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0006','M002','正常',DEFAULT);
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0006','M007','正常',DEFAULT);
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0006','M003','正常',DEFAULT);
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0006','M009','正常',DEFAULT);
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0006','M008','正常',DEFAULT);
+
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0007','M004','正常','管理員');
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0007','M007','正常',DEFAULT);
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0007','M021','正常',DEFAULT);
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0007','M028','正常',DEFAULT);
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0007','M027','正常',DEFAULT);
+
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0008','M002','正常','管理員');
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0009','M001','正常','管理員');
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0010','M001','正常','管理員');
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0011','M002','正常','管理員');
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0012','M003','正常','管理員');
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0013','M007','正常','管理員');
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0014','M004','正常','管理員');
+
+commit;
 
 
 
