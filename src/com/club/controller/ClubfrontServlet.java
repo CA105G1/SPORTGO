@@ -32,7 +32,7 @@ public class ClubfrontServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private static final String CLUB_LIST = "/front-end/club/club_list.jsp";
-	private static final String CLUB_PAGE = "/front-end/club/club_pageTest.jsp";
+	private static final String CLUB_PAGE = "/front-end/club/club_page.jsp";
 	private static final String CLUB_INTRO = "/front-end/club/club_intro_page.jsp";
 	private static final String CLUB_MANAGE = "/front-end/club_memberlist/reviewaddclub.jsp";
 	
