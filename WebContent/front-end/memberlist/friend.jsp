@@ -271,7 +271,7 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 				</div>
 				<div class="col-xs-12 col-sm-3">
 				<!-- 好友管理 -->
-				<h1>我的捧油</h1><br>
+				<h3>我的捧油</h3><br>
 				<div class="grid-container" style="display:grid;">
 					<c:forEach var="friend" items="${friendlist}">
 						<c:forEach var="member" items="${memberlist}">
@@ -308,7 +308,7 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 						</c:forEach>
 					</c:forEach>
 				</div>
-				<h1>捧油拜託加加</h1><br>
+				<h3>捧油拜託加加</h3><br>
 				<div class="grid-container" style="display:grid;">
 					<c:forEach var="friend" items="${possiblefriend}">
 						<c:forEach var="member" items="${memberlist}">
@@ -330,7 +330,7 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 						</c:forEach>
 					</c:forEach>
 				</div>
-				<h1>哪些捧油誰想加我呀</h1><br>
+				<h3>哪些捧油誰想加我呀</h3><br>
 				<div class="grid-container" style="display:grid;">
 					<c:forEach var="friend" items="${whoaddme}">
 						<c:forEach var="member" items="${memberlist}">

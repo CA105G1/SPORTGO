@@ -114,9 +114,10 @@ public class FriendServlet extends HttpServlet {
 				MemberlistService memberService = new MemberlistService();
 				MemberlistVO member = memberService.getOneMem(mem1_no);
 				String mem_name = member.getMem_name();
-				dao.appendRedis(mem2_no, mem_name);
-				System.out.println("insert into Redis succeed.");
-				
+				if(dao!=null&& mem_name!=null && mem2_no !=null) {
+					dao.appendRedis(mem2_no, mem_name);
+					System.out.println("insert into Redis succeed.");
+				}
 			} catch (RuntimeException re) {
 				re.printStackTrace(System.err);
 				req.setAttribute("status", "false");
@@ -234,7 +235,9 @@ public class FriendServlet extends HttpServlet {
 					MemberlistVO member = memberService.getOneMem(mem2_no);
 					String mem_name = member.getMem_name();
 					System.out.println(mem2_no+","+mem_name);
-					String name = dao.getValue(mem1_no);
+					String name = null;
+					if(dao!=null)
+						name = dao.getValue(mem1_no);
 					if(name.equals(mem_name)) {
 						dao.deleteRedis(mem1_no, mem_name);
 						System.out.println("delete data from Redis succeed.");

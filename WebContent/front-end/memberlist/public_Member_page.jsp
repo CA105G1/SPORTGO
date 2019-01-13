@@ -9,6 +9,8 @@
 <%@ page import = "com.sport.model.*" %>
 <%@ page import = "java.util.*" %>
 <jsp:useBean id="memberlistService" class="com.memberlist.model.MemberlistService"/>
+<jsp:useBean id="clubService" class="com.club.model.ClubService"/>
+<jsp:useBean id="sportService" class="com.sport.model.SportService"/>
 <%
 	String mem_no = (String)request.getParameter("mem_no");
 	MemberlistService service = new MemberlistService();
@@ -37,21 +39,17 @@
 	List<MemberlistVO> memberlist = service.getAllMem();
 	pageContext.setAttribute("memberlist",memberlist);
 	Club_memberlistService clubmemservice = new Club_memberlistService();
-	List<Club_memberlistVO> clubmember = clubmemservice.getByMem(mem_no);
+	List<Club_memberlistVO> clubmember = clubmemservice.getByMemPart(mem_no);
 	pageContext.setAttribute("clubmember",clubmember);
-	ClubService clubservice = new ClubService();
-	List<ClubVO> clublist = clubservice.getAll();
-	pageContext.setAttribute("clublist",clublist);
-	SportService sportservice = new SportService();
-	List<SportVO> sportlist = sportservice.getAll();
-	pageContext.setAttribute("sportlist", sportlist);
-	
+	List<Club_memberlistVO> clubhost = clubmemservice.getByMemHost(mem_no);
+	pageContext.setAttribute("clubhost", clubhost);
+
 	String status = (String)request.getAttribute("status");
 	if(status==null)
 		pageContext.setAttribute("status","");
 	else
 		pageContext.setAttribute("status",status);
-	System.out.print(status);
+	
 %>
 <!DOCTYPE html>
 <html lang="">
@@ -148,7 +146,7 @@
 					<div class="container notation" style="width:100%;display:none;">
 	            	
 	       			</div>
-						<h3>揪團</h3>
+						<h2>揪團</h2>
 <!-- 						參加的揪團 -->
 						<div class=" tab-pane" style="display:flex;flex-flow:row wrap;">
 							<c:forEach var="sg_memVO" items="${sg_mem}">
@@ -185,28 +183,32 @@
 							
 						</div>
 							
-						<h3>社團</h3>
-							
+						<h2>社團</h2>
+<%-- 							<%System.out.println(clublist.get(1).getClub_no()); %> --%>
 						<div class=" tab-pane" style="display:flex;flex-flow:row wrap;">
 							<c:forEach var="clubmember" items="${clubmember}">
-								<c:forEach var="clublist" items="${clublist}">
-									<c:if test="${clubmember.club_no eq clublist.club_no}">
-										<a href="<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clublist.club_no}" 
+							
+										<a href="<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clubmember.club_no}" 
 										style="display:flex;flex-direction:column;width:calc(100% / 3 - 20px);margin:10px;">
-										<div style="width:100%;height:0;position:relative;padding-bottom:70%;overflow:hidden;border-radius:10px;">
-										<img src="<%=request.getContextPath()%>/clubImg.do?club_no=${clublist.club_no}"
-										style="height:100%;position:absolute;">
+										<div style="width:100%;height:auto;position:relative;padding-bottom:70%;overflow:hidden;border-radius:10px;">
+										<img src="<%=request.getContextPath()%>/clubImg.do?club_no=${clubmember.club_no}"
+										style="height:100%;position:absolute;"><br>
 										</div>
-										<label class="center"><i class="fa fa-users"></i>${clublist.club_name}</label>
-										<c:forEach var="sportlist" items="${sportlist}">
-											<c:if test="${clublist.sp_no eq sportlist.sp_no}">
-												<label class="center"><i class="fa fa-arrow-circle-o-right"></i>${sportlist.sp_name}</label>
-											</c:if>
-										</c:forEach>
+										<label class="center"><i class="fa fa-users"></i>${clubService.getOneClub(clubmember.club_no).club_name}</label>
+												<label class="center"><i class="fa fa-arrow-circle-o-right"></i>${sportService.getByPK(clubService.getOneClub(clubmember.club_no).sp_no).sp_name}</label>
 										</a>
-									</c:if>
-								</c:forEach>
 							</c:forEach>
+							<c:forEach var="clubhost" items="${clubhost}">
+											<a href="<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clubhost.club_no}"
+											style="display:flex;flex-direction:column;width:calc(100% / 3 - 20px);margin:10px;">
+											<div style="width:100%;height:auto;position:relative;padding-bottom:70%; overflow:hidden;border-radius:10px;">
+												<img class="img-responsive card-img-top" src="<%=request.getContextPath()%>/clubImg.do?club_no=${clubhost.club_no}"
+												style="height:100%;position:absolute;"><br>
+											</div>
+											<label class="center"><i class="fa fa-users"></i>${clubService.getOneClub(clubhost.club_no).club_name}</label>
+											<label class="center"><i class="fa fa-arrow-circle-o-right"></i>${clubService.getOneClub(clubhost.club_no).club_name}</label>
+											</a>
+								</c:forEach>
 						</div>
 						
 						
