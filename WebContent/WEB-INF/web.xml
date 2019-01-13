@@ -141,7 +141,14 @@
    <servlet-name>ClubmemberlistServlet</servlet-name>
    <url-pattern>/clubmemberlist.do</url-pattern>
   </servlet-mapping>
-  
+  <servlet>
+    <servlet-name>ResponesServlet</servlet-name>
+    <servlet-class>com.respones.controller.ResponesServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ResponesServlet</servlet-name>
+    <url-pattern>/respones.do</url-pattern>
+  </servlet-mapping>
   <servlet>
     <servlet-name>VenueServlet</servlet-name>
     <servlet-class>com.venue.controller.VenueServlet</servlet-class>
