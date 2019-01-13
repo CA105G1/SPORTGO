@@ -29,7 +29,6 @@
 			.grid-container{
 				grid-template-columns:20% 40% 20%;
 				grid-gap:20px;
-				padding:15px;
 				text-algin:center;
 			}
 			.list-group-item{
@@ -51,7 +50,7 @@
 <%-- 					<h1>${memberlistVO.mem_name}</h1> --%>
 					<div class="container">
 						<div class="row">
-							<h1>即將到來的揪團</h1>
+							<h3>即將到來的揪團</h3>
 							<div class="grid-container" style="display:grid;">
 								<c:forEach var="sg_memVO" items="${sg_mem}">
 									<c:forEach var="sg_infoVO" items="${sgall}">
@@ -62,13 +61,12 @@
 												style="height:100%;position:absolute;">
 												</div>
 												<a href="<%=request.getContextPath()%>/front-end/Sg_info/Sg_infoGetByPkForJoinMem.jsp?Sg_no=${sg_infoVO.sg_no}" 
-												class="list-group-item" style="display:flex;margin-top: 37.5px;margin-bottom: 37.5px;">
+												class="list-group-item" style="display:flex;height:100%;border:0;">
 												${sg_infoVO.sg_name}<br>
 											 	團長：${memberlistService.getOneMem(sg_infoVO.mem_no).mem_name}<br>
 											 	時間：${sg_infoVO.sg_date}<br>
 												</a>
-												<a href=""
-												class="list-group-item" style="display:flex;margin-top: 37.5px;margin-bottom: 37.5px;">評價</a>
+												<div></div>
 											</c:if>
 									</c:forEach>
 								</c:forEach>
@@ -78,22 +76,21 @@
 					
 					<div class="container">
 						<div class="row">
-							<h1>即將到來的我的揪團</h1>
+							<h3>即將到來的我的揪團</h3>
 							<div class="grid-container" style="display:grid;align-item:center;">
 								<c:forEach var="sg_infoVO" items="${sglist}">
-										<div style="width:100%;height:0;position:relative;padding-bottom:66.66666%;overflow:hidden;border-radius:10px;">
-										<img src="<%= request.getContextPath()%>
+										<div style="width:100%;height:0;position:relative;padding-bottom:80%;overflow:hidden;border-radius:10px;">
+										<img class="pic" src="<%= request.getContextPath()%>
 										/Sg_info/Sg_infoImg.do?sg_no=${sg_infoVO.sg_no}" style="height:100%;position:absolute;">
 										</div>
 										<a href="<%=request.getContextPath()%>/front-end/Sg_info/Sg_infoGetByPkForHead.jsp?Sg_no=${sg_infoVO.sg_no}"
-										 class="list-group-item" style="display:flex;margin-top: 37.5px;margin-bottom: 37.5px;">
+										 class="list-group-item" style="display:flex;height:100%;border:0;">
 										 ${sg_infoVO.sg_name}<br>
 										 團長：${memberlistService.getOneMem(sg_infoVO.mem_no).mem_name}<br>
 										 時間：${sg_infoVO.sg_date}<br>
 										
 										</a>
-										<a href=""
-										class="list-group-item" style="display:flex;margin-top: 37.5px;margin-bottom: 37.5px;">評價</a>
+										<div></div>
 								</c:forEach>
 							</div>
 						</div>
@@ -101,7 +98,7 @@
 					
 					<div class="container">
 						<div class="row">
-							<h1>我參加過的揪團</h1>
+							<h3>我參加過的揪團</h3>
 							<div class="grid-container" style="display:grid;align-item:center;">
 								<c:forEach var="sg_memVO" items="${sg_mem}">
 									<c:forEach var="sg_infoVO" items="${sghisall}">
@@ -111,13 +108,13 @@
 												style="height:100%;position:absolute;">
 												</div>
 												<a href="<%=request.getContextPath()%>/Sg_info/Sg_info.do?sg_no=${sg_infoVO.sg_no}" 
-												 class="list-group-item" style="display:flex;margin-top: 37.5px;margin-bottom: 37.5px;">
+												 class="list-group-item" style="display:flex;height:100%;border:0;">
 												${sg_infoVO.sg_name}<br>
 										 		團長：${memberlistService.getOneMem(sg_infoVO.mem_no).mem_name}<br>
 										 		時間：${sg_infoVO.sg_date}<br>
 												</a>
 												<a href=""
-												class="list-group-item" style="display:flex;margin-top: 37.5px;margin-bottom: 37.5px;">評價</a>
+												class="list-group-item" style="display:flex;height:100%;border:0;">評價</a>
 											</c:if>
 									</c:forEach>
 								</c:forEach>
@@ -127,7 +124,7 @@
 					
 					<div class="container">
 						<div class="row">
-							<h1>我舉辦過的揪團</h1>
+							<h3>我舉辦過的揪團</h3>
 							<div class="grid-container" style="display:grid;align-item:center;">
 								<c:forEach var="sg_infoVO" items="${sghislist}">
 									<div style="width:100%;height:0;position:relative;padding-bottom:66.66666%;overflow:hidden;border-radius:10px;">

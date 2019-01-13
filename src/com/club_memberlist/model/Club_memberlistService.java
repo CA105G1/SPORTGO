@@ -67,6 +67,15 @@ public class Club_memberlistService {
 	public List<Club_memberlistVO> getByMem(String mem_no){
 		return dao.findByMem(mem_no);
 	}
+	public List<Club_memberlistVO> getByMemHost(String mem_no){
+		return dao.findByMemHost(mem_no);
+	}
+	public List<Club_memberlistVO> getByMemPart(String mem_no){
+		return dao.findByMemPart(mem_no);
+	}
+	public List<Club_memberlistVO> getByMemPartWait(String mem_no){
+		return dao.findByMemPartWait(mem_no);
+	}
 	
 	public List<Club_memberlistVO> getAll(Map<String, String[]> map) {
 		return dao.getAll(map);

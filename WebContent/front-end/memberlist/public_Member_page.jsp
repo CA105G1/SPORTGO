@@ -4,13 +4,17 @@
 <%@ page import = "com.sg_info.model.*" %>
 <%@ page import = "com.sg_mem.model.*" %>
 <%@ page import = "com.friend.model.*" %>
+<%@ page import = "com.club_memberlist.model.*" %>
+<%@ page import = "com.club.model.*" %>
+<%@ page import = "com.sport.model.*" %>
 <%@ page import = "java.util.*" %>
-
+<jsp:useBean id="memberlistService" class="com.memberlist.model.MemberlistService"/>
 <%
 	String mem_no = (String)request.getParameter("mem_no");
 	MemberlistService service = new MemberlistService();
 	FriendService friendservice = new FriendService();
 	MemberlistVO memberlistVO = service.getOneMem(mem_no);
+	
 	pageContext.setAttribute("type", 1);//public
 	if(memberlistVO==null){
 		memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO");
@@ -32,6 +36,15 @@
 	pageContext.setAttribute("friend",friend);
 	List<MemberlistVO> memberlist = service.getAllMem();
 	pageContext.setAttribute("memberlist",memberlist);
+	Club_memberlistService clubmemservice = new Club_memberlistService();
+	List<Club_memberlistVO> clubmember = clubmemservice.getByMem(mem_no);
+	pageContext.setAttribute("clubmember",clubmember);
+	ClubService clubservice = new ClubService();
+	List<ClubVO> clublist = clubservice.getAll();
+	pageContext.setAttribute("clublist",clublist);
+	SportService sportservice = new SportService();
+	List<SportVO> sportlist = sportservice.getAll();
+	pageContext.setAttribute("sportlist", sportlist);
 	
 	String status = (String)request.getAttribute("status");
 	if(status==null)
@@ -50,6 +63,9 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<!-- Font Awesome -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		
 		<title>SPORTGO 會員頁面</title>
 		<style type="text/css">
 			
@@ -132,31 +148,65 @@
 					<div class="container notation" style="width:100%;display:none;">
 	            	
 	       			</div>
-					
+						<h3>揪團</h3>
+<!-- 						參加的揪團 -->
 						<div class=" tab-pane" style="display:flex;flex-flow:row wrap;">
 							<c:forEach var="sg_memVO" items="${sg_mem}">
 								<c:forEach var="sg_infoVO" items="${sgall}">
 									<c:if test="${sg_infoVO.sg_no eq sg_memVO.sg_no}">
 										<a href="<%=request.getContextPath()%>/front-end/Sg_info/Sg_infoGetByPkForJoinMem.jsp?Sg_no=${sg_infoVO.sg_no}" 
 										style="display:flex;flex-direction:column;width:calc(100% / 3 - 20px);margin:10px;">
-										<div style="width:100%;height:0;position:relative;padding-bottom:66.66666%;overflow:hidden;border-radius:10px;">
+										<div style="width:100%;height:0;position:relative;padding-bottom:70%;overflow:hidden;border-radius:10px;">
 										<img src="<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${sg_infoVO.sg_no}"
 										style="height:100%;position:absolute;">
 										</div>
 										<label class="center">${sg_infoVO.sg_name}</label>
+										<label class="center">團長：${memberlistService.getOneMem(sg_infoVO.mem_no).mem_name}</label>
 										<label class="center">${sg_infoVO.sg_date}</label>
 										</a>
 									</c:if>
 								</c:forEach>
 							</c:forEach>
-						
-<!-- 						<div class="tab-pane" id="club"> -->
-<!-- 						社團 -->
-<!-- 						</div> -->
-						
-<!-- 						<div class="tab-pane" id="information"> -->
-<!-- 						個人簡介 -->
-<!-- 						</div> -->
+<!-- 							創建的揪團 -->
+								<c:forEach var="sg_infoVO" items="${sglist}">
+										<a href="<%=request.getContextPath()%>/front-end/Sg_info/Sg_infoGetByPkForHead.jsp?Sg_no=${sg_infoVO.sg_no}" 
+										style="display:flex;flex-direction:column;width:calc(100% / 3 - 20px);margin:10px;">
+										<div style="width:100%;height:0;position:relative;padding-bottom:70%;overflow:hidden;border-radius:10px;">
+										<img src="<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${sg_infoVO.sg_no}"
+										style="height:100%;position:absolute;">
+										</div>
+										<label class="center">${sg_infoVO.sg_name}</label>
+										<label class="center">團長：${memberlistService.getOneMem(sg_infoVO.mem_no).mem_name}</label>
+										<label class="center">${sg_infoVO.sg_date}</label>
+										</a>
+								</c:forEach>
+							
+							
+							
+						</div>
+							
+						<h3>社團</h3>
+							
+						<div class=" tab-pane" style="display:flex;flex-flow:row wrap;">
+							<c:forEach var="clubmember" items="${clubmember}">
+								<c:forEach var="clublist" items="${clublist}">
+									<c:if test="${clubmember.club_no eq clublist.club_no}">
+										<a href="<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clublist.club_no}" 
+										style="display:flex;flex-direction:column;width:calc(100% / 3 - 20px);margin:10px;">
+										<div style="width:100%;height:0;position:relative;padding-bottom:70%;overflow:hidden;border-radius:10px;">
+										<img src="<%=request.getContextPath()%>/clubImg.do?club_no=${clublist.club_no}"
+										style="height:100%;position:absolute;">
+										</div>
+										<label class="center"><i class="fa fa-users"></i>${clublist.club_name}</label>
+										<c:forEach var="sportlist" items="${sportlist}">
+											<c:if test="${clublist.sp_no eq sportlist.sp_no}">
+												<label class="center"><i class="fa fa-arrow-circle-o-right"></i>${sportlist.sp_name}</label>
+											</c:if>
+										</c:forEach>
+										</a>
+									</c:if>
+								</c:forEach>
+							</c:forEach>
 						</div>
 						
 						
