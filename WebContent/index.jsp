@@ -87,28 +87,32 @@
 		<div class="container-fluid">
 			<div>
 				<div class="col-xs-12 col-sm-3">
-					<a href="img/indexImg/SP001.jpg">
+<!-- 					<a href="img/indexImg/SP001.jpg"> -->
+					<a href="<%=request.getContextPath()%>/Sg_info/Sg_info.do?action=sg_infoCompositeQuery&sp_no=SP001">
 						<img src="img/indexImg/SP001.jpg" class="img-responsive img-rounded"/>
 					</a>
 				</div>
 			</div>
 			<div>
 				<div class="col-xs-12 col-sm-3">
-					<a href="https://www.youtube.com/watch?v=oY2nVQNlUB8">
+<!-- 					<a href="https://www.youtube.com/watch?v=oY2nVQNlUB8"> -->
+					<a href="<%=request.getContextPath()%>/Sg_info/Sg_info.do?action=sg_infoCompositeQuery&sp_no=SP002">
 						<img src="img/indexImg/fun01.jpg" class="img-responsive img-rounded"/>
 					</a>
 				</div>
 			</div>
 			<div>
 				<div class="col-xs-12 col-sm-3">
-					<a href="img/indexImg/fun03.jpg">
+<!-- 					<a href="img/indexImg/fun03.jpg"> -->
+					<a href="<%=request.getContextPath()%>/Sg_info/Sg_info.do?action=sg_infoCompositeQuery&sp_no=SP003">
 						<img src="img/indexImg/fun03.jpg" class="img-responsive img-rounded"/>
 					</a>					
 				</div>
 			</div>
 			<div>
 				<div class="col-xs-12 col-sm-3">
-					<a href="img/indexImg/SP004.jpg">
+<!-- 					<a href="img/indexImg/SP004.jpg"> -->
+					<a href="<%=request.getContextPath()%>/Sg_info/Sg_info.do?action=sg_infoCompositeQuery&sp_no=SP004">
 						<img src="img/indexImg/SP004.jpg" class="img-responsive img-rounded"/>
 					</a>
 				</div>
@@ -117,22 +121,25 @@
 		<div class="container-fluid">
 			<div>
 				<div class="col-xs-12 col-sm-3">
-					<a href="img/indexImg/SP005.png">
-					<img src="img/indexImg/SP005.png" class="img-responsive img-rounded"/>
+<!-- 					<a href="img/indexImg/SP005.png"> -->
+					<a href="<%=request.getContextPath()%>/Sg_info/Sg_info.do?action=sg_infoCompositeQuery&sp_no=SP005">
+						<img src="img/indexImg/SP005.png" class="img-responsive img-rounded"/>
 					</a>
 				</div>
 			</div>
 			<div>
 				<div class="col-xs-12 col-sm-3">
-					<a href="img/indexImg/SP006.jpg">
-					<img src="img/indexImg/SP006.jpg" class="img-responsive img-rounded"/>
+<!-- 					<a href="img/indexImg/SP006.jpg"> -->
+					<a href="<%=request.getContextPath()%>/Sg_info/Sg_info.do?action=sg_infoCompositeQuery&sp_no=SP006">
+						<img src="img/indexImg/SP006.jpg" class="img-responsive img-rounded"/>
 					</a>
 				</div>
 			</div>
 			<div>
 				<div class="col-xs-12 col-sm-3">
-					<a href="img/no-image.PNG">
-					<img src="img/no-image.PNG" class="img-responsive img-rounded"/>
+<!-- 					<a href="img/no-image.PNG"> -->
+					<a href="<%=request.getContextPath()%>/Sg_info/Sg_info.do?action=sg_infoCompositeQuery&sp_no=SP007">
+						<img src="img/no-image.PNG" class="img-responsive img-rounded"/>
 					</a>
 				</div>
 			</div>
