@@ -25,9 +25,18 @@ public class Logout extends HttpServlet {
 		HttpSession session = req.getSession();
 		session.removeAttribute("memberlistVO");
 //		session.invalidate();
-		String url ="Login.jsp";
-		res.sendRedirect(url);
-		System.out.println(session.getAttribute("memberlistVO"));
+		try{
+			String location = (String) session.getAttribute("location");
+			if(location!=null) {
+				session.removeAttribute("location");
+				res.sendRedirect(location);
+				return;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		res.sendRedirect(req.getContextPath()+"/index.jsp");
+//		System.out.println(session.getAttribute("memberlistVO"));
 	}
 
 }
