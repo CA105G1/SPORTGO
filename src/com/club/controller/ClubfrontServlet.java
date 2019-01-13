@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import org.apache.catalina.Session;
+
 import com.club.model.ClubService;
 import com.club.model.ClubVO;
 import com.post_info.model.Post_infoService;
@@ -70,6 +72,8 @@ System.out.println("requestURL : "+requestURL);/////////////////////////////////
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("clubVO", clubVO); 
 				req.setAttribute("postvolist", postvolist);
+				HttpSession session = req.getSession();
+				session.setAttribute("club_no", club_no);
 				RequestDispatcher successView = req.getRequestDispatcher(CLUB_PAGE); 
 				successView.forward(req, res);
 

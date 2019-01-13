@@ -2,14 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.club.model.*"%>
 <%@ page import="java.util.*"%>
+<%@ page import="com.club.model.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
-<%
-
-	ClubVO clubVO = (ClubVO)request.getAttribute("clubVO");
-	System.out.print(clubVO);
-	
-%>
 
 
 <html >
@@ -55,22 +49,26 @@
 		</style>
 	</head>
 
+
 	<!--data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" -->
 
 	<body>
-	
 	<%@ include file="/front-end/CA105G1_header.file" %>
+<!--------- 進入前天空中已經有clubVO在session裡，club_no在req裡，以下僅測試用 --------------> 	
+club_no = ${club_no }<br>
+clubVO = ${clubVO }
+<!-- ---------------------------------------------------------------------- -->
 		<div class="container">
 			<div class="row">
 				
 					<div class="col-xs-12 col-sm-2" style="margin-right: -;padding-left: 5px;padding-right: 5px;">
-						<%@ include file="/front-end/club/club_pageRight.file" %>
+						<%@ include file="/front-end/club/club_pageRight.jsp" %>
 					</div>
 				<div class="col-xs-12 col-sm-8">
-					<div>66666</div>
+					<div>club_no = ${club_no }</div>
 				</div>
 				<div class="col-xs-12 col-sm-2" id="xx">
-					<div>好友列表</div>
+					<div>clubVO = ${clubVO }</div>
 				</div>
 			</div>
 		</div>
