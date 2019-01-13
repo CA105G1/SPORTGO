@@ -16,10 +16,10 @@ import com.sg_info.model.Sg_infoVO;
 import com.sg_rep.model.Sg_repVO;
 
 public class SportDAO implements SportDAO_interface{
-	private static final String driver = "oracle.jdbc.driver.OracleDriver";
-	private static final String url = "jdbc:oracle:thin:@localhost:1521:xe";
-	private static final String user = "CA105G1";
-	private static final String psw = "123456";
+//	private static final String driver = "oracle.jdbc.driver.OracleDriver";
+//	private static final String url = "jdbc:oracle:thin:@localhost:1521:xe";
+//	private static final String user = "CA105G1";
+//	private static final String psw = "123456";
 
 	private static final String insertStmt =
 			"INSERT INTO sport VALUES('SP' || LPAD(SPORT_SEQ.nextval, 3, 0), ?)";
@@ -62,6 +62,7 @@ public class SportDAO implements SportDAO_interface{
 		
 		try {
 			//連線池版
+		con = ds.getConnection();
 			con = ds.getConnection();
 			//JDBC版
 //			con = DriverManager.getConnection(url, user, psw);

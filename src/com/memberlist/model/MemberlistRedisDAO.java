@@ -7,9 +7,9 @@ import redis.clients.jedis.JedisPool;
 
 public class MemberlistRedisDAO implements MemberlistRedisDAO_interface {
 
-	private static JedisPool pool = null;
+	private JedisPool pool = null;
 	private static final String AUTH = "123456";
-	private static Jedis jedis;
+	private Jedis jedis;
 	public MemberlistRedisDAO() {
 		super();
 		pool = JedisUtil.getJedisPool();
