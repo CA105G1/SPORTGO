@@ -76,7 +76,6 @@
 			<form action="<%= request.getContextPath()%>/Sg_info/Sg_info.do" method="post" enctype="multipart/form-data">
 				<table class="table table-hover table-striped table-bordered text-center">
 					<jsp:useBean id="clubSvc" scope="page" class="com.club.model.ClubService"/>
-					<a href="<%= request.getContextPath()%>/front-end/Sg_info/SgHome.jsp">回到揪團首頁</a>
 					<caption class="text-center"><span id="title">${clubSvc.getOneClub(club_no).club_name}</span>專屬揪團</caption>
 					<tbody>
 					<!------------ 圖片上傳 ------------>

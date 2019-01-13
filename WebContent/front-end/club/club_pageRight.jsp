@@ -23,7 +23,7 @@
 				</h4>
 				<div class="list-group active">
 					<a href="<%= request.getContextPath()%>/front-end/club/club_intro_page.jsp" class="list-group-item">簡介</a>
-					<a href="<%= request.getContextPath()%>/front-end/club/Sg_infoCreateForClub.jsp" class="list-group-item">專屬揪團</a>
+					<a href="<%= request.getContextPath()%>/front-end/club/Sg_infoList.jsp" class="list-group-item">專屬揪團</a>
 					<a href="#" class="list-group-item" role="tab" id="myCreatePost">建立貼文</a>
 					<a href="#" class="list-group-item">影音相簿</a>
 					<a href="<%= request.getContextPath()%>/clubfront.do?actionfront=getOneClubmanage&club_no=${clubVO.club_no}" class="list-group-item">社團管理</a>
