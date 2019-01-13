@@ -67,11 +67,23 @@
 			    <a class="right carousel-control" href="#carousel-id" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
 			</div>
 		</div>
+		<div style="height:50px"></div>
 		<%-- 推薦揪團區 --%>
 		<%-- 左側MAP --%>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-12 col-sm-1"></div>
+				<div class="col-xs-12 col-sm-10">
+					<jsp:include page="/front-end/Sg_infoByMap.jsp" />			
+				</div>
+				<div class="col-xs-12 col-sm-1"></div>
+			</div>
+		</div>
+		
 		<%-- 右側推薦揪團列表 --%>
 
 		<%-- 各個運動連結 --%>
+		<div style="height:500px"></div>
 		<div class="container-fluid">
 			<div>
 				<div class="col-xs-12 col-sm-3">
