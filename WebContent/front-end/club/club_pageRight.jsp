@@ -12,12 +12,11 @@
 		<title>club_pageRight</title>
 	</head>
 	<body>
-		
 		<!-- 右選單 -->
 		<div class="container-fluid">
 			<div class="row">
 				<h4 id="club_name" class="_19s-" >
-					<a href='club_pageTest.jsp?club_no=${clubVO.club_no}' >
+					<a href='club_page.jsp?club_no=${clubVO.club_no}' >
 						${clubVO.club_name}
 					</a>
 				</h4>

@@ -73,7 +73,7 @@
 
 </head>
 <body>
-<%@ include file="/front-end/CA105G1_header.file" %>
+<jsp:include page="/front-end/CA105G1_header.jsp" />
 <br>
 
 
@@ -253,7 +253,7 @@
 				</div>
 		</div>
 	</div>
-<%@ include file="/front-end/CA105G1_footer.file" %>
+<jsp:include page="/front-end/CA105G1_footer.jsp" />
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	

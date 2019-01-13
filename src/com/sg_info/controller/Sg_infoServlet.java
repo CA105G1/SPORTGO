@@ -196,7 +196,7 @@ public class Sg_infoServlet extends HttpServlet {
 						
 //				req.setAttribute("Sg_infoVO", sg_infoVO);
 				if("限社團".equals(sg_per)) {
-					RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/club/club_page.jsp");
+					RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/club/Sg_infoList.jsp");
 					dispatcher.forward(req, res);
 				}else {
 					RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/Sg_info/SgHome.jsp");

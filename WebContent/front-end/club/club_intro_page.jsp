@@ -54,7 +54,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-12 col-sm-2" id="xx1">
-					<%@ include file="/front-end/club/club_pageRight.jsp" %>
+					<jsp:include page="/front-end/club/club_pageRight.jsp" />
 				</div>
 				
 				<div class="col-xs-12 col-sm-8">
@@ -81,6 +81,7 @@
 </FORM>
 				</div>
 				<div class="col-xs-12 col-sm-2" id="xx">
+					<div>clubVO = ${clubVO }</div>
 				</div>
 			</div>
 		</div>
