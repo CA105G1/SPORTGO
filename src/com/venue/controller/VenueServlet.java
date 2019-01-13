@@ -42,23 +42,28 @@ public class VenueServlet extends HttpServlet {
 		System.out.println("VenueServlet : "+action);
 		if(action != null ) {
 			switch (action) {
+				//select
 				case "get_all_venue":
 				case "get_one_venue":
 				case "listVenueByCompositeQuery":
 				case "listVenueByCompostieQueryForFrontEnd":
 					doForwardNextServlet(request, response, VENUE_SELECT_SERVLET);
 					break;
+				// insert or update
 				case "updateForQuerry":
 				case "update_cancel":
 				case "update_reset":
 				case "update_commit":
 					doForwardNextServlet(request, response, VENUE_CREATE_OR_UPATE_SERVLET);
 					break;
+				// delete
 				case "delete":
 					doForwardNextServlet(request, response, VENUE_DELETE_SERVLET);
 					break;
+				//function
 				case "memEvaluateVenueInFrontEnd":
 					doForwardNextServlet(request, response, VENUE_FUNCTION_SERVLET);
+					break;
 				default:
 					System.out.println("In this VenueServlet, there aer no "+action+".");
 					break;
