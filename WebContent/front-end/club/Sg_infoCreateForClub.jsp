@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="com.sg_info.model.*"%>
 <%@ page import="com.memberlist.model.*"%>
+<%@ page import="com.club.model.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
@@ -40,12 +41,14 @@
 
 </head>
 <body>
-<%@ include file="/front-end/CA105G1_header.file" %>
+<jsp:include page="/front-end/CA105G1_header.jsp" />
 
 <%
-	MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO"); 
-	String club_no = request.getParameter("club_no");
-	request.setAttribute("club_no",club_no);
+//  session中有memberlistVO、club_no，EL直接拿了就用
+	String club_no = (String)session.getAttribute("club_no");
+	ClubService svc = new ClubService();
+	ClubVO clubVO = svc.getOneClub(club_no);
+	request.setAttribute("clubVO",clubVO);
 %>
 
 
@@ -66,11 +69,10 @@
 
 <div class="container">
 	<div class="row">
-<!-- 		<div class="col-xs-12 col-sm-1"></div> -->
-		<div class="col-xs-12 col-sm-3">
-			<%@ include file="/front-end/club/club_pageRight.file" %>						
+		<div class="col-xs-12 col-sm-2">
+			<%@ include file="/front-end/club/club_pageRight.jsp" %>						
 		</div>
-		<div class="col-xs-12 col-sm-6">
+		<div class="col-xs-12 col-sm-8">
 			<form action="<%= request.getContextPath()%>/Sg_info/Sg_info.do" method="post" enctype="multipart/form-data">
 				<table class="table table-hover table-striped table-bordered text-center">
 					<jsp:useBean id="clubSvc" scope="page" class="com.club.model.ClubService"/>
@@ -80,15 +82,15 @@
 					<!------------ 圖片上傳 ------------>
 						<tr>
 							<td colspan="2" class="uploadPicTd">
-								<img src="<%= request.getContextPath()%>/img/no-image.PNG" style="width:100%"  id="showPic">
+								<img src="<%= request.getContextPath()%>/img/no-image.PNG" style="width:90%"  id="showPic">
 								<input type="file" id="sg_pic" name="sg_pic"><br>
 							</td>
 						</tr>
 						<tr>
 							<th>團長</th>
 							<td>
-								<%=memberlistVO.getMem_name()%>
-								<input type="hidden" name="mem_no" value="<%=memberlistVO.getMem_no()%>">
+								${memberlistVO.mem_name }
+								<input type="hidden" name="mem_no" value="${memberlistVO.mem_no }">
 							</td>
 						</tr>
 						<tr>
@@ -208,11 +210,11 @@
 				<input type="hidden" name="loc_end" id="loc_end">
 			</form>
 		</div>
-		<div class="col-xs-12 col-sm-3"></div>
+		<div class="col-xs-12 col-sm-2">123</div>
 	</div>
 </div>
 
-<%@ include file="/front-end/CA105G1_footer.file" %>
+<jsp:include page="/front-end/CA105G1_footer.jsp" />
 
 <script type="text/javascript">
 
@@ -241,7 +243,6 @@
 
 
 	//設定活動時間表
-	$.datetimepicker.setLocale('zh'); // kr ko ja en
 	
 	$("#sg_date").click(function(){
 		if($('#apl_end').val() == null){

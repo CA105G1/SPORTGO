@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import org.apache.catalina.Session;
+
 import com.club.model.ClubService;
 import com.club.model.ClubVO;
 import com.post_info.model.Post_infoService;
@@ -30,7 +32,7 @@ public class ClubfrontServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private static final String CLUB_LIST = "/front-end/club/club_list.jsp";
-	private static final String CLUB_PAGE = "/front-end/club/club_page.jsp";
+	private static final String CLUB_PAGE = "/front-end/club/club_pageTest.jsp";
 	private static final String CLUB_INTRO = "/front-end/club/club_intro_page.jsp";
 	private static final String CLUB_MANAGE = "/front-end/club_memberlist/reviewaddclub.jsp";
 	
@@ -70,6 +72,8 @@ System.out.println("requestURL : "+requestURL);/////////////////////////////////
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("clubVO", clubVO); 
 				req.setAttribute("postvolist", postvolist);
+				HttpSession session = req.getSession();
+				session.setAttribute("club_no", club_no);
 				RequestDispatcher successView = req.getRequestDispatcher(CLUB_PAGE); 
 				successView.forward(req, res);
 
