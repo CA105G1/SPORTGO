@@ -58,7 +58,7 @@
 	<!--data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" -->
 
 	<body>
-	
+	 
 	<%@ include file="/front-end/CA105G1_header.file" %>
 		<div class="container-fluid">
 			<div class="row">
