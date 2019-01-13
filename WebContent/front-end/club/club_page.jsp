@@ -75,7 +75,7 @@
 				<div class="col-xs-12 col-lg-1" id="xx1"></div>
 				
 					<div class="col-xs-12 col-sm-2" style="margin-right: -;padding-left: 5px;padding-right: 5px;">
-						<%@ include file="club_pageRight.file" %>
+						<%@ include file="club_pageRight.jsp" %>
 					</div>
 						
 				<div class="col-xs-12 col-sm-7">
