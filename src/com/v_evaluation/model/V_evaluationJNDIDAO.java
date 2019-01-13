@@ -3,30 +3,22 @@ package com.v_evaluation.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import java.sql.*;
 
-public class V_evaluationJDBCDAO implements V_evaluationDAO_interface{
+public class V_evaluationJNDIDAO implements V_evaluationDAO_interface{
 	
-//	private static DataSource ds = null;
-//	static {
-//		try {
-//			Context ctx = new InitialContext();
-//			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/CA105G1");
-//		} catch (NamingException e) {
-//			e.printStackTrace();
-//		}
-//	}
-	
-	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
-	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
-	private static final String USER = "CA105G1";
-	private static final String PASSWORD = "123456";
-	
-	static { //預先載入驅動程式
+	private static DataSource ds = null;
+	static {
 		try {
-			Class.forName(DRIVER);
-		} catch (ClassNotFoundException ce) {
-			ce.printStackTrace();
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup(com.util.lang.Util.JNDI_DATABASE_NAME);//---java:comp/env/jdbc/CA105G1DB
+		} catch (NamingException e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -47,7 +39,7 @@ public class V_evaluationJDBCDAO implements V_evaluationDAO_interface{
 
 		try {
 
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			psmt = con.prepareStatement(INSERT_STMT);
 			
 			psmt.setString(1, veVO.getMem_no());
@@ -85,7 +77,7 @@ public class V_evaluationJDBCDAO implements V_evaluationDAO_interface{
 
 		try {
 
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			psmt = con.prepareStatement(UPDATE);
 			
 			psmt.setInt(1, veVO.getScore());
@@ -124,7 +116,7 @@ public class V_evaluationJDBCDAO implements V_evaluationDAO_interface{
 
 		try {
 
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			psmt = con.prepareStatement(DELETE);
 			
 			psmt.setString(1, mem_no);
@@ -162,7 +154,7 @@ public class V_evaluationJDBCDAO implements V_evaluationDAO_interface{
 
 		try {
 
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			psmt = con.prepareStatement(GET_ONE);
 			
 			psmt.setString(1, mem_no);
@@ -213,7 +205,6 @@ public class V_evaluationJDBCDAO implements V_evaluationDAO_interface{
 	public List<V_evaluationVO> getAll() {
 		
 		List<V_evaluationVO> list = new ArrayList<V_evaluationVO>();
-		V_evaluationVO veVO = null;
 		
 		Connection con = null;
 		PreparedStatement psmt = null;
@@ -221,7 +212,7 @@ public class V_evaluationJDBCDAO implements V_evaluationDAO_interface{
 
 		try {
 
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			psmt = con.prepareStatement(GET_ALL_STMT);
 			rs = psmt.executeQuery();
 			list = collectV_evaluationVO(rs);
@@ -270,7 +261,7 @@ public class V_evaluationJDBCDAO implements V_evaluationDAO_interface{
 		ResultSet resultSet = null;
 		List<V_evaluationVO> list = new ArrayList<>();
 		try {
-			connection = DriverManager.getConnection(URL, USER, PASSWORD);
+			connection = ds.getConnection();
 			preparedStatement = connection.prepareStatement(GET_ONE_VENUE_SCORE_LIST_SQL);
 			preparedStatement.setString(1, v_no);
 			resultSet = preparedStatement.executeQuery();
@@ -317,29 +308,6 @@ public class V_evaluationJDBCDAO implements V_evaluationDAO_interface{
 		return list;
 	}
 	
-	
-	public static void main(String[] args) {
-		
-		V_evaluationDAO_interface vei  = new V_evaluationJDBCDAO();
-		
-//		vei.insert(new V_evaluationVO("M005","V000002", 3));
-//		vei.insert(new VEVO("M002","V000003", 2));
-//		vei.update(new VEVO("M001","V000002", 4));
-//		vei.delete("M001", "V000001");
-//		
-//		
-//		V_evaluationVO ve = vei.findByPrimaryKey("M002", "V000002");
-//		System.out.println(ve.getScore());
-//		
-//		System.out.println("========================");
-		
-		List<V_evaluationVO> veVO = vei.getAll();
-		
-		for (V_evaluationVO x : veVO) {
-			System.out.println(x.getMem_no() + " " + x.getV_no() + " " + x.getScore());
-		}
-		
-	}
 	
 	
 }

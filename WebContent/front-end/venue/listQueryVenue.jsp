@@ -45,44 +45,9 @@
 <body>
 <jsp:useBean id="venueTypeService" scope="page" class="com.venuetype.model.VenueTypeService" />
 <!-- 	<h1>This is listAllVenue.jsp</h1> -->
- <%-- 
-	<table border="1">
-		<tr>
-			<th>場地編號</th>
-			<th>場地名稱</th>
-			<th>場地類型編號</th>
-			<th>郵遞區碼</th>
-			<th>緯度</th>
-			<th>經度</th>
-			<th>圖片</th>
-			<th>地址</th>
-			<th>電話</th>
-			<th>場地狀態</th>
-			<th>場地功能</th>
-		</tr>
-		
-		<%@ include file="pages/page1_forVenue.file" %> 
-		<c:forEach var="venueVO" items="${myList}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
-	
-			<tr>
-				<td>${venueVO.v_no}</td>
-				<td>${venueVO.v_name}</td>
-				<td>${venueVO.vt_no}</td>
-				<td>${venueVO.reg_no}</td>
-				<td>${venueVO.v_lat}</td>
-				<td>${venueVO.v_long}</td>
-				<td>${venueVO.v_photo1_url}</td>
-				<td>${venueVO.v_address}</td>
-				<td>${venueVO.v_phoneno}</td>
-				<td>${venueVO.open_state}</td>
-				<td>${venueVO.v_display}</td>
-			</tr>
-			
-		</c:forEach>
-	</table>
-	<%@ include file="pages/page2_forVenue.file" %> 
---%>
+
 <!-- one card -->
+<%if(list.size()!=0){ %><%----------------start to show-----------------------------------------------------------------------------------------%>
 	<%@ include file="pages/page1_forVenue.file" %>
 	<table class="table table-hover table-striped table-bordered table-condensed">
 	<tbody>	
@@ -182,7 +147,15 @@
 	</tbody>
 	</table>
 	<%@ include file="pages/page2_forVenue.file" %> 
-	
+<% }else{%><%----------------end to show-----------------------------------------------------------------------------------------%>
+	<table class="table table-hover table-striped table-bordered table-condensed">
+		<tbody>
+			<tr><th>---查無資料---</th></tr>
+		</tbody>
+	</table>
+<% }%>
+
+
 	<br>
 	<br>
 	<br>

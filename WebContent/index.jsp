@@ -43,8 +43,8 @@
 			    <!-- 幻燈片主圖區 -->
 			    <div class="carousel-inner">			    
 			        <% for(int carousel_item = 0 ; carousel_item < newsVOList.size();carousel_item++){   %>
-				    <% 		NewsVO newsVO = newsVOList.get(carousel_item);							     %>
-				    <% 		request.setAttribute("newsVO", newsVO);									     %>
+				    <% 		NewsVO newsVO = newsVOList.get(carousel_item);							   %>
+				    <% 		request.setAttribute("newsVO", newsVO);									   %>
 				        <div class="item <%=carousel_item==0? "active":"" %>">
 				            <img src="<%=request.getContextPath()%>/news/newsImg.do?news_no=<%=newsVO.getNews_no()%>" 
 				            class="img-responsive img-rounded center-block" alt="" style="width:1000px; height:500px"/>
@@ -69,11 +69,7 @@
 		</div>
 		<%-- 推薦揪團區 --%>
 		<%-- 左側MAP --%>
-		
-		<jsp:include page="/front-end/Sg_infoByMap.jsp" />	
-		<div style="height:500px"></div>
 		<%-- 右側推薦揪團列表 --%>
-		<div></div>
 
 		<%-- 各個運動連結 --%>
 		<div class="container-fluid">
@@ -139,8 +135,8 @@
 		
 		<%-- footer目前尚缺連結點 --%>
 <%-- 		<%@ include file="front-end/CA105G1_footer.file" %> <!--請更正成下一行-->--%>
-
-		<jsp:include page="/front-end/CA105G1_footer.jsp" />		
+		<jsp:include page="/front-end/CA105G1_footer.jsp" />
+		
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	</body>

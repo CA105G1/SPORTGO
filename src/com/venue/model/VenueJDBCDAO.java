@@ -423,7 +423,7 @@ public class VenueJDBCDAO implements VenueDAO_interface {
 
 	
 	@Override
-	public List<VenueVO> getAll(Map<String, String[]> map) {
+	public List<VenueVO> getAll(Map<String, String[]> map, boolean isFrontEnd) {
 		List<VenueVO> list = new ArrayList<VenueVO>();
 		
 		Connection connection = null;
@@ -432,7 +432,7 @@ public class VenueJDBCDAO implements VenueDAO_interface {
 		try {
 			connection = DriverManager.getConnection(URL, USER, PASSWORD);
 			String finalSQL = "Select * from venue "
-					+ Util_JDBC_CompositeQuery_Venue.get_WhereCondition(map)
+					+ Util_JDBC_CompositeQuery_Venue.get_WhereCondition(map, isFrontEnd)
 					+ " order by v_no";
 			
 			preparedStatement = connection.prepareStatement(finalSQL);
@@ -468,6 +468,11 @@ public class VenueJDBCDAO implements VenueDAO_interface {
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public List<VenueVO> getAll(Map<String, String[]> map) {
+		return getAll(map, false);
 	}
 
 	
