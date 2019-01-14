@@ -18,11 +18,18 @@ public interface ProductDAO_interface {
 	ProductVO findByPK (String pro_no);
 	//全部查詢    
     public abstract List<ProductVO> getAll();
+    //全部查詢(上架)
+    public abstract List<ProductVO> getAllOnShelve();
     //複合查詢
     public abstract List<ProductVO> getAll(Map<String, String[]> map);
     //更新狀態
     public abstract int updateShelve(String pro_no ,String pro_shelve);
     //查詢最後一筆
     public abstract ProductVO getLastVO();
-
+    //訂單購買數量更動商品庫存
+    public abstract int updateStock(String pro_no , Integer cart_pro_stock);
+    //查詢購物車購買數量時庫存數量
+    public abstract ProductVO getSelectStock(String pro_no , Integer cart_pro_stock);
+    //更新評價分數
+    public abstract int updateAssess(String pro_no, Integer pro_all_assess);
 }

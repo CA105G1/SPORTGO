@@ -30,11 +30,21 @@
 		
 	</head>
 	<body>
-		<%@ include file="/front-end/CA105G1_header.file" %>
+		<%-- include header --%>
+<%-- 	<%@ include file="/back-end/CA105G1_header_back.file" %> --%>
+		<%-- include show_loginBox --%>
+<%-- 	<%@ include file="/back-end/emp/loginfile/showLoginBackEnd.file" %> --%>
+		
+		<jsp:include page="/back-end/CA105G1_header_back.jsp"/>
 		
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-xs-12 col-sm-12">
+				<div class="col-xs-12 col-sm-3">
+<!-- 					<h1>後台共用區</h1> -->
+<!-- 					<h2>here need include file</h2> -->
+					<jsp:include page="/back-end/left_side_field.jsp"/>
+				</div>
+				<div class="col-xs-12 col-sm-9">
 					<h1>場地資料查詢</h1>
 					
 					<div role="tabpanel">
@@ -146,15 +156,14 @@
 										</c:forEach>
 									</ul>
 								</c:if>	
-								
 					        	<%-- 查詢回應區--%>
 					        	<div class="panel panel-info">
 					        		<% if("get_one_venue".equals(request.getParameter("action"))){ %>
-										<jsp:include page="showOneVenueInfo.jsp" flush="true" />	
+<%-- 										<jsp:include page="showOneVenueInfo.jsp" flush="true" />	 --%>
 									<% }else if("get_all_venue".equals(request.getParameter("action"))){%>
-										<jsp:include page="listQueryVenue.jsp" flush="true" />	
+<%-- 										<jsp:include page="listQueryVenue.jsp" flush="true" />	 --%>
 									<% }else if("listVenueByCompositeQuery".equals(request.getParameter("action"))){%>
-										<jsp:include page="listQueryVenue.jsp"/>
+<%-- 										<jsp:include page="listQueryVenue.jsp"/> --%>
 									<% } %>
 					        	</div>
 					        	
@@ -179,7 +188,7 @@
 
 
 
-		<%@ include file="/front-end/CA105G1_footer.file" %>
+		<%@ include file="/back-end/CA105G1_footer_back.file" %>
 		
 		
 		<script src="https://code.jquery.com/jquery.js"></script>

@@ -37,21 +37,21 @@ public class Sg_memServlet extends HttpServlet {
 			
 			String sg_no = req.getParameter("sg_no");
 			String mem_no = req.getParameter("mem_no");
-			boolean answer;
-			boolean isJoin = false;
-
+//			boolean answer;
+//			boolean isJoin = false;
+//
 			Sg_memService svc = new Sg_memService();
-			List<Sg_memVO> list = svc.getAllBySg_no(sg_no);
-			//判斷是否重複加入
-			for(Sg_memVO vo : list) {
-				if(vo.getMem_no().equals(mem_no)) {
-					isJoin = true;
-				}
-			}
-			if(isJoin) {
-				//重複報名則回傳false到前端
-				answer=false;
-			}else {
+//			List<Sg_memVO> list = svc.getAllBySg_no(sg_no);
+//			//判斷是否重複加入
+//			for(Sg_memVO vo : list) {
+//				if(vo.getMem_no().equals(mem_no)) {
+//					isJoin = true;
+//				}
+//			}
+//			if(isJoin) {
+//				//重複報名則回傳false到前端
+//				answer=false;
+//			}else {
 				svc.insertSg_mem(sg_no, mem_no);
 				//變更sg_info資料表的報名人數
 				Sg_infoService sg_infosvc = new Sg_infoService();
@@ -59,12 +59,12 @@ public class Sg_memServlet extends HttpServlet {
 				sg_ttlapl += 1;
 				sg_infosvc.updateTtlapl(sg_no, sg_ttlapl);
 				//////////////////////
-				answer=true;
-			}
+//				answer=true;
+//			}
 			
 			JSONObject obj = new JSONObject();
 			try {
-				obj.put("answer", answer);
+				obj.put("answer", "OK");
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

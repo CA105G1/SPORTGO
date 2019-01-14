@@ -14,6 +14,9 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.sg_info.model.CompositeQuery_Sg_info;
+import com.sg_info.model.Sg_infoVO;
+
 public class ClubDAO implements ClubDAO_interface{
 	private static DataSource ds = null;
 	static {
@@ -25,11 +28,7 @@ public class ClubDAO implements ClubDAO_interface{
 		}
 	}
 	
-		@Override
-	public List<ClubVO> getAll(Map<String, String[]> map) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		
 
 
 		private static final String INSERT_STMT = 
@@ -37,6 +36,8 @@ public class ClubDAO implements ClubDAO_interface{
 			+ "VALUES (('C'||LPAD(to_char(club_seq.NEXTVAL), 4, '0')), ?, ?, ?, ?, ?, ?)";
 		private static final String GET_ALL_STMT = 
 			"SELECT club_no,sp_no,photo,photo_ext,club_status,club_name,club_intro FROM club order by club_no";
+		private static final String GET_ALL_FOR_PUBLIC_STMT = 
+				"SELECT club_no,sp_no,photo,photo_ext,club_status,club_name,club_intro FROM club WHERE club_status='正常' order by club_no";
 		private static final String GET_ONE_STMT = 
 			"SELECT club_no,sp_no,photo,photo_ext,club_status,club_name,club_intro FROM club where club_no = ?";
 		private static final String UPDATE = 
@@ -260,6 +261,127 @@ public class ClubDAO implements ClubDAO_interface{
 			}
 			return list;
 		}
+		
+		
+		@Override
+		public List<ClubVO> getAllForPublic() {
+			List<ClubVO> list = new ArrayList<ClubVO>();
+			ClubVO clubVO = null;
+			
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			try {
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(GET_ALL_FOR_PUBLIC_STMT);
+				rs = pstmt.executeQuery();
+				while(rs.next()) {
+					clubVO = new ClubVO();
+					clubVO.setClub_no(rs.getString("club_no"));
+					clubVO.setSp_no(rs.getString("sp_no"));
+					clubVO.setPhoto(rs.getBytes("photo"));
+					clubVO.setPhoto_ext(rs.getString("photo_ext"));
+					clubVO.setClub_status(rs.getString("club_status"));
+					clubVO.setClub_name(rs.getString("club_name"));
+					clubVO.setClub_intro(rs.getString("club_intro"));
+					list.add(clubVO);
+				}
+			
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+			}finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+			}
+			return list;
+		}
+		
+		
+		
+		@Override
+		public List<ClubVO> getAll(Map<String, String[]> map) {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			ClubVO vo = null;
+			List<ClubVO> list = new ArrayList<ClubVO>();
+			
+			try {
+				con = ds.getConnection();
+				String sqlStr = "SELECT * FROM club "
+				+ "WHERE club_status='正常'"
+				+ CompositeQuery_Club.get_WhereCondition(map)
+				+ " ORDER BY club_no";
+	System.out.println("sqlStr="+sqlStr);
+				pstmt = con.prepareStatement(sqlStr);
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					vo = new ClubVO();
+					vo.setClub_no(rs.getString("club_no"));
+					vo.setSp_no(rs.getString("sp_no"));
+					vo.setPhoto(rs.getBytes("photo"));
+					vo.setPhoto_ext(rs.getString("photo_ext"));
+					vo.setClub_status(rs.getString("club_status"));
+					vo.setClub_name(rs.getString("club_name"));
+					vo.setClub_intro(rs.getString("club_intro"));
+					
+					list.add(vo);
+				}
+				
+				
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				if(rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+				if(pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+				if(con != null) {
+					try {
+						con.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			
+			return list;
+		}
+		
+		
 }
 		
 		

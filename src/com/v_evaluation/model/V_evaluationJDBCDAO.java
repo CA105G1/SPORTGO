@@ -35,8 +35,10 @@ public class V_evaluationJDBCDAO implements V_evaluationDAO_interface{
 	private static final String GET_ONE = "SELECT * FROM v_evaluation WHERE mem_no = ? AND v_no = ?";
 	private static final String UPDATE = "UPDATE v_evaluation set score=? WHERE mem_no = ? AND　v_no = ?";
 	private static final String DELETE = "DELETE FROM v_evaluation WHERE mem_no= ? AND v_no= ?";
+	private static final String GET_ONE_VENUE_SCORE_LIST_SQL= "Select * from v_evaluation where v_no = ? ";
 	
 	
+
 	@Override
 	public void insert(V_evaluationVO veVO) {
 		
@@ -222,14 +224,14 @@ public class V_evaluationJDBCDAO implements V_evaluationDAO_interface{
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			psmt = con.prepareStatement(GET_ALL_STMT);
 			rs = psmt.executeQuery();
-			
-			while (rs.next()) {
-				veVO = new V_evaluationVO();
-				veVO.setMem_no(rs.getString("mem_no"));
-				veVO.setV_no(rs.getString("v_no"));
-				veVO.setScore(rs.getInt("score"));
-				list.add(veVO);
-			}
+			list = collectV_evaluationVO(rs);
+//			while (rs.next()) {
+//				veVO = new V_evaluationVO();
+//				veVO.setMem_no(rs.getString("mem_no"));
+//				veVO.setV_no(rs.getString("v_no"));
+//				veVO.setScore(rs.getInt("score"));
+//				list.add(veVO);
+//			}
 			
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -260,6 +262,62 @@ public class V_evaluationJDBCDAO implements V_evaluationDAO_interface{
 		}	
 		return list;
 	}
+	
+	@Override
+	public List<V_evaluationVO> getOneVenueScoreList(String v_no) {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		List<V_evaluationVO> list = new ArrayList<>();
+		try {
+			connection = DriverManager.getConnection(URL, USER, PASSWORD);
+			preparedStatement = connection.prepareStatement(GET_ONE_VENUE_SCORE_LIST_SQL);
+			preparedStatement.setString(1, v_no);
+			resultSet = preparedStatement.executeQuery();
+			list = collectV_evaluationVO(resultSet);
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			
+			if (resultSet != null) {
+				try {
+					resultSet.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			
+			if (preparedStatement != null) {
+				try {
+					preparedStatement.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}	
+		return list;
+	}
+	
+	private List<V_evaluationVO> collectV_evaluationVO(ResultSet rs) throws SQLException{
+		List<V_evaluationVO> list = new ArrayList<>();
+		while (rs.next()) {
+			V_evaluationVO veVO = new V_evaluationVO();
+			veVO.setMem_no(rs.getString("mem_no"));
+			veVO.setV_no(rs.getString("v_no"));
+			veVO.setScore(rs.getInt("score"));
+			list.add(veVO);
+		}
+		return list;
+	}
+	
+	
 	public static void main(String[] args) {
 		
 		V_evaluationDAO_interface vei  = new V_evaluationJDBCDAO();

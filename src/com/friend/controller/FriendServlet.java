@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.memberlist.model.*;
+
+
 import com.friend.model.*;
 
 public class FriendServlet extends HttpServlet {
@@ -27,7 +29,6 @@ public class FriendServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		HttpSession session = req.getSession();
 		FriendService service = new FriendService();
-		MemberlistRedisDAO dao = new MemberlistRedisDAO();
 		MemberlistVO memberlistVO = null;
 		String action = req.getParameter("action");
 //		String mem_no = (String) req.getAttribute("mem_no");
@@ -59,6 +60,7 @@ public class FriendServlet extends HttpServlet {
 				res.sendRedirect("Login.jsp");
 				return;
 			}
+			MemberlistRedisDAO dao = new MemberlistRedisDAO();
 			String mem1_no = memberlistVO.getMem_no();
 			String mem2_no = (String) req.getParameter("mem2_no");
 			List<FriendVO> friendlist = service.findMyFriend(mem1_no);
@@ -111,9 +113,10 @@ public class FriendServlet extends HttpServlet {
 				MemberlistService memberService = new MemberlistService();
 				MemberlistVO member = memberService.getOneMem(mem1_no);
 				String mem_name = member.getMem_name();
-				dao.appendRedis(mem2_no, mem_name);
-				System.out.println("insert into Redis succeed.");
-				
+				if(dao!=null&& mem_name!=null && mem2_no !=null) {
+					dao.appendRedis(mem2_no, mem_name);
+					System.out.println("insert into Redis succeed.");
+				}
 			} catch (RuntimeException re) {
 				re.printStackTrace(System.err);
 				req.setAttribute("status", "false");
@@ -121,7 +124,10 @@ public class FriendServlet extends HttpServlet {
 				go.forward(req, res);
 				return;
 			}
-			memberlistVO = null;
+			if(memberlistVO!=null)
+				memberlistVO = null;
+			if(dao!=null)
+				dao = null;
 			req.setAttribute("status", "succeed");
 			RequestDispatcher go = req.getRequestDispatcher("public_Member_page.jsp?mem_no="+mem2_no);
 			go.forward(req, res);
@@ -177,7 +183,8 @@ public class FriendServlet extends HttpServlet {
 				System.out.println("無法刪除");
 				return;
 			}
-			memberlistVO = null;
+			if(memberlistVO!=null)
+				memberlistVO = null;
 			req.setAttribute("status", "succeed");
 			RequestDispatcher go = req.getRequestDispatcher("Friend.do?action=find_My_Friend");
 			go.forward(req, res);
@@ -192,6 +199,7 @@ public class FriendServlet extends HttpServlet {
 				res.sendRedirect("Login.jsp");
 				return;
 			}
+			MemberlistRedisDAO dao = new MemberlistRedisDAO();
 			String mem1_no = memberlistVO.getMem_no();
 			String mem2_no = (String) req.getParameter("mem2_no");
 			System.out.println(mem1_no+","+mem2_no);
@@ -222,14 +230,29 @@ public class FriendServlet extends HttpServlet {
 				try{
 					service.changeStatus(mem1_no, mem2_no, "好友");
 					System.out.println("更新好友成功");
-				}catch(RuntimeException re) {
-					re.printStackTrace(System.err);
+					/****更新Redis****/
+					MemberlistService memberService = new MemberlistService();
+					MemberlistVO member = memberService.getOneMem(mem2_no);
+					String mem_name = member.getMem_name();
+					System.out.println(mem2_no+","+mem_name);
+					String name = null;
+					if(dao!=null)
+						name = dao.getValue(mem1_no);
+					if(name.equals(mem_name)) {
+						dao.deleteRedis(mem1_no, mem_name);
+						System.out.println("delete data from Redis succeed.");
+					}
+				}catch(RuntimeException je) {
+					je.printStackTrace(System.err);
 					System.out.println("資料庫刪除不成功");
 				}
 			}else {
 				System.out.println("無法更新好友");
 			}
-			memberlistVO = null;
+			if(memberlistVO!=null)
+				memberlistVO = null;
+			if(dao!= null)
+				dao = null;
 			req.setAttribute("status", "succeed");
 			RequestDispatcher go = req.getRequestDispatcher("Friend.do?action=find_My_Friend");
 			go.forward(req, res);

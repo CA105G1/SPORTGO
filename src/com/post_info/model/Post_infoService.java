@@ -51,6 +51,9 @@ public class Post_infoService {
 	public List<Post_infoVO> getAll(Map<String, String[]> map) {
 		return dao.getAll(map);
 	}
-
+	
+	public List<Post_infoVO> getAllfromclub(String club_no){
+		return dao.getAllfromclub(club_no);
+	}
 	
 }

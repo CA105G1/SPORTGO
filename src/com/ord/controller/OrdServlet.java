@@ -186,35 +186,52 @@ if ("insert".equals(action)) { //來自shoppingcart_front.jsp的請求
 				//數量
 //				String[] pro_count = req.getParameterValues("pro_count"); 
 				
-				/***************************2.開始新增資料***************************************/
+				
 
-				/***********測試*************/
+				/***********備註*************/
 				/*訂單有一些會是null與0的情況
 				 * 前端部分因為有兩個form表單的問題，所以刪除按鈕可能需要用ajax處理
 				 */
-				
 				ProductService proSvc1 = new ProductService();
 				List<OrddetailsVO> testList = new ArrayList<OrddetailsVO>(); // 準備置入訂單數量
 				OrdJDBCDAO ordDAO = new OrdJDBCDAO();
+				/***********購物車與商品庫存判斷**************/
+				
 				String ord_no = null;
-				if(!errorMsgs.isEmpty() || pro_no == null ) {
+				if(!errorMsgs.isEmpty() || pro_no == null ) {  //判斷有無選擇購物車商品
 					if(pro_no == null) {
 						errorMsgs.add("未選擇商品");
 					}
 				} else {
-					for(int i = 0 ; i < pro_no.length ; i ++) {
+				for(int i = 0 ; i < pro_no.length ; i ++) {
+					ShoppingcartDAO cartDAO = new ShoppingcartDAO();
+					Integer cart_pro_count = cartDAO.findByCount(mem_no, pro_no[i]);
+					ProductVO proVO = proSvc1.getProductStock(pro_no[i], cart_pro_count);
+					//查詢後商品數量為0時
+					if(proVO.getPro_stock().intValue() == 0) {
+						/****永續層****/
+						//更動(減)商品庫存量並改狀態為已售完
+						System.out.println("近來已售完");
+						proSvc1.updateStock(pro_no[i], cart_pro_count);
+						proSvc1.updateShelve(pro_no[i], "售完");
+					} else {
+					//查詢後若不為0時，只更動商品庫存量
+						/****永續層****/
+						System.out.println("更動庫存量");
+						proSvc1.updateStock(pro_no[i], cart_pro_count);
+					}
+				}
+				/***************************2.開始新增資料***************************************/
+				
+					for(int i = 0 ; i < pro_no.length ; i ++) {  //選擇幾樣商品並加入到list的orddetailsVO
 						ShoppingcartDAO cartDAO = new ShoppingcartDAO();
 	                	Integer pro_bonus = proSvc1.getOneProduct(pro_no[i]).getPro_bonus();
-	                	System.out.println("負數:" + pro_bonus);
 	                	Integer pro_count = cartDAO.findByCount(mem_no, pro_no[i]);
 	                	ord_amount += pro_bonus*pro_count;
 						testList.add(i, new OrddetailsVO(pro_no[i] , pro_bonus,pro_count));
 	        			cartDAO.delete(mem_no, pro_no[i]);
-	        			System.out.println("加總的:" + ord_amount);
 	                }
-					/****訂單項目***/
-					
-					System.out.println("沒有ord_amount:"+ord_amount);
+					/****製作訂單與訂單明細***/
 					OrdVO ordVO = new OrdVO();
 					//ordVO.setOrd_no(ord_no); jdbc以用sql自動  
 					ordVO.setMem_no(mem_no);
@@ -237,10 +254,9 @@ if ("insert".equals(action)) { //來自shoppingcart_front.jsp的請求
 
 
 
-				// Send the use back to the form, if there were errors
+				/*****發生錯誤時，讓購物車保持裡面有商品*****/
 				if (!errorMsgs.isEmpty()) {
 					System.out.println(errorMsgs);
-//					req.setAttribute("proVO", proVO); // 含有輸入格式錯誤的proVO物件,也存入req
 					ProductService proSvc = new ProductService();
 					ShoppingcartDAO cartDAO = new ShoppingcartDAO();
 					List<ProductVO> proVOList = new ArrayList<>();

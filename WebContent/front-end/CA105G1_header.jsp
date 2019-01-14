@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -34,15 +34,18 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand myNoWrap" href="<%=request.getContextPath()%>/index.jsp">
-						<img src="<%=request.getContextPath()%>/img/logo_SportyGo_2_light.png" alt="SportGo!"/>
-					</a>
+					
 				</div>
 					
 				<!-- 手機隱藏選單區 -->
 				<div class="collapse navbar-collapse navbar-ex1-collapse">
 					<!-- 左選單 -->
 					<ul class="nav navbar-nav">
+						<li>
+							<a class="navbar-brand center-block" href="<%=request.getContextPath()%>/index.jsp">
+								<img src="<%=request.getContextPath()%>/img/logo_SportyGo_2_light.png" alt="SportGo!"/>
+							</a>
+						</li>
 						<li class="active"><a href="<%=request.getContextPath()%>/index.jsp">SportyGo!</a></li>
 						<li><a href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp">揪團去</a></li>
 						<li><a href="<%=request.getContextPath()%>/front-end/club/club_list.jsp">社團</a></li>
@@ -54,29 +57,41 @@
 							<input type="text" class="form-control" placeholder="請輸入關鍵字">
 						</div>
 						<button type="submit" class="btn btn-default">搜尋</button>
-						<a href="<%=request.getContextPath()%>/backEndIndex.jsp">後台首頁</a>
+						
 					</form>
 				
 					<!-- 右選單 -->
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="<%=request.getContextPath()%>/front-end/pro/listAllPro_front.jsp"><i class="glyphicon glyphicon-shopping-cart"></i> 商城 </a></li>
-						<li>
-							<c:if test="${memberlistVO==null}">
+						<c:if test="${memberlistVO==null}">
+							<li>
 								<a href="#">訪客，您好</a>
-							</c:if>
-							<c:if test="${!(memberlistVO==null)}">
+							</li>
+							<li>
+								<%  session = request.getSession();
+									if(!"/CA105G1/front-end/memberlist/Login.jsp".equals(request.getRequestURI())){
+										session.setAttribute("location",request.getRequestURI()); 
+									}
+									System.out.println("log_in_location :　"+ request.getRequestURI());
+								%>
+								<a href="<%=request.getContextPath()%>/front-end/memberlist/Login.jsp?">登入/註冊</a>
+							</li>
+						</c:if>
+						<c:if test="${!(memberlistVO==null)}">
+							<li>
 								<a href="#">${memberlistVO.mem_name}，您好</a>
-							</c:if>
-						</li>
-						<li>
-							<c:if test="${memberlistVO==null}">
-								<a href="<%=request.getContextPath()%>/front-end/memberlist/Login.jsp">登入/註冊</a>
-							</c:if>
-							<c:if test="${!(memberlistVO==null)}">
+							</li>
+							<li>
+								<%  session = request.getSession();
+									if(!"/CA105G1/front-end/memberlist/Login.jsp".equals(request.getRequestURI())){
+										session.setAttribute("location",request.getRequestURI()); 
+									}
+									System.out.println("log_out_location :　"+ request.getRequestURI());
+								%>
 								<a href="<%=request.getContextPath()%>/front-end/memberlist/logout.do">登出</a>
-							</c:if>
-						</li>
-						
+							</li>
+						</c:if>
+						<li><a href="<%=request.getContextPath()%>/backEndIndex.jsp">後台首頁</a></li>
 					</ul>
 				</div>
 				<!-- 手機隱藏選單區結束 -->
@@ -89,73 +104,104 @@
 			<nav class="navbar navbar-default" role="navigation">
 				<div class="navbar-myself-center">
 					<ul class="nav navbar-nav navbar-form">
-						<li ><a href="#">首頁</a></li>
+						<li ><a href="<%=request.getContextPath()%>/index.jsp">　首頁　</a></li>
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 								關於我們
 								<!-- <b class="caret"></b> -->
 							</a>
 							<ul class="dropdown-menu">
-								<li><a href="#">list01</a></li>
-								<li><a href="#">list02</a></li>
-								<li><a href="#">list03</a></li>
+								<li><a href="#">還沒做...1</a></li>
+								<li><a href="#">要做啥阿...2</a></li>
+								<li><a href="#">.......</a></li>
 							</ul>
 						</li>
 						
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-								會員專區
-								<!-- <b class="caret"></b> -->
-							</a>
-							<ul class="dropdown-menu">
-								<li><a href="#">Member01</a></li>
-								<li><a href="#">Member02</a></li>
-								<li><a href="#">Member03</a></li>
-							</ul>
-						</li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-								　揪團　
-								<!-- <b class="caret"></b> -->
-							</a>
-							<ul class="dropdown-menu">
-								<li><a href="#">建立揪團</a></li>
-								<li><a href="#">瀏覽揪團</a></li>
-								<li><a href="#">list03</a></li>
-							</ul>
-						</li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-								　社團　
-								<!-- <b class="caret"></b> -->
-							</a>
-							<ul class="dropdown-menu">
-								<li><a href="#">建立社團</a></li>
-								<li><a href="#">瀏覽社團</a></li>
-								<li><a href="#">list03</a></li>
-							</ul>
-						</li>
+						<li><a href="<%=request.getContextPath()%>/front-end/memberlist/public_Member_page.jsp">　會員專區　</a></li>
+<!-- 						<li class="dropdown"> -->
+<!-- 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"> -->
+<!-- 								會員專區 -->
+<!-- 								<b class="caret"></b> -->
+<!-- 							</a> -->
+<!-- 							<ul class="dropdown-menu"> -->
+<%-- 								<li><a href="<%=request.getContextPath()%>/front-end/memberlist/public_Member_page.jsp">個人頁面</a></li> --%>
+<!-- 								<li><a href="#">Member02</a></li> -->
+<!-- 								<li><a href="#">Member03</a></li> -->
+<!-- 							</ul> -->
+<!-- 						</li> -->
+						
+						<li><a href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp">　揪團　</a></li>
+<!-- 						<li class="dropdown"> -->
+<%-- 							<a href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp" class="dropdown-toggle" data-toggle="dropdown"> --%>
+<!-- 								　揪團　 -->
+<!-- 								<b class="caret"></b> -->
+<!-- 							</a> -->
+<!-- 							<ul class="dropdown-menu"> -->
+<!-- 								<li><a href="#">建立揪團</a></li> -->
+<!-- 								<li><a href="#">瀏覽揪團</a></li> -->
+<!-- 								<li><a href="#">list03</a></li> -->
+<!-- 							</ul> -->
+<!-- 						</li> -->
+
+						<li><a href="<%=request.getContextPath()%>/front-end/club/club_list.jsp">　社團　</a></li>
+<!-- 						<li class="dropdown"> -->
+<%-- 							<a href="<%=request.getContextPath()%>/front-end/club/club_list.jsp" class="dropdown-toggle" data-toggle="dropdown"> --%>
+<!-- 								　社團　 -->
+<!-- 								<b class="caret"></b> -->
+<!-- 							</a> -->
+<!-- 							<ul class="dropdown-menu"> -->
+<!-- 								<li><a href="#">建立社團</a></li> -->
+<!-- 								<li><a href="#">瀏覽社團</a></li> -->
+<!-- 								<li><a href="#">list03</a></li> -->
+<!-- 							</ul> -->
+<!-- 						</li> -->
 						
 						<li><a href="#">　賽事　</a></li>
-						<li><a href="#">　場地　</a></li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-								　商城　
-								<!-- <b class="caret"></b> -->
-							</a>
-							<ul class="dropdown-menu">
-								<li><a href="#">list01</a></li>
-								<li><a href="#">list02</a></li>
-								<li><a href="#">list03</a></li>
-							</ul>
-						</li>
+						<li><a href="<%=request.getContextPath()%>/front-end/venue/venue_query_info_by_composite_front.jsp">　場地　</a></li>
+												
+						<li><a href="<%=request.getContextPath()%>/front-end/pro/listAllPro_front.jsp">　商城　</a></li>
+<!-- 						<li class="dropdown"> -->
+<%-- 							<a href="<%=request.getContextPath()%>/front-end/pro/listAllPro_front.jsp" class="dropdown-toggle" data-toggle="dropdown"> --%>
+<!-- 								　商城　 -->
+<!-- 								<b class="caret"></b> -->
+<!-- 							</a> -->
+<!-- 							<ul class="dropdown-menu"> -->
+<!-- 								<li><a href="#">list01</a></li> -->
+<!-- 								<li><a href="#">list02</a></li> -->
+<!-- 								<li><a href="#">list03</a></li> -->
+<!-- 							</ul> -->
+<!-- 						</li> -->
 					</ul>
 				</div>
 			</nav>
 		</div>	
 	</div>
 			
-		<script src="https://code.jquery.com/jquery.js"></script>
+<!-- 		<script src="https://code.jquery.com/jquery.js"></script> -->
 <!-- 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 	</body>
+	
+	<script>
+// 		$(function(){
+// 			$('.dropdown-toggle').on('mouseenter',new function(){
+				
+// 			});
+// 		});
+		//沒用的垃圾
+// 		window.addEventListener("load", function(){
+// 			document.getElementById("login_header").addEventListener("click", function(){
+// 				document.location.href="/CA105G1/front-end/memberlist/Login.jsp";
+// 				return;
+// 			},false);			
+// 		},false);
+		
+// 		$("#joinbtn").click(function(){
+// 			 //原頁面VO由session帶著去跟回
+// 			document.location.href="/CA105G1/front-end/memberlist/Login.jsp";
+// 			return;
+// 		});
+		
+	</script>
+	
+	
 </html>

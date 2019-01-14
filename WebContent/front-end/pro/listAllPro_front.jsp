@@ -11,7 +11,7 @@
 	if ("findBy".equals(request.getAttribute("findBy"))) {
 		list = (List<ProductVO>) request.getAttribute("pro_ByCompositeQuery");
 	} else {
-		list = proSvc.getAll();
+		list = proSvc.getAllOnShelve();
 	}
     pageContext.setAttribute("list",list);
 
@@ -28,9 +28,12 @@
 	<title>商城</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-	<!-- sweetalert-link -->
+<!-- sweetalert-link -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
+<!-- 按鈕cdn -->
+    <link type="text/css" rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css">
+<%--     <script src="<%=request.getContextPath() %>/front-end/pro/tool/font-awesome.css"></script> --%>
 	<!--[if lt IE 9]>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -82,6 +85,145 @@
 			width: 1109px;
 
 		}
+/*********按鈕的css************/
+/* h1 {  */
+/*     font-size: 30px;  */
+/*     font-family: 'Microsoft YaHei','Lantinghei SC','Open Sans',Arial,'Hiragino Sans GB','STHeiti','WenQuanYi Micro Hei','SimSun',sans-serif;  */
+/* }  */
+.pad-15{ 
+    padding: 15px 0; 
+} 
+
+.btn{ 
+    color: #fff; 
+    text-transform: uppercase; 
+    border-radius: 0; 
+    padding-left: 60px; 
+    position: relative; 
+    transform: translateZ(0px); 
+    transition: all 0.5s ease 0s; 
+    font-family: 'Microsoft YaHei','Lantinghei SC','Open Sans',Arial,'Hiragino Sans GB','STHeiti','WenQuanYi Micro Hei','SimSun',sans-serif; 
+} 
+.btn:after{ 
+    content: ""; 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    bottom: 0; 
+    right: 0; 
+    background: #fff; 
+    z-index: -1; 
+    transform: scaleX(0); 
+    transform-origin: 100% 50% 0; 
+    transition: all 0.5s ease-out 0s; 
+} 
+.btn:hover:after{ 
+    transform: scaleX(1); 
+    transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66); 
+} 
+.btn span{ 
+    width: 40px; 
+    height: 100%; 
+    line-height: 45px; 
+    background: #fff; 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    transition: all 0.3s linear 0s; 
+} 
+.btn span:after{ 
+    content: ""; 
+    display: block; 
+    width: 10px; 
+    height: 10px; 
+    background: #fff; 
+    margin: auto 0; 
+    position: absolute; 
+    top: 0; 
+    right: -5px; 
+    bottom: 0; 
+    transform: rotate(45deg); 
+    transition: all 0.3s linear 0s; 
+} 
+.btn.btn-sm{ 
+    padding-left: 40px; 
+} 
+.btn.btn-sm span{ 
+    width: 27px; 
+    line-height: 30px; 
+} 
+.btn.btn-sm span:after{ 
+    width: 8px; 
+    height: 8px; 
+    right: -4px; 
+} 
+.btn.btn-xs{ 
+    padding-left: 30px; 
+} 
+.btn.btn-xs span{ 
+    width: 20px; 
+    line-height: 23px; 
+} 
+.btn.btn-xs span:after{ 
+    width: 7px; 
+    height: 7px; 
+    right: -3px; 
+} 
+.btn.red{ 
+    border: 1px solid #fe6d6d; 
+    background: #fe6d6d; 
+} 
+.btn.red:hover, 
+.btn.red span{ 
+    color: #fe6d6d; 
+} 
+.btn.red:hover span, 
+.btn.red:hover span:after{ 
+    background: #fe6d6d; 
+} 
+.btn.blue{ 
+    border: 1px solid #3bb4e5; 
+    background: #3bb4e5; 
+} 
+.btn.blue:hover, 
+.btn.blue span{ 
+    color: #3bb4e5; 
+} 
+.btn.blue:hover span, 
+.btn.blue:hover span:after{ 
+    background: #3bb4e5; 
+} 
+.btn.orange{ 
+    border: 1px solid #ee955b; 
+    background: #ee955b; 
+} 
+.btn.orange:hover, 
+.btn.orange span{ 
+    color: #ee955b; 
+} 
+.btn.orange:hover span, 
+.btn.orange:hover span:after{ 
+    background: #ee955b; 
+} 
+.btn.green{ 
+    border: 1px solid #79d799; 
+    background: #79d799; 
+} 
+.btn.green:hover, 
+.btn.green span{ 
+    color: #79d799; 
+} 
+.btn.green:hover span, 
+.btn.green:hover span:after{ 
+    background: #79d799; 
+} 
+.btn:hover span{ 
+    color: #fff; 
+} 
+@media only screen and (max-width: 767px){ 
+    .btn{ margin-bottom: 20px; } 
+}
+/*********按鈕的css************/
 /*div超過高度隱藏*/
 /*.divtest {
 table-layout: fixed;
@@ -352,14 +494,19 @@ overflow: hidden;
 									    	<tbody>
 									    		<tr>
 									    			<c:forEach var="proVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
-										    			<td>
+										    			<td onclick="document.getElementById('pro').submit()">
 															<div class="w3-card-4" style="width:250px">
 														    	<img class="img-responsive" src="<%=request.getContextPath()%>/pro/proImg.do?pro_no=${proVO.pro_no}">
 														    	<div class="w3-container w3-center">
 														       		<div class="divStyle"> ${proVO.pro_name}</div>
 														       		<div>${proVO.pro_bonus}</div>
-														       		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/pro/pro.do" style="margin-bottom: 0px;">
-																		<input type="submit" value="詳情">
+														       		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/pro/pro.do" id="pro" style="margin-bottom: 0px;">
+<!-- 																		<input type="submit" value="詳情" class="btn btn-info"> -->
+
+																        <a  onclick="document.getElementById('pro').submit()" class="btn btn-lg blue"> 
+																            <span class="fa fa-credit-card-alt"></span>商品詳情 
+																        </a> 
+
 																		<input type="hidden" name="pro_no" value="${proVO.pro_no}">
 																		<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
 																		<input type="hidden" name="action" value="getOne_For_Display_front">

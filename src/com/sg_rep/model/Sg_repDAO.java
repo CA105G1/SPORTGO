@@ -28,7 +28,7 @@ public class Sg_repDAO implements Sg_repDAO_interface{
 	private static final String findByPkStmt =
 			"SELECT * FROM sg_rep WHERE rep_no=?";
 	private static final String getAllStmt =
-			"SELECT * FROM sg_rep ORDER BY rep_no";
+			"SELECT * FROM sg_rep WHERE rep_status='待審核' ORDER BY rep_no";
 	
 	//連線池版
 //	private static DataSource ds = null;

@@ -5,11 +5,16 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%
-	ClubService clubSvc = new ClubService();
-	List<ClubVO> list = clubSvc.getAll();
-	pageContext.setAttribute("list", list);
+	List<ClubVO> list = null;
+	//取得複合查詢後的list
+	list = (List<ClubVO>)request.getAttribute("list");
+	//若沒有值就代表是第一次載入頁面，直接getAll
+	if(list == null){
+		ClubService clubSvc = new ClubService();
+		list = clubSvc.getAllForPublic();
+		pageContext.setAttribute("list", list);
+	}
 //  ClubVO clubVO = (ClubVO) request.getAttribute("clubVO");
-
 %>
 
 <html>
@@ -73,7 +78,7 @@
 
 </head>
 <body>
-<%@ include file="/front-end/CA105G1_header.file" %>
+<jsp:include page="/front-end/CA105G1_header.jsp" />
 <br>
 
 
@@ -87,101 +92,103 @@
 							<div class="list-group" id="myList" role="tablist">
 								<a class="list-group-item list-group-item-actionfront" data-toggle="list" href="#myclub" role="tab">我的社團</a>
 <!---建立社團--------------------------------------------------------------------------------->
-								<% Object object = request.getAttribute("errorMsgs"); %>
-								<% if("insert".equals(request.getParameter("actionfront")) && object != null){
-										List<String> errorMsgs = (List<String>)object;%>
-										<a class="list-group-item list-group-item-actionfront" data-toggle="modal" data-target="#clubModalLong" 
- 								   		href="#createclub" role="tab" id="myCreateClud">建立社團</a>
-								<% }else {%>
-										<a class="list-group-item list-group-item-actionfront" data-toggle="modal" data-target="#clubModalLong" 
- 								   		href="#createclub" role="tab">建立社團</a>
-								<% }%>
-<%-- 								<c:if test="${param.actionfront=='insert' && errorMsgs!=null}"> --%>
-<!-- 									<a class="list-group-item list-group-item-actionfront" data-toggle="modal" data-target="#clubModalLong" -->
-<!-- 								   		href="#createclub" role="tab" id="myCreateClud">建立社團</a> -->
-<%-- 								</c:if> --%>
-<%-- 								<c:if test="${!(param.actionfront=='insert' && errorMsgs!=null)}"> --%>
-<!-- 									<a class="list-group-item list-group-item-actionfront" data-toggle="modal" data-target="#clubModalLong" -->
-<!-- 								   		href="#createclub" role="tab" >建立社團</a> -->
-<%-- 								</c:if> --%>
+	<% Object object = request.getAttribute("errorMsgs"); %>
+		<% if("insert".equals(request.getParameter("actionfront")) && object != null){
+			List<String> errorMsgs = (List<String>)object;%>
+								<a class="list-group-item list-group-item-actionfront" data-toggle="modal" data-target="#clubModalLong" 
+ 						   			href="#createclub" role="tab" id="myCreateClud">建立社團</a>
+		<% }else {%>
+								<a class="list-group-item list-group-item-actionfront" data-toggle="modal" data-target="#clubModalLong" 
+ 						   			href="#createclub" role="tab">建立社團</a>
+		<% }%>
+<%-- 	<c:if test="${param.actionfront=='insert' && errorMsgs!=null}"> --%>
+<!-- 		<a class="list-group-item list-group-item-actionfront" data-toggle="modal" data-target="#clubModalLong" -->
+<!-- 		    href="#createclub" role="tab" id="myCreateClud">建立社團</a> -->
+<%-- 	</c:if> --%>
+<%-- 	<c:if test="${!(param.actionfront=='insert' && errorMsgs!=null)}"> --%>
+<!-- 		<a class="list-group-item list-group-item-actionfront" data-toggle="modal" data-target="#clubModalLong" -->
+<!-- 		    href="#createclub" role="tab" >建立社團</a> -->
+<%-- 	</c:if> --%>
 <!---Modal------------------------------------------------------------------------------------>
-								<div class="modal fade" id="clubModalLong" tabindex="-1" role="dialog" aria-labelledby="clubModalLongTitle" aria-hidden="true">
-									<div class="modal-dialog  .modal-dialog-centered " role="document">
-										<div class="modal-content">
-											<div class="modal-header">
-												<h4 class="modal-title" id="clubModalLongTitle">建立社團</h4>
-												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-													<span aria-hidden="true">&times;</span>
-												</button>
-											</div>
-											<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/clubfront.do" name="form1" enctype='multipart/form-data'>
-												<div class="modal-body ">
-													<br> <br>
-													<div class="form-group">
-														<img src="/CA105G1/img/no-image.PNG" id="photo" > 
-														<input type="file" id="photo" name="photo" ><br>
-													</div>
-													<br> <br>
-
-													<div class="form-group">
-														<label class="club_name">社團名稱</label>
-														<input type="text" name="club_name" id="club_name" class="form-control" >
-													</div>
-													<br> <br>
-													<jsp:useBean id="sportSvc" scope="page"
-														class="com.sport.model.SportService" />
-														<div class="form-group">
-															<label class="sport">運動項目</label> 
-																<select name="sport" id="sport" class="form-control">
-																	<option value="">請選擇運動種類
-													<c:forEach var="sportVO" items="${sportSvc.all}">
-																	<option value="${sportVO.sp_no}" ${(clubVO.sp_no==sportVO.sp_no)?'selected':'' }>
-																	${sportVO.sp_name}
-													</c:forEach>
-																</select>
-														</div>
-													<br> <br>
-
-													<div class="form-group">
-														<label class="club_intro">社團簡介</label>
-														<textarea name="club_intro" id="club_intro" class="form-control" ROWS=10 ></textarea>
-													</div>
-													<br> <br>
-													<div class="form-group"  style="display:none" >
-														<label class="photo_ext">圖片副檔名</label>
-														<textarea name="photo_ext" value="jpg" id="photo_ext" class="form-control" ROWS=10 ></textarea>
-													</div>
-													<div class="form-group"  style="display:none" >
-<!-- 														<label class="club_status">社團狀態</label> -->
-<!-- 														<textarea name="club_status" value="正常" id="club_status" class="form-control" ROWS=10 ></textarea> -->
-														<input type="hidden" name="club_status" value="正常" />
-													</div>
-												</div>
-												<div class="modal-footer">
-													<input type="hidden" name="actionfront" value="insert">
-													<button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-													<button type="submit" class="btn btn-primary">送出</button>
-												</div>
-											</FORM>
-											<%-- 錯誤表列 --%>
-											<c:if test="${not empty errorMsgs}">
-							<font style="color:red">請修正以下錯誤:</font>
-							<ul>
-							<c:forEach var="message" items="${errorMsgs}">
-							<li style="color:red">${message}</li>
-							</c:forEach>
-							</ul>
-							</c:if>
-										</div>
-										
-									</div>
-								</div>
+<div class="modal fade" id="clubModalLong" tabindex="-1" role="dialog" aria-labelledby="clubModalLongTitle" aria-hidden="true">
+	<div class="modal-dialog  .modal-dialog-centered " role="document">
+		<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="clubModalLongTitle">建立社團</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+				</div>
+<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/clubfront.do" name="form1" enctype='multipart/form-data'>
+				<div class="modal-body ">
+				<br>
+				<br>
+					<div class="form-group">
+						<img src="/CA105G1/img/no-image.PNG" id="photo" > 
+							<input type="file" id="photo" name="photo" >
+				<br>
+				</div>
+				<br>
+				<br>
+					<div class="form-group">
+						<label class="club_name">社團名稱</label>
+							<input type="text" name="club_name" id="club_name" class="form-control" >
+					</div>
+				<br>
+				<br>
+<jsp:useBean id="sportSvc" scope="page" class="com.sport.model.SportService" />
+					<div class="form-group">
+						<label class="sport">運動項目</label> 
+							<select name="sport" id="sport" class="form-control">
+								<option value="">請選擇運動種類
+									<c:forEach var="sportVO" items="${sportSvc.all}">
+								<option value="${sportVO.sp_no}" ${(clubVO.sp_no==sportVO.sp_no)?'selected':'' }>
+								${sportVO.sp_name}
+									</c:forEach>
+							</select>
+					</div>
+				<br>
+				<br>
+					<div class="form-group">
+						<label class="club_intro">社團簡介</label>
+							<textarea name="club_intro" id="club_intro" class="form-control" ROWS=10 ></textarea>
+					</div>
+				<br>
+				<br> 
+					<div class="form-group"  style="display:none" >
+						<label class="photo_ext">圖片副檔名</label>
+							<textarea name="photo_ext" value="jpg" id="photo_ext" class="form-control" ROWS=10 ></textarea>
+					</div>
+					<div class="form-group"  style="display:none" >
+<!-- 					<label class="club_status">社團狀態</label> -->
+<!-- 						<textarea name="club_status" value="正常" id="club_status" class="form-control" ROWS=10 ></textarea> -->
+							<input type="hidden" name="club_status" value="正常" />
+					</div> 
+				</div>
+				<div class="modal-footer">
+						<input type="hidden" name="actionfront" value="insert">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+						<button type="submit" class="btn btn-primary">送出</button>
+				</div>
+</FORM>
+<%-- 錯誤表列 --%>
+<c:if test="${not empty errorMsgs}">
+<font style="color:red">請修正以下錯誤:</font>
+<ul>
+<c:forEach var="message" items="${errorMsgs}">
+<li style="color:red">${message}</li>
+</c:forEach>
+</ul>
+</c:if>
+		</div>
+	</div>
+</div>
 <!---Modal------------------------------------------------------------------------------------>
 <!---建立社團-----------------------------------------------------------------------------建立社團--->
 								<a class="list-group-item list-group-item-actionfront " data-toggle="list" href="#searchclub" role="tab">
 								搜尋社團
 								</a>
-				      	<form method="post" actionfront="<%= request.getContextPath()%>/clubfront.do">
+				      	<form method="post" action="<%= request.getContextPath()%>/clubfront.do">
 				      		<div class="table-responsive">
 					      		<table class="table table-hover text-center" align="center">
 					      			
@@ -231,7 +238,7 @@
 										<div class="container_1" >
 										<div class="card" >
 											<div>
-											<img class="img-responsive card-img-top" src="<%=request.getContextPath()%>/club/clubImg.do?club_no=${clubVO.club_no}">
+											<img class="img-responsive card-img-top" src="<%=request.getContextPath()%>/clubImg.do?club_no=${clubVO.club_no}">
 											</div>
 											<div class="card-body">
 												<h4 class="card-title">${clubVO.club_name}</h4>
@@ -251,7 +258,7 @@
 				</div>
 		</div>
 	</div>
-<%@ include file="/front-end/CA105G1_footer.file" %>
+<jsp:include page="/front-end/CA105G1_footer.jsp" />
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	

@@ -62,8 +62,8 @@ public class MemberChatServer {
 	
 	@OnError
 	public void onError(Session userSession, Throwable e) {
-		e.printStackTrace(System.err);
-		System.out.println("Error: "+e.toString());
+//		e.printStackTrace(System.err);
+//		System.out.println("Error: "+e.toString());
 	}
 	
 	@OnClose

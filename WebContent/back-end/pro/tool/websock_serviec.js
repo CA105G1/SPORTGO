@@ -32,8 +32,8 @@
 			console.log("WebSocket 已離線");
 		};
 	}
-	function starWebsock(){
-		var pro_name = $('#productname').val();
+	function starWebsock(pro_name){
+//		var pro_name = $('#productname').val();
 		var jsonObj = {"pro_name" : pro_name};
         webSocket.send(JSON.stringify(jsonObj));//會觸發java端onMessage
 	}
@@ -46,11 +46,12 @@
 		swal({
 			title:"成功上架搂!",
 			html:$("<div>").html('商品:'+ data+"<br>"+'已成功上架'), 
-			type:"success"
+			type:"success",
+			allowOutsideClick: false
 		}).then(
 			function (result) {
                 if (result) {
-                	document.getElementById('formSubmit').submit();
+//                	tuchback();//確認後進行轉交
                 }
 			}
 		);

@@ -5,6 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page import="java.util.*"%>
     
+    
 <% 
 List<Sg_infoVO> list = null;
 //取得複合查詢後的list
@@ -29,60 +30,11 @@ if(list == null){
 <script src="<%= request.getContextPath()%>/datetimepicker/jquery.js"></script>
 <script src="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
 
-<style type="text/css">
-	#map {
-        height: 550px;  /* The height is 400 pixels */
-        width: 100%;  /* The width is the width of the web page */
-    }
-    .sg_infoList{
-    	display: flex;
-    	justify-content: center;
-    	align-items: center;
-
-    	border-radius: 30px;
-    	cursor: pointer;
-    	box-shadow: 0 3px #999;
-    	width:700px;
-    	height:240px;
-    }
-    .sg_infoList:active {
-	  	box-shadow: 0 1px #666;
-	  	transform: translateY(1px);
-	}
-    .outer{
-    	display: flex;
-    	flex-direction: column;
-    	flex-wrap: wrap;
-    	justify-content: center;
-    	align-items: center;
-    }
-    .img-responsive{
-    	border-radius: 50px;
-    }
-	th{
-		text-align:center;
-	}
-	select{
-		width:100%;
-		text-align: center;
-    	text-align-last: center;
-	}
-	.panel-title{
-		text-align: center;
-    	text-align-last: center;
-	}
-	.sg_picDiv{
-		padding:0px;
-	}
-	  
-</style>
-
-
 
 </head>
 <body>
 
-<%@ include file="/front-end/CA105G1_header.file" %>
+<jsp:include page="/front-end/CA105G1_header.jsp" />
 
 	<div class="container-fluid">
 		<div class="row">
@@ -256,7 +208,7 @@ if(list == null){
 						<input type="submit" id="${Sg_infoVO.sg_no}"  style="display: none">
 					</form>
 			</c:forEach>
-			<%@ include file="page2.file" %>
+			<%@ include file="page2_ByCompositeQuery.file" %>
 
 
 
@@ -265,7 +217,7 @@ if(list == null){
 
 		</div>
 	</div>
-<%@ include file="/front-end/CA105G1_footer.file" %>
+<jsp:include page="/front-end/CA105G1_footer.jsp" />
 
 
 <script>
@@ -283,6 +235,54 @@ if(list == null){
 </script>
 
 
+
+<style type="text/css">
+	#map {
+        height: 550px;  /* The height is 400 pixels */
+        width: 100%;  /* The width is the width of the web page */
+    }
+    .sg_infoList{
+    	display: flex;
+    	justify-content: center;
+    	align-items: center;
+
+    	border-radius: 30px;
+    	cursor: pointer;
+    	box-shadow: 0 3px #999;
+    	width:700px;
+    	height:240px;
+    }
+    .sg_infoList:active {
+	  	box-shadow: 0 1px #666;
+	  	transform: translateY(1px);
+	}
+    .outer{
+    	display: flex;
+    	flex-direction: column;
+    	flex-wrap: wrap;
+    	justify-content: center;
+    	align-items: center;
+    }
+    .img-responsive{
+    	border-radius: 50px;
+    }
+	th{
+		text-align:center;
+	}
+	select{
+		width:100%;
+		text-align: center;
+    	text-align-last: center;
+	}
+	.panel-title{
+		text-align: center;
+    	text-align-last: center;
+	}
+	.sg_picDiv{
+		padding:0px;
+	}
+	  
+</style>
 
 
 

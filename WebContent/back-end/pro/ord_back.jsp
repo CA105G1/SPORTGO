@@ -140,7 +140,7 @@
 			
 		}
 		tr:hover {
-		    background: #000;
+		    background: #aaf;
 		}
 
 		td {
@@ -212,12 +212,12 @@
 								    
 									<tr class="tablebgc">
 <%-- 									<c:if test="${s.index} == '2'}" var="condition" scope="page" >  --%>
-										<th class="thwidth">商品名稱圖片</th>
-										<th>商品編號</th>
-										<th>買家應付金額</th>
-										<th>買家購買數量</th>
+										<th class="thwidth">會員</th>
+										<th>會員編號</th>
+										<th>訂單編號</th>
+										<th>下單日期</th>
 										<th>訂單狀態</th>
-										<th>商品當前庫存</th>
+										<th>訂單金額</th>
 										<th>操作</th>
 <%-- 									</c:if> --%>
 									</tr>
@@ -229,9 +229,9 @@
 										</th>
 										<th>${ordListVO.mem_no}</th>
 										<th>${ordListVO.ord_no}</th>
-										<th></th>
+										<th>${ordListVO.ord_date}</th>
 										<th><div id="${ordListVO.ord_no}">${ordListVO.ord_status}</div></th>
-										<th></th>
+										<th>${ordListVO.ord_amount}</th>
 										<th>
 											<select name=""  class="form-control select_ord_change" style="width:90px;">
 												<option value="${ordListVO.ord_no}">完成</option>
@@ -248,7 +248,13 @@
 							<div class="panel" style="margin-bottom: 0px;">
 								<table class="table table-hover">
 								    <thead>
-									    
+									    <th class="thwidth">商品名稱圖片</th>
+										<th>商品編號</th>
+										<th>買家應付金額</th>
+										<th>買家購買數量</th>
+										<th>商品當前狀態</th>
+										<th>商品當前庫存</th>
+										<th></th>
 								    </thead>
 									<tbody>
 										<tr class="xs1">
@@ -269,7 +275,7 @@
 											<td style="width: 148px">
 												${orddetails.pro_count }
 											</td>
-											<!-- 商品狀態 -->
+											<!-- 訂單狀態 -->
 											<td style="width: 106px">
 												${proSvc.getOneProduct(orddetails.pro_no).pro_shelve}
 											</td>
@@ -297,16 +303,16 @@
 
 
 
-
+<!-- 有被其他頁面用到需要關掉jquery cnd -->
 <!-- 			<script src="https://code.jquery.com/jquery.js"></script> -->
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 			<script type="text/javascript">
 				$(document).ready(function(){
-				      $(".flip").hover(function(){
+				      $(".flip").click(function(){
 				          $(this).siblings(".panel").slideToggle("slow");
-				          $(this).siblings(".xs1").toggle();
-				          $(".xs1").toggle();
-				          $(".xs2").toggle();
+// 				          $(this).siblings(".xs1").toggle();
+// 				          $(".xs1").toggle();
+// 				          $(".xs2").toggle();
 				        });
 					<!--下拉狀態-->
 					$('.select_ord_change').change(function(){

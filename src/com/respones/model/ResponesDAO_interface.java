@@ -11,4 +11,5 @@ public interface ResponesDAO_interface {
     public ResponesVO findByPrimaryKey(String res_no);
     public List<ResponesVO> getAll();
     public List<ResponesVO> getAll(Map<String, String[]> map);
+	public List<ResponesVO> getallfrompost(String post_no);
 }

@@ -19,7 +19,7 @@ public class Post_infoDAO  implements Post_infoDAO_interface{
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/CA105G1");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/CA105G1DB");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
@@ -27,7 +27,7 @@ public class Post_infoDAO  implements Post_infoDAO_interface{
 	
 		
 		private static final String INSERT_STMT = 
-			"INSERT INTO post_info (post_no,club_no,mem_no,post_topic,post_content,post_date) VALUES (('P'||LPAD(to_char(post_info_seq.NEXTVAL), 4, '0')), ?, ?, ?, ?, ?)";
+			"INSERT INTO post_info (post_no,club_no,mem_no,post_topic,post_content,post_date) VALUES (('P'||LPAD(to_char(post_info_seq.NEXTVAL), 4, '0')), ?, ?, ?, ?, CURRENT DATE)";
 		private static final String GET_ALL_STMT = 
 			"SELECT post_no,club_no,mem_no,post_topic,post_content,post_date FROM post_info order by post_no";
 		private static final String GET_ONE_STMT = 
@@ -36,6 +36,8 @@ public class Post_infoDAO  implements Post_infoDAO_interface{
 			"UPDATE post_info set post_no=?, club_no=?, mem_no=?, post_topic=?, post_content=?, post_date=? where post_no = ?";
 		private static final String DELETE = 
 			"DELETE FROM post_info where post_no = ?";
+		
+		private static final String GET_ALL_STMT_FROM_CLUBNO="select * from post_info where club_no=?";
 		
 		@Override
 		public void insert(Post_infoVO post_infoVO) {
@@ -326,7 +328,61 @@ public class Post_infoDAO  implements Post_infoDAO_interface{
 			}
 			return list;
 		}
-
+		
+		
+		public List<Post_infoVO> getAllfromclub(String club_no){
+			List<Post_infoVO> list_post = new ArrayList<Post_infoVO>();
+			Post_infoVO post_infoVO = null;
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			try {
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(GET_ALL_STMT_FROM_CLUBNO);
+				pstmt.setString(1,club_no);
+				rs = pstmt.executeQuery();
+				while(rs.next()) {
+					post_infoVO = new Post_infoVO();
+					post_infoVO.setPost_no(rs.getString("post_no"));
+					post_infoVO.setClub_no(rs.getString("club_no"));
+					post_infoVO.setMem_no(rs.getString("mem_no"));
+					post_infoVO.setPost_topic(rs.getString("post_topic"));
+					post_infoVO.setPost_content(rs.getString("post_content"));
+					post_infoVO.setPost_date(rs.getTimestamp("post_date"));
+					
+					list_post.add(post_infoVO);
+				}
+			
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+			}finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+			}
+			
+			return list_post;
+		}
 
 }
 		

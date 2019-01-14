@@ -1,6 +1,7 @@
 package com.pro.controller;
 
 import java.io.*;
+import java.net.URL;
 import java.util.*;
 
 import javax.servlet.*;
@@ -40,7 +41,7 @@ public class ProServlet extends HttpServlet {
 		
 		String action = req.getParameter("action");
 		
-		System.out.println("action:" +action);
+		System.out.println("action:" + action);
 if ("getOne_For_Display".equals(action)) { //來自select_page.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -194,7 +195,7 @@ if ("update".equals(action)) { // 來自update_pro_input.jsp的請求
 					if(!req.getParameter("pro_bonus").trim().matches(integerReg)) {
 						ProductService proSvc  = new ProductService();
 						pro_bonus = proSvc.getOneProduct(pro_no).getPro_bonus();
-						errorMsgs.add("商品單價請勿非數字");
+						errorMsgs.add("商品單價請勿非數字或負數");
 					} else {
 						pro_bonus = new Integer(req.getParameter("pro_bonus").trim());
 					}
@@ -345,8 +346,8 @@ if ("insert".equals(action)) { //來自addPro.jsp的請求
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
-
-			try {
+            
+//			try {
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 				//解析網頁送來的圖片
 				String integerReg = "([0-9]{0,7})";
@@ -367,7 +368,7 @@ if ("insert".equals(action)) { //來自addPro.jsp的請求
 				String pro_name = req.getParameter("ename");
 				if (pro_name == null || pro_name.trim().length() == 0) {
 					errorMsgs.add("名稱請勿空白");
-				}
+				} 
 				String pic_ext = null;//沒有用的欄位
 //				String pic_ext = req.getParameter("pic_ext");
 //				if (pic_ext == null || pic_ext.trim().length() == 0) {
@@ -380,7 +381,7 @@ if ("insert".equals(action)) { //來自addPro.jsp的請求
 				Integer pro_bonus = null;
 				try {
 					if(!req.getParameter("pro_bonus").trim().matches(integerReg)) {
-						 errorMsgs.add("商品單價請勿非數字");
+						 errorMsgs.add("商品單價請勿非數字或負數");
 						 ProductService proSvc  = new ProductService();
 						 pro_bonus = proSvc.getOneProduct(pro_no).getPro_safestock();
 					 } else {
@@ -423,31 +424,31 @@ if ("insert".equals(action)) { //來自addPro.jsp的請求
 					errorMsgs.add("商品狀態請勿空白");
 				}
 				
-				Integer pro_all_assess = null;
-				try {
-					if(!req.getParameter("pro_all_assess").trim().matches(integerReg)) {
-						 errorMsgs.add("商品總評價請勿非數字");
-						 ProductService proSvc  = new ProductService();
-						 pro_all_assess = proSvc.getOneProduct(pro_no).getPro_all_assess();
-					 } else {
-						 pro_all_assess = new Integer(req.getParameter("pro_all_assess").trim());
-					 }
-				} catch (NumberFormatException e1) {
-					errorMsgs.add("商品總評價請勿空白");
-				}
+				Integer pro_all_assess = 0;
+//				try {
+//					if(!req.getParameter("pro_all_assess").trim().matches(integerReg)) {
+//						 errorMsgs.add("商品總評價請勿非數字");
+//						 ProductService proSvc  = new ProductService();
+//						 pro_all_assess = proSvc.getOneProduct(pro_no).getPro_all_assess();
+//					 } else {
+//						 pro_all_assess = new Integer(req.getParameter("pro_all_assess").trim());
+//					 }
+//				} catch (NumberFormatException e1) {
+//					errorMsgs.add("商品總評價請勿空白");
+//				}
 		
-				Integer pro_all_assessman = null;
-				try {
-					 if(!req.getParameter("pro_all_assessman").trim().matches(integerReg)) {
-						 errorMsgs.add("商品評價總人數請勿非數字");
-						 ProductService proSvc  = new ProductService();
-						 pro_all_assessman = proSvc.getOneProduct(pro_no).getPro_all_assessman();
-					 } else {
-						 pro_all_assessman = new Integer(req.getParameter("pro_all_assessman").trim());
-					 }
-				} catch (NumberFormatException e) {
-					errorMsgs.add("商品評價總人數請勿空白");
-				}
+				Integer pro_all_assessman = 0;
+//				try {
+//					 if(!req.getParameter("pro_all_assessman").trim().matches(integerReg)) {
+//						 errorMsgs.add("商品評價總人數請勿非數字");
+//						 ProductService proSvc  = new ProductService();
+//						 pro_all_assessman = proSvc.getOneProduct(pro_no).getPro_all_assessman();
+//					 } else {
+//						 pro_all_assessman = new Integer(req.getParameter("pro_all_assessman").trim());
+//					 }
+//				} catch (NumberFormatException e) {
+//					errorMsgs.add("商品評價總人數請勿空白");
+//				}
 								
 
 				ProductVO proVO = new ProductVO();
@@ -468,31 +469,48 @@ if ("insert".equals(action)) { //來自addPro.jsp的請求
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					System.out.println(errorMsgs);
+					System.out.println("errorMsgs"+errorMsgs);
 					req.setAttribute("proVO", proVO); // 含有輸入格式錯誤的proVO物件,也存入req
 					RequestDispatcher failureView = req
 							.getRequestDispatcher(PATH_ADDPRO);
 					failureView.forward(req, res);
 					return;
-				}
+   				}
 				
 				/***************************2.開始新增資料***************************************/
+				req.setAttribute("success", "success");
 				ProductService proSvc = new ProductService();
 				proVO = proSvc.addPro(pro_classid,pro_name,pro_pic,pic_ext,pro_format,
 						pro_bonus,pro_stock,pro_safestock,pro_details,pro_shelve,pro_all_assess,pro_all_assessman);
 				
+				/***************************2.1websock推播***********************************/
+//				URL urlws = new URL("ws://localhost:8081/CA105G1/MyEchoServer");
+//				MyEchoServer clientEndPoint = new MyEchoServer();
+//				clientEndPoint.onMessage(message);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
+//				String requestURL = req.getParameter("requestURL");  //來源的路徑請求
+//				req.setAttribute("requestURL", requestURL);
+				String requestPro_name = proVO.getPro_name();
+				req.setAttribute("requestPro_name", requestPro_name);
+				
 				String url = PATH_LIST_ALL_PRO;
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllPro.jsp
-				successView.forward(req, res);				
+				successView.forward(req, res);	
+				
+//				PrintWriter out = res.getWriter();
+//				JSONObject obj = new JSONObject();
+//				
+//				out.write(obj.toString());
+//				out.flush();
+//				out.close();
 				
 				/***************************其他可能的錯誤處理**********************************/
-			} catch (Exception e) {
-				RequestDispatcher failureView = req
-						.getRequestDispatcher(PATH_ADDPRO);
-				failureView.forward(req, res);
-			}
+//			} catch (Exception e) {
+//				RequestDispatcher failureView = req
+//						.getRequestDispatcher(PATH_ADDPRO);
+//				failureView.forward(req, res);
+//			}
 		}
 		
 		
@@ -548,12 +566,14 @@ if ("pro_ByCompositeQuery".equals(action)) { //來自listAllPro的複合查詢�
 				System.out.println(PATH_FRONT_LIST_ALL_PRO.equals(requestURL));
 				                
 				/***************************2.開始複合查詢***************************************/
+				if(map !=null) {
 				ProductService proSvc = new ProductService();
 				List<ProductVO> list  = proSvc.getAll(map);
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
 				req.setAttribute("pro_ByCompositeQuery", list); // 資料庫取出的list物件,存入request
 				req.setAttribute("findBy", "findBy");
+				}
 				String url = null;
 				System.out.println("requestURL : "+requestURL);
 				if(PATH_FRONT_LIST_ALL_PRO.equals(requestURL)) {
@@ -665,8 +685,8 @@ if ("herf_Display".equals(action)) { //來自websock的請求
 		}
 
 
-
-if ("ok_cancel".equals(action)) {
+//下拉選單
+if ("ok_cancel".equals(action)) {  
 				List<String> errorMsgs = new LinkedList<String>();
 				// Store this set in the request scope, in case we need to
 				// send the ErrorPage view.
@@ -697,7 +717,15 @@ if ("ok_cancel".equals(action)) {
 					e.printStackTrace();
 				}
 		}
-
+//評價
+System.out.println("action:"+action);
+if ("assess".equals(action)) {
+				List<String> errorMsgs = new LinkedList<String>();
+				// Store this set in the request scope, in case we need to
+				// send the ErrorPage view.
+				String pro_no = req.getParameter("pro_no");
+				System.out.println("assess"+pro_no);
+		  }
 	}
 
     public static byte[] Photo (InputStream in) {  //將inputStream to byte[]
