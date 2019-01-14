@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="com.sg_info.model.*"%>
 <%@ page import="com.memberlist.model.*"%>
+<%@ page import="com.club.model.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
@@ -13,8 +14,7 @@
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link   rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
-<script src="<%= request.getContextPath()%>/datetimepicker/jquery.js"></script>
-<script src="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
 <style type="text/css">
 	th{
@@ -39,12 +39,14 @@
 
 </head>
 <body>
-<%@ include file="/front-end/CA105G1_header.file" %>
+<jsp:include page="/front-end/CA105G1_header.jsp" />
 
 <%
-	MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO"); 
-	String club_no = request.getParameter("club_no");
-	request.setAttribute("club_no","C0003");
+//  session中有memberlistVO、club_no，EL直接拿了就用
+	String club_no = (String)session.getAttribute("club_no");
+	ClubService svc = new ClubService();
+	ClubVO clubVO = svc.getOneClub(club_no);
+	request.setAttribute("clubVO",clubVO);
 %>
 
 
@@ -65,26 +67,27 @@
 
 <div class="container">
 	<div class="row">
-		<div class="col-xs-12 col-sm-3"></div>
-		<div class="col-xs-12 col-sm-6">
+		<div class="col-xs-12 col-sm-2">
+			<jsp:include page="/front-end/club/club_pageRight.jsp" />						
+		</div>
+		<div class="col-xs-12 col-sm-8">
 			<form action="<%= request.getContextPath()%>/Sg_info/Sg_info.do" method="post" enctype="multipart/form-data">
 				<table class="table table-hover table-striped table-bordered text-center">
 					<jsp:useBean id="clubSvc" scope="page" class="com.club.model.ClubService"/>
-					<a href="<%= request.getContextPath()%>/front-end/Sg_info/SgHome.jsp">回到揪團首頁</a>
 					<caption class="text-center"><span id="title">${clubSvc.getOneClub(club_no).club_name}</span>專屬揪團</caption>
 					<tbody>
 					<!------------ 圖片上傳 ------------>
 						<tr>
 							<td colspan="2" class="uploadPicTd">
-								<img src="<%= request.getContextPath()%>/img/no-image.PNG" style="width:100%"  id="showPic">
+								<img src="<%= request.getContextPath()%>/img/no-image.PNG" style="width:90%"  id="showPic">
 								<input type="file" id="sg_pic" name="sg_pic"><br>
 							</td>
 						</tr>
 						<tr>
 							<th>團長</th>
 							<td>
-								<%=memberlistVO.getMem_name()%>
-								<input type="hidden" name="mem_no" value="<%=memberlistVO.getMem_no()%>">
+								${memberlistVO.mem_name }
+								<input type="hidden" name="mem_no" value="${memberlistVO.mem_no }">
 							</td>
 						</tr>
 						<tr>
@@ -115,15 +118,6 @@
 									value="${param.sg_fee }">
 							</td>
 						</tr>
-<!-- 						<tr> -->
-<!-- 							<th>權限</th> -->
-<!-- 							<td> -->
-<!-- 								<select name="sg_per"> -->
-<!-- 									<option value="公開">公開</option> -->
-<!-- 									<option value="限社團">限社團</option> -->
-<!-- 								</select> -->
-<!-- 							</td> -->
-<!-- 						</tr> -->
 						<jsp:useBean id="sportSvc" scope="page" class="com.sport.model.SportService" />
 						<tr>
 							<th>運動種類</th> <!-- 下拉選單 -->
@@ -203,6 +197,7 @@
 				</div>
 				<div id="distance"></div>
 				<div id="map"></div>
+<canvas id="myChart" width="700" height="400" style="display: none"></canvas>
 				
 				<input type="submit" value="送出" class="btn btn-success btn-block">
 				<input type="hidden" name="action"value="insert">
@@ -212,11 +207,11 @@
 				<input type="hidden" name="loc_end" id="loc_end">
 			</form>
 		</div>
-		<div class="col-xs-12 col-sm-3"></div>
+		<div class="col-xs-12 col-sm-2">123</div>
 	</div>
 </div>
 
-<%@ include file="/front-end/CA105G1_footer.file" %>
+<jsp:include page="/front-end/CA105G1_footer.jsp" />
 
 <script type="text/javascript">
 
@@ -245,37 +240,51 @@
 
 
 	//設定活動時間表
-	$.datetimepicker.setLocale('zh'); // kr ko ja en
 	
-	var sg_date = new Date();
-	$('#sg_date').datetimepicker({
-		timepicker: true,
-		format: 'Y-m-d H:i',
-	    beforeShowDay: function(date) {
-	  	  if (  date.getYear() <  sg_date.getYear() || 
-		           (date.getYear() == sg_date.getYear() && date.getMonth() <  sg_date.getMonth()) || 
-		           (date.getYear() == sg_date.getYear() && date.getMonth() == sg_date.getMonth() && date.getDate() < sg_date.getDate())
-	        ) {
-	             return [false, ""]
-	        }
-	        return [true, ""];
-	}});
+	$("#sg_date").click(function(){
+		if($('#apl_end').val() == null){
+			var sg_date = new Date();
+		}else{
+			var sg_date = new Date($('#apl_end').val());
+		}
+	 	$('#sg_date').datetimepicker({
+	 		timepicker: true,
+	 		format: 'Y-m-d H:i',
+	 	    beforeShowDay: function(date) {
+	 	  	  if (  date.getYear() <  sg_date.getYear() || 
+	 		           (date.getYear() == sg_date.getYear() && date.getMonth() <  sg_date.getMonth()) || 
+	 		           (date.getYear() == sg_date.getYear() && date.getMonth() == sg_date.getMonth() && date.getDate() < sg_date.getDate())
+	 	        ) {
+	 	             return [false, ""]
+	 	        }
+	 	        return [true, ""];
+	 	}});
+	});
 	
 	
 	//設定報名結束日期表
-    var somedate2 = new Date($('#sg_date').val());
-       $('#apl_end').datetimepicker({
-    	   timepicker: false,
-    	   format: 'Y-m-d',
-           beforeShowDay: function(date) {
-         	  if (  date.getYear() >  somedate2.getYear() || 
-  		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-  		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-               ) {
-                    return [false, ""]
-               }
-               return [true, ""];
-       }});
+	$("#apl_end").click(function(){
+		
+		var somedate1 = new Date();
+        var somedate2 = new Date($('#sg_date').val());
+        $('#apl_end').datetimepicker({
+        	timepicker: false,
+        	format: 'Y-m-d',
+            beforeShowDay: function(date) {
+          	  if (  date.getYear() <  somedate1.getYear() || 
+   		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
+   		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
+   		             ||
+   		            date.getYear() >  somedate2.getYear() || 
+   		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
+   		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
+                ) {
+                     return [false, ""]
+                }
+                return [true, ""];
+        }});
+		
+	});
 
     
     
@@ -381,7 +390,8 @@
         // 載入路線服務與路線顯示圖層 Directions API
         directionsService = new google.maps.DirectionsService();
         directionsDisplay = new google.maps.DirectionsRenderer();
-
+        var path=[];
+        
         var road = document.getElementById("road");
         road.addEventListener("click", function(){
         // 放置路線圖層
@@ -399,21 +409,92 @@
 	             directionsDisplay.setDirections(result);
 	             //顯示路線距離
 	             $("#distance").text("總距離為： "+result.routes[0].legs[0].distance.text);
+	        	
+	           //先清空path
+	          	 path=[];
+	             //抓取路線各個點座標存入path陣列供計算海拔用
+				var pathobj = result.routes[0].overview_path;
+				for(var i = 0; i < pathobj.length; i++){
+					path.push(pathobj[i]);
+				}
+	             //開始計算海拔高度
+	            displayPathElevation(path,elevator);
 	         }else{
 	             console.log(status);
 	         }
 	        });
+	        
+	      //計算海拔高度
+	        var elevator = new google.maps.ElevationService;
+	        
+	        function displayPathElevation(path, elevator) {
+	          elevator.getElevationAlongPath({
+	            'path': path,
+	            'samples': 100
+	          }, plotElevation);
+	        }
+	        
+	        function plotElevation(elevations, status) {
+	        	var meterValue = [];
+	        	//抓到各個點的海拔高度(M)存入meterValue陣列
+	        	for (var i = 0; i < elevations.length; i++) {
+	        		meterValue.push(elevations[i].elevation);
+// 	console.log(elevations[i].elevation);
+	              }
+	        	$("#myChart").css("display","");
+	        	drawChart(meterValue);
+	        }
 
-        }, false);
+        }, false);//road click
         
    	} //myLoc
    	
     
+   	
+	function drawChart(meterValue){
+   		var labelArr = [];
+   	   	for(i=0;i<100;i++){
+   	   		labelArr.push("");
+   	   	}
+   	   	
+   	   	var ctx = document.getElementById("myChart").getContext('2d');
+   	   	var myChart = new Chart(ctx, {
+   	   	    type: 'line',
+   	   	    data: {
+   	   	        labels: labelArr,
+	   	   	     datasets : [
+	   	             {
+	   	                 label: "路線坡度",  //当前数据的说明
+	   	                 fill: true,  //是否要显示数据部分阴影面积块  false:不显示
+	   	                 borderColor: "rgba(75,192,192,1)",//数据曲线颜色
+	   	                 data: meterValue,  //填充的数据
+	   	              	pointRadius:0,
+	   	             }
+	   	         ]
+   	   	    },
+   	   	    options: {
+   	   	        scales: {
+   	   	            yAxes: [{
+   	   	                ticks: {
+   	   	              		callback: function(value, index, values) {
+                        	return value + "m";
+ 	   	              		},
+ 	   	                    beginAtZero:true
+   	   	                }
+   	   	            }]
+   	   	        }
+   	   	    }
+   	   	});
+   	}
+   	
 	
 	
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAb2lDof7yMn-TTXwt2hwVm4y92t1AqvyU&callback=initMap&libraries=places"
         async defer></script>
+<script src="<%= request.getContextPath()%>/datetimepicker/jquery.js"></script>
+<script src="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+
 
 
 </body>

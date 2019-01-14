@@ -37,7 +37,7 @@
 
 </head>
 <body>
-<%@ include file="/front-end/CA105G1_header.file" %>
+<jsp:include page="/front-end/CA105G1_header.jsp" />
 
 <%
 	MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO"); 
@@ -198,7 +198,7 @@
 				</div>
 				<div id="distance"></div>
 				<div id="map"></div>
-<canvas id="myChart" width="400" height="400"></canvas>
+<canvas id="myChart" width="700" height="400" style="display: none"></canvas>
 				
 				<input type="submit" value="送出" class="btn btn-success btn-block">
 				<input type="hidden" name="action"value="insert">
@@ -212,7 +212,7 @@
 	</div>
 </div>
 
-<%@ include file="/front-end/CA105G1_footer.file" %>
+<jsp:include page="/front-end/CA105G1_footer.jsp" />
 
 <script type="text/javascript">
 
@@ -243,35 +243,52 @@
 	//設定活動時間表
 	$.datetimepicker.setLocale('zh'); // kr ko ja en
 	
-	var sg_date = new Date();
-	$('#sg_date').datetimepicker({
-		timepicker: true,
-		format: 'Y-m-d H:i',
-	    beforeShowDay: function(date) {
-	  	  if (  date.getYear() <  sg_date.getYear() || 
-		           (date.getYear() == sg_date.getYear() && date.getMonth() <  sg_date.getMonth()) || 
-		           (date.getYear() == sg_date.getYear() && date.getMonth() == sg_date.getMonth() && date.getDate() < sg_date.getDate())
-	        ) {
-	             return [false, ""]
-	        }
-	        return [true, ""];
-	}});
+	$("#sg_date").click(function(){
+		if($('#apl_end').val() == null){
+			var sg_date = new Date();
+		}else{
+			var sg_date = new Date($('#apl_end').val());
+		}
+	 	$('#sg_date').datetimepicker({
+	 		timepicker: true,
+	 		format: 'Y-m-d H:i',
+	 	    beforeShowDay: function(date) {
+	 	  	  if (  date.getYear() <  sg_date.getYear() || 
+	 		           (date.getYear() == sg_date.getYear() && date.getMonth() <  sg_date.getMonth()) || 
+	 		           (date.getYear() == sg_date.getYear() && date.getMonth() == sg_date.getMonth() && date.getDate() < sg_date.getDate())
+	 	        ) {
+	 	             return [false, ""]
+	 	        }
+	 	        return [true, ""];
+	 	}});
+	});
+	
 	
 	
 	//設定報名結束日期表
-    var somedate2 = new Date($('#sg_date').val());
-       $('#apl_end').datetimepicker({
-    	   timepicker: false,
-    	   format: 'Y-m-d',
-           beforeShowDay: function(date) {
-         	  if (  date.getYear() >  somedate2.getYear() || 
-  		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-  		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-               ) {
-                    return [false, ""]
-               }
-               return [true, ""];
-       }});
+	$("#apl_end").click(function(){
+		
+		var somedate1 = new Date();
+        var somedate2 = new Date($('#sg_date').val());
+        $('#apl_end').datetimepicker({
+        	timepicker: false,
+        	format: 'Y-m-d',
+            beforeShowDay: function(date) {
+          	  if (  date.getYear() <  somedate1.getYear() || 
+   		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
+   		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
+   		             ||
+   		            date.getYear() >  somedate2.getYear() || 
+   		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
+   		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
+                ) {
+                     return [false, ""]
+                }
+                return [true, ""];
+        }});
+		
+	});
+    
 
     
     
@@ -395,7 +412,9 @@
 	             directionsDisplay.setDirections(result);
 	          	 //顯示路線距離
 	             $("#distance").text("總距離為： "+result.routes[0].legs[0].distance.text);
-	          	 
+	           	
+	          	 //先清空path
+	          	 path=[];
 	             //抓取路線各個點座標存入path陣列供計算海拔用
 				var pathobj = result.routes[0].overview_path;
 				for(var i = 0; i < pathobj.length; i++){
@@ -426,6 +445,7 @@
 	        		meterValue.push(elevations[i].elevation);
 // 	console.log(elevations[i].elevation);
 	              }
+	        	$("#myChart").css("display","");
 	        	drawChart(meterValue);
 	        }
 

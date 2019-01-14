@@ -15,12 +15,12 @@ public class Sg_memService_android {
 		dao.insert(sg_memVO);
 	}
 	
-	public void updateSGMember(Sg_memVO_android sg_memVO) {
-		dao.update(sg_memVO);
-	}
-	
 	public void deleteSGMember(String sg_no, String mem_no) {
 		dao.delete(sg_no, mem_no);
+	}
+	
+	public void checkIn(String sg_no, String mem_no) throws SQLException {
+		dao.update(sg_no, mem_no);
 	}
 	
 	public List<SGMember> getSGMember(String sg_no) {

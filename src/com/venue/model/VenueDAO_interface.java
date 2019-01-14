@@ -11,5 +11,6 @@ public interface VenueDAO_interface {
 	public VenueVO findByPrimaryKey(String v_no);
 	public List<VenueVO> getAll();
 	public List<VenueVO> getAll(Map<String, String[]> map);
+	public List<VenueVO> getAll(Map<String, String[]> map, boolean isFrontEnd);
 	
 }

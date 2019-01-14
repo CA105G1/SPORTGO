@@ -6,8 +6,10 @@ import java.util.Arrays;
 
 public class NewsVO implements Serializable{
 	private static final long serialVersionUID = 3090317870143707331L;
-
-	public static final String STUTAS_DEFAULT = "未發布";
+	
+//	public static final String NEW_STUTAS_BEFORE_RELEASE = "未發布";
+//	public static final String NEW_STUTAS_RELEASE = "發布中";
+//	public static final String NEW_STUTAS_OUT_OF_TIME = "下架";
 	
 	private String news_no;
 	private String newstype_no;

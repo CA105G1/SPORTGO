@@ -1,6 +1,11 @@
 package com.sg_like.model;
 
 import java.util.*;
+
+import javax.naming.Context;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import java.sql.*;
 
 public class Sg_likeJDBCDAO implements Sg_likeDAO_interface{
@@ -17,6 +22,20 @@ public class Sg_likeJDBCDAO implements Sg_likeDAO_interface{
 	
 	private static final String GETBYPK = "SELECT * FROM SG_LIKE WHERE SG_NO=? AND MEM_NO=?";
 	
+	private static DataSource ds = null;
+	
+	static {
+		try {
+			Context ctx = new javax.naming.InitialContext();
+			ds = (DataSource)ctx.lookup("java:comp/env/jdbc/CA105G1DB");
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
 	//constructor
 	public Sg_likeJDBCDAO() {
 	}
@@ -30,16 +49,13 @@ public class Sg_likeJDBCDAO implements Sg_likeDAO_interface{
 		PreparedStatement pstmt = null;
 		
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, user, password);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(PUSH_LIKE);
 			
 			pstmt.setString(1, sg_like.getSg_no());
 			pstmt.setString(2, sg_like.getMem_no());
 			
 			pstmt.executeUpdate();
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver."+e.getMessage());
 		}catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "+se.getMessage());
 		}finally {
@@ -69,17 +85,13 @@ public class Sg_likeJDBCDAO implements Sg_likeDAO_interface{
 		PreparedStatement pstmt = null;
 		
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, user, password);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(PUSH_DISLIKE);
 			
 			pstmt.setString(1, mem_no);
 			pstmt.setString(2, sg_no);
 			
 			pstmt.executeUpdate();
-		} catch(ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database Driver. "
-														+ e.getMessage());
 		}catch(SQLException se) {
 			throw new RuntimeException("A database error occured. "
 														+se.getMessage());
@@ -111,8 +123,7 @@ public class Sg_likeJDBCDAO implements Sg_likeDAO_interface{
 		ResultSet rs = null;
 		
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, user, password);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(SG_WHO_LIKE);
 			pstmt.setString(1, sg_no);
 			
@@ -124,9 +135,6 @@ public class Sg_likeJDBCDAO implements Sg_likeDAO_interface{
 				likelist.add(sg_like);
 			}
 			
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-													+e.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 													+se.getMessage());
@@ -164,8 +172,7 @@ public class Sg_likeJDBCDAO implements Sg_likeDAO_interface{
 		ResultSet rs = null;
 		
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, user, password);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(LIKE_WHICH_SG);
 			
 			pstmt.setString(1, mem_no);
@@ -175,8 +182,6 @@ public class Sg_likeJDBCDAO implements Sg_likeDAO_interface{
 				memlike.setSg_no(rs.getString("sg_no"));
 				likelist.add(memlike);
 			}
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "+e.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("Database errors occured. "+se.getMessage());
 		}finally {
@@ -213,8 +218,7 @@ public class Sg_likeJDBCDAO implements Sg_likeDAO_interface{
 		ResultSet rs = null;
 		
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, user, password);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GETBYPK);
 			
 			pstmt.setString(1, sg_no);
@@ -231,8 +235,6 @@ public class Sg_likeJDBCDAO implements Sg_likeDAO_interface{
 			return true;
 			
 			
-		}catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "+e.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("Database errors occured. "+se.getMessage());
 		}finally {

@@ -8,6 +8,7 @@ public class Sg_info extends Sg_infoVO_android implements Serializable{
 	//Join後得到的欄位
 	private String mem_name;
 	private String sp_name;
+	private String club_name;
 	private String v_name;
 	private Double v_lat;
 	private Double v_long;
@@ -34,6 +35,15 @@ public class Sg_info extends Sg_infoVO_android implements Serializable{
 	public void setV_name(String v_name) {
 		this.v_name = v_name;
 	}
+	
+	public String getClub_name() {
+		return club_name;
+	}
+
+	public void setClub_name(String club_name) {
+		this.club_name = club_name;
+	}
+
 
 	public Double getV_lat() {
 		return v_lat;

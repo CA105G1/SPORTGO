@@ -30,12 +30,12 @@
 		
 	</head>
 	<body>
-		<%@ include file="/front-end/CA105G1_header.file" %>
+		<jsp:include page="/front-end/CA105G1_header.file" />
 		
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-xs-12 col-sm-12">
-					<h1>場地資料查詢</h1>
+					<h1>前台場地資料查詢</h1>
 					
 					<div role="tabpanel">
 					    <!-- 標籤面板：標籤區 -->
@@ -43,9 +43,9 @@
 					        <li role="presentation" class="active">
 					            <a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">查詢區</a>
 					        </li>
-					        <li role="presentation" class="">
-					            <a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">新增區</a>
-					        </li>
+<!-- 					        <li role="presentation" class=""> -->
+<!-- 					            <a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">新增區</a> -->
+<!-- 					        </li> -->
 					        <li role="presentation">
 					            <a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">檢舉區</a>
 					        </li>

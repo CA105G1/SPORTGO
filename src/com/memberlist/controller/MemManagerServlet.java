@@ -12,9 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import com.sport.model.SportService;
+import com.club.model.ClubService;
+import com.club.model.ClubVO;
+import com.club_memberlist.model.Club_memberlistService;
+import com.club_memberlist.model.Club_memberlistVO;
 import com.memberlist.model.*;
 import com.sg_info.model.*;
 import com.sg_mem.model.*;
+import com.sport.model.SportVO;
 @MultipartConfig(fileSizeThreshold=1024*1024,maxFileSize=5*1024*1024,maxRequestSize=5*5*1024*1024)
 public class MemManagerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -218,6 +224,26 @@ public class MemManagerServlet extends HttpServlet {
 			req.setAttribute("sg_mem",sgmem);
 			RequestDispatcher sggo = req.getRequestDispatcher("sg.jsp");
 			sggo.forward(req, res);
+		}
+		
+		if("Member_Club".equals(action)) {
+			Club_memberlistService clubmemservice = new Club_memberlistService();
+			List<Club_memberlistVO> clubmember = clubmemservice.getByMemPart(mem_no);
+			List<Club_memberlistVO> clubhost = clubmemservice.getByMemHost(mem_no);
+			List<Club_memberlistVO> clubwait = clubmemservice.getByMemPartWait(mem_no);
+			ClubService clubservice = new ClubService();
+			List<ClubVO> clublist = clubservice.getAll();
+			SportService sportservice = new SportService();
+			List<SportVO> sportlist = sportservice.getAll();
+			req.setAttribute("clubmember",clubmember);
+			req.setAttribute("clubhost",clubhost);
+			req.setAttribute("clubwait",clubwait);
+			req.setAttribute("clublist",clublist);
+			req.setAttribute("sportlist", sportlist);
+			RequestDispatcher clubgo = req.getRequestDispatcher("club.jsp");
+			clubgo.forward(req, res);
+			
+			
 		}
 	}
 }

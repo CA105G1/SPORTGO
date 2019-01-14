@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -19,50 +20,32 @@
 		.errorMsgs-color{
 			color:red
 		}
+		table th div.mytile{
+			display: flex;
+			justify-content:center;
+		}
 	</style>
 </head>
 <body>
 	<h1>this is add one news page</h1>
-<!-- 	<from> -->
-<!-- 		選擇輸入類型<input type="text" name="" value="" /> -->
-<!-- 		<input type="text" name="" value="" /> -->
-<!-- 		<input type="text" name="" value="" /> -->
-<!-- 		<input type="text" name="" value="" /> -->
-<!-- 		<input type="text" name="" value="" /> -->
-<!-- 		<input type="text" name="" value="" /> -->
-<!-- 		<input type="text" name="" value="" /> -->
-<!-- 		<input type="text" name="" value="" /> -->
-<!-- 	</from> -->
-<%
-
-%>
-
-
 <%-- 錯誤表列 --%>
-<c:if test="${not empty errorMsgs}">
-	<font style="color:red">請修正以下錯誤:</font>
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">  <!-- 等同於${errorMsgs.entrySet()} -->
-			<li style="color:red">${message.value}</li>  <!-- 等同於${message.getValue()} -->
-		</c:forEach>
-	</ul>
-</c:if>
+<%-- <c:if test="${not empty errorMsgs_tab2}"> --%>
+<!-- 	<font style="color:red">請修正以下錯誤:</font> -->
+<!-- 	<ul> -->
+<%-- 		<c:forEach var="message" items="${errorMsgs_tab2}">  <!-- 等同於${errorMsgs_tab2.entrySet()} --> --%>
+<%-- 			<li style="color:red">${message.value}</li>  <!-- 等同於${message.getValue()} --> --%>
+<%-- 		</c:forEach> --%>
+<!-- 	</ul> -->
+<%-- </c:if> --%>
 <div class="container-fluid">
 	<div class="row">
 		<form action="<%=request.getContextPath()%>/news/news.do" method="post" enctype="multipart/form-data">
 			<table class="table table-hover table-striped table-bordered text-center">
 				<caption class="text-center">this is add news page</caption>
 				<tbody>
-				<!------------ 圖片上傳 ------------>
+				
 					<tr>
-						<td colspan="2" class="uploadPicTd">
-							<img src="<%=request.getContextPath()%>/img/no-image.PNG" style="width:100%"  id="showPic">
-							<input type="file" id="news_picture" name="news_picture"><br>
-							<div class="pull-left errorMsgs-color">${errorMsgs.get("news_picture")}</div><br>
-						</td>
-					</tr>
-					<tr>
-						<th>消息種類</th>
+						<th><div class="mytile">消息種類</div></th>
 						<td>
 							<jsp:useBean id="newstypeService" scope="page" class="com.newstype.model.NewstypeService" />
 							<select size="1" name="newstype_no" id="newstype_no">
@@ -72,37 +55,65 @@
 <%--				<option value="${sportVO.sp_no}" ${(param.sp_no == sportVO.sp_no)? 'selected':'' }>${sportVO.sp_name} --%>
 								</c:forEach>
 							</select><br>
-							<div class="center-block errorMsgs-color">${errorMsgs.get("newstype_no")}</div>
+							<div class="center-block errorMsgs-color">${errorMsgs_tab2.get("newstype_no")}</div>
 						</td>
 					</tr>
 					<tr>
-						<th>消息內容</th>
+						<th><div class="mytile">消息內容</div></th>
 						<td>
 							<input type="text" name="news_script" value="${newsVO.news_script}"/><br>
-							<div class="center-block errorMsgs-color">${errorMsgs.get("news_script")}</div> 
+							<div class="center-block errorMsgs-color">${errorMsgs_tab2.get("news_script")}</div> 
 						</td>
 					</tr>
 					<tr>
-						<th>發布開始時間</th>
+						<th><div class="mytile">發布開始時間</div></th>
 						<td>
-							<input type="text" id="news_release_date" name="news_release_date" value='${newsVO.getNews_release_date()}'/><br>
-							<div class="center-block errorMsgs-color">${errorMsgs.get("news_release_date")}</div> 
+							<c:if test="${newsVO==null}">
+								<input type="text" id="news_release_date_tab2" name="news_release_date" value=''/>
+							</c:if>
+							<c:if test="${newsVO!=null}">
+								<input type="text" id="news_release_date_tab2" name="news_release_date" 
+									value='<fmt:formatDate value="${newsVO.news_release_date}" pattern="yyyy-MM-dd HH:mm"/>'/><br>
+								<div class="center-block errorMsgs-color">${errorMsgs_tab2.get("news_release_date")}</div> 
+							</c:if>
 						</td>
 					</tr>
 					<tr>
-						<th>發布截止時間</th>
+						<th><div class="mytile">發布截止時間</div></th>
 						<td>
-							<input type="text" id="news_last_date" name="news_last_date" value="${newsVO.getNews_last_date()}"/><br>
-							<div class="center-block errorMsgs-color">${errorMsgs.get("news_last_date")}</div> 
+							<c:if test="${newsVO==null}">
+								<input type="text" id="news_last_date_tab2" name="news_last_date" value=''/>
+							</c:if>
+							<c:if test="${newsVO!=null}">
+								<input type="text" id="news_last_date_tab2" name="news_last_date" 
+									value='<fmt:formatDate value="${newsVO.news_last_date}" pattern="yyyy-MM-dd HH:mm"/>'/><br>
+								<div class="center-block errorMsgs-color">${errorMsgs_tab2.get("news_last_date")}</div> 
+							</c:if>						
 						</td>
 					</tr>
 				</tbody>
 			</table>
 			<input type="hidden" name="action"value="insert_one_news">
 			<input type="submit" value="送出" class="btn btn-success btn-block">
+			<table>
+				<tbody>				
+					<!------------ 圖片上傳 ------------>
+					<tr>
+						<td colspan="2" class="uploadPicTd">
+							<div>
+								<input type="file" id="news_picture_tab2" name="news_picture" />
+								<div class="pull-left errorMsgs-color">${errorMsgs_tab2.get("news_picture")}</div>
+							</div>
+							<div>
+								<img src="<%=request.getContextPath()%>/img/no-image.PNG" id="showPic_tab2"
+								class="img-responsive img-rounded center-block" />
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</form>
 	</div>
-	<div class="col-xs-12 col-sm-3"></div>
 </div>
 
 
@@ -127,40 +138,32 @@
 	</style>
 	<script type="text/javascript">
 	
-		//照片上傳
-		$("#news_picture").change(function(){
-			readURL(this);
-		});
+		
+// 		$("#news_picture_tab2").change(function(){
+// 			readURL(this);
+// 		});
 	
-		function readURL(input){
-			if(input.files && input.files[0]){
-				var reader = new FileReader();
-				reader.onload = function(e){
-					var img = document.getElementById("showPic");
-					img.src=e.target.result;
-// 					img.maxHeight = "300px";
-//  					img.width = 100%;
-				}
-				reader.readAsDataURL(input.files[0]);
-			}
-		}
+// 		function readURL(input){
+// 			if(input.files && input.files[0]){
+// 				var reader = new FileReader();
+// 				reader.onload = function(e){
+// 					$('#showPic_tab2').attr({"src":e.target.result, "width":"200px"});
+// 					console.log("#showPic_tab2 : "+($('#showPic_tab2').attr("src")));
+// 				}
+// 				reader.readAsDataURL(input.files[0]);
+// 			}
+// 		}
 	
 		//設定時間
 		$.datetimepicker.setLocale('zh'); // kr ko ja en
 		//news_release_date 開始
 		//news_last_date 結束
 		var news_release_date = new Date();
-		$('#news_release_date').datetimepicker({
+		$('#news_release_date_tab2').datetimepicker({
 			theme: '',
  			step: 10,
  			timepicker: true,
-			format:'Y-m-d H:i',
- 				onShow:function( date ){
-  					this.setOptions({
-        			maxDate:jQuery('#news_last_date').val()?jQuery('#news_last_date').val():false
-   				})
-  			},
-  			beforeShowDay: function(date) {
+ 			beforeShowDay: function(date) {
   		  		if (date.getYear() <  news_release_date.getYear() || 
   			    	(date.getYear() == news_release_date.getYear() && date.getMonth() <  news_release_date.getMonth()) || 
   			    	(date.getYear() == news_release_date.getYear() && date.getMonth() == news_release_date.getMonth() && date.getDate() < news_release_date.getDate())
@@ -168,16 +171,23 @@
   		             return [false, ""]
   		      	}
   		      	return [true, ""];
+  			},
+			format:'Y-m-d H:i',
+ 				onShow:function( date ){
+  					this.setOptions({
+        			maxDate:jQuery('#news_last_date_tab2').val()?jQuery('#news_last_date_tab2').val():false
+   				})
   			}
+  			
  		});
- 		$('#news_last_date').datetimepicker({
+ 		$('#news_last_date_tab2').datetimepicker({
 			theme: '',
  			step: 10,
  			timepicker: true,
 			format:'Y-m-d H:i',
   			onShow:function( date ){
    				this.setOptions({
-    				minDate:jQuery('#news_release_date').val()?jQuery('#news_release_date').val():false
+    				minDate:jQuery('#news_release_date_tab2').val()?jQuery('#news_release_date_tab2').val():false
    				})
   			},
  		});

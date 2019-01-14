@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="java.util.*"%>
 <%@ page import="com.sg_info.model.*"%>
 <%@ page import="com.sg_like.model.*"%>
+<%@ page import="com.sg_mem.model.*"%>
 <%@ page import="com.memberlist.model.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -20,60 +22,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
 
-<style type="text/css">
-	#infoSpan{
-		margin-left:30%;
-	}
-	.table>tbody>tr>th{
-		border-top:0px;
-	}
-	.backToList{
-		cursor: pointer;
-	}
-	.backToList:active {
-	  	transform: translateY(1px);
-	}
-	#map {
-		height: 400px;  /* The height is 400 pixels */
-		width: 100%;  /* The width is the width of the web page */
-	}
-	#btnGroup{
-		display:flex;
-		justify-content: space-between;
-	}
-	.panel-title{
-		text-align: center;
-    	text-align-last: center;
-	}
-	.list-group-item{
-		text-align: center;
-    	text-align-last: center;
-	}
- 	#sg_memList{ 
- 		background-color: #FFFFE0; 
-		border-radius: 10px; 
-    	cursor: pointer; 
-     	box-shadow: 0 2px #999; 
-    	width:80%; 
-     	text-align: center; 
-     	text-align-last: center; 
- 	} 
-	#sg_memList:active {
-	  	box-shadow: 0 1px #666;
-	  	transform: translateY(1px);
-	}
-	#sg_memPic{
-		width:50px;
-		height:50px;
-		border-radius: 50px;
-		padding:3px;
-	}
-</style>
+
  
 </head>
 <body>
-<%@ include file="/front-end/CA105G1_header.file" %>
-
+<jsp:include page="/front-end/CA105G1_header.jsp" />
 
 <% 
 	Sg_infoVO vo = (Sg_infoVO)request.getAttribute("Sg_infoVO");	
@@ -113,11 +66,13 @@ System.out.println("memberlistVO= "+memberlistVO);
 			<form action="<%= request.getContextPath()%>/Sg_info/Sg_info.do" method="post" enctype="multipart/form-data">
 			
 				<table class="table table-hover">
-					<i class="glyphicon glyphicon-circle-arrow-left icon-large brown backToList"></i>  <!-- 返回按鍵 -->
-					<a href="<%= request.getContextPath()%>/front-end/Sg_info/SgHome.jsp" display="none" id="linkBack">回到揪團首頁</a>
-					
+					<!-- 返回按鍵 -->
+					<i class="glyphicon glyphicon-circle-arrow-left icon-large brown backToList"></i>  
+					<a href="<%= request.getContextPath()%>/front-end/Sg_info/SgHome.jsp" display="none" id="linkBack">回到揪團列表</a>
 					<caption style="text-align:center">
 						<h3>
+							<!-- 額滿圖示 -->
+							<img id="joinFullPic" src="<%= request.getContextPath()%>/img/joinFull.png" style="width:80px; height:auto; display:none">
 							<!-- 團名 -->
 							<img src="<%= request.getContextPath()%>/img/sporticons/${Sg_infoVO.sp_no}.svg" style="width:20px; height:auto;">
 							${Sg_infoVO.sg_name }
@@ -191,7 +146,7 @@ System.out.println("memberlistVO= "+memberlistVO);
 								<div id="distance"></div>
 						</div>
 					</div>
-<canvas id="myChart" width="700" height="400"></canvas>
+<canvas id="myChart" width="700" height="400" style="display: none"></canvas>
 				
 			</form>
 		</div> <!-- col-sm-6 -->
@@ -225,32 +180,49 @@ System.out.println("memberlistVO= "+memberlistVO);
 				加入收藏
 			</div>
 			
-			<div class="btn" id="joinbtn">
+			<button class="btn" id="joinbtn">
 				<img src="<%= request.getContextPath()%>/img/add.png">
 				加入揪團
-			</div>
+			</button>
 			
-			<div class="btn" id="sharebtn">
+			<button class="btn" id="sharebtn">
 				<img src="<%= request.getContextPath()%>/img/share.png">
 				分享給好友
-			</div>
+			</button>
 			
-			<div class="btn" id="repbtn">
+			<button class="btn" id="repbtn">
 				<img src="<%= request.getContextPath()%>/img/warning.png">
 				檢舉
-			</div>
+			</button>
 		</div>
 		<div class="col-xs-12 col-sm-3">
 		</div>
 	</div>
 </div>
 
-<%@ include file="/front-end/CA105G1_footer.file" %>
+<jsp:include page="/front-end/CA105G1_footer.jsp" />
 
 
 <script type="text/javascript">
+	//若是社團專屬揪團則調整返回鍵連結
+	if('${param.club_no}'.length != 0){
+		$("#linkBack").attr("href","<%= request.getContextPath()%>/front-end/club/Sg_infoList.jsp");
+	}
+	
+	//若報名人數已達上限則關閉報名按鍵
+	<%
+		boolean isFull = false;
+		if(vo.getSg_ttlapl() >= vo.getSg_maxno()){
+			isFull = true;
+		}
+	%>
+	if(<%= vo.getSg_ttlapl() >= vo.getSg_maxno()%>){
+		$("#joinbtn").attr('disabled', true);
+		$("#joinFullPic").css('display', '');
+	}
 		
-		
+	
+	
 	//google map設定
 	var map;
 	function initMap(){
@@ -326,6 +298,7 @@ System.out.println("memberlistVO= "+memberlistVO);
 	        	for (var i = 0; i < elevations.length; i++) {
 	        		meterValue.push(elevations[i].elevation);
 	              }
+	        	$("#myChart").css("display","");
 	        	drawChart(meterValue);
 	        }
 	        
@@ -448,7 +421,32 @@ System.out.println("memberlistVO= "+memberlistVO);
 		});
 		//////////////////加入揪團按鍵設定///////////////////////////
 		$("#joinbtn").click(function(){
-			if(<%= vo.getSg_fee()%> != 0){
+			<%
+				boolean isJoin = false;
+				Sg_memService svc = new Sg_memService();
+				List<Sg_memVO> list = svc.getAllBySg_no(vo.getSg_no());
+				//判斷是否重複加入
+				for(Sg_memVO sg_memvo : list) {
+					if(sg_memvo.getMem_no().equals(memberlistVO.getMem_no())) {
+						isJoin = true;
+					}
+				}
+			%>
+			
+			if(<%=isJoin%>){  //若重複報名則跳出警訊
+				swal({
+					  title: "您已重複報名", html: "馬上到我的揪團查看", type: "error", showCancelButton: true, showCloseButton: true,confirmButtonText: "前往",cancelButtonText: "取消"
+					}).then(
+						function (result) {
+							if(result){
+								document.location.href="<%= request.getContextPath()%>/front-end/memberlist/MemManager.do?action=Member_Sg";
+							}
+							},function(dismiss) {
+								location.reload();
+							
+						});
+				return;
+			}else if(<%= vo.getSg_fee()%> != 0){  //若要付費則先付費再存入資料庫
 				swal({
 					  title: "請填寫付款資訊", showCancelButton: true, showCloseButton: true,confirmButtonText: "確定付款",cancelButtonText: "取消",
 					  html:	
@@ -497,30 +495,16 @@ System.out.println("memberlistVO= "+memberlistVO);
 					alert("發生錯誤!");
 				},
 				success: function(data){
-					if(data.answer){
-						swal({
-							  title: "成功加入!", html: "馬上到我的揪團查看", type: "success", showCancelButton: true, showCloseButton: true,confirmButtonText: "前往",cancelButtonText: "取消"
-							}).then(
-								function (result) {
-								if(result){
-									document.location.href="<%= request.getContextPath()%>/front-end/memberlist/MemManager.do?action=Member_Sg";
-								}
-								},function(dismiss) {
-									location.reload();
-								});
-					}else{
-						swal({
-						  title: "您已重複報名", html: "馬上到我的揪團查看", type: "error", showCancelButton: true, showCloseButton: true,confirmButtonText: "前往",cancelButtonText: "取消"
+					swal({
+						  title: "成功加入!", html: "馬上到我的揪團查看", type: "success", showCancelButton: true, showCloseButton: true,confirmButtonText: "前往",cancelButtonText: "取消"
 						}).then(
 							function (result) {
-								if(result){
-									document.location.href="<%= request.getContextPath()%>/front-end/memberlist/MemManager.do?action=Member_Sg";
-								}
-								},function(dismiss) {
-									location.reload();
-								
+							if(result){
+								document.location.href="<%= request.getContextPath()%>/front-end/memberlist/MemManager.do?action=Member_Sg";
+							}
+							},function(dismiss) {
+								location.reload();
 							});
-					};
 				}
 			}); //ajax
 		} //function join
@@ -578,11 +562,67 @@ System.out.println("memberlistVO= "+memberlistVO);
 	
 
 </script>
-<!-- 信用卡 -->
-<link href="<%=request.getContextPath() %>/front-end/pro/card/card-js.min.css" rel="stylesheet" type="text/css" />
-<script src="<%=request.getContextPath() %>/front-end/pro/card/card-js.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAb2lDof7yMn-TTXwt2hwVm4y92t1AqvyU&callback=initMap&libraries=places"
         async defer></script>
+
+
+
+
+<style type="text/css">
+	#infoSpan{
+		margin-left:30%;
+	}
+	.table>tbody>tr>th{
+		border-top:0px;
+	}
+	.backToList{
+		cursor: pointer;
+	}
+	.backToList:active {
+	  	transform: translateY(1px);
+	}
+	#map {
+		height: 400px;  /* The height is 400 pixels */
+		width: 100%;  /* The width is the width of the web page */
+	}
+	#btnGroup{
+		display:flex;
+		justify-content: space-between;
+	}
+	.panel-title{
+		text-align: center;
+    	text-align-last: center;
+	}
+	.list-group-item{
+		text-align: center;
+    	text-align-last: center;
+	}
+ 	#sg_memList{ 
+ 		background-color: #FFFFE0; 
+		border-radius: 10px; 
+    	cursor: pointer; 
+     	box-shadow: 0 2px #999; 
+    	width:80%; 
+     	text-align: center; 
+     	text-align-last: center; 
+ 	} 
+	#sg_memList:active {
+	  	box-shadow: 0 1px #666;
+	  	transform: translateY(1px);
+	}
+	#sg_memPic{
+		width:50px;
+		height:50px;
+		border-radius: 50px;
+		padding:3px;
+	}
+	.btn{
+		background-color:white
+	}
+	
+</style>
+
+
 
 
 

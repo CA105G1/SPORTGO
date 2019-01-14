@@ -153,6 +153,10 @@
 											<c:if test="${venueVO.openday_sun=='Y'}"> 日 </c:if>
 										</td>
 									</tr>
+									<tr ${v_evaluationVO.v_no==venueVO.v_no?'style="background-color:#FFEE99"':''}>
+										<th>場地評價</th>
+										<td>${scoreMap.get(venueVO.getV_no())==-1?'尚無評價分數':scoreMap.get(venueVO.getV_no())}</td>
+									</tr>
 									<tr>
 										<th></th>
 										<td style="text-align:right">

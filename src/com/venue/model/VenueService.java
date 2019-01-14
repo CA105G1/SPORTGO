@@ -11,6 +11,10 @@ public class VenueService {
 		venueDAO = new VenueDAO();
 	}
 	
+	public List<VenueVO> getAll(Map<String, String[]> map, boolean isFrontEnd){
+		return venueDAO.getAll(map, isFrontEnd);
+	}
+	
 	public List<VenueVO> getAll(Map<String, String[]> map){
 		return venueDAO.getAll(map);
 	}

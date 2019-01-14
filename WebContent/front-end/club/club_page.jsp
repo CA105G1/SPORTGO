@@ -1,6 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.club.model.*"%>
+<%@ page import="com.post_info.model.*"%>
+<%@ page import="com.respones.model.*"%>
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
@@ -9,8 +11,22 @@
 	List<ClubVO> list = clubSvc.getAll();
 	pageContext.setAttribute("list", list);
 	
+//    Post_infoService post_infoSvc = new Post_infoService();
+// 	Post_infoVO post_infoVO = post_infoSvc.getOnePost_info("P0001");
 
-	//ClubVO clubVO = (ClubVO)request.getAttribute("clubVO");
+ //	Post_infoVO post_infoVO = (Post_infoVO)request.getAttribute("post_infoVO");
+ 	
+/*********************************************************************************************/	
+	List<Post_infoVO> postvolist=(ArrayList)request.getAttribute("postvolist");
+/*********************************************************************************************/
+	
+// 	ResponesVO responesVO = new ResponesVO();
+// 	String post_no = request.getParameter("post_no");
+	
+// 	ResponesService responesSvc = new ResponesService(); 
+	
+// 	List<ResponesVO> responeslist = responesSvc.getallfrompost(post_no);
+// 	pageContext.setAttribute("list",list);
 	
 %>
 
@@ -30,6 +46,8 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
+		<script src="https://cdn.ckeditor.com/ckeditor5/11.2.0/classic/ckeditor.js"></script>
+		
 		<style type="text/css">
 			
 			textarea {
@@ -46,12 +64,13 @@
 			font-family:Microsoft JhengHei
 			}
 		
+			#postsearch{
+    			padding-left: 5px;
+    			padding-right: 5px;
+    			padding-top: 2px;
+    			padding-bottom: 2px;
+			}
 			
-/* 			#clubphoto{ */
-/* 			max-width:600px;  */
-/* myimg:expression(onload=function(){  */
-/* this.style.width=(this.offsetWidth > 600)?"600px":"auto"}); */
-/* 			} */
 		</style>
 	</head>
 
@@ -62,76 +81,96 @@
 	<%@ include file="/front-end/CA105G1_header.file" %>
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-xs-12 col-lg-2" id="xx1">
-					
+				<div class="col-xs-12 col-lg-1" id="xx1"></div>
+				
+				<div class="col-xs-12 col-lg-2" style="margin-right: -;padding-left: 5px;padding-right: 5px;">
+					<jsp:include page="club_pageRight.jsp" />
 				</div>
-				
-					<div class="col-xs-12 col-sm-1" style="margin-right: -;padding-left: 5px;padding-right: 5px;">
-						<input type="hidden" name="actionfront" value="getoneclub">
-							<h4 id="club_name" class="_19s-" >
-								<a href='<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clubVO.club_no}' >
-									${clubVO.club_name}
-								</a>
-							</h4>
-
-					<div class="list-group active">
-						<a href="<%= request.getContextPath()%>/clubfront.do?actionfront=getOneClubintro&club_no=${clubVO.club_no}" display="none" class="list-group-item">簡介</a>
-						<a href="#" class="list-group-item">專屬揪團</a>
-						<a href="#" class="list-group-item">建立文章</a>
-						<a href="#" class="list-group-item">影音相簿</a>
-						<a href="<%= request.getContextPath()%>/clubfront.do?actionfront=getOneClubmanage&club_no=${clubVO.club_no}" display="none" class="list-group-item">社團管理</a>
-			
-						<a href="<%= request.getContextPath()%>/front-end/club/club_list.jsp" display="none" id="linkBack" class="list-group-item">返回列表</a>
-				<br>
-						<button type="button" class="btn btn-dark" href="<%= request.getContextPath()%>/clubmemberlist.do?action=dropoutclub&club_no=${clubVO.club_no}">
-								退出社團
-						</button>
-				<br><br>
-				
-					</div>					
-					</div>
-				<div class="col-xs-12 col-sm-7">
+						
+				<div class="col-xs-12 col-lg-7">
 					
 <!---------------------------- 貼文列表 ------------------------------------->
+					<div>
+						<input type="text" class="form-control" placeholder="search" style="width:15em" />
+	  					<button class="btn btn-primary" type="button" id="postsearch">送出</button>
+					</div>
 					<div class="card text-center" id="post">
-							<div class="card-header">
-								<img src="<%= request.getContextPath()%>/front-end/club/images/C0007.jpg" class="img-fluid" id="clubphoto" width="50%" >
-							</div>
+							<div class="card-header"></div>
 							<br>
   							<div class="card-body">
-    							<h5 class="card-title">貼文主題</h5>
-    							<p class="card-text">貼文內容</p>
-  							</div>
+								<c:forEach var="postinfo" items="${postvolist}">
+    								<h3 class="card-title"  class="list-group-item">主題：${postinfo.post_topic}</h3>
+    								<p class="card-text">${postinfo.post_content}</p>
+<!--     								回文 -->
+<%--     								<jsp:useBean id="responesSvc" scope="page" class="com.respones.model.ResponesService" /> --%>
+<%-- 									<c:forEach var="responesVO" items="${responesSvc.all}"> --%>
+<!--     									<div class="h3"> -->
+<%--     										${responesVO.res_no}--- --%>
+<!--     									</div> -->
+<!--     									<div class="h3"> -->
+<%--     										${responesVO.res_content} --%>
+<!--     									</div> -->
+<%--     								</c:forEach>	 --%>
+    							</c:forEach>
+  							</div> <!-- card-body結束 -->
+<!-------------------------------------------- 留言版 --------------------------------------------------->
   							<div class="card-footer text-muted">
-    						回文
+								<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/respones.do?" name="form">  
+									<div class="card" id="respones">
+							  			<div class="card-header">
+							   				留言版
+							  			</div>
+							  				<div class="card-body">
+							    			<textarea class="form-control" name="res_content" id="res_content"></textarea><!--留言區塊-->
+											<input type="hidden" name="post_no" id="post_no">
+											<input type="hidden" name="mem_no" id="mem_no">
+											<input type="hidden" name="res_date" id="res_date">
+							  				</div>
+							  				<br>
+							  			<div class="card-footer text-muted">
+							  				<input type="hidden" name="action" value="insert">
+							    			<button type="submit" class="btn btn-primary">送出</button>
+							  			</div>
+									</div>
+								</FORM> 		
   							</div>
-					</div>
-					<br>
-<!-------------------------社團內的揪團 ------------------------------------->
-					<div class="card text-center" >
-  							<div class="card-body">
-    							<p class="card-text">社團內的揪團</p>
-  							</div>
-  							<div class="card-footer text-muted">
-  							</div>
-					</div>
-									
-				</div>
+<!-------------------------------------------- 留言版 ---------------------------------------------------->
+<!----------------------------------------------回文------------------------------------------------------>
+							<div class="res_content">
+    								<jsp:useBean id="responesSvc" scope="page" class="com.respones.model.ResponesService" />
+									<c:forEach var="responesVO" items="${responesSvc.all}">
+    									<div class="h3">
+    										${responesVO.res_no}---
+    									</div>
+    									<div class="h3">
+    										${responesVO.res_content}
+    									</div>
+    								</c:forEach>	
+							</div>
+<!----------------------------------------------回文------------------------------------------------------>
 					
-				<div class="col-xs-12 col-lg-2" id="xx">
-					<div>好友列表</div>
+							<div class="col-xs-12 col-lg-2" id="xx">
+								<div>好友列表</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
-		</div>
-		
-
-
-
-		
-		
-		</form>
+				
 		<%@ include file="/front-end/CA105G1_footer.file" %>
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script>
+			ClassicEditor
+				.create( document.querySelector( '#editor' ) )
+				.then( editor => {
+					console.log( editor );
+				} )
+				.catch( error => {
+					console.error( error );
+				} );
+		</script>
+	
+
 	</body>
 </html>
