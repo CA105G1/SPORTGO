@@ -284,9 +284,9 @@ public class MemberDAO_android implements MemberDAO_interface_android  {
 	}
 	
 	@Override
-	public MemberVO_android findByPrimaryKey(String memno) {
+	public Member findByPrimaryKey(String memno) {
 		
-		MemberVO_android member = null;
+		Member member = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -299,7 +299,7 @@ public class MemberDAO_android implements MemberDAO_interface_android  {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				member = new MemberVO_android();
+				member = new Member();
 				member.setMem_name(rs.getString("mem_name"));
 				member.setMem_nick(rs.getString("mem_nick"));
 				member.setMem_account(rs.getString("mem_account"));
@@ -412,11 +412,12 @@ public class MemberDAO_android implements MemberDAO_interface_android  {
 	}
 	
 	@Override
-	public String isMember(String mem_account, String mem_pswd) {
+	public Member isMember(String mem_account, String mem_pswd) {
 		
 		Connection con = null;
 		PreparedStatement ps = null;
 		JsonObject jobj = new JsonObject();
+		Member mem = null;
 		
 		try {
 			
@@ -427,8 +428,7 @@ public class MemberDAO_android implements MemberDAO_interface_android  {
 			ResultSet rs = ps.executeQuery();
 			
 			while (rs.next()) {
-				MemberVO_android mem = new MemberVO_android();
-				mem = new MemberVO_android();
+				mem = new Member();
 				mem.setMem_no(rs.getString("mem_no"));
 				mem.setMem_name(rs.getString("mem_name"));
 				mem.setMem_nick(rs.getString("mem_nick"));
@@ -442,9 +442,9 @@ public class MemberDAO_android implements MemberDAO_interface_android  {
 				mem.setMem_card(rs.getString("mem_card"));
 				mem.setMem_expiry(rs.getString("mem_expiry"));
 				
-				String member = new Gson().toJson(mem);
-				jobj.addProperty("member", member);
-				jobj.addProperty("isMember", true);
+//				String member = new Gson().toJson(mem);
+//				jobj.addProperty("member", member);
+//				jobj.addProperty("isMember", true);
 			}
 			
 		} catch (SQLException e) {
@@ -466,8 +466,7 @@ public class MemberDAO_android implements MemberDAO_interface_android  {
 				e.printStackTrace();
 			}
 		}
-		
-		return jobj.toString();
+		return mem;
 	}
 
 	@Override

@@ -9,8 +9,8 @@ public interface MemberDAO_interface_android {
 	public void updatePassword(MemberVO_android memberlist);
 	public void updateCraditcard(MemberVO_android memberlist);
 	public void updateStatus(String mem_no,String mem_status);
-	public MemberVO_android findByPrimaryKey(String mem_no);
+	public Member findByPrimaryKey(String mem_no);
 	public List<MemberVO_android> getAll();
-	public String isMember(String mem_account, String mem_pswd);
+	public Member isMember(String mem_account, String mem_pswd);
 	public byte[] getImage(String mem_no);
 }

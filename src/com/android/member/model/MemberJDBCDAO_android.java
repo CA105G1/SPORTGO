@@ -278,9 +278,9 @@ public class MemberJDBCDAO_android implements MemberDAO_interface_android  {
 	
 	
 	@Override
-	public MemberVO_android findByPrimaryKey(String memno) {
+	public Member findByPrimaryKey(String memno) {
 		
-		MemberVO_android member = null;
+		Member member = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -294,7 +294,7 @@ public class MemberJDBCDAO_android implements MemberDAO_interface_android  {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				member = new MemberVO_android();
+				member = new Member();
 				member.setMem_name(rs.getString("mem_name"));
 				member.setMem_nick(rs.getString("mem_nick"));
 				member.setMem_account(rs.getString("mem_account"));
@@ -412,11 +412,12 @@ public class MemberJDBCDAO_android implements MemberDAO_interface_android  {
 		return list;
 	}
 	
-	public String isMember(String mem_account, String mem_pswd) {
+	public Member isMember(String mem_account, String mem_pswd) {
 		
 		Connection conn = null;
 		PreparedStatement ps = null;
 		JsonObject jobj = new JsonObject();
+		Member mem = null;
 		
 		try {
 			Class.forName(Util.DRIVER);
@@ -429,8 +430,7 @@ public class MemberJDBCDAO_android implements MemberDAO_interface_android  {
 			ResultSet rs = ps.executeQuery();
 			
 			while (rs.next()) {
-				MemberVO_android mem = new MemberVO_android();
-				mem = new MemberVO_android();
+				mem = new Member();
 				mem.setMem_no(rs.getString("mem_no"));
 				mem.setMem_name(rs.getString("mem_name"));
 				mem.setMem_nick(rs.getString("mem_nick"));
@@ -444,9 +444,9 @@ public class MemberJDBCDAO_android implements MemberDAO_interface_android  {
 				mem.setMem_card(rs.getString("mem_card"));
 				mem.setMem_expiry(rs.getString("mem_expiry"));
 				
-				String member = new Gson().toJson(mem);
-				jobj.addProperty("member", member);
-				jobj.addProperty("isMember", true);
+//				String member = new Gson().toJson(mem);
+//				jobj.addProperty("member", member);
+//				jobj.addProperty("isMember", true);
 			}
 			
 		} catch (ClassNotFoundException e) {
@@ -473,7 +473,7 @@ public class MemberJDBCDAO_android implements MemberDAO_interface_android  {
 			}
 		}
 		
-		return jobj.toString();
+		return mem;
 	}
 
 	@Override

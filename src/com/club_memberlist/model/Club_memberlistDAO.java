@@ -20,7 +20,7 @@ public class Club_memberlistDAO  implements Club_memberlistDAO_interface{
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/CA105G1");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/CA105G1DB");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
