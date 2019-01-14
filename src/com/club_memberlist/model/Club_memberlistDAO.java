@@ -540,7 +540,7 @@ public class Club_memberlistDAO  implements Club_memberlistDAO_interface{
 				
 				pstmt.setString(1, club_no);
 				pstmt.setString(2, mem_no);
-				
+				 
 				pstmt.executeUpdate();
 				
 			} catch (SQLException e) {
