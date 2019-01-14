@@ -257,13 +257,14 @@
 			
 			webSocket.onmessage = function(event){
 				$(".notation").show();
-				var notation = event.data;
-					console.log(notation);
-					$(".notation").append("<div class='alert alert-info alert-dismissable' role='alert'>"+
-					"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"+
-		         	"<span aria-hidden='true' style='color: white;'>再說</span></button>"+
-	            	"<p class='alert-title'>有捧油想加加</p><p class='alert-body'>"+
-	            	notation+"</p></div>");
+				var jsonObj = JSON.parse(event.data);
+					if(jsonObj.type==='notation'){
+						$(".notation").append("<div class='alert alert-info alert-dismissable' role='alert'>"+
+						"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"+
+			         	"<span aria-hidden='true' style='color: deeppink;'>好</span></button>"+
+		            	"<p class='alert-title'>"+jsonObj.to+"</p><p class='alert-body'>"+
+		            	jsonObj.message+"</p></div>");
+					}
 			};
 			
 			webSocket.onclose = function(event){
@@ -273,8 +274,8 @@
 		}
 		
 		function sendMessage(){
-			webSocket.send('${memberlistVO.mem_name}');
-			console.log('${memberlistVO.mem_name}');
+			webSocket.send('${memberlistVO.mem_no}');
+			console.log('${memberlistVO.mem_no}');
 		}
 	</script>
 	<jsp:include page="/front-end/CA105G1_footer.jsp"/>

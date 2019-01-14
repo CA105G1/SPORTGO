@@ -66,7 +66,9 @@
 											 	團長：${memberlistService.getOneMem(sg_infoVO.mem_no).mem_name}<br>
 											 	時間：${sg_infoVO.sg_date}<br>
 												</a>
-												<div></div>
+												<div class="list-group-item"  style="display:flex;margin-top: 37.5px;margin-bottom: 37.5px;border:0;">
+												${sg_infoVO.sg_status}
+												</div>
 											</c:if>
 									</c:forEach>
 								</c:forEach>
@@ -90,7 +92,9 @@
 										 時間：${sg_infoVO.sg_date}<br>
 										
 										</a>
-										<div></div>
+										<div class="list-group-item"  style="display:flex;margin-top: 37.5px;margin-bottom: 37.5px;border:0;">
+										${sg_infoVO.sg_status}
+										</div>
 								</c:forEach>
 							</div>
 						</div>
@@ -132,13 +136,13 @@
 									/Sg_info/Sg_infoImg.do?sg_no=${sg_infoVO.sg_no}" style="height:100%;position:absolute;">
 									</div>
 									<a href="<%=request.getContextPath()%>/front-end/Sg_info/Sg_infoGetByPkForHead.jsp?Sg_no=${sg_infoVO.sg_no}"
-									class="list-group-item" style="display:flex;margin-top: 37.5px;margin-bottom: 37.5px;">
+									class="list-group-item" style="display:flex;margin-top: 37.5px;margin-bottom: 37.5px;border:0;">
 									${sg_infoVO.sg_name}<br>
 									團長：${memberlistService.getOneMem(sg_infoVO.mem_no).mem_name}<br>
 									時間：${sg_infoVO.sg_date}<br>
 									</a>
 									<a href=""
-									class="list-group-item"  style="display:flex;margin-top: 37.5px;margin-bottom: 37.5px;">評價</a>
+									class="list-group-item"  style="display:flex;margin-top: 37.5px;margin-bottom: 37.5px;border:0;">評價</a>
 								</c:forEach>
 							</div>
 						</div>

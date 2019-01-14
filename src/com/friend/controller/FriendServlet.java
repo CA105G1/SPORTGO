@@ -114,7 +114,7 @@ public class FriendServlet extends HttpServlet {
 				MemberlistVO member = memberService.getOneMem(mem1_no);
 				String mem_name = member.getMem_name();
 				if(dao!=null&& mem_name!=null && mem2_no !=null) {
-					dao.appendRedis(mem2_no, mem_name);
+					dao.appendRedis(mem2_no,"notation","捧油加加",mem_name+" 想加你好友唷");
 					System.out.println("insert into Redis succeed.");
 				}
 			} catch (RuntimeException re) {
