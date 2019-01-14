@@ -293,4 +293,10 @@ public class ClubJDBCDAO implements ClubDAO_interface{
 //			System.out.println();
 //		}
 	}
+
+	@Override
+	public List<ClubVO> getAllForPublic() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

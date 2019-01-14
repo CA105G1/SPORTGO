@@ -458,12 +458,12 @@ public class Sg_infoServlet extends HttpServlet {
 				Sg_infoService svc = new Sg_infoService();
 				svc.updateStatus(sg_no, sg_status);
 				
-				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/memberlist/sg.jsp");
+				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/memberlist/MemManager.do?action=Member_Sg");
 				dispatcher.forward(req, res);
 				
 			}catch(Exception e) {
 				errorMsg.add(e.getMessage());
-				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/memberlist/sg.jsp");
+				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/memberlist/MemManager.do?action=Member_Sg");
 				dispatcher.forward(req, res);
 			}
 		}

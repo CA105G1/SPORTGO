@@ -52,6 +52,10 @@ public class ClubService {
 		return dao.getAll();
 	}
 	
+	public List<ClubVO> getAllForPublic(){
+		return dao.getAllForPublic();
+	}
+	
 	public List<ClubVO> getAll(Map<String, String[]> map) {
 		return dao.getAll(map);
 	}

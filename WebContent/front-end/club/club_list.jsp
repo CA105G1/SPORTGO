@@ -5,11 +5,16 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%
-	ClubService clubSvc = new ClubService();
-	List<ClubVO> list = clubSvc.getAll();
-	pageContext.setAttribute("list", list);
+	List<ClubVO> list = null;
+	//取得複合查詢後的list
+	list = (List<ClubVO>)request.getAttribute("list");
+	//若沒有值就代表是第一次載入頁面，直接getAll
+	if(list == null){
+		ClubService clubSvc = new ClubService();
+		list = clubSvc.getAllForPublic();
+		pageContext.setAttribute("list", list);
+	}
 //  ClubVO clubVO = (ClubVO) request.getAttribute("clubVO");
-
 %>
 
 <html>
@@ -183,7 +188,7 @@
 								<a class="list-group-item list-group-item-actionfront " data-toggle="list" href="#searchclub" role="tab">
 								搜尋社團
 								</a>
-				      	<form method="post" actionfront="<%= request.getContextPath()%>/clubfront.do">
+				      	<form method="post" action="<%= request.getContextPath()%>/clubfront.do">
 				      		<div class="table-responsive">
 					      		<table class="table table-hover text-center" align="center">
 					      			

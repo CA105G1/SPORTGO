@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,8 @@ import com.club.model.ClubService;
 import com.club.model.ClubVO;
 import com.post_info.model.Post_infoService;
 import com.post_info.model.Post_infoVO;
+import com.sg_info.model.Sg_infoService;
+import com.sg_info.model.Sg_infoVO;
 import com.sport.model.SportService;
 
 
@@ -366,6 +369,45 @@ if ("insert".equals(actionfront)) {
 				failureView.forward(req, res);
 			}
 		}
+
+
+if("clubCompositeQuery".equals(actionfront)) {
+	List<String> errorMsg = new LinkedList<String>();
+	req.setAttribute("errorMsg", errorMsg);
+	
+	try {
+		///////////將查詢資料轉為MAP///////////////////
+//		Map<String, String[]> map = req.getParameterMap();
+		HttpSession session = req.getSession();
+		Map<String, String[]> map = (Map<String, String[]>)session.getAttribute("map");
+		if (req.getParameter("whichPage") == null){
+		HashMap<String, String[]> map1 = new HashMap<String, String[]>(req.getParameterMap());
+		session.setAttribute("map",map1);
+			map = map1;
+		} 
+		
+		///////////開始查詢/////////////////////
+		//若抓不到map就代表不是複合查詢
+		if(map != null) {
+			ClubService svc = new ClubService();
+			List<ClubVO> list = svc.getAll(map);
+			///////////轉交資料/////////////////////
+			req.setAttribute("list", list);
+		}
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/club/club_list.jsp");
+		dispatcher.forward(req, res);
+		
+	}catch(Exception e) {
+		errorMsg.add(e.getMessage());
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/club/club_list.jsp");
+		dispatcher.forward(req, res);
+	}
+}
+
+
+
+
+
 		
 	}
 	
