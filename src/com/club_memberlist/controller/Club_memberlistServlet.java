@@ -181,8 +181,6 @@ if ("dropoutclub".equals(action)) {
 		
 		String club_no = req.getParameter("club_no");
 		String mem_no = req.getParameter("mem_no");
-System.out.println("club_no--"+club_no);
-System.out.println("mem_no--"+mem_no);
 //		Club_memberlistVO club_memberlistVO = new Club_memberlistVO();
 //		
 //		club_memberlistVO.setClub_no(club_no);
@@ -192,7 +190,6 @@ System.out.println("mem_no--"+mem_no);
 		Club_memberlistService club_memberlistSvc = new Club_memberlistService();
 		club_memberlistSvc.dropoutclub(club_no, mem_no);
 
-System.out.println("------");
 		
 		/***************************3.修改完成,準備轉交(Send the Success view)*************/
 

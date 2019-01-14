@@ -171,7 +171,7 @@ if(list == null){
 					<div class="btn sg_infoList" style="background-color: #DDDDDD">
 					</c:if>
 						<div class="col-xs-12 col-sm-6 sg_picDiv">
-							<img src="<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${Sg_infoVO.sg_no}" class="sg_pic img-responsive img-rounded">
+							<img src="<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${Sg_infoVO.sg_no}" class="portrait img-responsive img-rounded">
 						</div>
 						<div class="col-xs-12 col-sm-6">
 							<table class="table text-center" background="1" style="border-color:#FF0000">
@@ -263,9 +263,6 @@ if(list == null){
     	justify-content: center;
     	align-items: center;
     }
-    .img-responsive{
-    	border-radius: 50px;
-    }
 	th{
 		text-align:center;
 	}
@@ -278,8 +275,31 @@ if(list == null){
 		text-align: center;
     	text-align-last: center;
 	}
-	.sg_picDiv{
+	
+	.sg_picDiv {
+		position: relative;
+		width: 50%;
+		height: 200px;
+		overflow: hidden;
+		border-radius: 50px;
+	  
 		padding:0px;
+		margin-top:auto;
+		margin-bottom:auto;
+	}
+	.sg_picDiv img {
+	  position: absolute;
+	  left: 50%;
+	  top: 50%;
+	  height: 100%;
+	  width: auto;
+	  -webkit-transform: translate(-50%,-50%);
+	      -ms-transform: translate(-50%,-50%);
+	          transform: translate(-50%,-50%);
+	}
+	.sg_picDiv img.portrait {
+	  width: 100%;
+	  height: auto;
 	}
 	  
 </style>

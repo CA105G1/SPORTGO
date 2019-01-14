@@ -28,7 +28,7 @@ public class Sg_infoImgServlet extends HttpServlet {
 		String sg_no = req.getParameter("sg_no");
 		Sg_infoService svc = new Sg_infoService();
 		byte[] pic = svc.GetByPK(sg_no).getSg_pic();
-		pic = shrink(pic, 300);
+//		pic = shrink(pic, 300);
 		
 		res.setContentType("image/*");
 		res.setContentLength(pic.length);
