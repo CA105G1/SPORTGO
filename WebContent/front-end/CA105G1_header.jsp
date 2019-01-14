@@ -72,7 +72,7 @@
 									if(!"/CA105G1/front-end/memberlist/Login.jsp".equals(request.getRequestURI())){
 										session.setAttribute("location",request.getRequestURI()); 
 									}
-									//System.out.println("log_in_location :　"+ request.getRequestURI());
+									System.out.println("log_in_location :　"+ request.getRequestURI());
 								%>
 								<a href="<%=request.getContextPath()%>/front-end/memberlist/Login.jsp?">登入/註冊</a>
 							</li>
@@ -86,7 +86,7 @@
 									if(!"/CA105G1/front-end/memberlist/Login.jsp".equals(request.getRequestURI())){
 										session.setAttribute("location",request.getRequestURI()); 
 									}
-									//System.out.println("log_out_location :　"+ request.getRequestURI());
+									System.out.println("log_out_location :　"+ request.getRequestURI());
 								%>
 								<a href="<%=request.getContextPath()%>/front-end/memberlist/logout.do">登出</a>
 							</li>
