@@ -62,7 +62,7 @@ public class Club_memberlistDAO  implements Club_memberlistDAO_interface{
 				pstmt.setString(4, clubmemberlistVO.getCmem_class());
 				pstmt.setTimestamp(5, clubmemberlistVO.getSilence_time());
 				
-				
+				 
 				pstmt.executeUpdate();
 				
 			} catch (SQLException se) {
