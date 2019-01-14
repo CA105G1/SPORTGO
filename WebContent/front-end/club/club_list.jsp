@@ -154,7 +154,7 @@
 							<textarea name="club_intro" id="club_intro" class="form-control" ROWS=10 ></textarea>
 					</div>
 				<br>
-				<br>
+				<br> 
 					<div class="form-group"  style="display:none" >
 						<label class="photo_ext">圖片副檔名</label>
 							<textarea name="photo_ext" value="jpg" id="photo_ext" class="form-control" ROWS=10 ></textarea>
