@@ -35,7 +35,8 @@
 //  	pageContext.setAttribute("list",list);
 
 // //刪除回覆
- 	
+// 	HttpSession session2 = request.getSession();
+// 	MemberlistVO memberlistVO = (MemberlistVO)session2.getAttribute("mem_no");
 %>
 
 
@@ -111,13 +112,9 @@
     								
     								
 <!-------------------------------------------- 留言版 --------------------------------------------------->
-							<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/respones.do" name="form">  
   							<div class="card-footer text-muted">
+							<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/respones.do" name="form">  
 									<div class="card" id="respones">
-									<div>
-									System.out.println(${postinfoVO.post_no});
-									System.out.println(${memberlistVO.mem_no});
-									</div>
 							  			<div class="card-body">
 					    <!-- 留言輸入框 -->  <textarea class="form-control" name="res_content" id="res_content" placeholder="我要留言" row="5"></textarea>
 											<input type="hidden" name="club_no" id="club_no" value="${postinfoVO.club_no}"/>
@@ -131,8 +128,8 @@
 							    			<button type="submit" class="btn btn-primary">送出</button>
 							  			</div>
 									</div>
+							</FORM> 		
   							</div>
-							</FORM> <!-- /respones.do -->		
   							
 <!-------------------------------------------- 留言版 ---------------------------------------------------->
 <!----------------------------------------------回文------------------------------------------------------>
@@ -145,25 +142,15 @@
 												<table class="table">
 													<jsp:useBean id="responesSvc" scope="page" class="com.respones.model.ResponesService"/>
 													<c:forEach var="responesVO" items="${responesSvc.getallfrompost(postinfoVO.post_no)}">
-											<!-- 刪除 --><FORM METHOD="post" ACTION="<%=request.getContextPath()%>/respones.do" name="form">
 				    									<tr>
-				    										<input type="hidden" name="res_no" id="res_no" value="${responesVO.res_no}"/>
-				    										<jsp:useBean id="post_infoSvc" scope="page" class="com.post_info.model.Post_infoService"/>
-				    										<input type="hidden" name="club_no" id="club_no" value="${post_infoSvc.getOnePost_info(responesVO.post_no).getClub_no()}"/>
-					      			 <!-- 回文者的照片-->    		<td scope="col">
-					      			 								<img src="<%=request.getContextPath()%>/showPicture?mem_no=${responesVO.mem_no}" >
-					      			 							</td>
-					      				 <!-- 回文內容-->		<td scope="col">
-					      				 							${responesVO.res_content}
-				      				 							</td>
-				      				 							<td>
-			 													<button type="submit" class="btn btn-light" name="action" value="delete" >
- 							 										刪除 
- 																</button>
-				      				 							</td> 
+					      			 <!-- 回文者的照片-->    <td scope="col">
+					      			 							<img src="<%=request.getContextPath()%>/showPicture?mem_no=${responesVO.mem_no}" >
+					      			 						</td>
+					      				 <!-- 回文內容-->	<td scope="col">
+					      				 						${responesVO.res_content}
+				      				 						</td>
  				      				 						
 				    									</tr>
-											<!-- 刪除 --></FORM>
 			    									</c:forEach>	
 												</table>
 										</div>

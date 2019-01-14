@@ -15,6 +15,7 @@
 	
 //  Post_infoService post_infoSvc = new Post_infoService();
 // 	Post_infoVO post_infoVO = post_infoSvc.getOnePost_info("P0001");
+
  //	Post_infoVO post_infoVO = (Post_infoVO)request.getAttribute("post_infoVO");
  	
 /***依照社團編號去找對應的貼文*******************************************************************/	
@@ -33,9 +34,7 @@
 //  	ResponesService responesSvc = new ResponesService(); 
 //  	List<ResponesVO> responeslist = responesSvc.getallfrompost(post_no);
 //  	pageContext.setAttribute("list",list);
-
-// //刪除回覆
- 	
+	
 %>
 
 
@@ -111,13 +110,9 @@
     								
     								
 <!-------------------------------------------- 留言版 --------------------------------------------------->
-							<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/respones.do" name="form">  
   							<div class="card-footer text-muted">
+							<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/respones.do" name="form">  
 									<div class="card" id="respones">
-									<div>
-									System.out.println(${postinfoVO.post_no});
-									System.out.println(${memberlistVO.mem_no});
-									</div>
 							  			<div class="card-body">
 					    <!-- 留言輸入框 -->  <textarea class="form-control" name="res_content" id="res_content" placeholder="我要留言" row="5"></textarea>
 											<input type="hidden" name="club_no" id="club_no" value="${postinfoVO.club_no}"/>
@@ -131,43 +126,27 @@
 							    			<button type="submit" class="btn btn-primary">送出</button>
 							  			</div>
 									</div>
+							</FORM> 		
   							</div>
-							</FORM> <!-- /respones.do -->		
   							
 <!-------------------------------------------- 留言版 ---------------------------------------------------->
 <!----------------------------------------------回文------------------------------------------------------>
-							<div class="dropdown">
-					  			<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					    			顯示所有留言
-					  			</button>
-  									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">  
-										<div class="dropdown-item">
-												<table class="table">
-													<jsp:useBean id="responesSvc" scope="page" class="com.respones.model.ResponesService"/>
-													<c:forEach var="responesVO" items="${responesSvc.getallfrompost(postinfoVO.post_no)}">
-											<!-- 刪除 --><FORM METHOD="post" ACTION="<%=request.getContextPath()%>/respones.do" name="form">
-				    									<tr>
-				    										<input type="hidden" name="res_no" id="res_no" value="${responesVO.res_no}"/>
-				    										<jsp:useBean id="post_infoSvc" scope="page" class="com.post_info.model.Post_infoService"/>
-				    										<input type="hidden" name="club_no" id="club_no" value="${post_infoSvc.getOnePost_info(responesVO.post_no).getClub_no()}"/>
-					      			 <!-- 回文者的照片-->    		<td scope="col">
-					      			 								<img src="<%=request.getContextPath()%>/showPicture?mem_no=${responesVO.mem_no}" >
-					      			 							</td>
-					      				 <!-- 回文內容-->		<td scope="col">
-					      				 							${responesVO.res_content}
-				      				 							</td>
-				      				 							<td>
-			 													<button type="submit" class="btn btn-light" name="action" value="delete" >
- 							 										刪除 
- 																</button>
-				      				 							</td> 
- 				      				 						
-				    									</tr>
-											<!-- 刪除 --></FORM>
-			    									</c:forEach>	
-												</table>
-										</div>
-  									</div>
+							<div class="res_content">
+								<div class="container">
+									<table class="table">
+										<jsp:useBean id="responesSvc" scope="page" class="com.respones.model.ResponesService"/>
+										<c:forEach var="responesVO" items="${responesSvc.getallfrompost(postinfoVO.post_no)}">
+	    									<tr>
+		      			 <!-- 回文者的照片-->    <td scope="col">
+		      			 							<img src="<%=request.getContextPath()%>/showPicture?mem_no=${responesVO.mem_no}" >
+		      			 						</td>
+		      				 <!-- 回文內容-->	<td scope="col">
+		      				 						${responesVO.res_content}
+	      				 						</td>
+	    									</tr>
+    									</c:forEach>	
+									</table>
+								</div>
 							</div>
 <!----------------------------------------------回文------------------------------------------------------>
    								</c:forEach><!-- 最外層postinfoVO的 -->

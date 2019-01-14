@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import com.memberlist.model.MemberlistVO;
 import com.post_info.model.Post_infoService;
 import com.post_info.model.Post_infoVO;
 import com.respones.model.ResponesService;
@@ -50,13 +51,13 @@ if ("getOne_For_Display".equals(action)) {
 
 			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
-				String post_no = req.getParameter("post_no");
+				String res_no = req.getParameter("res_no");
 				
 				
 				/***************************2.開始查詢資料*****************************************/
 				ResponesService responesSvc = new ResponesService();
 				
-				ResponesVO responesVO = responesSvc.getOneRespones(post_no);
+				ResponesVO responesVO = responesSvc.getOneRespones(res_no);
 				
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
@@ -82,11 +83,11 @@ if ("getOne_For_Update".equals(action)) { // 來自listAllEmp.jsp的請求
 			
 			try {
 				/***************************1.接收請求參數****************************************/
-				String post_no = req.getParameter("post_no");
+				String res_no = req.getParameter("res_no");
 				
 				/***************************2.開始查詢資料****************************************/
 				ResponesService responesSvc = new ResponesService();
-				ResponesVO responesVO = responesSvc.getOneRespones(post_no);
+				ResponesVO responesVO = responesSvc.getOneRespones(res_no);
 								
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
 				req.setAttribute("responesVO", responesVO);         // 資料庫取出的empVO物件,存入req
@@ -160,8 +161,8 @@ if ("insert".equals(action)) {
 			try {
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 				String club_no =req.getParameter("club_no"); ///
+				String res_no = req.getParameter("res_no");
 				String post_no = req.getParameter("post_no");
-				
 				String mem_no = req.getParameter("mem_no");
 				if(mem_no == null || mem_no.trim().length() == 0) {
 					errorMsgs.add("請登入");
@@ -171,9 +172,7 @@ if ("insert".equals(action)) {
 				if (res_content == null || res_content.trim().length() == 0) {
 					errorMsgs.add("回覆內容請勿空白");
 				}	
-				
 				Timestamp res_date = new Timestamp(System.currentTimeMillis());
-				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
@@ -184,17 +183,15 @@ if ("insert".equals(action)) {
 				/***************************2.開始新增資料***************************************/
 				ResponesService responesSvc = new ResponesService();
 				ResponesVO responesVO = responesSvc.addRespones(post_no, mem_no, res_content, res_date);
-				
 				/// select 貼文列表
 				Post_infoService post_infoService = new Post_infoService();
 				List<Post_infoVO> postvolist = post_infoService.getAllfromclub(club_no);
-				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				req.setAttribute("postvolist", postvolist);
 				req.setAttribute("responesVO", responesVO);
 				String url = CLUBPAGE;
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
-				successView.forward(req, res);				
+				successView.forward(req, res);
 //System.out.println("哈囉我在這裡呦");
 				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {
@@ -205,6 +202,40 @@ if ("insert".equals(action)) {
 				failureView.forward(req, res);
 			}
 		}
+
+//刪除回覆
+if ("delete".equals(action)) {
+					List<String> errorMsgs = new LinkedList<String>();
+					req.setAttribute("errorMsgs", errorMsgs);
+/******************************************************************************************************/					
+					HttpSession session = req.getSession();
+				 	MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO");
+					try {
+					/***************************1.接收請求參數****************************************/
+						String res_no = req.getParameter("res_no");
+						String club_no = req.getParameter("club_no");
+					/***************************2.開始查詢資料****************************************/
+						ResponesService responesSvc = new ResponesService();
+						responesSvc.deleteBymem_no(res_no,memberlistVO.getMem_no());
+						
+						Post_infoService postinfo = new Post_infoService();
+						List<Post_infoVO> postvolist = postinfo.getAllfromclub(club_no);
+						
+					/***************************3.查詢完成,準備轉交(Send the Success view)************/
+						req.setAttribute("postvolist", postvolist);
+						RequestDispatcher successView = req.getRequestDispatcher(CLUBPAGE);
+						successView.forward(req, res);
+						
+					/***************************其他可能的錯誤處理**********************************/
+					} catch (Exception e) {
+					errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
+					RequestDispatcher failureView = req
+							.getRequestDispatcher(CLUBPAGE);
+					failureView.forward(req, res);
+					}
+				}
+	
+	
 		
 
 	}

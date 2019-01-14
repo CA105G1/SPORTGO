@@ -44,6 +44,9 @@ public class ResponesDAO  implements ResponesDAO_interface{
 			"SELECT * FROM respones where post_no=?";
 		private static final String DELETE = 
 			"DELETE FROM respones  where res_no = ? AND mem_no = ? ";
+		private static final String DELETEBYRES = /////////////////
+				"DELETE FROM respones  where res_no = ?";
+		
 		
 		@Override
 		public void insert(ResponesVO responesVO) {
@@ -301,9 +304,7 @@ se.printStackTrace();
 			return list_respones;
 		}
 
-		public List<ResponesVO> delete(String res_no,String mem_no) {
-			List<ResponesVO> list_respones = new ArrayList<ResponesVO>();
-			ResponesVO responesVO = null;
+		public void delete(String res_no,String mem_no) {
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
@@ -313,6 +314,50 @@ se.printStackTrace();
 				pstmt = con.prepareStatement(DELETE);
 				pstmt.setString(1, res_no);
 				pstmt.setString(2, mem_no);
+				pstmt.executeUpdate();
+				
+			
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+			}finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+			}
+		}
+
+
+		public List<ResponesVO> delete(String res_no) {/////////////////
+			List<ResponesVO> list_responesbyres_no = new ArrayList<ResponesVO>();
+			ResponesVO responesVO = null;
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			try {
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(DELETEBYRES);
+				pstmt.setString(1, res_no);
+				
 				rs = pstmt.executeQuery();
 				while(rs.next()) {
 					responesVO = new ResponesVO();
@@ -321,7 +366,7 @@ se.printStackTrace();
 					responesVO.setMem_no(rs.getString("mem_no"));
 					responesVO.setRes_content(rs.getString("res_content"));
 					responesVO.setRes_date(rs.getTimestamp("res_date"));
-					list_respones.add(responesVO);
+					list_responesbyres_no.add(responesVO);
 				
 				}
 			
@@ -351,9 +396,10 @@ se.printStackTrace();
 					}
 				}
 			}
-			return list_respones;
+			return list_responesbyres_no;
 		}
-		
+
+
 		
 
 
