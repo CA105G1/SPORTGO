@@ -79,10 +79,10 @@ if ("insert".equals(action)) { //來自listOnePro_front.jsp的請求
 			//以及存在redis會有覆蓋的問題
 			
 			/***************************2.開始新增資料***************************************/
-			ShoppingcartDAO carDAO = new ShoppingcartDAO();
-			carDAO.insert(cartVO);
+			ShoppingcartDAO cartDAO = new ShoppingcartDAO();
+			cartDAO.insert(cartVO);
 			
-			
+			cartDAO = null;
 			/***************************3.開始查詢資料***********/
 			ProductService proSvc = new ProductService();   //準備再次使用pro_no取得proVO物件
 			ProductVO proVO = proSvc.getOneProduct(pro_no); //資料庫取出的proVO物件,
@@ -146,7 +146,7 @@ if ("getAll_For_Display".equals(action)) { //來自listOnePro_front.jsp的請求
 			}
 			
 //		
-			
+			cartDAO = null;
 			/***************************4.準備轉交(Send the Success view)***********/
 			req.setAttribute("proVOList", proVOList);
 			req.setAttribute("hAll", hAll);
@@ -181,7 +181,7 @@ if("delete".equals(action)) {
 				proVOList.add(proSvc.getOneProduct(pro_no1));
 			}
 			
-			
+			cartDAO = null;
 			/***************************4.準備轉交(Send the Success view)***********/
 			res.setContentType("text/plain");
 			res.setCharacterEncoding("UTF-8");

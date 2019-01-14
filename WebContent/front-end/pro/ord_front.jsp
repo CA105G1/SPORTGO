@@ -159,10 +159,62 @@
 		.divAdd{
 			/*按鈕add靠右*/
 		}
+        /***評價css****/
+		.s-txt {
+			/*float:left;*/
+
+		}
+		.s-xxs {
+			display:inline-block;
+			vertical-align:middle;
+		}
+		.s-xx { 
+			float:left;
+			color:#e3e3e3;
+			padding-right:8px;
+			cursor:pointer;
+			font-size: 25px;
+			vertical-align:middle;
+		}
+				/*外框*/
+		.s-haoping {
+			color:#f13a3a;
+			border:1px solid #f13a3a;
+			padding:2px 4px;
+			font-size:12px;
+			vertical-align:middle;
+			position:relative;
+			display:none;
+		}
+		/*外框*/
+		.s-haoping .s-hp-triangle0 {
+			border-width:4px;
+			position:absolute;
+			top:5px;
+			left:-8px;
+			border-color:transparent #f13a3a transparent transparent;
+			border-style:dashed solid dashed dashed;
+		}
+		/*外框*/
+		.s-haoping .s-hp-triangle1 {
+			border-width:4px;
+			position:absolute;
+			top:5px;
+			left:-7px;
+			border-color:transparent  #f8f8f8 transparent transparent;
+			border-style:dashed solid dashed dashed;
+		}
+				.divStyle{
+            border-bottom: 1px dotted #c8cbcc;
+		}
+		/*星星顏色*/
+		.color-f13a3a {
+			color:#f13a3a;
+		}
 		</style>
 	</head>
 
-	<body>
+	<body> 
 <%@ include file="/front-end/CA105G1_header.file" %>
 		<div class="container-fluid backgc">
 			<div class="row">
@@ -304,6 +356,24 @@
 																									${proSvc.getOneProduct(orddetails.pro_no).pro_shelve}
 																								</td>
 																								<!-- 下拉式按鈕(目前無) -->
+																								<td>
+																								    <!-- 評價系統 -->
+																									<div class="star">
+																									    <span class="s-txt">產品評價：</span>
+																										    <span class="s-xxs">
+																										        <span class="iconfont s-xx">☆</span>
+																											    <span class="iconfont s-xx">☆</span>
+																											    <span class="iconfont s-xx">☆</span>
+																											    <span class="iconfont s-xx">☆</span>
+																											    <span class="iconfont s-xx">☆</span>
+																										    </span>
+																									    <span class="s-haoping">
+																										<em class="s-hp-triangle0">
+																									        </em><em class="s-hp-triangle1">
+																									        </em><span class="s-hp-txt">5分好評</span>
+																									    </span>
+																									</div>
+																								</td>
 																							</tr>
 																						</c:forEach>
 																					</tbody>
@@ -344,14 +414,70 @@
 				         })
 					})
 				})
-			})
+			});
 			function creatQuerycancel(ord_no){
-				var queryString= {"action":"cancel", "ord_no":ord_no , "ord_status" :"取消"};
+				var queryString= {"action":"ok_cancel", "ord_no":ord_no , "ord_status" :"取消"};
 				return queryString;
 			}
 			function returnpath(){
 				window.location.replace("<%= request.getContextPath()%>/front-end/pro/listAllPro_front.jsp"); 
 			}
+			//評價jquery
+		    var isclick = false;
+		    var arr = ["1分差評", "2分中評", "3分中評", "4分好評", "5分好評"];
+		    var clickind = -1;
+
+		    $(".s-xx").on("click", function() {
+		        isclick = true;
+		        clickind = $(this).index();
+		    });
+		    
+		    $(".s-xx").hover(function() {
+		        var ind = $(this).index();
+		        $(this).siblings(".s-xx").removeClass("color-f13a3a");
+		        for (var i = 0; i <= ind; i++) {
+		            $(".s-xx").eq(i).addClass("color-f13a3a");
+		            $(".s-haoping").siblings(".s-hp-txt").text(arr[i]).end().show();
+		        }
+		    }, function() {
+		        if (!isclick) {
+		            $(".s-xx").removeClass("color-f13a3a");
+		            $(".s-haoping").hide();
+		        } else {
+		            $(".s-xx").removeClass("color-f13a3a");
+		            for (var i = 0; i <= clickind; i++) {
+		                $(".s-xx").eq(i).addClass("color-f13a3a");
+		                $(".s-haoping").find(".s-hp-txt").text(arr[i]).end().show();
+		            }
+		        }
+		    });
+		    function creatQueryAssess(){
+		    	var queryString= {"action":"assess", "ord_no":ord_no , "ord_status" :"取消"};
+				return queryString;
+		    }
+		    
+		    function sendAssess(){
+		    	alert("有跳出");
+		    	$.ajax({
+					 type: "POST",
+					 url: "<%= request.getContextPath()%>/pro/pro.do",
+					 async:false,
+					 data: creatQueryAssess(val),
+					 dataType: "json",
+					 success: function (data){
+//						 console.log("取消");
+<%-- 						 window.location.replace("<%= request.getContextPath()%>/front-end/pro/listAllPro_front.jsp");  --%>
+				     },
+				     error: function(){alert("AJAX-class發生錯誤囉!")}
+		         })
+		    	
+		    }
+// 		    $(window).bind('beforeunload',function(){
+		    	
+		    	
+// 		    	return '提示資訊';
+// 		    	}
+// 		    );
 			
 				// document.getElementById("display").style.display = 'none';
 				//    $(function() {  //將圖片預覽

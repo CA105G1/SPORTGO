@@ -77,7 +77,9 @@ public class ProductService {
 	public List<ProductVO> getAll(Map<String, String[]> map) {
 		return proDAO.getAll(map);
 	}
-	
+	public List<ProductVO> getAllOnShelve(){
+		return proDAO.getAllOnShelve();
+	}
 	public void deletePro (String pro_no) {
 		proDAO.delete(pro_no);
 	}
@@ -88,5 +90,12 @@ public class ProductService {
 	
 	public ProductVO getLastProduct() {
 		return proDAO.getLastVO();
+	}
+	
+	public int updateStock(String pro_no,Integer cart_pro_stock) {
+		return proDAO.updateStock(pro_no, cart_pro_stock);
+	}
+	public ProductVO getProductStock(String pro_no,Integer cart_pro_stock) {
+		return proDAO.getSelectStock(pro_no, cart_pro_stock);
 	}
 }

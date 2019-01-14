@@ -3,6 +3,9 @@ package com.ord.model;
 import java.sql.*;
 import java.util.*;
 
+import javax.naming.Context;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 
 import com.orddetails.model.*;
 import com.product.model.ProductVO;
@@ -27,7 +30,18 @@ public class OrdJDBCDAO implements OrdDAO_interface{
 	private static final String UPDATA_STATUS = "UPDATE ORD SET   ORD_STATUS = ? WHERE ORD_NO = ?";
 	//會員編號查詢
 	private static final String SELECT_MEM_NO = "SELECT * FROM ORD WHERE MEM_NO = ?";
-	
+	//連線池版
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new javax.naming.InitialContext();
+			ds = (DataSource)ctx.lookup("java:comp/env/jdbc/CA105G1DB");
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	//JDBC版本
     static {
     	try {
 			Class.forName(DRIVER);
@@ -42,7 +56,10 @@ public class OrdJDBCDAO implements OrdDAO_interface{
 		Connection con = null; 
 		PreparedStatement ps = null;
 		try {
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+		    //連線池
+		    con = ds.getConnection();
+		    //JDBC版
+//			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			ps = con.prepareStatement(INERT_INTO);
 			ps.setString(1, ordVO.getMem_no());
 			ps.setTimestamp (2,ordVO.getOrd_deldate());
@@ -92,7 +109,10 @@ public class OrdJDBCDAO implements OrdDAO_interface{
         Connection con = null; 
 		PreparedStatement ps = null;
 		try {
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+		    //連線池
+		    con = ds.getConnection();
+		    //JDBC版
+//			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			ps = con.prepareCall(UPDATA);
 			ps.setTimestamp(1, ordVO.getOrd_deldate());
 			ps.setString(2, ordVO.getOrd_status());
@@ -140,7 +160,10 @@ public class OrdJDBCDAO implements OrdDAO_interface{
 		Connection con = null; 
 		PreparedStatement ps = null;
 		try {
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+		    //連線池
+		    con = ds.getConnection();
+		    //JDBC版
+//			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			ps = con.prepareStatement(DELETE);
 			ps.setString(1, ord_no);
 			count = ps.executeUpdate();
@@ -184,7 +207,10 @@ public class OrdJDBCDAO implements OrdDAO_interface{
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+		    //連線池
+		    con = ds.getConnection();
+		    //JDBC版
+//			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			ps = con.prepareStatement(SELECT);
 			ps.setString(1, ord_no);
 			rs = ps.executeQuery();
@@ -239,7 +265,10 @@ public class OrdJDBCDAO implements OrdDAO_interface{
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+		    //連線池
+		    con = ds.getConnection();
+		    //JDBC版
+//			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			ps = con.prepareStatement(SELECT_ALL);
 			rs = ps.executeQuery();
 			
@@ -294,7 +323,10 @@ public class OrdJDBCDAO implements OrdDAO_interface{
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+		    //連線池
+		    con = ds.getConnection();
+		    //JDBC版
+//			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			ps = con.prepareStatement(UPDATA_STATUS);
 			ps.setString(1, ord_status);
 			ps.setString(2, ord_no);
@@ -350,7 +382,10 @@ public class OrdJDBCDAO implements OrdDAO_interface{
 		String next_ord_no = null;
 		try {
 
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+		    //連線池
+		    con = ds.getConnection();
+		    //JDBC版
+//			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			
 			// 1●設定於 pstm.executeUpdate()之前
     		con.setAutoCommit(false);

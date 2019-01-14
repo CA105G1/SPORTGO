@@ -5,22 +5,31 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-
+import com.memberlist.model.JedisUtil;
 import com.product.model.ProductJDBCDAO;
 import com.product.model.ProductService;
 import com.product.model.ProductVO;
 
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 public class ShoppingcartDAO implements Shoppingcart_interface{
 	private static final String HOST = "localhost";
 	private static final Integer PORT = 6379;
 	private static final String AUTH = "123456";
-	
 	public ShoppingcartDAO() {
 		super();
 	}
+	/**連線池版本**/
+//	private static JedisPool pool = null;
+//	 private static final String AUTH = "123456";
+//	 private static Jedis jedis;
+//	 public ShoppingcartDAO() {
+//	  super();
+//	  pool = JedisUtil.getJedisPool();
+//	  jedis = pool.getResource();
+//	  jedis.auth(AUTH);
+//	 }
 	@Override
 	public void insert(ShoppingcartVO cartVO) {
 		
@@ -37,6 +46,7 @@ public class ShoppingcartDAO implements Shoppingcart_interface{
 		
 		
 		jedis.close();
+		
 	}
 	
 

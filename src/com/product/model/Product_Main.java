@@ -41,7 +41,7 @@ public class Product_Main {
 //    	  proVO1.setPro_all_assess(5);
 //    	  proVO1.setPro_all_assessman(10);
 //        System.out.println("成功新增" + proDAO.insert(proVO1));
-        
+		
 //        //修改
 //        ProductVO proVO2 = new ProductVO();
 //        proVO2.setPro_no("P001");  
@@ -59,8 +59,8 @@ public class Product_Main {
 //    	proVO2.setPro_all_assessman(100);
 //    	System.out.println("成功修改" + proDAO.update(proVO2));
       
-		//單筆查詢
-    	ProductVO proVO3 = proDAO.findByPK("P001");
+//		//單筆查詢
+    	ProductVO proVO3 = proDAO.getSelectStock("P001", 1);
     	System.out.println(proVO3.getPro_no() + ",");
     	System.out.println(proVO3.getPro_classid() + ",");
     	System.out.println(proVO3.getPro_name() + ",");
@@ -99,6 +99,11 @@ public class Product_Main {
 //    	System.out.println("成功刪除" + proDAO.delete("20181217-000001" , "PR001" ,"P001"));//測試的話日期每天需要修改才能
 //    	//刪除      
 //    	System.out.println("成功刪除" + proDAO.delete("P001"));//測試的話日期每天需要修改才能
+		
+		//test
+//		proDAO.updateStock("P001", 1);
+		//test2
+//		proDAO.getSelectStock("P001",2);
    	
     	
 	}

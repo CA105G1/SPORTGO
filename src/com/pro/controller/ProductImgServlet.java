@@ -18,6 +18,7 @@ public class ProductImgServlet extends HttpServlet{
 	    req.setCharacterEncoding("UTF-8");
 	    String pro_no = req.getParameter("pro_no");
 	    ProductService  proSvc = new ProductService();
+	    
 	    byte[] pic = proSvc.getOneProduct(pro_no).getPro_pic();  //DB沒有圖片時會錯
 	
 	   ServletOutputStream out = res.getOutputStream();

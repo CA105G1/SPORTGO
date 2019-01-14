@@ -309,10 +309,18 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script type="text/javascript"> 
 			$(function(){
+				//設置數量框不可手動填寫（此處為避免不必要的操作失誤）
+	            $("#num").prop("disabled", true);
 
+				console.log(<%=proVO.getPro_stock()%>);
 				var t = $(".text_box");
-				$("#add").click(function(){		
-					t.val(parseInt(t.val())+1)
+				$("#add").click(function(){	
+
+					if(t.val() == <%=proVO.getPro_stock()%>){
+						$(this).prop("disabled", true);
+					}else{
+						t.val(parseInt(t.val())+1);
+					}
 					// setTotal();
 				})
 				$("#min").click(function(){
@@ -321,6 +329,7 @@
 		                }else{
 		                $("#min").attr("disabled","disabled")        //當$("#min")為1時，$("#min")不可讀狀態
 		               }
+					$(this).siblings("#add").prop("disabled", false);
 					// setTotal();
 				})
 				$("#num").keyup(function(){

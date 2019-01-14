@@ -325,12 +325,12 @@
 									    					<div class="fontsize_s">
 									    						商品安全庫存量 :			    						
 									    					</div>
-									    					<div class="fontsize_s">
-									    						商品總評價 :				    						
-									    					</div>
-									    					<div class="fontsize_s">
-									    						商品評價總人數 :				    						
-									    					</div>
+<!-- 									    					<div class="fontsize_s"> -->
+<!-- 									    						商品總評價 :				    						 -->
+<!-- 									    					</div> -->
+<!-- 									    					<div class="fontsize_s"> -->
+<!-- 									    						商品評價總人數 :				    						 -->
+<!-- 									    					</div> -->
 		                                                </div>
 		                                                <div class="col-xs-12 col-sm-8 ">
 		                                                	<!-- 商品單價 -->
@@ -347,11 +347,11 @@
 		                                                	</div>
 		                                                	<!-- 商品總評價 -->
 		                                                	<div class="valuesize">
-		                                                		<input type="TEXT" class="form-control" name="pro_all_assess" size="45" value="<%= (proVO==null)? "" : proVO.getPro_all_assess()%>" />
+		                                                		<input type="hidden" class="form-control" name="pro_all_assess" size="45" value="<%= (proVO==null)? "" : proVO.getPro_all_assess()%>" />
 		                                                	</div>
 		                                                	<!-- 商品評價總人數 -->
 		                                                	<div class="valuesize">
-		                                                		<input type="TEXT" class="form-control" name="pro_all_assessman" size="45" value="<%= (proVO==null)? "" : proVO.getPro_all_assessman()%>" />
+		                                                		<input type="hidden" class="form-control" name="pro_all_assessman" size="45" value="<%= (proVO==null)? "" : proVO.getPro_all_assessman()%>" />
 		                                                	</div>
 		                                                </div>
 		                                                <div class="col-xs-12 col-sm-2 ">
@@ -367,11 +367,12 @@
 
 		                                <!-- 按鈕 -->
 		                                    <div class="row">
-		                                    	<!-- 送出按鈕 -->
+		                                    	<!-- 送出按鈕使用websock -->
 									    		<div style="text-align: center;">
 									    			<input type="hidden" name="action" value="insert">
-													<input type="button" value="送出新增" onclick="starWebsock()">
-									    		    
+									    			<input type="submit" value="新增">
+<!-- 													<input type="button" value="送出新增" onclick="starWebsock()"> -->
+<!-- 									    		        <input type="button" value="送出新增" onclick="formAjax()"> -->
 								    			<!-- 取消按鈕 -->
 									    		
 									    			<button type="button" onclick="tuchback()">取消</button>
@@ -392,6 +393,22 @@
 <%-- 	<script src="<%=request.getContextPath() %>/back-end/pro/tool/websock.js"></script> --%>
 	<script src="<%=request.getContextPath() %>/back-end/pro/tool/websock_serviec.js"></script>
 	<script type="text/javascript">
+	    function formAjax(){
+	    	var data = new FormData($("#formSubmit")[0]);
+	    	$.ajax({
+				 type: "POST",
+				 url: "<%= request.getContextPath()%>/pro/pro.do",
+				 data:data,
+				 processData: false,
+				 contentType: false,
+				 async: false,
+				 success: function (data){//還是會回傳:傳回的值怪怪的
+					 starWebsock();
+			     },
+			     error: function(){alert("AJAX-class發生錯誤囉!")}
+	         });
+	    	
+	    }
 		$(function() {  //將圖片預覽
 	    	$('input[type=file]').change(function() {
 	      	var input = $(this);

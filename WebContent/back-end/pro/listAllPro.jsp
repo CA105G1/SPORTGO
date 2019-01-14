@@ -35,13 +35,9 @@
 <!-- sweetalert-link -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
-<!--  -->
+<!-- bootstrap -->
 <!-- 	<script src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-
-
-
 
 	<!--[if lt IE 9]>
 	    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -164,7 +160,7 @@
 		</style>
 	</head>
 
-	<body>
+<body onload="connect();" onunload="disconnect();">
 <%@ include file="/front-end/CA105G1_header.file" %>
 		<div class="container-fluid">
 			<div class="row">
@@ -360,15 +356,33 @@
 		</div>
 
 <%@ include file="/front-end/CA105G1_footer.file" %>
+<!-- websock -->
+<script src="<%=request.getContextPath() %>/back-end/pro/tool/websock_serviec.js"></script>
 
-
-
-
-			
+			<%if ("success".equals(request.getAttribute("success"))) {
+			out.println("<script type=\"text/javascript\">$(document).ready(function(){ ");
+			out.println("var pro_name= \""+request.getAttribute("requestPro_name")+"\";");
+			out.println("test(pro_name);");
+			out.println("})</script>");
+			}%>
 			<script type="text/javascript">
+			function test(pro_name){
+				swal({
+					title:"商品新增成功",
+					html:"按下確認鍵進行推撥", 
+					type:"success",
+					allowOutsideClick: false
+				}).then(
+					function (result) {
+		                if (result) {
+		                	starWebsock(pro_name);
+		                }
+					}
+				);
+			}
 			$(document).ready(function(){
+	            
 				$('#example').DataTable();
-				$('#example1').DataTable();
 				$('.select_change').change(function(){
 					$.ajax({
 						 type: "POST",
