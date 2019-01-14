@@ -83,7 +83,7 @@ img{
 			<div class="col-sm-4">
 			<br>
 				<form method="post" action="<%=request.getContextPath()%>/venue/venue.do">
-					<input type="hidden" name="action" value="updateForQuery" />
+					<input type="hidden" name="action" value="updateForQueryOneVenue" />
 					<input type="hidden" name="v_no" value="${venueVO.v_no}" />
 					<input type="submit" value="${venueVO.v_no}_updateForQuery_btn" class="form-control btn-warning"/>
 				</form>
@@ -102,11 +102,17 @@ img{
 
 		<div class="row">
 			<div class="col-sm-3">
+<!-- 				<div> -->
+<%-- 					<a href="${venueVO.v_photo1_url}"><img src="${venueVO.v_photo1_url}" border="0"></a> --%>
+<!-- 				</div> -->
+<!-- 				<div> -->
+<%-- 					<a href="${venueVO.v_photo2_url}"><img src="${venueVO.v_photo2_url}" border="0"></a> --%>
+<!-- 				</div> -->
 				<div>
-					<a href="${venueVO.v_photo1_url}"><img src="${venueVO.v_photo1_url}" border="0"></a>
+					<img src="<%=request.getContextPath()%>/venue/venueImg.do?v_no=${venueVO.v_no}" border="0" />
 				</div>
 				<div>
-					<a href="${venueVO.v_photo2_url}"><img src="${venueVO.v_photo2_url}" border="0"></a>
+					<img src="<%=request.getContextPath()%>/venue/venueImg.do?v_no=${venueVO.v_no}" border="0" />
 				</div>
 				<div>
 					<div class="label label-default label-text">緯度 : ${venueVO.v_lat}</div>

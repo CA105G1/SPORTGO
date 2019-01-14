@@ -18,9 +18,7 @@ public class VenueServlet extends HttpServlet {
 	private static final String VENUE_CREATE_OR_UPATE_SERVLET = "/venue/venueCreateOrUpdate.do";
 	private static final String VENUE_DELETE_SERVLET = "/venue/venueDelete.do";	
 	private static final String VENUE_FUNCTION_SERVLET = "/venue/venueFunc.do";
-	
 
-	
 	public VenueServlet() {
         super();
     }
@@ -43,16 +41,17 @@ public class VenueServlet extends HttpServlet {
 		if(action != null ) {
 			switch (action) {
 				//select
-				case "get_all_venue":
-				case "get_one_venue":
+				//case "get_all_venue":
+				case "update_reset":
+				case "updateForQueryOneVenue":
+				case "show_one_venue_back":
 				case "listVenueByCompositeQuery":
 				case "listVenueByCompostieQueryForFrontEnd":
 					doForwardNextServlet(request, response, VENUE_SELECT_SERVLET);
 					break;
 				// insert or update
-				case "updateForQuerry":
-				case "update_cancel":
-				case "update_reset":
+				//case "update_cancel":
+				case "insert_one_venue":
 				case "update_commit":
 					doForwardNextServlet(request, response, VENUE_CREATE_OR_UPATE_SERVLET);
 					break;

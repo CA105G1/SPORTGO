@@ -160,7 +160,8 @@
 									<tr>
 										<th></th>
 										<td style="text-align:right">
-											<a href="<%=request.getContextPath()%>/venue/venue.do?action=get_one_venue&v_no=${venueVO.v_no}"> more...... </a>
+											<a href="<%=request.getContextPath()%>/venue/venue.do?action=show_one_venue_back&v_no=${venueVO.v_no}"
+											class="btn btn-info btn-block">more information......</a>
 										</td>
 									</tr>
 								</tbody>

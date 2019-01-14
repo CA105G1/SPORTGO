@@ -60,7 +60,7 @@
 					        <li role="presentation" class="${whichTab=='tab2'?'active':'' }">
 					            <a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">新增</a>
 					        </li>
-					        
+					        <% System.out.println("whichTab : "+whichTab);%>
 					        <% if("tab3".equals(whichTab)){ %>
 								<li role="presentation" class="${whichTab=='tab3'?'active':'' }">
 					            	<a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">更新</a>
@@ -142,12 +142,10 @@
 								</c:if>	
 					        	<%-- 查詢回應區--%>
 					        	<div class="panel panel-info">
-<%-- 					        		<% if("get_one_venue".equals(request.getParameter("action"))){ %> --%>
-<%-- 										<jsp:include page="showOneVenueInfo.jsp" flush="true" />	 --%>
-<%-- 									<% }else if("get_all_venue".equals(request.getParameter("action"))){%> --%>
-<%-- 										<jsp:include page="listQueryVenue.jsp" flush="true" />	 --%>
 									<% if("listVenueByCompositeQuery".equals(request.getParameter("action"))){%>
 										<jsp:include page="listQueryVenue_back.jsp"/>
+									<% }else if("show_one_venue_back".equals(request.getParameter("action"))){ %>
+										<jsp:include page="show_one_venue_back.jsp"/>
 									<% } %>
 					        	</div>
 					        </div>
@@ -156,7 +154,7 @@
 					        	<jsp:include page="/back-end/venue/add_one_venue_back.jsp" />
 					        </div>
 					       <% if("tab3".equals(whichTab)){ %>
-								<div role="tabpanel" class="tab-pane ${whichTab=='tab3'?'active':'' }" id="tab3">
+								<div role="tabpanel" class="tab-pane ${whichTab=='tab3'?'active':''}" id="tab3">
 					        		<jsp:include page="/back-end/venue/update_one_venue_back.jsp" />
 					        	</div>
 							<% } %>
