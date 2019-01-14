@@ -24,7 +24,7 @@ public class ResponesDAO  implements ResponesDAO_interface{
 			e.printStackTrace();
 		}
 	}
-	
+	 
 		@Override
 	public List<ResponesVO> getAll(Map<String, String[]> map) {
 		// TODO Auto-generated method stub

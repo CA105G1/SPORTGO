@@ -43,7 +43,7 @@ public class Post_infoDAO  implements Post_infoDAO_interface{
 		public void insert(Post_infoVO post_infoVO) {
 			Connection con = null;
 			PreparedStatement pstmt = null;
-			
+			 
 			try {
 				con = ds.getConnection();
 				pstmt = con.prepareStatement(INSERT_STMT);

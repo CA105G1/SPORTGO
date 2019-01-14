@@ -26,7 +26,7 @@ public class ClubDAO implements ClubDAO_interface{
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
-	}
+	} 
 	
 		
 
