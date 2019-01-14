@@ -6,7 +6,7 @@
 <%
 	ProductVO proVO = (ProductVO) request.getAttribute("proVO");
 %>
-
+ 
 
 <!DOCTYPE html>
 <html lang=""> 
