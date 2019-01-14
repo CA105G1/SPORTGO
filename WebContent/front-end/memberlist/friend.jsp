@@ -223,7 +223,7 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 							<div class="profile">
 								<img src="<%=request.getContextPath()%>
 											/front-end/memberlist/showPicture.do?mem_no=${memberlistVO.mem_no}">
-								<h1 id="userName" style="max-width:100%;max-height:100%">${memberlistVO.mem_name}</h1>
+								<h3 id="userName" style="max-width:100%;max-height:100%">${memberlistVO.mem_name}</h3>
 								<div class="icons">
 									<i class="fa fa-commenting fa-lg" aria-hidden="true"></i>
 									<i class="fa fa-bars fa-lg" aria-hidden="true"></i>
@@ -236,7 +236,28 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 								</div>
 							</div>
 <!-- 							好友的地方 -->
-						<div class="contact-list"></div>
+						<div class="contact-list">
+							<c:forEach var="friend" items="${friendlist}">
+						<c:forEach var="member" items="${memberlist}">
+							<c:if test="${memberlistVO.mem_no eq friend.mem1_no}">
+								<c:if test="${friend.mem2_no eq member.mem_no}" >
+									<img src="<%=request.getContextPath()%>
+									/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"
+									style="width:80px;height:80px;border-radius:50%;">
+									<label>${member.mem_name}</label><br>
+								</c:if>
+							</c:if>
+							<c:if test="${memberlistVO.mem_no eq friend.mem2_no}">
+								<c:if test="${friend.mem1_no eq member.mem_no}" >
+									<img src="<%=request.getContextPath()%>
+									/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"
+									style="width:80px;height:80px;border-radius:50%">
+									<label>${member.mem_name}</label><br>
+								</c:if>
+							</c:if>
+						</c:forEach>
+					</c:forEach>
+						</div>
 				</section>
 
 				<section class="right">
