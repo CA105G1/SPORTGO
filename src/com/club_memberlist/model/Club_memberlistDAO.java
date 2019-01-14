@@ -43,6 +43,8 @@ public class Club_memberlistDAO  implements Club_memberlistDAO_interface{
 				"SELECT * FROM club_memberList where mem_no = ? AND cmem_class = '一般成員' and cmem_status='正常'";
 		private static final String GET_BY_MEM_PARTICIPATE_WAIT_FOR_VERIFY =
 				"SELECT * FROM club_memberList where mem_no = ? AND cmem_class = '一般成員' and cmem_status='待審核'";
+		private static final String deleteStmt =
+				"DELETE FROM club_memberList WHERE club_no=? and mem_no=?";
 		
 		
 		@Override
@@ -60,7 +62,7 @@ public class Club_memberlistDAO  implements Club_memberlistDAO_interface{
 				pstmt.setString(4, clubmemberlistVO.getCmem_class());
 				pstmt.setTimestamp(5, clubmemberlistVO.getSilence_time());
 				
-				
+				 
 				pstmt.executeUpdate();
 				
 			} catch (SQLException se) {
@@ -523,6 +525,44 @@ public class Club_memberlistDAO  implements Club_memberlistDAO_interface{
 				}
 			}
 			return list;
+		}
+
+
+		@Override
+		public void delete(String club_no, String mem_no) {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			
+			try {
+				//連線池版
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(deleteStmt);
+				
+				pstmt.setString(1, club_no);
+				pstmt.setString(2, mem_no);
+				 
+				pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				if(pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+				if(con != null) {
+					try {
+						con.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			
 		}
 
 

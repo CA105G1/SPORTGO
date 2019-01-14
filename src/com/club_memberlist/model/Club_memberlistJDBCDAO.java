@@ -569,6 +569,12 @@ public class Club_memberlistJDBCDAO implements Club_memberlistDAO_interface{
 			System.out.println();
 		}
 	}
+
+	@Override
+	public void delete(String club_no, String mem_no) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 }

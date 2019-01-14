@@ -16,5 +16,6 @@ public interface Club_memberlistDAO_interface {
     public List<Club_memberlistVO> findByMemPartWait(String mem_no);
     public List<Club_memberlistVO> getAll();
     public List<Club_memberlistVO> getAll(Map<String, String[]> map);
+    public void delete(String club_no, String mem_no);
 	
 }

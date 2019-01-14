@@ -26,7 +26,7 @@ public class ClubDAO implements ClubDAO_interface{
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
-	}
+	} 
 	
 		
 
@@ -48,16 +48,10 @@ public class ClubDAO implements ClubDAO_interface{
 		public void insert(ClubVO clubVO) {
 			Connection con = null;
 			PreparedStatement pstmt = null;
-			ResultSet rs = null;
 			
 			try {
 				con = ds.getConnection();
-				
-				String[] cols = {"club_no"};
-				
-				pstmt = con.prepareStatement(INSERT_STMT,cols);
-//				if(clubVO.getClub_name()!=null)
-//					clubVO.setClub_name(clubVO.getClub_name().toUpperCase());
+				pstmt = con.prepareStatement(INSERT_STMT);
 				
 				pstmt.setString(1, clubVO.getSp_no());
 				pstmt.setBytes (2, clubVO.getPhoto());
@@ -66,25 +60,7 @@ public class ClubDAO implements ClubDAO_interface{
 				pstmt.setString(5, clubVO.getClub_name());
 				pstmt.setString(6, clubVO.getClub_intro());
 				
-				if(pstmt.executeUpdate()==1) {
-					System.out.println("---成功輸入---");
-				}else {
-					System.out.println("---輸入失敗---");
-				}
-				
-				rs = pstmt.getGeneratedKeys();
-				ResultSetMetaData rsmd = rs.getMetaData();
-				int columnCount = rsmd.getColumnCount();
-				if(rs.next()) {
-					do {
-						for(int i = 1; i<= columnCount;i++) {
-							clubVO.setClub_no(rs.getString(1));
-							System.out.println("自增主鍵值 = " + clubVO.getClub_no()+"(剛新增成功的newstype_no)");
-						}
-					}while (rs.next());
-				} else {
-					System.out.println("NO KEYS WERE GENERATED.");
-				}
+				pstmt.executeQuery();
 				
 			} catch (SQLException se) {
 				throw new RuntimeException("A database error occured. "

@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.club.model.*"%>
+<%@ page import="java.util.*"%>
+<%@ page import="com.club_memberlist.model.*"%>
+<%@ page import="com.memberlist.model.*"%>
 <!DOCTYPE html>
 <html lang="">
 	<head>
@@ -9,6 +12,8 @@
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
 		<title>club_pageRight</title>
 	</head>
 	<body>
@@ -28,10 +33,97 @@
 					<a href="<%= request.getContextPath()%>/clubfront.do?actionfront=getOneClubmanage&club_no=${clubVO.club_no}" class="list-group-item">社團管理</a>
 					<a href="<%= request.getContextPath()%>/front-end/club/club_list.jsp"class="list-group-item">返回列表</a>
 				</div>	
-				<button type="button" class="btn btn-dark" href="<%=request.getContextPath()%>/clubmemberlist.do?action=dropoutclub&club_no=${clubVO.club_no}">
-					退出社團
-				</button>	
+				<button type="button" class="btn btn-dark" id="joinbtn" style="display:">加入社團</button>	
+				<button type="button" class="btn btn-dark" id="outbtn" style="display:none">退出社團</button>	
 			</div>
 		</div>
 	</body>
+	
+<script>
+<%MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO");%>
+
+<%if(memberlistVO == null){
+	session.setAttribute("location", request.getRequestURI());%>
+	$("#joinbtn").click(function(){
+		document.location.href="<%= request.getContextPath()%>/front-end/memberlist/Login.jsp";
+		return;
+	});
+<%}else{%>
+
+//判斷是否重複加入
+<%
+boolean isJoin = false;
+Club_memberlistService svc = new Club_memberlistService();
+List<Club_memberlistVO> list2 = svc.getByMem(memberlistVO.getMem_no());
+String club_no = (String)session.getAttribute("club_no");
+
+for(Club_memberlistVO club_memberlistvo : list2) {
+	if(club_no.equals(club_memberlistvo.getClub_no())) {
+		isJoin = true;
+	}
+}
+%>
+
+//變換加入或退出按鍵
+if(<%=isJoin%>){
+	$("#joinbtn").css("display","none");
+	$("#outbtn").css("display","");
+	
+}
+
+
+//////////////////加入社團按鍵設定///////////////////////////
+	$("#joinbtn").click(function(){
+		$.ajax({
+			type: "POST",
+			url: "<%= request.getContextPath()%>/club_memberlist.do",
+			data: {"action" : "addintoclub", "club_no" : "${club_no}", "mem_no" : "<%= memberlistVO.getMem_no()%>", "location" : "<%=request.getRequestURI()%>"},
+			dataType: "json",
+			error: function(){
+				alert("發生錯誤!");
+			},
+			success: function(data){
+				swal({
+					  title: "成功加入!", html: "馬上到我的社團查看", type: "success", showCancelButton: true, showCloseButton: true,confirmButtonText: "前往",cancelButtonText: "取消"
+					}).then(
+						function (result) {
+						if(result){
+							document.location.href="<%= request.getContextPath()%>/front-end/memberlist/MemManager.do?action=Member_Sg";
+						}
+						},function(dismiss) {
+							location.reload();
+						});
+			}
+		}); //ajax
+	}); //joinbtn click
+	
+	
+	$("#outbtn").click(function(){
+		swal({
+		  title: "確定退出?", type: "warning", showCancelButton: true, showCloseButton: true,
+		}).then(
+			function (result) {
+			if(result){
+				$.ajax({
+					type: "POST",
+					url: "<%= request.getContextPath()%>/club_memberlist.do",
+					data: {"action" : "dropoutclub", "club_no" : "${club_no}", "mem_no" : "<%= memberlistVO.getMem_no()%>", "location" : "<%=request.getRequestURI()%>"},
+					dataType: "json",
+					error: function(){
+						alert("發生錯誤!");
+					},
+					success: function(data){
+						location.reload();
+					}
+				});
+			}
+		});
+	});
+	
+	
+<%}%> //else
+
+</script>
+	
+	
 </html>

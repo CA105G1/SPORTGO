@@ -2,6 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.club.model.*"%>
+<%@ page import="com.club_memberlist.model.*"%>
+<%@ page import="com.memberlist.model.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%
@@ -14,6 +16,8 @@
 		list = clubSvc.getAllForPublic();
 		pageContext.setAttribute("list", list);
 	}
+	
+	MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO");
 //  ClubVO clubVO = (ClubVO) request.getAttribute("clubVO");
 %>
 
@@ -246,8 +250,7 @@
 											</div>
 											
 											<div class="card-footer" style="padding-left: 90px;">
-												<a href='<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clubVO.club_no}' class="btn btn-primary">加入</a>
-												&nbsp;&nbsp;
+												<input type="hidden" id="club_no" class="btn btn-primary" value="${clubVO.club_no}">
 												<a href='<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clubVO.club_no}' class="btn btn-primary">進入</a>
 											</div>
 											<br><br>
@@ -259,8 +262,12 @@
 		</div>
 	</div>
 <jsp:include page="/front-end/CA105G1_footer.jsp" />
-	<script src="https://code.jquery.com/jquery.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+
+
+<script src="https://code.jquery.com/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	
 	<script type="text/javascript"> 
 	//照片上傳
@@ -282,6 +289,10 @@
 			reader.readAsDataURL(input.files[0]);
 		}
 	}
+	
+	
+	
+	
 
 </script> 
 	

@@ -134,12 +134,12 @@
     <url-pattern>/post_info.do</url-pattern>
   </servlet-mapping>
    <servlet>
-   <servlet-name>ClubmemberlistServlet</servlet-name>
-   <servlet-class>com.clubmemberlist.controller.ClubmemberlistServlet</servlet-class>
+   <servlet-name>Club_memberlistServlet</servlet-name>
+   <servlet-class>com.club_memberlist.controller.Club_memberlistServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-   <servlet-name>ClubmemberlistServlet</servlet-name>
-   <url-pattern>/clubmemberlist.do</url-pattern>
+   <servlet-name>Club_memberlistServlet</servlet-name>
+   <url-pattern>/club_memberlist.do</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>ResponesServlet</servlet-name>

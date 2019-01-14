@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.android.member.model.Member;
 import com.android.member.model.MemberService_android;
 import com.android.member.model.MemberVO_android;
 import com.google.gson.Gson;
@@ -51,10 +52,15 @@ public class MemberServlet_android extends HttpServlet {
 		if ("isMember".equals(action)) {
 			String mem_account = jsonObject.get("mem_account").getAsString();
 			String mem_pswd = jsonObject.get("mem_pswd").getAsString();
-			writeText(res, String.valueOf(service.isMember(mem_account, mem_pswd)));
+			try {
+				Member member = service.isMember(mem_account, mem_pswd);
+				writeText(res, member == null ? "" : gson.toJson(member));
+			} catch (Exception e) {
+				writeText(res, "查無會員");
+			}
 		} else if ("getMember".equals(action)) {
 			String mem_no = jsonObject.get("mem_no").getAsString();
-			MemberVO_android member = service.getMember(mem_no);
+			Member member = service.getMember(mem_no);
 			writeText(res, member == null ? "" : gson.toJson(member));
 		} else if ("getPic".equals(action)) {
 			OutputStream os = res.getOutputStream();
