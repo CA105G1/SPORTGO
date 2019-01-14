@@ -163,7 +163,7 @@
 <!-- 					<label class="club_status">社團狀態</label> -->
 <!-- 						<textarea name="club_status" value="正常" id="club_status" class="form-control" ROWS=10 ></textarea> -->
 							<input type="hidden" name="club_status" value="正常" />
-					</div>
+					</div> 
 				</div>
 				<div class="modal-footer">
 						<input type="hidden" name="actionfront" value="insert">
