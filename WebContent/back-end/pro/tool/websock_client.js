@@ -61,8 +61,8 @@
    			window.location.replace("/CA105G1/pro/pro.do?action=herf_Display&pro_no="+data);
    		 }, function(dismiss) {
 				swal({
-					  title: "~錯過可惜~",   
-					  html:     '<b>如果後悔，按以下連結</b>' + '<br><a href="/CA105G1/pro/pro.do?action=herf_Display&pro_no='+data+'" color:rgb(240,94,157)">電 子 商 店 EShop</a>' + '<br>仍可搶購新品~',
+					  title: "您還不購買嗎",   
+					  html:     '<b>千萬別錯過</b>' +'<br>前往搶購新品'+ '<br><a href="/CA105G1/pro/pro.do?action=herf_Display&pro_no='+data+'" style="color:red"">SportGO ~ EShop</a>'  ,
 					  width: 300,
 					  padding: 20, 
 					  showConfirmButton: true,

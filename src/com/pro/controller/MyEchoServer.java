@@ -31,11 +31,12 @@ public class MyEchoServer {
 	}
 	
 	@OnMessage                   
-	public void onMessage(Session userSession, String message) {
+	public void onMessage( String message) {
 		StringBuffer sbuf =new StringBuffer();
+		System.out.println("message:"+message);
 		sbuf.append(message);
 		sbuf.deleteCharAt(sbuf.length()-1);
-		
+//		System.out.println(userSession+""+message);
 		ProductService proSvc = new ProductService();
 		ProductVO proVO = proSvc.getLastProduct();
 		sbuf.append(",\"pro_no\":\""+proVO.getPro_no()+"\"}");
