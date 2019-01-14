@@ -67,8 +67,14 @@
 							<li>
 								<a href="#">訪客，您好</a>
 							</li>
-							<li>	
-								<a href="<%=request.getContextPath()%>/front-end/memberlist/Login.jsp">登入/註冊</a>
+							<li>
+								<%  session = request.getSession();
+									if(!"/CA105G1/front-end/memberlist/Login.jsp".equals(request.getRequestURI())){
+										session.setAttribute("location",request.getRequestURI()); 
+									}
+									//System.out.println("log_in_location :　"+ request.getRequestURI());
+								%>
+								<a href="<%=request.getContextPath()%>/front-end/memberlist/Login.jsp?">登入/註冊</a>
 							</li>
 						</c:if>
 						<c:if test="${!(memberlistVO==null)}">
@@ -76,6 +82,12 @@
 								<a href="#">${memberlistVO.mem_name}，您好</a>
 							</li>
 							<li>
+								<%  session = request.getSession();
+									if(!"/CA105G1/front-end/memberlist/Login.jsp".equals(request.getRequestURI())){
+										session.setAttribute("location",request.getRequestURI()); 
+									}
+									//System.out.println("log_out_location :　"+ request.getRequestURI());
+								%>
 								<a href="<%=request.getContextPath()%>/front-end/memberlist/logout.do">登出</a>
 							</li>
 						</c:if>
@@ -175,7 +187,19 @@
 				
 // 			});
 // 		});
+		//沒用的垃圾
+// 		window.addEventListener("load", function(){
+// 			document.getElementById("login_header").addEventListener("click", function(){
+// 				document.location.href="/CA105G1/front-end/memberlist/Login.jsp";
+// 				return;
+// 			},false);			
+// 		},false);
 		
+// 		$("#joinbtn").click(function(){
+// 			 //原頁面VO由session帶著去跟回
+// 			document.location.href="/CA105G1/front-end/memberlist/Login.jsp";
+// 			return;
+// 		});
 		
 	</script>
 	

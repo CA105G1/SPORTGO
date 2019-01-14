@@ -55,7 +55,7 @@
 			<div class="row">
 				
 				<div class="col-xs-12 col-sm-2" style="margin-right: -;padding-left: 5px;padding-right: 5px;">
-					<%@ include file="/front-end/club/club_pageRight.jsp" %>
+					<jsp:include page="/front-end/club/club_pageRight.jsp" />
 				</div>
 				<div class="col-xs-12 col-sm-8" id="listDiv">
 					<a class="btn btn-info btn-block" href="<%= request.getContextPath()%>/front-end/club/Sg_infoCreateForClub.jsp">
@@ -87,10 +87,13 @@
 									<fmt:formatDate value="${sg_infoVO.sg_date}" pattern="yyyy-MM-dd HH:mm"/>
 								</div>
 							</div>
-	
-							<style type="submit" class="w3-container w3-red btn btn-block">
-							 	 前往察看
-							</style>
+							
+							<form method="post" action="<%= request.getContextPath()%>/Sg_info/Sg_info.do">
+								<input type="hidden" name="sg_no" value="${sg_infoVO.sg_no}">
+								<input type="hidden" name="club_no" value="${club_no}">
+								<input type="hidden" name="action" value="getByPK">
+								<input type="submit" class="w3-container w3-red btn btn-block" value="前往察看">
+							</form>
 						</div>
 					</c:forEach>
 				</div>

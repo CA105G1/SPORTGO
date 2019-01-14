@@ -59,34 +59,13 @@
 
 	<body>
 	 
-	<%@ include file="/front-end/CA105G1_header.file" %>
-		<div class="container-fluid">
+	<jsp:include page="/front-end/CA105G1_header.jsp" />
+		<div class="container">
 			<div class="row">
-				<div class="col-xs-12 col-lg-2" id="xx1">
-					
+				<div class="col-xs-12 col-sm-2" style="margin-right: -;padding-left: 5px;padding-right: 5px;">
+					<jsp:include page="/front-end/club/club_pageRight.jsp" />	
 				</div>
-				
-					<div class="col-xs-12 col-sm-1" style="margin-right: -;padding-left: 5px;padding-right: 5px;">
-					<input type="hidden" name="actionfront" value="getoneclub">
-					<h4 id="club_name" class="_19s-" >
-					<a href='<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clubVO.club_no}' >
-						${clubVO.club_name}
-					</a>
-					</h4>
-
-						<div class="list-group active">
-							<a href="#" class="list-group-item">簡介</a>
-							<a href="#" class="list-group-item">專屬揪團</a>
-							<a href="#" class="list-group-item">建立文章</a>
-							<a href="#" class="list-group-item">影音相簿</a>
-							<a href="#" class="list-group-item">社團管理</a>
-							<a href="<%= request.getContextPath()%>/front-end/club/club_list.jsp" display="none" id="linkBack" class="list-group-item">返回列表</a>
-					<br>
-							<button type="button" class="btn btn-dark">退出社團</button>
-					<br><br>
-						</div>									
-					</div>
-				<div class="col-xs-12 col-sm-7">
+				<div class="col-xs-12 col-sm-8">
 
 					<table class="table table-hover">
 						<thead>
@@ -111,7 +90,7 @@
 
 				</div>
 					
-				<div class="col-xs-12 col-lg-2" id="xx">
+				<div class="col-xs-12 col-sm-2" id="xx">
 					<!-- XXXXXXXXXXXX -->
 <!-- 					<div>XXXXXXXXXXXXXXXX</div> -->
 				</div>
@@ -124,7 +103,7 @@
 		
 		
 		</form>
-		<%@ include file="/front-end/CA105G1_footer.file" %>
+		<jsp:include page="/front-end/CA105G1_footer.jsp" />
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	</body>

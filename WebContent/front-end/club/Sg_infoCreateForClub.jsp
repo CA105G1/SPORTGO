@@ -14,8 +14,6 @@
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link   rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
-<script src="<%= request.getContextPath()%>/datetimepicker/jquery.js"></script>
-<script src="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
 <style type="text/css">
@@ -70,7 +68,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-xs-12 col-sm-2">
-			<%@ include file="/front-end/club/club_pageRight.jsp" %>						
+			<jsp:include page="/front-end/club/club_pageRight.jsp" />						
 		</div>
 		<div class="col-xs-12 col-sm-8">
 			<form action="<%= request.getContextPath()%>/Sg_info/Sg_info.do" method="post" enctype="multipart/form-data">
@@ -494,6 +492,9 @@
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAb2lDof7yMn-TTXwt2hwVm4y92t1AqvyU&callback=initMap&libraries=places"
         async defer></script>
+<script src="<%= request.getContextPath()%>/datetimepicker/jquery.js"></script>
+<script src="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+
 
 
 </body>

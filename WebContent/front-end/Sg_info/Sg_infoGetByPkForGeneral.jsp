@@ -22,59 +22,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
 
-<style type="text/css">
-	#infoSpan{
-		margin-left:30%;
-	}
-	.table>tbody>tr>th{
-		border-top:0px;
-	}
-	.backToList{
-		cursor: pointer;
-	}
-	.backToList:active {
-	  	transform: translateY(1px);
-	}
-	#map {
-		height: 400px;  /* The height is 400 pixels */
-		width: 100%;  /* The width is the width of the web page */
-	}
-	#btnGroup{
-		display:flex;
-		justify-content: space-between;
-	}
-	.panel-title{
-		text-align: center;
-    	text-align-last: center;
-	}
-	.list-group-item{
-		text-align: center;
-    	text-align-last: center;
-	}
- 	#sg_memList{ 
- 		background-color: #FFFFE0; 
-		border-radius: 10px; 
-    	cursor: pointer; 
-     	box-shadow: 0 2px #999; 
-    	width:80%; 
-     	text-align: center; 
-     	text-align-last: center; 
- 	} 
-	#sg_memList:active {
-	  	box-shadow: 0 1px #666;
-	  	transform: translateY(1px);
-	}
-	#sg_memPic{
-		width:50px;
-		height:50px;
-		border-radius: 50px;
-		padding:3px;
-	}
-	.btn{
-		background-color:white
-	}
-	
-</style>
+
  
 </head>
 <body>
@@ -118,11 +66,12 @@ System.out.println("memberlistVO= "+memberlistVO);
 			<form action="<%= request.getContextPath()%>/Sg_info/Sg_info.do" method="post" enctype="multipart/form-data">
 			
 				<table class="table table-hover">
-					<i class="glyphicon glyphicon-circle-arrow-left icon-large brown backToList"></i>  <!-- 返回按鍵 -->
-					<a href="<%= request.getContextPath()%>/front-end/Sg_info/SgHome.jsp" display="none" id="linkBack">回到揪團首頁</a>
-					
+					<!-- 返回按鍵 -->
+					<i class="glyphicon glyphicon-circle-arrow-left icon-large brown backToList"></i>  
+					<a href="<%= request.getContextPath()%>/front-end/Sg_info/SgHome.jsp" display="none" id="linkBack">回到揪團列表</a>
 					<caption style="text-align:center">
 						<h3>
+							<!-- 額滿圖示 -->
 							<img id="joinFullPic" src="<%= request.getContextPath()%>/img/joinFull.png" style="width:80px; height:auto; display:none">
 							<!-- 團名 -->
 							<img src="<%= request.getContextPath()%>/img/sporticons/${Sg_infoVO.sp_no}.svg" style="width:20px; height:auto;">
@@ -255,6 +204,11 @@ System.out.println("memberlistVO= "+memberlistVO);
 
 
 <script type="text/javascript">
+	//若是社團專屬揪團則調整返回鍵連結
+	if('${param.club_no}'.length != 0){
+		$("#linkBack").attr("href","<%= request.getContextPath()%>/front-end/club/Sg_infoList.jsp");
+	}
+	
 	//若報名人數已達上限則關閉報名按鍵
 	<%
 		boolean isFull = false;
@@ -267,6 +221,8 @@ System.out.println("memberlistVO= "+memberlistVO);
 		$("#joinFullPic").css('display', '');
 	}
 		
+	
+	
 	//google map設定
 	var map;
 	function initMap(){
@@ -608,6 +564,65 @@ System.out.println("memberlistVO= "+memberlistVO);
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAb2lDof7yMn-TTXwt2hwVm4y92t1AqvyU&callback=initMap&libraries=places"
         async defer></script>
+
+
+
+
+<style type="text/css">
+	#infoSpan{
+		margin-left:30%;
+	}
+	.table>tbody>tr>th{
+		border-top:0px;
+	}
+	.backToList{
+		cursor: pointer;
+	}
+	.backToList:active {
+	  	transform: translateY(1px);
+	}
+	#map {
+		height: 400px;  /* The height is 400 pixels */
+		width: 100%;  /* The width is the width of the web page */
+	}
+	#btnGroup{
+		display:flex;
+		justify-content: space-between;
+	}
+	.panel-title{
+		text-align: center;
+    	text-align-last: center;
+	}
+	.list-group-item{
+		text-align: center;
+    	text-align-last: center;
+	}
+ 	#sg_memList{ 
+ 		background-color: #FFFFE0; 
+		border-radius: 10px; 
+    	cursor: pointer; 
+     	box-shadow: 0 2px #999; 
+    	width:80%; 
+     	text-align: center; 
+     	text-align-last: center; 
+ 	} 
+	#sg_memList:active {
+	  	box-shadow: 0 1px #666;
+	  	transform: translateY(1px);
+	}
+	#sg_memPic{
+		width:50px;
+		height:50px;
+		border-radius: 50px;
+		padding:3px;
+	}
+	.btn{
+		background-color:white
+	}
+	
+</style>
+
+
 
 
 

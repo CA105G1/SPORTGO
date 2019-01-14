@@ -12,7 +12,6 @@ import javax.servlet.http.HttpSession;
 
 import com.memberlist.model.*;
 
-import redis.clients.jedis.exceptions.JedisException;
 
 import com.friend.model.*;
 
@@ -30,7 +29,6 @@ public class FriendServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		HttpSession session = req.getSession();
 		FriendService service = new FriendService();
-		MemberlistRedisDAO dao = new MemberlistRedisDAO();
 		MemberlistVO memberlistVO = null;
 		String action = req.getParameter("action");
 //		String mem_no = (String) req.getAttribute("mem_no");
@@ -62,6 +60,7 @@ public class FriendServlet extends HttpServlet {
 				res.sendRedirect("Login.jsp");
 				return;
 			}
+			MemberlistRedisDAO dao = new MemberlistRedisDAO();
 			String mem1_no = memberlistVO.getMem_no();
 			String mem2_no = (String) req.getParameter("mem2_no");
 			List<FriendVO> friendlist = service.findMyFriend(mem1_no);
@@ -200,6 +199,7 @@ public class FriendServlet extends HttpServlet {
 				res.sendRedirect("Login.jsp");
 				return;
 			}
+			MemberlistRedisDAO dao = new MemberlistRedisDAO();
 			String mem1_no = memberlistVO.getMem_no();
 			String mem2_no = (String) req.getParameter("mem2_no");
 			System.out.println(mem1_no+","+mem2_no);
