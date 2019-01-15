@@ -13,5 +13,4 @@ public interface ResponesDAO_interface {
     public List<ResponesVO> getAll(Map<String, String[]> map);
 	public List<ResponesVO> getallfrompost(String post_no);
 	public void delete(String res_no, String mem_no);//刪除回文必須是原本留言者
-	public List<ResponesVO> delete(String res_no);///////////
 }

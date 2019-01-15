@@ -114,7 +114,7 @@ public class ResponesJDBCDAO implements ResponesDAO_interface {
 		
 		
 		@Override
-		public List<ResponesVO> delete(String res_no ,String mem_no) {
+		public void delete(String res_no ,String mem_no) {
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			
@@ -150,7 +150,6 @@ public class ResponesJDBCDAO implements ResponesDAO_interface {
 					}
 				}
 			}
-			return list;
 		}
 		
 		@Override

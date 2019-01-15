@@ -44,8 +44,6 @@ public class ResponesDAO  implements ResponesDAO_interface{
 			"SELECT * FROM respones where post_no=?";
 		private static final String DELETE = 
 			"DELETE FROM respones  where res_no = ? AND mem_no = ? ";
-		private static final String DELETEBYRES = /////////////////
-				"DELETE FROM respones  where res_no = ?";
 		
 		
 		@Override
@@ -345,65 +343,6 @@ se.printStackTrace();
 			}
 		}
 
-
-		public List<ResponesVO> delete(String res_no) {/////////////////
-			List<ResponesVO> list_responesbyres_no = new ArrayList<ResponesVO>();
-			ResponesVO responesVO = null;
-			Connection con = null;
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
-			
-			try {
-				con = ds.getConnection();
-				pstmt = con.prepareStatement(DELETEBYRES);
-				pstmt.setString(1, res_no);
-				
-				rs = pstmt.executeQuery();
-				while(rs.next()) {
-					responesVO = new ResponesVO();
-					responesVO.setRes_no(rs.getString("res_no"));
-					responesVO.setPost_no(rs.getString("post_no"));
-					responesVO.setMem_no(rs.getString("mem_no"));
-					responesVO.setRes_content(rs.getString("res_content"));
-					responesVO.setRes_date(rs.getTimestamp("res_date"));
-					list_responesbyres_no.add(responesVO);
-				
-				}
-			
-			} catch (SQLException se) {
-				throw new RuntimeException("A database error occured. "
-						+ se.getMessage());
-			}finally {
-				if (rs != null) {
-					try {
-						rs.close();
-					} catch (SQLException se) {
-						se.printStackTrace(System.err);
-					}
-				}
-				if (pstmt != null) {
-					try {
-						pstmt.close();
-					} catch (SQLException se) {
-						se.printStackTrace(System.err);
-					}
-				}
-				if (con != null) {
-					try {
-						con.close();
-					} catch (SQLException se) {
-						se.printStackTrace(System.err);
-					}
-				}
-			}
-			return list_responesbyres_no;
-		}
-
-
-		
-
-
-		
 }
 		
 		

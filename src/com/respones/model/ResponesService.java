@@ -52,8 +52,6 @@ public class ResponesService {
 		 dao.delete(res_no, mem_no);
 	}
 	
-	public List<ResponesVO> deleteByres_no(String res_no){///////////
-		return dao.delete(res_no);
-	}
+	
 
 }
