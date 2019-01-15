@@ -177,7 +177,8 @@
   					this.setOptions({
         			maxDate:jQuery('#news_last_date_tab2').val()?jQuery('#news_last_date_tab2').val():false
    				})
-  			}
+  			},
+  			closeOnDateSelect:true
   			
  		});
  		$('#news_last_date_tab2').datetimepicker({
@@ -190,6 +191,7 @@
     				minDate:jQuery('#news_release_date_tab2').val()?jQuery('#news_release_date_tab2').val():false
    				})
   			},
+  			closeOnDateSelect:true
  		});
 
 	</script>
