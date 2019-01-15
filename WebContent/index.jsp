@@ -51,10 +51,11 @@
 		</div>
 		
 		<%-- 右側推薦揪團列表 --%>
-
+		
 		<%-- 各個運動連結 --%>
-		<div style="height:500px"></div>
+		
 		<div class="container"  style="display:flex;flex-flow:row wrap;">
+			
 				<a href="<%=request.getContextPath()%>/Sg_info/Sg_info.do?action=sg_infoCompositeQuery&sp_no=SP001"
 				style="display:flex;flex-direction:column;width:calc(100% / 3 - 30px);margin:10px;">
 					<div style="width:100%;height:0;position:relative;padding-bottom:75%;overflow:hidden;border-radius:10px;">
@@ -63,18 +64,19 @@
 						style="height:100%;position:absolute;"/>
 					</div>
 				</a>
+				
 <!-- 					<a href="https://www.youtube.com/watch?v=oY2nVQNlUB8"> -->
 				<a href="<%=request.getContextPath()%>/Sg_info/Sg_info.do?action=sg_infoCompositeQuery&sp_no=SP002"
 				style="display:flex;flex-direction:column;width:calc(100% / 3 - 30px);margin:10px;">
 					<div style="width:100%;height:0;position:relative;padding-bottom:75%;overflow:hidden;border-radius:10px;">
-						<img src="img/indexImg/fun01.jpg" style="height:100%;position:absolute;"/>
+						<img src="img/no-image.PNG" style="height:100%;position:absolute;"/>
 					</div>
 				</a>
 <!-- 					<a href="img/indexImg/fun03.jpg"> -->
 				<a href="<%=request.getContextPath()%>/Sg_info/Sg_info.do?action=sg_infoCompositeQuery&sp_no=SP003"
 				style="display:flex;flex-direction:column;width:calc(100% / 3 - 30px);margin:10px;">
 					<div style="width:100%;height:0;position:relative;padding-bottom:75%;overflow:hidden;border-radius:10px;">
-						<img src="img/indexImg/fun03.jpg" style="height:100%;position:absolute;"/>
+						<img src="img/no-image.PNG" style="height:100%;position:absolute;"/>
 					</div>
 				</a>					
 <!-- 					<a href="img/indexImg/SP004.jpg"> -->
