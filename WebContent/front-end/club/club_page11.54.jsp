@@ -15,7 +15,7 @@
 	
 //  Post_infoService post_infoSvc = new Post_infoService();
 // 	Post_infoVO post_infoVO = post_infoSvc.getOnePost_info("P0001");
-//	Post_infoVO post_infoVO = (Post_infoVO)request.getAttribute("post_infoVO");
+ //	Post_infoVO post_infoVO = (Post_infoVO)request.getAttribute("post_infoVO");
  	
 /***依照社團編號去找對應的貼文*******************************************************************/	
 // 	List<Post_infoVO> postvolist=(ArrayList)request.getAttribute("postvolist");
@@ -139,12 +139,12 @@
   							
 <!-------------------------------------------- 留言版 ---------------------------------------------------->
 <!----------------------------------------------回文------------------------------------------------------>
-					  			<button class="responesShow btn btn-secondary " type="button" id="dropdownMenuButton" data-toggle="" aria-haspopup="true" aria-expanded="false">
+							<div class="dropdown">
+					  			<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					    			顯示所有留言
 					  			</button>
-							<div class=" container-fluid" id="respones" style="display: none;">
-  									<div class="" aria-labelledby="" width="100%">  
-										<div class="" width="100%">
+  									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">  
+										<div class="dropdown-item">
 												<table class="table">
 													<jsp:useBean id="responesSvc" scope="page" class="com.respones.model.ResponesService"/>
 													<c:forEach var="responesVO" items="${responesSvc.getallfrompost(postinfoVO.post_no)}">
@@ -190,12 +190,6 @@
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script>
-		$(document).ready(function() {
-			$(".responesShow").click(function() {
-//	 			$(".answer:not(this)").hide("slow"),
-				$(this).next().slideToggle("slow");
-			});
-		});
 			ClassicEditor
 				.create( document.querySelector( '#editor' ) )
 				.then( editor => {

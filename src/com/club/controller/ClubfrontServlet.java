@@ -67,16 +67,12 @@ System.out.println("requestURL : "+requestURL);/////////////////////////////////
 				
 				/***************************2.開始查詢資料*****************************************/
 				ClubService clubSvc = new ClubService();
-	
 				ClubVO clubVO = clubSvc.getOneClub(club_no);
 				
 				Post_infoService postinfo = new Post_infoService();
 				List<Post_infoVO> postvolist = postinfo.getAllfromclub(club_no);
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
-				req.setAttribute("clubVO", clubVO); 
-				req.setAttribute("postvolist", postvolist);
-				HttpSession session = req.getSession();
-				session.setAttribute("club_no", club_no);
+				
 				RequestDispatcher successView = req.getRequestDispatcher(CLUB_PAGE); 
 				successView.forward(req, res);
 

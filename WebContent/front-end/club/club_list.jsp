@@ -251,7 +251,7 @@
 											
 											<div class="card-footer" style="padding-left: 90px;">
 												<input type="hidden" id="club_no" class="btn btn-primary" value="${clubVO.club_no}">
-												<a href='<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clubVO.club_no}' class="btn btn-primary">進入</a>
+												<a href='<%=request.getContextPath()%>/front-end/club/club_page.jsp?club_no=${clubVO.club_no}' class="btn btn-primary">進入</a>
 											</div>
 											<br><br>
 										</div>
