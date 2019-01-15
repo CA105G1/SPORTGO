@@ -36,9 +36,9 @@ import com.newstype.model.NewstypeVO;
 @MultipartConfig(fileSizeThreshold=1024*1024, maxFileSize=5*1024*1024, maxRequestSize=5*5*1024*1024)
 public class NewsServlet extends HttpServlet {
 	private Timer myTimer;
-	public static List<NewsVO> theNewsVOList ;
-	public static List<NewstypeVO> theNewstypeVOList ;
-	public static List<NewsVO> theNewsVO_ForProduct_List;
+	public List<NewsVO> theNewsVOList ;
+	public List<NewstypeVO> theNewstypeVOList ;
+	public List<NewsVO> theNewsVO_ForProduct_List;
 	
 	public static final String MAINTAIN_NEWS_INFO_INDEX_BACK_PATH = "/back-end/news/maintain_news_info.jsp"; 
 	public static final String QUERY_THIS_SERVLET_ACTIN_AGAIN ="/news/news.do";
@@ -54,7 +54,7 @@ public class NewsServlet extends HttpServlet {
 	private static final String TAB_UPDATE="tab3";
 	private static final String ERRORMSGS_TITILE = "errorMsgs_";
 	
-	private static final String NEWS_PRODUCTNAME="促銷商品"; // 98
+	private final String NEWS_PRODUCTNAME="促銷商品"; // 98
 	
 	@Override
 	public void init() throws ServletException {
@@ -289,7 +289,10 @@ public class NewsServlet extends HttpServlet {
 			/// 永續層工作
 			NewsService newsService = new NewsService();
 			newsVO = newsService.addNews(newsVO);
-			
+			/// ServletContext的物件也要變更
+			chargeNewsStutas();
+			updateTheNewsTypeList();
+			updateTheNewsList();
 			/// 轉交對象
 			RequestDispatcher successsView = 
 					request.getRequestDispatcher(QUERY_THIS_SERVLET_ACTIN_AGAIN+"?action=showOneNews&news_no="+newsVO.getNews_no());
