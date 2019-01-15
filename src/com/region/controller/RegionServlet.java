@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.region.model.RegService;
 import com.region.model.RegVO;
 
 public class RegionServlet extends HttpServlet {
@@ -21,16 +20,15 @@ public class RegionServlet extends HttpServlet {
         super();
     }
 
-	@Override
-	public void init() throws ServletException {
-		super.init();
-		RegService regService = new RegService();
-		reg_nameList = regService.getReg_nameList();
-		regionMapKeyReg_name = regService.getRegionMapKeyReg_name();
-System.out.println(reg_nameList+"ddddddddddddd");
-		getServletContext().setAttribute("reg_nameList", reg_nameList);
-		getServletContext().setAttribute("regionMapKeyReg_name", regionMapKeyReg_name);
-	}
+//	@Override
+//	public void init() throws ServletException {
+//		super.init();
+//		RegService regService = new RegService();
+//		reg_nameList = regService.getReg_nameList();
+//		regionMapKeyReg_name = regService.getRegionMapKeyReg_name();
+//		getServletContext().setAttribute("reg_nameList", reg_nameList);
+//		getServletContext().setAttribute("regionMapKeyReg_name", regionMapKeyReg_name);
+//	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
@@ -40,10 +38,10 @@ System.out.println(reg_nameList+"ddddddddddddd");
 		doGet(request, response);
 	}
 
-	@Override
-	public void destroy() {
-		super.destroy();
-	}
+//	@Override
+//	public void destroy() {
+//		super.destroy();
+//	}
 
 	
 	

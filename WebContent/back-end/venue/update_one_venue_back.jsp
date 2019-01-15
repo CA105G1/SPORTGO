@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>CA105G1:SPORTYGO:update_one_venue</title>
+	<title>CA105G1:SPORTYGO:update_one_venue_back</title>
 
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,7 +27,7 @@
 	</style>
 </head>
 <body>
-	<h1>this is update one venue page</h1>
+	<h1>this is update one venue page for back</h1>
 <%
 
 %>
