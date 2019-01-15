@@ -26,7 +26,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-import com.emp.model.EmpVO;
 import com.news.model.NewsService;
 import com.news.model.NewsVO;
 import com.news.model.Util_Check_News_Parameter;
