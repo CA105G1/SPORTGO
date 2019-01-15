@@ -437,13 +437,13 @@
 														<div>
 															<center>														
 															  <div class="panel">
-<!-- 															    <form id="subscription-form"> -->
+
 															
 															      <div class="card-js stripe" data-stripe="true"></div>
 															      <button type="submit" class="btncard" ><div id="testnum"></div></button>
 															      <input type="hidden" name="ord_amount" value="test">
 																  <input type="hidden" name="action" value="insert">
-<!-- 															    </form> -->
+
 															  </div>
 															</center>
 														</div>
