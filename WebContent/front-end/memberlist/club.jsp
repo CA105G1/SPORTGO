@@ -5,7 +5,13 @@
 <%@ page import = "com.club.model.*" %>
 <%@ page import = "com.sport.model.*" %>
 <%@ page import = "java.util.*" %>
-
+<%
+	String status = (String)request.getAttribute("status");
+	if(status==null)
+		pageContext.setAttribute("status","");
+	else
+		pageContext.setAttribute("status",status);
+%>
 <!DOCTYPE html>
 <html lang="">
 	<head>
@@ -15,6 +21,7 @@
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		
 		<!-- Font Awesome -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -62,7 +69,7 @@
 												style="height:100%;position:absolute;">
 											</div>
 											<a href="<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clublist.club_no}"
-											class="list-group-item" style="display:flex;height:100%;border:0;">
+											class="list-group-item" style="display:flex;height:100%;border:0;font-size:22px;">
 											${clublist.club_name}<br>
 											<c:forEach var="sportlist" items="${sportlist}">
 												<c:if test="${clublist.sp_no eq sportlist.sp_no}">
@@ -71,7 +78,7 @@
 											</c:forEach>
 											</a>
 											<div>
-											<a href=""
+											<a href="MemManager.do?action=dropoutclub&club_no=${clublist.club_no}"
 											class="list-group-item" style="text-align:center;display:flex;height:100%;border:0;">
 													<label>退出</label>
 												</a>
@@ -99,7 +106,7 @@
 												style="height:100%;position:absolute;">
 											</div>
 											<a href="<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clublist.club_no}"
-											class="list-group-item" style="text-align:center;display:flex;height:100%;border:0;">
+											class="list-group-item" style="text-align:center;display:flex;height:100%;border:0;font-size:22px;">
 											${clublist.club_name}<br>
 											<c:forEach var="sportlist" items="${sportlist}">
 												<c:if test="${clublist.sp_no eq sportlist.sp_no}">
@@ -133,7 +140,7 @@
 												style="height:100%;position:absolute;">
 											</div>
 											<a href="<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clublist.club_no}"
-											class="list-group-item" style="text-align:center;display:flex;height:100%;border:0;">
+											class="list-group-item" style="text-align:center;display:flex;height:100%;border:0;font-size:22px;">
 											${clublist.club_name}<br>
 											<c:forEach var="sportlist" items="${sportlist}">
 												<c:if test="${clublist.sp_no eq sportlist.sp_no}">
@@ -160,6 +167,20 @@
 		</div>
 	<jsp:include page="/front-end/CA105G1_footer.jsp"/>
 	<script>
+	var status = "${status}";
+	var mem_no = "${mem_no}";
+	console.log(mem_no);
+	$(function(){
+		console.log(status);
+		if('succeed'===status){
+			swal("退社成功！", "就是不喜歡這裡", "success");
+		}else if('false'===status){
+			swal("退社失敗！", "你的仇家太多，無法離開", "error");
+		}else if('duplicate'===status){
+			swal("不能退", "哪有人退了再退退了再退", "warning");
+		}
+		
+	})
 // 	var action = "${action}";
 	
 // 	$(function(){

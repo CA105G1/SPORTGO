@@ -1,6 +1,8 @@
 package com.evaofmem.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +40,31 @@ public class EvaofmemServlet extends HttpServlet {
 		mem_no = memberlistVO.getMem_no();
 		
 		if("Evaluate_Sg".equals(action)) {
-			
+			String evaluated = (String) req.getAttribute("evaluated_no");
+			String sg_no = (String) req.getAttribute("sg_no");
+			Integer score = (Integer) req.getAttribute("input-1");
+			if(score==null) {
+				score = 0;
+			}
+			try {
+				service.addEvaluate(sg_no, mem_no, evaluated, score);
+				System.out.println("evalated succeed");
+			}catch(RuntimeException re) {
+				try {
+					service.updateEvaluate(sg_no, mem_no, evaluated, score);
+					System.out.println("evaluated update");
+				}catch(RuntimeException e) {
+					e.printStackTrace();
+					System.out.println("evaluated failed");
+					req.setAttribute("status", "evaluatederr");
+					RequestDispatcher clubgo = req.getRequestDispatcher("MemManager.do?action=Member_Sg");
+					clubgo.forward(req, res);
+				}
+			}
+			req.setAttribute("status", "evaluated");
+			req.setAttribute("score", score);
+			RequestDispatcher clubgo = req.getRequestDispatcher("MemManager.do?action=Member_Sg");
+			clubgo.forward(req, res);
 		}
 		
 		if("Sg_score".equals(action)) {

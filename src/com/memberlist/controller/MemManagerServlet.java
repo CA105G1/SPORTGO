@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.sport.model.SportService;
 import com.club.model.ClubService;
 import com.club.model.ClubVO;
@@ -242,8 +245,48 @@ public class MemManagerServlet extends HttpServlet {
 			req.setAttribute("sportlist", sportlist);
 			RequestDispatcher clubgo = req.getRequestDispatcher("club.jsp");
 			clubgo.forward(req, res);
-			
-			
+		}
+		
+		if("delete_Sg".equals(action)) {
+			String sg_no = req.getParameter("Sg_no");
+			Sg_memService svc = new Sg_memService();
+			try {
+				svc.deleteSg_mem(sg_no, mem_no);
+				//變更sg_info資料表的報名人數
+				Sg_infoService sg_infosvc = new Sg_infoService();
+				Integer sg_ttlapl = sg_infosvc.GetByPK(sg_no).getSg_ttlapl();
+				sg_ttlapl -= 1;
+				sg_infosvc.updateTtlapl(sg_no, sg_ttlapl);
+			}catch(RuntimeException re) {
+				System.out.println("delete failed.");
+				req.setAttribute("status", "false");
+				re.printStackTrace(System.err);
+				RequestDispatcher clubgo = req.getRequestDispatcher("MemManager.do?action=Member_Sg");
+				clubgo.forward(req, res);
+			}
+			req.setAttribute("status", "succeed");
+			RequestDispatcher clubgo = req.getRequestDispatcher("MemManager.do?action=Member_Sg");
+			clubgo.forward(req, res);
+		}
+		
+		if ("dropoutclub".equals(action)) { 
+				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+				String club_no = req.getParameter("club_no");
+				/***************************2.開始修改資料*****************************************/
+				try {
+				Club_memberlistService club_memberlistSvc = new Club_memberlistService();
+				club_memberlistSvc.dropoutclub(club_no, mem_no);
+			} catch (RuntimeException e) {
+				System.out.println("delete failed.");
+				req.setAttribute("status", "false");
+				e.printStackTrace(System.err);
+				RequestDispatcher clubgo = req.getRequestDispatcher("MemManager.do?action=Member_Club");
+				clubgo.forward(req, res);
+			}
+				/***************************3.修改完成,準備轉交(Send the Success view)*************/
+				req.setAttribute("status", "succeed");
+				RequestDispatcher clubgo = req.getRequestDispatcher("MemManager.do?action=Member_Club");
+				clubgo.forward(req, res);
 		}
 	}
 }

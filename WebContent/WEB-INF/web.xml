@@ -85,6 +85,14 @@
     <servlet-name>showPicture</servlet-name>
     <url-pattern>/front-end/memberlist/showPicture.do</url-pattern>
   </servlet-mapping>
+   <servlet>
+    <servlet-name>EvaofmemServlet</servlet-name>
+    <servlet-class>com.evaofmem.controller.EvaofmemServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EvaofmemServlet</servlet-name>
+    <url-pattern>/front-end/memberlist/Evaofmem.do</url-pattern>
+  </servlet-mapping>
   <servlet>
     <servlet-name>MemberServlet_Android</servlet-name>
     <servlet-class>com.android.member.controller.MemberServlet_Android</servlet-class>
