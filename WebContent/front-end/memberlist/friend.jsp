@@ -475,7 +475,7 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 			var jsonObj = {
 					"userName" :userName,
 					"to" :chatFriend,
-					"type" : chat,
+					"type" : "chat",
 					"message" :message
 			};
 			if(chatFriend!=null)

@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core"%>
 <%@ page import = "com.memberlist.model.*" %>
 <%@ page import = "com.ord.model.*" %>
+<%@ page import = "com.orddetails.model.*" %>
 <%@ page import = "java.util.*" %>
 
 <% 
@@ -14,6 +15,7 @@
 	OrdService ordservice = new OrdService();
 	List<OrdVO> ordlist = ordservice.getAllmem_no(mem_no);
 	pageContext.setAttribute("ordlist", ordlist);
+	OrddetailsService orddetailsSvc = new OrddetailsService();
 
 %>
 <!DOCTYPE html>
@@ -94,7 +96,7 @@
             </div>
             <div class="col-xs-8 col-sm-9">
                 <strong>下訂日期</strong><br>
-                <span class="text-muted">${ordlist.ord_date}</span>
+                <span class="text-muted">${ord.ord_date}</span>
             </div>
             <div class="col-xs-1 col-sm-1 dropdown-user" data-for=".cyruxx">
                 <i class="glyphicon glyphicon-chevron-down text-muted"></i>
@@ -106,7 +108,7 @@
             <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title">User information</h3>
+                        <h3 class="panel-title">訂單資訊</h3>
                     </div>
                     <div class="panel-body">
                         <div class="row">
