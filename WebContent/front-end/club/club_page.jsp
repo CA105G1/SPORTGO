@@ -11,7 +11,6 @@
 <%
 //	依照社團編號去找對應的貼文
 // 	List<Post_infoVO> postvolist=(ArrayList)request.getAttribute("postvolist");
-
  	ResponesVO responesVO = new ResponesVO();
  	
 /***回文的會員*********************************************************************************/ 	
@@ -28,27 +27,26 @@
 // 		/////////////////////登出貼文會消失///////////////////////////////
 
 		MemberlistVO memberlistVO =null;
-		Object tempObject = session.getAttribute("memberlistVO");//從session取得
-		String club_no = null;
-		if(tempObject!=null){//如果會員有登入
-			memberlistVO = (MemberlistVO)tempObject;
-		  	String new_club_no = request.getParameter("club_no");
-		  	System.out.println("new_club_no="+new_club_no);//////////////////////////////////
-		  	request.getSession().setAttribute("club_no", new_club_no);
-		  	club_no = new_club_no;
-		 }else{
-		  	String old_club_no = (String)request.getSession().getAttribute("club_no");
-		  if(old_club_no!=null){
-		   	request.getSession().removeAttribute("club_no");
-		   	club_no = old_club_no;
-		  }else{
-		   	club_no = request.getParameter("club_no");
-		  }
-		 }
-
-
-
-
+	  	Object tempObject = session.getAttribute("memberlistVO");//從session取得
+	  	String club_no = null;
+	  	if(tempObject!=null){//如果會員有登入
+	   		memberlistVO = (MemberlistVO)tempObject;
+	     	String new_club_no = request.getParameter("club_no");
+	    	if(new_club_no==null){//之前沒登入，之後有登入，使用session.getAttribute("tempClub_no");
+	      		new_club_no = (String)session.getAttribute("tempClub_no");
+	     	}
+	     	System.out.println("new_club_no="+new_club_no);//////////////////////////////////
+	     	request.getSession().setAttribute("club_no", new_club_no);
+	     	club_no = new_club_no;
+	  	}else{
+	     	String old_club_no = (String)request.getSession().getAttribute("club_no");
+	     	if(old_club_no!=null){
+	       		request.getSession().removeAttribute("club_no");
+	       		club_no = old_club_no;
+	     	}else{
+	       		club_no = request.getParameter("club_no");
+	     	}
+	  	}
 
 		ClubService clubSvc = new ClubService();
 		ClubVO clubVO = clubSvc.getOneClub(club_no);
@@ -56,8 +54,6 @@
 		Post_infoService postinfo = new Post_infoService();
 		List<Post_infoVO> postvolist = postinfo.getAllfromclub(club_no);
 		request.setAttribute("postvolist", postvolist);
-	
- 	
 %>
 
 
@@ -110,7 +106,7 @@
 
 	<body>
 	
-	<%@ include file="/front-end/CA105G1_header.file" %>
+	<jsp:include page="/front-end/CA105G1_header.jsp" />
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-xs-12 col-lg-1" id="xx1"></div>
@@ -156,53 +152,46 @@
   							
 <!-------------------------------------------- 留言版 ---------------------------------------------------->
 <!----------------------------------------------回文------------------------------------------------------>
-					  			<button class="responesShow btn  btn-link" type="button" id="dropdownMenuButton" data-toggle="" aria-haspopup="true" aria-expanded="false">
-					    			顯示所有留言
-					  			</button>
+					  		<button class="responesShow btn  btn-link" type="button" id="dropdownMenuButton" data-toggle="" aria-haspopup="true" aria-expanded="false">
+					    		顯示所有留言
+					  		</button>
 							<div class=" container-fluid" id="respones" style="display: none;">
-  									<div class="" aria-labelledby="" width="100%">  
-										<div class="" width="100%">
-												<table class="table">
-													<jsp:useBean id="responesSvc" scope="page" class="com.respones.model.ResponesService"/>
-													<c:forEach var="responesVO" items="${responesSvc.getallfrompost(postinfoVO.post_no)}">
-									<!-- 刪除的FORM --><FORM METHOD="post" ACTION="<%=request.getContextPath()%>/respones.do" name="form">
-				    									<tr>
-				    										<input type="hidden" name="res_no" id="res_no" value="${responesVO.res_no}"/>
-				    										<jsp:useBean id="post_infoSvc" scope="page" class="com.post_info.model.Post_infoService"/>
-				    										<input type="hidden" name="club_no" id="club_no" value="${post_infoSvc.getOnePost_info(responesVO.post_no).getClub_no()}"/>
-					      			 <!-- 回文者的照片--><td scope="col">
-					      			 							<img src="<%=request.getContextPath()%>/front-end/memberlist/showPicture.do?mem_no=${responesVO.mem_no}"  style="width: 10%">
-					      			 						</td>
-					      				 <!-- 回文內容-->	<td scope="col">
-					      				 						${responesVO.res_content}
-				      				 						</td>
-				      				 						<td>
-			 													<button type="submit" class="btn btn-light" name="action" value="delete" >
- 							 										刪除 
- 																</button>
-				      				 						</td> 
+								<table class="table">
+									<jsp:useBean id="responesSvc" scope="page" class="com.respones.model.ResponesService"/>
+									<c:forEach var="responesVO" items="${responesSvc.getallfrompost(postinfoVO.post_no)}"><!-- 內層forEach -->
+					 <!-- 刪除的FORM --><FORM METHOD="post" ACTION="<%=request.getContextPath()%>/respones.do" name="form">
+				    					<tr>
+				    					<input type="hidden" name="res_no" id="res_no" value="${responesVO.res_no}"/>
+				    					<jsp:useBean id="post_infoSvc" scope="page" class="com.post_info.model.Post_infoService"/>
+				    					<input type="hidden" name="club_no" id="club_no" value="${post_infoSvc.getOnePost_info(responesVO.post_no).getClub_no()}"/>
+										<td scope="col"><!-- 回文者的照片-->
+					      			 		<img src="<%=request.getContextPath()%>/front-end/memberlist/showPicture.do?mem_no=${responesVO.mem_no}"  style="width: 10%">
+					      			 	</td>
+										<td scope="col"><!-- 回文內容-->
+					      					${responesVO.res_content}
+				      				 	</td>
+				      				 	<td>
+			 								<button type="submit" class="btn btn-light" name="action" value="delete" >
+ 							 					刪除 
+ 											</button>
+				      				 	</td> 
  				      				 						
-				    									</tr>
-									<!-- 刪除的FORM --></FORM>
-			    									</c:forEach>	
-												</table>
-										</div>
-  									</div>
-							</div>
+				    					</tr>
+					 <!-- 刪除的FORM --></FORM>
+			    					</c:forEach><!-- 內層forEach -->
+								</table>
+							</div><!-- id="respones"結束 -->
 <!----------------------------------------------回文------------------------------------------------------>
    								</c:forEach><!-- 最外層postinfoVO的 -->
   							</div> <!-- card-body結束 -->
-
-
-					
-							<div class="col-xs-12 col-lg-2" id="xx">
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+  							
+							<div class="col-xs-12 col-lg-2" id="xx"></div>
+					</div><!-- card text-center結束 -->
+				</div><!-- col-xs-12 col-lg-7結束-->
+			</div><!-- row結束 -->
+		</div><!-- 最外層container-fluid結束 -->
 				
-		<%@ include file="/front-end/CA105G1_footer.file" %>
+		<jsp:include page="/front-end/CA105G1_footer.jsp" />
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script>

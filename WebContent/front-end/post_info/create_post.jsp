@@ -9,7 +9,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
-
 <html >
 	<head>
 	 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -53,10 +52,7 @@
 		</style>
 	</head>
 
-	<!--data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" -->
-
 	<body>
-	
 	<jsp:include page="/front-end/CA105G1_header.jsp" />
 		<div class="container-fluid">
 			<div class="row">
