@@ -133,13 +133,13 @@
     <servlet-name>Post_infoServlet</servlet-name>
     <url-pattern>/post_info.do</url-pattern>
   </servlet-mapping>
-   <servlet>
-   <servlet-name>Club_memberlistServlet</servlet-name>
-   <servlet-class>com.club_memberlist.controller.Club_memberlistServlet</servlet-class>
+  <servlet>
+    <servlet-name>Club_memberlistServlet</servlet-name>
+    <servlet-class>com.club_memberlist.controller.Club_memberlistServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-   <servlet-name>Club_memberlistServlet</servlet-name>
-   <url-pattern>/club_memberlist.do</url-pattern>
+    <servlet-name>Club_memberlistServlet</servlet-name>
+    <url-pattern>/club_memberlist.do</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>ResponesServlet</servlet-name>
@@ -197,7 +197,6 @@
     <servlet-name>VenueImgServlet</servlet-name>
     <url-pattern>/venue/venueImg.do</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>EmpServlet</servlet-name>
     <servlet-class>com.emp.controller.EmpServlet</servlet-class>
@@ -206,17 +205,15 @@
     <servlet-name>EmpServlet</servlet-name>
     <url-pattern>/emp/emp.do</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>NewsServlet</servlet-name>
     <servlet-class>com.news.controller.NewsServlet</servlet-class>
-  	<load-on-startup>15</load-on-startup>
+    <load-on-startup>15</load-on-startup>
   </servlet>
   <servlet-mapping>
     <servlet-name>NewsServlet</servlet-name>
     <url-pattern>/news/news.do</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>NewsImgServlet</servlet-name>
     <servlet-class>com.news.controller.NewsImgServlet</servlet-class>
@@ -225,8 +222,6 @@
     <servlet-name>NewsImgServlet</servlet-name>
     <url-pattern>/news/newsImg.do</url-pattern>
   </servlet-mapping>
-  
-  
   <servlet>
     <servlet-name>Sg_infoServlet</servlet-name>
     <servlet-class>com.sg_info.controller.Sg_infoServlet</servlet-class>
@@ -307,5 +302,14 @@
   <servlet-mapping>
     <servlet-name>ProductImgServlet</servlet-name>
     <url-pattern>/pro/proImg.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  <servlet-name>RegionServlet</servlet-name>
+    <servlet-class>com.region.controller.RegionServlet</servlet-class>
+    <load-on-startup>15</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RegionServlet</servlet-name>
+    <url-pattern>/region/region.do</url-pattern>
   </servlet-mapping>
 </web-app>

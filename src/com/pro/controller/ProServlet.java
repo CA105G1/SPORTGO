@@ -28,6 +28,9 @@ public class ProServlet extends HttpServlet {
 	//-------------------------前端路徑---------------------//
 	private static final String PATH_FRONT_LIST_ALL_PRO = "/front-end/pro/listAllPro_front.jsp";
 	private static final String PATH_FRONT_LIST_ONE_PRO = "/front-end/pro/listOnePro_front.jsp";
+	//-------------------------模板路徑---------------------//
+//	private static final String PATH_FRONT_LIST_ALL_PRO = "/front-end/pro/alazea-gh-pages/listAllPro_front.jsp";
+//	private static final String PATH_FRONT_LIST_ONE_PRO = "/front-end/pro/alazea-gh-pages/listOnePro_front.jsp";
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
@@ -607,7 +610,7 @@ if ("getOne_For_Display_front".equals(action)) { //來自select_page.jsp的請�
 			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				String str = req.getParameter("pro_no");
-				
+				System.out.println("str:"+str);
 		
 				if (str == null || (str.trim()).length() == 0) {
 					errorMsgs.add("請輸入商品編號");

@@ -39,10 +39,10 @@ public class OrdServlet extends HttpServlet {
 	//-------------------------前端路徑---------------------//
 	private static final String PATH_FRONT_LIST_ALL_PRO = "/front-end/pro/listAllPro_front.jsp";
 	private static final String PATH_FRONT_LIST_ONE_PRO = "/front-end/pro/listOnePro_front.jsp";
-	private static final String PATH_SHOPPINGCART_FRONT = "/front-end/pro/shoppingcart_front.jsp";
-	private static final String PATH_ORD_FRONT = "/front-end/pro/ord_front.jsp";
-	
-	
+//	private static final String PATH_SHOPPINGCART_/front-end/pro/ord_front.jsp";
+	//------------------------模板路徑(訂單的address要換舊版時需開)----------------------//
+	private static final String PATH_SHOPPINGCART_FRONT = "/front-end/pro/alazea-gh-pages/shoppingcart_front.jsp";
+	private static final String PATH_ORD_FRONT = "/front-end/pro/alazea-gh-pages/ord_front.jsp";
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
@@ -73,7 +73,21 @@ if ("insert".equals(action)) { //來自shoppingcart_front.jsp的請求
 				card = remove_Multi_Spaces(card);
 				String expirydate = req.getParameter("expirydate");
 				expirydate = remove_Multi_Spaces(expirydate);
+				
+				if("".equals(card)||(card.trim()).length()==0) {
+					errorMsgs.add("信用卡欄位必填");
+				}
+				if("".equals(expirydate)||(expirydate.trim()).length()==0) {
+					errorMsgs.add("信用卡日期欄位必填");
+				}
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理(收貨地址)*************************/
+				
+//				String receiver = req.getParameter("address_receiver");
+//				String phone = req.getParameter("address_phone");
+//				String country = req.getParameter("address_country");
+//				String city = req.getParameter("address_city");
+//				String detail = req.getParameter("address_detail");
+//				String zip = req.getParameter("address_zip");
 				
 				String receiver = req.getParameter("receiver");
 				String phone = req.getParameter("phone");

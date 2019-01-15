@@ -23,31 +23,7 @@
 	</head>
 	<body>
 		
-		<div class="card text-center">
-  			<div class="card-header">
-   				<h3>建立貼文</h3>
-  			</div>
-  			<div class="card-body">
-    			<div class="form-group">
-					<label class="post_topic">
-						貼文主題
-						<input type="text" name="post_topic" id="post_topic" class="form-control"  size="50">
-					</label>
-					<br>
-					<br>
-					<label class="post_content" >
-						貼文內容
-						<br>
-					<textarea name="content" id="editor" class="form-control" >This is some sample content.</textarea>
-					</label>
-				</div>
-    			
-  			</div>
-  			<div class="card-footer text-muted">
-  				<input type="hidden" name="action" value="insert">
-   				<button type="submit" class="btn btn-primary">發佈</button>
-  			</div>
-			</div>
+		
 
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>

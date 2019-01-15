@@ -570,8 +570,9 @@ public class Sg_infoJDBCDAO_android implements Sg_infoDAO_interface_android{
 		
 	}
 
+
 	@Override
-	public List<Sg_info> findBySearch(String mem_name, String venue, long start, long end) {
+	public List<Sg_info> findBySearch(String mem_name, String venue, String start, String end) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -108,8 +108,13 @@ public class Sg_infoService_android {
 		
 	}
 	
-	public List<Sg_info> getBySearch(String mem_name, String venue, long start, long end) {
-		return dao.findBySearch(mem_name, venue, start, end);
+	public List<Sg_info> getBySearch(String mem_name, String v_name, String start, String end) {
+		List<Sg_info> list = dao.findBySearch(mem_name, v_name, start, end);
+		for (Sg_info x: list) {
+			if (x.getClub_no() != null)
+			x.setClub_name(service.getOneClub(x.getClub_no()).getClub_name());
+		}
+		return list;
 		
 	}
 	

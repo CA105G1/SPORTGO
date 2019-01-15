@@ -162,11 +162,14 @@ public class VenueSelectServlet extends HttpServlet {
 			VenueTypeVO venueTypeVO = venueTypeService.getOneVenueTypeByPK(venueVO.getVt_no());
 			RegService regService = new RegService();
 			RegVO regVO = regService.getRegVOByPK(venueVO.getReg_no());
+			V_evaluationService v_evaluationService = new V_evaluationService();
+			Double venue_score = v_evaluationService.getOneVenueScore(venueVO.getV_no());
 			
 			///////
 			request.setAttribute("venueVO", venueVO);
 			request.setAttribute("venueTypeVO", venueTypeVO);
 			request.setAttribute("regVO", regVO);
+			request.setAttribute("venue_score", venue_score);
 			RequestDispatcher successView = request.getRequestDispatcher(goToLoaclUrl);
 			successView.forward(request, response);
 			return;

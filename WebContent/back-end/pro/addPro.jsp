@@ -287,7 +287,7 @@
 	                                                	<div class="valuesize">
 <%-- 	                                                		<input type="TEXT" class="form-control" name="shelve" size="45" value="<%= (proVO==null)? "MANAGER" : proVO.getPro_shelve()%>" /> --%>
 	                                                		<select name="shelve"  class="form-control" style="width:150px;">
-																<option value="上架">上架</option>
+																<option value="上架中">上架中</option>
 																<option value="下架">下架</option>
 															</select>
 	                                                	</div>

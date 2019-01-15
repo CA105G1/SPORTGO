@@ -26,10 +26,12 @@ public class VenueCreateOrUpdateServlet extends HttpServlet {
 	//private static final String ERRORMSGS_NO_TAB = "errorMsgs";
 	private static final String ERRORMSGS_TITLE = "errorMsgs_";
 	
-	private static final String WHITCH_TAB = "whitchTab";
+	private static final String WHITCH_TAB = "whichTab";
 	private static final String TAB_SELECT = "tab1";
 	private static final String TAB_CREATE = "tab2";
 	private static final String TAB_UPDATE = "tab3";
+	
+	private static final String VENUEVO_FOR_ERROR_NAME_TITLE = "venueVO_";
 	
 	private static final String MAINTAIN_VENUE_INFO_BACK = "/back-end/venue/maintain_venue_info_back.jsp";
 	private static final String QUERY_SUPER_SERVLET_ACTION_AGAIN = "/venue/venue.do?action=";
@@ -54,8 +56,12 @@ public class VenueCreateOrUpdateServlet extends HttpServlet {
 				// remark:
 				// OK---> // request.setAttribute(WHITCH_TAB, TAB_SELECT);
 				// Error---> // request.setAttribute(WHITCH_TAB, TAB_CREATE);
-				doActionInsertOneVenue(request, response, QUERY_SUPER_SERVLET_ACTION_AGAIN+"show_one_venue_back&v_no=", 
-						MAINTAIN_VENUE_INFO_BACK, TAB_CREATE, false);
+				doActionInsertOneVenue(request, response, 
+						QUERY_SUPER_SERVLET_ACTION_AGAIN+"show_one_venue_back&v_no=", // goToLocalUrl_forSuccess
+						MAINTAIN_VENUE_INFO_BACK,  // goToLocalUrl_forError
+						TAB_CREATE, // whichTab_forErrorMsgs
+						VENUEVO_FOR_ERROR_NAME_TITLE+TAB_CREATE, // request.setAttribute("?",venueVO);
+						false);  // isFrontEnd
 				break;
 			case "update_cancel":
 				
@@ -82,7 +88,7 @@ public class VenueCreateOrUpdateServlet extends HttpServlet {
 		return getErrorMsgsCollection(request,titleName,"");
 	}
 	
-	private void doActionInsertOneVenue(HttpServletRequest request, HttpServletResponse response, String goToLocalUrl_forSuccess, String goToLocalUrl_forError, String whichTab_forErrorMsgs, boolean isFrontEnd) throws ServletException, IOException{
+	private void doActionInsertOneVenue(HttpServletRequest request, HttpServletResponse response, String goToLocalUrl_forSuccess, String goToLocalUrl_forError, String whichTab_forErrorMsgs, String venueVO4Error, boolean isFrontEnd) throws ServletException, IOException{
 		//insert_one_venue
 		Map<String, String> errorMsgs = getErrorMsgsCollection(request, ERRORMSGS_TITLE, whichTab_forErrorMsgs);
 		VenueVO venueVO = null;
@@ -159,31 +165,31 @@ public class VenueCreateOrUpdateServlet extends HttpServlet {
 			venueVO.setOpen_time(open_time);
 			
 			String openday_mon = request.getParameter("openday_mon"); // Y or N
-			openday_mon = checkYorN(openday_mon, errorMsgs, "openday_mon", "請選擇星期一是否開放");
+			openday_mon = checkYorN(openday_mon, errorMsgs, "openday_weak", "請選擇是否開放");
 			venueVO.setOpenday_mon(openday_mon);
 			
 			String openday_tue = request.getParameter("openday_tue"); // Y or N
-			openday_tue = checkYorN(openday_tue, errorMsgs, "openday_tue", "請選擇星期二是否開放");
+			openday_tue = checkYorN(openday_tue, errorMsgs, "openday_weak", "請選擇是否開放");
 			venueVO.setOpenday_tue(openday_tue);
 			
 			String openday_wed = request.getParameter("openday_wed"); // Y or N
-			openday_wed = checkYorN(openday_wed, errorMsgs, "openday_wed", "請選擇星期三是否開放");
+			openday_wed = checkYorN(openday_wed, errorMsgs, "openday_weak", "請選擇是否開放");
 			venueVO.setOpenday_wed(openday_wed);
 			
 			String openday_thu = request.getParameter("openday_thu"); // Y or N
-			openday_thu = checkYorN(openday_thu, errorMsgs, "openday_mon", "請選擇星期四是否開放");
+			openday_thu = checkYorN(openday_thu, errorMsgs, "openday_weak", "請選擇是否開放");
 			venueVO.setOpenday_thu(openday_thu);
 			
 			String openday_fri = request.getParameter("openday_fri"); // Y or N
-			openday_fri = checkYorN(openday_fri, errorMsgs, "openday_fri", "請選擇星期五是否開放");
+			openday_fri = checkYorN(openday_fri, errorMsgs, "openday_weak", "請選擇是否開放");
 			venueVO.setOpenday_fri(openday_fri);
 			
 			String openday_sat = request.getParameter("openday_sat"); // Y or N
-			openday_sat = checkYorN(openday_sat, errorMsgs, "openday_sat", "請選擇星期六是否開放");
+			openday_sat = checkYorN(openday_sat, errorMsgs, "openday_weak", "請選擇是否開放");
 			venueVO.setOpenday_sat(openday_sat);
 			
 			String openday_sun = request.getParameter("openday_sun"); // Y or N
-			openday_sun = checkYorN(openday_sun, errorMsgs, "openday_sun", "請選擇星期日是否開放");
+			openday_sun = checkYorN(openday_sun, errorMsgs, "openday_weak", "請選擇是否開放");
 			venueVO.setOpenday_sun(openday_sun);
 			
 			String v_display = request.getParameter("v_display"); // 顯示，不顯示
@@ -194,7 +200,7 @@ public class VenueCreateOrUpdateServlet extends HttpServlet {
 			
 			byte[] v_photo1 = null;
 			String v_photo1_ext = null;
-			Map<String, byte[]> map = checkAndGetParameterAboutPicture(request, errorMsgs, "v_phote1");
+			Map<String, byte[]> map = checkAndGetParameterAboutPicture(request, errorMsgs, "v_photo1");
 			Set<String> set =map.keySet();
 			for(String string : set) {
 				v_photo1_ext = string;
@@ -203,11 +209,36 @@ public class VenueCreateOrUpdateServlet extends HttpServlet {
 			venueVO.setV_photo1_ext(v_photo1_ext);
 			venueVO.setV_photo1(v_photo1);
 			
+			String v_lat = request.getParameter("v_lat");
+			try {
+				if(v_lat==null || v_lat.trim().length()==0) {
+					venueVO.setV_lat(new Double("0"));
+				}else {
+					venueVO.setV_lat(new Double(v_lat));
+				}
+			}catch (NumberFormatException e) {
+				errorMsgs.put("v_lat", "lat:格式不對");
+			}
+			String v_long = request.getParameter("v_long");
+			try {
+				if(v_long==null || v_long.trim().length()==0) {
+					venueVO.setV_long(new Double("0"));
+				}else {
+					venueVO.setV_long(new Double(v_long));
+				}
+			}catch (NumberFormatException e) {
+				errorMsgs.put("v_long", "long:格式不對");
+			}
+			
+			
+			
+			
 			if(!errorMsgs.isEmpty()) {
 				if(!errorMsgs.containsKey("v_photo1")) {
 					errorMsgs.put("v_photo1", "請重新上傳圖片");
 				}
-				request.setAttribute("venueVO", venueVO);
+				request.setAttribute(WHITCH_TAB, TAB_CREATE);
+				request.setAttribute(venueVO4Error, venueVO);
 				RequestDispatcher failureView = request.getRequestDispatcher(goToLocalUrl_forError);
 				failureView.forward(request, response);
 				return;
@@ -217,12 +248,16 @@ public class VenueCreateOrUpdateServlet extends HttpServlet {
 			venueService.addVenue(venueVO);
 			
 			//// 轉交出去
+			request.setAttribute(WHITCH_TAB, TAB_SELECT);
 			RequestDispatcher successsView = request.getRequestDispatcher(goToLocalUrl_forSuccess+venueVO.getV_no());
 			successsView.forward(request, response);
 			return;
 			
 		}catch (Exception e) {
-			errorMsgs.put(DB_ERROR_MSGS,"取得資料失敗: "+e.getMessage());
+			e.printStackTrace();
+			request.setAttribute(WHITCH_TAB, TAB_CREATE);
+			request.setAttribute(venueVO4Error, venueVO);
+			errorMsgs.put(DB_ERROR_MSGS,"儲存資料失敗: "+e.getMessage());
 			RequestDispatcher failureView = request.getRequestDispatcher(goToLocalUrl_forError);
 			failureView.forward(request, response);
 			return;
@@ -268,8 +303,7 @@ public class VenueCreateOrUpdateServlet extends HttpServlet {
 	}
 	
 	private String checkYorN(String reulstString ,Map<String, String> errorMsgs, String culname, String errorMessageString) {
-		String string_reg="^[YN]$";
-		if(reulstString.matches(string_reg)) {
+		if("Y".equals(reulstString) || "N".equals(reulstString)) {
 			return reulstString;
 		}else {
 			errorMsgs.put(culname, errorMessageString);

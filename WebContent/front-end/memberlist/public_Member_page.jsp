@@ -258,6 +258,7 @@
 			webSocket.onmessage = function(event){
 				$(".notation").show();
 				var jsonObj = JSON.parse(event.data);
+				console.log(jsonObj.type);
 					if(jsonObj.type==='notation'){
 						$(".notation").append("<div class='alert alert-info alert-dismissable' role='alert'>"+
 						"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"+

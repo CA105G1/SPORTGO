@@ -15,10 +15,10 @@
 	
 //  Post_infoService post_infoSvc = new Post_infoService();
 // 	Post_infoVO post_infoVO = post_infoSvc.getOnePost_info("P0001");
- //	Post_infoVO post_infoVO = (Post_infoVO)request.getAttribute("post_infoVO");
+//	Post_infoVO post_infoVO = (Post_infoVO)request.getAttribute("post_infoVO");
  	
 /***依照社團編號去找對應的貼文*******************************************************************/	
-	List<Post_infoVO> postvolist=(ArrayList)request.getAttribute("postvolist");
+// 	List<Post_infoVO> postvolist=(ArrayList)request.getAttribute("postvolist");
 /*********************************************************************************************/
  	ResponesVO responesVO = new ResponesVO();
  	String post_no = request.getParameter("post_no");
@@ -33,8 +33,15 @@
 //  	ResponesService responesSvc = new ResponesService(); 
 //  	List<ResponesVO> responeslist = responesSvc.getallfrompost(post_no);
 //  	pageContext.setAttribute("list",list);
+		String club_no = request.getParameter("club_no");
+		ClubVO clubVO = clubSvc.getOneClub(club_no);
+		request.setAttribute("ClubVO", clubVO);
 
-// //刪除回覆
+		Post_infoService postinfo = new Post_infoService();
+		List<Post_infoVO> postvolist = postinfo.getAllfromclub(club_no);
+		request.setAttribute("postvolist", postvolist);
+	
+		request.getSession().setAttribute("club_no", club_no);
  	
 %>
 
@@ -114,10 +121,6 @@
 							<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/respones.do" name="form">  
   							<div class="card-footer text-muted">
 									<div class="card" id="respones">
-									<div>
-									System.out.println(${postinfoVO.post_no});
-									System.out.println(${memberlistVO.mem_no});
-									</div>
 							  			<div class="card-body">
 					    <!-- 留言輸入框 -->  <textarea class="form-control" name="res_content" id="res_content" placeholder="我要留言" row="5"></textarea>
 											<input type="hidden" name="club_no" id="club_no" value="${postinfoVO.club_no}"/>
@@ -136,12 +139,12 @@
   							
 <!-------------------------------------------- 留言版 ---------------------------------------------------->
 <!----------------------------------------------回文------------------------------------------------------>
-							<div class="dropdown">
-					  			<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					  			<button class="responesShow btn btn-secondary " type="button" id="dropdownMenuButton" data-toggle="" aria-haspopup="true" aria-expanded="false">
 					    			顯示所有留言
 					  			</button>
-  									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">  
-										<div class="dropdown-item">
+							<div class=" container-fluid" id="respones" style="display: none;">
+  									<div class="" aria-labelledby="" width="100%">  
+										<div class="" width="100%">
 												<table class="table">
 													<jsp:useBean id="responesSvc" scope="page" class="com.respones.model.ResponesService"/>
 													<c:forEach var="responesVO" items="${responesSvc.getallfrompost(postinfoVO.post_no)}">
@@ -187,6 +190,12 @@
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script>
+		$(document).ready(function() {
+			$(".responesShow").click(function() {
+//	 			$(".answer:not(this)").hide("slow"),
+				$(this).next().slideToggle("slow");
+			});
+		});
 			ClassicEditor
 				.create( document.querySelector( '#editor' ) )
 				.then( editor => {

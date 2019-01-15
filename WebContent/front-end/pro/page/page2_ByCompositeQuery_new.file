@@ -1,0 +1,27 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+  <%if (rowsPerPage<rowNumber) {%>
+    <%if(pageIndex>=rowsPerPage){%>
+        <li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/pro/pro.do?whichPage=1&action=pro_ByCompositeQuery&requestURL=<%=request.getServletPath()%>">first</a></li>;
+        <li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/pro/pro.do?whichPage=<%=whichPage-1%>&action=pro_ByCompositeQuery&requestURL=<%=request.getServletPath()%>">上一頁 </a></li>
+    <%}%> 
+  
+    <%if(pageIndex<pageIndexArray[pageNumber-1]){%>
+        <li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/pro/pro.do?whichPage=<%=whichPage+1%>&action=pro_ByCompositeQuery&requestURL=<%=request.getServletPath()%>">下一頁 </a></li>;
+        <li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/pro/pro.do?whichPage=<%=pageNumber%>&action=pro_ByCompositeQuery&requestURL=<%=request.getServletPath()%>">last</a></li>;
+    <%}%>
+  <%}%>  
+ 
+<br><br>
+
+  <%if ( pageNumber > 1) {%>
+    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/pro/pro.do?action=pro_ByCompositeQuery&requestURL=<%=request.getServletPath()%>">   
+       <select size="1" name="whichPage">
+         <%for (int i=1; i<=pageNumber; i++){%>
+            <option value="<%=i%>">跳至第<%=i%>頁
+         <%}%> 
+       </select>
+       <input type="submit" value="確定" >
+       <input type="hidden" name="action" value="list">  
+    </FORM>
+  <%}%>

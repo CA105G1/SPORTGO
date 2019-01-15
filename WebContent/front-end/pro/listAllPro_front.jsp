@@ -25,7 +25,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-	<title>商城</title>
+	<title>SportGO商城</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <!-- sweetalert-link -->
@@ -90,139 +90,139 @@
 /*     font-size: 30px;  */
 /*     font-family: 'Microsoft YaHei','Lantinghei SC','Open Sans',Arial,'Hiragino Sans GB','STHeiti','WenQuanYi Micro Hei','SimSun',sans-serif;  */
 /* }  */
-.pad-15{ 
-    padding: 15px 0; 
-} 
+/* .pad-15{  */
+/*     padding: 15px 0;  */
+/* }  */
 
-.btn{ 
-    color: #fff; 
-    text-transform: uppercase; 
-    border-radius: 0; 
-    padding-left: 60px; 
-    position: relative; 
-    transform: translateZ(0px); 
-    transition: all 0.5s ease 0s; 
-    font-family: 'Microsoft YaHei','Lantinghei SC','Open Sans',Arial,'Hiragino Sans GB','STHeiti','WenQuanYi Micro Hei','SimSun',sans-serif; 
-} 
-.btn:after{ 
-    content: ""; 
-    position: absolute; 
-    top: 0; 
-    left: 0; 
-    bottom: 0; 
-    right: 0; 
-    background: #fff; 
-    z-index: -1; 
-    transform: scaleX(0); 
-    transform-origin: 100% 50% 0; 
-    transition: all 0.5s ease-out 0s; 
-} 
-.btn:hover:after{ 
-    transform: scaleX(1); 
-    transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66); 
-} 
-.btn span{ 
-    width: 40px; 
-    height: 100%; 
-    line-height: 45px; 
-    background: #fff; 
-    position: absolute; 
-    top: 0; 
-    left: 0; 
-    transition: all 0.3s linear 0s; 
-} 
-.btn span:after{ 
-    content: ""; 
-    display: block; 
-    width: 10px; 
-    height: 10px; 
-    background: #fff; 
-    margin: auto 0; 
-    position: absolute; 
-    top: 0; 
-    right: -5px; 
-    bottom: 0; 
-    transform: rotate(45deg); 
-    transition: all 0.3s linear 0s; 
-} 
-.btn.btn-sm{ 
-    padding-left: 40px; 
-} 
-.btn.btn-sm span{ 
-    width: 27px; 
-    line-height: 30px; 
-} 
-.btn.btn-sm span:after{ 
-    width: 8px; 
-    height: 8px; 
-    right: -4px; 
-} 
-.btn.btn-xs{ 
-    padding-left: 30px; 
-} 
-.btn.btn-xs span{ 
-    width: 20px; 
-    line-height: 23px; 
-} 
-.btn.btn-xs span:after{ 
-    width: 7px; 
-    height: 7px; 
-    right: -3px; 
-} 
-.btn.red{ 
-    border: 1px solid #fe6d6d; 
-    background: #fe6d6d; 
-} 
-.btn.red:hover, 
-.btn.red span{ 
-    color: #fe6d6d; 
-} 
-.btn.red:hover span, 
-.btn.red:hover span:after{ 
-    background: #fe6d6d; 
-} 
-.btn.blue{ 
-    border: 1px solid #3bb4e5; 
-    background: #3bb4e5; 
-} 
-.btn.blue:hover, 
-.btn.blue span{ 
-    color: #3bb4e5; 
-} 
-.btn.blue:hover span, 
-.btn.blue:hover span:after{ 
-    background: #3bb4e5; 
-} 
-.btn.orange{ 
-    border: 1px solid #ee955b; 
-    background: #ee955b; 
-} 
-.btn.orange:hover, 
-.btn.orange span{ 
-    color: #ee955b; 
-} 
-.btn.orange:hover span, 
-.btn.orange:hover span:after{ 
-    background: #ee955b; 
-} 
-.btn.green{ 
-    border: 1px solid #79d799; 
-    background: #79d799; 
-} 
-.btn.green:hover, 
-.btn.green span{ 
-    color: #79d799; 
-} 
-.btn.green:hover span, 
-.btn.green:hover span:after{ 
-    background: #79d799; 
-} 
-.btn:hover span{ 
-    color: #fff; 
-} 
-@media only screen and (max-width: 767px){ 
-    .btn{ margin-bottom: 20px; } 
-}
+/* .btn{  */
+/*     color: #fff;  */
+/*     text-transform: uppercase;  */
+/*     border-radius: 0;  */
+/*     padding-left: 60px;  */
+/*     position: relative;  */
+/*     transform: translateZ(0px);  */
+/*     transition: all 0.5s ease 0s;  */
+/*     font-family: 'Microsoft YaHei','Lantinghei SC','Open Sans',Arial,'Hiragino Sans GB','STHeiti','WenQuanYi Micro Hei','SimSun',sans-serif;  */
+/* }  */
+/* .btn:after{  */
+/*     content: "";  */
+/*     position: absolute;  */
+/*     top: 0;  */
+/*     left: 0;  */
+/*     bottom: 0;  */
+/*     right: 0;  */
+/*     background: #fff;  */
+/*     z-index: -1;  */
+/*     transform: scaleX(0);  */
+/*     transform-origin: 100% 50% 0;  */
+/*     transition: all 0.5s ease-out 0s;  */
+/* }  */
+/* .btn:hover:after{  */
+/*     transform: scaleX(1);  */
+/*     transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);  */
+/* }  */
+/* .btn span{  */
+/*     width: 40px;  */
+/*     height: 100%;  */
+/*     line-height: 45px;  */
+/*     background: #fff;  */
+/*     position: absolute;  */
+/*     top: 0;  */
+/*     left: 0;  */
+/*     transition: all 0.3s linear 0s;  */
+/* }  */
+/* .btn span:after{  */
+/*     content: "";  */
+/*     display: block;  */
+/*     width: 10px;  */
+/*     height: 10px;  */
+/*     background: #fff;  */
+/*     margin: auto 0;  */
+/*     position: absolute;  */
+/*     top: 0;  */
+/*     right: -5px;  */
+/*     bottom: 0;  */
+/*     transform: rotate(45deg);  */
+/*     transition: all 0.3s linear 0s;  */
+/* }  */
+/* .btn.btn-sm{  */
+/*     padding-left: 40px;  */
+/* }  */
+/* .btn.btn-sm span{  */
+/*     width: 27px;  */
+/*     line-height: 30px;  */
+/* }  */
+/* .btn.btn-sm span:after{  */
+/*     width: 8px;  */
+/*     height: 8px;  */
+/*     right: -4px;  */
+/* }  */
+/* .btn.btn-xs{  */
+/*     padding-left: 30px;  */
+/* }  */
+/* .btn.btn-xs span{  */
+/*     width: 20px;  */
+/*     line-height: 23px;  */
+/* }  */
+/* .btn.btn-xs span:after{  */
+/*     width: 7px;  */
+/*     height: 7px;  */
+/*     right: -3px;  */
+/* }  */
+/* .btn.red{  */
+/*     border: 1px solid #fe6d6d;  */
+/*     background: #fe6d6d;  */
+/* }  */
+/* .btn.red:hover,  */
+/* .btn.red span{  */
+/*     color: #fe6d6d;  */
+/* }  */
+/* .btn.red:hover span,  */
+/* .btn.red:hover span:after{  */
+/*     background: #fe6d6d;  */
+/* }  */
+/* .btn.blue{  */
+/*     border: 1px solid #3bb4e5;  */
+/*     background: #3bb4e5;  */
+/* }  */
+/* .btn.blue:hover,  */
+/* .btn.blue span{  */
+/*     color: #3bb4e5;  */
+/* }  */
+/* .btn.blue:hover span,  */
+/* .btn.blue:hover span:after{  */
+/*     background: #3bb4e5;  */
+/* }  */
+/* .btn.orange{  */
+/*     border: 1px solid #ee955b;  */
+/*     background: #ee955b;  */
+/* }  */
+/* .btn.orange:hover,  */
+/* .btn.orange span{  */
+/*     color: #ee955b;  */
+/* }  */
+/* .btn.orange:hover span,  */
+/* .btn.orange:hover span:after{  */
+/*     background: #ee955b;  */
+/* }  */
+/* .btn.green{  */
+/*     border: 1px solid #79d799;  */
+/*     background: #79d799;  */
+/* }  */
+/* .btn.green:hover,  */
+/* .btn.green span{  */
+/*     color: #79d799;  */
+/* }  */
+/* .btn.green:hover span,  */
+/* .btn.green:hover span:after{  */
+/*     background: #79d799;  */
+/* }  */
+/* .btn:hover span{  */
+/*     color: #fff;  */
+/* }  */
+/* @media only screen and (max-width: 767px){  */
+/*     .btn{ margin-bottom: 20px; }  */
+/* } */
 /*********按鈕的css************/
 /*div超過高度隱藏*/
 /*.divtest {
@@ -369,61 +369,61 @@ overflow: hidden;
 <!-- 					</div> -->
 <!-- 				</nav> -->
 			<!-- 幻燈片 -->
-				<div id="carousel-id" class="carousel slide" data-ride="carousel">
-					<!-- 幻燈片小圓點區 -->
-					<ol class="carousel-indicators">
-						<li data-target="#carousel-id" data-slide-to="0" class=""></li>
-						<li data-target="#carousel-id" data-slide-to="1" class=""></li>
-						<li data-target="#carousel-id" data-slide-to="2" class="active"></li>
-					</ol>
-					<!-- 幻燈片主圖區 -->
-					<div class="carousel-inner">
-						<div class="item">
-							<img src="https://api.fnkr.net/testimg/2800x700/aaaaaa" alt="">
-							<div class="container">
-								<div class="carousel-caption">
-									<h1>CSS可樂好喝超爽快</h1>
-									<p>你喝過了嗎？</p>
-									<p>
-										<a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a>
-									</p>
-								</div>
-							</div>
-						</div>
-						<div class="item">
-							<img src="https://api.fnkr.net/testimg/2800x700/aaaaaa" alt="">
-							<div class="container">
-								<div class="carousel-caption">
-									<h1>CSS可樂的外掛真方便</h1>
-									<p>你安裝了嗎？</p>
-									<p>
-										<a class="btn btn-lg btn-primary" href="#" role="button">更多</a>
-									</p>
-								</div>
-							</div>
-						</div>
-						<div class="item active">
-							<img src="https://api.fnkr.net/testimg/2800x700/aaaaaa" alt="">
-							<div class="container">
-								<div class="carousel-caption">
-									<h1>我是標題喔～自己改文案吧</h1>
-									<p>我是內文喔，你可以把字打在這裡呦</p>
-									<p>
-										<a class="btn btn-lg btn-primary" href="#" role="button">詳細內容</a>
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- 上下頁控制區 -->
-					<a class="left carousel-control" href="#carousel-id" data-slide="prev">
-						<span class="glyphicon glyphicon-chevron-left"></span>
-					</a>
-					<a class="right carousel-control" href="#carousel-id" data-slide="next">
-						<span class="glyphicon glyphicon-chevron-right"></span>
-					</a>
-				</div>
-
+<!-- 				<div id="carousel-id" class="carousel slide" data-ride="carousel"> -->
+<!-- 					幻燈片小圓點區 -->
+<!-- 					<ol class="carousel-indicators"> -->
+<!-- 						<li data-target="#carousel-id" data-slide-to="0" class=""></li> -->
+<!-- 						<li data-target="#carousel-id" data-slide-to="1" class=""></li> -->
+<!-- 						<li data-target="#carousel-id" data-slide-to="2" class="active"></li> -->
+<!-- 					</ol> -->
+<!-- 					幻燈片主圖區 -->
+<!-- 					<div class="carousel-inner"> -->
+<!-- 						<div class="item"> -->
+<!-- 							<img src="https://api.fnkr.net/testimg/2800x700/aaaaaa" alt=""> -->
+<!-- 							<div class="container"> -->
+<!-- 								<div class="carousel-caption"> -->
+<!-- 									<h1>CSS可樂好喝超爽快</h1> -->
+<!-- 									<p>你喝過了嗎？</p> -->
+<!-- 									<p> -->
+<!-- 										<a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a> -->
+<!-- 									</p> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 						<div class="item"> -->
+<!-- 							<img src="https://api.fnkr.net/testimg/2800x700/aaaaaa" alt=""> -->
+<!-- 							<div class="container"> -->
+<!-- 								<div class="carousel-caption"> -->
+<!-- 									<h1>CSS可樂的外掛真方便</h1> -->
+<!-- 									<p>你安裝了嗎？</p> -->
+<!-- 									<p> -->
+<!-- 										<a class="btn btn-lg btn-primary" href="#" role="button">更多</a> -->
+<!-- 									</p> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 						<div class="item active"> -->
+<!-- 							<img src="https://api.fnkr.net/testimg/2800x700/aaaaaa" alt=""> -->
+<!-- 							<div class="container"> -->
+<!-- 								<div class="carousel-caption"> -->
+<!-- 									<h1>我是標題喔～自己改文案吧</h1> -->
+<!-- 									<p>我是內文喔，你可以把字打在這裡呦</p> -->
+<!-- 									<p> -->
+<!-- 										<a class="btn btn-lg btn-primary" href="#" role="button">詳細內容</a> -->
+<!-- 									</p> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 					上下頁控制區 -->
+<!-- 					<a class="left carousel-control" href="#carousel-id" data-slide="prev"> -->
+<!-- 						<span class="glyphicon glyphicon-chevron-left"></span> -->
+<!-- 					</a> -->
+<!-- 					<a class="right carousel-control" href="#carousel-id" data-slide="next"> -->
+<!-- 						<span class="glyphicon glyphicon-chevron-right"></span> -->
+<!-- 					</a> -->
+<!-- 				</div> -->
+<jsp:include page="/front-end/indexPutNewsCarousel.jsp" />
 			<br>
 
 			<!-- 大區容器 -->
@@ -494,18 +494,18 @@ overflow: hidden;
 									    	<tbody>
 									    		<tr>
 									    			<c:forEach var="proVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
-										    			<td onclick="document.getElementById('pro').submit()">
+										    			<td>
 															<div class="w3-card-4" style="width:250px">
 														    	<img class="img-responsive" src="<%=request.getContextPath()%>/pro/proImg.do?pro_no=${proVO.pro_no}">
 														    	<div class="w3-container w3-center">
 														       		<div class="divStyle"> ${proVO.pro_name}</div>
 														       		<div>${proVO.pro_bonus}</div>
-														       		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/pro/pro.do" id="pro" style="margin-bottom: 0px;">
+														       		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/pro/pro.do" id="${proVO.pro_no}" style="margin-bottom: 0px;">
 <!-- 																		<input type="submit" value="詳情" class="btn btn-info"> -->
 
-																        <a  onclick="document.getElementById('pro').submit()" class="btn btn-lg blue"> 
-																            <span class="fa fa-credit-card-alt"></span>商品詳情 
-																        </a> 
+																        <a  onclick="document.getElementById('${proVO.pro_no}').submit()">test </a>
+<!-- 																            <span class="fa fa-credit-card-alt"></span>商品詳情  -->
+<!-- 																        </a>  -->
 
 																		<input type="hidden" name="pro_no" value="${proVO.pro_no}">
 																		<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">

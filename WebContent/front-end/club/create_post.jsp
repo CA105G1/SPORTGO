@@ -13,13 +13,11 @@
 	List<ClubVO> list = clubSvc.getAll();
 	pageContext.setAttribute("list", list);
 	
-//  Post_infoService post_infoSvc = new Post_infoService();
-// 	Post_infoVO post_infoVO = post_infoSvc.getOnePost_info("P0001");
-
- //	Post_infoVO post_infoVO = (Post_infoVO)request.getAttribute("post_infoVO");
+	Post_infoService post_infoSvc = new Post_infoService();
+	Post_infoVO post_infoVO = (Post_infoVO)request.getAttribute("post_infoVO");
  	
 /***依照社團編號去找對應的貼文*******************************************************************/	
-	List<Post_infoVO> postvolist=(ArrayList)request.getAttribute("postvolist");
+// 	List<Post_infoVO> postvolist=(ArrayList)request.getAttribute("postvolist");
 /*********************************************************************************************/
  	ResponesVO responesVO = new ResponesVO();
  	String post_no = request.getParameter("post_no");
@@ -34,7 +32,16 @@
 //  	ResponesService responesSvc = new ResponesService(); 
 //  	List<ResponesVO> responeslist = responesSvc.getallfrompost(post_no);
 //  	pageContext.setAttribute("list",list);
+		String club_no = request.getParameter("club_no");
+		ClubVO clubVO = clubSvc.getOneClub(club_no);
+		request.setAttribute("ClubVO", clubVO);
+
+		Post_infoService postinfo = new Post_infoService();
+		List<Post_infoVO> postvolist = postinfo.getAllfromclub(club_no);
+		request.setAttribute("postvolist", postvolist);
 	
+		request.getSession().setAttribute("club_no", club_no);
+ 	
 %>
 
 
@@ -95,77 +102,54 @@
 				</div>
 						
 				<div class="col-xs-12 col-lg-7">
-					
-<!---------------------------- 貼文列表 ------------------------------------->
-					<div><!-- 貼文搜尋 -->
-						<input type="text" class="form-control" placeholder="search" style="width:15em" />
-	  					<button class="btn btn-primary" type="button" id="postsearch">送出</button>
-					</div>
-					<div class="card text-center" id="post">
-							<br>
-  							<div class="card-body">
-								<c:forEach var="postinfoVO" items="${postvolist}">
-    								<h3 class="card-title"  class="list-group-item">主題：${postinfoVO.post_topic}</h3>
-    								<p class="card-text">${postinfoVO.post_content}</p>
-    								
-    								
-<!-------------------------------------------- 留言版 --------------------------------------------------->
-  							<div class="card-footer text-muted">
-							<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/respones.do" name="form">  
-									<div class="card" id="respones">
-							  			<div class="card-body">
-					    <!-- 留言輸入框 -->  <textarea class="form-control" name="res_content" id="res_content" placeholder="我要留言" row="5"></textarea>
-											<input type="hidden" name="club_no" id="club_no" value="${postinfoVO.club_no}"/>
-											<input type="hidden" name="post_no" id="post_no" value="${postinfoVO.post_no}">
-											<input type="hidden" name="mem_no" id="mem_no" value="${memberlistVO.mem_no}">
-											<input type="hidden" name="requestURL" id="requestURL" value="/front-end/club/club_page.jsp">
-							  			</div>
-							  		<br>
-							  			<div class="card-footer text-muted">
-							  				<input type="hidden" name="action" value="insert">
-							    			<button type="submit" class="btn btn-primary">送出</button>
-							  			</div>
-									</div>
-							</FORM> 		
-  							</div>
-  							
-<!-------------------------------------------- 留言版 ---------------------------------------------------->
-<!----------------------------------------------回文------------------------------------------------------>
-							<div class="res_content">
-								<div class="container">
-									<table class="table">
-										<jsp:useBean id="responesSvc" scope="page" class="com.respones.model.ResponesService"/>
-										<c:forEach var="responesVO" items="${responesSvc.getallfrompost(postinfoVO.post_no)}">
-	    									<tr>
-		      			 <!-- 回文者的照片-->    <td scope="col">
-		      			 							<img src="<%=request.getContextPath()%>/showPicture?mem_no=${responesVO.mem_no}" >
-		      			 						</td>
-		      				 <!-- 回文內容-->	<td scope="col">
-		      				 						${responesVO.res_content}
-	      				 						</td>
-	    									</tr>
-    									</c:forEach>	
-									</table>
+<!------------------------建立貼文------------------------------------------------------------>		
+					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/post_info.do" name="form">
+						<div class="card text-center">
+				  			<div class="card-header">
+				   				<h3>建立貼文</h3>
+				  			</div>
+				  			<div class="card-body">
+				    			<div class="form-group">
+									<label class="post_topic">
+										貼文主題
+										<input type="text" name="post_topic" id="post_topic" class="form-control"  size="50">
+									</label>
+									<br>
+									<br>
+									<label class="post_content" >
+										貼文內容
+									<br>
+									<textarea name="content" id="editor" class="form-control" ><!--貼文內容輸入框-->
+										This is some sample content.
+									</textarea>
+									<input type="hidden" name="club_no" id="club_no" value="${post_infoVO.club_no}"/>
+									<input type="hidden" name="mem_no" id="mem_no" value="${post_infoVO.mem_no}"/>
+									<!-- 時間可以 -->
+									</label>
 								</div>
-							</div>
-<!----------------------------------------------回文------------------------------------------------------>
-   								</c:forEach><!-- 最外層postinfoVO的 -->
-  							</div> <!-- card-body結束 -->
-
-
-					
-							<div class="col-xs-12 col-lg-2" id="xx">
-								<div>好友列表</div>
-							</div>
+				  			</div>
+				  			<div class="card-footer text-muted">
+				  				<input type="hidden" name="action" value="insert">
+				   				<button type="submit" class="btn btn-primary">建立</button>
+				  			</div>
 						</div>
-					</div>
-				</div>
-			</div>
+					</FORM>
+<!------------------------建立貼文------------------------------------------------------------>	
+				<div class="col-xs-12 col-lg-2" id="xx"></div>
+				</div><!-- col-xs-12 col-lg-7結束 -->
+			</div><!-- row結束 -->
+		</div><!-- container-fluid結束 -->
 				
 		<%@ include file="/front-end/CA105G1_footer.file" %>
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script>
+		$(document).ready(function() {
+			$(".responesShow").click(function() {
+//	 			$(".answer:not(this)").hide("slow"),
+				$(this).next().slideToggle("slow");
+			});
+		});
 			ClassicEditor
 				.create( document.querySelector( '#editor' ) )
 				.then( editor => {

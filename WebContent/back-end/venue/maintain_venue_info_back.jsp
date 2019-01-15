@@ -53,7 +53,7 @@
 			<!-- 標籤面板：標籤區 -->
 					    <ul class="nav nav-tabs" role="tablist">
 					        　	<!-- news area -->
-					        <!-- 使用request.getAttribute("whichtab")來分辨，哪個class is active -->
+					        <!-- 使用request.getAttribute("whichTab")來分辨，哪個class is active -->
 					        <li role="presentation" class="${whichTab==null?'active':(whichTab=='tab1'?'active':'') }">
 					            <a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">查詢、更新</a>
 					        </li>

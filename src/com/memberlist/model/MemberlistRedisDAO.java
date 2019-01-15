@@ -33,10 +33,10 @@ public class MemberlistRedisDAO implements MemberlistRedisDAO_interface {
 	@Override
 	public void appendRedis(String mem_no, String type,String title,String element) {
 		String value = "{"
-				+ "userName:"+mem_no
-				+ ",type:"+type
-				+ ",message:"+element
-				+ ",to:"+title
+				+ "\"userName\":"+"\""+mem_no+"\""
+				+ ",\"type\":"+"\""+type+"\""
+				+ ",\"message\":"+"\""+element+"\""
+				+ ",\"to\":"+"\""+title+"\""
 				+ "}";
 		jedis.lpush(mem_no, value);//List<String>
 		jedis.close();

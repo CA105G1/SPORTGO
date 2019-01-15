@@ -18,7 +18,7 @@
  //	Post_infoVO post_infoVO = (Post_infoVO)request.getAttribute("post_infoVO");
  	
 /***依照社團編號去找對應的貼文*******************************************************************/	
-	List<Post_infoVO> postvolist=(ArrayList)request.getAttribute("postvolist");
+// 	List<Post_infoVO> postvolist=(ArrayList)request.getAttribute("postvolist");
 /*********************************************************************************************/
  	ResponesVO responesVO = new ResponesVO();
  	String post_no = request.getParameter("post_no");
@@ -33,10 +33,16 @@
 //  	ResponesService responesSvc = new ResponesService(); 
 //  	List<ResponesVO> responeslist = responesSvc.getallfrompost(post_no);
 //  	pageContext.setAttribute("list",list);
+		String club_no = request.getParameter("club_no");
+		ClubVO clubVO = clubSvc.getOneClub(club_no);
+		request.setAttribute("ClubVO", clubVO);
 
-// //刪除回覆
-// 	HttpSession session2 = request.getSession();
-// 	MemberlistVO memberlistVO = (MemberlistVO)session2.getAttribute("mem_no");
+		Post_infoService postinfo = new Post_infoService();
+		List<Post_infoVO> postvolist = postinfo.getAllfromclub(club_no);
+		request.setAttribute("postvolist", postvolist);
+	
+		request.getSession().setAttribute("club_no", club_no);
+ 	
 %>
 
 
@@ -112,8 +118,8 @@
     								
     								
 <!-------------------------------------------- 留言版 --------------------------------------------------->
-  							<div class="card-footer text-muted">
 							<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/respones.do" name="form">  
+  							<div class="card-footer text-muted">
 									<div class="card" id="respones">
 							  			<div class="card-body">
 					    <!-- 留言輸入框 -->  <textarea class="form-control" name="res_content" id="res_content" placeholder="我要留言" row="5"></textarea>
@@ -128,8 +134,8 @@
 							    			<button type="submit" class="btn btn-primary">送出</button>
 							  			</div>
 									</div>
-							</FORM> 		
   							</div>
+							</FORM> <!-- /respones.do -->		
   							
 <!-------------------------------------------- 留言版 ---------------------------------------------------->
 <!----------------------------------------------回文------------------------------------------------------>
@@ -142,15 +148,25 @@
 												<table class="table">
 													<jsp:useBean id="responesSvc" scope="page" class="com.respones.model.ResponesService"/>
 													<c:forEach var="responesVO" items="${responesSvc.getallfrompost(postinfoVO.post_no)}">
+											<!-- 刪除 --><FORM METHOD="post" ACTION="<%=request.getContextPath()%>/respones.do" name="form">
 				    									<tr>
-					      			 <!-- 回文者的照片-->    <td scope="col">
-					      			 							<img src="<%=request.getContextPath()%>/showPicture?mem_no=${responesVO.mem_no}" >
-					      			 						</td>
-					      				 <!-- 回文內容-->	<td scope="col">
-					      				 						${responesVO.res_content}
-				      				 						</td>
+				    										<input type="hidden" name="res_no" id="res_no" value="${responesVO.res_no}"/>
+				    										<jsp:useBean id="post_infoSvc" scope="page" class="com.post_info.model.Post_infoService"/>
+				    										<input type="hidden" name="club_no" id="club_no" value="${post_infoSvc.getOnePost_info(responesVO.post_no).getClub_no()}"/>
+					      			 <!-- 回文者的照片-->    		<td scope="col">
+					      			 								<img src="<%=request.getContextPath()%>/showPicture?mem_no=${responesVO.mem_no}" >
+					      			 							</td>
+					      				 <!-- 回文內容-->		<td scope="col">
+					      				 							${responesVO.res_content}
+				      				 							</td>
+				      				 							<td>
+			 													<button type="submit" class="btn btn-light" name="action" value="delete" >
+ 							 										刪除 
+ 																</button>
+				      				 							</td> 
  				      				 						
 				    									</tr>
+											<!-- 刪除 --></FORM>
 			    									</c:forEach>	
 												</table>
 										</div>

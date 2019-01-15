@@ -30,9 +30,11 @@ import redis.clients.jedis.Jedis;
 //問題是否要加下面著個才可以接到form表單呢
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5  * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class ShoppingCartServlet extends HttpServlet{
-	
+	//-----------------------------舊版路徑
 	private static final String PATH_LISTONEPRO_FRONT = "/front-end/pro/listOnePro_front.jsp";
 	private static final String PATH_SHOPPINGCART = "/front-end/pro/shoppingcart_front.jsp";
+	//-----------------------------模板路徑
+//	private static final String PATH_SHOPPINGCART = "/front-end/pro/alazea-gh-pages/shoppingcart_front.jsp";
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
