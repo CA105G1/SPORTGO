@@ -177,16 +177,16 @@
 </FORM>
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
-<font style="color:red">請修正以下錯誤:</font>
-<ul>
-<c:forEach var="message" items="${errorMsgs}">
-<li style="color:red">${message}</li>
-</c:forEach>
-</ul>
+	<font style="color:red">請修正以下錯誤:</font>
+	<ul>
+	<c:forEach var="message" items="${errorMsgs}">
+		<li style="color:red">${message}</li>
+	</c:forEach>
+	</ul>
 </c:if>
-		</div>
-	</div>
-</div>
+		</div><!--div class="modal-content"結束 -->
+	</div><!--div class="modal-dialog .modal-dialog-centered"結束 -->
+</div><!--div class="modal fade"結束-->
 <!---Modal------------------------------------------------------------------------------------>
 <!---建立社團-----------------------------------------------------------------------------建立社團--->
 								<a class="list-group-item list-group-item-actionfront " data-toggle="list" href="#searchclub" role="tab">

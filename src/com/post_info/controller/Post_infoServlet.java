@@ -138,21 +138,22 @@ if ("insert".equals(action)) {
 			try {
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 				String club_no = req.getParameter("club_no");
+				System.out.println("哈囉我在這");////////////////////////////////////
 				
 				String mem_no = req.getParameter("mem_no");
-				
+				System.out.println("哈囉我在這2");////////////////////////////////////
 				String post_topic = req.getParameter("post_topic").trim();
 				if (post_topic == null || post_topic.trim().length() == 0) {
 					errorMsgs.add("貼文主題請勿空白");
 				}	
-
+				System.out.println("哈囉我在這3");////////////////////////////////////
 				String post_content = req.getParameter("post_content").trim();
 				if (post_content == null || post_content.trim().length() == 0) {
 					errorMsgs.add("貼文內容請勿空白");
 				}	
-				
+				System.out.println("哈囉我在這4");////////////////////////////////////
 				Timestamp post_date = new Timestamp(System.currentTimeMillis());
-
+				System.out.println("哈囉我在這5");////////////////////////////////////
 			
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -161,14 +162,13 @@ if ("insert".equals(action)) {
 					failureView.forward(req, res);
 					return;
 				}
-				System.out.println("哈囉我在這");
 				/***************************2.開始新增資料***************************************/
 				Post_infoService post_infoSvc = new Post_infoService();
 				Post_infoVO post_infoVO = post_infoSvc.addPost_info(club_no, mem_no, post_topic, post_content,post_date);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				req.setAttribute("post_infoVO", post_infoVO);
-				String url = (POSTPAGE);
+				String url = (CLUBPAGE);
 				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				successView.forward(req, res);				
 				
@@ -176,7 +176,7 @@ if ("insert".equals(action)) {
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher(POSTPAGE);
+						.getRequestDispatcher(CLUBPAGE);
 				failureView.forward(req, res);
 			}
 		}

@@ -28,7 +28,7 @@
 				<div class="list-group active">
 					<a href="<%= request.getContextPath()%>/front-end/club/club_intro_page.jsp" class="list-group-item">簡介</a>
 					<a href="<%= request.getContextPath()%>/front-end/club/Sg_infoList.jsp" class="list-group-item">專屬揪團</a>
-					<a href="#" class="list-group-item" role="tab" id="myCreatePost">建立貼文</a>
+					<a href="<%= request.getContextPath()%>/front-end/post_info/create_post.jsp" class="list-group-item" >建立貼文</a>
 					<a href="#" class="list-group-item">影音相簿</a>
 					<a href="<%= request.getContextPath()%>/front-end/club_memberlist/reviewaddclub.jsp" id="clubManage" class="list-group-item" style="display:none">社團管理</a>
 					<a href="<%= request.getContextPath()%>/front-end/club/club_list.jsp"class="list-group-item">返回列表</a>
@@ -70,9 +70,9 @@
 	<%
 	boolean isJoin = false;
 	List<Club_memberlistVO> list2 = svc.getByMem(memberlistVO.getMem_no());
-	
+
 	for(Club_memberlistVO club_memberlistvo : list2) {
-		if(club_no.equals(club_memberlistvo.getClub_no())) {
+		if(club_memberlistvo.getClub_no().equals(club_no)) {
 			isJoin = true;
 		}
 	}

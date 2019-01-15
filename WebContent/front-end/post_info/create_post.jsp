@@ -8,41 +8,6 @@
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<%
-	ClubService clubSvc = new ClubService();
-	List<ClubVO> list = clubSvc.getAll();
-	pageContext.setAttribute("list", list);
-	
-	Post_infoService post_infoSvc = new Post_infoService();
-	Post_infoVO post_infoVO = (Post_infoVO)request.getAttribute("post_infoVO");
- 	
-/***依照社團編號去找對應的貼文*******************************************************************/	
-// 	List<Post_infoVO> postvolist=(ArrayList)request.getAttribute("postvolist");
-/*********************************************************************************************/
- 	ResponesVO responesVO = new ResponesVO();
- 	String post_no = request.getParameter("post_no");
- 	
- 	
-/***回文的會員*********************************************************************************/ 	
- 	MemberlistService memSvc = new MemberlistService();
- 	List<MemberlistVO> list2 = memSvc.getAllMem();
- 	pageContext.setAttribute("list2", list2);
-/*********************************************************************************************/ 
-	
-//  	ResponesService responesSvc = new ResponesService(); 
-//  	List<ResponesVO> responeslist = responesSvc.getallfrompost(post_no);
-//  	pageContext.setAttribute("list",list);
-		String club_no = request.getParameter("club_no");
-		ClubVO clubVO = clubSvc.getOneClub(club_no);
-		request.setAttribute("ClubVO", clubVO);
-
-		Post_infoService postinfo = new Post_infoService();
-		List<Post_infoVO> postvolist = postinfo.getAllfromclub(club_no);
-		request.setAttribute("postvolist", postvolist);
-	
-		request.getSession().setAttribute("club_no", club_no);
- 	
-%>
 
 
 <html >
@@ -60,7 +25,7 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
-		<script src="https://cdn.ckeditor.com/ckeditor5/11.2.0/classic/ckeditor.js"></script>
+		<script src="https://cdn.ckeditor.com/4.11.2/standard/ckeditor.js"></script>
 		
 		<style type="text/css">
 			
@@ -98,7 +63,7 @@
 				<div class="col-xs-12 col-lg-1" id="xx1"></div>
 				
 				<div class="col-xs-12 col-lg-2" style="margin-right: -;padding-left: 5px;padding-right: 5px;">
-					<jsp:include page="club_pageRight.jsp" />
+					<jsp:include page="/front-end/club/club_pageRight.jsp" />
 				</div>
 						
 				<div class="col-xs-12 col-lg-7">
@@ -108,6 +73,7 @@
 				  			<div class="card-header">
 				   				<h3>建立貼文</h3>
 				  			</div>
+				  			<br>
 				  			<div class="card-body">
 				    			<div class="form-group">
 									<label class="post_topic">
@@ -116,15 +82,17 @@
 									</label>
 									<br>
 									<br>
-									<label class="post_content" >
+									<label >
 										貼文內容
 									<br>
-									<textarea name="content" id="editor" class="form-control" ><!--貼文內容輸入框-->
-										This is some sample content.
-									</textarea>
+									<!--貼文內容輸入框-->
+									<textarea name="editor" id="post_content"  class="form-control" ></textarea>
+               						<script>
+                        				CKEDITOR.replace( 'editor', {width: '700px' } );
+                					</script>
 									<input type="hidden" name="club_no" id="club_no" value="${post_infoVO.club_no}"/>
 									<input type="hidden" name="mem_no" id="mem_no" value="${post_infoVO.mem_no}"/>
-									<!-- 時間可以 -->
+									<!-- 時間可以不寫 -->
 									</label>
 								</div>
 				  			</div>
@@ -134,6 +102,15 @@
 				  			</div>
 						</div>
 					</FORM>
+					<%-- 錯誤表列 --%>
+					<c:if test="${not empty errorMsgs}">
+						<font style="color:red">請修正以下錯誤:</font>
+						<ul>
+						<c:forEach var="message" items="${errorMsgs}">
+							<li style="color:red">${message}</li>
+						</c:forEach>
+						</ul>
+					</c:if>
 <!------------------------建立貼文------------------------------------------------------------>	
 				<div class="col-xs-12 col-lg-2" id="xx"></div>
 				</div><!-- col-xs-12 col-lg-7結束 -->
@@ -144,20 +121,14 @@
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script>
-		$(document).ready(function() {
-			$(".responesShow").click(function() {
-//	 			$(".answer:not(this)").hide("slow"),
-				$(this).next().slideToggle("slow");
-			});
-		});
-			ClassicEditor
-				.create( document.querySelector( '#editor' ) )
-				.then( editor => {
-					console.log( editor );
-				} )
-				.catch( error => {
-					console.error( error );
-				} );
+			CKEDITOR.replace( 'editor', {
+			    extraPlugins: 'easyimage',
+			    removePlugins: 'image',
+			    cloudServices_tokenUrl: 'https://36858.cke-cs.com/token/dev/P5oQfFj6vNube6BjhQLtEsAgtQ20tO0VqKeFLOzYFOlf4jS12ccjhd8UW1LX',
+			    cloudServices_uploadUrl: 'https://36858.cke-cs.com/easyimage/upload/'
+			   
+			} );
+			
 		</script>
 	
 
