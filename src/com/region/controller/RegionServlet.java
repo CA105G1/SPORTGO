@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.region.model.RegService;
 import com.region.model.RegVO;
 
-@WebServlet("/region/region.do")
 public class RegionServlet extends HttpServlet {
 	
 	private List<String> reg_nameList =null;
@@ -29,6 +27,7 @@ public class RegionServlet extends HttpServlet {
 		RegService regService = new RegService();
 		reg_nameList = regService.getReg_nameList();
 		regionMapKeyReg_name = regService.getRegionMapKeyReg_name();
+System.out.println(reg_nameList+"ddddddddddddd");
 		getServletContext().setAttribute("reg_nameList", reg_nameList);
 		getServletContext().setAttribute("regionMapKeyReg_name", regionMapKeyReg_name);
 	}

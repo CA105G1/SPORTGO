@@ -303,4 +303,13 @@
     <servlet-name>ProductImgServlet</servlet-name>
     <url-pattern>/pro/proImg.do</url-pattern>
   </servlet-mapping>
+  <servlet>
+  <servlet-name>RegionServlet</servlet-name>
+    <servlet-class>com.region.controller.RegionServlet</servlet-class>
+    <load-on-startup>15</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RegionServlet</servlet-name>
+    <url-pattern>/region/region.do</url-pattern>
+  </servlet-mapping>
 </web-app>
