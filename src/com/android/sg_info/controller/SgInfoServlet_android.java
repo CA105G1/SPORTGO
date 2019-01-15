@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -88,8 +89,8 @@ public class SgInfoServlet_android extends HttpServlet {
 		} else if ("findBySearch".equals(action)) {
 			String mem_name = jsonObject.get("mem_name").getAsString();
 			String venue = jsonObject.get("venue").getAsString();
-			long start = jsonObject.get("start").getAsLong();
-			long end = jsonObject.get("end").getAsLong();
+			String start = jsonObject.get("start").getAsString();
+			String end = jsonObject.get("end").getAsString();
 			
 			List<Sg_info> sgList = service.getBySearch(mem_name, venue, start, end);
 			writeText(res, gson.toJson(sgList));

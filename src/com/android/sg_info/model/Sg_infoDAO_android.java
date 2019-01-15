@@ -5,13 +5,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+
+
 
 public class Sg_infoDAO_android implements Sg_infoDAO_interface_android{
 
@@ -48,8 +55,6 @@ public class Sg_infoDAO_android implements Sg_infoDAO_interface_android{
 	private static final String FIND_BY_LIKE =
 			"SELECT SG.*, SP.sp_name, V.V_Name, M.MEM_NAME , V.V_LAT, V.V_LONG FROM SG_INFO SG LEFT JOIN SG_LIKE SL ON SG.SG_NO = SL.SG_NO LEFT JOIN SPORT SP on SP.sp_no = SG.sp_no LEFT JOIN VENUE V ON V.V_NO = SG.V_NO LEFT JOIN MEMBERLIST M ON SG.MEM_NO = M.MEM_NO WHERE SL.MEM_NO = ? AND SG.SG_DATE > SYSDATE ORDER BY SG.SG_DATE";
 	private static final String FIND_BY_HIS =
-			"SELECT SG.*, SP.sp_name, V.V_Name, M.MEM_NAME , V.V_LAT, V.V_LONG FROM SG_MEM SGM LEFT JOIN SG_INFO SG ON SGM.SG_NO = SG.SG_NO LEFT JOIN SPORT SP on SP.sp_no = SG.sp_no LEFT JOIN VENUE V ON V.V_NO = SG.V_NO LEFT JOIN MEMBERLIST M ON SG.MEM_NO = M.MEM_NO WHERE SGM.MEM_NO = ? AND SG.SG_DATE < SYSDATE ORDER BY SG.SG_DATE";
-	private static final String FIND_BY_SEARCH =
 			"SELECT SG.*, SP.sp_name, V.V_Name, M.MEM_NAME , V.V_LAT, V.V_LONG FROM SG_MEM SGM LEFT JOIN SG_INFO SG ON SGM.SG_NO = SG.SG_NO LEFT JOIN SPORT SP on SP.sp_no = SG.sp_no LEFT JOIN VENUE V ON V.V_NO = SG.V_NO LEFT JOIN MEMBERLIST M ON SG.MEM_NO = M.MEM_NO WHERE SGM.MEM_NO = ? AND SG.SG_DATE < SYSDATE ORDER BY SG.SG_DATE";
 	private static final String GET_ALL =
 			"SELECT SG.*, SP.sp_name, V.V_Name, M.MEM_NAME , V.V_LAT, V.V_LONG FROM sg_info SG LEFT JOIN SPORT SP on SP.sp_no = SG.sp_no LEFT JOIN VENUE V ON V.V_NO = SG.V_NO LEFT JOIN MEMBERLIST M ON SG.MEM_NO = M.MEM_NO WHERE SG.SG_STATUS = '揪團中' ORDER BY SG_DATE";
@@ -689,22 +694,40 @@ public class Sg_infoDAO_android implements Sg_infoDAO_interface_android{
 	}
 	
 	@Override
-	public List<Sg_info> findBySearch(String mem_name, String venue, long start, long end) {
+	public List<Sg_info> findBySearch(String mem_name, String v_name, String start, String end) {
+		
+		String time = "";
+		
+		if (!start.equals("") && !end.equals("")) {
+			time = "Sg_Date between to_timestamp('" + start + "','yyyy-mm-dd hh24:mi:ss') and to_timestamp('" + end + "','yyyy-mm-dd hh24:mi:ss') and ";
+		} else if (!start.equals("")) {
+			time = "SG_DATE > to_timestamp('" + start + "','yyyy-mm-dd hh24:mi:ss') and ";
+		} else if (!end.equals("")) {
+			time = "SG_DATE < to_timestamp('" + end + "','yyyy-mm-dd hh24:mi:ss') and ";
+		}
+		
+		Map<String, String[]> map = new TreeMap<String, String[]>();
+		map.put("mem_name", new String[] { mem_name });
+		map.put("v_name", new String[] { v_name });
+		map.put("action", new String[] { "getXXX" });
+		
+		String finalSQL = "SELECT SG.*, SP.sp_name, V.V_Name, M.MEM_NAME , V.V_LAT, V.V_LONG FROM sg_info SG LEFT JOIN SPORT SP on SP.sp_no = SG.sp_no LEFT JOIN VENUE V ON V.V_NO = SG.V_NO LEFT JOIN MEMBERLIST M ON SG.MEM_NO = M.MEM_NO where "
+		          + get_WhereCondition(map)
+		          + time
+		          + "SG.SG_STATUS = '揪團中' order by sg.Sg_no";
+		
+		System.out.println(finalSQL);
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		Sg_info vo = null;
 		List<Sg_info> list = new ArrayList<Sg_info>();
-		
+			
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(FIND_BY_HIS);
+			pstmt = con.prepareStatement(finalSQL);
 			
-			pstmt.setString(1, mem_name);
-			pstmt.setString(2, venue);
-			pstmt.setTimestamp(3, new Timestamp(start));
-			pstmt.setTimestamp(4, new Timestamp(end));
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -807,6 +830,7 @@ public class Sg_infoDAO_android implements Sg_infoDAO_interface_android{
 				vo.setLoc_end(rs.getString("loc_end"));
 				vo.setV_lat(rs.getDouble("v_lat"));
 				vo.setV_long(rs.getDouble("v_long"));
+				System.out.println(rs.getTimestamp("sg_date"));
 				
 				list.add(vo);
 			}
@@ -890,4 +914,39 @@ public class Sg_infoDAO_android implements Sg_infoDAO_interface_android{
 		
 		return sg_pic;
 	}
+	
+	public static String get_aCondition_For_Oracle(String columnName, String value) {
+
+		String aCondition = null;
+
+		if ("sg_fee".equals(columnName)) // 用於其他
+			aCondition = columnName + "=" + value;
+		else if ("mem_name".equals(columnName) || "v_name".equals(columnName)) // 用於varchar
+			aCondition = columnName + " like '%" + value + "%'";
+		
+		return aCondition + " ";
+	}
+
+	public static String get_WhereCondition(Map<String, String[]> map) {
+		Set<String> keys = map.keySet();
+		StringBuffer whereCondition = new StringBuffer();
+		int count = 0;
+		for (String key : keys) {
+			String value = map.get(key)[0];
+			if (value != null && value.trim().length() != 0	&& !"action".equals(key)) {
+				count++;
+				String aCondition = get_aCondition_For_Oracle(key, value.trim());
+
+				if (count == 1)
+					whereCondition.append(aCondition + " and ");
+				else
+					whereCondition.append(aCondition + " and ");
+
+				System.out.println("有送出查詢資料的欄位數count = " + count);
+			}
+		}
+		
+		return whereCondition.toString();
+	}
+
 }
