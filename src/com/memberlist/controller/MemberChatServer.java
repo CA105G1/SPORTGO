@@ -52,7 +52,7 @@ public class MemberChatServer {
 			if(session.isOpen()) {
 				for(String data : historydata) {
 					session.getBasicRemote().sendText(data);
-					System.out.println("historymessage rebuild");
+//					System.out.println("historymessage rebuild");
 				}
 			}
 		}catch(Exception ex) {
