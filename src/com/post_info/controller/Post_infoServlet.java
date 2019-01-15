@@ -175,6 +175,7 @@ if ("insert".equals(action)) {
 				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
+				System.out.println("哈囉我在這7");////////////////////////////////////
 				RequestDispatcher failureView = req
 						.getRequestDispatcher(CLUBPAGE);
 				failureView.forward(req, res);
