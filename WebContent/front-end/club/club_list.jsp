@@ -2,14 +2,23 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.club.model.*"%>
+<%@ page import="com.club_memberlist.model.*"%>
+<%@ page import="com.memberlist.model.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%
-	ClubService clubSvc = new ClubService();
-	List<ClubVO> list = clubSvc.getAll();
-	pageContext.setAttribute("list", list);
+	List<ClubVO> list = null;
+	//取得複合查詢後的list
+	list = (List<ClubVO>)request.getAttribute("list");
+	//若沒有值就代表是第一次載入頁面，直接getAll
+	if(list == null){
+		ClubService clubSvc = new ClubService();
+		list = clubSvc.getAllForPublic();
+		pageContext.setAttribute("list", list);
+	}
+	
+	MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO");
 //  ClubVO clubVO = (ClubVO) request.getAttribute("clubVO");
-
 %>
 
 <html>
@@ -73,7 +82,7 @@
 
 </head>
 <body>
-<%@ include file="/front-end/CA105G1_header.file" %>
+<jsp:include page="/front-end/CA105G1_header.jsp" />
 <br>
 
 
@@ -149,7 +158,7 @@
 							<textarea name="club_intro" id="club_intro" class="form-control" ROWS=10 ></textarea>
 					</div>
 				<br>
-				<br>
+				<br> 
 					<div class="form-group"  style="display:none" >
 						<label class="photo_ext">圖片副檔名</label>
 							<textarea name="photo_ext" value="jpg" id="photo_ext" class="form-control" ROWS=10 ></textarea>
@@ -158,10 +167,10 @@
 <!-- 					<label class="club_status">社團狀態</label> -->
 <!-- 						<textarea name="club_status" value="正常" id="club_status" class="form-control" ROWS=10 ></textarea> -->
 							<input type="hidden" name="club_status" value="正常" />
-					</div>
+					</div> 
 				</div>
 				<div class="modal-footer">
-					<input type="hidden" name="actionfront" value="insert">
+						<input type="hidden" name="actionfront" value="insert">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
 						<button type="submit" class="btn btn-primary">送出</button>
 				</div>
@@ -183,7 +192,7 @@
 								<a class="list-group-item list-group-item-actionfront " data-toggle="list" href="#searchclub" role="tab">
 								搜尋社團
 								</a>
-				      	<form method="post" actionfront="<%= request.getContextPath()%>/clubfront.do">
+				      	<form method="post" action="<%= request.getContextPath()%>/clubfront.do">
 				      		<div class="table-responsive">
 					      		<table class="table table-hover text-center" align="center">
 					      			
@@ -233,7 +242,7 @@
 										<div class="container_1" >
 										<div class="card" >
 											<div>
-											<img class="img-responsive card-img-top" src="<%=request.getContextPath()%>/club/clubImg.do?club_no=${clubVO.club_no}">
+											<img class="img-responsive card-img-top" src="<%=request.getContextPath()%>/clubImg.do?club_no=${clubVO.club_no}">
 											</div>
 											<div class="card-body">
 												<h4 class="card-title">${clubVO.club_name}</h4>
@@ -241,8 +250,7 @@
 											</div>
 											
 											<div class="card-footer" style="padding-left: 90px;">
-												<a href='<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clubVO.club_no}' class="btn btn-primary">加入</a>
-												&nbsp;&nbsp;
+												<input type="hidden" id="club_no" class="btn btn-primary" value="${clubVO.club_no}">
 												<a href='<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clubVO.club_no}' class="btn btn-primary">進入</a>
 											</div>
 											<br><br>
@@ -253,9 +261,13 @@
 				</div>
 		</div>
 	</div>
-<%@ include file="/front-end/CA105G1_footer.file" %>
-	<script src="https://code.jquery.com/jquery.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<jsp:include page="/front-end/CA105G1_footer.jsp" />
+
+
+
+
+<script src="https://code.jquery.com/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	
 	<script type="text/javascript"> 
 	//照片上傳
@@ -277,6 +289,10 @@
 			reader.readAsDataURL(input.files[0]);
 		}
 	}
+	
+	
+	
+	
 
 </script> 
 	

@@ -44,4 +44,16 @@ public class ResponesService {
 		return dao.getAll();
 	}
 	
+	public List<ResponesVO> getallfrompost(String post_no){
+		return dao.getallfrompost(post_no);
+	}
+	
+	public void deleteBymem_no(String res_no,String mem_no){
+		 dao.delete(res_no, mem_no);
+	}
+	
+	public List<ResponesVO> deleteByres_no(String res_no){///////////
+		return dao.delete(res_no);
+	}
+
 }

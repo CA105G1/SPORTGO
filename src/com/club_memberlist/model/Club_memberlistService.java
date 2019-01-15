@@ -67,6 +67,15 @@ public class Club_memberlistService {
 	public List<Club_memberlistVO> getByMem(String mem_no){
 		return dao.findByMem(mem_no);
 	}
+	public List<Club_memberlistVO> getByMemHost(String mem_no){
+		return dao.findByMemHost(mem_no);
+	}
+	public List<Club_memberlistVO> getByMemPart(String mem_no){
+		return dao.findByMemPart(mem_no);
+	}
+	public List<Club_memberlistVO> getByMemPartWait(String mem_no){
+		return dao.findByMemPartWait(mem_no);
+	}
 	
 	public List<Club_memberlistVO> getAll(Map<String, String[]> map) {
 		return dao.getAll(map);
@@ -93,23 +102,17 @@ public Club_memberlistVO addintoclub(String club_no, String mem_no) {
 	
 	clubmemberlistVO.setClub_no(club_no);
 	clubmemberlistVO.setMem_no(mem_no);
-	clubmemberlistVO.setCmem_status("正式會員");
+	clubmemberlistVO.setCmem_status("待審核");
 	clubmemberlistVO.setCmem_class("一般成員");
-	dao.update(clubmemberlistVO);
+	dao.insert(clubmemberlistVO);
 	
 	return clubmemberlistVO;
 }
 
-public Club_memberlistVO dropoutclub(String club_no, String mem_no) {
-	Club_memberlistVO clubmemberlistVO = new Club_memberlistVO();
-	
-	clubmemberlistVO.setClub_no(club_no);
-	clubmemberlistVO.setMem_no(mem_no);
-	
-	dao.update(clubmemberlistVO);
-	
-	return clubmemberlistVO;
+public void dropoutclub(String club_no, String mem_no) {
+	dao.delete(club_no, mem_no);
 }
+
 
 
 

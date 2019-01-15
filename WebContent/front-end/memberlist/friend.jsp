@@ -10,7 +10,7 @@
 	List<FriendVO> whoaddme =(List<FriendVO>)request.getAttribute("whoaddme");
 	List<MemberlistVO> memberlist = service.getAllMem();
 	if(friendlist==null)
-		response.sendRedirect("Login.jsp");
+		response.sendRedirect("Friend.do?action=find_My_Friend");
 	pageContext.setAttribute("friendlist",friendlist);
 	pageContext.setAttribute("memberlist",memberlist);
 %>
@@ -223,43 +223,90 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 							<div class="profile">
 								<img src="<%=request.getContextPath()%>
 											/front-end/memberlist/showPicture.do?mem_no=${memberlistVO.mem_no}">
-								<h1 id="userName" style="max-width:100%;max-height:100%">${memberlistVO.mem_name}</h1>
+								<h3 id="userName" style="max-width:100%;max-height:100%">${memberlistVO.mem_name}</h3>
 								<div class="icons">
 									<i class="fa fa-commenting fa-lg" aria-hidden="true"></i>
 									<i class="fa fa-bars fa-lg" aria-hidden="true"></i>
 								</div>
 							</div>
-							<div class="wrap-search">
-								<div class="search">
-									<i class="fa fa-search fa" aria-hidden="true"></i>
-									<input type="text" class="input-search" placeholder="搜尋好友">
-								</div>
-							</div>
+<!-- 							<div class="wrap-search"> -->
+<!-- 								<div class="search"> -->
+<!-- 									<i class="fa fa-search fa" aria-hidden="true"></i> -->
+<!-- 									<input type="text" class="input-search" placeholder="搜尋好友"> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
 <!-- 							好友的地方 -->
-						<div class="contact-list"></div>
+						<div class="contact-list">
+							<c:forEach var="friend" items="${friendlist}">
+								<c:forEach var="member" items="${memberlist}">
+									<c:if test="${memberlistVO.mem_no eq friend.mem1_no}">
+										<c:if test="${friend.mem2_no eq member.mem_no}" >
+											<div id="${member.mem_no}">
+												<img src="<%=request.getContextPath()%>
+												/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"
+												style="width:50px;height:50px;border-radius:50%;">
+												<label>${member.mem_name}</label><br>
+											</div>
+										</c:if>
+									</c:if>
+									<c:if test="${memberlistVO.mem_no eq friend.mem2_no}">
+										<c:if test="${friend.mem1_no eq member.mem_no}" >
+											<div id="${member.mem_no}">
+												<img src="<%=request.getContextPath()%>
+												/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"
+												style="width:50px;height:50px;border-radius:50%">
+												<label>${member.mem_name}</label><br>
+											</div>
+										</c:if>
+									</c:if>
+								</c:forEach>
+							</c:forEach>
+						</div>
 				</section>
 
 				<section class="right">
 						<div class="chat-head">
-								<img src="">
-								<div class="chat-name">
-										<h1 class="font-name">${memberlistVO.mem_name}</h1>
-										<p class="font-online"></p>
-								</div>
+<!-- 								<img src=""> -->
+<!-- 								<div class="chat-name"> -->
+<!-- 										<h3 class="font-name"></h3> -->
+<!-- 										<p class="font-online"></p> -->
+<!-- 								</div> -->
 <!-- 						聊天室上方的放大鏡..等 -->
-								<i class="fa fa-search fa-lg" aria-hidden="true"></i>
-								<i class="fa fa-paperclip fa-lg" aria-hidden="true"></i>
-								<i class="fa fa-bars fa-lg" aria-hidden="true" id="show-contact-information"></i>
-								<i class="fa fa-times fa-lg" aria-hidden="true" id="close-contact-information"></i>
+<!-- 								<i class="fa fa-search fa-lg" aria-hidden="true"></i> -->
+<!-- 								<i class="fa fa-paperclip fa-lg" aria-hidden="true"></i> -->
+<!-- 								<i class="fa fa-bars fa-lg" aria-hidden="true" id="show-contact-information"></i> -->
+<!-- 								<i class="fa fa-times fa-lg" aria-hidden="true" id="close-contact-information"></i> -->
 						</div>
 <!-- 						聊天室中間 -->
 						<div class="wrap-chat" id="messageArea">
+							<div class="container notation" style="width:100%;display:none;">
+	       					</div>
+							<c:forEach var="friend" items="${friendlist}">
+								<c:forEach var="member" items="${memberlist}">
+									<c:if test="${memberlistVO.mem_no eq friend.mem1_no}">
+										<c:if test="${friend.mem2_no eq member.mem_no}" >
+											<div class="chat" id="chat_${member.mem_no}" style="display:none;"></div>
+											<div class="information"></div>
+										</c:if>
+									</c:if>
+									<c:if test="${memberlistVO.mem_no eq friend.mem2_no}">
+										<c:if test="${friend.mem1_no eq member.mem_no}" >
+											<div class="chat" id="chat_${member.mem_no}" style="display:none;"></div>
+											<div class="information"></div>
+										</c:if>
+									</c:if>
+								</c:forEach>
+							</c:forEach>
 								<div class="chat" id="chat"></div>
 								<div class="information"></div>
 						</div>
 <!-- 					    聊天室下方輸入聊天訊息的區塊 -->
 						<div class="wrap-message">
-								<i class="fa fa-smile-o fa-lg" aria-hidden="true"></i>
+								<i class="fa fa-smile-o fa-lg" aria-hidden="true">
+<!-- 									<ul> -->
+<!-- 										<li><img src="https://i.chatstickers.com/popo/cry.png"></li> -->
+<!-- 									</ul> -->
+								</i>
 								<div class="message">
 									<input type="text" class="input-message" id="input-message" placeholder="請輸入聊天訊息"
 									onkeydown="if(event.keyCode== 13)sendMessage();">
@@ -271,7 +318,7 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 				</div>
 				<div class="col-xs-12 col-sm-3">
 				<!-- 好友管理 -->
-				<h1>我的捧油</h1><br>
+				<h3>我的捧油</h3><br>
 				<div class="grid-container" style="display:grid;">
 					<c:forEach var="friend" items="${friendlist}">
 						<c:forEach var="member" items="${memberlist}">
@@ -308,7 +355,7 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 						</c:forEach>
 					</c:forEach>
 				</div>
-				<h1>捧油拜託加加</h1><br>
+				<h3>捧油拜託加加</h3><br>
 				<div class="grid-container" style="display:grid;">
 					<c:forEach var="friend" items="${possiblefriend}">
 						<c:forEach var="member" items="${memberlist}">
@@ -330,7 +377,7 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 						</c:forEach>
 					</c:forEach>
 				</div>
-				<h1>哪些捧油誰想加我呀</h1><br>
+				<h3>哪些捧油誰想加我呀</h3><br>
 				<div class="grid-container" style="display:grid;">
 					<c:forEach var="friend" items="${whoaddme}">
 						<c:forEach var="member" items="${memberlist}">
@@ -356,39 +403,62 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 		</div>
 		
 		
-	<script src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script><script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+	<script src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 		
 	</div>
 	<jsp:include page="/front-end/CA105G1_footer.jsp"/>
 	<script>
-		var userName = '${memberlistVO.mem_name}';
+		var userName = '${memberlistVO.mem_no}';
 		var MemPoint = '/MemChatServer'+'/'+userName;
+		var chatFriend = null;
 		var host = window.location.host;
 		var endPointURL = 'ws://'+host+'/CA105G1'+MemPoint;
-		console.log(userName);
 		
 		var webSocket;
 		
 		$(function(){
-			connect();
+					connect();
 		})
-		
+		$(".contact-list > div").click(
+				function(){
+					chatFriend = this.id;
+					console.log(chatFriend);
+					$("#chat_" + chatFriend);
+					$(".chat").hide();
+					$("#chat_" + chatFriend).show();
+				});
 		function connect(){
 			webSocket = new WebSocket(endPointURL);
 			
 			webSocket.onopen =function(event){
 				console.log("WebSocket connected successful");
-				
 			};
 			
 			webSocket.onmessage = function(event){
 				var messageArea = document.getElementById("chat");
 				var jsonObj = JSON.parse(event.data);
+// 				var online = jsonObj.message;
+// 				console.log(online);
+// 				if(jsonObj.message==="上線嘍～～～"){
+// 					console.log("上線嘍～～～");
+// 					$(".notation").append("<div class='alert alert-info alert-dismissable' role='alert'>"+
+// 							"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"+
+// 				         	"<span aria-hidden='true' style='color: white;'>再說</span></button>"+
+// 			            	"<p class='alert-title'>"+jsonObj.userName+"</p><p class='alert-body'>"+
+// 			            	jsonObj.message+"</p></div>");
+// 				}
+				console.log(jsonObj.to);
+				chatFriend = jsonObj.to;
 				var message = jsonObj.userName + ": "+jsonObj.message+ "\r\n";
 				if(jsonObj.userName===userName){
-					$("#chat").append("<div style='text-align:right;'>" + message+ "</div>");
+					$("#chat_" + jsonObj.to).append("<div style='display:flex;flex-direction:row-reverse;font-size:18px;'>"
+					+"<img style='width:30px;height:30px;border-radius:50%;' src='showPicture.do?mem_no="
+						+jsonObj.userName+"'><br>"+jsonObj.message+ "</div>");
 				}else{
-					$("#chat").append("<div>" + message+ "</div>");
+					$("#chat_" + jsonObj.userName).append("<div style='display:flex;font-size:18px;'>"
+							+"<img style='width:30px;height:30px;border-radius:50%;' src='showPicture.do?mem_no="
+							+jsonObj.userName+"'><br>"+jsonObj.message+ "</div>");
 				}
 				messageArea.value = messageArea.value + message;
 				messageArea.scrollTop = messageArea.scrollHeight;
@@ -404,9 +474,12 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 			var message = inputMessage.value;
 			var jsonObj = {
 					"userName" :userName,
+					"to" :chatFriend,
+					"type" : chat,
 					"message" :message
 			};
-			webSocket.send(JSON.stringify(jsonObj));
+			if(chatFriend!=null)
+				webSocket.send(JSON.stringify(jsonObj));
 			inputMessage.value = "";
 			inputMessage.focus();
 		}

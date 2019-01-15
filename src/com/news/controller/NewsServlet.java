@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -37,6 +38,8 @@ public class NewsServlet extends HttpServlet {
 	private Timer myTimer;
 	public static List<NewsVO> theNewsVOList ;
 	public static List<NewstypeVO> theNewstypeVOList ;
+	public static List<NewsVO> theNewsVO_ForProduct_List;
+	
 	public static final String MAINTAIN_NEWS_INFO_INDEX_BACK_PATH = "/back-end/news/maintain_news_info.jsp"; 
 	public static final String QUERY_THIS_SERVLET_ACTIN_AGAIN ="/news/news.do";
 	
@@ -51,6 +54,7 @@ public class NewsServlet extends HttpServlet {
 	private static final String TAB_UPDATE="tab3";
 	private static final String ERRORMSGS_TITILE = "errorMsgs_";
 	
+	private static final String NEWS_PRODUCTNAME="促銷商品"; // 98
 	
 	@Override
 	public void init() throws ServletException {
@@ -89,6 +93,21 @@ public class NewsServlet extends HttpServlet {
 		NewsService service = new NewsService();
 		theNewsVOList = service.getReleaseNews(new Timestamp(System.currentTimeMillis()));
 		getServletContext().setAttribute("newsVOList", theNewsVOList);
+		
+		List<String> listType = new ArrayList<>();
+		listType.add(NEWS_PRODUCTNAME);
+		
+		Map<String, String> map = new HashMap<>();
+		for(String keyName : listType) {
+			for(NewstypeVO newstypeVO : theNewstypeVOList) {
+				if(keyName.equals(newstypeVO.getNewstype_name())) {
+					map.put(keyName, newstypeVO.getNewstype_no());
+					continue;
+				}
+			}
+		}
+		theNewsVO_ForProduct_List = service.getReleaseNewsAndChooseNewsType(new Timestamp(System.currentTimeMillis()), map);
+		getServletContext().setAttribute("newsVOProductList", theNewsVO_ForProduct_List);
 	}
 	
 	private void updateTheNewsTypeList() {

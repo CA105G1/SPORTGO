@@ -30,60 +30,11 @@ if(list == null){
 <script src="<%= request.getContextPath()%>/datetimepicker/jquery.js"></script>
 <script src="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
 
-<style type="text/css">
-	#map {
-        height: 550px;  /* The height is 400 pixels */
-        width: 100%;  /* The width is the width of the web page */
-    }
-    .sg_infoList{
-    	display: flex;
-    	justify-content: center;
-    	align-items: center;
-
-    	border-radius: 30px;
-    	cursor: pointer;
-    	box-shadow: 0 3px #999;
-    	width:700px;
-    	height:240px;
-    }
-    .sg_infoList:active {
-	  	box-shadow: 0 1px #666;
-	  	transform: translateY(1px);
-	}
-    .outer{
-    	display: flex;
-    	flex-direction: column;
-    	flex-wrap: wrap;
-    	justify-content: center;
-    	align-items: center;
-    }
-    .img-responsive{
-    	border-radius: 50px;
-    }
-	th{
-		text-align:center;
-	}
-	select{
-		width:100%;
-		text-align: center;
-    	text-align-last: center;
-	}
-	.panel-title{
-		text-align: center;
-    	text-align-last: center;
-	}
-	.sg_picDiv{
-		padding:0px;
-	}
-	  
-</style>
-
-
 
 </head>
 <body>
 
-<%@ include file="/front-end/CA105G1_header.file" %>
+<jsp:include page="/front-end/CA105G1_header.jsp" />
 
 	<div class="container-fluid">
 		<div class="row">
@@ -220,7 +171,7 @@ if(list == null){
 					<div class="btn sg_infoList" style="background-color: #DDDDDD">
 					</c:if>
 						<div class="col-xs-12 col-sm-6 sg_picDiv">
-							<img src="<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${Sg_infoVO.sg_no}" class="sg_pic img-responsive img-rounded">
+							<img src="<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${Sg_infoVO.sg_no}" class="portrait img-responsive img-rounded">
 						</div>
 						<div class="col-xs-12 col-sm-6">
 							<table class="table text-center" background="1" style="border-color:#FF0000">
@@ -266,7 +217,7 @@ if(list == null){
 
 		</div>
 	</div>
-<%@ include file="/front-end/CA105G1_footer.file" %>
+<jsp:include page="/front-end/CA105G1_footer.jsp" />
 
 
 <script>
@@ -284,6 +235,74 @@ if(list == null){
 </script>
 
 
+
+<style type="text/css">
+	#map {
+        height: 550px;  /* The height is 400 pixels */
+        width: 100%;  /* The width is the width of the web page */
+    }
+    .sg_infoList{
+    	display: flex;
+    	justify-content: center;
+    	align-items: center;
+
+    	border-radius: 30px;
+    	cursor: pointer;
+    	box-shadow: 0 3px #999;
+    	width:700px;
+    	height:240px;
+    }
+    .sg_infoList:active {
+	  	box-shadow: 0 1px #666;
+	  	transform: translateY(1px);
+	}
+    .outer{
+    	display: flex;
+    	flex-direction: column;
+    	flex-wrap: wrap;
+    	justify-content: center;
+    	align-items: center;
+    }
+	th{
+		text-align:center;
+	}
+	select{
+		width:100%;
+		text-align: center;
+    	text-align-last: center;
+	}
+	.panel-title{
+		text-align: center;
+    	text-align-last: center;
+	}
+	
+	.sg_picDiv {
+		position: relative;
+		width: 50%;
+		height: 200px;
+		overflow: hidden;
+		border-radius: 50px;
+	  
+		padding:0px;
+		margin-top:auto;
+		margin-bottom:auto;
+	}
+	.sg_picDiv img {
+	  position: absolute;
+	  left: 50%;
+	  top: 50%;
+	  height: 100%;
+	  width: auto;
+	  -webkit-transform: translate(-50%,-50%);
+	      -ms-transform: translate(-50%,-50%);
+	          transform: translate(-50%,-50%);
+	}
+	.sg_picDiv img.portrait {
+	  width: 100%;
+	  height: auto;
+	}
+	  
+</style>
 
 
 

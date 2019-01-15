@@ -26,7 +26,7 @@ public class ResponesJDBCDAO implements ResponesDAO_interface {
 		private static final String DELETE = 
 			"DELETE FROM respones where res_no = ?";
 		private static final String UPDATE = 
-			"UPDATE respones set post_no=?, mem_no=?, res_content=?, res_date=? where res_no = ?";
+			"UPDATE respones set post_no=?, mem_no=?, res_content=?, res_date=? where res_no = ? and mem_no=?";
 			
 		@Override
 		public void insert(ResponesVO responesVO) {
@@ -114,7 +114,7 @@ public class ResponesJDBCDAO implements ResponesDAO_interface {
 		
 		
 		@Override
-		public void delete(String res_no) {
+		public List<ResponesVO> delete(String res_no ,String mem_no) {
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			
@@ -124,6 +124,7 @@ public class ResponesJDBCDAO implements ResponesDAO_interface {
 				pstmt = con.prepareStatement(DELETE);
 				
 				pstmt.setString(1, res_no);
+				pstmt.setString(2, mem_no);
 				
 				pstmt.executeUpdate();
 				
@@ -149,6 +150,7 @@ public class ResponesJDBCDAO implements ResponesDAO_interface {
 					}
 				}
 			}
+			return list;
 		}
 		
 		@Override
@@ -313,6 +315,11 @@ public class ResponesJDBCDAO implements ResponesDAO_interface {
 		}
 		@Override
 		public List<ResponesVO> getAll(Map<String, String[]> map) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		@Override
+		public List<ResponesVO> getallfrompost(String post_no) {
 			// TODO Auto-generated method stub
 			return null;
 		}

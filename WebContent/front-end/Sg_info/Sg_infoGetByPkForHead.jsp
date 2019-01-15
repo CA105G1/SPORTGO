@@ -78,7 +78,7 @@ if(vo == null){
  
 </head>
 <body>
-<%@ include file="/front-end/CA105G1_header.file" %>
+<jsp:include page="/front-end/CA105G1_header.jsp" />
 
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsg}">
@@ -262,7 +262,7 @@ if(vo == null){
 
 
 
-<%@ include file="/front-end/CA105G1_footer.file" %>
+<jsp:include page="/front-end/CA105G1_footer.jsp" />
 
 
 <script type="text/javascript">
@@ -311,35 +311,52 @@ if(vo == null){
 	
 	    
 	    
-	    //設定活動時間表
-	    var sg_date = new Date();
-        $('#sg_date2').datetimepicker({
-        	timepicker: true,
-        	format: 'Y-m-d H:i',
-            beforeShowDay: function(date) {
-          	  if (  date.getYear() <  sg_date.getYear() || 
-   		           (date.getYear() == sg_date.getYear() && date.getMonth() <  sg_date.getMonth()) || 
-   		           (date.getYear() == sg_date.getYear() && date.getMonth() == sg_date.getMonth() && date.getDate() < sg_date.getDate())
-                ) {
-                     return [false, ""]
-                }
-                return [true, ""];
-        }});
+    	//設定活動時間表
+    	$.datetimepicker.setLocale('zh'); // kr ko ja en
+    	
+    	$("#sg_date2").click(function(){
+    		if($('#apl_end2').val() == null){
+    			var sg_date = new Date();
+    		}else{
+    			var sg_date = new Date($('#apl_end2').val());
+    		}
+    	 	$('#sg_date2').datetimepicker({
+    	 		timepicker: true,
+    	 		format: 'Y-m-d H:i',
+    	 	    beforeShowDay: function(date) {
+    	 	  	  if (  date.getYear() <  sg_date.getYear() || 
+    	 		           (date.getYear() == sg_date.getYear() && date.getMonth() <  sg_date.getMonth()) || 
+    	 		           (date.getYear() == sg_date.getYear() && date.getMonth() == sg_date.getMonth() && date.getDate() < sg_date.getDate())
+    	 	        ) {
+    	 	             return [false, ""]
+    	 	        }
+    	 	        return [true, ""];
+    	 	}});
+    	});
         
       //設定報名結束日期表
-        var somedate2 = new Date($('#sg_date').val());
-           $('#apl_end').datetimepicker({
-        	   timepicker: false,
-        	   format: 'Y-m-d',
-               beforeShowDay: function(date) {
-             	  if (  date.getYear() >  somedate2.getYear() || 
-      		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-      		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-                   ) {
-                        return [false, ""]
-                   }
-                   return [true, ""];
-           }});
+    	$("#apl_end2").click(function(){
+    		
+    		var somedate1 = new Date();
+            var somedate2 = new Date($('#sg_date2').val());
+            $('#apl_end2').datetimepicker({
+            	timepicker: false,
+            	format: 'Y-m-d',
+                beforeShowDay: function(date) {
+              	  if (  date.getYear() <  somedate1.getYear() || 
+       		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
+       		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
+       		             ||
+       		            date.getYear() >  somedate2.getYear() || 
+       		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
+       		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
+                    ) {
+                         return [false, ""]
+                    }
+                    return [true, ""];
+            }});
+    		
+    	});
 	    
 	    
 	    $("#update").css("display","none");

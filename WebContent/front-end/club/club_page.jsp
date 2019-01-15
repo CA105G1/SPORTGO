@@ -1,6 +1,10 @@
+<%@page import="com.memberlist.model.MemberlistService"%>
+<%@page import="com.memberlist.model.MemberlistVO"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.club.model.*"%>
+<%@ page import="com.post_info.model.*"%>
+<%@ page import="com.respones.model.*"%>
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
@@ -9,9 +13,29 @@
 	List<ClubVO> list = clubSvc.getAll();
 	pageContext.setAttribute("list", list);
 	
-
-	//ClubVO clubVO = (ClubVO)request.getAttribute("clubVO");
+//  Post_infoService post_infoSvc = new Post_infoService();
+// 	Post_infoVO post_infoVO = post_infoSvc.getOnePost_info("P0001");
+ //	Post_infoVO post_infoVO = (Post_infoVO)request.getAttribute("post_infoVO");
+ 	
+/***依照社團編號去找對應的貼文*******************************************************************/	
+	List<Post_infoVO> postvolist=(ArrayList)request.getAttribute("postvolist");
+/*********************************************************************************************/
+ 	ResponesVO responesVO = new ResponesVO();
+ 	String post_no = request.getParameter("post_no");
+ 	
+ 	
+/***回文的會員*********************************************************************************/ 	
+ 	MemberlistService memSvc = new MemberlistService();
+ 	List<MemberlistVO> list2 = memSvc.getAllMem();
+ 	pageContext.setAttribute("list2", list2);
+/*********************************************************************************************/ 
 	
+//  	ResponesService responesSvc = new ResponesService(); 
+//  	List<ResponesVO> responeslist = responesSvc.getallfrompost(post_no);
+//  	pageContext.setAttribute("list",list);
+
+// //刪除回覆
+ 	
 %>
 
 
@@ -65,146 +89,100 @@
 	<%@ include file="/front-end/CA105G1_header.file" %>
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-xs-12 col-lg-2" id="xx1">
-					
-				</div>
+				<div class="col-xs-12 col-lg-1" id="xx1"></div>
 				
-					<div class="col-xs-12 col-sm-1" style="margin-right: -;padding-left: 5px;padding-right: 5px;">
-						<input type="hidden" name="actionfront" value="getoneclub">
-							<h4 id="club_name" class="_19s-" >
-								<a href='<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clubVO.club_no}' >
-									${clubVO.club_name}
-								</a>
-							</h4>
-
-					<div class="list-group active">
-						<a href="<%= request.getContextPath()%>/clubfront.do?actionfront=getOneClubintro&club_no=${clubVO.club_no}" display="none" class="list-group-item">簡介</a>
-						<a href="#" class="list-group-item">專屬揪團</a>
-						<!---建立貼文------------------------------------------------------------------建立貼文------>
-	<% Object object = request.getAttribute("errorMsgs"); %>
-		<% if("insert".equals(request.getParameter("action")) && object != null){
-			List<String> errorMsgs = (List<String>)object;%>
-						<a class="list-group-item list-group-item-action" data-toggle="modal" data-target="#post_infoModalLong" 
-			   			   href="#createpost" role="tab" id="myCreatePost">建立貼文</a>
-		<%}else {%>
-						<a class="list-group-item list-group-item-action" data-toggle="modal" data-target="#post_infoModalLong" 
-			               href="#createpost" role="tab">建立貼文</a>
-	 	<% }%> 
-<!---Modal------------------------------------------------------------------------------------>
-<div class="modal fade" id="post_infoModalLong" tabindex="-1" role="dialog" aria-labelledby="post_infoModalLongTitle" aria-hidden="true">
-	<div class="modal-dialog  .modal-dialog-centered " role="document">
-		<div class="modal-content">
-		
-				<div class="modal-header">
-					<h4 class="modal-title" id="post_infoModalLongTitle">建立貼文</h4>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
+				<div class="col-xs-12 col-lg-2" style="margin-right: -;padding-left: 5px;padding-right: 5px;">
+					<jsp:include page="club_pageRight.jsp" />
 				</div>
-				
-<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/post_info.do" name="form1" enctype='multipart/form-data'>
-				<div class="modal-body ">
-					<div class="form-group">
-						<label class="post_topic">
-							貼文主題
-							<input type="text" name="post_topic" id="post_topic" class="form-control"  size="50">
-						</label>
-				<br>
-				<br>
-						<label class="post_content" >
-							貼文內容
-				<br>
-							<textarea name="content" id="editor" class="form-control" ></textarea>
-						</label>
 						
-					</div>
-					<div class="form-group"  style="display:none" >
-						<label class="club_no">社團編號</label>
-							<textarea name="club_no"  id="club_no" class="form-control" ROWS=10 ></textarea>
-					</div>
-					<div class="form-group"  style="display:none" >
-						<label class="mem_no">會員編號</label>
-							<textarea name="mem_no"  id="mem_no" class="form-control" ROWS=10 ></textarea>
-					</div>
-					<div class="form-group"  style="display:none" >
-						<label class="post_date">發布時間</label>
-							<textarea name="post_date"  id="post_date" class="form-control" ROWS=10 ></textarea>
-					</div>
-					
-				</div>
-				
-				<div class="modal-footer">
-						<input type="hidden" name="action" value="insert">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-					<button type="submit" class="btn btn-primary">建立</button>
-				</div>
-				
-</FORM>
-
-<%-- 錯誤表列 --%>
-<c:if test="${not empty errorMsgs}">
-<font style="color:red">請修正以下錯誤:</font>
-<ul>
-<c:forEach var="message" items="${errorMsgs}">
-<li style="color:red">${message}</li>
-</c:forEach>
-</ul>
-</c:if>
-		</div>
-	</div>
-</div>
-<!---Modal------------------------------------------------------------------------------------>
-<!---建立貼文------------------------------------------------------------------建立貼文------->
-						<a href="#" class="list-group-item">影音相簿</a>
-						<a href="<%= request.getContextPath()%>/clubfront.do?actionfront=getOneClubmanage&club_no=${clubVO.club_no}" display="none" class="list-group-item">社團管理</a>
-			
-						<a href="<%= request.getContextPath()%>/front-end/club/club_list.jsp" display="none" id="linkBack" class="list-group-item">返回列表</a>
-				<br>
-						<button type="button" class="btn btn-dark" href="<%=request.getContextPath()%>/clubmemberlist.do?action=dropoutclub&club_no=${clubVO.club_no}">
-								退出社團
-						</button>
-				<br><br>
-				
-					</div>					
-					</div>
-				<div class="col-xs-12 col-sm-7">
+				<div class="col-xs-12 col-lg-7">
 					
 <!---------------------------- 貼文列表 ------------------------------------->
-<input type="text" class="form-control" placeholder="search" style="width:15em">
-  									<button class="btn btn-primary" type="button" id="postsearch">送出</button>
+					<div><!-- 貼文搜尋 -->
+						<input type="text" class="form-control" placeholder="search" style="width:15em" />
+	  					<button class="btn btn-primary" type="button" id="postsearch">送出</button>
+					</div>
 					<div class="card text-center" id="post">
-							<div class="card-header">
-<%-- 								<img src="<%= request.getContextPath()%>/front-end/club/images/C0007.jpg" class="img-fluid" id="clubphoto" width="50%" > --%>
-  									
-  									
-							</div>
 							<br>
   							<div class="card-body">
-  							<c:forEach var="post_infoVO" items="${list}">
-    							<h5 class="card-title" display="none" class="list-group-item">${post_infoVO.post_topic}</h5>
-    							<p class="card-text">${post_infoVO.post_content}</p>
-    						</c:forEach>
-  							</div> 
+								<c:forEach var="postinfoVO" items="${postvolist}">
+    								<h3 class="card-title"  class="list-group-item">主題：${postinfoVO.post_topic}</h3>
+    								<p class="card-text">${postinfoVO.post_content}</p>
+    								
+    								
+<!-------------------------------------------- 留言版 --------------------------------------------------->
+							<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/respones.do" name="form">  
   							<div class="card-footer text-muted">
-    						回文
+									<div class="card" id="respones">
+									<div>
+									System.out.println(${postinfoVO.post_no});
+									System.out.println(${memberlistVO.mem_no});
+									</div>
+							  			<div class="card-body">
+					    <!-- 留言輸入框 -->  <textarea class="form-control" name="res_content" id="res_content" placeholder="我要留言" row="5"></textarea>
+											<input type="hidden" name="club_no" id="club_no" value="${postinfoVO.club_no}"/>
+											<input type="hidden" name="post_no" id="post_no" value="${postinfoVO.post_no}">
+											<input type="hidden" name="mem_no" id="mem_no" value="${memberlistVO.mem_no}">
+											<input type="hidden" name="requestURL" id="requestURL" value="/front-end/club/club_page.jsp">
+							  			</div>
+							  		<br>
+							  			<div class="card-footer text-muted">
+							  				<input type="hidden" name="action" value="insert">
+							    			<button type="submit" class="btn btn-primary">送出</button>
+							  			</div>
+									</div>
   							</div>
-					</div>
-					<br>
-									
-				</div>
+							</FORM> <!-- /respones.do -->		
+  							
+<!-------------------------------------------- 留言版 ---------------------------------------------------->
+<!----------------------------------------------回文------------------------------------------------------>
+							<div class="dropdown">
+					  			<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					    			顯示所有留言
+					  			</button>
+  									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">  
+										<div class="dropdown-item">
+												<table class="table">
+													<jsp:useBean id="responesSvc" scope="page" class="com.respones.model.ResponesService"/>
+													<c:forEach var="responesVO" items="${responesSvc.getallfrompost(postinfoVO.post_no)}">
+											<!-- 刪除 --><FORM METHOD="post" ACTION="<%=request.getContextPath()%>/respones.do" name="form">
+				    									<tr>
+				    										<input type="hidden" name="res_no" id="res_no" value="${responesVO.res_no}"/>
+				    										<jsp:useBean id="post_infoSvc" scope="page" class="com.post_info.model.Post_infoService"/>
+				    										<input type="hidden" name="club_no" id="club_no" value="${post_infoSvc.getOnePost_info(responesVO.post_no).getClub_no()}"/>
+					      			 <!-- 回文者的照片-->    		<td scope="col">
+					      			 								<img src="<%=request.getContextPath()%>/showPicture?mem_no=${responesVO.mem_no}" >
+					      			 							</td>
+					      				 <!-- 回文內容-->		<td scope="col">
+					      				 							${responesVO.res_content}
+				      				 							</td>
+				      				 							<td>
+			 													<button type="submit" class="btn btn-light" name="action" value="delete" >
+ 							 										刪除 
+ 																</button>
+				      				 							</td> 
+ 				      				 						
+				    									</tr>
+											<!-- 刪除 --></FORM>
+			    									</c:forEach>	
+												</table>
+										</div>
+  									</div>
+							</div>
+<!----------------------------------------------回文------------------------------------------------------>
+   								</c:forEach><!-- 最外層postinfoVO的 -->
+  							</div> <!-- card-body結束 -->
+
+
 					
-				<div class="col-xs-12 col-lg-2" id="xx">
-					<div>好友列表</div>
+							<div class="col-xs-12 col-lg-2" id="xx">
+								<div>好友列表</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
-		</div>
-		
-
-
-
-		
-		
-		</form>
+				
 		<%@ include file="/front-end/CA105G1_footer.file" %>
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>

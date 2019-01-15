@@ -21,6 +21,8 @@ import javax.servlet.http.Part;
 
 import com.post_info.model.Post_infoService;
 import com.post_info.model.Post_infoVO;
+import com.respones.model.ResponesService;
+import com.respones.model.ResponesVO;
 
 @MultipartConfig(fileSizeThreshold=1024*1024, maxFileSize=5*1024*1024, maxRequestSize=5*5*1024*1024)
 public class Post_infoServlet extends HttpServlet{
@@ -55,7 +57,11 @@ if ("getOnePost_display".equals(action)) {
 				Post_infoService post_infoSvc = new Post_infoService();
 				Post_infoVO post_infoVO = post_infoSvc.getOnePost_info(post_no);
 				
+				ResponesService respones = new ResponesService();
+				List<ResponesVO> responesvolist = respones.getallfrompost(post_no);
+				
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
+				req.setAttribute("responesvolist", responesvolist);
 				req.setAttribute("post_infoVO", post_infoVO); 
 				String url = CLUBPAGE;
 				RequestDispatcher successView = req.getRequestDispatcher(url); 

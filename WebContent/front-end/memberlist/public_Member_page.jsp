@@ -4,13 +4,19 @@
 <%@ page import = "com.sg_info.model.*" %>
 <%@ page import = "com.sg_mem.model.*" %>
 <%@ page import = "com.friend.model.*" %>
+<%@ page import = "com.club_memberlist.model.*" %>
+<%@ page import = "com.club.model.*" %>
+<%@ page import = "com.sport.model.*" %>
 <%@ page import = "java.util.*" %>
-
+<jsp:useBean id="memberlistService" class="com.memberlist.model.MemberlistService"/>
+<jsp:useBean id="clubService" class="com.club.model.ClubService"/>
+<jsp:useBean id="sportService" class="com.sport.model.SportService"/>
 <%
 	String mem_no = (String)request.getParameter("mem_no");
 	MemberlistService service = new MemberlistService();
 	FriendService friendservice = new FriendService();
 	MemberlistVO memberlistVO = service.getOneMem(mem_no);
+	
 	pageContext.setAttribute("type", 1);//public
 	if(memberlistVO==null){
 		memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO");
@@ -32,13 +38,18 @@
 	pageContext.setAttribute("friend",friend);
 	List<MemberlistVO> memberlist = service.getAllMem();
 	pageContext.setAttribute("memberlist",memberlist);
-	
+	Club_memberlistService clubmemservice = new Club_memberlistService();
+	List<Club_memberlistVO> clubmember = clubmemservice.getByMemPart(mem_no);
+	pageContext.setAttribute("clubmember",clubmember);
+	List<Club_memberlistVO> clubhost = clubmemservice.getByMemHost(mem_no);
+	pageContext.setAttribute("clubhost", clubhost);
+
 	String status = (String)request.getAttribute("status");
 	if(status==null)
 		pageContext.setAttribute("status","");
 	else
 		pageContext.setAttribute("status",status);
-	System.out.print(status);
+	
 %>
 <!DOCTYPE html>
 <html lang="">
@@ -50,6 +61,9 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<!-- Font Awesome -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		
 		<title>SPORTGO 會員頁面</title>
 		<style type="text/css">
 			
@@ -132,31 +146,69 @@
 					<div class="container notation" style="width:100%;display:none;">
 	            	
 	       			</div>
-					
+						<h2>揪團</h2>
+<!-- 						參加的揪團 -->
 						<div class=" tab-pane" style="display:flex;flex-flow:row wrap;">
 							<c:forEach var="sg_memVO" items="${sg_mem}">
 								<c:forEach var="sg_infoVO" items="${sgall}">
 									<c:if test="${sg_infoVO.sg_no eq sg_memVO.sg_no}">
 										<a href="<%=request.getContextPath()%>/front-end/Sg_info/Sg_infoGetByPkForJoinMem.jsp?Sg_no=${sg_infoVO.sg_no}" 
 										style="display:flex;flex-direction:column;width:calc(100% / 3 - 20px);margin:10px;">
-										<div style="width:100%;height:0;position:relative;padding-bottom:66.66666%;overflow:hidden;border-radius:10px;">
+										<div style="width:100%;height:0;position:relative;padding-bottom:70%;overflow:hidden;border-radius:10px;">
 										<img src="<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${sg_infoVO.sg_no}"
 										style="height:100%;position:absolute;">
 										</div>
 										<label class="center">${sg_infoVO.sg_name}</label>
+										<label class="center">團長：${memberlistService.getOneMem(sg_infoVO.mem_no).mem_name}</label>
 										<label class="center">${sg_infoVO.sg_date}</label>
 										</a>
 									</c:if>
 								</c:forEach>
 							</c:forEach>
-						
-<!-- 						<div class="tab-pane" id="club"> -->
-<!-- 						社團 -->
-<!-- 						</div> -->
-						
-<!-- 						<div class="tab-pane" id="information"> -->
-<!-- 						個人簡介 -->
-<!-- 						</div> -->
+<!-- 							創建的揪團 -->
+								<c:forEach var="sg_infoVO" items="${sglist}">
+										<a href="<%=request.getContextPath()%>/front-end/Sg_info/Sg_infoGetByPkForHead.jsp?Sg_no=${sg_infoVO.sg_no}" 
+										style="display:flex;flex-direction:column;width:calc(100% / 3 - 20px);margin:10px;">
+										<div style="width:100%;height:0;position:relative;padding-bottom:70%;overflow:hidden;border-radius:10px;">
+										<img src="<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${sg_infoVO.sg_no}"
+										style="height:100%;position:absolute;">
+										</div>
+										<label class="center">${sg_infoVO.sg_name}</label>
+										<label class="center">團長：${memberlistService.getOneMem(sg_infoVO.mem_no).mem_name}</label>
+										<label class="center">${sg_infoVO.sg_date}</label>
+										</a>
+								</c:forEach>
+							
+							
+							
+						</div>
+							
+						<h2>社團</h2>
+<%-- 							<%System.out.println(clublist.get(1).getClub_no()); %> --%>
+						<div class=" tab-pane" style="display:flex;flex-flow:row wrap;">
+							<c:forEach var="clubmember" items="${clubmember}">
+							
+										<a href="<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clubmember.club_no}" 
+										style="display:flex;flex-direction:column;width:calc(100% / 3 - 20px);margin:10px;">
+										<div style="width:100%;height:auto;position:relative;padding-bottom:70%;overflow:hidden;border-radius:10px;">
+										<img src="<%=request.getContextPath()%>/clubImg.do?club_no=${clubmember.club_no}"
+										style="height:100%;position:absolute;"><br>
+										</div>
+										<label class="center"><i class="fa fa-users"></i>${clubService.getOneClub(clubmember.club_no).club_name}</label>
+												<label class="center"><i class="fa fa-arrow-circle-o-right"></i>${sportService.getByPK(clubService.getOneClub(clubmember.club_no).sp_no).sp_name}</label>
+										</a>
+							</c:forEach>
+							<c:forEach var="clubhost" items="${clubhost}">
+											<a href="<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clubhost.club_no}"
+											style="display:flex;flex-direction:column;width:calc(100% / 3 - 20px);margin:10px;">
+											<div style="width:100%;height:auto;position:relative;padding-bottom:70%; overflow:hidden;border-radius:10px;">
+												<img class="img-responsive card-img-top" src="<%=request.getContextPath()%>/clubImg.do?club_no=${clubhost.club_no}"
+												style="height:100%;position:absolute;"><br>
+											</div>
+											<label class="center"><i class="fa fa-users"></i>${clubService.getOneClub(clubhost.club_no).club_name}</label>
+											<label class="center"><i class="fa fa-arrow-circle-o-right"></i>${clubService.getOneClub(clubhost.club_no).club_name}</label>
+											</a>
+								</c:forEach>
 						</div>
 						
 						
@@ -205,13 +257,14 @@
 			
 			webSocket.onmessage = function(event){
 				$(".notation").show();
-				var notation = event.data;
-					console.log(notation);
-					$(".notation").append("<div class='alert alert-info alert-dismissable' role='alert'>"+
-					"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"+
-		         	"<span aria-hidden='true' style='color: white;'>再說</span></button>"+
-	            	"<p class='alert-title'>有捧油想加加</p><p class='alert-body'>"+
-	            	notation+"</p></div>");
+				var jsonObj = JSON.parse(event.data);
+					if(jsonObj.type==='notation'){
+						$(".notation").append("<div class='alert alert-info alert-dismissable' role='alert'>"+
+						"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"+
+			         	"<span aria-hidden='true' style='color: deeppink;'>好</span></button>"+
+		            	"<p class='alert-title'>"+jsonObj.to+"</p><p class='alert-body'>"+
+		            	jsonObj.message+"</p></div>");
+					}
 			};
 			
 			webSocket.onclose = function(event){
@@ -221,8 +274,8 @@
 		}
 		
 		function sendMessage(){
-			webSocket.send('${memberlistVO.mem_name}');
-			console.log('${memberlistVO.mem_name}');
+			webSocket.send('${memberlistVO.mem_no}');
+			console.log('${memberlistVO.mem_no}');
 		}
 	</script>
 	<jsp:include page="/front-end/CA105G1_footer.jsp"/>

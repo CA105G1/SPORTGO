@@ -2,14 +2,21 @@ package com.memberlist.model;
 
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 public class MemberlistRedisDAO implements MemberlistRedisDAO_interface {
 
-	private static JedisPool pool = null;
+	private JedisPool pool;
 	private static final String AUTH = "123456";
-	private static Jedis jedis;
+	private Jedis jedis;
+	
 	public MemberlistRedisDAO() {
 		super();
 		pool = JedisUtil.getJedisPool();
@@ -24,8 +31,14 @@ public class MemberlistRedisDAO implements MemberlistRedisDAO_interface {
 	}
 
 	@Override
-	public void appendRedis(String mem_no, String element) {
-		jedis.lpush(mem_no, element);//List<String>
+	public void appendRedis(String mem_no, String type,String title,String element) {
+		String value = "{"
+				+ "userName:"+mem_no
+				+ ",type:"+type
+				+ ",message:"+element
+				+ ",to:"+title
+				+ "}";
+		jedis.lpush(mem_no, value);//List<String>
 		jedis.close();
 	}
 	
@@ -35,11 +48,24 @@ public class MemberlistRedisDAO implements MemberlistRedisDAO_interface {
 		int count = -1;
 		for(String list : value) {
 			count++;
-			if(list==mem_name) {
-				break;
+			JSONObject json = new JSONObject();
+			String message=null;
+			try {
+				message = json.getJSONObject(list).getString("message");
+			} catch (JSONException e) {
+				e.printStackTrace();
 			}
+			 if(message.equals(mem_name))
+				 jedis.lrem(mem_no,count ,mem_name); 
 		}
-		jedis.lrem(mem_no, count, mem_name);
+//		int count = -1;
+//		for(String list : value) {
+//			count++;
+//			if(list==mem_name) {
+//				break;
+//			}
+//		}
+//		jedis.lrem(mem_no, count, mem_name);
 		jedis.close();
 	}
 
@@ -51,19 +77,16 @@ public class MemberlistRedisDAO implements MemberlistRedisDAO_interface {
 	}
 
 	@Override
-	public List<String> getHistoryMsg(String sender, String receiver) {
-		String key = new StringBuilder(sender).append(":").append(receiver).toString();
-		List<String> historyData = jedis.lrange(key, 0, jedis.llen(key)-1);
+	public List<String> getHistoryMsg(String sender) {
+		List<String> historyData = jedis.lrange(sender, 0, jedis.llen(sender)-1);
 		jedis.close();
 		return historyData;
 	}
 
 	@Override
-	public void saveChatMessage(String sender, String receiver, String message) {
-		String senderKey = new StringBuilder(sender).append(":").append(receiver).toString();
-		String receiverKey = new StringBuilder(receiver).append(":").append(sender).toString();
-		jedis.rpush(senderKey, message);
-		jedis.rpush(receiverKey, message);
+	public void saveChatMessage(String sender, String receiver, String message) throws JSONException {
+		jedis.rpush(sender, message.toString());
+		jedis.rpush(receiver, message.toString());
 		jedis.close();
 	}
 
@@ -89,4 +112,5 @@ public class MemberlistRedisDAO implements MemberlistRedisDAO_interface {
 //		dao.deleteRedis("Hello");
 //		System.out.println("deleted completed");
 	}
+
 }

@@ -1,6 +1,9 @@
 package com.venue.controller;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.MultipartConfig;
@@ -26,12 +29,30 @@ public class VenueImgServlet extends HttpServlet {
 		String v_no = request.getParameter("v_no");
 		VenueService venueService = new VenueService();
 		byte[] photo = venueService.getOneVenue(v_no).getV_photo1();
-		
+		InputStream inputStream = null;
+		ByteArrayOutputStream outputStream = null;
+		if(photo==null) {
+			inputStream = getServletContext().getResourceAsStream("/img/no-image.PNG");
+			outputStream = new ByteArrayOutputStream();	
+			byte[] b = new byte[4096];
+			int bytesRead;
+			while((bytesRead = inputStream.read(b))!=-1) {
+				outputStream.write(b, 0, bytesRead);
+			}
+			/// remember to trans to byte[]
+			photo = outputStream.toByteArray();
+		}
 		response.setContentType("image/*");
 		response.setContentLength(photo.length);
-		ServletOutputStream outputStream = response.getOutputStream();
-		outputStream.write(photo);
-		outputStream.close();
+		ServletOutputStream servletOutputStream = response.getOutputStream();
+		servletOutputStream.write(photo);
+		if(outputStream!=null) {
+			outputStream.close();
+		}
+		if(inputStream!=null) {
+			inputStream.close();
+		}
+		servletOutputStream.close();
 	}
 
 }

@@ -2,6 +2,7 @@ package com.club_memberlist.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,6 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.club_memberlist.model.Club_memberlistService;
 import com.club_memberlist.model.Club_memberlistVO;
@@ -44,6 +48,7 @@ public class Club_memberlistServlet extends HttpServlet{
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
+		PrintWriter pw = res.getWriter();
 		System.out.println("Club_memberListServlet--- action : "+action);
 
 //社團成員活動權限
@@ -121,7 +126,7 @@ if ("addintoclub".equals(action)) {
 	
 	List<String> errorMsgs = new LinkedList<String>();
 	req.setAttribute("errorMsgs", errorMsgs);
-	String requestURL = req.getParameter("requestURL");
+	String location = req.getParameter("location");
 	try {
 		/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 		
@@ -134,28 +139,32 @@ if ("addintoclub".equals(action)) {
 		
 		club_memberlistVO.setClub_no(club_no);
 		club_memberlistVO.setMem_no(mem_no);
-		//club_memberlistVO.setCmem_status("一般會員");
-		//在這設定初始狀態
 		
 		Club_memberlistService club_memberlistSvc = new Club_memberlistService();
 		club_memberlistVO = club_memberlistSvc.addintoclub(club_no, mem_no);
 		
 		/***************************3.修改完成,準備轉交(Send the Success view)*************/
 
-		req.setAttribute("Club_memberlistVO", club_memberlistVO);
-		String url = requestURL;
-		url = url.substring(1,url.length());
-		url = url.substring(url.indexOf("/"),url.length());
-		System.out.println("url : "+url);
-		RequestDispatcher successView = req.getRequestDispatcher(url);   // 修改成功後,轉交回送出修改的來源網頁
-		successView.forward(req, res);
+		JSONObject obj = new JSONObject();
+		try {
+			obj.put("answer", "OK");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		pw.write(obj.toString());
+		
+//		req.setAttribute("Club_memberlistVO", club_memberlistVO);
+//		RequestDispatcher successView = req.getRequestDispatcher(URI);   // 修改成功後,轉交回送出修改的來源網頁
+//		successView.forward(req, res);
+		
 	
 
 		/***************************其他可能的錯誤處理*************************************/
 	} catch (Exception e) {
 		errorMsgs.add("修改資料失敗:"+e.getMessage());
 		RequestDispatcher failureView = req
-				.getRequestDispatcher(REVIEWADDCLUB_PATH);
+				.getRequestDispatcher(location);
 		failureView.forward(req, res);
 	}
 }
@@ -165,49 +174,40 @@ if ("dropoutclub".equals(action)) {
 	
 	List<String> errorMsgs = new LinkedList<String>();
 	req.setAttribute("errorMsgs", errorMsgs);
-	String requestURL = req.getParameter("requestURL");
+	String location = req.getParameter("location");
 
 	try {
 		/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 		
 		String club_no = req.getParameter("club_no");
 		String mem_no = req.getParameter("mem_no");
-		String cmem_status = req.getParameter("cmem_status");
-		
-	
-		Club_memberlistVO club_memberlistVO = new Club_memberlistVO();
-		
-		club_memberlistVO.setClub_no(club_no);
-		club_memberlistVO.setMem_no(mem_no);
-		club_memberlistVO.setCmem_status(cmem_status);
-		
-
-		// Send the use back to the form, if there were errors
-		if (!errorMsgs.isEmpty()) {
-			req.setAttribute("club_memberlistVO", club_memberlistVO); 
-			RequestDispatcher failureView = req
-					.getRequestDispatcher(CLUBLIST_PATH);
-			failureView.forward(req, res);
-			return; //程式中斷
-		}
+//		Club_memberlistVO club_memberlistVO = new Club_memberlistVO();
+//		
+//		club_memberlistVO.setClub_no(club_no);
+//		club_memberlistVO.setMem_no(mem_no);
 		
 		/***************************2.開始修改資料*****************************************/
 		Club_memberlistService club_memberlistSvc = new Club_memberlistService();
-		club_memberlistVO = club_memberlistSvc.addintoclub(club_no, mem_no);
+		club_memberlistSvc.dropoutclub(club_no, mem_no);
+
 		
 		/***************************3.修改完成,準備轉交(Send the Success view)*************/
 
-		req.setAttribute("Club_memberlistVO", club_memberlistVO);
-		String url = requestURL;
-		RequestDispatcher successView = req.getRequestDispatcher(url);   // 修改成功後,轉交回送出修改的來源網頁
-		successView.forward(req, res);
+		JSONObject obj = new JSONObject();
+		try {
+			obj.put("answer", "OK");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		pw.write(obj.toString());
 	
 
 		/***************************其他可能的錯誤處理*************************************/
 	} catch (Exception e) {
 		errorMsgs.add("修改資料失敗:"+e.getMessage());
 		RequestDispatcher failureView = req
-				.getRequestDispatcher(CLUBLIST_PATH);
+				.getRequestDispatcher(location);
 		failureView.forward(req, res);
 	}
 }

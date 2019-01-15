@@ -40,10 +40,10 @@ public class MapLocLoad extends HttpServlet {
 	@Override
 	public void init() throws ServletException {
 		timer = new Timer();
-		Sg_infoService sg_infosvc = new Sg_infoService();
 		//報名時間到時判斷人數是否達標，並改變狀態
 		TimerTask task = new TimerTask() {
 			public void run() {
+				Sg_infoService sg_infosvc = new Sg_infoService();
 				List<Sg_infoVO> list = sg_infosvc.getAll();
 				for(Sg_infoVO vo : list) {
 					if(vo.getApl_end().getTime() < new Date().getTime()) {

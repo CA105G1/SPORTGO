@@ -3,6 +3,8 @@
 <%@ page import="com.news.model.NewsVO" %>
 <%@ page import="java.util.List"%>
 
+
+
 <!DOCTYPE html>
 <html lang="">
 	<head>
@@ -15,6 +17,16 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 	</head>
 	<body>
@@ -42,7 +54,7 @@
 			<!-- 標籤面板：標籤區 -->
 					    <ul class="nav nav-tabs" role="tablist">
 							<!-- 使用request.getAttribute("whichtab")來分辨，哪個class is active -->
-					        <li role="presentation" class="${whichTab=='tab1'?'active':'' }">
+					        <li role="presentation" class="${whichTab==null?'active':(whichTab=='tab1'?'active':'') }">
 					            <a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">查詢、更新</a>
 					        </li>
 					        <li role="presentation" class="${whichTab=='tab2'?'active':'' }">
@@ -61,8 +73,8 @@
 			<!-- 標籤面板：內容區 -->
 					    <div class="tab-content">
 					    	<!-- 使用request.getAttribute("whichtab")來分辨，哪個class is active -->
-					        <div role="tabpanel" class="tab-pane ${whichTab=='tab1'?'active':'' }" id="tab1">
-					        	<h1>查詢、更新</h1>
+					        <div role="tabpanel" class="tab-pane ${whichTab==null?'active':(whichTab=='tab1'?'active':'') }" id="tab1">
+			<%-- 查詢面板  --%>	<h1>查詢、更新</h1>
 					        	<div class="panel panel-info">
 									<div class="panel-heading">
 										<h3 class="panel-title">最新消息管理</h3>
@@ -124,7 +136,7 @@
 												<jsp:include page="show_one_news.jsp" flush="true"/>
 										<% }else if("delete_this_news".equals(request.getParameter("action"))){ %>
 												<div>${newsVO.news_no}-${newsVO.news_script}--已被刪除</div>
-										<% }else if("update_news_no_stutas".equals(request.getParameter("action"))){ %>
+										<% }else if("update_news_no_stutas".equals(request.getParameter("action")) && ("tab2".equals(whichTab))){ %>
 												<jsp:include page="listQueryNews.jsp" flush="true" />
 										<% } %>
 						        	</div>
@@ -133,6 +145,7 @@
 									
 								</div>
 					        </div>
+					        
 					        
 					 <%-- <%=request.getContextPath()%>/back-end/news/maintain_news_info.jsp#tab2 --%>       
 					        <div role="tabpanel" class="tab-pane ${whichTab=='tab2'?'active':'' }" id="tab2">

@@ -17,5 +17,10 @@ public class VenueTypeService {
 	public boolean isVenueType(String functionList, String vt_name) {
 		return venueTypeDAO.isVenueType(functionList, vt_name);
 	}
+	
+	public VenueTypeVO getOneVenueTypeByPK(String vt_no) {
+		return venueTypeDAO.findByPrimaryKey(vt_no);
+	}
+	
 
 }

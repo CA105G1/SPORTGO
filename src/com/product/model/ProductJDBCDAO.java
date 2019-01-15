@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.naming.Context;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import com.pro.controller.jdbcUtil_CompositeQuery_Pro;
 
 public class ProductJDBCDAO implements ProductDAO_interface{
@@ -26,7 +30,27 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 	private static final String DELETE = "Delete FROM PRODUCT WHERE PRO_NO = ?";
 	//更新狀態
 	private static final String UPDATE_PRO_SHELVE = "UPDATE PRODUCT SET   PRO_SHELVE = ? WHERE PRO_NO = ?";
+	//查詢全部上架商品
+	private static final String SELECT_SHELVE = "SELECT * FROM PRODUCT WHERE PRO_SHELVE = ? and pro_stock > 0";
+	//訂單購買數量更動商品庫存
+	private static final String UPDATE_STOCK = "UPDATE PRODUCT SET  PRO_STOCK = (PRO_STOCK-?) where PRO_NO = ?";
+	//查詢購物車購買數量時庫存數量
+	private static final String SELECT_STOCK = "SELECT PRO_NO,PRO_CLASSID,PRO_NAME,PRO_PIC,PRO_PIC_EXT,PRO_FORMAT,PRO_BONUS,pro_stock ?,PRO_SAFESTOCK,PRO_DETAILS,PRO_SHELVE,PRO_ALL_ASSESS,PRO_ALL_ASSESSMAN from product where pro_no = ?";
+	//更新評價分數
+	private static final String UPDATE_ASSESS = "";
 	
+	//連線池版
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new javax.naming.InitialContext();
+			ds = (DataSource)ctx.lookup("java:comp/env/jdbc/CA105G1DB");
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	//JDBC版本
 	static {
 		try {
 			Class.forName(DRIVER);
@@ -45,8 +69,10 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 		PreparedStatement ps = null;
 		int count = 0 ;
 		 try {
-				con = DriverManager.getConnection(URL, USER, PASSWORD);
-				
+			    //連線池
+			    con = ds.getConnection();
+			    //JDBC版
+//				con = DriverManager.getConnection(URL, USER, PASSWORD);
 		        ps = con.prepareStatement(INSERT);
 		        
 
@@ -109,8 +135,10 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 		PreparedStatement ps = null;
 		int count = 0;
 		try {
-			
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+		    //連線池
+		    con = ds.getConnection();
+		    //JDBC版
+//			con = DriverManager.getConnection(URL, USER, PASSWORD);
 		    ps = con.prepareStatement(UPDATE);
 		    
 		    
@@ -162,7 +190,10 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 			PreparedStatement ps = null;
 			int count = 0;
 			try {				
-				con = DriverManager.getConnection(URL, USER, PASSWORD);
+			    //連線池
+			    con = ds.getConnection();
+			    //JDBC版
+//				con = DriverManager.getConnection(URL, USER, PASSWORD);
 				ps = con.prepareStatement(DELETE);
 				ps.setString(1, pro_no);
 				count = ps.executeUpdate();
@@ -214,7 +245,10 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 //			ps.addBatch();
 //			ps.executeBatch();
 			
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+		    //連線池
+		    con = ds.getConnection();
+		    //JDBC版
+//			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			ps = con.prepareStatement(DELETE_CHILDREN_PROM);
 			ps.setString(1,prom_project_id );
 			ps.executeUpdate();
@@ -261,7 +295,10 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+		    //連線池
+		    con = ds.getConnection();
+		    //JDBC版
+//			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			ps = con.prepareStatement(SELECT_ALL);
 		    rs = ps.executeQuery();
 		    
@@ -326,7 +363,10 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 		
 		try {
 			
-			con =  DriverManager.getConnection(URL, USER, PASSWORD);
+		    //連線池
+		    con = ds.getConnection();
+		    //JDBC版
+//			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			ps = con.prepareStatement(SELECT_FINDBYPK);
 			
 			ps.setString(1, pro_no);
@@ -396,7 +436,10 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 		
 		try {
 			
-			con =  DriverManager.getConnection(URL, USER, PASSWORD);
+		    //連線池
+		    con = ds.getConnection();
+		    //JDBC版
+//			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			ps = con.prepareStatement(SELECT_FINDBYPK);
 			
 			String finalSQL = "select * from product "
@@ -465,7 +508,10 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 		int count = 0;
 		
 		try {
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+		    //連線池
+		    con = ds.getConnection();
+		    //JDBC版
+//			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			ps = con.prepareStatement(UPDATE_PRO_SHELVE);
 			System.out.println(pro_no + ":" +pro_shelve);
 			ps.setString(1, pro_shelve);
@@ -512,7 +558,10 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 		Statement stmt = null;
 		ResultSet rs = null;
 		try {
-			con =  DriverManager.getConnection(URL, USER, PASSWORD);
+		    //連線池
+		    con = ds.getConnection();
+		    //JDBC版
+//			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			rs = stmt.executeQuery(SELECT_ALL);
 			rs.last();
@@ -566,6 +615,240 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 		}		   
 		return proVO;
 	}
+	
+	//查詢全部上架商品
+	@Override
+	public List<ProductVO> getAllOnShelve() {
+		List<ProductVO> proVOList = new ArrayList<>();
+		ProductVO proVO = null;
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+		    //連線池
+		    con = ds.getConnection();
+		    //JDBC版
+//			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			ps = con.prepareStatement(SELECT_SHELVE);
+			ps.setString(1,"上架中");
+		    rs = ps.executeQuery();
+		    
+		    while(rs.next()) {
+		    	proVO = new ProductVO();
+		    	proVO.setPro_no(rs.getString("PRO_NO"));
+		    	proVO.setPro_classid(rs.getString("PRO_CLASSID"));
+		    	proVO.setPro_name(rs.getString("PRO_NAME"));
+		    	proVO.setPro_pic(rs.getBytes("PRO_PIC"));
+		    	proVO.setPro_pic_ext(rs.getString("PRO_PIC_EXT"));
+		    	proVO.setPro_format(rs.getString("PRO_FORMAT"));
+		    	proVO.setPro_bonus(rs.getInt("PRO_BONUS"));
+		    	proVO.setPro_stock(rs.getInt("PRO_STOCK"));
+		    	proVO.setPro_safestock(rs.getInt("PRO_SAFESTOCK"));
+		    	proVO.setPro_details(rs.getString("PRO_DETAILS"));
+		    	proVO.setPro_shelve(rs.getString("PRO_SHELVE"));
+		    	proVO.setPro_all_assess(rs.getInt("PRO_ALL_ASSESS"));
+		    	proVO.setPro_all_assessman(rs.getInt("PRO_ALL_ASSESSMAN"));
+		    	proVOList.add(proVO);
+		    }
+			
+		} catch (SQLException  e) {
+			// TODO Auto-generated catch block
+			throw new RuntimeException(e.getMessage());
+			
+		} finally {
+			if(rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return proVOList;
+	}
+	//訂單購買數量更動商品庫存
+	@Override
+	public int updateStock(String pro_no, Integer cart_pro_stock) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		int count = 0;
+		ProductService proSvc = new ProductService();
+		try {
+			 
+		    //連線池
+		    con = ds.getConnection();
+		    //JDBC版
+//			con = DriverManager.getConnection(URL, USER, PASSWORD);
+		    ps = con.prepareStatement(UPDATE_STOCK);
+//		    Integer pro_stock = proSvc.getProductStock(pro_no, cart_pro_stock).getPro_stock();
+//		    System.out.println(pro_stock);
+		    ps.setInt(1,cart_pro_stock);
+	        ps.setString(2, pro_no);
+	       
+	    	
+	    	count = ps.executeUpdate();
+		    
+		} catch (SQLException  e) {
+			// TODO Auto-generated catch block
+			throw new RuntimeException(e.getMessage());
+			
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return count;
+	}
+	//查詢購物車購買數量時庫存數量
+	@Override
+	public ProductVO getSelectStock(String pro_no, Integer cart_pro_stock) {
+		ProductVO proVO = null;
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			
+		    //連線池
+		    con = ds.getConnection();
+		    //JDBC版
+//			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			ps = con.prepareStatement(SELECT_FINDBYPK);
+//			int count = cart_pro_stock.intValue();
+//			ps.setInt(1, cart_pro_stock);
+			ps.setString(1, pro_no);
+			rs = ps.executeQuery();
+		
+			while (rs.next()) {
+				proVO = new ProductVO();
+				proVO.setPro_no(rs.getString("PRO_NO"));
+				proVO.setPro_classid(rs.getString("PRO_CLASSID"));
+				proVO.setPro_name(rs.getString("PRO_NAME"));
+				proVO.setPro_pic(rs.getBytes("PRO_PIC"));
+				proVO.setPro_pic_ext(rs.getString("PRO_PIC_EXT"));
+				proVO.setPro_format(rs.getString("PRO_FORMAT"));
+				proVO.setPro_bonus(rs.getInt("PRO_BONUS"));
+				proVO.setPro_stock(rs.getInt("PRO_STOCK")-cart_pro_stock);
+				proVO.setPro_safestock(rs.getInt("PRO_SAFESTOCK"));
+				proVO.setPro_details(rs.getString("PRO_DETAILS"));
+				proVO.setPro_shelve(rs.getString("PRO_SHELVE"));
+				proVO.setPro_all_assess(rs.getInt("PRO_ALL_ASSESS"));
+				proVO.setPro_all_assessman(rs.getInt("PRO_ALL_ASSESSMAN"));
+			}
+//			con.commit();//測試
+		} catch (SQLException  e) {
+			// TODO Auto-generated catch block
+//			throw new RuntimeException(e.getMessage());
+			e.printStackTrace();
+		} finally {
+			if(rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return proVO;
+	}
+	//更新評價分數
+	@Override
+	public int updateAssess(String pro_no, Integer pro_all_assess) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		int count = 0;
+		ProductService proSvc = new ProductService();
+		try {
+			 
+		    //連線池
+		    con = ds.getConnection();
+		    //JDBC版
+//			con = DriverManager.getConnection(URL, USER, PASSWORD);
+		    ps = con.prepareStatement(UPDATE_STOCK);
+//		    Integer pro_stock = proSvc.getProductStock(pro_no, cart_pro_stock).getPro_stock();
+//		    System.out.println(pro_stock);
+//		    ps.setInt(1,cart_pro_stock);
+	        ps.setString(2, pro_no);
+	       
+	    	
+	    	count = ps.executeUpdate();
+		    
+		} catch (SQLException  e) {
+			// TODO Auto-generated catch block
+			throw new RuntimeException(e.getMessage());
+			
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return count;
+	}
+	
+	
+
 	
 
 	

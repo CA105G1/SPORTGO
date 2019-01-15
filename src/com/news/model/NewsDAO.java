@@ -144,7 +144,6 @@ public class NewsDAO implements NewsDAO_interface{
 //				System.out.println("---更新失敗---編號: "+newsVO.getNews_no());
 			}
 		} catch(SQLException e) {
-//			e.printStackTrace();
 			throw new RuntimeException("A database error occured. "+e.getMessage());
 		} finally {
 			if(pstmt!=null) {

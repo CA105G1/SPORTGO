@@ -1,7 +1,6 @@
 package com.venue.model;
 
 import java.util.Set;
-import java.util.List;
 import java.util.Map;
 
 public class Util_JDBC_CompositeQuery_Venue {
@@ -26,6 +25,10 @@ public class Util_JDBC_CompositeQuery_Venue {
 	}
 	
 	public static String get_WhereCondition(Map<String, String[]> map) {
+		return get_WhereCondition(map,false);
+	}
+	
+	public static String get_WhereCondition(Map<String, String[]> map, boolean isFrontEnd) {
 		Set<String> keys = map.keySet();
 		StringBuffer whereCondition = new StringBuffer();
 		int count = 0;
@@ -43,9 +46,15 @@ public class Util_JDBC_CompositeQuery_Venue {
 //				System.out.println("送出的欄位數"+count);
 			}
 		}
+		if(isFrontEnd) {
+			if(count==0) {
+				whereCondition.append(" where v_fitall='Y' and v_display='顯示' and open_state in ('免費對外開放使用', '付費對外開放使用') ");
+			}else {
+				whereCondition.append(" and v_fitall='Y' and v_display='顯示'  and open_state in ('免費對外開放使用', '付費對外開放使用') ");				
+			}
+		}
 		return whereCondition.toString();
 	}
-
 	
 
 }

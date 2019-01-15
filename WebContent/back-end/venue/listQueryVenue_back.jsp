@@ -153,10 +153,15 @@
 											<c:if test="${venueVO.openday_sun=='Y'}"> 日 </c:if>
 										</td>
 									</tr>
+									<tr ${v_evaluationVO.v_no==venueVO.v_no?'style="background-color:#FFEE99"':''}>
+										<th>場地評價</th>
+										<td>${scoreMap.get(venueVO.getV_no())==-1?'尚無評價分數':scoreMap.get(venueVO.getV_no())}</td>
+									</tr>
 									<tr>
 										<th></th>
 										<td style="text-align:right">
-											<a href="<%=request.getContextPath()%>/venue/venue.do?action=get_one_venue&v_no=${venueVO.v_no}"> more...... </a>
+											<a href="<%=request.getContextPath()%>/venue/venue.do?action=show_one_venue_back&v_no=${venueVO.v_no}"
+											class="btn btn-info btn-block">more information......</a>
 										</td>
 									</tr>
 								</tbody>
@@ -170,7 +175,7 @@
 							<p>DB</p>
 							<div>
 								<img src="<%=request.getContextPath()%>/venue/venueImg.do?v_no=${venueVO.v_no}" class="img-responsive img-rounded" alt="WTF"/>
-							<div>
+							</div>
 						</div>
 					</div>
 				</div>

@@ -121,6 +121,9 @@ public class Sg_infoServlet extends HttpServlet {
 				Integer sg_minno = null;
 				try {
 					sg_minno = new Integer(req.getParameter("sg_minno").trim());
+					if(sg_minno >= sg_maxno) {
+						errorMsg.put("sg_minno","人數下限請小於人數上限");
+					}
 				} catch (NumberFormatException e) {
 					sg_minno = 0;
 					errorMsg.put("sg_minno","人數下限請填數字");
@@ -193,7 +196,7 @@ public class Sg_infoServlet extends HttpServlet {
 						
 //				req.setAttribute("Sg_infoVO", sg_infoVO);
 				if("限社團".equals(sg_per)) {
-					RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/club/club_page.jsp");
+					RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/club/Sg_infoList.jsp");
 					dispatcher.forward(req, res);
 				}else {
 					RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/Sg_info/SgHome.jsp");
@@ -305,6 +308,9 @@ public class Sg_infoServlet extends HttpServlet {
 				Integer sg_minno = null;
 				try {
 					sg_minno = new Integer(req.getParameter("sg_info3").trim());
+					if(sg_minno >= sg_maxno) {
+						errorMsg.add("人數下限請小於人數上限");
+					}
 				} catch (NumberFormatException e) {
 					sg_minno = 0;
 					errorMsg.add("人數下限請填數字");
@@ -452,12 +458,12 @@ public class Sg_infoServlet extends HttpServlet {
 				Sg_infoService svc = new Sg_infoService();
 				svc.updateStatus(sg_no, sg_status);
 				
-				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/memberlist/sg.jsp");
+				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/memberlist/MemManager.do?action=Member_Sg");
 				dispatcher.forward(req, res);
 				
 			}catch(Exception e) {
 				errorMsg.add(e.getMessage());
-				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/memberlist/sg.jsp");
+				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/memberlist/MemManager.do?action=Member_Sg");
 				dispatcher.forward(req, res);
 			}
 		}

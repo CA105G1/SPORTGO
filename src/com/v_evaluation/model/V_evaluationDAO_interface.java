@@ -9,6 +9,7 @@ public interface V_evaluationDAO_interface {
 	public void delete(String mem_no, String v_no);
     public V_evaluationVO findByPrimaryKey(String mem_no, String v_no);
 	public List<V_evaluationVO> getAll();
+	public List<V_evaluationVO> getOneVenueScoreList(String v_no);
 //	萬用複合查詢(傳入參數型態Map)(回傳 List)
 //  public List<VTVO> getAll(Map<String, String[]> map); 
 

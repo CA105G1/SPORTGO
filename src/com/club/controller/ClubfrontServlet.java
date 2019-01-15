@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -18,8 +19,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import org.apache.catalina.Session;
+
 import com.club.model.ClubService;
 import com.club.model.ClubVO;
+import com.post_info.model.Post_infoService;
+import com.post_info.model.Post_infoVO;
+import com.sg_info.model.Sg_infoService;
+import com.sg_info.model.Sg_infoVO;
 import com.sport.model.SportService;
 
 
@@ -46,14 +53,14 @@ public class ClubfrontServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String actionfront = req.getParameter("actionfront");
-		System.out.println(actionfront);
+System.out.println(actionfront);
 		
 if ("getOneClub".equals(actionfront)) { //進入or加入社團
 
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			String requestURL = req.getParameter("requestURL");
-
+System.out.println("requestURL : "+requestURL);///////////////////////////////////////////////
 			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				String club_no = req.getParameter("club_no");
@@ -63,9 +70,13 @@ if ("getOneClub".equals(actionfront)) { //進入or加入社團
 	
 				ClubVO clubVO = clubSvc.getOneClub(club_no);
 				
+				Post_infoService postinfo = new Post_infoService();
+				List<Post_infoVO> postvolist = postinfo.getAllfromclub(club_no);
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("clubVO", clubVO); 
-				
+				req.setAttribute("postvolist", postvolist);
+				HttpSession session = req.getSession();
+				session.setAttribute("club_no", club_no);
 				RequestDispatcher successView = req.getRequestDispatcher(CLUB_PAGE); 
 				successView.forward(req, res);
 
@@ -358,6 +369,45 @@ if ("insert".equals(actionfront)) {
 				failureView.forward(req, res);
 			}
 		}
+
+
+if("clubCompositeQuery".equals(actionfront)) {
+	List<String> errorMsg = new LinkedList<String>();
+	req.setAttribute("errorMsg", errorMsg);
+	
+	try {
+		///////////將查詢資料轉為MAP///////////////////
+//		Map<String, String[]> map = req.getParameterMap();
+		HttpSession session = req.getSession();
+		Map<String, String[]> map = (Map<String, String[]>)session.getAttribute("map");
+		if (req.getParameter("whichPage") == null){
+		HashMap<String, String[]> map1 = new HashMap<String, String[]>(req.getParameterMap());
+		session.setAttribute("map",map1);
+			map = map1;
+		} 
+		
+		///////////開始查詢/////////////////////
+		//若抓不到map就代表不是複合查詢
+		if(map != null) {
+			ClubService svc = new ClubService();
+			List<ClubVO> list = svc.getAll(map);
+			///////////轉交資料/////////////////////
+			req.setAttribute("list", list);
+		}
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/club/club_list.jsp");
+		dispatcher.forward(req, res);
+		
+	}catch(Exception e) {
+		errorMsg.add(e.getMessage());
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/club/club_list.jsp");
+		dispatcher.forward(req, res);
+	}
+}
+
+
+
+
+
 		
 	}
 	

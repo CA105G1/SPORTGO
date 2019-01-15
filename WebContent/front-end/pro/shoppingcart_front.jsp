@@ -264,7 +264,7 @@
 
 
 
-					                  <FORM METHOD="post" ACTION="<%= request.getContextPath()%>/ord/ord.do" name="form1" enctype="multipart/form-data">
+					                  
 										<div class="container-fluid">
 											<div class="row">
 													<!-- 表單 -->
@@ -282,10 +282,16 @@
 																				</c:forEach>
 																			</ul>
 																		</c:if>
-																		<div>
-																			<h2 class="fontsize">購物車</h2>
-																		</div>
+																		<table>
+																		    <td>
+																				<div>
+																					<img  src="<%=request.getContextPath()%>/front-end/pro/page/cart_icon.jpg" style="width: 150px;height: 150px;">
+																				</div>
+																			</td>
+																			<td><h2 class="fontsize">購物車</h2></td>
+																		</table>
 																		<!-- 關鍵字搜尋 -->
+																		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/pro/pro.do" name="formquery">
 																			<div class="container">
 																				<div class="row">
 																					<!-- 搜尋表單 -->
@@ -298,7 +304,8 @@
 																								<div class="input-group">
 																									<input type="text" class="form-control" placeholder="請輸入關鍵字">
 																									<span class="input-group-btn">
-																										<button class="btn btn-info" type="button">搜尋</button>
+																										<button class="btn btn-info" type="button" onClick="document.formquery.submit();">搜尋</button>
+																										<input type="hidden" name="action" value="pro_ByCompositeQuery">
 																									</span>
 																								</div>
 																								
@@ -308,9 +315,9 @@
 																					<div class="col-xs-12 col-sm-4"></div>
 																				</div>
 																			</div>
-																		
+																		</FORM>
 <!--  -------------------------------------------------------------------------所有商品 -->
-																				
+																			<FORM METHOD="post" ACTION="<%= request.getContextPath()%>/ord/ord.do" name="form1" enctype="multipart/form-data">						
 																				<table class="table table-hover ">
 																					<thead>
 																						<tr class="tablebgc">
@@ -325,46 +332,54 @@
 																					<tbody>
 																						<jsp:useBean id="productClassSvc" scope="page" class="com.productclass.model.ProductClassService" />
 																						
-																						<c:forEach var="proVO" items="${proVOList}">
-																							<tr>
-																								<td>
-																								<!-- 核取方塊大小 -->
-																									<input type="checkbox" name="pro_no" value="${proVO.pro_no}" class="box">
-
-																								</td>
-																								<!-- 商品圖片名稱 -->
-																								<td style="text-align: left;">
-																									<div style="height: 80px">
-																										<img class="imgsize" src="<%=request.getContextPath()%>/pro/proImg.do?pro_no=${proVO.pro_no}"> ${proVO.pro_name}
-																									</div>
-																								</td>
-																								
-																								<!-- 商品單價 -->
-																								<td>
-																									${proVO.pro_bonus}
-																								</td>
-																								<!-- 商品數量 -->
-																								<td>
-																				                    <input type="button" name="name" value="-" class="reduce" />
-																					                <input type="text" name="name" value="${hAll[proVO.pro_no]}" class="textNum" style="text-align:center;" size="1"/>
-																					                <input type="button" name="name" value="+" class="add" />
-																					                <input type="text" class="return_mem_no" value="<%=session.getAttribute("mem_no")%>" style="display: none;"/>
-																					                <input type="text" class="return_pro_no" value="${proVO.pro_no}" style="display: none;"/>
-																					                <input type="text" class="return_pro_bonus" value="${proVO.pro_bonus}" style="display: none;"/>
-																					                <input class="danjia" value="" style="display: none;"/>
-																								</td>
-																								<!-- 商品總計 -->
-																								<td>
-																									<div id="${proVO.pro_no}" class="sumTheNumber">${hAll[proVO.pro_no] * proVO.pro_bonus}</div>
-																								</td>
-																								<!-- 按鈕 -->
-																								<td>
-																								    <button type="button" class="deletedata" value="${proVO.pro_no}"  >刪除</button>
-																								</td>
-																							</tr>
-																						</c:forEach>
-																						
-                                                                                    
+																						<c:choose>
+																						    <c:when test="${proVOList  == null}">
+																						        <tr>
+																						            <td colspan="6"><h1>購物車尚無商品</h1></td>
+																						        </tr>
+																						    </c:when>
+																						    <c:otherwise>
+																								<c:forEach var="proVO" items="${proVOList}">
+																									<tr>
+																									    
+																										<td>
+																										<!-- 核取方塊大小 -->
+																											<input type="checkbox" name="pro_no" value="${proVO.pro_no}" class="box">
+		
+																										</td>
+																										<!-- 商品圖片名稱 -->
+																										<td style="text-align: left;">
+																											<div style="height: 80px">
+																												<img class="imgsize" src="<%=request.getContextPath()%>/pro/proImg.do?pro_no=${proVO.pro_no}"> ${proVO.pro_name}
+																											</div>
+																										</td>
+																										
+																										<!-- 商品單價 -->
+																										<td>
+																											${proVO.pro_bonus}
+																										</td>
+																										<!-- 商品數量 -->
+																										<td>
+																						                    <input type="button" name="name" value="-" class="reduce" />
+																							                <input type="text" name="name" value="${hAll[proVO.pro_no]}" class="textNum" style="text-align:center;" size="1"/>
+																							                <input type="button" name="name" value="+" class="add" />
+																							                <input type="text" class="return_mem_no" value="<%=session.getAttribute("mem_no")%>" style="display: none;"/>
+																							                <input type="text" class="return_pro_no" value="${proVO.pro_no}" style="display: none;"/>
+																							                <input type="text" class="return_pro_bonus" value="${proVO.pro_bonus}" style="display: none;"/>
+																							                <input class="danjia" value="" style="display: none;"/>
+																										</td>
+																										<!-- 商品總計 -->
+																										<td>
+																											<div id="${proVO.pro_no}" class="sumTheNumber">${hAll[proVO.pro_no] * proVO.pro_bonus}</div>
+																										</td>
+																										<!-- 按鈕 -->
+																										<td>
+																										    <button type="button" class="deletedata" value="${proVO.pro_no}"  >刪除</button>
+																										</td>
+																									</tr>
+																								</c:forEach>
+																							</c:otherwise>
+																						</c:choose>
 																					</tbody>
 																				</table>
 																				<div class="container">
@@ -425,7 +440,7 @@
 <!-- 															    <form id="subscription-form"> -->
 															
 															      <div class="card-js stripe" data-stripe="true"></div>
-															      <button type"submit" class="btncard" value="Pay $"><div id="testnum" ></div></button>
+															      <button type="submit" class="btncard" ><div id="testnum"></div></button>
 															      <input type="hidden" name="ord_amount" value="test">
 																  <input type="hidden" name="action" value="insert">
 <!-- 															    </form> -->
@@ -460,6 +475,7 @@
 			<script type="text/javascript">
 				$(document).ready(function(){
 					//用遍歷計算總價
+					$('#testnum').html('Pay $');
 					getTotals();
 					//計算總價，編寫總價方法(尚未用到)
 		            function totalPrice() {
@@ -473,17 +489,17 @@
 
 		            //設置數量框不可手動填寫（此處為避免不必要的操作失誤）
 		            $(".textNum").prop("disabled", true);
-
+                    //當商品庫存量剛好為1時
 		            //減號邏輯
 		            $(".reduce").click(function () {
 		                var num = $(this).siblings(".textNum").val();  //獲取數量框裏的數值
 		                var mem_no = $(this).siblings(".return_mem_no").val();//獲取session的當前編號
 		                var pro_no =  $(this).siblings(".return_pro_no").val();//獲取pro_no選擇的商品
 		                var pro_bonus = $(this).siblings(".return_pro_bonus").val();//獲取pro_bonus商品單價
-		                
+		                if(num != 1){//數量為1時不能遞減
 		                num--;  //單擊“-”減號時，數量遞減
-		                $(this).siblings(".textNum").val(num); //把數量變化後的新值放入數量框中
-		                
+		                	$(this).siblings(".textNum").val(num); //把數量變化後的新值放入數量框中
+		                }
 			                $.ajax({
 								 type: "POST",
 								 url: "<%= request.getContextPath()%>/shoppingCartServlet/shoppingCartServlet.do",
@@ -495,7 +511,9 @@
 							     },
 							     error: function(){alert("AJAX-class發生錯誤囉!")}
 					         })
-		                
+		                if (num < ${proVO.pro_stock}){  //當庫存數量大於購買數量時解除封鎖狀態
+		                	$(this).siblings(".add").prop("disabled", false);
+		                }
 		                if (num <= 1) {
 		                    $(this).prop("disabled", true); //當輸入框內數值為0時，使“-”減號處於不可用狀態。
 		                };
@@ -504,7 +522,7 @@
 		                $(this).siblings(".xiaoji").text(xiaoji); //把得到的小計值放入數量框中顯示
 		                totalPrice();//調用“總價”方法，使每點擊減號，數量變化時，總價跟着變化
 		                
-		            })
+		            });
 
 		            //加號邏輯（邏輯如同減號的邏輯差不多）
 		            $(".add").click(function () {
@@ -512,6 +530,10 @@
 		                var mem_no = $(this).siblings(".return_mem_no").val();//獲取session的當前編號
 		                var pro_no =  $(this).siblings(".return_pro_no").val();//獲取pro_no選擇的商品
 		                var pro_bonus = $(this).siblings(".return_pro_bonus").val();//獲取pro_bonus商品單價
+		                if (num == ${proVO.pro_stock}){ //當庫存數量小於購買數量時封鎖狀態
+				        	$(this).prop("disabled", true);
+		                    return;
+		                }
 		                num++;
 		                $(this).siblings(".textNum").val(num);
 		                
@@ -526,7 +548,7 @@
 							     },
 							     error: function(){alert("AJAX-class發生錯誤囉!")}
 					         })
-		                
+				        
 		                if (num > 0) {
 		                    $(this).siblings(".reduce").prop("disabled", false); //判斷當輸入框內數值大於0，使“-”減號處於解封可用狀態。
 		                };
@@ -535,12 +557,12 @@
 		                $(this).siblings(".xiaoji").text(xiaoji);
 		                totalPrice();
 		                
-		            })
+		            });
 				            
 		            //全選
 		            $("#allSelect").click(function () {
 		                $(".box").prop("checked", true);
-		            })
+		            });
 		
 		            //取消全選
 		            $("#notSelect").click(function () {
@@ -564,11 +586,11 @@
 									 window.location.replace("<%= request.getContextPath()%>/shoppingCartServlet/shoppingCartServlet.do?action=getAll_For_Display"); 
 							     },
 							     error: function(){alert("AJAX-class發生錯誤囉!")}
-					         })
-						})
-					})
+					         });
+						});
+					});
                                    
-				})
+				});
 				function subtraction(mem_no,pro_no,num,pro_bonus){  //數量加減時帶回去controller處理
 					var queryString= {"action":"insert","mem_no":mem_no, "pro_no":pro_no,"pro_count":num,"pro_bonus":pro_bonus};
 					return queryString;
@@ -585,7 +607,7 @@
 					$(".sumTheNumber").each(function(e){
 						total += parseInt($(this).text());
 						console.log(parseInt($(this).text()));
-						$('#testnum').html(total)
+						$('#testnum').html('Pay $'+total)
 					});
 				}
 				

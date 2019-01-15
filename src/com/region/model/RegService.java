@@ -16,5 +16,9 @@ public class RegService {
 	public RegVO getRegVOFromAddress(String address) {
 		return regDAO.getRegVOFromAddress(address);
 	}
+	
+	public RegVO getRegVOByPK(Integer reg_no) {
+		return regDAO.findByPrimaryKey(reg_no);
+	}
 
 }
