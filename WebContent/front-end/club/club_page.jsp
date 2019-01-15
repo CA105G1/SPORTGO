@@ -9,19 +9,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%
-	ClubService clubSvc = new ClubService();
-	List<ClubVO> list = clubSvc.getAll();
-	pageContext.setAttribute("list", list);
 	
-//  Post_infoService post_infoSvc = new Post_infoService();
-// 	Post_infoVO post_infoVO = post_infoSvc.getOnePost_info("P0001");
-//	Post_infoVO post_infoVO = (Post_infoVO)request.getAttribute("post_infoVO");
+	
  	
 /***依照社團編號去找對應的貼文*******************************************************************/	
 // 	List<Post_infoVO> postvolist=(ArrayList)request.getAttribute("postvolist");
 /*********************************************************************************************/
  	ResponesVO responesVO = new ResponesVO();
- 	String post_no = request.getParameter("post_no");
  	
  	
 /***回文的會員*********************************************************************************/ 	
@@ -30,18 +24,20 @@
  	pageContext.setAttribute("list2", list2);
 /*********************************************************************************************/ 
 	
-//  	ResponesService responesSvc = new ResponesService(); 
-//  	List<ResponesVO> responeslist = responesSvc.getallfrompost(post_no);
-//  	pageContext.setAttribute("list",list);
-		String club_no = request.getParameter("club_no");
+		String club_no = (String)session.getAttribute("club_no");
+		if(club_no == null){
+			club_no = request.getParameter("club_no");
+			request.getSession().setAttribute("club_no", club_no);
+		}
+		
+		ClubService clubSvc = new ClubService();
 		ClubVO clubVO = clubSvc.getOneClub(club_no);
-		request.setAttribute("ClubVO", clubVO);
+		request.setAttribute("clubVO", clubVO);
 
 		Post_infoService postinfo = new Post_infoService();
 		List<Post_infoVO> postvolist = postinfo.getAllfromclub(club_no);
 		request.setAttribute("postvolist", postvolist);
 	
-		request.getSession().setAttribute("club_no", club_no);
  	
 %>
 
@@ -139,7 +135,7 @@
   							
 <!-------------------------------------------- 留言版 ---------------------------------------------------->
 <!----------------------------------------------回文------------------------------------------------------>
-					  			<button class="responesShow btn btn-secondary " type="button" id="dropdownMenuButton" data-toggle="" aria-haspopup="true" aria-expanded="false">
+					  			<button class="responesShow btn  btn-link" type="button" id="dropdownMenuButton" data-toggle="" aria-haspopup="true" aria-expanded="false">
 					    			顯示所有留言
 					  			</button>
 							<div class=" container-fluid" id="respones" style="display: none;">
@@ -179,7 +175,6 @@
 
 					
 							<div class="col-xs-12 col-lg-2" id="xx">
-								<div>好友列表</div>
 							</div>
 						</div>
 					</div>
