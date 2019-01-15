@@ -38,6 +38,7 @@
     <url-pattern>/front-end/memberlist/prolike.jsp</url-pattern>
     <url-pattern>/front-end/memberlist/sg.jsp</url-pattern>
     <url-pattern>/front-end/Sg_info/Sg_infoCreate.jsp</url-pattern>
+    <url-pattern>/front-end/club/Sg_infoCreateForClub.jsp</url-pattern>
     <dispatcher>REQUEST</dispatcher>
     <dispatcher>FORWARD</dispatcher>
     <dispatcher>INCLUDE</dispatcher>
@@ -109,12 +110,44 @@
     <url-pattern>/club.do</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>ClubfrontServlet</servlet-name>
+    <servlet-class>com.club.controller.ClubfrontServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ClubfrontServlet</servlet-name>
+    <url-pattern>/clubfront.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>ClubImgServlet</servlet-name>
     <servlet-class>com.club.controller.ClubImgServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ClubImgServlet</servlet-name>
     <url-pattern>/clubImg.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>Post_infoServlet</servlet-name>
+    <servlet-class>com.post_info.controller.Post_infoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Post_infoServlet</servlet-name>
+    <url-pattern>/post_info.do</url-pattern>
+  </servlet-mapping>
+   <servlet>
+   <servlet-name>Club_memberlistServlet</servlet-name>
+   <servlet-class>com.club_memberlist.controller.Club_memberlistServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+   <servlet-name>Club_memberlistServlet</servlet-name>
+   <url-pattern>/club_memberlist.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ResponesServlet</servlet-name>
+    <servlet-class>com.respones.controller.ResponesServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ResponesServlet</servlet-name>
+    <url-pattern>/respones.do</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>VenueServlet</servlet-name>
@@ -125,13 +158,46 @@
     <url-pattern>/venue/venue.do</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>VenueSelectServlet</servlet-name>
+    <servlet-class>com.venue.controller.VenueSelectServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>VenueSelectServlet</servlet-name>
+    <url-pattern>/venue/venueSelect.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>VenueCreateOrUpdateServlet</servlet-name>
+    <servlet-class>com.venue.controller.VenueCreateOrUpdateServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>VenueCreateOrUpdateServlet</servlet-name>
+    <url-pattern>/venue/venueCreateOrUpdate.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>VenueDeleteServlet</servlet-name>
+    <servlet-class>com.venue.controller.VenueDeleteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>VenueDeleteServlet</servlet-name>
+    <url-pattern>/venue/venueDelete.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>VenueFuncServlet</servlet-name>
+    <servlet-class>com.venue.controller.VenueFuncServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>VenueFuncServlet</servlet-name>
+    <url-pattern>/venue/venueFunc.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>VenueImgServlet</servlet-name>
     <servlet-class>com.venue.controller.VenueImgServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>VenueImgServlet</servlet-name>
-    <url-pattern>/vunue/venueImg.do</url-pattern>
+    <url-pattern>/venue/venueImg.do</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <servlet-name>EmpServlet</servlet-name>
     <servlet-class>com.emp.controller.EmpServlet</servlet-class>
