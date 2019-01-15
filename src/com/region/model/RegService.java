@@ -2,15 +2,15 @@ package com.region.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class RegService {
 	private RegDAO_interface regDAO = null;
 	private List<String> reg_nameList =null;
-	
+	private Map<String, List<RegVO>> regionMapKeyReg_name = null;
 	
 	
 	public RegService() {
@@ -27,6 +27,20 @@ public class RegService {
 	
 	public RegVO getRegVOByPK(Integer reg_no) {
 		return regDAO.findByPrimaryKey(reg_no);
+	}
+	
+	public void setRegionMapKeyReg_name() {
+		if(reg_nameList==null) {
+			setReg_nameList();
+		}
+		regionMapKeyReg_name = new LinkedHashMap<>();
+		for(String reg_name: reg_nameList) {
+			Map<String, String[]> map = new HashMap<>();
+			String[] reg_name_array = {reg_name};
+			map.put("reg_name", reg_name_array);
+			List<RegVO> list = regDAO.getAll(map);
+			regionMapKeyReg_name.put(reg_name, list);
+		}
 	}
 	
 	public void setReg_nameList(){
@@ -49,12 +63,17 @@ public class RegService {
 		}
 		return reg_nameList;
 	}
-	public List<RegVO> getRegVOFormRegName(String reg_name) {
-		Map<String, String[]> map = new HashMap<>();
-		String[] reg_name_array = {reg_name};
-		map.put("reg_name", reg_name_array);
-		return regDAO.getAll(map);
-	}
+//	// version 1
+//	public List<RegVO> getRegVOFormRegName(String reg_name) {
+//		Map<String, String[]> map = new HashMap<>();
+//		String[] reg_name_array = {reg_name};
+//		map.put("reg_name", reg_name_array);
+//		return regDAO.getAll(map);
+//	}
 	
+	// version 2
+	public List<RegVO> getRegVOFormRegName(String reg_name) {
+		return regionMapKeyReg_name.get(reg_name);
+	}
 
 }
