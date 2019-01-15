@@ -11,12 +11,7 @@ public class RegService {
 	private RegDAO_interface regDAO = null;
 	private List<String> reg_nameList =null;
 	
-	public List<String> getReg_nameList(){
-		if(reg_nameList==null) {
-			setReg_nameList();
-		}
-		return reg_nameList;
-	}
+	
 	
 	public RegService() {
 		this.regDAO = new RegDAO();
@@ -48,7 +43,12 @@ public class RegService {
 			reg_nameList.add(reg_name);
 		}
 	}
-	
+	public List<String> getReg_nameList(){
+		if(reg_nameList==null) {
+			setReg_nameList();
+		}
+		return reg_nameList;
+	}
 	public List<RegVO> getRegVOFormRegName(String reg_name) {
 		Map<String, String[]> map = new HashMap<>();
 		String[] reg_name_array = {reg_name};
