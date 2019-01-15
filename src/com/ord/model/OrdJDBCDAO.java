@@ -487,6 +487,7 @@ public class OrdJDBCDAO implements OrdDAO_interface{
 		try {
 			 con = ds.getConnection();
 			ps = con.prepareStatement(SELECT_MEM_NO);
+			ps.setString(1, mem_no);
 			rs = ps.executeQuery();
 			
 			while(rs.next()) {
