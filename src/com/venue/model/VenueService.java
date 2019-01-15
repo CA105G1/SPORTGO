@@ -35,6 +35,10 @@ public class VenueService {
 		venueDAO.insert(venueVO);
 	}
 	
+	public void updateVenue(VenueVO venueVO) {
+		venueDAO.update(venueVO);
+	}
+	
 	public void addVenue(String v_name, String v_patktype, String v_introduction,
 		 String vt_no, String v_weburl, String v_inout,
 		 Integer reg_no, String v_address, String v_phoneno,
