@@ -53,7 +53,7 @@
 	<!--data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" -->
 
 	<body>
-	<%@ include file="/front-end/CA105G1_header.file" %>
+	<jsp:include page="/front-end/CA105G1_header.jsp" /><!-- 原本file改成jsp -->
 <!--------- 進入前天空中已經有clubVO在session裡，club_no在req裡，以下僅測試用 --------------> 	
 club_no = ${club_no }<br>
 clubVO = ${clubVO }
