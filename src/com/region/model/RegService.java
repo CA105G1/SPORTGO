@@ -75,5 +75,12 @@ public class RegService {
 	public List<RegVO> getRegVOFormRegName(String reg_name) {
 		return regionMapKeyReg_name.get(reg_name);
 	}
+	public Map<String, List<RegVO>> getRegionMapKeyReg_name(){
+		if(regionMapKeyReg_name==null) {
+			setRegionMapKeyReg_name();
+		}
+		return regionMapKeyReg_name;
+	}
+	
 
 }
