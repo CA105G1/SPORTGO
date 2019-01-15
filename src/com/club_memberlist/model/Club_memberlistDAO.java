@@ -40,9 +40,9 @@ public class Club_memberlistDAO  implements Club_memberlistDAO_interface{
 		private static final String GET_BY_MEM =
 				"SELECT * FROM club_memberList where mem_no = ? ";
 		private static final String GET_BY_MEM_HOST =
-				"SELECT * FROM club_memberList where mem_no = ? AND cmem_class = '管理員' and cmem_status='正常'";
+				"SELECT * FROM club_memberList where mem_no = ? AND cmem_class = '管理員' and cmem_status='正式社員'";
 		private static final String GET_BY_MEM_PARTICIPATE =
-				"SELECT * FROM club_memberList where mem_no = ? AND cmem_class = '一般成員' and cmem_status='正常'";
+				"SELECT * FROM club_memberList where mem_no = ? AND cmem_class = '一般成員' and cmem_status='正式社員'";
 		private static final String GET_BY_MEM_PARTICIPATE_WAIT_FOR_VERIFY =
 				"SELECT * FROM club_memberList where mem_no = ? AND cmem_class = '一般成員' and cmem_status='待審核'";
 		private static final String deleteStmt =

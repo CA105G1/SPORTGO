@@ -27,6 +27,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import org.json.JSONException;
+
+import com.memberlist.model.MemberlistRedisDAO;
 import com.sg_info.model.Sg_infoService;
 import com.sg_info.model.Sg_infoVO;
 @MultipartConfig(fileSizeThreshold=1024*1024, maxFileSize=5*1024*1024, maxRequestSize=5*5*1024*1024)
@@ -466,6 +469,31 @@ public class Sg_infoServlet extends HttpServlet {
 				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/memberlist/MemManager.do?action=Member_Sg");
 				dispatcher.forward(req, res);
 			}
+		}
+		
+		
+		if("shareSg_info".equals(action)) {
+			MemberlistRedisDAO dao = new MemberlistRedisDAO();
+			
+			String mem_no = req.getParameter("mem_no");
+System.out.println("mem_no="+mem_no);
+			String mem2_no = req.getParameter("mem2_no");
+System.out.println("mem2_no="+mem2_no);
+			String title = "<a href='https://tw.yahoo.com/'>xxxxxxx</a>";
+			
+			String value = "{"
+					+ "\"userName\":"+"\""+mem_no+"\""
+					+ ",\"type\":"+"\"chat\""
+					+ ",\"message\":"+"\""+title+"\""
+					+ ",\"to\":"+"\""+mem2_no+"\""
+					+ "}";
+			try {
+				dao.saveChatMessage(mem_no, mem2_no, value);
+			} catch (JSONException e) {
+				System.out.println("分享出錯了");
+				e.printStackTrace();
+			}
+			
 		}
 		
 		

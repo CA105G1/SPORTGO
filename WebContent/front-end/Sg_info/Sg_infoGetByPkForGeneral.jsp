@@ -5,6 +5,7 @@
 <%@ page import="com.sg_like.model.*"%>
 <%@ page import="com.sg_mem.model.*"%>
 <%@ page import="com.memberlist.model.*"%>
+<%@ page import = "com.friend.model.*" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
@@ -196,9 +197,56 @@ System.out.println("memberlistVO= "+memberlistVO);
 			</button>
 		</div>
 		<div class="col-xs-12 col-sm-3">
+		<!--------------------------------------------- TEST ---------------------------------------------->
+<%if(memberlistVO!=null){
+String mem_notest = memberlistVO.getMem_no();
+FriendService friendSvc = new FriendService();
+List<FriendVO> friendlist = friendSvc.findMyFriend(mem_notest);
+MemberlistService service2 = new MemberlistService();
+List<MemberlistVO> memberlist2 = service2.getAllMem();
+pageContext.setAttribute("friendlist",friendlist);  	pageContext.setAttribute("memberlist2",memberlist2);
+%>
+<form method="post" action="<%= request.getContextPath()%>/Sg_info/Sg_info.do">
+<input type="hidden" name="action" value="shareSg_info">
+<input type="hidden" name="mem_no" value="${memberlistVO.mem_no}">
+	<c:forEach var="friend" items="${friendlist}">
+		<c:forEach var="member" items="${memberlist2}">
+			<c:if test="${memberlistVO.mem_no eq friend.mem1_no}">
+				<c:if test="${friend.mem2_no eq member.mem_no}" >
+<!-- 									<form method="post" action="Friend.do"  class="grid-item"> -->
+							<input type="checkbox" value="${member.mem_no}">
+							<img src="<%=request.getContextPath()%>
+							/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"
+							style="width:40px;height:40px;border-radius:50%;">
+							<label>${member.mem_name}</label><br>
+<!-- 							<input type="hidden" name="action" value="delete_Friend"> -->
+							<input type="hidden" name="mem2_no" value="${member.mem_no}">
+<!-- 									</form> -->
+				</c:if>
+			</c:if>
+			<c:if test="${memberlistVO.mem_no eq friend.mem2_no}">
+				<c:if test="${friend.mem1_no eq member.mem_no}" >
+<!-- 									<form method="post" action="Friend.do"  class="grid-item"> -->
+							<input type="checkbox"  value="${member.mem_no}">
+							<img src="<%=request.getContextPath()%>
+							/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"
+							style="width:40px;height:40px;border-radius:50%">
+							<label>${member.mem_name}</label><br>
+<!-- 							<input type="hidden" name="action" value="delete_Friend"> -->
+							<input type="hidden" name="mem2_no" value="${member.mem_no}">
+<!-- 									</form> -->
+				</c:if>
+			</c:if>
+		</c:forEach>
+	</c:forEach>
+	<input type="submit" value="送出分享">
+</form>
+	<%} %>
+<!--------------------------------------------- TEST ---------------------------------------------->
 		</div>
 	</div>
 </div>
+
 
 <jsp:include page="/front-end/CA105G1_footer.jsp" />
 
@@ -363,7 +411,10 @@ System.out.println("memberlistVO= "+memberlistVO);
 			return;
 		});
 		$("#sharebtn").click(function(){
+			<%
+	 		session.setAttribute("Sg_infoVO", vo);%> //原頁面VO由session帶著去跟回
 			document.location.href="<%= request.getContextPath()%>/front-end/memberlist/Login.jsp";
+			return;
 		});
 		$("#repbtn").click(function(){
 			<%
@@ -508,6 +559,11 @@ System.out.println("memberlistVO= "+memberlistVO);
 				}
 			}); //ajax
 		} //function join
+		
+		
+		$("#sharebtn").click(function(){
+			
+		});
 		
 		
 		$("#repbtn").click(function(){
