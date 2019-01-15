@@ -174,24 +174,6 @@
 	  }
 	</style>
 	<script type="text/javascript">
-	
-// 		//照片上傳
-// 		$("#news_picture_tab3").change(function(){
-// 			readURL_tab3(this);
-// 			$('#hasChangePicture_tab3').val("true");
-// 			console.log("hasChangePicture : "+($('#hasChangePicture_tab3').val()));
-// 		});
-	
-// 		function readURL_tab3(input){
-// 			if(input.files && input.files[0]){
-// 				var reader = new FileReader();
-// 				reader.onload = function(e){
-// 					$('#showPic_tab3').attr({"src":e.target.result, "width":"200px"})
-// 					console.log("#showPic_tab3 : "+($('#showPic_tab3').attr("src")));
-// 				}
-// 				reader.readAsDataURL(input.files[0]);
-// 			}
-// 		}
 		
 		
 	
@@ -218,7 +200,8 @@
   		             return [false, ""]
   		      	}
   		      	return [true, ""];
-  			}
+  			},
+  			closeOnDateSelect:true
  		});
  		$('#news_last_date_tab3').datetimepicker({
 			theme: '',
@@ -230,6 +213,7 @@
     				minDate:jQuery('#news_release_date_tab3').val()?jQuery('#news_release_date_tab3').val():false
    				})
   			},
+  			closeOnDateSelect:true
  		});
 
 	</script>

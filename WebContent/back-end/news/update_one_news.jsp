@@ -199,7 +199,8 @@
   		             return [false, ""]
   		      	}
   		      	return [true, ""];
-  			}
+  			},
+  			closeOnDateSelect:true
  		});
  		$('#news_last_date_tab3').datetimepicker({
 			theme: '',
@@ -211,6 +212,7 @@
     				minDate:jQuery('#news_release_date_tab3').val()?jQuery('#news_release_date_tab3').val():false
    				})
   			},
+  			closeOnDateSelect:true
  		});
 
 	</script>
