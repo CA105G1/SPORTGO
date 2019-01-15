@@ -34,6 +34,10 @@
 				width:33%;
 				height:auto;
 			}
+			#sg_picDiv{
+				height:200px;
+			}
+			
 		</style>
 		
 		
@@ -54,7 +58,7 @@
 		<div class="container">
 			<div class="row">
 				
-				<div class="col-xs-12 col-sm-2" style="margin-right: -;padding-left: 5px;padding-right: 5px;">
+				<div class="col-xs-12 col-sm-2" >
 					<jsp:include page="/front-end/club/club_pageRight.jsp" />
 				</div>
 				<div class="col-xs-12 col-sm-8" id="listDiv">
@@ -71,9 +75,9 @@
 									${sg_infoVO.sg_name }
 								</h5>
 							</div>
-	
-							<img src="<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${sg_infoVO.sg_no}" class="sg_pic img-responsive img-rounded">
-	
+							<div id="sg_picDiv">
+								<img src="<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${sg_infoVO.sg_no}" class="img-responsive img-rounded"">
+							</div>
 							<div class="w3-container">
 								<!-- 團長 -->
 								<div >

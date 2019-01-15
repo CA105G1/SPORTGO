@@ -575,6 +575,12 @@ public class Club_memberlistJDBCDAO implements Club_memberlistDAO_interface{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public List<Club_memberlistVO> findByClub(String club_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 
 }

@@ -10,6 +10,7 @@ public interface Club_memberlistDAO_interface {
     public void update(Club_memberlistVO clubmemberlistVO);
 //    public void delete(String club_no,String mem_no);
     public Club_memberlistVO findByPrimaryKey(String club_no,String mem_no);
+    public List<Club_memberlistVO> findByClub(String club_no);
     public List<Club_memberlistVO> findByMem(String mem_no);
     public List<Club_memberlistVO> findByMemHost(String mem_no);
     public List<Club_memberlistVO> findByMemPart(String mem_no);

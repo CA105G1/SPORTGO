@@ -5,13 +5,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%
-	ClubService clubSvc = new ClubService();
-	List<ClubVO> list = clubSvc.getAll();
-	pageContext.setAttribute("list", list);
-	
-
-	//ClubVO clubVO = (ClubVO)request.getAttribute("clubVO");
-	
+	//session中有memberlistVO、club_no，EL直接拿了就用
+	String club_no = (String)session.getAttribute("club_no");
+	ClubService svc = new ClubService();
+	ClubVO clubVO = svc.getOneClub(club_no);
+	request.setAttribute("clubVO",clubVO);
 %>
 
 
@@ -46,23 +44,16 @@
 			font-family:Microsoft JhengHei
 			}
 		
-			
-/* 			#clubphoto{ */
-/* 			max-width:600px;  */
-/* myimg:expression(onload=function(){  */
-/* this.style.width=(this.offsetWidth > 600)?"600px":"auto"}); */
-/* 			} */
 		</style>
 	</head>
 
-	<!--data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" -->
 
 	<body>
 	 
 	<jsp:include page="/front-end/CA105G1_header.jsp" />
 		<div class="container">
 			<div class="row">
-				<div class="col-xs-12 col-sm-2" style="margin-right: -;padding-left: 5px;padding-right: 5px;">
+				<div class="col-xs-12 col-sm-2">
 					<jsp:include page="/front-end/club/club_pageRight.jsp" />	
 				</div>
 				<div class="col-xs-12 col-sm-8">

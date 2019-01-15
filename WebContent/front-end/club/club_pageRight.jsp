@@ -21,7 +21,7 @@
 		<div class="container-fluid">
 			<div class="row">
 				<h4 id="club_name" class="_19s-" >
-					<a href='club_page.jsp?club_no=${clubVO.club_no}' >
+					<a href='<%= request.getContextPath()%>/front-end/club/club_page.jsp' >
 						${clubVO.club_name}
 					</a>
 				</h4>
@@ -30,7 +30,7 @@
 					<a href="<%= request.getContextPath()%>/front-end/club/Sg_infoList.jsp" class="list-group-item">專屬揪團</a>
 					<a href="#" class="list-group-item" role="tab" id="myCreatePost">建立貼文</a>
 					<a href="#" class="list-group-item">影音相簿</a>
-					<a href="<%= request.getContextPath()%>/clubfront.do?actionfront=getOneClubmanage&club_no=${clubVO.club_no}" id="clubManage" class="list-group-item" style="display:none">社團管理</a>
+					<a href="<%= request.getContextPath()%>/front-end/club_memberlist/reviewaddclub.jsp" id="clubManage" class="list-group-item" style="display:none">社團管理</a>
 					<a href="<%= request.getContextPath()%>/front-end/club/club_list.jsp"class="list-group-item">返回列表</a>
 				</div>	
 				<button type="button" class="btn btn-dark" id="joinbtn" style="display:">加入社團</button>	
