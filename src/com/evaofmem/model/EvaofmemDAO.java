@@ -51,7 +51,7 @@ public class EvaofmemDAO implements EvaofmemDAO_interface {
 			pstmt.setString(1, evaofmem.getSg_no());
 			pstmt.setString(2, evaofmem.getEvaluate_no());
 			pstmt.setString(3, evaofmem.getEvaluated_no());
-			pstmt.setInt(4, evaofmem.getEva_score());
+			pstmt.setDouble(4, evaofmem.getEva_score());
 			
 			pstmt.executeUpdate();
 		} catch (SQLException se) {
@@ -83,7 +83,7 @@ public class EvaofmemDAO implements EvaofmemDAO_interface {
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_EVA);
-			pstmt.setInt(1, evaofmem.getEva_score());
+			pstmt.setDouble(1, evaofmem.getEva_score());
 			pstmt.setString(2, evaofmem.getSg_no());
 			pstmt.setString(3, evaofmem.getEvaluate_no());
 			pstmt.setString(4, evaofmem.getEvaluated_no());
@@ -210,7 +210,7 @@ public class EvaofmemDAO implements EvaofmemDAO_interface {
 				evaofmem.setSg_no(rs.getString("sg_no"));
 				evaofmem.setEvaluate_no(rs.getString("evaluate_no"));
 				evaofmem.setEvaluated_no(rs.getString("evaluated_no"));
-				evaofmem.setEva_score(rs.getInt("eva_score"));
+				evaofmem.setEva_score(rs.getDouble("eva_score"));
 				list.add(evaofmem);
 			}
 		} catch (SQLException se) {

@@ -10,19 +10,19 @@ public class EvaofmemService {
 	}
 	
 	public void addEvaluate(String sg_no, String evaluate_no,
-		String evaluated_no,Integer eva_score) {
+		String evaluated_no,Double eva_score) {
 		EvaofmemVO VO = new EvaofmemVO(sg_no,evaluate_no,evaluated_no,eva_score);
 		dao.insert(VO);
 	}
 	
 	public void updateEvaluate(String sg_no, String evaluate_no,
-			String evaluated_no,Integer eva_score) {
+			String evaluated_no,Double eva_score) {
 			EvaofmemVO VO = new EvaofmemVO(sg_no,evaluate_no,evaluated_no,eva_score);
 			dao.update(VO);
 	}
 
 	public void deleteEvaluate(String sg_no, String evaluate_no,
-			String evaluated_no,Integer eva_score) {
+			String evaluated_no,Double eva_score) {
 			EvaofmemVO VO = new EvaofmemVO(sg_no,evaluate_no,evaluated_no,eva_score);
 			dao.delete(VO);
 	}

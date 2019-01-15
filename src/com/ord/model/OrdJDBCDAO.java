@@ -485,7 +485,7 @@ public class OrdJDBCDAO implements OrdDAO_interface{
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			 con = ds.getConnection();
 			ps = con.prepareStatement(SELECT_MEM_NO);
 			rs = ps.executeQuery();
 			

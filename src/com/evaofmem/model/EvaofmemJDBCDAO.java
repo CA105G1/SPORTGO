@@ -41,7 +41,7 @@ public class EvaofmemJDBCDAO implements EvaofmemDAO_interface {
 			pstmt.setString(1, evaofmem.getSg_no());
 			pstmt.setString(2, evaofmem.getEvaluate_no());
 			pstmt.setString(3, evaofmem.getEvaluated_no());
-			pstmt.setInt(4, evaofmem.getEva_score());
+			pstmt.setDouble(4, evaofmem.getEva_score());
 			
 			pstmt.executeUpdate();
 		} catch (ClassNotFoundException e) {
@@ -77,7 +77,7 @@ public class EvaofmemJDBCDAO implements EvaofmemDAO_interface {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, user, password);
 			pstmt = con.prepareStatement(UPDATE_EVA);
-			pstmt.setInt(1, evaofmem.getEva_score());
+			pstmt.setDouble(1, evaofmem.getEva_score());
 			pstmt.setString(2, evaofmem.getSg_no());
 			pstmt.setString(3, evaofmem.getEvaluate_no());
 			pstmt.setString(4, evaofmem.getEvaluated_no());
@@ -216,7 +216,7 @@ public class EvaofmemJDBCDAO implements EvaofmemDAO_interface {
 				evaofmem.setSg_no(rs.getString("sg_no"));
 				evaofmem.setEvaluate_no(rs.getString("evaluate_no"));
 				evaofmem.setEvaluated_no(rs.getString("evaluated_no"));
-				evaofmem.setEva_score(rs.getInt("eva_score"));
+				evaofmem.setEva_score(rs.getDouble("eva_score"));
 				list.add(evaofmem);
 			}
 		} catch (ClassNotFoundException e) {
@@ -306,29 +306,29 @@ public class EvaofmemJDBCDAO implements EvaofmemDAO_interface {
 	
 	public static void main(String[] args) {
 		EvaofmemJDBCDAO evadao = new EvaofmemJDBCDAO();
-		EvaofmemVO eva1 =new EvaofmemVO("S003","M002","M003",8);
-		EvaofmemVO eva2 =new EvaofmemVO("S003","M002","M004",7);
-		EvaofmemVO eva3 =new EvaofmemVO("S003","M002","M005",8);
-		EvaofmemVO eva4 =new EvaofmemVO("S004","M002","M004",9);
-		EvaofmemVO eva5 =new EvaofmemVO("S003","M005","M004",10);
-		EvaofmemVO eva6 =new EvaofmemVO("S003","M002","M004",10);
-		EvaofmemVO eva7 =new EvaofmemVO("S004","M002","M004");
-		evadao.insert(eva1);
-		evadao.insert(eva2);
-		evadao.insert(eva3);
-		evadao.insert(eva4);
-		evadao.insert(eva5);
-		System.out.println("Score of M004 is before update : "+evadao.findMyEva("M004"));
-		evadao.update(eva6);
-		System.out.println("Score of M004 is after update : "+evadao.findMyEva("M004"));
-		evadao.delete(eva7);
-		System.out.println("evaluation is deleted.");
-		List<EvaofmemVO> list = evadao.findIEvad("M002");
-		for(EvaofmemVO vo: list) { 
-			System.out.println(vo.getSg_no()+":"+",name :"+vo.getEvaluated_no()+", score :"+vo.getEva_score());
-		}
-		System.out.println("Score of S003 is : "+evadao.findSgEva("S003"));
-		
+//		EvaofmemVO eva1 =new EvaofmemVO("S003","M002","M003",8);
+//		EvaofmemVO eva2 =new EvaofmemVO("S003","M002","M004",7);
+//		EvaofmemVO eva3 =new EvaofmemVO("S003","M002","M005",8);
+//		EvaofmemVO eva4 =new EvaofmemVO("S004","M002","M004",9);
+//		EvaofmemVO eva5 =new EvaofmemVO("S003","M005","M004",10);
+//		EvaofmemVO eva6 =new EvaofmemVO("S003","M002","M004",10);
+//		EvaofmemVO eva7 =new EvaofmemVO("S004","M002","M004");
+//		evadao.insert(eva1);
+//		evadao.insert(eva2);
+//		evadao.insert(eva3);
+//		evadao.insert(eva4);
+//		evadao.insert(eva5);
+//		System.out.println("Score of M004 is before update : "+evadao.findMyEva("M004"));
+//		evadao.update(eva6);
+//		System.out.println("Score of M004 is after update : "+evadao.findMyEva("M004"));
+//		evadao.delete(eva7);
+//		System.out.println("evaluation is deleted.");
+//		List<EvaofmemVO> list = evadao.findIEvad("M002");
+//		for(EvaofmemVO vo: list) { 
+//			System.out.println(vo.getSg_no()+":"+",name :"+vo.getEvaluated_no()+", score :"+vo.getEva_score());
+//		}
+//		System.out.println("Score of S003 is : "+evadao.findSgEva("S003"));
+//		
 	}
 
 	

@@ -40,12 +40,12 @@ public class EvaofmemServlet extends HttpServlet {
 		mem_no = memberlistVO.getMem_no();
 		
 		if("Evaluate_Sg".equals(action)) {
-			String evaluated = (String) req.getAttribute("evaluated_no");
-			String sg_no = (String) req.getAttribute("sg_no");
-			Integer score = (Integer) req.getAttribute("input-1");
-			if(score==null) {
-				score = 0;
-			}
+			String evaluated = (String) req.getParameter("evaluated_no");
+			String sg_no = (String) req.getParameter("sg_no");
+			String scorein = (String) req.getParameter("input-1");
+			System.out.println(scorein);
+			Double score = new Double(scorein);
+			System.out.println(score);
 			try {
 				service.addEvaluate(sg_no, mem_no, evaluated, score);
 				System.out.println("evalated succeed");

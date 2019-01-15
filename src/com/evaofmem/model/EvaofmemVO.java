@@ -9,10 +9,10 @@ public class EvaofmemVO implements java.io.Serializable {
 	private String sg_no;
 	private String evaluate_no;//mem_no
 	private String evaluated_no;//mem_no
-	private Integer eva_score;
+	private Double eva_score;
 	//for insert, update
 	public EvaofmemVO(String sg_no,String evaluate_no,
-			String evaluated_no,Integer eva_score){
+			String evaluated_no,Double eva_score){
 		setSg_no(sg_no);
 		setEvaluate_no(evaluate_no);
 		setEvaluated_no(evaluated_no);
@@ -44,10 +44,10 @@ public class EvaofmemVO implements java.io.Serializable {
 	public void setEvaluated_no(String evaluated_no) {
 		this.evaluated_no = evaluated_no;
 	}
-	public Integer getEva_score() {
+	public Double getEva_score() {
 		return eva_score;
 	}
-	public void setEva_score(Integer eva_score) {
+	public void setEva_score(Double eva_score) {
 		this.eva_score = eva_score;
 	}
 	

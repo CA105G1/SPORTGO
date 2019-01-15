@@ -5,15 +5,15 @@
 <%@ page import = "java.util.*" %>
 
 <% 
-// 	MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO");
-// 	if(memberlistVO==null){
-// 		response.sendRedirect("Login.jsp");
-// 		return;
-// 	}
-// 	String mem_no = memberlistVO.getMem_no();
-// 	OrdService ordservice = new OrdService();
-// 	List<OrdVO> ordlist = ordservice.getAllmem_no(mem_no);
-// 	pageContext.setAttribute("ordlist", ordlist);
+	MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO");
+	if(memberlistVO==null){
+		response.sendRedirect("Login.jsp");
+		return;
+	}
+	String mem_no = memberlistVO.getMem_no();
+	OrdService ordservice = new OrdService();
+	List<OrdVO> ordlist = ordservice.getAllmem_no(mem_no);
+	pageContext.setAttribute("ordlist", ordlist);
 
 %>
 <!DOCTYPE html>
@@ -81,7 +81,7 @@
 				</div>
 				<div class="col-xs-12 col-sm-9 tab-content">
 				<!-- 訂單管理 -->
-<%-- 				<c:forEach var="ord" items="${ordlist}"> --%>
+				<c:forEach var="ord" items="${ordlist}">
 				
         
        <div class="well col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
@@ -93,8 +93,8 @@
                      alt="User Pic">
             </div>
             <div class="col-xs-8 col-sm-9">
-                <strong>Cyruxx</strong><br>
-                <span class="text-muted">User level: Administrator</span>
+                <strong>下訂日期</strong><br>
+                <span class="text-muted">${ordlist.ord_date}</span>
             </div>
             <div class="col-xs-1 col-sm-1 dropdown-user" data-for=".cyruxx">
                 <i class="glyphicon glyphicon-chevron-down text-muted"></i>
@@ -180,7 +180,7 @@
 				
 				
 				
-<%-- 				</c:forEach>				 --%>
+				</c:forEach>				
 				
 				
 				</div>	
