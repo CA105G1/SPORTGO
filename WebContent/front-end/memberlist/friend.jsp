@@ -427,6 +427,7 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 					$("#chat_" + chatFriend);
 					$(".chat").hide();
 					$("#chat_" + chatFriend).show();
+					$('.chat').scrollTop($('.chat').prop('scrollHeight'));
 				});
 		function connect(){
 			webSocket = new WebSocket(endPointURL);
@@ -448,8 +449,6 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 // 			            	"<p class='alert-title'>"+jsonObj.userName+"</p><p class='alert-body'>"+
 // 			            	jsonObj.message+"</p></div>");
 // 				}
-				console.log(jsonObj.to);
-				chatFriend = jsonObj.to;
 				var message = jsonObj.userName + ": "+jsonObj.message+ "\r\n";
 				if(jsonObj.userName===userName){
 					$("#chat_" + jsonObj.to).append("<div style='display:flex;flex-direction:row-reverse;font-size:18px;'>"
@@ -461,7 +460,7 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 							+jsonObj.userName+"'><br>"+jsonObj.message+ "</div>");
 				}
 				messageArea.value = messageArea.value + message;
-				messageArea.scrollTop = messageArea.scrollHeight;
+				$('.chat').scrollTop($('.chat').prop('scrollHeight'));
 			};
 			
 			webSocket.onclose = function(event){
