@@ -54,6 +54,9 @@ public class RegisterMem extends HttpServlet {
 		if("".equals(account)||(account.trim()).length()==0) {
 			errorMsgs.put("account", "帳號欄位必填");
 		}
+		if(!account.matches("[a-zA-Z0-9]{0,15}")) {
+			errorMsgs.put("account", "帳號欄位格式有誤,只能是數字或英文字母");
+		}
 		/*******驗證帳號是否重複********/
 		try{
 			mem_no = service.getOneMemByAccount(account);
@@ -68,14 +71,26 @@ public class RegisterMem extends HttpServlet {
 		if("".equals(name)||(name.trim()).length()==0) {
 			errorMsgs.put("name", "姓名欄位必填");
 		}
+		if(name.length()>15) {
+			errorMsgs.put("name", "姓名欄位太長");
+		}
 		if("".equals(password)||(password.trim()).length()==0) {
 			errorMsgs.put("password", "密碼欄位必填");
+		}
+		if(password.length()>12) {
+			errorMsgs.put("password", "密碼不得超過12位");
 		}
 		if("".equals(email)||(email.trim()).length()==0) {
 			errorMsgs.put("email", "電子郵件欄位必填");
 		}
+		if(!email.matches("^[_a-z0-9-]+([.][_a-z0-9-]+)*@[a-z0-9-]+([.][a-z0-9-]+)*$")) {
+			errorMsgs.put("email", "電子郵件格式有誤");
+		}
 		if("".equals(phone)||(phone.trim()).length()==0) {
 			errorMsgs.put("phone","電話欄位必填");
+		}
+		if(!phone.matches("^[0][0-9]{9}")) {
+			errorMsgs.put("phone","電話欄位格式有誤,必須為開頭是0的10個數字");
 		}
 		if(!errorMsgs.isEmpty()) {
 			RequestDispatcher notnull = req.getRequestDispatcher("RegisterMem_page.jsp");
@@ -123,9 +138,9 @@ public class RegisterMem extends HttpServlet {
 		/************查詢完成準備轉交（send the success view）***************/
 		HttpSession session = req.getSession();
 		MemberlistVO memberlistVO = service.getOneMem(mem_no);
-		session.setAttribute("MemberlistVO", memberlistVO);
+		session.setAttribute("memberlistVO", memberlistVO);
 		session.setAttribute("mem_no", mem_no);
 		System.out.println("member created successful");
-		res.sendRedirect("Member_page.jsp");
+		res.sendRedirect("public_Member_page.jsp");
 	} 
 }
