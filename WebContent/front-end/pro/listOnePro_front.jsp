@@ -133,7 +133,7 @@
 	</style>
 	</head>
 	<body>
-<%@ include file="/front-end/CA105G1_header.file" %>
+<jsp:include page="/front-end/CA105G1_header.jsp"/>
 		<div class="container-fluid backgc">
 			<div class="row">
 				
@@ -299,7 +299,7 @@
 
 
 
-<%@ include file="/front-end/CA105G1_footer.file" %>
+<jsp:include page="/front-end/CA105G1_footer.jsp"/>
 
 			</div>
 		</div>
