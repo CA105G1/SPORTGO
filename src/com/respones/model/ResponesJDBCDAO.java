@@ -322,4 +322,10 @@ public class ResponesJDBCDAO implements ResponesDAO_interface {
 			// TODO Auto-generated method stub
 			return null;
 		}
+		
+		@Override
+		public void deleteBypostno(String res_no) {
+			// TODO Auto-generated method stub
+			
+		}
 }
