@@ -9,7 +9,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-<!-- 		<script src="https://code.jquery.com/jquery.js"></script> -->
+		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
@@ -98,11 +98,11 @@
 			},
 			success: function(data){
 				swal({
-					  title: "成功加入!", html: "馬上到我的社團查看", type: "success", showCancelButton: true, showCloseButton: true,confirmButtonText: "前往",cancelButtonText: "取消"
+					  title: "成功提出申請!", type: "success", showCloseButton: true,confirmButtonText: "確定"
 					}).then(
 						function (result) {
 						if(result){
-							document.location.href="<%= request.getContextPath()%>/front-end/memberlist/MemManager.do?action=Member_Sg";
+							location.reload();
 						}
 						},function(dismiss) {
 							location.reload();
