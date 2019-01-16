@@ -19,35 +19,8 @@
  	pageContext.setAttribute("list2", list2);
 /*********************************************************************************************/ 
 	
-// 		String club_no = (String)session.getAttribute("club_no");
-// 		if(club_no == null){//如果沒有就給他一個新的
-// 			club_no = request.getParameter("club_no");
-// 			request.getSession().setAttribute("club_no", club_no);
-// 		}/////////////////////登出貼文會消失///////////////////////////////
-// 		/////////////////////登出貼文會消失///////////////////////////////
-
-		MemberlistVO memberlistVO =null;
-	  	Object tempObject = session.getAttribute("memberlistVO");//從session取得
-	  	String club_no = null;
-	  	if(tempObject!=null){//如果會員有登入
-	   		memberlistVO = (MemberlistVO)tempObject;
-	     	String new_club_no = request.getParameter("club_no");
-	    	if(new_club_no==null){//之前沒登入，之後有登入，使用session.getAttribute("tempClub_no");
-	      		new_club_no = (String)session.getAttribute("tempClub_no");
-	     	}
-	     	System.out.println("new_club_no="+new_club_no);//////////////////////////////////
-	     	request.getSession().setAttribute("club_no", new_club_no);
-	     	club_no = new_club_no;
-	  	}else{
-	     	String old_club_no = (String)request.getSession().getAttribute("club_no");
-	     	if(old_club_no!=null){
-	       		request.getSession().removeAttribute("club_no");
-	       		club_no = old_club_no;
-	     	}else{
-	       		club_no = request.getParameter("club_no");
-	     	}
-	  	}
-
+		String club_no = request.getParameter("club_no");
+		request.setAttribute("club_no", club_no);
 		ClubService clubSvc = new ClubService();
 		ClubVO clubVO = clubSvc.getOneClub(club_no);
 		request.setAttribute("clubVO", clubVO);

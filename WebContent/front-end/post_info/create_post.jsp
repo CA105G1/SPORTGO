@@ -8,6 +8,7 @@
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<% %>
 
 <html >
 	<head>
@@ -86,8 +87,8 @@
                						<script>
                         				CKEDITOR.replace( 'editor', {width: '700px' } );
                 					</script>
-									<input type="hidden" name="club_no" id="club_no" value="${post_infoVO.club_no}"/>
-									<input type="hidden" name="mem_no" id="mem_no" value="${post_infoVO.mem_no}"/>
+									<input type="hidden" name="club_no" id="club_no" value="${club_no}"/>
+									<input type="hidden" name="mem_no" id="mem_no" value="${mem_no}"/>
 									<!-- 時間可以不寫 -->
 									</label>
 								</div>
