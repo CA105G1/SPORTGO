@@ -38,7 +38,7 @@
         vertical-align: middle;
         text-align:center
     }
-    .showSP{
+    .showSP > th , .showSP > td{
     	background-color: #FFEE99;
     }    
 	</style>

@@ -193,6 +193,7 @@
 		readURL(this);
 		if(temp_My_pic=="#v_photo1_tab3"){
 			$('#hasChangePicture_tab3').val("true");
+			console.log($('#hasChangePicture_tab3').val());
 		}
 	});
 	
