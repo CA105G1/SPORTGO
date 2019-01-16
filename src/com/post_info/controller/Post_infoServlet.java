@@ -29,7 +29,7 @@ public class Post_infoServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	
 	public Post_infoServlet(){
-		super();
+		super(); 
 	}
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {

@@ -4,7 +4,7 @@
 <%@ page import="com.club_memberlist.model.*"%>
 <%@ page import="com.memberlist.model.*"%>
 <!DOCTYPE html>
-<html lang="">
+<html lang=""> 
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">

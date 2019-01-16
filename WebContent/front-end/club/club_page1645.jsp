@@ -7,7 +7,7 @@
 <%@ page import="com.respones.model.*"%>
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+ 
 <%
 //	依照社團編號去找對應的貼文
 // 	List<Post_infoVO> postvolist=(ArrayList)request.getAttribute("postvolist");
