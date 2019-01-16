@@ -55,7 +55,7 @@ public class ClubfrontServlet extends HttpServlet {
 		String actionfront = req.getParameter("actionfront");
 System.out.println(actionfront);
 		
-if ("getOneClub".equals(actionfront)) { //進入or加入社團
+if ("getOneClub".equals(actionfront)) { /////////////////////////////進入社團/////////////////////
 
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -66,14 +66,15 @@ System.out.println("requestURL : "+requestURL);/////////////////////////////////
 				String club_no = req.getParameter("club_no");
 				
 				/***************************2.開始查詢資料*****************************************/
-				ClubService clubSvc = new ClubService();
-				ClubVO clubVO = clubSvc.getOneClub(club_no);
-				
-				Post_infoService postinfo = new Post_infoService();
-				List<Post_infoVO> postvolist = postinfo.getAllfromclub(club_no);
+				req.getSession().setAttribute("club_no", club_no);
+//				ClubService clubSvc = new ClubService();
+//				ClubVO clubVO = clubSvc.getOneClub(club_no);
+//				
+//				Post_infoService postinfo = new Post_infoService();
+//				List<Post_infoVO> postvolist = postinfo.getAllfromclub(club_no);
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				
-				RequestDispatcher successView = req.getRequestDispatcher(CLUB_PAGE); 
+				RequestDispatcher successView = req.getRequestDispatcher("/front-end/club/club_intro_page.jsp"); 
 				successView.forward(req, res);
 
 				/***************************其他可能的錯誤處理*************************************/

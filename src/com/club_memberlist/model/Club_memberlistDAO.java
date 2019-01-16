@@ -35,6 +35,8 @@ public class Club_memberlistDAO  implements Club_memberlistDAO_interface{
 			"SELECT club_no,mem_no,cmem_status,cmem_class,silence_time FROM club_memberlist where club_no=? and mem_no=?";
 		private static final String UPDATE = 
 			"UPDATE club_memberlist set cmem_status=?, cmem_class=?, silence_time=?  where club_no=? and mem_no=?";
+		private static final String UPDATE_STATUS = 
+				"UPDATE club_memberlist set cmem_status=? where club_no=? and mem_no=?";
 		private static final String GET_BY_CLUB =
 				"SELECT * FROM club_memberList where club_no = ? ORDER BY cmem_class";
 		private static final String GET_BY_MEM =
@@ -622,6 +624,41 @@ public class Club_memberlistDAO  implements Club_memberlistDAO_interface{
 				}
 			}
 			return list;
+		}
+
+
+		@Override
+		public void updateStatus(String club_no, String mem_no, String cmem_status) {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			
+			try {
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(UPDATE_STATUS);
+				pstmt.setString(1, cmem_status);
+				pstmt.setString(2, club_no);
+				pstmt.setString(3, mem_no);
+				pstmt.executeUpdate();
+				
+			}catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				if(pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+				if(con != null) {
+					try {
+						con.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			
 		}
 
 

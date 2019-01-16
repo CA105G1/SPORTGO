@@ -169,6 +169,50 @@ if ("addintoclub".equals(action)) {
 	}
 }
 
+
+
+//審核社團加入申請
+if("isJoinClub".equals(action)) {
+	List<String> errorMsgs = new LinkedList<String>();
+	req.setAttribute("errorMsgs", errorMsgs);
+	
+	try {
+		/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+		
+		String result = req.getParameter("result");
+		String club_no = req.getParameter("club_no");
+		String mem_no = req.getParameter("mem_no");
+		String cmem_status = null;
+		
+		/***************************2.開始修改資料*****************************************/
+		Club_memberlistService club_memberlistSvc = new Club_memberlistService();
+		if("agree".equals(result)) {
+			cmem_status = "正式社員";
+			club_memberlistSvc.updateStatus(club_no, mem_no, cmem_status);
+		}else if("disagree".equals(result)) {
+			club_memberlistSvc.dropoutclub(club_no, mem_no);
+		}
+		
+		/***************************3.修改完成,準備轉交(Send the Success view)*************/
+		res.sendRedirect(req.getContextPath()+"/front-end/club_memberlist/reviewaddclub.jsp");
+		//使用重導，若使用forward會出現亂碼
+//		RequestDispatcher successView = req.getRequestDispatcher("/front-end/club_memberlist/reviewaddclub.jsp");   // 修改成功後,轉交回送出修改的來源網頁
+//		successView.forward(req, res);
+		
+		/***************************其他可能的錯誤處理*************************************/
+	}catch (Exception e) {
+		errorMsgs.add("修改資料失敗:"+e.getMessage());
+		RequestDispatcher failureView = req
+				.getRequestDispatcher("/front-end/club_memberlist/reviewaddclub.jsp");
+		failureView.forward(req, res);
+	}
+}
+
+
+
+
+
+
 //退出社團
 if ("dropoutclub".equals(action)) { 
 	

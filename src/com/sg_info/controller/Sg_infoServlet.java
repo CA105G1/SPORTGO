@@ -473,27 +473,35 @@ public class Sg_infoServlet extends HttpServlet {
 		
 		
 		if("shareSg_info".equals(action)) {
-			MemberlistRedisDAO dao = new MemberlistRedisDAO();
 			
 			String mem_no = req.getParameter("mem_no");
-System.out.println("mem_no="+mem_no);
-			String mem2_no = req.getParameter("mem2_no");
-System.out.println("mem2_no="+mem2_no);
-			String title = "<a href='https://tw.yahoo.com/'>xxxxxxx</a>";
+			String sg_no = req.getParameter("sg_no");
+			String[] mem2_noArr = req.getParameterValues("mem2_no");
 			
-			String value = "{"
-					+ "\"userName\":"+"\""+mem_no+"\""
-					+ ",\"type\":"+"\"chat\""
-					+ ",\"message\":"+"\""+title+"\""
-					+ ",\"to\":"+"\""+mem2_no+"\""
-					+ "}";
-			try {
-				dao.saveChatMessage(mem_no, mem2_no, value);
-			} catch (JSONException e) {
-				System.out.println("分享出錯了");
-				e.printStackTrace();
+			for(String mem2_no : mem2_noArr) {
+				MemberlistRedisDAO dao = new MemberlistRedisDAO();
+			
+						String title = "<div>推薦您加入這個揪團<div>"
+								+ "<a href='"+req.getContextPath()+"/Sg_info/Sg_info.do?sg_no="+sg_no+"&action=getByPK'>點我進入2</a>";
+						
+						String value = "{"
+								+ "\"userName\":"+"\""+mem_no+"\""
+								+ ",\"type\":"+"\"chat\""
+								+ ",\"message\":"+"\""+title+"\""
+								+ ",\"to\":"+"\""+mem2_no+"\""
+								+ "}";
+			
+						try {
+							dao.saveChatMessage(mem_no, mem2_no, value);
+						} catch (JSONException e) {
+							System.out.println("分享出錯了");
+							e.printStackTrace();
+						}
 			}
 			
+			RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/memberlist/Friend.do?action=find_My_Friend");
+			dispatcher.forward(req, res);
+						
 		}
 		
 		
