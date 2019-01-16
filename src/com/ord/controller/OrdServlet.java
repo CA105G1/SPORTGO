@@ -39,9 +39,9 @@ public class OrdServlet extends HttpServlet {
 	//-------------------------前端路徑---------------------//
 	private static final String PATH_FRONT_LIST_ALL_PRO = "/front-end/pro/listAllPro_front.jsp";
 	private static final String PATH_FRONT_LIST_ONE_PRO = "/front-end/pro/listOnePro_front.jsp";
-	private static final String PATH_SHOPPINGCART_FRONT = "/front-end/pro/ord_front.jsp";
+//	private static final String PATH_SHOPPINGCART_FRONT = "/front-end/pro/ord_front.jsp";
 	//------------------------模板路徑(訂單的address要換舊版時需開)----------------------//
-//	private static final String PATH_SHOPPINGCART_FRONT = "/front-end/pro/alazea-gh-pages/shoppingcart_front.jsp";
+	private static final String PATH_SHOPPINGCART_FRONT = "/front-end/pro/alazea-gh-pages/shoppingcart_front.jsp";
 	private static final String PATH_ORD_FRONT = "/front-end/pro/alazea-gh-pages/ord_front.jsp";
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
@@ -82,19 +82,19 @@ if ("insert".equals(action)) { //來自shoppingcart_front.jsp的請求
 				}
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理(收貨地址)*************************/
 				
-//				String receiver = req.getParameter("address_receiver");
-//				String phone = req.getParameter("address_phone");
-//				String country = req.getParameter("address_country");
-//				String city = req.getParameter("address_city");
-//				String detail = req.getParameter("address_detail");
-//				String zip = req.getParameter("address_zip");
+				String receiver = req.getParameter("address_receiver");
+				String phone = req.getParameter("address_phone");
+				String country = req.getParameter("address_country");
+				String city = req.getParameter("address_city");
+				String detail = req.getParameter("address_detail");
+				String zip = req.getParameter("address_zip");
 				
-				String receiver = req.getParameter("receiver");
-				String phone = req.getParameter("phone");
-				String country = req.getParameter("country");
-				String city = req.getParameter("city");
-				String detail = req.getParameter("detail");
-				String zip = req.getParameter("zip");
+//				String receiver = req.getParameter("receiver");
+//				String phone = req.getParameter("phone");
+//				String country = req.getParameter("country");
+//				String city = req.getParameter("city");
+//				String detail = req.getParameter("detail");
+//				String zip = req.getParameter("zip");
 				
 				if("".equals(receiver)||(receiver.trim()).length()==0) {
 					errorMsgs.add("收件人欄位必填");

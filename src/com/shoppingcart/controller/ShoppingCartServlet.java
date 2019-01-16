@@ -174,7 +174,8 @@ if("delete".equals(action)) {
 			}
 			ShoppingcartDAO cartDAO = new ShoppingcartDAO();
 			cartDAO.delete(mem_no, pro_no);
-			
+			cartDAO = null;
+			cartDAO = new ShoppingcartDAO();
 			ProductService proSvc = new ProductService();
 			List<ProductVO> proVOList = new ArrayList<>();
 			List<Integer> pro_countList = new ArrayList<>();

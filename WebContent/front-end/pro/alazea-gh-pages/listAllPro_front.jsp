@@ -36,6 +36,7 @@
     <!-- Core Stylesheet -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/style.css">
 
+
 </head>
 
 <body onload="connect();" onunload="disconnect();">
@@ -52,47 +53,100 @@
     <header class="header-area">
 
         <!-- ***** Top Header Area ***** -->
-        <div class="top-header-area">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="top-header-content d-flex align-items-center justify-content-between">
-                            <!-- Top Header Content -->
-                            <div class="top-header-meta">
-                                <a href="#" data-toggle="tooltip" data-placement="bottom" title="infodeercreative@gmail.com"><i class="fa fa-envelope-o" aria-hidden="true"></i> <span>Email: infodeercreative@gmail.com</span></a>
-                                <a href="#" data-toggle="tooltip" data-placement="bottom" title="+1 234 122 122"><i class="fa fa-phone" aria-hidden="true"></i> <span>Call Us: +1 234 122 122</span></a>
-                            </div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light navbar-dark bg-dark">
+<img style="height: 20px;"src="<%=request.getContextPath()%>/img/logo_SportyGo_2_light.png" alt="SportGo!"/>
+  <a class="navbar-brand" href="<%=request.getContextPath()%>/index.jsp">SportGo!</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-                            <!-- Top Header Content -->
-                            <div class="top-header-meta d-flex">
-                                <!-- Language Dropdown -->
-                                <div class="language-dropdown">
-                                    <div class="dropdown">
-                                        <button class="btn btn-secondary dropdown-toggle mr-30" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Language</button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="#">USA</a>
-                                            <a class="dropdown-item" href="#">UK</a>
-                                            <a class="dropdown-item" href="#">Bangla</a>
-                                            <a class="dropdown-item" href="#">Hindi</a>
-                                            <a class="dropdown-item" href="#">Spanish</a>
-                                            <a class="dropdown-item" href="#">Latin</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Login -->
-                                <div class="login">
-                                    <a href="#"><i class="fa fa-user" aria-hidden="true"></i> <span>Login</span></a>
-                                </div>
-                                <!-- Cart -->
-                                <div class="cart">
-                                    <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> <span>Cart <span class="cart-quantity">(1)</span></span></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item active">
+        <a class="nav-link" href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp">揪團去 <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="<%=request.getContextPath()%>/front-end/club/club_list.jsp">社團</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">Disabled</a>
+      </li>
+    </ul>
+    
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+         <ul class="navbar-nav ml-auto">
+             <li class="nav-item">
+                 <a class="nav-link scroll-link" href="#top-content"><span class="oi oi-cart">購物車</span></a>
+             </li>
+           		<c:if test="${memberlistVO==null}">
+					<li>
+						<a class="nav-link" href="#">訪客，您好</a>
+					</li>
+					<li>
+						<% System.out.println("log_in_location :　"+ request.getRequestURI());%>
+						<a href="<%=request.getContextPath()%>/front-end/memberlist/Login.jsp">登入/註冊</a>
+					</li>
+				</c:if>
+             	<c:if test="${!(memberlistVO==null)}">
+					<li class="nav-item">
+						<a class="nav-link" href="<%=request.getContextPath()%>/front-end/memberlist/public_Member_page.jsp">${memberlistVO.mem_name}，您好</a>
+					</li>
+					<li class="nav-item ">
+						<a class="nav-link" href="#" >通知</a>
+					</li>
+					<li class="nav-item">
+						<% System.out.println("log_out_location :　"+ request.getRequestURI());%>
+						<a class="nav-link" href="<%=request.getContextPath()%>/front-end/memberlist/logout.do">登出</a>
+					</li>
+				</c:if>
+             <li class="nav-item">
+                 <a class="nav-link"  href="<%=request.getContextPath()%>/backEndIndex.jsp">後台首頁</a>
+             </li>
+         </ul>
+     </div>
+  </div>
+</nav>
+<!--         <div class="top-header-area"> -->
+<!--             <div class="container"> -->
+<!--                 <div class="row"> -->
+<!--                     <div class="col-12"> -->
+<!--                         <div class="top-header-content d-flex align-items-center justify-content-between"> -->
+<!--                             Top Header Content -->
+<!--                             <div class="top-header-meta"> -->
+<!--                                 <a href="#" data-toggle="tooltip" data-placement="bottom" title="infodeercreative@gmail.com"><i class="fa fa-envelope-o" aria-hidden="true"></i> <span>Email: infodeercreative@gmail.com</span></a> -->
+<!--                                 <a href="#" data-toggle="tooltip" data-placement="bottom" title="+1 234 122 122"><i class="fa fa-phone" aria-hidden="true"></i> <span>Call Us: +1 234 122 122</span></a> -->
+<!--                             </div> -->
+
+<!--                             Top Header Content -->
+<!--                             <div class="top-header-meta d-flex"> -->
+<!--                                 Language Dropdown -->
+<!--                                 <div class="language-dropdown"> -->
+<!--                                     <div class="dropdown"> -->
+<!--                                         <button class="btn btn-secondary dropdown-toggle mr-30" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Language</button> -->
+<!--                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> -->
+<!--                                             <a class="dropdown-item" href="#">USA</a> -->
+<!--                                             <a class="dropdown-item" href="#">UK</a> -->
+<!--                                             <a class="dropdown-item" href="#">Bangla</a> -->
+<!--                                             <a class="dropdown-item" href="#">Hindi</a> -->
+<!--                                             <a class="dropdown-item" href="#">Spanish</a> -->
+<!--                                             <a class="dropdown-item" href="#">Latin</a> -->
+<!--                                         </div> -->
+<!--                                     </div> -->
+<!--                                 </div> -->
+<!--                                 Login -->
+<!--                                 <div class="login"> -->
+<!--                                     <a href="#"><i class="fa fa-user" aria-hidden="true"></i> <span>Login</span></a> -->
+<!--                                 </div> -->
+<!--                                 Cart -->
+<!--                                 <div class="cart"> -->
+<!--                                     <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> <span>Cart <span class="cart-quantity">(1)</span></span></a> -->
+<!--                                 </div> -->
+<!--                             </div> -->
+<!--                         </div> -->
+<!--                     </div> -->
+<!--                 </div> -->
+<!--             </div> -->
+<!--         </div> -->
 
         <!-- ***** Navbar Area ***** -->
         <div class="alazea-main-menu">
@@ -100,9 +154,11 @@
                 <div class="container">
                     <!-- Menu -->
                     <nav class="classy-navbar justify-content-between" id="alazeaNav">
-
+ 
                         <!-- Nav Brand -->
-                        <a href="index.html" class="nav-brand"><img src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/logo.png" alt=""></a>
+                        <a href="index.html" class="nav-brand">
+<%--                             <img style="height: 40px;"src="<%=request.getContextPath()%>/img/logo_SportyGo_2_light.png" alt=""> --%>
+                        </a>
 
                         <!-- Navbar Toggler -->
                         <div class="classy-navbar-toggler">
@@ -120,59 +176,57 @@
                             <!-- Navbar Start -->
                             <div class="classynav">
                                 <ul>
-                                    <li><a href="index.html">Home</a></li>
-                                    <li><a href="about.html">About</a></li>
-                                    <li><a href="#">Pages</a>
-                                        <ul class="dropdown">
-                                            <li><a href="index.html">Home</a></li>
-                                            <li><a href="about.html">About</a></li>
-                                            <li><a href="shop.html">Shop</a>
-                                                <ul class="dropdown">
-                                                    <li><a href="shop.html">Shop</a></li>
-                                                    <li><a href="shop-details.html">Shop Details</a></li>
-                                                    <li><a href="cart.html">Shopping Cart</a></li>
-                                                    <li><a href="checkout.html">Checkout</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="portfolio.html">Portfolio</a>
-                                                <ul class="dropdown">
-                                                    <li><a href="portfolio.html">Portfolio</a></li>
-                                                    <li><a href="single-portfolio.html">Portfolio Details</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="blog.html">Blog</a>
-                                                <ul class="dropdown">
-                                                    <li><a href="blog.html">Blog</a></li>
-                                                    <li><a href="single-post.html">Blog Details</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="contact.html">Contact</a></li>
-                                        </ul>
+                                    <li><a href="<%=request.getContextPath()%>/index.jsp">　首頁　</a></li>
+                                    <li><a href="#">關於我們</a>
+<!--                                         <ul class="dropdown"> -->
+<!--                                             <li><a href="index.html">動機</a></li> -->
+<!--                                             <li><a href="shop.html">Shop</a> -->
+<!--                                                 <ul class="dropdown"> -->
+<!--                                                     <li><a href="shop.html">Shop</a></li> -->
+<!--                                                     <li><a href="shop-details.html">Shop Details</a></li> -->
+<!--                                                     <li><a href="cart.html">Shopping Cart</a></li> -->
+<!--                                                     <li><a href="checkout.html">Checkout</a></li> -->
+<!--                                                 </ul> -->
+<!--                                             </li> -->
+<!--                                             <li><a href="portfolio.html">Portfolio</a> -->
+<!--                                                 <ul class="dropdown"> -->
+<!--                                                     <li><a href="portfolio.html">Portfolio</a></li> -->
+<!--                                                     <li><a href="single-portfolio.html">Portfolio Details</a></li> -->
+<!--                                                 </ul> -->
+<!--                                             </li> -->
+<!--                                             <li><a href="blog.html">Blog</a> -->
+<!--                                                 <ul class="dropdown"> -->
+<!--                                                     <li><a href="blog.html">Blog</a></li> -->
+<!--                                                     <li><a href="single-post.html">Blog Details</a></li> -->
+<!--                                                 </ul> -->
+<!--                                             </li> -->
+<!--                                             <li><a href="contact.html">Contact</a></li> -->
+<!--                                         </ul> -->
                                     </li>
-                                    <li><a href="shop.html">Shop</a></li>
-                                    <li><a href="portfolio.html">Portfolio</a></li>
-                                    <li><a href="contact.html">Contact</a></li>
+                                    <li><a href="<%=request.getContextPath()%>/front-end/memberlist/public_Member_page.jsp">　會員專區　</a></li>
+                                    <li><a href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp">　揪團　</a></li>
+                                    <li><a href="<%=request.getContextPath()%>/front-end/club/club_list.jsp">　社團　</a></li>
                                 </ul>
 
                                 <!-- Search Icon -->
-                                <div id="searchIcon">
-                                    <i class="fa fa-search" aria-hidden="true"></i>
-                                </div>
+<!--                                 <div id="searchIcon"> -->
+<!--                                     <i class="fa fa-search" aria-hidden="true"></i> -->
+<!--                                 </div> -->
 
                             </div>
                             <!-- Navbar End -->
                         </div>
                     </nav>
-
+ 
                     <!-- Search Form -->
-                    <div class="search-form">
-                        <form action="#" method="get">
-                            <input type="search" name="search" id="search" placeholder="Type keywords &amp; press enter...">
-                            <button type="submit" class="d-none"></button>
-                        </form>
-                        <!-- Close Icon -->
-                        <div class="closeIcon"><i class="fa fa-times" aria-hidden="true"></i></div>
-                    </div>
+<!--                     <div class="search-form"> -->
+<!--                         <form action="#" method="get"> -->
+<!--                             <input type="search" name="search" id="search" placeholder="Type keywords &amp; press enter..."> -->
+<!--                             <button type="submit" class="d-none"></button> -->
+<!--                         </form> -->
+<!--                         Close Icon -->
+<!--                         <div class="closeIcon"><i class="fa fa-times" aria-hidden="true"></i></div> -->
+<!--                     </div> -->
                 </div>
             </div>
         </div>
@@ -192,10 +246,9 @@
                         <div class="col-12">
                             <!-- Post Content -->
                             <div class="hero-slides-content text-center">
-                                <h2>線上視訊問診已成為主流，歡迎預約體驗，讓你有不同的診療感受!</p>
+                                <h2>如果運動可以讓你更美更健康，你還會拒絕嗎？</p>
                                 <div class="welcome-btn-group">
-                                    <a href="#" class="btn alazea-btn mr-30">馬上體驗</a>
-                                    <a href="#" class="btn alazea-btn active">聯繫我們</a>
+                                    <a href="<%=request.getContextPath()%>/index.jsp" class="btn alazea-btn mr-30">馬上體驗</a>
                                 </div>
                             </div>
                         </div>
@@ -212,10 +265,9 @@
                         <div class="col-12">
                             <!-- Post Content -->
                             <div class="hero-slides-content text-center">
-                                <h2>不需要排隊等候，不需要人擠人，動一動手指，即可與醫生線上視訊問診，馬上來體驗!</p>
+                                <h2>現在就加入運動的行列吧!</p>
                                 <div class="welcome-btn-group">
-                                    <a href="#" class="btn alazea-btn mr-30">立即開始體驗!</a>
-                                    <a href="#" class="btn alazea-btn active">聯繫我們</a>
+                                    <a href="<%=request.getContextPath()%>/index.jsp" class="btn alazea-btn mr-30">立即開始體驗!</a>
                                 </div>
                             </div>
                         </div>

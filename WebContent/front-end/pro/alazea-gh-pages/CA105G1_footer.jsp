@@ -34,14 +34,13 @@
         </button>
         <div class="collapse navbar-collapse d-flex justify-content-center" id="navbarsExampleDefault">
             <ul class="navbar-nav ">
-              <li class="nav-item "><a class="nav-link" href="/">首頁</a></li>
+              <li class="nav-item "><a class="nav-link" href="<%=request.getContextPath()%>/index.jsp">首頁</a></li>
               <li class="nav-item "><a class="nav-link" href="/">關於我們</a></li>
-              <li class="nav-item "><a class="nav-link" href="/">會員專區</a></li>
-              <li class="nav-item "><a class="nav-link" href="/">揪團</a></li>
-              <li class="nav-item "><a class="nav-link" href="/">社團</a></li>
-              <li class="nav-item "><a class="nav-link" href="/">賽事</a></li>
-              <li class="nav-item "><a class="nav-link" href="/">場地</a></li>
-              <li class="nav-item "><a class="nav-link" href="/">網站地圖</a></li>
+              <li class="nav-item "><a class="nav-link" href="<%=request.getContextPath()%>/front-end/memberlist/public_Member_page.jsp">會員專區</a></li>
+              <li class="nav-item "><a class="nav-link" href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp">揪團</a></li>
+              <li class="nav-item "><a class="nav-link" href="<%=request.getContextPath()%>/front-end/club/club_list.jsp">社團</a></li>
+              <li class="nav-item "><a class="nav-link" href="<%=request.getContextPath()%>/front-end/pro/listAllPro_front.jsp">商城</a></li>
+              <li class="nav-item "><a class="nav-link" href="<%=request.getContextPath()%>/front-end/venue/venue_query_info_by_composite_front.jsp">場地</a></li>
             </ul>
         </div>
     </nav>

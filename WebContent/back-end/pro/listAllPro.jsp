@@ -341,9 +341,11 @@
 					</div>
 <!--------------------------------------------訂單管理-->
 					        </div>
-					        <div role="tabpanel" class="tab-pane" id="tab2">
-					        	<jsp:include page="/back-end/pro/ord_back.jsp"/>
-					        </div>
+					        <a href="<%=request.getContextPath()%>/back-end/pro/ord_back.jsp">
+						        <div role="tabpanel" class="tab-pane" id="tab2" onclick="location.href='ord_back.jsp'">
+	<%-- 					        	<jsp:include page="/back-end/pro/ord_back.jsp"/> --%>
+						        </div>
+                            </a>
 					        <div role="tabpanel" class="tab-pane" id="tab3">
 					        	<h1>標題三內容</h1>
 					        </div>

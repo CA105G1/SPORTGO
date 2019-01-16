@@ -26,11 +26,11 @@ public class ProServlet extends HttpServlet {
 	private static final String PATH_LIST_ALL_PRO = "/back-end/pro/listAllPro.jsp";
 	private static final String PATH_ADDPRO = "/back-end/pro/addPro.jsp";
 	//-------------------------前端路徑---------------------//
-	private static final String PATH_FRONT_LIST_ALL_PRO = "/front-end/pro/listAllPro_front.jsp";
-	private static final String PATH_FRONT_LIST_ONE_PRO = "/front-end/pro/listOnePro_front.jsp";
+//	private static final String PATH_FRONT_LIST_ALL_PRO = "/front-end/pro/listAllPro_front.jsp";
+//	private static final String PATH_FRONT_LIST_ONE_PRO = "/front-end/pro/listOnePro_front.jsp";
 	//-------------------------模板路徑---------------------//
-//	private static final String PATH_FRONT_LIST_ALL_PRO = "/front-end/pro/alazea-gh-pages/listAllPro_front.jsp";
-//	private static final String PATH_FRONT_LIST_ONE_PRO = "/front-end/pro/alazea-gh-pages/listOnePro_front.jsp";
+	private static final String PATH_FRONT_LIST_ALL_PRO = "/front-end/pro/alazea-gh-pages/listAllPro_front.jsp";
+	private static final String PATH_FRONT_LIST_ONE_PRO = "/front-end/pro/alazea-gh-pages/listOnePro_front.jsp";
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
