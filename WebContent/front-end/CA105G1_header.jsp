@@ -68,15 +68,17 @@
 								<a href="#">訪客，您好</a>
 							</li>
 							<li>
-								<%  String tempClub_no = request.getParameter("club_no");
+								<%  
+									//String tempClub_no = request.getParameter("club_no");
 									session = request.getSession();
 									if(!"/CA105G1/front-end/memberlist/Login.jsp".equals(request.getRequestURI())){
 										session.setAttribute("location",request.getRequestURI());
-										session.setAttribute("tempClub_no", tempClub_no);
+										//session.setAttribute("tempClub_no", tempClub_no);
 									}
 									System.out.println("log_in_location :　"+ request.getRequestURI());
 								%>
-								<a href="<%=request.getContextPath()%>/front-end/memberlist/Login.jsp?club_no=${tempClub_no}">登入/註冊</a>
+								<a href="<%=request.getContextPath()%>/front-end/memberlist/Login.jsp">登入/註冊</a>
+<%-- 								<a href="<%=request.getContextPath()%>/front-end/memberlist/Login.jsp?club_no=${tempClub_no}">登入/註冊</a> --%>
 							</li>
 						</c:if>
 						<c:if test="${!(memberlistVO==null)}">
@@ -88,7 +90,7 @@
 									if(!"/CA105G1/front-end/memberlist/Login.jsp".equals(request.getRequestURI())){
 										session.setAttribute("location",request.getRequestURI()); 
 									}
-									session.removeAttribute("tempClub_no"); // 登入移除 club_no
+// 									session.removeAttribute("tempClub_no"); // 登入移除 club_no
 									System.out.println("log_out_location :　"+ request.getRequestURI());
 								%>
 								<a href="<%=request.getContextPath()%>/front-end/memberlist/logout.do">登出</a>
