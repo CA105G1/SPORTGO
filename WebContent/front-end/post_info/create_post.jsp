@@ -82,7 +82,7 @@
 				    			<div class="form-group">
 									<label class="post_topic">
 										貼文主題
-										<input type="text" name="post_topic" id="post_topic" class="form-control"  size="50">
+										<input type="text" name="post_topic" id="post_topic" class="form-control"  size="50" value="${post_topic}">
 									</label>
 									<br>
 									<br>
@@ -90,7 +90,7 @@
 										貼文內容
 									<br>
 									<!--貼文內容輸入框-->
-									<textarea name="editor" id="post_content"  class="form-control" ></textarea>
+									<textarea name="editor" id="post_content"  class="form-control" value="${editor}"></textarea>
                						<script>
                         				CKEDITOR.replace( 'editor', {width: '700px' } );
                 					</script>

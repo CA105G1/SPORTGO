@@ -105,7 +105,7 @@ if ("update".equals(action)) {
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("post_infoVO", post_infoVO); 
 					RequestDispatcher failureView = req
-							.getRequestDispatcher(CREATEPOST);
+							.getRequestDispatcher(CLUBPAGE);
 					failureView.forward(req, res);
 					return; //程式中斷
 				}
@@ -116,7 +116,7 @@ if ("update".equals(action)) {
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 
 				req.setAttribute("Post_infoVO", post_infoVO);
-				String url = requestURL;
+				String url = CLUBPAGE;
 				RequestDispatcher successView = req.getRequestDispatcher(url);   // 修改成功後,轉交回送出修改的來源網頁
 				successView.forward(req, res);
 
@@ -124,7 +124,7 @@ if ("update".equals(action)) {
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher(CREATEPOST);
+						.getRequestDispatcher(CLUBPAGE);
 				failureView.forward(req, res);
 			}
 		}
@@ -139,32 +139,21 @@ if ("insert".equals(action)) {
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 				String club_no = req.getParameter("club_no");
 				
-				System.out.println(club_no);////////////////////////////////////
-				System.out.println("哈囉我在這");////////////////////////////////////
-				
 				String mem_no = req.getParameter("mem_no");
-				System.out.println(mem_no);////////////////////////////////////
-				System.out.println("哈囉我在這2");////////////////////////////////////
 				String post_topic = req.getParameter("post_topic").trim();
 				if (post_topic == null || post_topic.trim().length() == 0) {
 					errorMsgs.add("貼文主題請勿空白");
 				}	
-				System.out.println(post_topic);////////////////////////////////////
-				System.out.println("哈囉我在這3");////////////////////////////////////
 				String post_content = req.getParameter("editor").trim();
 				if (post_content == null || post_content.trim().length() == 0) {
 					errorMsgs.add("貼文內容請勿空白");
 				}	
-				System.out.println(post_content);////////////////////////////////////
-				System.out.println("哈囉我在這4");////////////////////////////////////
 				Timestamp post_date = new Timestamp(System.currentTimeMillis());
-				System.out.println(post_date);////////////////////////////////////
-				System.out.println("哈囉我在這5");////////////////////////////////////
 			
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher(CLUBPAGE+"?"+club_no);
+							.getRequestDispatcher(CREATEPOST+"?"+club_no);
 					failureView.forward(req, res);
 					return;
 				}
@@ -181,7 +170,6 @@ if ("insert".equals(action)) {
 				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				System.out.println("哈囉我在這7");////////////////////////////////////
 				RequestDispatcher failureView = req
 						.getRequestDispatcher(CREATEPOST);
 				failureView.forward(req, res);

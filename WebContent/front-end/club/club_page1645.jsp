@@ -97,14 +97,13 @@
 					</div>
 					<div class="card text-center" id="post">
 							<br>
-		<!-- 新增的FORM --><FORM METHOD="post" ACTION="<%=request.getContextPath()%>/respones.do" name="form">  
   							<div class="card-body">
-  								<div class="update_${responesVO.mem_no}" >編輯</div><!-- 17:05 -->
 								<c:forEach var="postinfoVO" items="${postvolist}">
     								<h3 class="card-title"  class="list-group-item">主題：${postinfoVO.post_topic}</h3>
     								<p class="card-text">${postinfoVO.post_content}</p>    								
     								
 <!-------------------------------------------- 留言版 --------------------------------------------------->
+		<!-- 新增的FORM --><FORM METHOD="post" ACTION="<%=request.getContextPath()%>/respones.do" name="form">  
   							<div class="card-footer text-muted">
 									<div class="card" id="respones">
 							  			<div class="card-body">
@@ -168,7 +167,6 @@
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script>
-		console.log("delete_${mem_no}");
 		$(function() {
 			$(".delete_${mem_no}").css("display","inline");
 			$(".responesShow").click(function() {
