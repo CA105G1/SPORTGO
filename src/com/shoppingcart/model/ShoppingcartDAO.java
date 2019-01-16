@@ -14,27 +14,27 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 public class ShoppingcartDAO implements Shoppingcart_interface{
-	private static final String HOST = "localhost";
-	private static final Integer PORT = 6379;
-	private static final String AUTH = "123456";
-	public ShoppingcartDAO() {
-		super();
-	}
+//	private static final String HOST = "localhost";
+//	private static final Integer PORT = 6379;
+//	private static final String AUTH = "123456";
+//	public ShoppingcartDAO() {
+//		super();
+//	}
 	/**連線池版本**/
-//	private static JedisPool pool = null;
-//	 private static final String AUTH = "123456";
-//	 private static Jedis jedis;
-//	 public ShoppingcartDAO() {
-//	  super();
-//	  pool = JedisUtil.getJedisPool();
-//	  jedis = pool.getResource();
-//	  jedis.auth(AUTH);
-//	 }
+	private  JedisPool pool = null;
+	 private static final String AUTH = "123456";
+	 private  Jedis jedis;
+	 public ShoppingcartDAO() {
+	  super();
+	  pool = JedisUtil.getJedisPool();
+	  jedis = pool.getResource();
+	  jedis.auth(AUTH);
+	 }
 	@Override
 	public void insert(ShoppingcartVO cartVO) {
 		
-		Jedis jedis = new Jedis(HOST, PORT);
-		jedis.auth(AUTH);
+//		Jedis jedis = new Jedis(HOST, PORT);
+//		jedis.auth(AUTH);
 		
 //			String job = new JSONObject(cartVO).toString();
 //			jedis.set(cartVO.getMem_no(), job);
@@ -52,39 +52,53 @@ public class ShoppingcartDAO implements Shoppingcart_interface{
 
 	@Override
 	public Map<String , String> getAll(String mem_no) {
-		Jedis jedis = new Jedis(HOST, PORT);
-		jedis.auth(AUTH);
-		List<ProductVO> proVOList = new ArrayList<>();
-		List<Integer> pro_countList = new ArrayList<>();
-		ProductService proSvc = new ProductService();
-		ProductJDBCDAO proDAO = new ProductJDBCDAO();//test
+//		Jedis jedis = new Jedis(HOST, PORT);
+//		jedis.auth(AUTH);
+//		List<ProductVO> proVOList = new ArrayList<>();
+//		List<Integer> pro_countList = new ArrayList<>();
+//		ProductService proSvc = new ProductService();
+//		ProductJDBCDAO proDAO = new ProductJDBCDAO();//test
 		
 		
-		Map<String , String> hAll = jedis.hgetAll(mem_no);
+		Map<String , String> hAll = null;
+		hAll = jedis.hgetAll(mem_no);
+		if (!hAll.isEmpty()) {
+			
+			
+		}
 //		for (String pro_no : hAll.keySet()) {
 //			proVOList.add(proSvc.getOneProduct(pro_no));
 //			pro_countList.add(Integer.parseInt(hAll.get(pro_no)));
 //		}
 //		jedis.hdel("M001", "P001");
-		
-		 return hAll;
+		System.out.println("redis有東西");
+		jedis.close();
+		return hAll;
 	}
 	
 	@Override
 	public void delete(String mem_no, String pro_no) {
-		Jedis jedis = new Jedis(HOST, PORT);
-		jedis.auth(AUTH);
+//		Jedis jedis = new Jedis(HOST, PORT);
+//		jedis.auth(AUTH);
 		jedis.hdel(mem_no, pro_no);
-		
+		jedis.close();
+	}
+	
+	@Override
+	public void deleteAll(String mem_no, String[] pro_no) {
+		jedis.hdel(mem_no, pro_no);
+
+		jedis.close();
 	}
 	
 	@Override
 	public Integer findByCount(String mem_no, String pro_no) {
-		Jedis jedis = new Jedis(HOST, PORT);
-		jedis.auth(AUTH);
+//		Jedis jedis = new Jedis(HOST, PORT);
+//		jedis.auth(AUTH);
 		Integer count = 0;
 		
 		count = Integer.parseInt(jedis.hget(mem_no, pro_no));
+		jedis.close();
 		return count;
 	}
 	
@@ -138,6 +152,7 @@ public class ShoppingcartDAO implements Shoppingcart_interface{
 //		String pro_no = "P006";
 //		cartDAO.findByCount(mem_no, pro_no);
 	}
+
 	
 	
 }
