@@ -68,7 +68,7 @@
     
 </head>
 
-<body>
+<body onload="connect();" onunload="disconnect();">
     <!-- Preloader -->
     <div class="preloader d-flex align-items-center justify-content-center">
         <div class="preloader-circle"></div>
@@ -282,7 +282,7 @@
                                     <td class="price"><span>$</span>${proVO.pro_bonus}</td>
                                     <td class="total_price">$<span id="${proVO.pro_no}" class="sumTheNumber">${hAll[proVO.pro_no] * proVO.pro_bonus}</span></td>
 <%--                                     <td><i class="icon_close"></i><input type="hidden" value="${proVO.pro_no}"></div></td> --%>
-                                    <td><button type="button" class="btn btn-outline-danger" value="${proVO.pro_no}"  >刪除</button></td>
+                                    <td><button type="button" class="btn btn-outline-danger deletedata" value="${proVO.pro_no}"  >刪除</button></td>
                                 </tr>
                                 </c:forEach>
                             </tbody>
@@ -381,7 +381,7 @@
                         </div>
                         
                             <a id="testnum" onclick="document.getElementById('form-id').submit();" class="btn alazea-btn w-100"></a>
-                        
+                            <a id="testnum2" class="btn alazea-btn w-100"></a>
 
                             
                     </div>
@@ -394,138 +394,7 @@
     <!-- ##### Cart Area End ##### -->
 
     <!-- ##### Footer Area Start ##### -->
-    <footer class="footer-area bg-img" style="background-image: url(<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/bg-img/3.jpg);">
-        <!-- Main Footer Area -->
-        <div class="main-footer-area">
-            <div class="container">
-                <div class="row">
-
-                    <!-- Single Footer Widget -->
-                    <div class="col-12 col-sm-6 col-lg-3">
-                        <div class="single-footer-widget">
-                            <div class="footer-logo mb-30">
-                                <a href="#"><img src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/logo.png" alt=""></a>
-                            </div>
-                            <p>Lorem ipsum dolor sit samet, consectetur adipiscing elit. India situs atione mantor</p>
-                            <div class="social-info">
-                                <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Single Footer Widget -->
-                    <div class="col-12 col-sm-6 col-lg-3">
-                        <div class="single-footer-widget">
-                            <div class="widget-title">
-                                <h5>QUICK LINK</h5>
-                            </div>
-                            <nav class="widget-nav">
-                                <ul>
-                                    <li><a href="#">Purchase</a></li>
-                                    <li><a href="#">FAQs</a></li>
-                                    <li><a href="#">Payment</a></li>
-                                    <li><a href="#">News</a></li>
-                                    <li><a href="#">Return</a></li>
-                                    <li><a href="#">Advertise</a></li>
-                                    <li><a href="#">Shipping</a></li>
-                                    <li><a href="#">Career</a></li>
-                                    <li><a href="#">Orders</a></li>
-                                    <li><a href="#">Policities</a></li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-
-                    <!-- Single Footer Widget -->
-                    <div class="col-12 col-sm-6 col-lg-3">
-                        <div class="single-footer-widget">
-                            <div class="widget-title">
-                                <h5>BEST SELLER</h5>
-                            </div>
-
-                            <!-- Single Best Seller Products -->
-                            <div class="single-best-seller-product d-flex align-items-center">
-                                <div class="product-thumbnail">
-                                    <a href="shop-details.html"><img src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/bg-img/4.jpg" alt=""></a>
-                                </div>
-                                <div class="product-info">
-                                    <a href="shop-details.html">Cactus Flower</a>
-                                    <p>$10.99</p>
-                                </div>
-                            </div>
-
-                            <!-- Single Best Seller Products -->
-                            <div class="single-best-seller-product d-flex align-items-center">
-                                <div class="product-thumbnail">
-                                    <a href="shop-details.html"><img src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/bg-img/5.jpg" alt=""></a>
-                                </div>
-                                <div class="product-info">
-                                    <a href="shop-details.html">Tulip Flower</a>
-                                    <p>$11.99</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Single Footer Widget -->
-                    <div class="col-12 col-sm-6 col-lg-3">
-                        <div class="single-footer-widget">
-                            <div class="widget-title">
-                                <h5>CONTACT</h5>
-                            </div>
-
-                            <div class="contact-information">
-                                <p><span>Address:</span> 505 Silk Rd, New York</p>
-                                <p><span>Phone:</span> +1 234 122 122</p>
-                                <p><span>Email:</span> info.deercreative@gmail.com</p>
-                                <p><span>Open hours:</span> Mon - Sun: 8 AM to 9 PM</p>
-                                <p><span>Happy hours:</span> Sat: 2 PM to 4 PM</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Footer Bottom Area -->
-        <div class="footer-bottom-area">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="border-line"></div>
-                    </div>
-                    <!-- Copywrite Text -->
-                    <div class="col-12 col-md-6">
-                        <div class="copywrite-text">
-                            <p>&copy; <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-</p>
-                        </div>
-                    </div>
-                    <!-- Footer Nav -->
-                    <div class="col-12 col-md-6">
-                        <div class="footer-nav">
-                            <nav>
-                                <ul>
-                                    <li><a href="#">Home</a></li>
-                                    <li><a href="#">About</a></li>
-                                    <li><a href="#">Service</a></li>
-                                    <li><a href="#">Portfolio</a></li>
-                                    <li><a href="#">Blog</a></li>
-                                    <li><a href="#">Contact</a></li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
+<jsp:include page="/front-end/pro/alazea-gh-pages/CA105G1_footer.jsp"/>
     <!-- ##### Footer Area End ##### -->
 
     <!-- ##### All Javascript Files ##### -->
@@ -540,12 +409,88 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <!-- Active js -->
     <script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/active.js"></script>
     
-    <!-- 信用卡 -->
+<!-- sweetalert-link -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />    
+<!-- websock -->
+<script src="<%=request.getContextPath() %>/back-end/pro/tool/websock_client.js"></script>    
+<!-- 信用卡風格 -->
 <link href="<%=request.getContextPath() %>/front-end/pro/card/card-js.min.css" rel="stylesheet" type="text/css" />
 <script src="<%=request.getContextPath() %>/front-end/pro/card/card-js.min.js"></script>
-
+<!-- 信用卡日期驗證 -->
+<script src="<%=request.getContextPath() %>/front-end/pro/card/creditcard.js"></script>
 			<script type="text/javascript">
 				$(document).ready(function(){
+					<!--信用卡日期驗證-->
+					var cardtrue = false;
+					$(".expiry").keyup(function(){
+						var number = $(".expiry").val();
+						console.log("number"+number)
+						if(0< number.substr(0, 2) && number.substr(0, 2)<=12 && number.substr(3,1 )==="/" && number.substr(4,5) >= 19 && number.length === 7){
+							//"19"年到期的 完全正確
+							$('#testnum2').hide();
+							$('#testnum').show();
+							cardtrue = true;
+						}else if (number.length === 0){
+							//沒輸入時為正常按鈕
+							$(".expiry").css("border-color","#d8d8d8");//輸入框的css
+							$('#testnum2').css("background-color","#dc3545");
+							$('#testnum2').css("border","#dc3545");
+							$('#testnum2').css("color","#ffffff");
+							$('#testnum2').css("pointer-events","none");
+							$('#testnum2').html("信用卡日期未填寫");
+							$('#testnum2').show();
+							$('#testnum').hide();
+						}else{
+							//驗證錯誤時
+							$('#testnum2').show();
+							$('#testnum').hide();
+							$('#testnum2').css("background-color","#dc3545");
+							$('#testnum2').css("border","#dc3545");
+							$('#testnum2').css("color","#ffffff");
+							$('#testnum2').css("pointer-events","none");
+							$('#testnum2').html("信用卡日期錯誤");
+						}
+					});
+					<!--信用卡卡號驗證-->
+	                $('#testnum2').hide();
+		            $(".card-number").keyup(function(){
+		                var number = $(".card-number").val();
+		                var arr = number.split(" ");//將取得的數字去掉所有空白回傳字串array
+		                var num = arr.join("");//將array組起來
+		                if(num.length == 16){
+		                    var name = detectCardType(num);
+		                    if(name === false){
+		                        //卡號錯誤
+			                    $('#testnum2').css("background-color","#dc3545");
+			                    $('#testnum2').css("border","#dc3545");
+			                    $('#testnum2').css("color","#ffffff");
+			                    $('#testnum2').html("信用卡號錯誤");
+			                    $('#testnum2').css("pointer-events","none");
+		                    }else{
+		                    	//卡號正確
+		                    	console.log(cardtrue);
+		                    	if(cardtrue === true){
+			                        $('#testnum2').hide();
+			                        $('#testnum').show();
+		                    	}
+		                    }
+		                } else {
+		                    //卡號長度不正確
+		                    if(num.length >= 1){
+		                    	$('#testnum').hide();
+			                    $('#testnum2').show();
+			                    $('#testnum2').css("background-color","#dc3545");
+			                    $('#testnum2').css("border","#dc3545");
+			                    $('#testnum2').css("color","#ffffff");
+			                    $('#testnum2').html("信用卡號長度不正確");
+			                    $('#testnum2').css("pointer-events","none");
+		                    }else{
+		                    $('#testnum2').hide();
+		                    $('#testnum').show();
+		                    }
+		                }
+		            });
 					//用遍歷計算總價
 					$('#testnum').html('Pay $');
 					getTotals();
@@ -646,7 +591,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 					//-------------------------------------------------------------------------
 					$('.deletedata').each( function() {
 						$(this).click( function() {
-							var val = $(this).next().val();
+							var val = $(this).val();
 							$.ajax({
 								 type: "POST",
 								 url: "<%= request.getContextPath()%>/shoppingCartServlet/shoppingCartServlet.do",
@@ -677,9 +622,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 					var total = 0;
 					$(".sumTheNumber").each(function(e){
 						total += parseInt($(this).text());
-						console.log(parseInt($(this).text()));
 						$('#testnum').html('Pay $'+total);
 						$('#testnumtwo').html('$'+total);
+						cardtotal = total;
 					});
 				}
 				

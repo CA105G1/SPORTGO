@@ -32,9 +32,9 @@ import redis.clients.jedis.Jedis;
 public class ShoppingCartServlet extends HttpServlet{
 	//-----------------------------舊版路徑
 	private static final String PATH_LISTONEPRO_FRONT = "/front-end/pro/listOnePro_front.jsp";
-	private static final String PATH_SHOPPINGCART = "/front-end/pro/shoppingcart_front.jsp";
+//	private static final String PATH_SHOPPINGCART = "/front-end/pro/shoppingcart_front.jsp";
 	//-----------------------------模板路徑
-//	private static final String PATH_SHOPPINGCART = "/front-end/pro/alazea-gh-pages/shoppingcart_front.jsp";
+	private static final String PATH_SHOPPINGCART = "/front-end/pro/alazea-gh-pages/shoppingcart_front.jsp";
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
@@ -178,7 +178,9 @@ if("delete".equals(action)) {
 			ProductService proSvc = new ProductService();
 			List<ProductVO> proVOList = new ArrayList<>();
 			List<Integer> pro_countList = new ArrayList<>();
+			System.out.println("進去中");
 			Map<String , String> hAll =  cartDAO.getAll(mem_no);
+			System.out.println("失敗");
 			for(String pro_no1 : hAll.keySet()) {
 				proVOList.add(proSvc.getOneProduct(pro_no1));
 			}

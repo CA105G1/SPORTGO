@@ -89,18 +89,18 @@
         });
     }
 
-    // :: 6.0 magnificPopup Active Code
-    if ($.fn.magnificPopup) {
-        $('.portfolio-img, .product-img').magnificPopup({
-            gallery: {
-                enabled: true
-            },
-            type: 'image'
-        });
-        $('.video-icon').magnificPopup({
-            type: 'iframe'
-        });
-    }
+    // :: 6.0 magnificPopup Active Code 按壓商品圖片時會註冊websock的服務彈跳視窗...
+//    if ($.fn.magnificPopup) {
+//        $('.portfolio-img, .product-img').magnificPopup({
+//            gallery: {
+//                enabled: true
+//            },
+//            type: 'image'
+//        });
+//        $('.video-icon').magnificPopup({
+//            type: 'iframe'
+//        });
+//    }
 
     // :: 7.0 Barfiller Active Code
     if ($.fn.barfiller) {

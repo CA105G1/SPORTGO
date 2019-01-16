@@ -14,5 +14,7 @@ public interface Shoppingcart_interface {
 	public abstract void delete (String mem_no,String pro_no) ;
 	//查詢單筆返回數量
 	public abstract Integer findByCount (String mem_no , String pro_no);
+	//刪除全部
+	public abstract void deleteAll (String mem_no , String[] pro_no);
 
 }
