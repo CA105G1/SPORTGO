@@ -23,12 +23,17 @@ public class VenueDeleteServlet extends HttpServlet {
 		String action = request.getParameter("action");
 		switch (action) {
 		case "delete":
-			
+			doActionDelete();
 			break;
 
 		default:
 			break;
 		}
+	}
+	
+	
+	private void doActionDelete() {
+		
 	}
 
 }
