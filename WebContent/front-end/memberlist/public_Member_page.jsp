@@ -220,6 +220,8 @@
 	<script>
 	var status = "${status}";
 	var mem_no = "${mem_no}";
+	var update_successful="${update_successful}";
+	var doupdate = "${update_do}";
 	console.log(mem_no);
 	$(function(){
 		console.log(status);
@@ -229,6 +231,8 @@
 			swal("加入失敗！", "可憐小蟲蟲", "error");
 		}else if('duplicate'===status){
 			swal("已經是好友了！", "就算很愛他也不可以這樣喔", "warning");
+		}else if('do'===doupdate){
+			swal("更新資料",update_successful,"success");
 		}
 		
 	})

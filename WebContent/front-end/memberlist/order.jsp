@@ -116,7 +116,7 @@
                             <div class="col-xs-2 col-sm-2">
                                 <img class="img-circle"
                                      src="<%=request.getContextPath()%>/pro/proImg.do?pro_no=${detail.pro_no}"
-                                     alt="User Pic">
+                                     alt="User Pic" style="max-width:80px;max-height:80px;border-redius:10px;">
                             </div>
 <!--                             比較小的的跳行 -->
                             <div class="col-xs-10 col-sm-10">

@@ -84,16 +84,27 @@ public class MemManagerServlet extends HttpServlet {
 			String emgcphone = req.getParameter("emgcphone");
 			/****修改會員密碼****/
 			String password = req.getParameter("password");
+			StringBuilder update_successful = new StringBuilder();
+			req.setAttribute("update_successful",update_successful);
 			/********選填欄位***********/
 			/******接受請求參數,錯誤驗證*******/
 			if("".equals(password)||(password.trim()).length()==0) {
 				errorMsgs.put("password", "密碼欄位必填");
+			}else if(password.length()>12) {
+				errorMsgs.put("password", "密碼不得超過12位");
 			}
 			if("".equals(email)||(email.trim()).length()==0) {
 				errorMsgs.put("email", "電子郵件欄位必填");
+			}else if(!email.matches("^[_a-z0-9-]+([.][_a-z0-9-]+)*@[a-z0-9-]+([.][a-z0-9-]+)*$")) {
+				errorMsgs.put("email", "電子郵件欄位有誤");
+			}else if(email.length()>60) {
+				errorMsgs.put("email", "電子郵件欄位過長");
 			}
 			if("".equals(phone)||(phone.trim()).length()==0) {
 				errorMsgs.put("phone","電話欄位必填");
+			}
+			if(!phone.matches("^[0][0-9]{9}")) {
+				errorMsgs.put("phone","電話欄位格式有誤,必須為開頭是0的10個數字");
 			}
 			if("".equals(name)||(name.trim()).length()==0) {
 				errorMsgs.put("name", "姓名欄位必填");
@@ -117,6 +128,7 @@ public class MemManagerServlet extends HttpServlet {
 					service.renewPicture(mem_no, file, part.getContentType());
 					System.out.println("picture renew successful");
 					req.setAttribute("picture", file);
+					update_successful.append("更新相片成功");
 				} catch (RuntimeException re) {
 					errorMsgs.put("picture", "輸入的照片有誤");
 					re.printStackTrace();
@@ -133,6 +145,7 @@ public class MemManagerServlet extends HttpServlet {
 				req.setAttribute("mem_emgc", emgc);
 				req.setAttribute("mem_emgcphone", emgcphone);
 				req.setAttribute("action", "Member_renew");
+				req.setAttribute("update_do", "do");
 				RequestDispatcher error = req.getRequestDispatcher("Member_renew.jsp");
 				error.forward(req, res);
 			}
@@ -141,6 +154,7 @@ public class MemManagerServlet extends HttpServlet {
 				if (!("".equals(nick) && "".equals(emgc) && "".equals(emgcphone)
 						&&"".equals(mem_no)&&"".equals(phone)&&"".equals(name))) {
 					memberlistVO = service.renewPrivacy(mem_no, name, nick, email, phone, emgc, emgcphone);
+					update_successful.append(",更新會員資料成功");
 					System.out.println("會員資料更新成功");
 				}
 				if(!("".equals(password)&&"".equals(mem_no))) {
@@ -155,6 +169,7 @@ public class MemManagerServlet extends HttpServlet {
 			if(errorMsgs.isEmpty()) {
 				memberlistVO = service.getOneMem(mem_no);
 				session.setAttribute("memberlistVO", memberlistVO);
+				req.setAttribute("update_do", "do");
 				RequestDispatcher donothing = req.getRequestDispatcher("public_Member_page.jsp");
 				donothing.forward(req, res);
 			}
