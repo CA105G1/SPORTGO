@@ -8,7 +8,7 @@
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
  
-<% 
+<%
 //	依照社團編號去找對應的貼文
 // 	List<Post_infoVO> postvolist=(ArrayList)request.getAttribute("postvolist");
  	ResponesVO responesVO = new ResponesVO();
@@ -19,7 +19,7 @@
  	pageContext.setAttribute("list2", list2);
 /*********************************************************************************************/ 
 	
-		String club_no = (String)session.getAttribute("club_no");
+		String club_no = request.getParameter("club_no");
 		request.setAttribute("club_no", club_no);
 		ClubService clubSvc = new ClubService();
 		ClubVO clubVO = clubSvc.getOneClub(club_no);
@@ -168,7 +168,6 @@
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script>
-		console.log("delete_${mem_no}");
 		$(function() {
 			$(".delete_${mem_no}").css("display","inline");
 			$(".responesShow").click(function() {

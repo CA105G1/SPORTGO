@@ -4,7 +4,7 @@
 <%@ page import="com.club_memberlist.model.*"%>
 <%@ page import="com.memberlist.model.*"%>
 <!DOCTYPE html>
-<html lang="">
+<html lang=""> 
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,7 +21,7 @@
 		<div class="container-fluid">
 			<div class="row">
 				<h4 id="club_name" class="_19s-" >
-					<a href='<%= request.getContextPath()%>/front-end/club/club_page.jsp' >
+					<a href='<%= request.getContextPath()%>/front-end/club/club_page.jsp?club_no=${clubVO.club_no}' >
 						${clubVO.club_name}
 					</a>
 				</h4>

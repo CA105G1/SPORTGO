@@ -42,8 +42,14 @@
 					<!-- 左選單 -->
 					<ul class="nav navbar-nav">
 						<li>
-							<a class="navbar-brand center-block" href="<%=request.getContextPath()%>/index.jsp">
-								<img src="<%=request.getContextPath()%>/img/logo_SportyGo_2_light.png" alt="SportGo!"/>
+<!-- 							<div class="navbar-header"> -->
+<!--     							<a href="#" class="navbar-left"> -->
+<!--        								 <img src="/path/to/image.png"> -->
+<!-- 							    </a> -->
+<!-- 							</div> -->
+							<a class="navbar-left center-block" href="<%=request.getContextPath()%>/index.jsp">
+								<img style="height: 20px;"
+								src="<%=request.getContextPath()%>/img/logo_SportyGo_2_light.png" alt="SportGo!"/>
 							</a>
 						</li>
 						<li class="active"><a href="<%=request.getContextPath()%>/index.jsp">SportyGo!</a></li>
@@ -51,18 +57,17 @@
 						<li><a href="<%=request.getContextPath()%>/front-end/club/club_list.jsp">社團</a></li>
 					</ul>
 				
-					<!-- 搜尋表單 -->
-					<form class="navbar-form navbar-right" role="search">
-						<div class="form-group">
-							<input type="text" class="form-control" placeholder="請輸入關鍵字">
-						</div>
-						<button type="submit" class="btn btn-default">搜尋</button>
-						
-					</form>
+<!-- 					搜尋表單 -->
+<!-- 					<form class="navbar-form navbar-right" role="search"> -->
+<!-- 						<div class="form-group"> -->
+<!-- 							<input type="text" class="form-control" placeholder="請輸入關鍵字"> -->
+<!-- 						</div> -->
+<!-- 						<button type="submit" class="btn btn-default">搜尋</button> -->
+<!-- 					</form> -->
 				
 					<!-- 右選單 -->
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="<%=request.getContextPath()%>/front-end/pro/listAllPro_front.jsp"><i class="glyphicon glyphicon-shopping-cart"></i> 商城 </a></li>
+						<li><a href="<%=request.getContextPath()%>/front-end/pro/listAllPro_front.jsp"><i class="glyphicon glyphicon-shopping-cart"></i> 購物車 </a></li>
 						<c:if test="${memberlistVO==null}">
 							<li>
 								<a href="#">訪客，您好</a>
@@ -83,7 +88,10 @@
 						</c:if>
 						<c:if test="${!(memberlistVO==null)}">
 							<li>
-								<a href="#">${memberlistVO.mem_name}，您好</a>
+								<a href="<%=request.getContextPath()%>/front-end/memberlist/public_Member_page.jsp">${memberlistVO.mem_name}，您好</a>
+							</li>
+							<li>
+								<a href="#" >通知</a>
 							</li>
 							<li>
 								<%  session = request.getSession();
@@ -113,12 +121,12 @@
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 								關於我們
-								<!-- <b class="caret"></b> -->
+								<b class="caret"></b>
 							</a>
 							<ul class="dropdown-menu">
-								<li><a href="#">還沒做...1</a></li>
-								<li><a href="#">要做啥阿...2</a></li>
-								<li><a href="#">.......</a></li>
+								<li><a href="#">動機</a></li>
+<!-- 								<li><a href="#">要做啥阿...2</a></li> -->
+<!-- 								<li><a href="#">.......</a></li> -->
 							</ul>
 						</li>
 						
@@ -161,7 +169,7 @@
 <!-- 							</ul> -->
 <!-- 						</li> -->
 						
-						<li><a href="#">　賽事　</a></li>
+<!-- 						<li><a href="#">　賽事(暫時刪除)　</a></li> -->
 						<li><a href="<%=request.getContextPath()%>/front-end/venue/venue_query_info_by_composite_front.jsp">　場地　</a></li>
 												
 						<li><a href="<%=request.getContextPath()%>/front-end/pro/listAllPro_front.jsp">　商城　</a></li>

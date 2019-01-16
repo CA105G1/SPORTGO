@@ -93,7 +93,7 @@
 						<a href="<%=request.getContextPath()%>/back-end/pro/addPro.jsp" class="list-group-item">新增商品</a>
 						<a href="<%=request.getContextPath()%>/back-end/pro/listAllPro.jsp" class="list-group-item">商品列表</a>
 <!-- 						<a href="#" class="list-group-item">商品類別列表</a> -->
-						<a href="<%=request.getContextPath()%>/back-end/pro/listAllPro.jsp" class="list-group-item">訂單列表</a>
+<%-- 						<a href="<%=request.getContextPath()%>/back-end/pro/listAllPro.jsp" class="list-group-item">訂單列表</a> --%>
 					</div>
 				</div>
 			</div>
@@ -110,7 +110,7 @@
 			    <div class="panel-collapse collapse" id="informatinBack">
 					<div class="list-group">
 						<a href="<%=request.getContextPath()%>/back-end/venue/maintain_venue_info_back.jsp" class="list-group-item">維護場地資訊</a>
-						<a href="#" class="list-group-item">維護賽事資訊</a>
+<!-- 						<a href="#" class="list-group-item">維護賽事資訊</a> -->
 						<a href="<%=request.getContextPath()%>/back-end/news/maintain_news_info.jsp" class="list-group-item">最新消息管理</a>
 					</div>
 				</div>
