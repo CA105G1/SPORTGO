@@ -18,9 +18,10 @@ import javax.websocket.server.ServerEndpoint;
 
 import org.json.JSONException;
 
+import com.friend.model.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.memberlist.model.MemberlistRedisDAO;
+import com.memberlist.model.*;
 
 @ServerEndpoint("/MemChatServer/{userName}")
 public class MemberChatServer {
@@ -34,15 +35,6 @@ public class MemberChatServer {
 	@OnOpen
 	public void onOpen(@PathParam("userName")String userName,Session userSession) throws IOException, JSONException {
 		sessionsMap.put(userName, userSession);
-//		上線通知 尚未完成
-//		JSONObject json = new JSONObject();
-//		json.append("userName", userName);
-//		json.append("message", "上線嘍～～～");
-//		Collection<Session> sessions = sessionsMap.values();
-//		for(Session session : sessions) {
-//			if(session.isOpen())
-//				session.getAsyncRemote().sendObject(json);
-//		}
 		System.out.println(userName+" connected");
 		//上線時抓歷史訊息
 		MemberlistRedisDAO dao = new MemberlistRedisDAO();
@@ -53,6 +45,23 @@ public class MemberChatServer {
 				for(String data : historydata) {
 					session.getBasicRemote().sendText(data);
 //					System.out.println("historymessage rebuild");
+				}
+			}
+			//
+			FriendService friendSvc = new FriendService();
+			List<FriendVO> friendlist = friendSvc.findMyFriend(userName);
+			Set<String> names =sessionsMap.keySet();
+			for(FriendVO list : friendlist) {
+				for(String name : names ) {
+					if(name.equals(list.getMem1_no())) {
+						String online = "{\"online\":\"online\",\"who\":\""+name+"\"}";
+						Session sess = sessionsMap.get(list.getMem2_no());
+						sess.getBasicRemote().sendText(online);
+					}else if(name.equals(list.getMem2_no())) {
+						String online = "{\"online\":\"online\",\"who\":\""+name+"\"}";
+						Session sess = sessionsMap.get(list.getMem1_no());
+						sess.getBasicRemote().sendText(online);
+					}
 				}
 			}
 		}catch(Exception ex) {
@@ -91,12 +100,12 @@ public class MemberChatServer {
 			if(session2.isOpen())
 				session2.getAsyncRemote().sendText(message);
 		}
+		System.out.println("Message received: "+message);
 //		Collection<Session> sessions = sessionsMap.values();
 //		for(Session session : sessions) {
 //			if(session.isOpen())
 //				session.getAsyncRemote().sendText(message);
 //		}
-		System.out.println("Message received: "+message);
 //		if(receiverSession!=null&&receiverSession.isOpen()) {
 //			if(messageType.equals("image")) {
 //				int imageLength = chatMessage.getContent().getBytes().length;
@@ -111,22 +120,41 @@ public class MemberChatServer {
 	
 	@OnError
 	public void onError(Session userSession, Throwable e) {
-		e.printStackTrace(System.err);
-		System.out.println("Error: "+e.toString());
+//		e.printStackTrace(System.err);
+//		System.out.println("Error: "+e.toString());
 	}
 	
 	@OnClose
 	public void onClose(Session userSession, CloseReason reason) {
+		FriendService friendSvc = new FriendService();
 		String userName = null;
-		Set<String> userNames = sessionsMap.keySet();
-		for(String Name : userNames) {
-			if(sessionsMap.get(Name).equals(userSession)) {
-				userName = Name;
-				System.out.println(userName+"disconnected");
-				sessionsMap.remove(Name);
-				break;
+		try {
+			Set<String> names =sessionsMap.keySet();
+			for(String Name : names) {
+				if(sessionsMap.get(Name).equals(userSession)) {
+					userName = Name;
+					break;
+				}
 			}
-		}
+			List<FriendVO> friendlist = friendSvc.findMyFriend(userName);
+			for(FriendVO list : friendlist) {
+				for(String name : names ) {
+					if(name.equals(list.getMem1_no())) {
+						String offline = "{\"online\":\"offline\",\"who\":\""+name+"\"}";
+						Session sess = sessionsMap.get(list.getMem2_no());
+							sess.getBasicRemote().sendText(offline);
+					}else if(name.equals(list.getMem2_no())) {
+						String offline = "{\"online\":\"offline\",\"who\":\""+name+"\"}";
+						Session sess = sessionsMap.get(list.getMem1_no());
+						sess.getBasicRemote().sendText(offline);
+					}
+				} 
+			}
+			sessionsMap.remove(userName);
+		}catch (Exception e) {
+				e.printStackTrace(System.err);
+			}
+		System.out.println(userName+"disconnected");
 	}
 	
 

@@ -27,6 +27,8 @@
 		Post_infoService postinfo = new Post_infoService();
 		List<Post_infoVO> postvolist = postinfo.getAllfromclub(club_no);
 		request.setAttribute("postvolist", postvolist);
+		
+		
 %>
 
 
@@ -70,6 +72,16 @@
     			padding-bottom: 2px;
 			}
 			
+			#btnGroupDrop1{
+				
+    border-left-width: 1px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+
+			}
+			
 			
 			
 		</style>
@@ -91,20 +103,28 @@
 				<div class="col-xs-12 col-lg-7">
 					
 <!---------------------------- 貼文列表 ------------------------------------->
+<!-- 查詢的FORM --><form method="post" action="<%= request.getContextPath()%>/post_info.do">
 					<div><!-- 貼文搜尋 -->
 						<input type="text" class="form-control" placeholder="search" style="width:15em" />
+						<input type="hidden" name="action" value="postCompositeQuery">
 	  					<button class="btn btn-primary" type="button" id="postsearch">送出</button>
-					</div>
+					</div><!-- 貼文搜尋 -->
+<!-- 查詢的FORM --></form>					
+<!-- 貼文刪除FORM --><FORM METHOD="post" ACTION="<%=request.getContextPath()%>/respones.do" name="form">  
 					<div class="card text-center" id="post">
-							<br>
-		<!-- 新增的FORM --><FORM METHOD="post" ACTION="<%=request.getContextPath()%>/respones.do" name="form">  
   							<div class="card-body">
-  								<div class="update_${responesVO.mem_no}" >編輯</div><!-- 17:05 -->
 								<c:forEach var="postinfoVO" items="${postvolist}">
-    								<h3 class="card-title"  class="list-group-item">主題：${postinfoVO.post_topic}</h3>
-    								<p class="card-text">${postinfoVO.post_content}</p>    								
-    								
-<!-------------------------------------------- 留言版 --------------------------------------------------->
+    								<h3 class="card-title"  class="list-group-item">
+    									${postinfoVO.post_topic}
+    								</h3>
+									<a href='<%=request.getContextPath()%>/post_info.do?action=update&post_no=${postinfoVO.post_no}'">編輯</a>
+<!-- 									<button type="submit" class="btn btn-link" id="deletepost" name="action" value="delete">刪除</button> -->
+<%-- 									<button class="btn btn-link" id="deletepost" onclick="location.href='<%=request.getContextPath()%>/post_info.do?action=delete&post_no=${postinfoVO.post_no}'">刪除</button> --%>
+									<a href='<%=request.getContextPath()%>/post_info.do?action=delete&post_no=${postinfoVO.post_no}'">刪除</a>
+    								<p class="card-text">${postinfoVO.post_content}</p><!--貼文內容 -->   								
+<!-- 貼文刪除FORM --></FORM>    								
+<!-------------------------------------------- 新增留言 --------------------------------------------------->
+		<!-- 新增的FORM --><FORM METHOD="post" ACTION="<%=request.getContextPath()%>/respones.do" name="form">  
   							<div class="card-footer text-muted">
 									<div class="card" id="respones">
 							  			<div class="card-body">
@@ -123,8 +143,8 @@
   							</div>
 		<!-- 新增的FORM --></FORM> 	
   							
-<!-------------------------------------------- 留言版 ---------------------------------------------------->
-<!----------------------------------------------回文------------------------------------------------------>
+<!--------------------------------------------新增留言 ---------------------------------------------------->
+<!------------------------------------------顯示&刪除留言-------------------------------------------------->
 					  		<button class="responesShow btn  btn-link" type="button" id="dropdownMenuButton" data-toggle="" aria-haspopup="true" aria-expanded="false">
 					    		顯示所有留言
 					  		</button>
@@ -154,10 +174,9 @@
 			    					</c:forEach><!-- 內層forEach -->
 								</table>
 							</div><!-- id="respones"結束 -->
-<!----------------------------------------------回文------------------------------------------------------>
+<!------------------------------------------顯示&刪除留言-------------------------------------------------->
    								</c:forEach><!-- 最外層postinfoVO的 -->
   							</div> <!-- card-body結束 -->
-  							
 							<div class="col-xs-12 col-lg-2" id="xx"></div>
 					</div><!-- card text-center結束 -->
 				</div><!-- col-xs-12 col-lg-7結束-->

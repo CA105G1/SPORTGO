@@ -245,7 +245,8 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 												<img src="<%=request.getContextPath()%>
 												/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"
 												style="width:50px;height:50px;border-radius:50%;">
-												<label>${member.mem_name}</label><br>
+												<label>${member.mem_name}</label>
+												<img class="online_${member.mem_no}" src="/CA105G1/img/offline.png" style="right:0;max-width:10px;max-height:10px;">
 											</div>
 										</c:if>
 									</c:if>
@@ -255,7 +256,8 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 												<img src="<%=request.getContextPath()%>
 												/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"
 												style="width:50px;height:50px;border-radius:50%">
-												<label>${member.mem_name}</label><br>
+												<label>${member.mem_name}</label>
+												<img class="online_${member.mem_no}" src="/CA105G1/img/offline.png" style="right:0;max-width:10px;max-height:10px;">
 											</div>
 										</c:if>
 									</c:if>
@@ -428,6 +430,9 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 					$(".chat").hide();
 					$("#chat_" + chatFriend).show();
 					$('.chat').scrollTop($('.chat').prop('scrollHeight'));
+					$('.chat-head').empty();
+					$('.chat-head').append("<img src='/CA105G1/front-end/memberlist/showPicture.do?mem_no="+chatFriend
+							+"'><h3 id='userName' style='max-width:100%;max-height:100%'>${memberlistVO.mem_name}</h3>");
 				});
 		function connect(){
 			webSocket = new WebSocket(endPointURL);
@@ -461,6 +466,14 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 				}
 				messageArea.value = messageArea.value + message;
 				$('.chat').scrollTop($('.chat').prop('scrollHeight'));
+				//上線通知
+				if(jsonObj.online==='online'){
+					$('.online_'+jsonObj.who).attr('src','/CA105G1/img/online.png');
+				};
+				//離線通知
+				if(jsonObj.online==='offline'){
+					$('.online_'+jsonObj.who).attr('src','/CA105G1/img/offline.png');
+				};
 			};
 			
 			webSocket.onclose = function(event){

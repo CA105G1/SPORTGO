@@ -60,4 +60,6 @@ public class ClubService {
 		return dao.getAll(map);
 	}
 	
+	
+	
 }

@@ -12,9 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.sport.model.SportService;
 import com.club.model.ClubService;
 import com.club.model.ClubVO;
@@ -96,7 +93,7 @@ public class MemManagerServlet extends HttpServlet {
 			if("".equals(email)||(email.trim()).length()==0) {
 				errorMsgs.put("email", "電子郵件欄位必填");
 			}else if(!email.matches("^[_a-z0-9-]+([.][_a-z0-9-]+)*@[a-z0-9-]+([.][a-z0-9-]+)*$")) {
-				errorMsgs.put("email", "電子郵件欄位有誤");
+				errorMsgs.put("email", "電子郵件格式有誤");
 			}else if(email.length()>60) {
 				errorMsgs.put("email", "電子郵件欄位過長");
 			}

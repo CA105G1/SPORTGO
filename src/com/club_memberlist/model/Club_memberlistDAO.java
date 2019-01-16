@@ -37,8 +37,10 @@ public class Club_memberlistDAO  implements Club_memberlistDAO_interface{
 			"UPDATE club_memberlist set cmem_status=?, cmem_class=?, silence_time=?  where club_no=? and mem_no=?";
 		private static final String UPDATE_STATUS = 
 				"UPDATE club_memberlist set cmem_status=? where club_no=? and mem_no=?";
+		private static final String UPDATE_CLASS = 
+				"UPDATE club_memberlist set cmem_class=? where club_no=? and mem_no=?";
 		private static final String GET_BY_CLUB =
-				"SELECT * FROM club_memberList where club_no = ? ORDER BY cmem_class";
+				"SELECT * FROM club_memberList where club_no = ? ORDER BY cmem_class DESC";
 		private static final String GET_BY_MEM =
 				"SELECT * FROM club_memberList where mem_no = ? ";
 		private static final String GET_BY_MEM_HOST =
@@ -636,6 +638,41 @@ public class Club_memberlistDAO  implements Club_memberlistDAO_interface{
 				con = ds.getConnection();
 				pstmt = con.prepareStatement(UPDATE_STATUS);
 				pstmt.setString(1, cmem_status);
+				pstmt.setString(2, club_no);
+				pstmt.setString(3, mem_no);
+				pstmt.executeUpdate();
+				
+			}catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				if(pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+				if(con != null) {
+					try {
+						con.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			
+		}
+
+
+		@Override
+		public void updateClass(String club_no, String mem_no, String cmem_class) {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			
+			try {
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(UPDATE_CLASS);
+				pstmt.setString(1, cmem_class);
 				pstmt.setString(2, club_no);
 				pstmt.setString(3, mem_no);
 				pstmt.executeUpdate();

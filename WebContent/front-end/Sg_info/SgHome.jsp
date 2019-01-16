@@ -208,7 +208,13 @@ if(list == null){
 						<input type="submit" id="${Sg_infoVO.sg_no}"  style="display: none">
 					</form>
 			</c:forEach>
-			<%@ include file="page2_ByCompositeQuery.file" %>
+			<%List<Sg_infoVO> list2 = (List<Sg_infoVO>)request.getAttribute("list");%>
+			<c:if test="<%=list2 == null%>">
+				<%@ include file="page2.file" %>
+			</c:if>
+			<c:if test="<%=list2 != null%>">
+				<%@ include file="page2_ByCompositeQuery.file" %>
+			</c:if>
 
 
 

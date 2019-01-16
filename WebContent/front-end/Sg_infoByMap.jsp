@@ -16,7 +16,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <style type="text/css">
 	#map {
-		height: 400px;  /* The height is 400 pixels */
+		height: 500px;  /* The height is 400 pixels */
 		width: 100%;  /* The width is the width of the web page */
 	}
 	.iw-title {
@@ -31,9 +31,9 @@
 </head>
 <body>
 <div class="form-group">
-	<label for="setRadius">搜尋距離</label>
+	<label for="setRadius">搜尋半徑</label>
 	<div class="input-group" style="width:20%">
-		<input type="text" id="setRadius" value="20000" class="form-control">
+		<input type="text" id="setRadius" value="5000" class="form-control">
 		<div class="input-group-addon">公尺</div>
 		<div class="input-group-btn">
 			<button class="btn btn-info" type="button" id="setRadiusBtn" onclick="initMap()">

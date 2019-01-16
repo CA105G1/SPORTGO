@@ -44,6 +44,7 @@ public class ClubDAO implements ClubDAO_interface{
 			"UPDATE club set sp_no=?, photo=?, photo_ext=?, club_status=?, club_name=?, club_intro=? where club_no = ?";
 		
 		
+		
 		@Override
 		public void insert(ClubVO clubVO) {
 			Connection con = null;
