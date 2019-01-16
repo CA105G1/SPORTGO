@@ -1,12 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core"%>
+
+
 <!DOCTYPE html>
 <html>
 	<head>
+		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-		<title></title>
+		<title>SPORTYGO!</title>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<!--[if lt IE 9]>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
 		<style type="text/css">
 			.navbar-brand {
 				padding: 0px; /* firefox bug fix */
@@ -22,6 +29,7 @@
 				justify-content:center;
 			}
 		</style>
+		
 	</head>
 	<body> 
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -52,9 +60,9 @@
 								src="<%=request.getContextPath()%>/img/logo_SportyGo_2_light.png" alt="SportGo!"/>
 							</a>
 						</li>
-						<li class="active"><a href="<%=request.getContextPath()%>/index.jsp">SportyGo!</a></li>
-						<li><a href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp">揪團去</a></li>
-						<li><a href="<%=request.getContextPath()%>/front-end/club/club_list.jsp">社團</a></li>
+						<li class="showActive active"><a href="<%=request.getContextPath()%>/index.jsp">SportGo!</a></li>
+						<li class="showActive"><a href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp">揪團去</a></li>
+						<li class="showActive"><a href="<%=request.getContextPath()%>/front-end/club/club_list.jsp">社團</a></li>
 					</ul>
 				
 <!-- 					搜尋表單 -->
@@ -105,7 +113,7 @@
 								<a href="<%=request.getContextPath()%>/front-end/memberlist/logout.do">登出</a>
 							</li>
 						</c:if>
-						<li><a href="<%=request.getContextPath()%>/backEndIndex.jsp">後台首頁</a></li>
+						<li class="showActive"><a href="<%=request.getContextPath()%>/backEndIndex.jsp">後台首頁</a></li>
 					</ul>
 				</div>
 				<!-- 手機隱藏選單區結束 -->
@@ -171,9 +179,9 @@
 <!-- 						</li> -->
 						
 <!-- 						<li><a href="#">　賽事(暫時刪除)　</a></li> -->
-						<li><a href="<%=request.getContextPath()%>/front-end/venue/venue_query_info_by_composite_front.jsp">　場地　</a></li>
+						<li class="showActive"><a href="<%=request.getContextPath()%>/front-end/venue/venue_query_info_by_composite_front.jsp">　場地　</a></li>
 												
-						<li><a href="<%=request.getContextPath()%>/front-end/pro/listAllPro_front.jsp">　商城　</a></li>
+						<li class="showActive"><a href="<%=request.getContextPath()%>/front-end/pro/listAllPro_front.jsp">　商城　</a></li>
 <!-- 						<li class="dropdown"> -->
 <%-- 							<a href="<%=request.getContextPath()%>/front-end/pro/listAllPro_front.jsp" class="dropdown-toggle" data-toggle="dropdown"> --%>
 <!-- 								　商城　 -->
@@ -196,6 +204,20 @@
 	</body>
 	
 	<script>
+		var dataForMarkActive;
+		window.addEventListener("load", function(){ 
+			var showActiveArray = document.getElementsByClassName("showActive");
+				for(var i = 0 ; i<showActiveArray.length ; i++){
+					showActiveArray[i].addEventListener("click", function(){
+		// 			dataForMarkActive = sessionStorage.setItem('key', 'value');
+						console.log(this.innerHTML);
+					},false);	
+				};
+		},false);
+		
+		
+	
+	
 // 		$(function(){
 // 			$('.dropdown-toggle').on('mouseenter',new function(){
 				

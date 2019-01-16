@@ -96,7 +96,7 @@
 					
 <!-- 					<div class="modal-footer"> -->
 <!-- 						<button type="button" class="btn btn-default" data-dismiss="modal"> 關閉 </button> -->
-<!-- <!-- 						<button type="button" class="btn btn-primary"> Login </button> --> -->
+<!-- <!-- 						<button type="button" class="btn btn-primary"> Login </button> --> 
 <!-- 							<input type="submit" value="login" class="btn btn-primary" /> -->
 <!-- 						</from> -->
 <!-- 					</div> -->
