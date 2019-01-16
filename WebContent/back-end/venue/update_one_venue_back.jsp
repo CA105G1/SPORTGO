@@ -67,9 +67,7 @@
 				<tbody>
 					<tr>
 						<th><div class="mytitle">場地編號</div></th>
-						<td>
-						
-						</td>
+						<td>${venueVO_tab3.v_no}</td>
 					</tr>
 					<tr>
 						<th><div class="mytitle">場地類型</div></th>
@@ -78,18 +76,18 @@
 							<select size="1" name="vt_no" id="vt_no">
 								<option value=""></option>
 								<c:forEach var="venueTypeVO" items="${venueTypeService.all}">
-									<option value="${venueTypeVO.vt_no}" ${venueTypeVO.vt_no==venueVO_tab2.vt_no?'selected':''}>${venueTypeVO.vt_name}</option>
+									<option value="${venueTypeVO.vt_no}" ${venueTypeVO.vt_no==venueVO_tab3.vt_no?'selected':''}>${venueTypeVO.vt_name}</option>
 								</c:forEach>
 							</select><br>
-							<div class="center-block errorMsgs-color">${errorMsgs_tab2.get("vt_no")}</div>
+							<div class="center-block errorMsgs-color">${errorMsgs_tab3.get("vt_no")}</div>
 						</td>
 					</tr>
 					
 					<tr>
 						<th><div class="mytitle">場地名稱</div></th>
 						<td>
-							<input type="text" name="v_name" value="${venueVO_tab2.v_name}"/><br>
-							<div class="center-block errorMsgs-color">${errorMsgs_tab2.get("v_name")}</div> 
+							<input type="text" name="v_name" value="${venueVO_tab3.v_name}"/><br>
+							<div class="center-block errorMsgs-color">${errorMsgs_tab3.get("v_name")}</div> 
 						</td>
 					</tr>
 					
@@ -98,10 +96,10 @@
 						<td>
 							<select size="1" name="v_inout" id="v_inout">
 								<option value=""></option>
-								<option value="室內設施" ${'室內設施'==venueVO_tab2.v_inout?'selected':''}>室內設施</option>
-								<option value="室外設施" ${'室外設施'==venueVO_tab2.v_inout?'selected':''}>室外設施</option>
+								<option value="室內設施" ${'室內設施'==venueVO_tab3.v_inout?'selected':''}>室內設施</option>
+								<option value="室外設施" ${'室外設施'==venueVO_tab3.v_inout?'selected':''}>室外設施</option>
 							</select><br>
-							<div class="center-block errorMsgs-color">${errorMsgs_tab2.get("v_inout")}</div>
+							<div class="center-block errorMsgs-color">${errorMsgs_tab3.get("v_inout")}</div>
 						</td>
 					</tr>
 					
@@ -112,18 +110,18 @@
 							<select size="1" name="reg_no" id="reg_no">
 								<option value=""></option>
 								<c:forEach var="regVO" items="${regService.all}">
-									<option value="${regVO.reg_no}" ${regVO.reg_no==venueVO_tab2.reg_no?'selected':''}>${regVO.reg_name}-${regVO.getReg_dist().trim()}</option>
+									<option value="${regVO.reg_no}" ${regVO.reg_no==venueVO_tab3.reg_no?'selected':''}>${regVO.reg_name}-${regVO.getReg_dist().trim()}</option>
 								</c:forEach>
 							</select><br>
-							<div class="center-block errorMsgs-color">${errorMsgs_tab2.get("reg_no")}</div>
+							<div class="center-block errorMsgs-color">${errorMsgs_tab3.get("reg_no")}</div>
 						</td>
 					</tr>
 					
 					<tr>
 						<th><div class="mytitle">場地地址</div></th>
 						<td>
-							<input type="text" name="v_address" value="${venueVO_tab2.v_address}"/><br>
-							<div class="center-block errorMsgs-color">${errorMsgs_tab2.get("v_address")}</div> 
+							<input type="text" name="v_address" value="${venueVO_tab3.v_address}"/><br>
+							<div class="center-block errorMsgs-color">${errorMsgs_tab3.get("v_address")}</div> 
 						</td>
 					</tr>
 					
@@ -131,8 +129,8 @@
 					<tr>
 						<th><div class="mytitle">場地電話</div></th>
 						<td>
-							<input type="text" name="v_phoneno" value="${venueVO_tab2.v_phoneno}"/><br>
-							<div class="center-block errorMsgs-color">${errorMsgs_tab2.get("v_phoneno")}</div> 
+							<input type="text" name="v_phoneno" value="${venueVO_tab3.v_phoneno}"/><br>
+							<div class="center-block errorMsgs-color">${errorMsgs_tab3.get("v_phoneno")}</div> 
 						</td>
 					</tr>
 					
@@ -141,11 +139,11 @@
 						<td>
 							<select size="1" name="open_state" id="open_state">
 								<option value=""></option>
-								<option value="不開放對外使用" ${'不開放對外使用'==venueVO_tab2.open_state?'selected':''}>不開放對外使用</option>
-								<option value="免費對外開放使用" ${'免費對外開放使用'==venueVO_tab2.open_state?'selected':''}>免費對外開放使用</option>
-								<option value="付費對外開放使用" ${'付費對外開放使用'==venueVO_tab2.open_state?'selected':''}>付費對外開放使用</option>
+								<option value="不開放對外使用" ${'不開放對外使用'==venueVO_tab3.open_state?'selected':''}>不開放對外使用</option>
+								<option value="免費對外開放使用" ${'免費對外開放使用'==venueVO_tab3.open_state?'selected':''}>免費對外開放使用</option>
+								<option value="付費對外開放使用" ${'付費對外開放使用'==venueVO_tab3.open_state?'selected':''}>付費對外開放使用</option>
 							</select><br>
-							<div class="center-block errorMsgs-color">${errorMsgs_tab2.get("open_state")}</div>
+							<div class="center-block errorMsgs-color">${errorMsgs_tab3.get("open_state")}</div>
 						</td>
 					</tr>
 					
@@ -157,8 +155,8 @@
 									<div class='p'>星期一</div>
 									<select size="1" name="openday_mon" id="openday_mon">
 										<option value=""></option>
-										<option value="Y" ${'Y'==venueVO_tab2.openday_mon?'selected':''}>開放使用</option>
-										<option value="N" ${'N'==venueVO_tab2.openday_mon?'selected':''}>休館</option>
+										<option value="Y" ${'Y'==venueVO_tab3.openday_mon?'selected':''}>開放使用</option>
+										<option value="N" ${'N'==venueVO_tab3.openday_mon?'selected':''}>休館</option>
 									</select>
 								</div>
 								
@@ -166,8 +164,8 @@
 									<div class='p'>星期二</div>
 									<select size="1" name="openday_tue" id="openday_tue">
 										<option value=""></option>
-										<option value="Y" ${'Y'==venueVO_tab2.openday_tue?'selected':''}>開放使用</option>
-										<option value="N" ${'N'==venueVO_tab2.openday_tue?'selected':''}>休館</option>
+										<option value="Y" ${'Y'==venueVO_tab3.openday_tue?'selected':''}>開放使用</option>
+										<option value="N" ${'N'==venueVO_tab3.openday_tue?'selected':''}>休館</option>
 									</select>
 								</div>
 								
@@ -175,8 +173,8 @@
 									<div class='p'>星期三</div>
 									<select size="1" name="openday_wed" id="openday_wed">
 										<option value=""></option>
-										<option value="Y" ${'Y'==venueVO_tab2.openday_wed?'selected':''}>開放使用</option>
-										<option value="N" ${'N'==venueVO_tab2.openday_wed?'selected':''}>休館</option>
+										<option value="Y" ${'Y'==venueVO_tab3.openday_wed?'selected':''}>開放使用</option>
+										<option value="N" ${'N'==venueVO_tab3.openday_wed?'selected':''}>休館</option>
 									</select>
 								</div>
 								
@@ -184,8 +182,8 @@
 									<div class='p'>星期四</div>
 									<select size="1" name="openday_thu" id="openday_thu">
 										<option value=""></option>
-										<option value="Y" ${'Y'==venueVO_tab2.openday_thu?'selected':''}>開放使用</option>
-										<option value="N" ${'N'==venueVO_tab2.openday_thu?'selected':''}>休館</option>
+										<option value="Y" ${'Y'==venueVO_tab3.openday_thu?'selected':''}>開放使用</option>
+										<option value="N" ${'N'==venueVO_tab3.openday_thu?'selected':''}>休館</option>
 									</select>
 								</div>
 								
@@ -193,8 +191,8 @@
 									<div class='p'>星期五</div>
 									<select size="1" name="openday_fri" id="openday_fri">
 										<option value=""></option>
-										<option value="Y" ${'Y'==venueVO_tab2.openday_fri?'selected':''}>開放使用</option>
-										<option value="N" ${'N'==venueVO_tab2.openday_fri?'selected':''}>休館</option>
+										<option value="Y" ${'Y'==venueVO_tab3.openday_fri?'selected':''}>開放使用</option>
+										<option value="N" ${'N'==venueVO_tab3.openday_fri?'selected':''}>休館</option>
 									</select>
 								</div>
 								
@@ -202,8 +200,8 @@
 									<div class='p'>星期六</div>
 									<select size="1" name="openday_sat" id="openday_sat">
 										<option value=""></option>
-										<option value="Y" ${'Y'==venueVO_tab2.openday_sat?'selected':''}>開放使用</option>
-										<option value="N" ${'N'==venueVO_tab2.openday_sat?'selected':''}>休館</option>
+										<option value="Y" ${'Y'==venueVO_tab3.openday_sat?'selected':''}>開放使用</option>
+										<option value="N" ${'N'==venueVO_tab3.openday_sat?'selected':''}>休館</option>
 									</select>
 								</div>
 								
@@ -211,12 +209,12 @@
 									<div class='p'>星期日</div>
 									<select size="1" name="openday_sun" id="openday_sun">
 										<option value=""></option>
-										<option value="Y" ${'Y'==venueVO_tab2.openday_sun?'selected':''}>開放使用</option>
-										<option value="N" ${'N'==venueVO_tab2.openday_sun?'selected':''}>休館</option>
+										<option value="Y" ${'Y'==venueVO_tab3.openday_sun?'selected':''}>開放使用</option>
+										<option value="N" ${'N'==venueVO_tab3.openday_sun?'selected':''}>休館</option>
 									</select>
 								</div>
 							</div>
-							<div class="center-block errorMsgs-color">${errorMsgs_tab2.get("openday_weak")}</div>
+							<div class="center-block errorMsgs-color">${errorMsgs_tab3.get("openday_weak")}</div>
 						</td>
 					</tr>
 					
@@ -234,10 +232,10 @@
 						<td>
 							<select size="1" name="v_display" id="v_display">
 								<option value=""></option>
-								<option value="顯示" ${'顯示'==venueVO_tab2.v_display?'selected':''}>顯示</option>
-								<option value="不顯示" ${'不顯示'==venueVO_tab2.v_display?'selected':''}>不顯示</option>
+								<option value="顯示" ${'顯示'==venueVO_tab3.v_display?'selected':''}>顯示</option>
+								<option value="不顯示" ${'不顯示'==venueVO_tab3.v_display?'selected':''}>不顯示</option>
 							</select><br>
-							<div class="center-block errorMsgs-color">${errorMsgs_tab2.get("v_display")}</div>
+							<div class="center-block errorMsgs-color">${errorMsgs_tab3.get("v_display")}</div>
 						</td>
 					</tr>
 					<tr>
@@ -246,10 +244,10 @@
 							
 							<select size="1" name="v_fitall" id="v_fitall">
 								<option value=""></option>
-								<option value="Y" ${'Y'==venueVO_tab2.v_fitall?'selected':''}>開放</option>
-								<option value="N" ${'N'==venueVO_tab2.v_fitall?'selected':''}>不開放</option>
+								<option value="Y" ${'Y'==venueVO_tab3.v_fitall?'selected':''}>開放</option>
+								<option value="N" ${'N'==venueVO_tab3.v_fitall?'selected':''}>不開放</option>
 							</select><br>
-							<div class="center-block errorMsgs-color">${errorMsgs_tab2.get("v_fitall")}</div>
+							<div class="center-block errorMsgs-color">${errorMsgs_tab3.get("v_fitall")}</div>
 						</td>
 					</tr>
 					<tr>
@@ -258,32 +256,34 @@
 							
 							<select size="1" name="v_fitinter" id="v_fitinter">
 								<option value=""></option>
-								<option value="Y" ${'Y'==venueVO_tab2.v_fitinter?'selected':''}>開放</option>
-								<option value="N" ${'N'==venueVO_tab2.v_fitinter?'selected':''}>不開放</option>
+								<option value="Y" ${'Y'==venueVO_tab3.v_fitinter?'selected':''}>開放</option>
+								<option value="N" ${'N'==venueVO_tab3.v_fitinter?'selected':''}>不開放</option>
 							</select><br>
-							<div class="center-block errorMsgs-color">${errorMsgs_tab2.get("v_fitinter")}</div>
+							<div class="center-block errorMsgs-color">${errorMsgs_tab3.get("v_fitinter")}</div>
 						</td>
 					</tr>
-					
-					
-				</tbody>
-			</table>
-			<input type="hidden" name="action"value="insert_one_venue">
-			<input type="submit" value="送出" class="btn btn-success btn-block">
-			<table>
-				<tbody>				
 					<!------------ 圖片上傳 ------------>
 					<tr>
 						<td colspan="2" class="uploadPicTd">
 							<div>
+								<input type="hidden" name="hasChargePictiure" id="hasChargePictiure_tab3" value="false">
 								<input type="file" id="v_photo1_tab2" name="v_photo1" />
-								<div class="pull-left errorMsgs-color">${errorMsgs_tab2.get("v_photo1")}</div>
+								<div class="pull-left errorMsgs-color">${errorMsgs_tab3.get("v_photo1")}</div>
 							</div>
 							<div>
-								<img src="<%=request.getContextPath()%>/img/no-image.PNG" id="showPic_tab2"
-								class="img-responsive img-rounded center-block" />
+								<img id="showPic_tab2" class="img-responsive img-rounded center-block" 
+								src="<%=request.getContextPath()%>/venue/venueImg.do?v_no=${venueVO_tab3.v_no}" />
 							</div>
 						</td>
+					</tr>
+					<tr>
+						<th colspan='2'>
+							<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>" /><!--送出本網頁的路徑給Controller-->
+			     			<input type="hidden" name="whichPage"	value="${param.whichPage}" />
+							<input type="hidden" name="v_no" value="${venueVO_tab3.v_no}" />
+							<input type="hidden" name="action"value="update_commit">
+							<input type="submit" value="確定更新" class="btn btn-success btn-block">
+						</th>
 					</tr>
 				</tbody>
 			</table>
@@ -348,7 +348,7 @@
 <%-- 							<c:if test="${newsVO!=null}"> --%>
 <!-- 								<input type="text" id="news_release_date_tab3" name="news_release_date"  -->
 <%-- 									value='<fmt:formatDate value="${newsVO.news_release_date}" pattern="yyyy-MM-dd HH:mm"/>'/><br> --%>
-<%-- 								<div class="center-block errorMsgs-color">${errorMsgs_tab2.get("news_release_date")}</div>  --%>
+<%-- 								<div class="center-block errorMsgs-color">${errorMsgs_tab3.get("news_release_date")}</div>  --%>
 <%-- 							</c:if> --%>
 <!-- 						</td> -->
 <!-- 					</tr> -->
@@ -361,7 +361,7 @@
 <%-- 							<c:if test="${newsVO!=null}"> --%>
 <!-- 								<input type="text" id="news_last_date_tab3" name="news_last_date"  -->
 <%-- 									value='<fmt:formatDate value="${newsVO.news_last_date}" pattern="yyyy-MM-dd HH:mm"/>'/><br> --%>
-<%-- 								<div class="center-block errorMsgs-color">${errorMsgs_tab2.get("news_last_date")}</div>  --%>
+<%-- 								<div class="center-block errorMsgs-color">${errorMsgs_tab3.get("news_last_date")}</div>  --%>
 <%-- 							</c:if>	 --%>
 <!-- 						</td> -->
 <!-- 					</tr> -->

@@ -5,8 +5,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Handler;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import com.venue.model.VenueService;
@@ -68,9 +71,9 @@ public class VenueCreateOrUpdateServlet extends HttpServlet {
 				break;
 			case "update_commit":
 				doActionUpdateOneVenue(request, response, 
-						"", // goToLocalUrl_forSuccess
+						QUERY_SUPER_SERVLET_ACTION_AGAIN+"listVenueByCompositeQuery", // goToLocalUrl_forSuccess
 						MAINTAIN_VENUE_INFO_BACK,  // goToLocalUrl_forError
-						TAB_CREATE, // whichTab_forErrorMsgs
+						TAB_SELECT, // whichTab_forErrorMsgs
 						VENUEVO_FOR_ERROR_NAME_TITLE+TAB_UPDATE, // request.setAttribute("?",venueVO);
 						false);  // isFrontEnd
 				break;
@@ -91,7 +94,13 @@ public class VenueCreateOrUpdateServlet extends HttpServlet {
 		return getErrorMsgsCollection(request,titleName,"");
 	}
 	
-	private void doActionUpdateOneVenue(HttpServletRequest request, HttpServletResponse response, String goToLocalUrl_forSuccess, String goToLocalUrl_forError, String whichTab_forErrorMsgs, String venueVO4Error, boolean isFrontEnd) throws ServletException, IOException{
+	private void doActionUpdateOneVenue(HttpServletRequest request, 
+										HttpServletResponse response, 
+										String goToLocalUrl_forSuccess, 
+										String goToLocalUrl_forError, 
+										String whichTab_forErrorMsgs, 
+										String venueVO4Error, 
+										boolean isFrontEnd) throws ServletException, IOException{
 		//update_commit
 		Map<String, String> errorMsgs = getErrorMsgsCollection(request, ERRORMSGS_TITLE, whichTab_forErrorMsgs);
 		//for 比對 舊的與新的
@@ -101,7 +110,8 @@ public class VenueCreateOrUpdateServlet extends HttpServlet {
 			VenueService venueService = new VenueService();
 			String v_no = request.getParameter("v_no");
 			VenueVO oldVenueVO = venueService.getOneVenue(v_no);
-			venueVO	= checkAllParamterForVenue(request, errorMsgs, oldVenueVO);
+			// check parameter right
+			venueVO	= checkAllParameterForVenue(request, errorMsgs, oldVenueVO);
 		
 			if(!errorMsgs.isEmpty()) {
 				if(!errorMsgs.containsKey("v_photo1")) {
@@ -118,16 +128,26 @@ public class VenueCreateOrUpdateServlet extends HttpServlet {
 			venueService.updateVenue(venueVO);
 			
 			//// 轉交出去
+			HttpSession session = request.getSession();
+			Map<String, String[]> venueMap = (Map<String, String[]>)session.getAttribute("venueMap");
+			if(request.getParameter("whichPage")==null||"".equals(request.getParameter("whichPage"))) {
+				HashMap<String, String[]> getMap = new HashMap<String, String[]>(request.getParameterMap());
+				session.setAttribute("venueMap", getMap);
+			}
+			List<VenueVO> list = venueService.getAll(venueMap, isFrontEnd);
+			
+			request.setAttribute("venueVO_toUpdate", venueVO);
 			request.setAttribute(WHITCH_TAB, TAB_SELECT);
+			request.setAttribute("myList", list);
 			RequestDispatcher successsView = request.getRequestDispatcher(goToLocalUrl_forSuccess+venueVO.getV_no());
 			successsView.forward(request, response);
 			return;
 		
 		}catch (Exception e) {
-			e.printStackTrace();
-			request.setAttribute(WHITCH_TAB, TAB_UPDATE);
-			request.setAttribute(venueVO4Error, venueVO);
+//			e.printStackTrace();
 			errorMsgs.put(DB_ERROR_MSGS,"儲存資料失敗: "+e.getMessage());
+			request.setAttribute(venueVO4Error, venueVO);
+			request.setAttribute(WHITCH_TAB, TAB_UPDATE);
 			RequestDispatcher failureView = request.getRequestDispatcher(goToLocalUrl_forError);
 			failureView.forward(request, response);
 			return;
@@ -140,14 +160,15 @@ public class VenueCreateOrUpdateServlet extends HttpServlet {
 		VenueVO venueVO = null;
 		try {
 			
-			venueVO = checkAllParamterForVenue(request, errorMsgs, venueVO);
+			venueVO = checkAllParameterForVenue(request, errorMsgs, venueVO);
+			
 			
 			if(!errorMsgs.isEmpty()) {
 				if(!errorMsgs.containsKey("v_photo1")) {
 					errorMsgs.put("v_photo1", "請重新上傳圖片");
 				}
 				request.setAttribute(WHITCH_TAB, TAB_CREATE);
-				request.setAttribute(venueVO4Error, venueVO);
+				request.setAttribute(venueVO4Error, venueVO); /// 此VO是用來恢復錯誤的VO設定
 				RequestDispatcher failureView = request.getRequestDispatcher(goToLocalUrl_forError);
 				failureView.forward(request, response);
 				return;
@@ -173,7 +194,7 @@ public class VenueCreateOrUpdateServlet extends HttpServlet {
 		}
 	}
 	
-	private VenueVO checkAllParamterForVenue(HttpServletRequest request, Map<String, String> errorMsgs, VenueVO oldVenueVO) {
+	private VenueVO checkAllParameterForVenue(HttpServletRequest request, Map<String, String> errorMsgs, VenueVO oldVenueVO) {
 		VenueVO venueVO = null;
 		if(oldVenueVO == null) {
 			venueVO = new VenueVO();
@@ -306,15 +327,41 @@ public class VenueCreateOrUpdateServlet extends HttpServlet {
 		
 		byte[] v_photo1 = null;
 		String v_photo1_ext = null;
-		Map<String, byte[]> map = checkAndGetParameterAboutPicture(request, errorMsgs, "v_photo1");
-		Set<String> set = map.keySet();
-		for(String string : set) {
-			v_photo1_ext = string;
+		
+		if(oldVenueVO==null) { // 確認是否為新建
+			Map<String, byte[]> map = checkAndGetParameterAboutPicture(request, errorMsgs, "v_photo1");
+			Set<String> set = map.keySet();
+			for(String string : set) {
+				v_photo1_ext = string;
+			}
+			v_photo1 = map.get(v_photo1_ext);
+			venueVO.setV_photo1_ext(v_photo1_ext);
+			venueVO.setV_photo1(v_photo1);
+		}else {
+			String hasChangePicture = request.getParameter("hasChangePicture");
+			if(!"false".equals(hasChangePicture)) { // 表示有更動Picture
+				Map<String, byte[]> map = checkAndGetParameterAboutPicture(request, errorMsgs, "v_photo1");
+				Set<String> set = map.keySet();
+				for(String  string :set) {
+					v_photo1_ext = string;
+				}
+				v_photo1 = map.get(v_photo1_ext);
+				venueVO.setV_photo1(v_photo1);
+				venueVO.setV_photo1_ext(v_photo1_ext);
+			}else {
+				//沒有更動原圖片，就取原先的
+				VenueVO tempVenueVO = null;
+				if("false".equals(hasChangePicture)) {
+					tempVenueVO = new VenueService().getOneVenue(venueVO.getV_no());
+					venueVO.setV_photo1(tempVenueVO.getV_photo1());
+					venueVO.setV_photo1_ext(tempVenueVO.getV_photo1_ext());
+				}
+			}
+			
 		}
-		v_photo1 = map.get(v_photo1_ext);
-		venueVO.setV_photo1_ext(v_photo1_ext);
-		venueVO.setV_photo1(v_photo1);
-
+		
+		
+		
 		return venueVO;
 	}
 	
