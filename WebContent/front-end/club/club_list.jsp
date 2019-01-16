@@ -79,7 +79,7 @@
 			}
 </style>
 
-
+ 
 </head>
 <body ${(errorMsgs!=null)?"onload='errormsgs()'":""}>
 <jsp:include page="/front-end/CA105G1_header.jsp" />
