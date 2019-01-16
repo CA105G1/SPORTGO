@@ -18,7 +18,7 @@
  	List<MemberlistVO> list2 = memSvc.getAllMem();
  	pageContext.setAttribute("list2", list2);
 /*********************************************************************************************/ 
-	
+	 
 		String club_no = (String)session.getAttribute("club_no");
 		request.setAttribute("club_no", club_no);
 		ClubService clubSvc = new ClubService();
