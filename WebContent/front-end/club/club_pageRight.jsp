@@ -21,7 +21,7 @@
 		<div class="container-fluid">
 			<div class="row">
 				<h4 id="club_name" class="_19s-" >
-					<a href='<%= request.getContextPath()%>/front-end/club/club_page.jsp?club_no=${clubVO.club_no}' >
+					<a href='<%= request.getContextPath()%>/front-end/club/club_page.jsp' >
 						${clubVO.club_name}
 					</a>
 				</h4>
