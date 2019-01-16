@@ -71,10 +71,12 @@ System.out.println("memberlistVO= "+memberlistVO);
 					<i class="glyphicon glyphicon-circle-arrow-left icon-large brown backToList"></i>
 					<!-- 判斷返回鍵要回到社團還是揪團 -->
 					<%String club_no =request.getParameter("club_no"); %>
-					<c:if test="<%=club_no%> == null"/>  
+					<c:if test="<%=club_no == null%>">  
 					<a href="<%= request.getContextPath()%>/front-end/Sg_info/SgHome.jsp" display="none" id="linkBack">回到揪團列表</a>
-					<c:if test="<%=club_no%> != null"/>  
+					</c:if>
+					<c:if test="<%=club_no != null%>">  
 					<a href="<%= request.getContextPath()%>/front-end/club/Sg_infoList.jsp?club_no=<%=club_no %>" display="none" id="linkBack">回到揪團列表</a>
+					</c:if>
 					<caption style="text-align:center">
 						<h3>
 							<!-- 額滿圖示 -->

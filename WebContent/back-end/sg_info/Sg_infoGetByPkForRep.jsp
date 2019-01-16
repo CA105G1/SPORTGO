@@ -109,7 +109,7 @@
 			
 				<table class="table table-hover">
 					<i class="glyphicon glyphicon-circle-arrow-left icon-large brown backToList"></i>  <!-- 返回按鍵 -->
-					<a href="<%= request.getContextPath()%>/back-end/sg_info/sg_infoBackEnd.jsp" display="none" id="linkBack">回到後台</a>
+					<a href="<%= request.getContextPath()%>/back-end/sg_info/sg_infoBackEnd.jsp?flag=true" display="none" id="linkBack">回到後台</a>
 					
 					<caption style="text-align:center">
 						<h3>

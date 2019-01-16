@@ -61,6 +61,10 @@ public class Club_memberlistService {
 		dao.updateStatus(club_no, mem_no, cmem_status);
 	}
 	
+	public void updateClass(String club_no, String mem_no, String cmem_class) {
+		dao.updateClass(club_no, mem_no, cmem_class);
+	}
+	
 	
 	public Club_memberlistVO getOneClubmemberlist(String club_no,String mem_no) {
 		return dao.findByPrimaryKey(club_no, mem_no);

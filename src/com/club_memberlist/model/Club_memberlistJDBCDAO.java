@@ -587,6 +587,12 @@ public class Club_memberlistJDBCDAO implements Club_memberlistDAO_interface{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void updateClass(String club_no, String mem_no, String cmem_class) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 }
