@@ -19,7 +19,7 @@
  	pageContext.setAttribute("list2", list2);
 /*********************************************************************************************/ 
 	
-		String club_no = request.getParameter("club_no");
+		String club_no = (String)session.getAttribute("club_no");
 		request.setAttribute("club_no", club_no);
 		ClubService clubSvc = new ClubService();
 		ClubVO clubVO = clubSvc.getOneClub(club_no);
