@@ -114,15 +114,16 @@
                     <div class="panel-body">
                         <div class="row">
                         <c:forEach var="detail" items="${OrddetailSvc.getOneOrd(ord.ord_no)}">
-                            <div class="col-xs-2 col-sm-2" style="max-width:80px;max-height:80px;border-redius:10px;">
+                            <div class="col-xs-2 col-sm-2" >
                                 <img class="img-circle"
                                      src="<%=request.getContextPath()%>/pro/proImg.do?pro_no=${detail.pro_no}"
-                                     alt="User Pic" style="height:100%;position:absolute;">
+                                     alt="User Pic" style="max-width:55px;max-height:55px;border-redius:1px;">
                             </div>
 <!--                             比較小的的跳行 -->
                             <div class="col-xs-10 col-sm-10">
                                 <strong>商品：${prdSvc.getOneProduct(detail.pro_no).pro_name}</strong><br>
                                 <strong>數量：${detail.pro_count}</strong><br>
+                                <strong>數量：${detail.pro_no}</strong><br>
                             </div>
 <!--                             比較大的使用table表示 -->
                         </c:forEach>

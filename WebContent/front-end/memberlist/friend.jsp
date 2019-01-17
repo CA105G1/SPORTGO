@@ -468,7 +468,7 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 							+"<img style='width:30px;height:30px;border-radius:50%;' src='showPicture.do?mem_no="
 							+jsonObj.userName+"'><br>"+jsonObj.message+ "</div>");
 				}
-				messageArea.value = messageArea.value + message;
+// 				messageArea.value = messageArea.value + message;
 				$('.chat').scrollTop($('.chat').prop('scrollHeight'));
 // 				messageArea.scrollTop = messageArea.scrollHeight;
 				//上線通知
