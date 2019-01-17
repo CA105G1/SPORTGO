@@ -56,7 +56,7 @@
 <!-- 							    </a> -->
 <!-- 							</div> -->
 							<a class="navbar-left center-block" href="<%=request.getContextPath()%>/index.jsp">
-								<img style="height: 20px;"
+								<img style="height: 20px; width:20px"
 								src="<%=request.getContextPath()%>/img/logo_SportyGo_2_light.png" alt="SportGo!"/>
 							</a>
 						</li>
@@ -75,8 +75,12 @@
 				
 					<!-- 右選單 -->
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="<%=request.getContextPath()%>/front-end/pro/listAllPro_front.jsp"><i class="glyphicon glyphicon-shopping-cart"></i> 購物車 </a></li>
+						<li>
+							<a href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/shoppingcart_front.jsp">
+							<i class="glyphicon glyphicon-shopping-cart"></i> 購物車 </a>
+						</li>
 						<c:if test="${memberlistVO==null}">
+							
 							<li>
 								<a href="#">訪客，您好</a>
 							</li>
@@ -95,6 +99,7 @@
 							</li>
 						</c:if>
 						<c:if test="${!(memberlistVO==null)}">
+							
 							<li>
 								<a href="<%=request.getContextPath()%>/front-end/memberlist/public_Member_page.jsp">${memberlistVO.mem_name}，您好</a>
 							</li>
@@ -181,7 +186,7 @@
 <!-- 						<li><a href="#">　賽事(暫時刪除)　</a></li> -->
 						<li class="showActive"><a href="<%=request.getContextPath()%>/front-end/venue/venue_query_info_by_composite_front.jsp">　場地　</a></li>
 												
-						<li class="showActive"><a href="<%=request.getContextPath()%>/front-end/pro/listAllPro_front.jsp">　商城　</a></li>
+						<li class="showActive"><a href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/listAllPro_front.jsp">　商城　</a></li>
 <!-- 						<li class="dropdown"> -->
 <%-- 							<a href="<%=request.getContextPath()%>/front-end/pro/listAllPro_front.jsp" class="dropdown-toggle" data-toggle="dropdown"> --%>
 <!-- 								　商城　 -->
