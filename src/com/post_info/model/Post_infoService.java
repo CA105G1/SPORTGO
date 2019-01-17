@@ -56,4 +56,7 @@ public class Post_infoService {
 		return dao.getAllfromclub(club_no);
 	}
 	
+	public void deletePost(String post_no) {
+		dao.delete(post_no);
+	}
 }

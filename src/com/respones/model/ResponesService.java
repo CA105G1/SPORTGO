@@ -52,6 +52,8 @@ public class ResponesService {
 		 dao.delete(res_no, mem_no);
 	}
 	
-	
+	public void deleteBypost_no(String post_no) {
+		dao.deleteBypostno(post_no);
+	}
 
 }

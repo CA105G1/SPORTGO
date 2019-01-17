@@ -39,7 +39,7 @@ public class OrdServlet extends HttpServlet {
 	//-------------------------前端路徑---------------------//
 	private static final String PATH_FRONT_LIST_ALL_PRO = "/front-end/pro/listAllPro_front.jsp";
 	private static final String PATH_FRONT_LIST_ONE_PRO = "/front-end/pro/listOnePro_front.jsp";
-//	private static final String PATH_SHOPPINGCART_/front-end/pro/ord_front.jsp";
+//	private static final String PATH_SHOPPINGCART_FRONT = "/front-end/pro/ord_front.jsp";
 	//------------------------模板路徑(訂單的address要換舊版時需開)----------------------//
 	private static final String PATH_SHOPPINGCART_FRONT = "/front-end/pro/alazea-gh-pages/shoppingcart_front.jsp";
 	private static final String PATH_ORD_FRONT = "/front-end/pro/alazea-gh-pages/ord_front.jsp";
@@ -82,19 +82,19 @@ if ("insert".equals(action)) { //來自shoppingcart_front.jsp的請求
 				}
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理(收貨地址)*************************/
 				
-//				String receiver = req.getParameter("address_receiver");
-//				String phone = req.getParameter("address_phone");
-//				String country = req.getParameter("address_country");
-//				String city = req.getParameter("address_city");
-//				String detail = req.getParameter("address_detail");
-//				String zip = req.getParameter("address_zip");
+				String receiver = req.getParameter("address_receiver");
+				String phone = req.getParameter("address_phone");
+				String country = req.getParameter("address_country");
+				String city = req.getParameter("address_city");
+				String detail = req.getParameter("address_detail");
+				String zip = req.getParameter("address_zip");
 				
-				String receiver = req.getParameter("receiver");
-				String phone = req.getParameter("phone");
-				String country = req.getParameter("country");
-				String city = req.getParameter("city");
-				String detail = req.getParameter("detail");
-				String zip = req.getParameter("zip");
+//				String receiver = req.getParameter("receiver");
+//				String phone = req.getParameter("phone");
+//				String country = req.getParameter("country");
+//				String city = req.getParameter("city");
+//				String detail = req.getParameter("detail");
+//				String zip = req.getParameter("zip");
 				
 				if("".equals(receiver)||(receiver.trim()).length()==0) {
 					errorMsgs.add("收件人欄位必填");
@@ -236,15 +236,17 @@ if ("insert".equals(action)) { //來自shoppingcart_front.jsp的請求
 					}
 				}
 				/***************************2.開始新增資料***************************************/
-				
+				    
 					for(int i = 0 ; i < pro_no.length ; i ++) {  //選擇幾樣商品並加入到list的orddetailsVO
 						ShoppingcartDAO cartDAO = new ShoppingcartDAO();
 	                	Integer pro_bonus = proSvc1.getOneProduct(pro_no[i]).getPro_bonus();
 	                	Integer pro_count = cartDAO.findByCount(mem_no, pro_no[i]);
 	                	ord_amount += pro_bonus*pro_count;
 						testList.add(i, new OrddetailsVO(pro_no[i] , pro_bonus,pro_count));
-	        			cartDAO.delete(mem_no, pro_no[i]);
 	                }
+					ShoppingcartDAO cartDAO = new ShoppingcartDAO();
+					cartDAO.deleteAll(mem_no, pro_no);
+					
 					/****製作訂單與訂單明細***/
 					OrdVO ordVO = new OrdVO();
 					//ordVO.setOrd_no(ord_no); jdbc以用sql自動  

@@ -7,6 +7,7 @@
 <%
 	//session中有memberlistVO、club_no，EL直接拿了就用
 	String club_no = (String)session.getAttribute("club_no");
+	
 	ClubService svc = new ClubService();
 	ClubVO clubVO = svc.getOneClub(club_no);
 	request.setAttribute("clubVO",clubVO);

@@ -293,7 +293,7 @@ overflow: hidden;
 	</style>
 </head>
 <body onload="connect();" onunload="disconnect();">
-<%@ include file="/front-end/CA105G1_header.file" %>
+<jsp:include page="/front-end/CA105G1_header.jsp"/>
 	<div class="container-fluid">
 		<div class="row">
 
@@ -524,7 +524,7 @@ overflow: hidden;
 	                        
 	                </div>
 	            </div>
-<%@ include file="/front-end/CA105G1_footer.file" %>
+<jsp:include page="/front-end/CA105G1_footer.jsp"/>
     </div>
 </div>
 

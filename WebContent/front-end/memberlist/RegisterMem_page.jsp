@@ -59,7 +59,7 @@
 					</div>
 					<div class="form-group">
 						<label for="email">電子郵件</label>
-						<input type="text" name="email" 
+						<input type="email" name="email" 
 						class="form-control" value="${param.email}">
 					</div>
 					<div class="form-group">

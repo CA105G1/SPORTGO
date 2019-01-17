@@ -35,9 +35,12 @@
 		vertical-align:top;
 	}
 	.table > tbody > tr > th{
-            vertical-align: middle;
-            text-align:center
-        }
+        vertical-align: middle;
+        text-align:center
+    }
+    .showSP > th , .showSP > td{
+    	background-color: #FFEE99;
+    }    
 	</style>
 
 
@@ -88,7 +91,7 @@
 	<tbody>	
 		<% int countItem=0;%> 
 		<c:forEach var="venueVO" items="${myList}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
-		<tr>
+		<tr class='${venueVO.v_no==venueVO_toUpdate.v_no?"showSP":""}'>
 			<th>
 				<div class="col-sm-1 h5" style="width:20px"><%=(++countItem)+(whichPage-1)*(rowsPerPage) %></div>
 			</th>

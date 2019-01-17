@@ -8,7 +8,7 @@
     var statusOutput  = document.getElementById("statusOutput");
     var statusPublish = document.getElementById("statusPublish");
 	var webSocket;
-	document.write("<script type=\"text/javascript\" src=\"sweetalert2.css\"></script>");
+//	document.write("<script type=\"text/javascript\" src=\"sweetalert2.css\"></script>");
 	function connect() {
 		// 建立 websocket 物件
 		console.log('host:'+host);

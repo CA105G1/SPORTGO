@@ -7,11 +7,10 @@
 <%@ page import="com.respones.model.*"%>
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
-<%
+ 
+<% 
 //	依照社團編號去找對應的貼文
 // 	List<Post_infoVO> postvolist=(ArrayList)request.getAttribute("postvolist");
-
  	ResponesVO responesVO = new ResponesVO();
  	
 /***回文的會員*********************************************************************************/ 	
@@ -19,45 +18,17 @@
  	List<MemberlistVO> list2 = memSvc.getAllMem();
  	pageContext.setAttribute("list2", list2);
 /*********************************************************************************************/ 
-	
-// 		String club_no = (String)session.getAttribute("club_no");
-// 		if(club_no == null){//如果沒有就給他一個新的
-// 			club_no = request.getParameter("club_no");
-// 			request.getSession().setAttribute("club_no", club_no);
-// 		}/////////////////////登出貼文會消失///////////////////////////////
-// 		/////////////////////登出貼文會消失///////////////////////////////
-
-		MemberlistVO memberlistVO =null;
-		Object tempObject = session.getAttribute("memberlistVO");//從session取得
-		String club_no = null;
-		if(tempObject!=null){//如果會員有登入
-			memberlistVO = (MemberlistVO)tempObject;
-		  	String new_club_no = request.getParameter("club_no");
-		  	System.out.println("new_club_no="+new_club_no);//////////////////////////////////
-		  	request.getSession().setAttribute("club_no", new_club_no);
-		  	club_no = new_club_no;
-		 }else{
-		  	String old_club_no = (String)request.getSession().getAttribute("club_no");
-		  if(old_club_no!=null){
-		   	request.getSession().removeAttribute("club_no");
-		   	club_no = old_club_no;
-		  }else{
-		   	club_no = request.getParameter("club_no");
-		  }
-		 }
-
-
-
-
-
+	 
+		String club_no = (String)session.getAttribute("club_no");
+		request.setAttribute("club_no", club_no);
 		ClubService clubSvc = new ClubService();
 		ClubVO clubVO = clubSvc.getOneClub(club_no);
 		request.setAttribute("clubVO", clubVO);
 		Post_infoService postinfo = new Post_infoService();
 		List<Post_infoVO> postvolist = postinfo.getAllfromclub(club_no);
 		request.setAttribute("postvolist", postvolist);
-	
- 	
+		
+		
 %>
 
 
@@ -101,6 +72,16 @@
     			padding-bottom: 2px;
 			}
 			
+			#btnGroupDrop1{
+				
+    border-left-width: 1px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+
+			}
+			
 			
 			
 		</style>
@@ -110,7 +91,7 @@
 
 	<body>
 	
-	<%@ include file="/front-end/CA105G1_header.file" %>
+	<jsp:include page="/front-end/CA105G1_header.jsp" />
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-xs-12 col-lg-1" id="xx1"></div>
@@ -122,19 +103,27 @@
 				<div class="col-xs-12 col-lg-7">
 					
 <!---------------------------- 貼文列表 ------------------------------------->
+<!-- 查詢的FORM --><form method="post" action="<%= request.getContextPath()%>/post_info.do">
 					<div><!-- 貼文搜尋 -->
 						<input type="text" class="form-control" placeholder="search" style="width:15em" />
+						<input type="hidden" name="action" value="postCompositeQuery">
 	  					<button class="btn btn-primary" type="button" id="postsearch">送出</button>
-					</div>
+					</div><!-- 貼文搜尋 -->
+<!-- 查詢的FORM --></form>					
+<!-- 貼文刪除FORM --><FORM METHOD="post" ACTION="<%=request.getContextPath()%>/respones.do" name="form">  
 					<div class="card text-center" id="post">
-							<br>
   							<div class="card-body">
 								<c:forEach var="postinfoVO" items="${postvolist}">
-    								<h3 class="card-title"  class="list-group-item">主題：${postinfoVO.post_topic}</h3>
-    								<p class="card-text">${postinfoVO.post_content}</p>
-    								
-    								
-<!-------------------------------------------- 留言版 --------------------------------------------------->
+    								<h3 class="card-title"  class="list-group-item">
+    									${postinfoVO.post_topic}
+    								</h3>
+									<a href='<%=request.getContextPath()%>/post_info.do?action=update&post_no=${postinfoVO.post_no}'">編輯</a>
+<!-- 									<button type="submit" class="btn btn-link" id="deletepost" name="action" value="delete">刪除</button> -->
+<%-- 									<button class="btn btn-link" id="deletepost" onclick="location.href='<%=request.getContextPath()%>/post_info.do?action=delete&post_no=${postinfoVO.post_no}'">刪除</button> --%>
+									<a href='<%=request.getContextPath()%>/post_info.do?action=delete&post_no=${postinfoVO.post_no}'">刪除</a>
+    								<p class="card-text">${postinfoVO.post_content}</p><!--貼文內容 -->   								
+<!-- 貼文刪除FORM --></FORM>    								
+<!-------------------------------------------- 新增留言 --------------------------------------------------->
 		<!-- 新增的FORM --><FORM METHOD="post" ACTION="<%=request.getContextPath()%>/respones.do" name="form">  
   							<div class="card-footer text-muted">
 									<div class="card" id="respones">
@@ -154,59 +143,53 @@
   							</div>
 		<!-- 新增的FORM --></FORM> 	
   							
-<!-------------------------------------------- 留言版 ---------------------------------------------------->
-<!----------------------------------------------回文------------------------------------------------------>
-					  			<button class="responesShow btn  btn-link" type="button" id="dropdownMenuButton" data-toggle="" aria-haspopup="true" aria-expanded="false">
-					    			顯示所有留言
-					  			</button>
+<!--------------------------------------------新增留言 ---------------------------------------------------->
+<!------------------------------------------顯示&刪除留言-------------------------------------------------->
+					  		<button class="responesShow btn  btn-link" type="button" id="dropdownMenuButton" data-toggle="" aria-haspopup="true" aria-expanded="false">
+					    		顯示所有留言
+					  		</button>
 							<div class=" container-fluid" id="respones" style="display: none;">
-  									<div class="" aria-labelledby="" width="100%">  
-										<div class="" width="100%">
-												<table class="table">
-													<jsp:useBean id="responesSvc" scope="page" class="com.respones.model.ResponesService"/>
-													<c:forEach var="responesVO" items="${responesSvc.getallfrompost(postinfoVO.post_no)}">
-									<!-- 刪除的FORM --><FORM METHOD="post" ACTION="<%=request.getContextPath()%>/respones.do" name="form">
-				    									<tr>
-				    										<input type="hidden" name="res_no" id="res_no" value="${responesVO.res_no}"/>
-				    										<jsp:useBean id="post_infoSvc" scope="page" class="com.post_info.model.Post_infoService"/>
-				    										<input type="hidden" name="club_no" id="club_no" value="${post_infoSvc.getOnePost_info(responesVO.post_no).getClub_no()}"/>
-					      			 <!-- 回文者的照片--><td scope="col">
-					      			 							<img src="<%=request.getContextPath()%>/front-end/memberlist/showPicture.do?mem_no=${responesVO.mem_no}"  style="width: 10%">
-					      			 						</td>
-					      				 <!-- 回文內容-->	<td scope="col">
-					      				 						${responesVO.res_content}
-				      				 						</td>
-				      				 						<td>
-			 													<button type="submit" class="btn btn-light" name="action" value="delete" >
- 							 										刪除 
- 																</button>
-				      				 						</td> 
+								<table class="table">
+									<jsp:useBean id="responesSvc" scope="page" class="com.respones.model.ResponesService"/>
+									<c:forEach var="responesVO" items="${responesSvc.getallfrompost(postinfoVO.post_no)}"><!-- 內層forEach -->
+					 <!-- 刪除的FORM --><FORM METHOD="post" ACTION="<%=request.getContextPath()%>/respones.do" name="form">
+				    					<tr>
+				    					<input type="hidden" name="res_no" id="res_no" value="${responesVO.res_no}"/>
+				    					<jsp:useBean id="post_infoSvc" scope="page" class="com.post_info.model.Post_infoService"/>
+				    					<input type="hidden" name="club_no" id="club_no" value="${post_infoSvc.getOnePost_info(responesVO.post_no).getClub_no()}"/>
+										<td scope="col"><!-- 回文者的照片-->
+					      			 		<img src="<%=request.getContextPath()%>/front-end/memberlist/showPicture.do?mem_no=${responesVO.mem_no}"  style="width: 10%">
+					      			 	</td>
+										<td scope="col"><!-- 回文內容-->
+					      					${responesVO.res_content}
+				      				 	</td>
+				      				 	<td>
+			 								<button type="submit" class="btn btn-light delete_${responesVO.mem_no}" name="action" value="delete" style="display:none;" >
+ 							 					刪除 
+ 											</button>
+				      				 	</td> 
  				      				 						
-				    									</tr>
-									<!-- 刪除的FORM --></FORM>
-			    									</c:forEach>	
-												</table>
-										</div>
-  									</div>
-							</div>
-<!----------------------------------------------回文------------------------------------------------------>
+				    					</tr>
+					 <!-- 刪除的FORM --></FORM>
+			    					</c:forEach><!-- 內層forEach -->
+								</table>
+							</div><!-- id="respones"結束 -->
+<!------------------------------------------顯示&刪除留言-------------------------------------------------->
    								</c:forEach><!-- 最外層postinfoVO的 -->
   							</div> <!-- card-body結束 -->
-
-
-					
-							<div class="col-xs-12 col-lg-2" id="xx">
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+							<div class="col-xs-12 col-lg-2" id="xx"></div>
+					</div><!-- card text-center結束 -->
+				</div><!-- col-xs-12 col-lg-7結束-->
+			</div><!-- row結束 -->
+		</div><!-- 最外層container-fluid結束 -->
 				
-		<%@ include file="/front-end/CA105G1_footer.file" %>
+		<jsp:include page="/front-end/CA105G1_footer.jsp" />
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script>
-		$(document).ready(function() {
+		console.log("delete_${mem_no}");
+		$(function() {
+			$(".delete_${mem_no}").css("display","inline");
 			$(".responesShow").click(function() {
 //	 			$(".answer:not(this)").hide("slow"),
 				$(this).next().slideToggle("slow");

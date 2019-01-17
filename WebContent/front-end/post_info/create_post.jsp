@@ -8,6 +8,13 @@
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<%
+	//session中有memberlistVO、club_no，EL直接拿了就用
+	String club_no = (String)session.getAttribute("club_no");
+	ClubService svc = new ClubService();
+	ClubVO clubVO = svc.getOneClub(club_no);
+	request.setAttribute("clubVO",clubVO);
+%>
 
 
 <html >
@@ -53,10 +60,7 @@
 		</style>
 	</head>
 
-	<!--data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" -->
-
 	<body>
-	
 	<jsp:include page="/front-end/CA105G1_header.jsp" />
 		<div class="container-fluid">
 			<div class="row">
@@ -78,7 +82,7 @@
 				    			<div class="form-group">
 									<label class="post_topic">
 										貼文主題
-										<input type="text" name="post_topic" id="post_topic" class="form-control"  size="50">
+										<input type="text" name="post_topic" id="post_topic" class="form-control"  size="50" value="${post_topic}">
 									</label>
 									<br>
 									<br>
@@ -86,12 +90,12 @@
 										貼文內容
 									<br>
 									<!--貼文內容輸入框-->
-									<textarea name="editor" id="post_content"  class="form-control" ></textarea>
+									<textarea name="editor" id="post_content"  class="form-control" value="${editor}"></textarea>
                						<script>
                         				CKEDITOR.replace( 'editor', {width: '700px' } );
                 					</script>
-									<input type="hidden" name="club_no" id="club_no" value="${post_infoVO.club_no}"/>
-									<input type="hidden" name="mem_no" id="mem_no" value="${post_infoVO.mem_no}"/>
+									<input type="hidden" name="club_no" id="club_no" value="${club_no}"/>
+									<input type="hidden" name="mem_no" id="mem_no" value="${mem_no}"/>
 									<!-- 時間可以不寫 -->
 									</label>
 								</div>

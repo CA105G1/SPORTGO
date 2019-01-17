@@ -1,12 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core"%>
+
+
 <!DOCTYPE html>
 <html>
 	<head>
+		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-		<title></title>
+		<title>SPORTYGO!</title>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<!--[if lt IE 9]>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
 		<style type="text/css">
 			.navbar-brand {
 				padding: 0px; /* firefox bug fix */
@@ -22,6 +29,7 @@
 				justify-content:center;
 			}
 		</style>
+		
 	</head>
 	<body> 
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -42,59 +50,75 @@
 					<!-- 左選單 -->
 					<ul class="nav navbar-nav">
 						<li>
-							<a class="navbar-brand center-block" href="<%=request.getContextPath()%>/index.jsp">
-								<img src="<%=request.getContextPath()%>/img/logo_SportyGo_2_light.png" alt="SportGo!"/>
+<!-- 							<div class="navbar-header"> -->
+<!--     							<a href="#" class="navbar-left"> -->
+<!--        								 <img src="/path/to/image.png"> -->
+<!-- 							    </a> -->
+<!-- 							</div> -->
+							<a class="navbar-left center-block" href="<%=request.getContextPath()%>/index.jsp">
+								<img style="height: 20px; width:20px"
+								src="<%=request.getContextPath()%>/img/logo_SportyGo_2_light.png" alt="SportGo!"/>
 							</a>
 						</li>
-						<li class="active"><a href="<%=request.getContextPath()%>/index.jsp">SportyGo!</a></li>
-						<li><a href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp">揪團去</a></li>
-						<li><a href="<%=request.getContextPath()%>/front-end/club/club_list.jsp">社團</a></li>
+						<li class="showActive active"><a href="<%=request.getContextPath()%>/index.jsp">SportGo!</a></li>
+						<li class="showActive"><a href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp">揪團去</a></li>
+						<li class="showActive"><a href="<%=request.getContextPath()%>/front-end/club/club_list.jsp">社團</a></li>
 					</ul>
 				
-					<!-- 搜尋表單 -->
-					<form class="navbar-form navbar-right" role="search">
-						<div class="form-group">
-							<input type="text" class="form-control" placeholder="請輸入關鍵字">
-						</div>
-						<button type="submit" class="btn btn-default">搜尋</button>
-						
-					</form>
+<!-- 					搜尋表單 -->
+<!-- 					<form class="navbar-form navbar-right" role="search"> -->
+<!-- 						<div class="form-group"> -->
+<!-- 							<input type="text" class="form-control" placeholder="請輸入關鍵字"> -->
+<!-- 						</div> -->
+<!-- 						<button type="submit" class="btn btn-default">搜尋</button> -->
+<!-- 					</form> -->
 				
 					<!-- 右選單 -->
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="<%=request.getContextPath()%>/front-end/pro/listAllPro_front.jsp"><i class="glyphicon glyphicon-shopping-cart"></i> 商城 </a></li>
+						<li>
+							<a href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/shoppingcart_front.jsp">
+							<i class="glyphicon glyphicon-shopping-cart"></i> 購物車 </a>
+						</li>
 						<c:if test="${memberlistVO==null}">
+							
 							<li>
 								<a href="#">訪客，您好</a>
 							</li>
 							<li>
-								<%  String tempClub_no = request.getParameter("club_no");
-									session = request.getSession();
-									if(!"/CA105G1/front-end/memberlist/Login.jsp".equals(request.getRequestURI())){
-										session.setAttribute("location",request.getRequestURI());
-										session.setAttribute("tempClub_no", tempClub_no);
-									}
+								<%  
+									//String tempClub_no = request.getParameter("club_no");
+// 									session = request.getSession();
+// 									if(!"/CA105G1/front-end/memberlist/Login.jsp".equals(request.getRequestURI())){
+// 										session.setAttribute("location",request.getRequestURI());
+// 										//session.setAttribute("tempClub_no", tempClub_no);
+// 									}
 									System.out.println("log_in_location :　"+ request.getRequestURI());
 								%>
-								<a href="<%=request.getContextPath()%>/front-end/memberlist/Login.jsp?club_no=${tempClub_no}">登入/註冊</a>
+								<a href="<%=request.getContextPath()%>/front-end/memberlist/Login.jsp">登入/註冊</a>
+<%-- 								<a href="<%=request.getContextPath()%>/front-end/memberlist/Login.jsp?club_no=${tempClub_no}">登入/註冊</a> --%>
 							</li>
 						</c:if>
 						<c:if test="${!(memberlistVO==null)}">
+							
 							<li>
-								<a href="#">${memberlistVO.mem_name}，您好</a>
+								<a href="<%=request.getContextPath()%>/front-end/memberlist/public_Member_page.jsp">${memberlistVO.mem_name}，您好</a>
 							</li>
 							<li>
-								<%  session = request.getSession();
-									if(!"/CA105G1/front-end/memberlist/Login.jsp".equals(request.getRequestURI())){
-										session.setAttribute("location",request.getRequestURI()); 
-									}
-									session.removeAttribute("tempClub_no"); // 登入移除 club_no
+								<a href="#" >通知</a>
+							</li>
+							<li>
+								<%  
+// 									session = request.getSession();
+// 									if(!"/CA105G1/front-end/memberlist/Login.jsp".equals(request.getRequestURI())){
+// 										session.setAttribute("location",request.getRequestURI()); 
+// 									}
+// // 									session.removeAttribute("tempClub_no"); // 登入移除 club_no
 									System.out.println("log_out_location :　"+ request.getRequestURI());
 								%>
 								<a href="<%=request.getContextPath()%>/front-end/memberlist/logout.do">登出</a>
 							</li>
 						</c:if>
-						<li><a href="<%=request.getContextPath()%>/backEndIndex.jsp">後台首頁</a></li>
+						<li class="showActive"><a href="<%=request.getContextPath()%>/backEndIndex.jsp">後台首頁</a></li>
 					</ul>
 				</div>
 				<!-- 手機隱藏選單區結束 -->
@@ -111,12 +135,12 @@
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 								關於我們
-								<!-- <b class="caret"></b> -->
+								<b class="caret"></b>
 							</a>
 							<ul class="dropdown-menu">
-								<li><a href="#">還沒做...1</a></li>
-								<li><a href="#">要做啥阿...2</a></li>
-								<li><a href="#">.......</a></li>
+								<li><a href="#">動機</a></li>
+<!-- 								<li><a href="#">要做啥阿...2</a></li> -->
+<!-- 								<li><a href="#">.......</a></li> -->
 							</ul>
 						</li>
 						
@@ -159,10 +183,10 @@
 <!-- 							</ul> -->
 <!-- 						</li> -->
 						
-						<li><a href="#">　賽事　</a></li>
-						<li><a href="<%=request.getContextPath()%>/front-end/venue/venue_query_info_by_composite_front.jsp">　場地　</a></li>
+<!-- 						<li><a href="#">　賽事(暫時刪除)　</a></li> -->
+						<li class="showActive"><a href="<%=request.getContextPath()%>/front-end/venue/venue_query_info_by_composite_front.jsp">　場地　</a></li>
 												
-						<li><a href="<%=request.getContextPath()%>/front-end/pro/listAllPro_front.jsp">　商城　</a></li>
+						<li class="showActive"><a href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/listAllPro_front.jsp">　商城　</a></li>
 <!-- 						<li class="dropdown"> -->
 <%-- 							<a href="<%=request.getContextPath()%>/front-end/pro/listAllPro_front.jsp" class="dropdown-toggle" data-toggle="dropdown"> --%>
 <!-- 								　商城　 -->
@@ -185,6 +209,20 @@
 	</body>
 	
 	<script>
+		var dataForMarkActive;
+		window.addEventListener("load", function(){ 
+			var showActiveArray = document.getElementsByClassName("showActive");
+				for(var i = 0 ; i<showActiveArray.length ; i++){
+					showActiveArray[i].addEventListener("click", function(){
+		// 			dataForMarkActive = sessionStorage.setItem('key', 'value');
+						console.log(this.innerHTML);
+					},false);	
+				};
+		},false);
+		
+		
+	
+	
 // 		$(function(){
 // 			$('.dropdown-toggle').on('mouseenter',new function(){
 				

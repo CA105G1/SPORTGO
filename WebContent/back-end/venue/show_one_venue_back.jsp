@@ -54,7 +54,7 @@
 						<th colspan="2">
 						
 							<div class="col-xs-12 col-sm-6">
-								<form method="post" action="<%=request.getContextPath()%>/news/news.do">
+								<form method="post" action="<%=request.getContextPath()%>/venue/venue.do">
 									<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>" /><!--送出本網頁的路徑給Controller-->
 			     					<input type="hidden" name="v_no" value="${venueVO.v_no}" />
 									<input type="hidden" name="action" value="delete" />
@@ -63,11 +63,11 @@
 							</div>
 						
 							<div class="col-xs-12 col-sm-6">
-								<form method="post" action="<%=request.getContextPath()%>/news/news.do">
+								<form method="post" action="<%=request.getContextPath()%>/venue/venue.do">
 									<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>" /><!--送出本網頁的路徑給Controller-->
 			     					<input type="hidden" name="whichPage"	value="${param.whichPage}" />
 			     					<input type="hidden" name="v_no" value="${venueVO.v_no}" />
-			     					<input type="hidden" name="action" value="show_one_venue_back" />
+			     					<input type="hidden" name="action" value="updateForQueryOneVenue" />
 									<input type="submit" value="更新" class="btn btn-success btn-block" />
 								</form>
 							</div>

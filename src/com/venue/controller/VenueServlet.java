@@ -55,7 +55,6 @@ public class VenueServlet extends HttpServlet {
 				case "update_commit":
 					doForwardNextServlet(request, response, VENUE_CREATE_OR_UPATE_SERVLET);
 					break;
-				// delete
 				case "delete":
 					doForwardNextServlet(request, response, VENUE_DELETE_SERVLET);
 					break;

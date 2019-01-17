@@ -4,7 +4,8 @@
 <%@ page import = "com.ord.model.*" %>
 <%@ page import = "com.orddetails.model.*" %>
 <%@ page import = "java.util.*" %>
-
+<jsp:useBean id="prdSvc" scope="page" class="com.product.model.ProductService"/>
+<jsp:useBean id="OrddetailSvc" scope="page" class="com.orddetails.model.OrddetailsService"/>
 <% 
 	MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO");
 	if(memberlistVO==null){
@@ -15,7 +16,6 @@
 	OrdService ordservice = new OrdService();
 	List<OrdVO> ordlist = ordservice.getAllmem_no(mem_no);
 	pageContext.setAttribute("ordlist", ordlist);
-	OrddetailsService orddetailsSvc = new OrddetailsService();
 
 %>
 <!DOCTYPE html>
@@ -83,22 +83,23 @@
 				</div>
 				<div class="col-xs-12 col-sm-9 tab-content">
 				<!-- 訂單管理 -->
-				<c:forEach var="ord" items="${ordlist}">
+<c:forEach var="ord" items="${ordlist}">
 				
         
        <div class="well col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
 <!--          一開始看到畫面 -->
         <div class="row user-row">
-            <div class="col-xs-3 col-sm-2">
-                <img class="img-circle"
-                     src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=50"
-                     alt="User Pic">
+            <div class="col-xs-1 col-sm-1">
+<!--                 <img class="img-circle" -->
+<!--                      src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=50" -->
+<!--                      alt="User Pic"> -->
             </div>
-            <div class="col-xs-8 col-sm-9">
+            <div class="col-xs-10 col-sm-10">
                 <strong>下訂日期</strong><br>
-                <span class="text-muted">${ord.ord_date}</span>
+                <span class="text-muted">${ord.ord_date}</span><br>
+                <span class="text-muted">${ord.ord_status}</span>
             </div>
-            <div class="col-xs-1 col-sm-1 dropdown-user" data-for=".cyruxx">
+            <div class="col-xs-1 col-sm-1 dropdown-user" id="drop_${ord.ord_no}" data-for=".cyruxx">
                 <i class="glyphicon glyphicon-chevron-down text-muted"></i>
             </div>
         </div>
@@ -112,54 +113,19 @@
                     </div>
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-md-3 col-lg-3 hidden-xs hidden-sm">
+                        <c:forEach var="detail" items="${OrddetailSvc.getOneOrd(ord.ord_no)}">
+                            <div class="col-xs-2 col-sm-2" style="max-width:80px;max-height:80px;border-redius:10px;">
                                 <img class="img-circle"
-                                     src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100"
-                                     alt="User Pic">
-                            </div>
-                            <div class="col-xs-2 col-sm-2 hidden-md hidden-lg">
-                                <img class="img-circle"
-                                     src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=50"
-                                     alt="User Pic">
+                                     src="<%=request.getContextPath()%>/pro/proImg.do?pro_no=${detail.pro_no}"
+                                     alt="User Pic" style="height:100%;position:absolute;">
                             </div>
 <!--                             比較小的的跳行 -->
-                            <div class="col-xs-10 col-sm-10 hidden-md hidden-lg">
-                                <strong>Cyruxx</strong><br>
-                                <dl>
-                                    <dt>User level:</dt>
-                                    <dd>Administrator</dd>
-                                    <dt>Registered since:</dt>
-                                    <dd>11/12/2013</dd>
-                                    <dt>Topics</dt>
-                                    <dd>15</dd>
-                                    <dt>Warnings</dt>
-                                    <dd>0</dd>
-                                </dl>
+                            <div class="col-xs-10 col-sm-10">
+                                <strong>商品：${prdSvc.getOneProduct(detail.pro_no).pro_name}</strong><br>
+                                <strong>數量：${detail.pro_count}</strong><br>
                             </div>
 <!--                             比較大的使用table表示 -->
-                            <div class=" col-md-9 col-lg-9 hidden-xs hidden-sm">
-                                <strong>Cyruxx</strong><br>
-                                <table class="table table-user-information">
-                                    <tbody>
-                                    <tr>
-                                        <td>User level:</td>
-                                        <td>Administrator</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Registered since:</td>
-                                        <td>11/12/2013</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Topics</td>
-                                        <td>15</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Warnings</td>
-                                        <td>0</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                        </c:forEach>
                         </div>
                     </div>
                     <div class="panel-footer">
@@ -193,9 +159,8 @@
 	<script>
 	$(document).ready(function() {
 	    var panels = $('.user-infos');
-	    var panelsButton = $('.dropdown-user');
 	    panels.hide();
-
+	    var panelsButton = $('.dropdown-user');
 	    //Click dropdown
 	    panelsButton.click(function() {
 	        //get data-for attribute
@@ -203,7 +168,7 @@
 	        var idFor = $(dataFor);
 
 	        //current button
-	        var currentButton = $(this);
+	        var currentButton = $(this.id);
 	        idFor.slideToggle(400, function() {
 	            //Completed slidetoggle
 	            if(idFor.is(':visible'))

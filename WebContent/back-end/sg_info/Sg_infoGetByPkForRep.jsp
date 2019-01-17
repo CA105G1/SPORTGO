@@ -20,52 +20,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
-<style type="text/css">
-	#infoSpan{
-		margin-left:30%;
-	}
-	.table>tbody>tr>th{
-		border-top:0px;
-	}
-	.backToList{
-		cursor: pointer;
-	}
-	.backToList:active {
-	  	transform: translateY(1px);
-	}
-	#map {
-		height: 400px;  /* The height is 400 pixels */
-		width: 100%;  /* The width is the width of the web page */
-	}
-	#btnGroup{
-		display:flex;
-		justify-content: space-between;
-	}
-	.panel-title{
-		text-align: center;
-    	text-align-last: center;
-	}
-	#sg_memList{ 
- 		background-color: #FFFFE0; 
-		border-radius: 10px; 
-    	cursor: pointer; 
-     	box-shadow: 0 2px #999; 
-    	width:80%; 
-     	text-align: center; 
-     	text-align-last: center; 
- 	} 
-	#sg_memList:active {
-	  	box-shadow: 0 1px #666;
-	  	transform: translateY(1px);
-	}
-	#sg_memPic{
-		width:50px;
-		height:50px;
-		border-radius: 50px;
-		padding:3px;
-	}
-	
-</style>
+
  
 </head>
 <body>
@@ -109,10 +64,12 @@
 			
 				<table class="table table-hover">
 					<i class="glyphicon glyphicon-circle-arrow-left icon-large brown backToList"></i>  <!-- 返回按鍵 -->
-					<a href="<%= request.getContextPath()%>/back-end/sg_info/sg_infoBackEnd.jsp" display="none" id="linkBack">回到後台</a>
+					<a href="<%= request.getContextPath()%>/back-end/sg_info/sg_infoBackEnd.jsp?flag=true" display="none" id="linkBack">回到後台</a>
 					
 					<caption style="text-align:center">
 						<h3>
+							<!-- 額滿圖示 -->
+							<img id="joinFullPic" src="<%= request.getContextPath()%>/img/joinFull.png" style="width:80px; height:auto; display:none">
 							<!-- 團名 -->
 							<img src="<%= request.getContextPath()%>/img/sporticons/${Sg_infoVO.sp_no}.svg" style="width:20px; height:auto;">
 							${Sg_infoVO.sg_name }
@@ -186,7 +143,7 @@
 						</div>
 						<div>
 								<div id="map"></div>
-								<div id="distance"></div>
+								<div id="distance" style="font-size:1.5em; font-weight:bold; color:red"></div>
 						</div>
 					</div>
 <canvas id="myChart" width="700" height="400" style="display: none"></canvas>
@@ -353,12 +310,73 @@
    	   	    }
    	   	});
    	}
+	
+	
+	
+	
+//若報名人數已達上限則顯示額滿圖示
+	
+	if(<%= vo.getSg_ttlapl() >= vo.getSg_maxno()%>){
+		$("#joinFullPic").css('display', '');
+	}
+	
 	  
 
 </script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAb2lDof7yMn-TTXwt2hwVm4y92t1AqvyU&callback=initMap&libraries=places"
         async defer></script>
+
+
+
+<style type="text/css">
+	#infoSpan{
+		margin-left:30%;
+	}
+	.table>tbody>tr>th{
+		border-top:0px;
+	}
+	.backToList{
+		cursor: pointer;
+	}
+	.backToList:active {
+	  	transform: translateY(1px);
+	}
+	#map {
+		height: 400px;  /* The height is 400 pixels */
+		width: 100%;  /* The width is the width of the web page */
+	}
+	#btnGroup{
+		display:flex;
+		justify-content: space-between;
+	}
+	.panel-title{
+		text-align: center;
+    	text-align-last: center;
+	}
+	#sg_memList{ 
+ 		background-color: #FFFFE0; 
+		border-radius: 10px; 
+    	cursor: pointer; 
+     	box-shadow: 0 2px #999; 
+    	width:80%; 
+     	text-align: center; 
+     	text-align-last: center; 
+ 	} 
+	#sg_memList:active {
+	  	box-shadow: 0 1px #666;
+	  	transform: translateY(1px);
+	}
+	#sg_memPic{
+		width:50px;
+		height:50px;
+		border-radius: 50px;
+		padding:3px;
+	}
+	
+</style>
+
+
 
 
 

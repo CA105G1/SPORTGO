@@ -15,14 +15,14 @@ public class CompositeQuery_Sg_info {
 
 		String aCondition = null;
 
-		if ("sp_no".equals(columnName) || "v_no".equals(columnName) || "sg_per".equals(columnName)) // 用於sg_info有的欄位
-			aCondition = "sg_info."+columnName + " like '%" + value + "%'";
-		else if("reg_no".equals(columnName))  // 用於venue有的欄位
-			aCondition = "venue."+columnName + " like '%" + value + "%'";
+		if ("sp_no".equals(columnName) || "v_no".equals(columnName) || "sg_per".equals(columnName)) // 用於sg_info+Venue合併有的欄位
+			aCondition = "sgV."+columnName + " like '%" + value + "%'";
+		else if("reg_name".equals(columnName) || "reg_dist".equals(columnName))  // 用於region有的欄位
+			aCondition = "region."+columnName + " like '%" + value + "%'";
 		else if ("sg_date".equals(columnName))  // 用於Oracle的date
-			aCondition = "to_char(" + "sg_info." + columnName + ",'yyyy-mm-dd')<='" + value + "'";
+			aCondition = "to_char(" + "sgV." + columnName + ",'yyyy-mm-dd')<='" + value + "'";
 		else if("keyword".equals(columnName)) //關鍵字查詢
-			aCondition = "sg_info.sg_name" + " like '%" + value + "%'";
+			aCondition = "sgV.sg_name" + " like '%" + value + "%'";
 			
 		return aCondition + " ";
 	}

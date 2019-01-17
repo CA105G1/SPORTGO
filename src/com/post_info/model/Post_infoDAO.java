@@ -27,7 +27,7 @@ public class Post_infoDAO  implements Post_infoDAO_interface{
 	
 		
 		private static final String INSERT_STMT = 
-			"INSERT INTO post_info (post_no,club_no,mem_no,post_topic,post_content,post_date) VALUES (('P'||LPAD(to_char(post_info_seq.NEXTVAL), 4, '0')), ?, ?, ?, ?, CURRENT DATE)";
+			"INSERT INTO post_info (post_no,club_no,mem_no,post_topic,post_content,post_date) VALUES (('P'||LPAD(to_char(post_info_seq.NEXTVAL), 4, '0')), ?, ?, ?, ?, SYSDATE)";
 		private static final String GET_ALL_STMT = 
 			"SELECT post_no,club_no,mem_no,post_topic,post_content,post_date FROM post_info order by post_no";
 		private static final String GET_ONE_STMT = 
@@ -53,7 +53,6 @@ public class Post_infoDAO  implements Post_infoDAO_interface{
 				pstmt.setString(2, post_infoVO.getMem_no());
 				pstmt.setString(3, post_infoVO.getPost_topic());
 				pstmt.setString(4, post_infoVO.getPost_content());
-				pstmt.setTimestamp(5, post_infoVO.getPost_date());
 				
 				pstmt.executeUpdate();
 				

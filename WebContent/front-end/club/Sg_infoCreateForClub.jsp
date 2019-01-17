@@ -195,7 +195,7 @@
 						</td></tr>
 					</table>
 				</div>
-				<div id="distance"></div>
+				<div id="distance" style="font-size:1.5em; font-weight:bold; color:red"></div>
 				<div id="map"></div>
 <canvas id="myChart" width="700" height="400" style="display: none"></canvas>
 				

@@ -44,7 +44,8 @@ public class ResponesDAO  implements ResponesDAO_interface{
 			"SELECT * FROM respones where post_no=?";
 		private static final String DELETE = 
 			"DELETE FROM respones  where res_no = ? AND mem_no = ? ";
-		
+		private static final String DELETE_BY_POST_NO = 
+			"DELETE FROM respones  where post_no = ?";
 		
 		@Override
 		public void insert(ResponesVO responesVO) {
@@ -312,6 +313,48 @@ se.printStackTrace();
 				pstmt = con.prepareStatement(DELETE);
 				pstmt.setString(1, res_no);
 				pstmt.setString(2, mem_no);
+				pstmt.executeUpdate();
+				
+			
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+			}finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+			}
+		}
+
+
+		@Override
+		public void deleteBypostno(String post_no) {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			try {
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(DELETE_BY_POST_NO);
+				pstmt.setString(1, post_no);
 				pstmt.executeUpdate();
 				
 			

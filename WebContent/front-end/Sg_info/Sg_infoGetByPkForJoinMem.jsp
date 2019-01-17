@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="java.util.*"%>
 <%@ page import="com.sg_info.model.*"%>
 <%@ page import="com.sg_like.model.*"%>
 <%@ page import="com.sg_mem.model.*"%>
 <%@ page import="com.memberlist.model.*"%>
+<%@ page import = "com.friend.model.*" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
@@ -20,52 +22,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
-<style type="text/css">
-	#infoSpan{
-		margin-left:30%;
-	}
-	.table>tbody>tr>th{
-		border-top:0px;
-	}
-	.backToList{
-		cursor: pointer;
-	}
-	.backToList:active {
-	  	transform: translateY(1px);
-	}
-	#map {
-		height: 400px;  /* The height is 400 pixels */
-		width: 100%;  /* The width is the width of the web page */
-	}
-	#btnGroup{
-		display:flex;
-		justify-content: space-between;
-	}
-	.panel-title{
-		text-align: center;
-    	text-align-last: center;
-	}
-	#sg_memList{ 
- 		background-color: #FFFFE0; 
-		border-radius: 10px; 
-    	cursor: pointer; 
-     	box-shadow: 0 2px #999; 
-    	width:80%; 
-     	text-align: center; 
-     	text-align-last: center; 
- 	} 
-	#sg_memList:active {
-	  	box-shadow: 0 1px #666;
-	  	transform: translateY(1px);
-	}
-	#sg_memPic{
-		width:50px;
-		height:50px;
-		border-radius: 50px;
-		padding:3px;
-	}
-	
-</style>
+
  
 </head>
 <body>
@@ -115,10 +72,12 @@ Sg_infoVO vo = svc.GetByPK(sg_no);
 			
 				<table class="table table-hover">
 					<i class="glyphicon glyphicon-circle-arrow-left icon-large brown backToList"></i>  <!-- 返回按鍵 -->
-					<a href="<%= request.getContextPath()%>/front-end/Sg_info/SgHome.jsp" display="none" id="linkBack">回到揪團首頁</a>
+					<a href="<%= request.getContextPath()%>/front-end/memberlist/MemManager.do?action=Member_Sg" display="none" id="linkBack">回到個人揪團管理</a>
 					
 					<caption style="text-align:center">
 						<h3>
+							<!-- 額滿圖示 -->
+							<img id="joinFullPic" src="<%= request.getContextPath()%>/img/joinFull.png" style="width:80px; height:auto; display:none">
 							<!-- 團名 -->
 							<img src="<%= request.getContextPath()%>/img/sporticons/${Sg_infoVO.sp_no}.svg" style="width:20px; height:auto;">
 							${Sg_infoVO.sg_name }
@@ -189,7 +148,7 @@ Sg_infoVO vo = svc.GetByPK(sg_no);
 						</div>
 						<div>
 								<div id="map"></div>
-								<div id="distance"></div>
+								<div id="distance" style="font-size:1.5em; font-weight:bold; color:red"></div>
 						</div>
 					</div>
 <canvas id="myChart" width="700" height="400" style="display: none"></canvas>
@@ -383,6 +342,32 @@ Sg_infoVO vo = svc.GetByPK(sg_no);
 	
 	
 	
+	
+	//若過了活動時間則關閉所有按鍵
+	<%
+		boolean isOver = false;
+		if(vo.getSg_date().getTime() < new Date().getTime()){
+			isOver = true;
+		}
+	%>
+	
+	if(<%=isOver%>){
+		$("#likebtn").attr('disabled', true);
+		$("#dislikebtn").attr('disabled', true);
+		$("#outbtn").attr('disabled', true);
+		$("#sharebtn").attr('disabled', true);
+		$("#repbtn").attr('disabled', true);
+	}
+	
+	
+	//若報名人數已達上限則顯示額滿圖示
+	
+	if(<%= vo.getSg_ttlapl() >= vo.getSg_maxno()%>){
+		$("#joinFullPic").css('display', '');
+	}
+	
+	
+	
 	  
 		/////////////////收藏按鍵設定////////////////////////
 		//若該會員有收藏該揪團則顯示實心
@@ -456,6 +441,58 @@ Sg_infoVO vo = svc.GetByPK(sg_no);
 		});
 		
 		
+		
+		//分享按鍵設定
+		<%
+			String mem_notest = memberlistVO.getMem_no();
+			FriendService friendSvc = new FriendService();
+			List<FriendVO> friendlist = friendSvc.findMyFriend(mem_notest);
+			MemberlistService service2 = new MemberlistService();
+			List<MemberlistVO> memberlist2 = service2.getAllMem();
+			pageContext.setAttribute("friendlist",friendlist);  	
+			pageContext.setAttribute("memberlist2",memberlist2);
+		%>
+		
+		
+		$("#sharebtn").click(function(){
+			swal({
+				title: '想分享給誰呢',
+				showConfirmButton: false,
+				html:
+					'<form method="post" action="<%= request.getContextPath()%>/Sg_info/Sg_info.do">'+
+						'<input type="hidden" name="action" value="shareSg_info">'+
+						'<input type="hidden" name="mem_no" value="${memberlistVO.mem_no}">'+
+						'<input type="hidden" name="sg_no" value="${Sg_infoVO.sg_no}">'+
+							'<c:forEach var="friend" items="${friendlist}">'+
+								'<c:forEach var="member" items="${memberlist2}">'+
+									'<c:if test="${memberlistVO.mem_no eq friend.mem1_no}">'+
+										'<c:if test="${friend.mem2_no eq member.mem_no}" >'+
+											'<input type="checkbox" name="mem2_no"  value="${member.mem_no}">'+
+											'<img src="<%=request.getContextPath()%>'+
+											'/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"'+
+											'style="width:40px;height:40px;border-radius:50%;">'+
+											'<label>${member.mem_name}</label><br>'+
+										'</c:if>'+
+									'</c:if>'+
+									'<c:if test="${memberlistVO.mem_no eq friend.mem2_no}">'+
+										'<c:if test="${friend.mem1_no eq member.mem_no}" >'+
+											'<input type="checkbox" name="mem2_no"  value="${member.mem_no}">'+
+											'<img src="<%=request.getContextPath()%>'+
+											'/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"'+
+											'style="width:40px;height:40px;border-radius:50%">'+
+											'<label>${member.mem_name}</label><br>'+
+										'</c:if>'+
+									'</c:if>'+
+								'</c:forEach>'+
+							'</c:forEach>'+
+						'<input type="submit" value="送出分享">'+
+					'</form>'
+			})
+		});
+		
+		
+		
+		
 		$("#repbtn").click(function(){
 			swal({
 				title: '正義之士就是你!',type: "warning",showCancelButton: true, showCloseButton: true,
@@ -508,6 +545,55 @@ Sg_infoVO vo = svc.GetByPK(sg_no);
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAb2lDof7yMn-TTXwt2hwVm4y92t1AqvyU&callback=initMap&libraries=places"
         async defer></script>
+
+
+
+<style type="text/css">
+	#infoSpan{
+		margin-left:30%;
+	}
+	.table>tbody>tr>th{
+		border-top:0px;
+	}
+	.backToList{
+		cursor: pointer;
+	}
+	.backToList:active {
+	  	transform: translateY(1px);
+	}
+	#map {
+		height: 400px;  /* The height is 400 pixels */
+		width: 100%;  /* The width is the width of the web page */
+	}
+	#btnGroup{
+		display:flex;
+		justify-content: space-between;
+	}
+	.panel-title{
+		text-align: center;
+    	text-align-last: center;
+	}
+	#sg_memList{ 
+ 		background-color: #FFFFE0; 
+		border-radius: 10px; 
+    	cursor: pointer; 
+     	box-shadow: 0 2px #999; 
+    	width:80%; 
+     	text-align: center; 
+     	text-align-last: center; 
+ 	} 
+	#sg_memList:active {
+	  	box-shadow: 0 1px #666;
+	  	transform: translateY(1px);
+	}
+	#sg_memPic{
+		width:50px;
+		height:50px;
+		border-radius: 50px;
+		padding:3px;
+	}
+	
+</style>
 
 
 

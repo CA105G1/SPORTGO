@@ -55,7 +55,7 @@
 						<th><div class="mytitle">場地類型</div></th>
 						<td>
 							<jsp:useBean id="venueTypeService" scope="page" class="com.venuetype.model.VenueTypeService" />
-							<select size="1" name="vt_no" id="vt_no">
+							<select size="1" name="vt_no" id="vt_no_tab2">
 								<option value=""></option>
 								<c:forEach var="venueTypeVO" items="${venueTypeService.all}">
 									<option value="${venueTypeVO.vt_no}" ${venueTypeVO.vt_no==venueVO_tab2.vt_no?'selected':''}>${venueTypeVO.vt_name}</option>
@@ -76,7 +76,7 @@
 					<tr>
 						<th><div class="mytitle">室內or室外</div></th>
 						<td>
-							<select size="1" name="v_inout" id="v_inout">
+							<select size="1" name="v_inout" id="v_inout_tab2">
 								<option value=""></option>
 								<option value="室內設施" ${'室內設施'==venueVO_tab2.v_inout?'selected':''}>室內設施</option>
 								<option value="室外設施" ${'室外設施'==venueVO_tab2.v_inout?'selected':''}>室外設施</option>
@@ -89,7 +89,7 @@
 						<th><div class="mytitle">場地地區</div></th>
 						<td>
 							<jsp:useBean id="regService" scope="page" class="com.region.model.RegService" />
-							<select size="1" name="reg_no" id="reg_no">
+							<select size="1" name="reg_no" id="reg_no_tab2">
 								<option value=""></option>
 								<c:forEach var="regVO" items="${regService.all}">
 									<option value="${regVO.reg_no}" ${regVO.reg_no==venueVO_tab2.reg_no?'selected':''}>${regVO.reg_name}-${regVO.getReg_dist().trim()}</option>
@@ -119,7 +119,7 @@
 					<tr>
 						<th><div class="mytitle">開放狀態</div></th>
 						<td>
-							<select size="1" name="open_state" id="open_state">
+							<select size="1" name="open_state" id="open_state_tab2">
 								<option value=""></option>
 								<option value="不開放對外使用" ${'不開放對外使用'==venueVO_tab2.open_state?'selected':''}>不開放對外使用</option>
 								<option value="免費對外開放使用" ${'免費對外開放使用'==venueVO_tab2.open_state?'selected':''}>免費對外開放使用</option>
@@ -135,7 +135,7 @@
 							<div style="display:inline-flex">
 								<div>
 									<div class='p'>星期一</div>
-									<select size="1" name="openday_mon" id="openday_mon">
+									<select size="1" name="openday_mon" id="openday_mon_tab2">
 										<option value=""></option>
 										<option value="Y" ${'Y'==venueVO_tab2.openday_mon?'selected':''}>開放使用</option>
 										<option value="N" ${'N'==venueVO_tab2.openday_mon?'selected':''}>休館</option>
@@ -144,7 +144,7 @@
 								
 								<div>
 									<div class='p'>星期二</div>
-									<select size="1" name="openday_tue" id="openday_tue">
+									<select size="1" name="openday_tue" id="openday_tue_tab2">
 										<option value=""></option>
 										<option value="Y" ${'Y'==venueVO_tab2.openday_tue?'selected':''}>開放使用</option>
 										<option value="N" ${'N'==venueVO_tab2.openday_tue?'selected':''}>休館</option>
@@ -153,7 +153,7 @@
 								
 								<div>
 									<div class='p'>星期三</div>
-									<select size="1" name="openday_wed" id="openday_wed">
+									<select size="1" name="openday_wed" id="openday_wed_tab2">
 										<option value=""></option>
 										<option value="Y" ${'Y'==venueVO_tab2.openday_wed?'selected':''}>開放使用</option>
 										<option value="N" ${'N'==venueVO_tab2.openday_wed?'selected':''}>休館</option>
@@ -162,7 +162,7 @@
 								
 								<div>
 									<div class='p'>星期四</div>
-									<select size="1" name="openday_thu" id="openday_thu">
+									<select size="1" name="openday_thu" id="openday_thu_tab2">
 										<option value=""></option>
 										<option value="Y" ${'Y'==venueVO_tab2.openday_thu?'selected':''}>開放使用</option>
 										<option value="N" ${'N'==venueVO_tab2.openday_thu?'selected':''}>休館</option>
@@ -171,7 +171,7 @@
 								
 								<div>
 									<div class='p'>星期五</div>
-									<select size="1" name="openday_fri" id="openday_fri">
+									<select size="1" name="openday_fri" id="openday_fri_tab2">
 										<option value=""></option>
 										<option value="Y" ${'Y'==venueVO_tab2.openday_fri?'selected':''}>開放使用</option>
 										<option value="N" ${'N'==venueVO_tab2.openday_fri?'selected':''}>休館</option>
@@ -180,7 +180,7 @@
 								
 								<div>
 									<div class='p'>星期六</div>
-									<select size="1" name="openday_sat" id="openday_sat">
+									<select size="1" name="openday_sat" id="openday_sat_tab2">
 										<option value=""></option>
 										<option value="Y" ${'Y'==venueVO_tab2.openday_sat?'selected':''}>開放使用</option>
 										<option value="N" ${'N'==venueVO_tab2.openday_sat?'selected':''}>休館</option>
@@ -189,7 +189,7 @@
 								
 								<div>
 									<div class='p'>星期日</div>
-									<select size="1" name="openday_sun" id="openday_sun">
+									<select size="1" name="openday_sun" id="openday_sun_tab2">
 										<option value=""></option>
 										<option value="Y" ${'Y'==venueVO_tab2.openday_sun?'selected':''}>開放使用</option>
 										<option value="N" ${'N'==venueVO_tab2.openday_sun?'selected':''}>休館</option>
@@ -212,7 +212,7 @@
 					<tr>
 						<th><div class="mytitle">是否顯示</div></th>
 						<td>
-							<select size="1" name="v_display" id="v_display">
+							<select size="1" name="v_display" id="v_display_tab2">
 								<option value=""></option>
 								<option value="顯示" ${'顯示'==venueVO_tab2.v_display?'selected':''}>顯示</option>
 								<option value="不顯示" ${'不顯示'==venueVO_tab2.v_display?'selected':''}>不顯示</option>
@@ -224,7 +224,7 @@
 						<th><div class="mytitle">適用對象-民眾</div></th>
 						<td>
 							
-							<select size="1" name="v_fitall" id="v_fitall">
+							<select size="1" name="v_fitall" id="v_fitall_tab2">
 								<option value=""></option>
 								<option value="Y" ${'Y'==venueVO_tab2.v_fitall?'selected':''}>開放</option>
 								<option value="N" ${'N'==venueVO_tab2.v_fitall?'selected':''}>不開放</option>
@@ -236,7 +236,7 @@
 						<th><div class="mytitle">適用對象-內部人員</div></th>
 						<td>
 							
-							<select size="1" name="v_fitinter" id="v_fitinter">
+							<select size="1" name="v_fitinter" id="v_fitinter_tab2">
 								<option value=""></option>
 								<option value="Y" ${'Y'==venueVO_tab2.v_fitinter?'selected':''}>開放</option>
 								<option value="N" ${'N'==venueVO_tab2.v_fitinter?'selected':''}>不開放</option>

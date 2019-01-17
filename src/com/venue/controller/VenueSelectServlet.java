@@ -31,6 +31,9 @@ public class VenueSelectServlet extends HttpServlet {
 	private static final String ERRORMSGS_NO_TAB = "errorMsgs";
 	private static final String ERRORMSGS_TITLE = "errorMsgs_";
 	
+	private static final String VENUEVO_FOR_ERROR_NAME_TITLE = "venueVO_";
+	private static final String VENUEVO_FOR_SHOW_ONE_NAME = "venueVO";
+	
 	private static final String WHITCH_TAB = "whichTab";
 	private static final String TAB_SELECT = "tab1";
 	private static final String TAB_CREATE = "tab2";
@@ -60,11 +63,21 @@ public class VenueSelectServlet extends HttpServlet {
 			case "update_reset":
 			case "updateForQueryOneVenue":
 				request.setAttribute(WHITCH_TAB, TAB_UPDATE);
-				doActionGetOneVenueOrForUpdate(request, response, MAINTAIN_VENUE_INFO_BACK, TAB_UPDATE, false);
+				doActionGetOneVenueOrForUpdate(request, response, 
+										MAINTAIN_VENUE_INFO_BACK,	// goToLoaclUrl_forSuccess
+										MAINTAIN_VENUE_INFO_BACK, 	// goToLacalUrl_forError
+										TAB_UPDATE, 				// whichTab_forErrorMsgs
+										VENUEVO_FOR_ERROR_NAME_TITLE+TAB_UPDATE, // venueVO4RawUpdateOrError
+										false); // isFront
 				break;
 			case "show_one_venue_back":
 				request.setAttribute(WHITCH_TAB, TAB_SELECT);
-				doActionGetOneVenueOrForUpdate(request, response, MAINTAIN_VENUE_INFO_BACK, TAB_SELECT, false);
+				doActionGetOneVenueOrForUpdate(request, response, 
+										MAINTAIN_VENUE_INFO_BACK, 	// goToLoaclUrl_forSuccess
+										MAINTAIN_VENUE_INFO_BACK, 	// goToLacalUrl_forError
+										TAB_SELECT, 				// whichTab_forErrorMsgs
+										VENUEVO_FOR_SHOW_ONE_NAME,	// venueVO4RawUpdateOrError
+										false);						// isFront
 				break;
 			case "listVenueByCompositeQuery":
 				request.setAttribute(WHITCH_TAB, TAB_SELECT);
@@ -148,7 +161,10 @@ public class VenueSelectServlet extends HttpServlet {
 		successView.forward(request, response);
 	}
 	
-	private void doActionGetOneVenueOrForUpdate(HttpServletRequest request, HttpServletResponse response, String goToLoaclUrl, String whichTab_forErrorMsgs, boolean isFrontEnd) throws ServletException, IOException{
+	private void doActionGetOneVenueOrForUpdate(HttpServletRequest request, HttpServletResponse response, 
+												String goToLoaclUrl_forSuccess, String goToLacalUrl_forError,
+												String whichTab_forErrorMsgs, String venueVO4RawUpdateOrError,
+												boolean isFrontEnd) throws ServletException, IOException{
 		//show_one_venue_back
 		Map<String,String> errorMsgs = getErrorMsgsCollection(request, ERRORMSGS_TITLE, whichTab_forErrorMsgs);
 		try {
@@ -166,16 +182,16 @@ public class VenueSelectServlet extends HttpServlet {
 			Double venue_score = v_evaluationService.getOneVenueScore(venueVO.getV_no());
 			
 			///////
-			request.setAttribute("venueVO", venueVO);
+			request.setAttribute(venueVO4RawUpdateOrError, venueVO);
 			request.setAttribute("venueTypeVO", venueTypeVO);
 			request.setAttribute("regVO", regVO);
 			request.setAttribute("venue_score", venue_score);
-			RequestDispatcher successView = request.getRequestDispatcher(goToLoaclUrl);
+			RequestDispatcher successView = request.getRequestDispatcher(goToLoaclUrl_forSuccess);
 			successView.forward(request, response);
 			return;
 		}catch (Exception e) {
 			errorMsgs.put(DB_ERROR_MSGS,"取得資料失敗: "+e.getMessage());
-			RequestDispatcher failureView = request.getRequestDispatcher(goToLoaclUrl);
+			RequestDispatcher failureView = request.getRequestDispatcher(goToLacalUrl_forError);
 			failureView.forward(request, response);
 			return;
 		}	

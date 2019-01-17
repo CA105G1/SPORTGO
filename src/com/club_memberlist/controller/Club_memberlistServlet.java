@@ -51,72 +51,41 @@ public class Club_memberlistServlet extends HttpServlet{
 		PrintWriter pw = res.getWriter();
 		System.out.println("Club_memberListServlet--- action : "+action);
 
-//社團成員活動權限
-if ("privilege".equals(action)) { 
+//變更社團成員權限
+if ("setCmem_class".equals(action)) { 
 	
 	List<String> errorMsgs = new LinkedList<String>();
 	req.setAttribute("errorMsgs", errorMsgs);
-	String requestURL = req.getParameter("requestURL");
 
 	try {
 		/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 		
 		String club_no = req.getParameter("club_no");
 		String mem_no =  req.getParameter("mem_no");
-
-		String cmem_status = req.getParameter("cmem_status").trim();
-		if ("禁言中".equals(cmem_status)){
-			errorMsgs.add("請詢問社團管理員");
-			if("待審核".equals(cmem_status)||"已退出".equals(cmem_status)) {
-				errorMsgs.add("請加入社團");
-			}
-		}else{
-			cmem_status=null;
-			if(cmem_status.trim().length() == 0) {
-				errorMsgs.add("社團成員狀態請勿空白");
-			}
-		}
-
-		String cmem_class = req.getParameter("cmem_class").trim();
-		if ("一般成員".equals(cmem_status)){
-			errorMsgs.add("您無社團管理權限");
-		}
+		String cmem_class =  req.getParameter("cmem_class");
 		
-		
-		Club_memberlistVO club_memberlistVO = new Club_memberlistVO();
-		
-		club_memberlistVO.setClub_no(club_no);
-		club_memberlistVO.setMem_no(mem_no);
-		club_memberlistVO.setCmem_status(cmem_status);
-		club_memberlistVO.setCmem_class(cmem_class);
-		
-
-		// Send the use back to the form, if there were errors
-		if (!errorMsgs.isEmpty()) {
-			req.setAttribute("club_memberlistVO", club_memberlistVO); 
-			RequestDispatcher failureView = req
-					.getRequestDispatcher(CLUBPAGE_PATH);
-			failureView.forward(req, res);
-			return; //程式中斷
-		}
 		
 		/***************************2.開始修改資料*****************************************/
 		Club_memberlistService club_memberlistSvc = new Club_memberlistService();
-		club_memberlistVO = club_memberlistSvc.privilege(club_no, mem_no, cmem_status, cmem_class);
+		club_memberlistSvc.updateClass(club_no, mem_no, cmem_class);
 		
 		/***************************3.修改完成,準備轉交(Send the Success view)*************/
 
-		req.setAttribute("Club_memberlistVO", club_memberlistVO);
-		String url = requestURL;
-		RequestDispatcher successView = req.getRequestDispatcher(url);   // 修改成功後,轉交回送出修改的來源網頁
-		successView.forward(req, res);
+		JSONObject obj = new JSONObject();
+		try {
+			obj.put("answer", "OK");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		pw.write(obj.toString());
 	
 
 		/***************************其他可能的錯誤處理*************************************/
 	} catch (Exception e) {
 		errorMsgs.add("修改資料失敗:"+e.getMessage());
 		RequestDispatcher failureView = req
-				.getRequestDispatcher(CLUBPAGE_PATH);
+				.getRequestDispatcher("/front-end/club_memberlist/reviewaddclub.jsp");
 		failureView.forward(req, res);
 	}
 }
@@ -168,6 +137,50 @@ if ("addintoclub".equals(action)) {
 		failureView.forward(req, res);
 	}
 }
+
+
+
+//審核社團加入申請
+if("isJoinClub".equals(action)) {
+	List<String> errorMsgs = new LinkedList<String>();
+	req.setAttribute("errorMsgs", errorMsgs);
+	
+	try {
+		/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+		
+		String result = req.getParameter("result");
+		String club_no = req.getParameter("club_no");
+		String mem_no = req.getParameter("mem_no");
+		String cmem_status = null;
+		
+		/***************************2.開始修改資料*****************************************/
+		Club_memberlistService club_memberlistSvc = new Club_memberlistService();
+		if("agree".equals(result)) {
+			cmem_status = "正式社員";
+			club_memberlistSvc.updateStatus(club_no, mem_no, cmem_status);
+		}else if("disagree".equals(result)) {
+			club_memberlistSvc.dropoutclub(club_no, mem_no);
+		}
+		
+		/***************************3.修改完成,準備轉交(Send the Success view)*************/
+		res.sendRedirect(req.getContextPath()+"/front-end/club_memberlist/reviewaddclub.jsp");
+		//使用重導，若使用forward會出現亂碼
+//		RequestDispatcher successView = req.getRequestDispatcher("/front-end/club_memberlist/reviewaddclub.jsp");   // 修改成功後,轉交回送出修改的來源網頁
+//		successView.forward(req, res);
+		
+		/***************************其他可能的錯誤處理*************************************/
+	}catch (Exception e) {
+		errorMsgs.add("修改資料失敗:"+e.getMessage());
+		RequestDispatcher failureView = req
+				.getRequestDispatcher("/front-end/club_memberlist/reviewaddclub.jsp");
+		failureView.forward(req, res);
+	}
+}
+
+
+
+
+
 
 //退出社團
 if ("dropoutclub".equals(action)) { 

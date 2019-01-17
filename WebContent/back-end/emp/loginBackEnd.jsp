@@ -18,50 +18,39 @@
 	</head>
 	<body>
 		
-		
-		
-		<a href='#modal-id' data-toggle="modal" class="btn-primary"> 後台 : 登入 </a>
-		
-		
-		<div class="modal fade" id="modal-id" tabindex="-1">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-						<h4 class="modal-title"> 後台 : 登入 </h4>
+	<form method="post" action="<%=request.getContextPath()%>/emp/emp.do">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12 col-sm-6 col-sm-offset-1">
+					<h1 align="center">後台管理員 : 登入 </h1>
+					<c:if test="${not empty errorMsgs}">
+						<ul class="error">
+							<c:forEach var="message" items="${errorMsgs}">
+								<li>${message.value}</li>
+							</c:forEach>
+						</ul>
+					</c:if>
+					<div class="form-group">
+						<label for="account">帳號</label>
+						<input type="text" name="emp_account" id="emp_account" class="form-control" value="Peter1" />
+						<div class="text-center" style="color:red">${errorMsgs.get("emp_account")}</div>
 					</div>
-					<div class="modal-body">
-
-						<form method="post" action="<%=request.getContextPath()%>/emp/emp.do">
-							account  : <input type="text" name="emp_account" value="Peter1"><br>
-							passwoed : <input type="password" name="emp_psw" value="654321"><br>
-							<input type="hidden" name="action" value="emp_login">
-
-<!-- 						錯誤表列 -->
-						<c:if test="${not empty errorMsgs}">
-							<ul>
-								<c:forEach var="message" items="${errorMsgs}">
-									<li style="color:red">${message}</li>
-								</c:forEach>
-							</ul>
-						</c:if>						
-<!-- 						內容區 -->
+					<div class="form-group">
+						<label for="emp_psw">密碼</label>
+						<input type="password" name="emp_psw_test" id="emp_psw" class="form-control" value="654321" />
+<!-- 						<input type="password" name="emp_psw" id="emp_psw" class="form-control" value="654321" /> -->
+						<div class="text-center" style="color:red">${errorMsgs.get("emp_psw")}</div>
 					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
-						<button type="button" class="btn btn-primary">Save changes</button>
-					</div>
+				</div>	
+			</div>	
+			<div class="row">
+				<div class="col-xs-12 col-sm-6 col-sm-offset-1">
+					<button type="submit" name="action" class="btn btn-info btn-block" value="emp_login"> 登入 </button>
 				</div>
 			</div>
 		</div>
-		
-		
-		
-		
-		
-		
-		
-		
+	</form>
+
 		<!-- 
 			---------------------------------------------------------------------------------
 		 -->
@@ -96,7 +85,7 @@
 					
 <!-- 					<div class="modal-footer"> -->
 <!-- 						<button type="button" class="btn btn-default" data-dismiss="modal"> 關閉 </button> -->
-<!-- <!-- 						<button type="button" class="btn btn-primary"> Login </button> --> -->
+<!-- <!-- 						<button type="button" class="btn btn-primary"> Login </button> --> 
 <!-- 							<input type="submit" value="login" class="btn btn-primary" /> -->
 <!-- 						</from> -->
 <!-- 					</div> -->

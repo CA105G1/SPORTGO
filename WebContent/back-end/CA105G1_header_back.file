@@ -24,25 +24,23 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand myNoWrap" href="#">
-				<img src="<%=request.getContextPath()%>/img/logo_SportyGo_2_light.png" alt="SportyGo!"/>
-			</a>
+			
 		</div>
 				
 		<!-- 手機隱藏選單區 -->
 		<div class="collapse navbar-collapse navbar-ex1-collapse">
 			<!-- 左選單 -->
 			<ul class="nav navbar-nav">
+				<li>
+					<a class="navbar-left center-block" href="<%=request.getContextPath()%>/index.jsp">
+						<img style="height: 20px;"
+						src="<%=request.getContextPath()%>/img/logo_SportyGo_2_light.png" alt="SportGo!"/>
+					</a>	
+				</li>
 				<li class="active"><a href="<%=request.getContextPath()%>/index.jsp">SportGo! 前台首頁 </a></li>
 			</ul>
 		
-			<!-- 搜尋表單 -->
-			<form class="navbar-form navbar-right" role="search">
-				<div class="form-group">
-					<input type="text" class="form-control" placeholder="請輸入關鍵字">
-				</div>
-				<button type="submit" class="btn btn-default">搜尋</button>
-			</form>
+
 		
 			<!-- 右選單 -->
 			<ul class="nav navbar-nav navbar-right">

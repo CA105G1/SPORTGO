@@ -68,8 +68,15 @@ System.out.println("memberlistVO= "+memberlistVO);
 			
 				<table class="table table-hover">
 					<!-- 返回按鍵 -->
-					<i class="glyphicon glyphicon-circle-arrow-left icon-large brown backToList"></i>  
+					<i class="glyphicon glyphicon-circle-arrow-left icon-large brown backToList"></i>
+					<!-- 判斷返回鍵要回到社團還是揪團 -->
+					<%String club_no =request.getParameter("club_no"); %>
+					<c:if test="<%=club_no == null%>">  
 					<a href="<%= request.getContextPath()%>/front-end/Sg_info/SgHome.jsp" display="none" id="linkBack">回到揪團列表</a>
+					</c:if>
+					<c:if test="<%=club_no != null%>">  
+					<a href="<%= request.getContextPath()%>/front-end/club/Sg_infoList.jsp?club_no=<%=club_no %>" display="none" id="linkBack">回到揪團列表</a>
+					</c:if>
 					<caption style="text-align:center">
 						<h3>
 							<!-- 額滿圖示 -->
@@ -144,7 +151,7 @@ System.out.println("memberlistVO= "+memberlistVO);
 						</div>
 						<div>
 								<div id="map"></div>
-								<div id="distance"></div>
+								<div id="distance" style="font-size:1.5em; font-weight:bold; color:red"></div>
 						</div>
 					</div>
 <canvas id="myChart" width="700" height="400" style="display: none"></canvas>
@@ -199,48 +206,42 @@ System.out.println("memberlistVO= "+memberlistVO);
 		<div class="col-xs-12 col-sm-3">
 		<!--------------------------------------------- TEST ---------------------------------------------->
 <%if(memberlistVO!=null){
-String mem_notest = memberlistVO.getMem_no();
-FriendService friendSvc = new FriendService();
-List<FriendVO> friendlist = friendSvc.findMyFriend(mem_notest);
-MemberlistService service2 = new MemberlistService();
-List<MemberlistVO> memberlist2 = service2.getAllMem();
-pageContext.setAttribute("friendlist",friendlist);  	pageContext.setAttribute("memberlist2",memberlist2);
+// String mem_notest = memberlistVO.getMem_no();
+// FriendService friendSvc = new FriendService();
+// List<FriendVO> friendlist = friendSvc.findMyFriend(mem_notest);
+// MemberlistService service2 = new MemberlistService();
+// List<MemberlistVO> memberlist2 = service2.getAllMem();
+// pageContext.setAttribute("friendlist",friendlist);  	
+// pageContext.setAttribute("memberlist2",memberlist2);
 %>
-<form method="post" action="<%= request.getContextPath()%>/Sg_info/Sg_info.do">
-<input type="hidden" name="action" value="shareSg_info">
-<input type="hidden" name="mem_no" value="${memberlistVO.mem_no}">
-	<c:forEach var="friend" items="${friendlist}">
-		<c:forEach var="member" items="${memberlist2}">
-			<c:if test="${memberlistVO.mem_no eq friend.mem1_no}">
-				<c:if test="${friend.mem2_no eq member.mem_no}" >
-<!-- 									<form method="post" action="Friend.do"  class="grid-item"> -->
-							<input type="checkbox" value="${member.mem_no}">
-							<img src="<%=request.getContextPath()%>
-							/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"
-							style="width:40px;height:40px;border-radius:50%;">
-							<label>${member.mem_name}</label><br>
-<!-- 							<input type="hidden" name="action" value="delete_Friend"> -->
-							<input type="hidden" name="mem2_no" value="${member.mem_no}">
-<!-- 									</form> -->
-				</c:if>
-			</c:if>
-			<c:if test="${memberlistVO.mem_no eq friend.mem2_no}">
-				<c:if test="${friend.mem1_no eq member.mem_no}" >
-<!-- 									<form method="post" action="Friend.do"  class="grid-item"> -->
-							<input type="checkbox"  value="${member.mem_no}">
-							<img src="<%=request.getContextPath()%>
-							/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"
-							style="width:40px;height:40px;border-radius:50%">
-							<label>${member.mem_name}</label><br>
-<!-- 							<input type="hidden" name="action" value="delete_Friend"> -->
-							<input type="hidden" name="mem2_no" value="${member.mem_no}">
-<!-- 									</form> -->
-				</c:if>
-			</c:if>
-		</c:forEach>
-	</c:forEach>
-	<input type="submit" value="送出分享">
-</form>
+<%-- <form method="post" action="<%= request.getContextPath()%>/Sg_info/Sg_info.do"> --%>
+<!-- <input type="hidden" name="action" value="shareSg_info"> -->
+<%-- <input type="hidden" name="mem_no" value="${memberlistVO.mem_no}"> --%>
+<%-- <input type="hidden" name="sg_no" value="${Sg_infoVO.sg_no}"> --%>
+<%-- 	<c:forEach var="friend" items="${friendlist}"> --%>
+<%-- 		<c:forEach var="member" items="${memberlist2}"> --%>
+<%-- 			<c:if test="${memberlistVO.mem_no eq friend.mem1_no}"> --%>
+<%-- 				<c:if test="${friend.mem2_no eq member.mem_no}" > --%>
+<%-- 							<input type="checkbox" name="mem2_no"  value="${member.mem_no}"> --%>
+<%-- 							<img src="<%=request.getContextPath()%> --%>
+<%-- 							/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}" --%>
+<!-- 							style="width:40px;height:40px;border-radius:50%;"> -->
+<%-- 							<label>${member.mem_name}</label><br> --%>
+<%-- 				</c:if> --%>
+<%-- 			</c:if> --%>
+<%-- 			<c:if test="${memberlistVO.mem_no eq friend.mem2_no}"> --%>
+<%-- 				<c:if test="${friend.mem1_no eq member.mem_no}" > --%>
+<%-- 							<input type="checkbox" name="mem2_no"  value="${member.mem_no}"> --%>
+<%-- 							<img src="<%=request.getContextPath()%> --%>
+<%-- 							/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}" --%>
+<!-- 							style="width:40px;height:40px;border-radius:50%"> -->
+<%-- 							<label>${member.mem_name}</label><br> --%>
+<%-- 				</c:if> --%>
+<%-- 			</c:if> --%>
+<%-- 		</c:forEach> --%>
+<%-- 	</c:forEach> --%>
+<!-- 	<input type="submit" value="送出分享"> -->
+<!-- </form> -->
 	<%} %>
 <!--------------------------------------------- TEST ---------------------------------------------->
 		</div>
@@ -256,19 +257,6 @@ pageContext.setAttribute("friendlist",friendlist);  	pageContext.setAttribute("m
 	if('${param.club_no}'.length != 0){
 		$("#linkBack").attr("href","<%= request.getContextPath()%>/front-end/club/Sg_infoList.jsp");
 	}
-	
-	//若報名人數已達上限則關閉報名按鍵
-	<%
-		boolean isFull = false;
-		if(vo.getSg_ttlapl() >= vo.getSg_maxno()){
-			isFull = true;
-		}
-	%>
-	if(<%= vo.getSg_ttlapl() >= vo.getSg_maxno()%>){
-		$("#joinbtn").attr('disabled', true);
-		$("#joinFullPic").css('display', '');
-	}
-		
 	
 	
 	//google map設定
@@ -391,6 +379,31 @@ pageContext.setAttribute("friendlist",friendlist);  	pageContext.setAttribute("m
    	   	});
    	}
 	
+	
+	
+	//若過了活動時間則關閉所有按鍵
+	<%
+		boolean isOver = false;
+		if(vo.getSg_date().getTime() < new Date().getTime()){
+			isOver = true;
+		}
+	%>
+	
+	if(<%=isOver%>){
+		$("#likebtn").attr('disabled', true);
+		$("#dislikebtn").attr('disabled', true);
+		$("#joinbtn").attr('disabled', true);
+		$("#sharebtn").attr('disabled', true);
+		$("#repbtn").attr('disabled', true);
+	}
+	
+	//若報名人數已達上限則關閉報名按鍵並顯示圖示
+	
+	if(<%= vo.getSg_ttlapl() >= vo.getSg_maxno()%>){
+		$("#joinbtn").attr('disabled', true);
+		$("#joinFullPic").css('display', '');
+	}
+		
 	
 	
 	
@@ -561,8 +574,52 @@ pageContext.setAttribute("friendlist",friendlist);  	pageContext.setAttribute("m
 		} //function join
 		
 		
+		//分享按鍵設定
+		<%
+			String mem_notest = memberlistVO.getMem_no();
+			FriendService friendSvc = new FriendService();
+			List<FriendVO> friendlist = friendSvc.findMyFriend(mem_notest);
+			MemberlistService service2 = new MemberlistService();
+			List<MemberlistVO> memberlist2 = service2.getAllMem();
+			pageContext.setAttribute("friendlist",friendlist);  	
+			pageContext.setAttribute("memberlist2",memberlist2);
+		%>
+		
+		
 		$("#sharebtn").click(function(){
-			
+			swal({
+				title: '想分享給誰呢',
+				showConfirmButton: false,
+				html:
+					'<form method="post" action="<%= request.getContextPath()%>/Sg_info/Sg_info.do">'+
+						'<input type="hidden" name="action" value="shareSg_info">'+
+						'<input type="hidden" name="mem_no" value="${memberlistVO.mem_no}">'+
+						'<input type="hidden" name="sg_no" value="${Sg_infoVO.sg_no}">'+
+							'<c:forEach var="friend" items="${friendlist}">'+
+								'<c:forEach var="member" items="${memberlist2}">'+
+									'<c:if test="${memberlistVO.mem_no eq friend.mem1_no}">'+
+										'<c:if test="${friend.mem2_no eq member.mem_no}" >'+
+											'<input type="checkbox" name="mem2_no"  value="${member.mem_no}">'+
+											'<img src="<%=request.getContextPath()%>'+
+											'/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"'+
+											'style="width:40px;height:40px;border-radius:50%;">'+
+											'<label>${member.mem_name}</label><br>'+
+										'</c:if>'+
+									'</c:if>'+
+									'<c:if test="${memberlistVO.mem_no eq friend.mem2_no}">'+
+										'<c:if test="${friend.mem1_no eq member.mem_no}" >'+
+											'<input type="checkbox" name="mem2_no"  value="${member.mem_no}">'+
+											'<img src="<%=request.getContextPath()%>'+
+											'/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"'+
+											'style="width:40px;height:40px;border-radius:50%">'+
+											'<label>${member.mem_name}</label><br>'+
+										'</c:if>'+
+									'</c:if>'+
+								'</c:forEach>'+
+							'</c:forEach>'+
+						'<input type="submit" value="送出分享">'+
+					'</form>'
+			})
 		});
 		
 		

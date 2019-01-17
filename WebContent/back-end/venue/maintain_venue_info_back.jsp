@@ -146,6 +146,8 @@
 										<jsp:include page="listQueryVenue_back.jsp"/>
 									<% }else if("show_one_venue_back".equals(request.getParameter("action"))){ %>
 										<jsp:include page="show_one_venue_back.jsp"/>
+									<% }else if("delete".equals(request.getParameter("action"))){ %>
+										<div>${venue.v_no}-${venueVO.v_name}-${venueTypeVO.vt_name}-已被刪除</div>
 									<% } %>
 					        	</div>
 					        </div>
@@ -193,6 +195,7 @@
 		readURL(this);
 		if(temp_My_pic=="#v_photo1_tab3"){
 			$('#hasChangePicture_tab3').val("true");
+			console.log($('#hasChangePicture_tab3').val());
 		}
 	});
 	
