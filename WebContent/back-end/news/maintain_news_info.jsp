@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="com.news.model.NewsVO" %>
 <%@ page import="java.util.List"%>
 
@@ -113,6 +114,17 @@
 												</select>
 											</div>
 											
+											<div>
+												<div class="label label-default label-text">請選擇開始發布時間</div>
+												<input type="text" name="news_release_date" id="news_release_date_tab1" 
+												value="${newsMap.get('news_release_date')[0]}" />
+											</div>
+											<div>
+												<div class="label label-default label-text">請選擇結束發布時間</div>
+												<dvi></dvi>
+												<input type="text" name="news_last_date" id="news_last_date_tab1" 
+												value="${newsMap.get('news_last_date')[0]}" />
+											</div>
 											
 											<div>
 												<input type="hidden" name="action" value="listNewsByCompositeQuery" /><br>
@@ -181,6 +193,80 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	
 	</body>
+	
+			<!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
+
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
+	<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
+	<script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+	
+	<style>
+	  .xdsoft_datetimepicker .xdsoft_datepicker {
+	           width:  300px;   /* width:  300px; */
+	  }
+	  .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
+	           height: 151px;   /* height:  151px; */
+	  }
+	</style>
+	<script type="text/javascript">
+	
+		
+// 		$("#news_picture_tab2").change(function(){
+// 			readURL(this);
+// 		});
+	
+// 		function readURL(input){
+// 			if(input.files && input.files[0]){
+// 				var reader = new FileReader();
+// 				reader.onload = function(e){
+// 					$('#showPic_tab2').attr({"src":e.target.result, "width":"200px"});
+// 					console.log("#showPic_tab2 : "+($('#showPic_tab2').attr("src")));
+// 				}
+// 				reader.readAsDataURL(input.files[0]);
+// 			}
+// 		}
+	
+		//設定時間
+		$.datetimepicker.setLocale('zh'); // kr ko ja en
+		//news_release_date 開始
+		//news_last_date 結束
+		var news_release_date = new Date();
+		$('#news_release_date_tab1').datetimepicker({
+			theme: '',
+ 			step: 10,
+ 			timepicker: true,
+ 			beforeShowDay: function(date) {
+  		  		if (date.getYear() <  news_release_date.getYear() || 
+  			    	(date.getYear() == news_release_date.getYear() && date.getMonth() <  news_release_date.getMonth()) || 
+  			    	(date.getYear() == news_release_date.getYear() && date.getMonth() == news_release_date.getMonth() && date.getDate() < news_release_date.getDate())
+  		        ){
+  		             return [false, ""]
+  		      	}
+  		      	return [true, ""];
+  			},
+			format:'Y-m-d H:i',
+ 				onShow:function( date ){
+  					this.setOptions({
+        			maxDate:jQuery('#news_last_date_tab1').val()?jQuery('#news_last_date_tab1').val():false
+   				})
+  			},
+  			closeOnDateSelect:true
+  			
+ 		});
+ 		$('#news_last_date_tab1').datetimepicker({
+			theme: '',
+ 			step: 10,
+ 			timepicker: true,
+			format:'Y-m-d H:i',
+  			onShow:function( date ){
+   				this.setOptions({
+    				minDate:jQuery('#news_release_date_tab1').val()?jQuery('#news_release_date_tab1').val():false
+   				})
+  			},
+  			closeOnDateSelect:true
+ 		});
+
+	</script>
 	
 	<script type="text/javascript">
 	

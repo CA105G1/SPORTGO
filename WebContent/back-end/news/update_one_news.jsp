@@ -79,6 +79,14 @@
 						</td>
 					</tr>
 					<tr>
+						<th><div class="mytile">關於發布設定</div></th>
+						<td>
+							<div class="mytile">
+								<p>不設定指定發布開始時間及發布截止時間，發布狀態為<b>未發布</b></p>
+							</div>
+						</td>
+					</tr>
+					<tr>
 						<th><div class="mytile">發布開始時間</div></th>
 						<td>
 							<c:if test="${newsVO==null}">
