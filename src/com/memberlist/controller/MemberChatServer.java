@@ -85,11 +85,21 @@ public class MemberChatServer {
 		}
 		if(session1!=null) {
 			if(session1.isOpen())
-				session1.getAsyncRemote().sendText(message);
+				try {
+					session1.getBasicRemote().sendText(message);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		}
 		if(session2!=null) {
 			if(session2.isOpen())
-				session2.getAsyncRemote().sendText(message);
+				try {
+					session2.getBasicRemote().sendText(message);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		}
 //		Collection<Session> sessions = sessionsMap.values();
 //		for(Session session : sessions) {

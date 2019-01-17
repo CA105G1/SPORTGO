@@ -80,6 +80,9 @@ public class MemberlistRedisDAO implements MemberlistRedisDAO_interface {
 	public List<String> getHistoryMsg(String sender) {
 		List<String> historyData = jedis.lrange(sender, 0, jedis.llen(sender)-1);
 		jedis.close();
+		for (String x: historyData) {
+			System.out.println(x);
+		}
 		return historyData;
 	}
 
