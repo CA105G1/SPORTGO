@@ -26,6 +26,7 @@
 		<div class="container-fluid">
 			<div class="ros">
 				<div class="col-xs-12 col-sm-6 col-sm-offset-1">
+<%-- 					<div>${empVO_forRes}</div> --%>
 					<div class="h1">新增管理員</div>
 					<form method="post" action ="<%=request.getContextPath()%>/emp/emp.do">
 			<%-------------
