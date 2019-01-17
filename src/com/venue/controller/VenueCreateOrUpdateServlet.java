@@ -75,7 +75,7 @@ public class VenueCreateOrUpdateServlet extends HttpServlet {
 				// OK---> // request.setAttribute(WHITCH_TAB, TAB_SELECT);
 				// Error---> // request.setAttribute(WHITCH_TAB, TAB_UPDATE);
 				doActionUpdateOneVenue(request, response, 
-						QUERY_SUPER_SERVLET_ACTION_AGAIN+"listVenueByCompositeQuery", // goToLocalUrl_forSuccess
+						QUERY_SUPER_SERVLET_ACTION_AGAIN, // goToLocalUrl_forSuccess
 						TAB_SELECT, // whichTab_forSuccess
 						MAINTAIN_VENUE_INFO_BACK,  // goToLocalUrl_forError
 						TAB_UPDATE, // whichTab_forError
@@ -133,24 +133,21 @@ public class VenueCreateOrUpdateServlet extends HttpServlet {
 			venueService.updateVenue(venueVO);
 			
 			//// 轉交出去
+	
 			HttpSession session = request.getSession();
 			Map<String, String[]> venueMap = (Map<String, String[]>)session.getAttribute("venueMap");
-			
-			Set<String> set = venueMap.keySet();
-			for(String string : set) {
-				System.out.println(string+" = "+venueMap.get(string));
-			}
-			
-			if(request.getParameter("whichPage")==null||"".equals(request.getParameter("whichPage"))) {
+	
+			if(request.getParameter("whichPage")==null || "".equals(request.getParameter("whichPage"))) {
 				HashMap<String, String[]> getMap = new HashMap<String, String[]>(request.getParameterMap());
 				session.setAttribute("venueMap", getMap);
 			}
+			String whichPage = request.getParameter("whichPage");
 			List<VenueVO> list = venueService.getAll(venueMap, isFrontEnd);
 			
 			request.setAttribute("venueVO_toUpdate", venueVO);
 			request.setAttribute(WHITCH_TAB, whichTab_forSuccess);
 			request.setAttribute("myList", list);
-			RequestDispatcher successsView = request.getRequestDispatcher(goToLocalUrl_forSuccess+"&v_no="+venueVO.getV_no());
+			RequestDispatcher successsView = request.getRequestDispatcher(goToLocalUrl_forSuccess+"listVenueByCompositeQuery&v_no="+venueVO.getV_no()+"&whichPage="+whichPage);
 			successsView.forward(request, response);
 			return;
 		
@@ -353,7 +350,6 @@ public class VenueCreateOrUpdateServlet extends HttpServlet {
 			venueVO.setV_photo1(v_photo1);
 		}else {
 			String hasChangePictiure = request.getParameter("hasChangePictiure");
-System.out.println("hasChangePictiure : "+hasChangePictiure);
 			if(!"false".equals(hasChangePictiure)) { // 表示有更動Picture
 				Map<String, byte[]> map = checkAndGetParameterAboutPicture(request, errorMsgs, "v_photo1");
 				Set<String> set = map.keySet();

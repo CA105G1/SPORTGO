@@ -127,10 +127,6 @@ public class VenueSelectServlet extends HttpServlet {
 			Map<String, String[]> venueMap = (Map<String, String[]>)session.getAttribute("venueMap");
 			if(request.getParameter("whichPage")==null || "".equals(request.getParameter("whichPage"))) {
 				HashMap<String, String[]> getMap = new HashMap<String, String[]>(request.getParameterMap());
-Set<String> set = getMap.keySet();
-for(String aStrings : set) {
-	System.out.println(aStrings+" = "+getMap.get(aStrings)[0]);
-}
 				session.setAttribute("venueMap", getMap);
 				venueMap = getMap;
 			}
@@ -177,7 +173,7 @@ for(String aStrings : set) {
 		try {
 			//////// 確認參數
 			String v_no = request.getParameter("v_no");
-			
+			String whichPage =request.getParameter("whichPage");
 			/////// DAO
 			VenueService service = new VenueService();
 			VenueVO venueVO = service.getOneVenue(v_no);
@@ -193,6 +189,7 @@ for(String aStrings : set) {
 			request.setAttribute("venueTypeVO", venueTypeVO);
 			request.setAttribute("regVO", regVO);
 			request.setAttribute("venue_score", venue_score);
+			request.setAttribute("whichPage", whichPage);
 			RequestDispatcher successView = request.getRequestDispatcher(goToLoaclUrl_forSuccess);
 			successView.forward(request, response);
 			return;
