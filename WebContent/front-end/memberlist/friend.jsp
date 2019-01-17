@@ -242,22 +242,22 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 									<c:if test="${memberlistVO.mem_no eq friend.mem1_no}">
 										<c:if test="${friend.mem2_no eq member.mem_no}" >
 											<div id="${member.mem_no}">
+												<img class="online_${member.mem_no}" src="/CA105G1/img/offline.png" style="right:0;max-width:10px;max-height:10px;">
 												<img src="<%=request.getContextPath()%>
 												/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"
 												style="width:50px;height:50px;border-radius:50%;">
-												<label>${member.mem_name}</label>
-												<img class="online_${member.mem_no}" src="/CA105G1/img/offline.png" style="right:0;max-width:10px;max-height:10px;">
+												<label id="name_${member.mem_no}">${member.mem_name}</label>
 											</div>
 										</c:if>
 									</c:if>
 									<c:if test="${memberlistVO.mem_no eq friend.mem2_no}">
 										<c:if test="${friend.mem1_no eq member.mem_no}" >
 											<div id="${member.mem_no}">
+												<img class="online_${member.mem_no}" src="/CA105G1/img/offline.png" style="right:0;max-width:10px;max-height:10px;">
 												<img src="<%=request.getContextPath()%>
 												/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"
 												style="width:50px;height:50px;border-radius:50%">
-												<label>${member.mem_name}</label>
-												<img class="online_${member.mem_no}" src="/CA105G1/img/offline.png" style="right:0;max-width:10px;max-height:10px;">
+												<label id="name_${member.mem_no}">${member.mem_name}</label>
 											</div>
 										</c:if>
 									</c:if>
@@ -431,8 +431,11 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 					$("#chat_" + chatFriend).show();
 					$('.chat').scrollTop($('.chat').prop('scrollHeight'));
 					$('.chat-head').empty();
+					var friend = '${service.getOneMem(chatFriend).mem_name}';
+					console.log(friend);
+					console.log($('#name_'+chatFriend).html());
 					$('.chat-head').append("<img src='/CA105G1/front-end/memberlist/showPicture.do?mem_no="+chatFriend
-							+"'><h3 id='userName' style='max-width:100%;max-height:100%'>${memberlistVO.mem_name}</h3>");
+							+"'><h3 id='userName' style='max-width:100%;max-height:100%'>"+$('#name_'+chatFriend).html()+"</h3>");
 				});
 		function connect(){
 			webSocket = new WebSocket(endPointURL);
