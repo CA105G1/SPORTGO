@@ -118,7 +118,7 @@
 								<a href="<%=request.getContextPath()%>/front-end/memberlist/logout.do">登出</a>
 							</li>
 						</c:if>
-						<li class="showActive"><a href="<%=request.getContextPath()%>/backEndIndex.jsp">後台首頁</a></li>
+<%-- 						<li class="showActive"><a href="<%=request.getContextPath()%>/backEndIndex.jsp">後台首頁</a></li> --%>
 					</ul>
 				</div>
 				<!-- 手機隱藏選單區結束 -->

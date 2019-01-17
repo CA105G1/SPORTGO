@@ -64,20 +64,20 @@
 			</div>
 
 			<!--後台社團專區-->
-			<div class="myGroup">
-				<div class="panel-heading">
-			    	<h3 class="panel-title">
-			    		<a role="button" data-toggle="collapse" href="#clubBack" aria-expanded="false" aria-controls="clubBack">
-							社團專區
-						</a>
-			    	</h3>
-			  	</div>
-			    <div class="panel-collapse collapse" id="clubBack">
-					<div class="list-group">
-						<a href="#" class="list-group-item">社團列表</a>
-					</div>
-				</div>
-			</div>
+<!-- 			<div class="myGroup"> -->
+<!-- 				<div class="panel-heading"> -->
+<!-- 			    	<h3 class="panel-title"> -->
+<!-- 			    		<a role="button" data-toggle="collapse" href="#clubBack" aria-expanded="false" aria-controls="clubBack"> -->
+<!-- 							社團專區 -->
+<!-- 						</a> -->
+<!-- 			    	</h3> -->
+<!-- 			  	</div> -->
+<!-- 			    <div class="panel-collapse collapse" id="clubBack"> -->
+<!-- 					<div class="list-group"> -->
+<!-- 						<a href="#" class="list-group-item">社團列表</a> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
 			
 			<!--後台商城管理-->
 			<div class="myGroup">
