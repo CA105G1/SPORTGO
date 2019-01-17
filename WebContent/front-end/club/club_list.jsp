@@ -5,7 +5,7 @@
 <%@ page import="com.club_memberlist.model.*"%>
 <%@ page import="com.memberlist.model.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+ 
 <%
 	List<ClubVO> list = null;
 	//取得複合查詢後的list
