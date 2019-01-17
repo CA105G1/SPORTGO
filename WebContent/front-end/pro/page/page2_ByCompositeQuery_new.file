@@ -16,12 +16,12 @@
 
   <%if ( pageNumber > 1) {%>
     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/pro/pro.do?action=pro_ByCompositeQuery&requestURL=<%=request.getServletPath()%>">   
-       <select size="1" name="whichPage">
+       <select size="1" name="whichPage" class="form-control selcls">
          <%for (int i=1; i<=pageNumber; i++){%>
             <option value="<%=i%>">跳至第<%=i%>頁
          <%}%> 
        </select>
-       <input type="submit" value="確定" >
+       <input type="submit" value="確定"  class="btn btn-outline-info">
        <input type="hidden" name="action" value="list">  
     </FORM>
   <%}%>

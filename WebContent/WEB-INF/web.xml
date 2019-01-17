@@ -339,6 +339,14 @@
     <url-pattern>/region/region.do</url-pattern>
   </servlet-mapping>
   
+    <servlet>
+    <servlet-name>Product_like_Servlet</servlet-name>
+    <servlet-class>com.product_like.controller.Product_like_Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Product_like_Servlet</servlet-name>
+    <url-pattern>/prolike/prolike.do</url-pattern>
+  </servlet-mapping>
   
   <filter>
     <filter-name>EmpCheckLoginFilter</filter-name>

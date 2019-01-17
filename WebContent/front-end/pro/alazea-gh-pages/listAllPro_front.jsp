@@ -36,7 +36,11 @@
     <!-- Core Stylesheet -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/style.css">
 
-
+    <style type="text/css">
+        .shop-products-area .pagination .page-item .page-link{
+            width: 100px;
+        }
+    </style>
 </head>
 
 <body onload="connect();" onunload="disconnect();">
@@ -53,59 +57,61 @@
     <header class="header-area">
 
         <!-- ***** Top Header Area ***** -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light navbar-dark bg-dark">
-<img style="height: 20px;"src="<%=request.getContextPath()%>/img/logo_SportyGo_2_light.png" alt="SportGo!"/>
-  <a class="navbar-brand" href="<%=request.getContextPath()%>/index.jsp">SportGo!</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+<jsp:include page="/front-end/pro/alazea-gh-pages/header.jsp"/> 
+        
+<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-dark bg-dark"> -->
+<%-- <img style="height: 20px;"src="<%=request.getContextPath()%>/img/logo_SportyGo_2_light.png" alt="SportGo!"/> --%>
+<%--   <a class="navbar-brand" href="<%=request.getContextPath()%>/index.jsp">SportGo!</a> --%>
+<!--   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation"> -->
+<!--     <span class="navbar-toggler-icon"></span> -->
+<!--   </button> -->
 
-  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-      <li class="nav-item active">
-        <a class="nav-link" href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp">揪團去 <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="<%=request.getContextPath()%>/front-end/club/club_list.jsp">社團</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
-      </li>
-    </ul>
+<!--   <div class="collapse navbar-collapse" id="navbarTogglerDemo02"> -->
+<!--     <ul class="navbar-nav mr-auto mt-2 mt-lg-0"> -->
+<!--       <li class="nav-item active"> -->
+<%--         <a class="nav-link" href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp">揪團去 <span class="sr-only">(current)</span></a> --%>
+<!--       </li> -->
+<!--       <li class="nav-item"> -->
+<%--         <a class="nav-link" href="<%=request.getContextPath()%>/front-end/club/club_list.jsp">社團</a> --%>
+<!--       </li> -->
+<!--       <li class="nav-item"> -->
+<!--         <a class="nav-link disabled" href="#">Disabled</a> -->
+<!--       </li> -->
+<!--     </ul> -->
     
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-         <ul class="navbar-nav ml-auto">
-             <li class="nav-item">
-                 <a class="nav-link scroll-link" href="#top-content"><span class="oi oi-cart">購物車</span></a>
-             </li>
-           		<c:if test="${memberlistVO==null}">
-					<li>
-						<a class="nav-link" href="#">訪客，您好</a>
-					</li>
-					<li>
-						<% System.out.println("log_in_location :　"+ request.getRequestURI());%>
-						<a href="<%=request.getContextPath()%>/front-end/memberlist/Login.jsp">登入/註冊</a>
-					</li>
-				</c:if>
-             	<c:if test="${!(memberlistVO==null)}">
-					<li class="nav-item">
-						<a class="nav-link" href="<%=request.getContextPath()%>/front-end/memberlist/public_Member_page.jsp">${memberlistVO.mem_name}，您好</a>
-					</li>
-					<li class="nav-item ">
-						<a class="nav-link" href="#" >通知</a>
-					</li>
-					<li class="nav-item">
-						<% System.out.println("log_out_location :　"+ request.getRequestURI());%>
-						<a class="nav-link" href="<%=request.getContextPath()%>/front-end/memberlist/logout.do">登出</a>
-					</li>
-				</c:if>
-             <li class="nav-item">
-                 <a class="nav-link"  href="<%=request.getContextPath()%>/backEndIndex.jsp">後台首頁</a>
-             </li>
-         </ul>
-     </div>
-  </div>
-</nav>
+<!--       <div class="collapse navbar-collapse" id="navbarResponsive"> -->
+<!--          <ul class="navbar-nav ml-auto"> -->
+<!--              <li class="nav-item"> -->
+<!--                  <a class="nav-link scroll-link" href="#top-content"><span class="oi oi-cart">購物車</span></a> -->
+<!--              </li> -->
+<%--            		<c:if test="${memberlistVO==null}"> --%>
+<!-- 					<li> -->
+<!-- 						<a class="nav-link" href="#">訪客，您好</a> -->
+<!-- 					</li> -->
+<!-- 					<li> -->
+<%-- 						<% System.out.println("log_in_location :　"+ request.getRequestURI());%> --%>
+<%-- 						<a href="<%=request.getContextPath()%>/front-end/memberlist/Login.jsp">登入/註冊</a> --%>
+<!-- 					</li> -->
+<%-- 				</c:if> --%>
+<%--              	<c:if test="${!(memberlistVO==null)}"> --%>
+<!-- 					<li class="nav-item"> -->
+<%-- 						<a class="nav-link" href="<%=request.getContextPath()%>/front-end/memberlist/public_Member_page.jsp">${memberlistVO.mem_name}，您好</a> --%>
+<!-- 					</li> -->
+<!-- 					<li class="nav-item "> -->
+<!-- 						<a class="nav-link" href="#" >通知</a> -->
+<!-- 					</li> -->
+<!-- 					<li class="nav-item"> -->
+<%-- 						<% System.out.println("log_out_location :　"+ request.getRequestURI());%> --%>
+<%-- 						<a class="nav-link" href="<%=request.getContextPath()%>/front-end/memberlist/logout.do">登出</a> --%>
+<!-- 					</li> -->
+<%-- 				</c:if> --%>
+<!--              <li class="nav-item"> -->
+<%--                  <a class="nav-link"  href="<%=request.getContextPath()%>/backEndIndex.jsp">後台首頁</a> --%>
+<!--              </li> -->
+<!--          </ul> -->
+<!--      </div> -->
+<!--   </div> -->
+<!-- </nav> -->
 <!--         <div class="top-header-area"> -->
 <!--             <div class="container"> -->
 <!--                 <div class="row"> -->
@@ -149,87 +155,7 @@
 <!--         </div> -->
 
         <!-- ***** Navbar Area ***** -->
-        <div class="alazea-main-menu">
-            <div class="classy-nav-container breakpoint-off">
-                <div class="container">
-                    <!-- Menu -->
-                    <nav class="classy-navbar justify-content-between" id="alazeaNav">
- 
-                        <!-- Nav Brand -->
-                        <a href="index.html" class="nav-brand">
-<%--                             <img style="height: 40px;"src="<%=request.getContextPath()%>/img/logo_SportyGo_2_light.png" alt=""> --%>
-                        </a>
 
-                        <!-- Navbar Toggler -->
-                        <div class="classy-navbar-toggler">
-                            <span class="navbarToggler"><span></span><span></span><span></span></span>
-                        </div>
-
-                        <!-- Menu -->
-                        <div class="classy-menu">
-
-                            <!-- Close Button -->
-                            <div class="classycloseIcon">
-                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
-                            </div>
-
-                            <!-- Navbar Start -->
-                            <div class="classynav">
-                                <ul>
-                                    <li><a href="<%=request.getContextPath()%>/index.jsp">　首頁　</a></li>
-                                    <li><a href="#">關於我們</a>
-<!--                                         <ul class="dropdown"> -->
-<!--                                             <li><a href="index.html">動機</a></li> -->
-<!--                                             <li><a href="shop.html">Shop</a> -->
-<!--                                                 <ul class="dropdown"> -->
-<!--                                                     <li><a href="shop.html">Shop</a></li> -->
-<!--                                                     <li><a href="shop-details.html">Shop Details</a></li> -->
-<!--                                                     <li><a href="cart.html">Shopping Cart</a></li> -->
-<!--                                                     <li><a href="checkout.html">Checkout</a></li> -->
-<!--                                                 </ul> -->
-<!--                                             </li> -->
-<!--                                             <li><a href="portfolio.html">Portfolio</a> -->
-<!--                                                 <ul class="dropdown"> -->
-<!--                                                     <li><a href="portfolio.html">Portfolio</a></li> -->
-<!--                                                     <li><a href="single-portfolio.html">Portfolio Details</a></li> -->
-<!--                                                 </ul> -->
-<!--                                             </li> -->
-<!--                                             <li><a href="blog.html">Blog</a> -->
-<!--                                                 <ul class="dropdown"> -->
-<!--                                                     <li><a href="blog.html">Blog</a></li> -->
-<!--                                                     <li><a href="single-post.html">Blog Details</a></li> -->
-<!--                                                 </ul> -->
-<!--                                             </li> -->
-<!--                                             <li><a href="contact.html">Contact</a></li> -->
-<!--                                         </ul> -->
-                                    </li>
-                                    <li><a href="<%=request.getContextPath()%>/front-end/memberlist/public_Member_page.jsp">　會員專區　</a></li>
-                                    <li><a href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp">　揪團　</a></li>
-                                    <li><a href="<%=request.getContextPath()%>/front-end/club/club_list.jsp">　社團　</a></li>
-                                </ul>
-
-                                <!-- Search Icon -->
-<!--                                 <div id="searchIcon"> -->
-<!--                                     <i class="fa fa-search" aria-hidden="true"></i> -->
-<!--                                 </div> -->
-
-                            </div>
-                            <!-- Navbar End -->
-                        </div>
-                    </nav>
- 
-                    <!-- Search Form -->
-<!--                     <div class="search-form"> -->
-<!--                         <form action="#" method="get"> -->
-<!--                             <input type="search" name="search" id="search" placeholder="Type keywords &amp; press enter..."> -->
-<!--                             <button type="submit" class="d-none"></button> -->
-<!--                         </form> -->
-<!--                         Close Icon -->
-<!--                         <div class="closeIcon"><i class="fa fa-times" aria-hidden="true"></i></div> -->
-<!--                     </div> -->
-                </div>
-            </div>
-        </div>
     </header>
     <!-- ##### Header Area End ##### -->
   
@@ -240,7 +166,7 @@
             <!-- Single Hero Post -->
             <div class="single-hero-post bg-overlay">
                 <!-- Post Image -->
-                <div class="slide-img bg-img" style="background-image: url(<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/bg-img/ski.jpg);"></div>
+                <div class="slide-img bg-img" style="background-image: url(<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/PN001.jpeg);"></div>
                 <div class="container h-100">
                     <div class="row h-100 align-items-center">
                         <div class="col-12">
@@ -259,7 +185,7 @@
             <!-- Single Hero Post -->
             <div class="single-hero-post bg-overlay">
                 <!-- Post Image -->
-                <div class="slide-img bg-img" style="background-image: url(<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/bg-img/food.jpg);"></div>
+                <div class="slide-img bg-img" style="background-image: url(<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/PN002.jpeg);"></div>
                 <div class="container h-100">
                     <div class="row h-100 align-items-center">
                         <div class="col-12">
@@ -431,7 +357,7 @@
                                         </div>
                                         <div class="product-meta d-flex">
                                             <!-- 我的最愛 -->
-                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
+                                            <a href="#" onclick="tuchlike(this.id);" class="wishlist-btn like_${proVO.pro_no}" id="${proVO.pro_no}"><i class="icon_heart_alt"></i></a>
                                             <!-- 查看商品詳情 -->
                                             <a onclick="document.getElementById('${proVO.pro_no}').submit()" class="add-to-cart-btn">Add to cart</a>
                                             <input type="hidden" name="pro_no" value="${proVO.pro_no}">
@@ -443,7 +369,7 @@
                                     </div>
                                     <!-- Product Info -->
                                     <div class="product-info mt-15 text-center">
-                                        <a href="shop-details.html">
+                                        <a onclick="document.getElementById('${proVO.pro_no}').submit()">
                                             <p>${proVO.pro_name}</p>
                                         </a>
                                         <h6>${proVO.pro_bonus}</h6>
@@ -504,10 +430,72 @@
 <script src="<%=request.getContextPath() %>/back-end/pro/tool/websock_client.js"></script>
 
         <script type="text/javascript"> 
-	
+       		var mem_no_login = "${memberlistVO.mem_no}";
+            
 			$(function() { 
 	 			document.getElementById("showpage").innerHTML = "Showing "+ <%=rowNumber%>+" results"; 
-			}) 
+                
+			});
+			
+			function tuchlike(clicked_id){
+				var clickid = clicked_id;
+				
+				if(mem_no_login == "null"){
+					<%session.setAttribute("location", request.getRequestURI());%>  
+					swal({
+					    title: '尚未登入',
+					    text: '請先登入會員。'
+					}).then(
+					    function () {
+					    console.log("<%= request.getContextPath()%>/front-end/memberlist/Login.jsp");
+					    	window.location.replace("<%= request.getContextPath()%>/front-end/memberlist/Login.jsp");
+					    }
+					)
+					
+				}else{
+					console.log($('.like_'+clickid).css("background-color"));
+					console.log($('.like_'+clickid).css("color") == "rgb(255, 0, 0)");
+					if($('.like_'+clickid).css("background-color") == "rgb(255, 0, 0)"){
+						console.log("我是紅色")
+						$.ajax({
+							 type: "POST",
+							 url: "<%= request.getContextPath()%>/prolike/prolike.do",
+							 data: deletelike(mem_no_login,clicked_id),
+							 dataType: "json",
+							 success: function (data){
+								 $('.like_'+clickid).css("background-color","#303030");
+								 $('.like_'+clickid).hover(function(){
+									 $('.like_'+clickid).css("background-color","#70c745");
+								 })
+						     },
+						     error: function(){alert("AJAX-class發生錯誤囉!")}
+						});
+					} else {
+						$.ajax({
+							 type: "POST",
+							 url: "<%= request.getContextPath()%>/prolike/prolike.do",
+							 data: addlike(mem_no_login,clicked_id),
+							 dataType: "json",
+							 success: function (data){
+								 $('.like_'+clickid).css("background-color","red");
+						     },
+						     error: function(){alert("AJAX-class發生錯誤囉!")}
+				         });
+				         
+					}
+				}
+				
+			}
+			function addlike(mem_no_login,clicked_id){
+				var queryString= {"action":"insert" , "mem_no":mem_no_login , "pro_no":clicked_id};
+			    console.log(queryString);
+				return queryString;
+			}
+			function deletelike(mem_no_login,clicked_id){
+				var queryString= {"action":"delete" , "mem_no":mem_no_login , "pro_no":clicked_id};
+			    console.log(queryString);
+				return queryString;
+			}
 		</script> 
     
     

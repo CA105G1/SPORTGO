@@ -39,7 +39,7 @@
               <li class="nav-item "><a class="nav-link" href="<%=request.getContextPath()%>/front-end/memberlist/public_Member_page.jsp">會員專區</a></li>
               <li class="nav-item "><a class="nav-link" href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp">揪團</a></li>
               <li class="nav-item "><a class="nav-link" href="<%=request.getContextPath()%>/front-end/club/club_list.jsp">社團</a></li>
-              <li class="nav-item "><a class="nav-link" href="<%=request.getContextPath()%>/front-end/pro/listAllPro_front.jsp">商城</a></li>
+              <li class="nav-item "><a class="nav-link" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/listAllPro_front.jsp">商城</a></li>
               <li class="nav-item "><a class="nav-link" href="<%=request.getContextPath()%>/front-end/venue/venue_query_info_by_composite_front.jsp">場地</a></li>
             </ul>
         </div>
