@@ -61,7 +61,7 @@ public class ClubDAO implements ClubDAO_interface{
 				pstmt.setString(5, clubVO.getClub_name());
 				pstmt.setString(6, clubVO.getClub_intro());
 				
-				pstmt.executeQuery();
+				pstmt.executeUpdate();
 				
 			} catch (SQLException se) {
 				throw new RuntimeException("A database error occured. "

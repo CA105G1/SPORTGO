@@ -115,7 +115,9 @@
 					</c:if>
 <!------------------------建立貼文------------------------------------------------------------>	
 				</div><!-- col-xs-12 col-lg-8結束 -->
-				<div class="col-xs-12 col-sm-2" id="xx">	<div>clubVO = ${clubVO }</div></div>
+				<div class="col-xs-12 col-sm-2" id="xx">
+<%-- 					<div>clubVO = ${clubVO }</div> --%>
+				</div>
 			</div><!-- row結束 -->
 		</div><!-- container-fluid結束 -->
 				

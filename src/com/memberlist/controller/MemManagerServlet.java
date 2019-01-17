@@ -151,15 +151,17 @@ public class MemManagerServlet extends HttpServlet {
 			}
 			try {
 				/*******永續層存取,更新會員資料*******/
-				if (!("".equals(nick) && "".equals(emgc) && "".equals(emgcphone)
-						&&"".equals(mem_no)&&"".equals(phone)&&"".equals(name))) {
-					memberlistVO = service.renewPrivacy(mem_no, name, nick, email, phone, emgc, emgcphone);
-					update_successful.append(",更新會員資料成功");
-					System.out.println("會員資料更新成功");
-				}
-				if(!("".equals(password)&&"".equals(mem_no))) {
-					service.renewPassword(mem_no, password);
-					System.out.println("會員密碼更新成功");
+				if(errorMsgs.isEmpty()) {
+					if (!("".equals(nick) && "".equals(emgc) && "".equals(emgcphone)
+							&&"".equals(mem_no)&&"".equals(phone)&&"".equals(name))) {
+						memberlistVO = service.renewPrivacy(mem_no, name, nick, email, phone, emgc, emgcphone);
+						update_successful.append(",更新會員資料成功");
+						System.out.println("會員資料更新成功");
+					}
+					if(!("".equals(password)&&"".equals(mem_no))) {
+						service.renewPassword(mem_no, password);
+						System.out.println("會員密碼更新成功");
+					}
 				}
 			} catch (RuntimeException e) {
 				System.out.println("新增資料錯誤"+e.getMessage());

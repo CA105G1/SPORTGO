@@ -190,7 +190,7 @@
 				</div>
 					
 				<div class="col-xs-12 col-lg-2" id="xx">
-					<div>好友列表</div>
+<!-- 					<div>好友列表</div> -->
 				</div>
 			</div>
 		</div>

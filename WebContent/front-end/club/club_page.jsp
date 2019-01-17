@@ -187,7 +187,7 @@
 					</div><!-- card text-center結束 -->
 				</div><!-- col-xs-12 col-lg-7結束-->
 				<div class="col-xs-12 col-sm-2" id="xx"><!--社團成員列表-->
-					<div>clubVO = ${clubVO }</div>
+<%-- 					<div>clubVO = ${clubVO }</div> --%>
 				</div>
 			</div><!-- row結束 -->
 		</div><!-- 最外層container-fluid結束 -->
