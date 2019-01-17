@@ -164,7 +164,7 @@
 				    					<input type="hidden" name="res_no" id="res_no" value="${responesVO.res_no}"/>
 				    					<jsp:useBean id="post_infoSvc" scope="page" class="com.post_info.model.Post_infoService"/>
 				    					<input type="hidden" name="club_no" id="club_no" value="${post_infoSvc.getOnePost_info(responesVO.post_no).getClub_no()}"/>
-										<td scope="col"><!-- 回文者的照片-->
+										<td scope="col" style=""><!-- 回文者的照片-->
 					      			 		<img src="<%=request.getContextPath()%>/front-end/memberlist/showPicture.do?mem_no=${responesVO.mem_no}"  style="width: 10%">
 					      			 	</td>
 										<td scope="col"><!-- 回文內容-->

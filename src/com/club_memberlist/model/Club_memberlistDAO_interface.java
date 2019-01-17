@@ -1,5 +1,6 @@
 package com.club_memberlist.model;
 
+import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
@@ -7,6 +8,7 @@ import com.club.model.ClubVO;
 
 public interface Club_memberlistDAO_interface {
 	public void insert(Club_memberlistVO clubmemberlistVO);
+	public void insert(Club_memberlistVO clubmemberlistVO,Connection con);
     public void update(Club_memberlistVO clubmemberlistVO);
     //變更成員狀態
     public void updateStatus(String club_no, String mem_no, String cmem_status);

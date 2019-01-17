@@ -12,7 +12,7 @@ public class ClubService {
 	}
 	
 	public ClubVO addClub(String sp_no,byte[] photo,String photo_ext,
-			String club_status,String club_name,String club_intro) {
+			String club_status,String club_name,String club_intro,String mem_no) {
 		
 		ClubVO clubVO = new ClubVO();
 
@@ -22,7 +22,7 @@ public class ClubService {
 		clubVO.setClub_status(club_status);
 		clubVO.setClub_name(club_name);
 		clubVO.setClub_intro(club_intro);
-		dao.insert(clubVO);
+		clubVO = dao.insert(clubVO,mem_no);
 		
 		return clubVO;
 	}

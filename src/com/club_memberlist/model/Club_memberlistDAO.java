@@ -28,7 +28,7 @@ public class Club_memberlistDAO  implements Club_memberlistDAO_interface{
 	
 		
 		private static final String INSERT_STMT = 
-			"INSERT INTO club_memberlist (club_no,mem_no,cmem_status,cmem_class,silence_time) VALUES (?, ?, ?, ?, ?)";
+			"INSERT INTO club_memberlist (club_no,mem_no,cmem_status,cmem_class) VALUES (?, ?, ?, ?)";
 		private static final String GET_ALL_STMT = 
 			"SELECT club_no,mem_no,cmem_status,cmem_class,silence_time FROM club_memberlist order by club_no, mem_no";
 		private static final String GET_ONE_STMT = 
@@ -93,6 +93,42 @@ public class Club_memberlistDAO  implements Club_memberlistDAO_interface{
 			}
 		}
 		
+		@Override
+		public void insert(Club_memberlistVO clubmemberlistVO, Connection con) {
+			PreparedStatement pstmt = null;
+			
+			try {
+				pstmt = con.prepareStatement(INSERT_STMT);
+				
+				pstmt.setString(1, clubmemberlistVO.getClub_no());
+				pstmt.setString (2, clubmemberlistVO.getMem_no());
+				pstmt.setString(3, clubmemberlistVO.getCmem_status());
+				pstmt.setString(4, clubmemberlistVO.getCmem_class());
+//				pstmt.setTimestamp(5, clubmemberlistVO.getSilence_time());
+//				System.out.println(clubmemberlistVO.getSilence_time());
+				 
+				pstmt.executeUpdate();
+				
+			} catch (SQLException se) {
+				try {
+					con.rollback();
+				} catch (SQLException e) {
+					System.out.println("insert clubmember failed");
+					e.printStackTrace();
+				}
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				// Clean up JDBC resources
+			} finally {
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+			}
+		}
 		
 		@Override
 		public void update(Club_memberlistVO clubmemberlistVO) {

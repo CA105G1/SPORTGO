@@ -237,6 +237,7 @@ if ("insert".equals(action)) { // 來自addEmp.jsp的請求
 //				String club_no = req.getParameter("club_no").trim();
 					
 				String sp_no = req.getParameter("sport");
+				String mem_no = req.getParameter("mem_no");
 				String sp_noReg = "^[(A-Z0-9_)]{5,7}$";
 				if (sp_no == null || sp_no.trim().length() == 0) {
 					errorMsgs.add("運動項目編號: 請勿空白");
@@ -295,7 +296,7 @@ if ("insert".equals(action)) { // 來自addEmp.jsp的請求
 				
 				/***************************2.開始新增資料***************************************/
 				ClubService clubSvc = new ClubService();
-				clubVO = clubSvc.addClub(sp_no,photo,photo_ext, club_status, club_name, club_intro);
+				clubVO = clubSvc.addClub(sp_no,photo,photo_ext, club_status, club_name, club_intro,mem_no);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				String url = "/front-end/club/club_home.jsp";

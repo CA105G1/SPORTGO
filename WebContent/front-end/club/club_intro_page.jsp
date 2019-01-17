@@ -73,10 +73,14 @@
 %>
 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/clubfront.do" name="form2">
 <%-- 				<jsp:useBean id="clubSvc" scope="page" class="com.club.model.ClubService" /> --%>
+	  							<div style="width:100%;height:0;position:relative;padding-bottom:66.66666667%;overflow:hidden;border-radius:10px;">
+								<img src="<%=request.getContextPath()%>/clubImg.do?club_no=${clubVO.club_no}"
+								style="height:100%;position:absolute;">
+								</div>
 					<div class="card text-center" id="post">
 						<h3 class="card-title">關於這個社團</h3>
   							<div class="card-body">
-  								<p><%=clubVO.getClub_intro() %></p>
+  								<p>${clubVO.club_intro}</p>
   							</div>
 					</div>
 </FORM>

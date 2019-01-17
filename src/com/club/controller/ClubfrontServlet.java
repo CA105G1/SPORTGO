@@ -299,6 +299,7 @@ if ("insert".equals(actionfront)) {
 //				String club_no = req.getParameter("club_no").trim();
 				
 				String sp_no = req.getParameter("sport");
+				String mem_no = req.getParameter("mem_no");
 				String sp_noReg = "^[(A-Z0-9_)]{5,7}$";
 				if (sp_no == null || sp_no.trim().length() == 0) {
 					errorMsgs.add("運動項目編號: 請勿空白");
@@ -350,13 +351,14 @@ if ("insert".equals(actionfront)) {
 				System.out.println("哈囉我在這");
 				/***************************2.開始新增資料***************************************/
 				ClubService clubSvc = new ClubService();
-				ClubVO clubVO = clubSvc.addClub(sp_no,photo,photo_ext, club_status, club_name, club_intro);
+				ClubVO clubVO = clubSvc.addClub(sp_no,photo,photo_ext, club_status, club_name, club_intro,mem_no);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-				req.setAttribute("clubVO", clubVO);
-				String url = "/front-end/club/club_page.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); 
-				successView.forward(req, res);				
+				HttpSession session = req.getSession();
+				session.setAttribute("clubVO", clubVO);
+				RequestDispatcher successView = req.getRequestDispatcher("/front-end/club/club_intro_page.jsp"); 
+				successView.forward(req, res);	
+//				res.sendRedirect("/CA105G1/front-end/club/club_list.jsp");
 				
 				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {

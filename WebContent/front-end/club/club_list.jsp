@@ -7,6 +7,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
  
 <%
+	session.removeAttribute("club_no");
 	List<ClubVO> list = null;
 	//取得複合查詢後的list
 	list = (List<ClubVO>)request.getAttribute("list");
@@ -177,6 +178,7 @@
 											</div>
 											<div class="modal-footer">
 												<input type="hidden" name="actionfront" value="insert">
+												<input type="hidden" name="mem_no" value="${mem_no}">
 												<button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
 												<button type="submit" class="btn btn-primary">送出</button>
 											</div>

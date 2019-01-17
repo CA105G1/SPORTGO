@@ -14,6 +14,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.club_memberlist.model.*;
 import com.sg_info.model.CompositeQuery_Sg_info;
 import com.sg_info.model.Sg_infoVO;
 
@@ -46,13 +47,16 @@ public class ClubDAO implements ClubDAO_interface{
 		
 		
 		@Override
-		public void insert(ClubVO clubVO) {
+		public ClubVO insert(ClubVO clubVO,String mem_no) {
 			Connection con = null;
 			PreparedStatement pstmt = null;
+			ClubVO clubvo = new ClubVO();
 			
 			try {
 				con = ds.getConnection();
-				pstmt = con.prepareStatement(INSERT_STMT);
+				con.setAutoCommit(false);
+				String[] club_no = {"club_no"};
+				pstmt = con.prepareStatement(INSERT_STMT,club_no);
 				
 				pstmt.setString(1, clubVO.getSp_no());
 				pstmt.setBytes (2, clubVO.getPhoto());
@@ -62,8 +66,37 @@ public class ClubDAO implements ClubDAO_interface{
 				pstmt.setString(6, clubVO.getClub_intro());
 				
 				pstmt.executeUpdate();
+				ResultSet rs = pstmt.getGeneratedKeys();
+				String clubno = null;
+				if(rs.next())
+					clubno = rs.getString(1);
+				System.out.println("自增主鍵"+clubno);
+				Club_memberlistService memSvc = new Club_memberlistService();
+				Club_memberlistDAO dao = new Club_memberlistDAO();
+//				List<Club_memberlistVO> club_member = memSvc.getAll();
+				Club_memberlistVO member = new Club_memberlistVO();
+					member.setClub_no(clubno);
+					member.setMem_no(mem_no);
+					member.setCmem_class("管理員");
+					member.setCmem_status("一般成員");
+//					member.setSilence_time();
+					dao.insert(member, con);
 				
+				
+				con.commit();
+				clubvo.setClub_no(clubno);
+				clubvo.setSp_no(clubVO.getSp_no());
+				clubvo.setPhoto(clubVO.getPhoto());
+				clubvo.setPhoto_ext(clubVO.getPhoto_ext());
+				clubvo.setClub_intro(clubVO.getClub_intro());
+				clubvo.setClub_name(clubVO.getClub_name());
 			} catch (SQLException se) {
+				try {
+					con.rollback();
+				} catch (SQLException e) {
+					System.out.println("insert club false");
+					e.printStackTrace();
+				}
 				throw new RuntimeException("A database error occured. "
 						+ se.getMessage());
 				
@@ -83,6 +116,7 @@ public class ClubDAO implements ClubDAO_interface{
 					}
 				}
 			}
+			return clubvo;
 		}
 		
 		

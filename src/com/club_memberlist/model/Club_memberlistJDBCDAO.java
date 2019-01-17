@@ -593,6 +593,12 @@ public class Club_memberlistJDBCDAO implements Club_memberlistDAO_interface{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void insert(Club_memberlistVO clubmemberlistVO, Connection con) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 }
