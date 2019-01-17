@@ -41,6 +41,8 @@ public class Post_infoDAO  implements Post_infoDAO_interface{
 		private static final String GET_ONE_BY_MEM_NO =////////////////////////////////////////////
 			"SELECT post_no,club_no,mem_no,post_topic,post_content,post_date FROM post_info where mem_no = ? ";
 		
+		private static final String GET_LIST_BY_KEYWORD="select * from post_info where post_topic like '%?%' order by post_no";
+		
 		@Override
 		public void insert(Post_infoVO post_infoVO) {
 			Connection con = null;
@@ -440,6 +442,66 @@ public class Post_infoDAO  implements Post_infoDAO_interface{
 			return post_infoVO;
 		}
 
+
+		@Override
+		public List<Post_infoVO> getAllbykeyword(String keyword) {
+			List<Post_infoVO> list = new ArrayList<Post_infoVO>();
+			
+			Post_infoVO post_infoVO = null;
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			try {
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(GET_LIST_BY_KEYWORD);
+				pstmt.setString(1, keyword);
+				
+				rs = pstmt.executeQuery();
+				
+				while (rs.next()) {
+					post_infoVO = new Post_infoVO();
+					post_infoVO.setPost_no(rs.getString("post_no"));
+					post_infoVO.setClub_no(rs.getString("club_no"));
+					post_infoVO.setMem_no(rs.getString("mem_no"));
+					post_infoVO.setPost_topic(rs.getString("post_topic"));
+					post_infoVO.setPost_content(rs.getString("post_content"));
+					post_infoVO.setPost_date(rs.getTimestamp("post_date"));
+					list.add(post_infoVO);
+				}
+				
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+			} finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			
+			return list;
+		}
+
+		
+		
 }
 		
 		

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -46,10 +47,10 @@ public class Post_infoServlet extends HttpServlet{
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		String CLUBPAGE = "/front-end/club/club_page.jsp";
-		String CREATEPOST = "/front-end/post_info/create_post.jsp";
-		String EDITPOST = "/front-end/post_info/edit_post.jsp";
-		
+		String CLUB_PAGE = "/front-end/club/club_page.jsp";
+		String CREATE_POST = "/front-end/post_info/create_post.jsp";
+		String EDIT_POST = "/front-end/post_info/edit_post.jsp";
+		String SEARCH_PAGE = "/front-end/post_info/search_post.jsp";
 //顯示貼文
 if ("getOnePost_display".equals(action)) { 
 
@@ -69,7 +70,7 @@ if ("getOnePost_display".equals(action)) {
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("responesvolist", responesvolist);
 				req.setAttribute("post_infoVO", post_infoVO); 
-				String url = EDITPOST;
+				String url = EDIT_POST;
 				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				successView.forward(req, res);
 
@@ -77,7 +78,7 @@ if ("getOnePost_display".equals(action)) {
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher(CLUBPAGE);
+						.getRequestDispatcher(CLUB_PAGE);
 				failureView.forward(req, res);
 			}
 		}
@@ -122,7 +123,7 @@ if ("update".equals(action)) {
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("post_infoVO", post_infoVO); 
 					RequestDispatcher failureView = req
-							.getRequestDispatcher(EDITPOST);
+							.getRequestDispatcher(EDIT_POST);
 					failureView.forward(req, res);
 					return; //程式中斷
 				}
@@ -131,7 +132,7 @@ if ("update".equals(action)) {
 				post_infoVO = post_infoSvc.updatePost_info(post_no, club_no, mem_no, post_topic, post_content, post_date);
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				req.setAttribute("post_infoVO", post_infoVO);
-				String url = (CLUBPAGE+"?"+club_no);
+				String url = (CLUB_PAGE+"?"+club_no);
 				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				successView.forward(req, res);				
 				
@@ -139,7 +140,7 @@ if ("update".equals(action)) {
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher(EDITPOST);
+						.getRequestDispatcher(EDIT_POST);
 				failureView.forward(req, res);
 			}
 		}
@@ -169,7 +170,7 @@ if ("insert".equals(action)) {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher(CREATEPOST+"?"+club_no);
+							.getRequestDispatcher(CREATE_POST+"?"+club_no);
 					failureView.forward(req, res);
 					return;
 				}
@@ -179,7 +180,7 @@ if ("insert".equals(action)) {
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				req.setAttribute("post_infoVO", post_infoVO);
-				String url = (CLUBPAGE+"?"+club_no);
+				String url = (CLUB_PAGE+"?"+club_no);
 				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				successView.forward(req, res);				
 				
@@ -187,7 +188,7 @@ if ("insert".equals(action)) {
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher(CREATEPOST);
+						.getRequestDispatcher(CREATE_POST);
 				failureView.forward(req, res);
 			}
 		}
@@ -213,14 +214,14 @@ if ("delete".equals(action)) {
 		
 		/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 			req.setAttribute("post_infoVO", post_infoVO); 
-			RequestDispatcher successView = req.getRequestDispatcher(CLUBPAGE); 
+			RequestDispatcher successView = req.getRequestDispatcher(CLUB_PAGE); 
 			successView.forward(req, res);
 
 		/***************************其他可能的錯誤處理*************************************/
 		} catch (Exception e) {
 			errorMsgs.add("無法取得資料:" + e.getMessage());
 			RequestDispatcher failureView = req
-					.getRequestDispatcher(CLUBPAGE);
+					.getRequestDispatcher(CLUB_PAGE);
 			failureView.forward(req, res);
 		}
 		}
@@ -230,31 +231,23 @@ if("postCompositeQuery".equals(action)) {
 	List<String> errorMsg = new LinkedList<String>();
 	req.setAttribute("errorMsg", errorMsg);
 	
+	List<Post_infoVO> list=new ArrayList<Post_infoVO>();
+	
 	try {
-		///////////將查詢資料轉為MAP///////////////////
-//		Map<String, String[]> map = req.getParameterMap();
 		HttpSession session = req.getSession();
-		Map<String, String[]> map = (Map<String, String[]>)session.getAttribute("map");
-		if (req.getParameter("whichPage") == null){
-		HashMap<String, String[]> map1 = new HashMap<String, String[]>(req.getParameterMap());
-		session.setAttribute("map",map1);
-			map = map1;
-		} 
+		String keyword =req.getParameter("keyword");
+		Post_infoService svc = new Post_infoService();
+		list=svc.getAllbykeyword(keyword);
 		
-		///////////開始查詢/////////////////////
-		//若抓不到map就代表不是複合查詢
-		if(map != null) {
-			ClubService svc = new ClubService();
-			List<ClubVO> list = svc.getAll(map);
-			///////////轉交資料/////////////////////
-			req.setAttribute("list", list);
-		}
-		RequestDispatcher dispatcher = req.getRequestDispatcher(CLUBPAGE);
+		req.setAttribute("listcom", list);
+		
+		
+		RequestDispatcher dispatcher = req.getRequestDispatcher(SEARCH_PAGE);
 		dispatcher.forward(req, res);
 		
 	}catch(Exception e) {
 		errorMsg.add(e.getMessage());
-		RequestDispatcher dispatcher = req.getRequestDispatcher(CLUBPAGE);
+		RequestDispatcher dispatcher = req.getRequestDispatcher(SEARCH_PAGE);
 		dispatcher.forward(req, res);
 	}
 }
