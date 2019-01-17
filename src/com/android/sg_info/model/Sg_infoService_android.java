@@ -87,32 +87,57 @@ public class Sg_infoService_android {
 	public Sg_info getByPK(String sg_no) {
 		return dao.findByPK(sg_no);
 		
-	}
-	
-	public List<Sg_info> getByMem(String mem_no) {
-		return dao.findByMem(mem_no);
 		
 	}
 	
+	public List<Sg_info> getByMem(String mem_no) {
+		List<Sg_info> list = dao.findByMem(mem_no);
+		for (Sg_info x: list) {
+			if (x.getClub_no() != null) {
+			x.setClub_name(service.getOneClub(x.getClub_no()).getClub_name());
+			}
+		}
+		return list;
+	}
+	
 	public List<Sg_info> getByMaster(String mem_no) {
-		return dao.findByMaster(mem_no);
+		List<Sg_info> list = dao.findByMaster(mem_no);
+		for (Sg_info x: list) {
+			if (x.getClub_no() != null) {
+			x.setClub_name(service.getOneClub(x.getClub_no()).getClub_name());
+			}
+		}
+		return list;
 	}
 	
 	public List<Sg_info> getByLike(String mem_no) {
-		return dao.findByLike(mem_no);
+		List<Sg_info> list = dao.findByLike(mem_no);
+		for (Sg_info x: list) {
+			if (x.getClub_no() != null) {
+			x.setClub_name(service.getOneClub(x.getClub_no()).getClub_name());
+			}
+		}
+		return list;
 		
 	}
 	
 	public List<Sg_info> getByHistory(String mem_no) {
-		return dao.findByHistory(mem_no);
+		List<Sg_info> list = dao.findByHistory(mem_no);
+		for (Sg_info x: list) {
+			if (x.getClub_no() != null) {
+			x.setClub_name(service.getOneClub(x.getClub_no()).getClub_name());
+			}
+		}
+		return list;
 		
 	}
 	
 	public List<Sg_info> getBySearch(String mem_name, String v_name, String start, String end) {
 		List<Sg_info> list = dao.findBySearch(mem_name, v_name, start, end);
 		for (Sg_info x: list) {
-			if (x.getClub_no() != null)
+			if (x.getClub_no() != null) {
 			x.setClub_name(service.getOneClub(x.getClub_no()).getClub_name());
+			}
 		}
 		return list;
 		
@@ -121,8 +146,9 @@ public class Sg_infoService_android {
 	public List<Sg_info> getAll(){
 		List<Sg_info> list = dao.getAll();
 		for (Sg_info x: list) {
-			if (x.getClub_no() != null)
+			if (x.getClub_no() != null) {
 			x.setClub_name(service.getOneClub(x.getClub_no()).getClub_name());
+			}
 		}
 		return list;
 	}
