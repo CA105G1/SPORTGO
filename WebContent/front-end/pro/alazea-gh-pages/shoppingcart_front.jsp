@@ -8,19 +8,21 @@
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%
-	List<ProductVO> proVOList = (List<ProductVO>) request.getAttribute("proVOList");
+// 	List<ProductVO> proVOList = (List<ProductVO>) request.getAttribute("proVOList");
 // 	Map<String , String> pro_countMap = (Map<String , String>) request.getAttribute("hAll");
-    if(proVOList == null){
+//     if(proVOList == null){
 		MemberlistVO memVO =  (MemberlistVO)session.getAttribute("memberlistVO");
-		System.out.print("memVO.getMem_no()"+memVO.getMem_no());
-// 		ProductService proSvc = new ProductService();
-// 	    ShoppingcartDAO cartDAO = new ShoppingcartDAO();
-// 	    Map<String , String> hAll =  cartDAO.getAll(memVO.getMem_no());
-// 		for(String pro_no : hAll.keySet()) {
-// 			proVOList.add(proSvc.getOneProduct(pro_no));
-// 		}
-// 		cartDAO = null;
-    }
+		List<ProductVO> proVOList = new ArrayList();
+		ProductService proSvc = new ProductService();
+	    ShoppingcartDAO cartDAO = new ShoppingcartDAO();
+	    Map<String , String> hAll =  cartDAO.getAll(memVO.getMem_no());
+		for(String pro_no : hAll.keySet()) {
+			proVOList.add(proSvc.getOneProduct(pro_no));
+			System.out.println(proSvc.getOneProduct(pro_no));
+		}
+		cartDAO = null;
+		request.setAttribute("proVOList", proVOList);
+//     }
     
 
 %>
