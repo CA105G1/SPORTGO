@@ -106,6 +106,9 @@ public class MemManagerServlet extends HttpServlet {
 			if("".equals(name)||(name.trim()).length()==0) {
 				errorMsgs.put("name", "姓名欄位必填");
 			}
+			if(name.length()>15) {
+				errorMsgs.put("name", "姓名欄位過長");
+			}
 			if("".equals(nick)||nick==null) {
 				memberlistVO.setMem_nick(" ");
 			}

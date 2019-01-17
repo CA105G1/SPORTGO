@@ -117,7 +117,7 @@
 											<div>
 												<a href=""
 											class="list-group-item" style="text-align:center;display:flex;height:100%;border:0;">
-													<label>解散</label>
+<!-- 													<label>解散</label> -->
 												</a>
 											</div>
 										</c:if>	
