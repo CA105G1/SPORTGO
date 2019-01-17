@@ -72,7 +72,7 @@ public class EmpServlet extends HttpServlet {
 				errorMsgs.put("emp_account","輸入格式不正確(a-zA-Z0-9_)");
 			}
 			String passwordReg= "[a-zA-Z0-9_]{1,20}";
-			String emp_psw = request.getParameter("emp_psw");
+			String emp_psw = request.getParameter("emp_psw_test");
 			if(emp_psw==null||emp_psw.trim().length()==0) {
 				errorMsgs.put("emp_psw","請輸入密碼");
 			}else if(!emp_psw.trim().matches(passwordReg)) {
@@ -87,11 +87,11 @@ public class EmpServlet extends HttpServlet {
 			EmpService empService = new EmpService();
 			EmpVO empVO = empService.checkEmpAccountByAccount(emp_account, emp_psw);
 			if(empVO==null) {
-				errorMsgs.put(RESULT_ERROR,"帳號輸入錯誤!");
+				errorMsgs.put("emp_account","帳號輸入錯誤!");
 				HttpSession session = request.getSession();
 				session.setAttribute("empVO", empVO);
 			}else if(empVO.getEmp_psw()==null) {
-				errorMsgs.put(RESULT_ERROR,"輸入密碼錯誤!");
+				errorMsgs.put("emp_psw","輸入密碼錯誤!");
 			}
 			if(!errorMsgs.isEmpty()) {
 				RequestDispatcher failureView = request.getRequestDispatcher(BACK_END_INDEX_PATH);

@@ -337,4 +337,22 @@
     <servlet-name>RegionServlet</servlet-name>
     <url-pattern>/region/region.do</url-pattern>
   </servlet-mapping>
+  
+  
+  <filter>
+    <filter-name>EmpCheckLoginFilter</filter-name>
+    <filter-class>com.emp.controller.EmpCheckLoginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>EmpCheckLoginFilter</filter-name>
+    <url-pattern>/back-end/venue/maintain_venue_info_back.jsp</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>INCLUDE</dispatcher>
+    <dispatcher>ERROR</dispatcher>
+    <dispatcher>ASYNC</dispatcher>
+  </filter-mapping>
+  
+  
+  
 </web-app>

@@ -38,11 +38,15 @@
 					<jsp:include page="/back-end/left_side_field.jsp"/>
 				</div>
 				<div class="col-xs-12 col-sm-9">
-				
-					<h1>This is the back-end index.</h1>
-
-				
-
+					<div>${empVO}</div>
+					<c:if test="${empVO==null}">
+						<jsp:include page="/back-end/emp/loginBackEnd.jsp"/>
+					</c:if>
+					<c:if test="${empVO!=null}">
+					
+						hello, ${empVO.emp_name}
+					
+					</c:if>
 				
 				
 				
