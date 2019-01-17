@@ -1,6 +1,8 @@
 package com.venue.model;
 
 import java.util.Set;
+import java.util.TreeMap;
+import java.lang.reflect.MalformedParameterizedTypeException;
 import java.util.Map;
 
 public class Util_JDBC_CompositeQuery_Venue {
@@ -34,7 +36,7 @@ public class Util_JDBC_CompositeQuery_Venue {
 		int count = 0;
 		for(String key:keys) {
 			String value = map.get(key)[0];
-			if(value != null && value.trim().length() != 0 && !"action".equals(key) && "whichPage".equals(key) && "requestURL".equals(key)) {
+			if(value != null && value.trim().length() != 0 && !"action".equals(key) && !"whichPage".equals(key) && !"requestURL".equals(key)) {
 				count++;
 				String aCondition = get_aCondition_For_Oracle(key, value.trim());
 //				System.out.println("aCondition : "+aCondition);
@@ -55,6 +57,13 @@ public class Util_JDBC_CompositeQuery_Venue {
 		}
 		return whereCondition.toString();
 	}
-	
-
+//	
+//	public static void main(String[] args) {
+//		Map<String, String[]> map = new TreeMap<>();
+//		map.put("vt_no", new String[] {"VT005"});
+//		
+//		String string =Util_JDBC_CompositeQuery_Venue.get_WhereCondition(map, true);
+//		System.out.println("String : "+string);
+//		
+//	}
 }

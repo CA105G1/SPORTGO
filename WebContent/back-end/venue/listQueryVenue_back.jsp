@@ -86,6 +86,9 @@
 	<%@ include file="pages/page2_forVenue.file" %> 
 --%>
 <!-- one card -->
+<% if(list==null || list.size()==0){%>
+	<div>查無資料</div>
+<% }else{ %>
 	<%@ include file="pages/page1_forVenue.file" %>
 	<table class="table table-hover table-striped table-bordered table-condensed">
 	<tbody>	
@@ -190,7 +193,7 @@
 	</tbody>
 	</table>
 	<%@ include file="pages/page2_forVenue.file" %> 
-	
+<% }%>	
 	<br>
 	<br>
 	<br>

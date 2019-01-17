@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.imageio.spi.RegisterableService;
 import javax.servlet.RequestDispatcher;
@@ -23,6 +24,8 @@ import com.venue.model.VenueService;
 import com.venue.model.VenueVO;
 import com.venuetype.model.VenueTypeService;
 import com.venuetype.model.VenueTypeVO;
+
+import oracle.net.aso.a;
 
 public class VenueSelectServlet extends HttpServlet {
 
@@ -124,6 +127,10 @@ public class VenueSelectServlet extends HttpServlet {
 			Map<String, String[]> venueMap = (Map<String, String[]>)session.getAttribute("venueMap");
 			if(request.getParameter("whichPage")==null || "".equals(request.getParameter("whichPage"))) {
 				HashMap<String, String[]> getMap = new HashMap<String, String[]>(request.getParameterMap());
+Set<String> set = getMap.keySet();
+for(String aStrings : set) {
+	System.out.println(aStrings+" = "+getMap.get(aStrings)[0]);
+}
 				session.setAttribute("venueMap", getMap);
 				venueMap = getMap;
 			}
