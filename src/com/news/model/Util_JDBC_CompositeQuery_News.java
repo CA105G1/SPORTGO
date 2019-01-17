@@ -14,7 +14,7 @@ public class Util_JDBC_CompositeQuery_News {
 			aCondition = columnName + " like '%"+value+"%' ";
 		// TimeStamp
 		}else if( "news_release_date".equals(columnName) || "news_last_date".equals(columnName)) {
-			aCondition = "to_char(" + columnName + ",'yyyy-mm-dd hh24:mi:ss')='" + value + "'";
+			aCondition = "to_char(" + columnName + ",'yyyy-mm-dd hh24:mi')='" + value + "'";
 			//to_timestamp('2018-12-08 14:45:32','yyyy-mm-dd hh24:mi:ss')
 		}
 		return aCondition;
@@ -27,7 +27,9 @@ public class Util_JDBC_CompositeQuery_News {
 		for(String key:keys) {
 			String value = map.get(key)[0];
 System.out.println("name : "+key+" ; value : "+value);
-			if(value != null && value.trim().length() != 0 && !"action".equals(key)) {
+			if(value != null && value.trim().length() != 0 
+					&& !"action".equals(key) && !"hasChangePicture".equals(key)
+					 && !"whichPage".equals(key) && !"requestURL".equals(key)) {
 				count++;
 				String aCondition = get_aCondition_For_Oracle(key, value.trim());
 //				System.out.println("aCondition : "+aCondition);

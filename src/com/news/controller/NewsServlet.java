@@ -293,6 +293,8 @@ public class NewsServlet extends HttpServlet {
 			updateTheNewsTypeList();
 			updateTheNewsList();
 			/// 轉交對象
+			//  轉交前，記得把session的newsMap清空
+			request.getSession().removeAttribute("newsMap");
 			RequestDispatcher successsView = 
 					request.getRequestDispatcher(QUERY_THIS_SERVLET_ACTIN_AGAIN+"?action=showOneNews&news_no="+newsVO.getNews_no());
 			successsView.forward(request, response);
@@ -506,7 +508,7 @@ public class NewsServlet extends HttpServlet {
 			}
 			List<NewsVO> list = newsService.getAll(newsMap);
 			
-			
+
 			request.setAttribute("newsVO_toUpdate", newsVO);
 			request.setAttribute(WHITCH_TAB, TAB_SELECT);
 //			showNewsListAndForward(list, MAINTAIN_NEWS_INFO_INDEX_BACK_PATH, request, response);
@@ -572,7 +574,7 @@ public class NewsServlet extends HttpServlet {
 		try {
 			HttpSession session = request.getSession();
 			Map<String, String[]> newsMap = (Map<String, String[]>)session.getAttribute("newsMap");
-			if(request.getParameter("whichPage")==null) {
+			if(request.getParameter("whichPage")==null || "".equals(request.getParameter("whichPage"))) {
 				HashMap<String, String[]> getMap = new HashMap<String, String[]>(request.getParameterMap());
 				session.setAttribute("newsMap", getMap);
 				newsMap = getMap;
@@ -591,6 +593,7 @@ public class NewsServlet extends HttpServlet {
 			showNewsListAndForward(list, MAINTAIN_NEWS_INFO_INDEX_BACK_PATH, request, response);
 			return;
 		}catch (Exception e) {
+			e.printStackTrace();
 			errorMsgs.put(DB_ERROR_MSGS, e.getMessage());
 			RequestDispatcher failureView = request.getRequestDispatcher(MAINTAIN_NEWS_INFO_INDEX_BACK_PATH);
 			failureView.forward(request, response);

@@ -84,10 +84,13 @@
 										<form method="post" action="<%=request.getContextPath()%>/news/news.do">
 											<div>
 												<div class="label label-default label-text">請輸入消息編號 : (N001)</div>
-												<div class="h1">${newsMap.get("news_no")[0]}</div>
 												<input type="text" name="news_no" value='${newsMap.get("news_no")[0]}'/>
-												
 											</div>
+											<div>
+												<div class="label label-default label-text">請輸入消息內容 :</div>
+												<input type="text" name="news_script" value='${newsMap.get("news_script")[0]}'/>
+											</div>
+											
 											<div>
 												<div class="label label-default label-text">請選擇消息種類:</div>							
 	<%-- 											<jsp:useBean id="newstypeService" scope="session" class="com.newstype.model.NewstypeService" /> --%>
