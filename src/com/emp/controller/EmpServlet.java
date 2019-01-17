@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.w3c.dom.css.ElementCSSInlineStyle;
+
 import com.emp.model.EmpService;
 import com.emp.model.EmpVO;
 import com.emp.model.Util_Password;
@@ -25,13 +27,17 @@ public class EmpServlet extends HttpServlet {
         super();
     }
 
-    private static final String BACK_END_INDEX_PATH = "/backEndIndex.jsp";
-//    private static final String BACK_END_INDEX_PATH = "/backEndIndex_fortest.jsp";
+    private final String BACK_END_INDEX_PATH = "/backEndIndex.jsp";
+    private final String FOR_ADD_EMP_SUCCESS_PATH = "/back-end/emp/maintain_emp_info_back.jsp";
+//    private final String BACK_END_INDEX_PATH = "/backEndIndex_fortest.jsp";
     
-    private static final String DB_ERROR_MSGS = "DataBaseError";
-    private static final String EMP_AUTH_SUPER = "超級管理員";
-    private static final String EMP_AUTH_NORMAL = "一般管理員";
-    private static final String RESULT_ERROR = "result_error";
+    private final String DB_ERROR_MSGS = "DataBaseError";
+    private final String EMP_AUTH_SUPER = "超級管理員";
+    private final String EMP_AUTH_NORMAL = "一般管理員";
+    private final String RESULT_ERROR = "result_error";
+    
+    private final String EMPVO_FOR_NEW_ONE = "empVO_forNewOne";
+    private final String EMPVO_FOR_FAIL = "empVO_forRes";
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
@@ -177,8 +183,8 @@ public class EmpServlet extends HttpServlet {
 			String emp_name = request.getParameter("emp_name");
 			if(emp_name==null || emp_name.trim().length()==0) {
 				errorMsgs.put("emp_name", "請輸入名稱");
+				emp_name = null;
 			}
-			
 			String emp_auth = request.getParameter("emp_auth");//"一般管理員"
 			if("normal_emp".equals(emp_auth)) {
 				emp_auth = "一般管理員";
@@ -186,32 +192,48 @@ public class EmpServlet extends HttpServlet {
 				emp_auth = "超級管理員";
 			}else if("".equals(emp_auth)){
 				errorMsgs.put("emp_auth", "請設定權限");
+				emp_auth= null;
 			}else {
 				errorMsgs.put("emp_auth", "不要猜權限");
+				emp_auth= null;
 			}
-			
 			String emp_phone = request.getParameter("emp_phone");
-			String emp_phoneReg = "^(\\d{2,3})[\\s\\-]?(\\d{6-8})";
-			if(emp_phone!=null && !emp_phone.matches(emp_phoneReg)) {
+			String emp_phoneReg1 = "^(\\d{2})[\\s\\-]?(\\d{6,8})";
+			String emp_phoneReg2 = "^(\\d{3})[\\s\\-]?(\\d{6,7})";
+			if(emp_phone!=null && (!emp_phone.matches(emp_phoneReg1) || !emp_phone.matches(emp_phoneReg2)) ) {
 				errorMsgs.put("emp_phone", "電話格式有誤");
-			}else {
-		//		emp_phone = emp_phone.
+				emp_phone = null;
+			}else if(emp_phone!=null){
+				emp_phone = emp_phone.replace("-", "");
 			}
 			String emp_email = request.getParameter("emp_email");
 			if(emp_email==null||emp_email.trim().length()==0) {
 				errorMsgs.put("emp_email", "請填寫E-mail");
+				emp_email = null;
 			}
 			String emp_account = request.getParameter("emp_account");
+			String accountReg = "[a-zA-Z0-9_]{1,50}";
 			if(emp_account==null||emp_account.trim().length()==0) {
 				errorMsgs.put("emp_account", "請輸入帳號");
+				emp_account = null;
 			}else if(emp_account != null && emp_account.trim().length() > 50){
 				errorMsgs.put("emp_acccount", "輸入長度過長");
+				emp_account = null;
+			}else if(!emp_account.trim().matches(accountReg)) {
+				errorMsgs.put("emp_account","輸入格式不正確(a-zA-Z0-9_)");
+				emp_account = null;
 			}
 			String emp_psw = request.getParameter("emp_psw"); /// 注意密碼 設定方式
+			String passwordReg= "[a-zA-Z0-9_]{1,20}";
 			if(emp_psw==null||emp_psw.trim().length()==0) {
 				errorMsgs.put("emp_psw", "請輸入帳號");
+				emp_psw = null;
 			}else if(emp_psw != null && emp_psw.trim().length() > 50){
 				errorMsgs.put("emp_psw", "輸入長度過長");
+				emp_psw = null;
+			}else if(emp_psw != null && !emp_psw.trim().matches(passwordReg)) {
+				errorMsgs.put("emp_psw","輸入格式不正確(a-zA-Z0-9_)");
+				emp_psw = null;
 			}
 			java.sql.Date hiredate = null;
 			try {
@@ -227,11 +249,12 @@ public class EmpServlet extends HttpServlet {
 			empVO.setEmp_phone(emp_phone);
 			empVO.setEmp_email(emp_email);
 			empVO.setEmp_account(emp_account);
-			empVO.setEmp_psw(Util_Password.encodePassword(emp_psw));
+			if(emp_psw!=null)
+				empVO.setEmp_psw(Util_Password.encodePassword(emp_psw));
 			empVO.setHiredate(hiredate);
 			
 			if(!errorMsgs.isEmpty()) {
-				request.setAttribute("empVO_forRes", empVO);
+				request.setAttribute(EMPVO_FOR_FAIL, empVO);
 				RequestDispatcher failureView = request.getRequestDispatcher(requestUrl);
 				failureView.forward(request, response);
 				return;
@@ -240,14 +263,16 @@ public class EmpServlet extends HttpServlet {
 			/// 永續層存取
 			EmpService empService = new EmpService();
 //			EmpVO empVO = empService.addEmp(emp_name, emp_auth, emp_phone, emp_email, emp_account, emp_psw, hiredate);
-			
+			EmpVO empVO2 = empService.addEmp(empVO);
 			/// 資料轉交
-			
-			
-			
-			
+			request.setAttribute(EMPVO_FOR_NEW_ONE, empVO);
+			RequestDispatcher successView = request.getRequestDispatcher("/back-end/emp/maintain_emp_info_back.jsp");
+			successView.forward(request, response);
+			return;
 			
 		} catch (Exception e) {
+//			e.printStackTrace();
+			request.setAttribute(EMPVO_FOR_FAIL, empVO);
 			errorMsgs.put(DB_ERROR_MSGS,"註冊資料庫失敗 : "+e.getMessage());
 			RequestDispatcher failureView = request.getRequestDispatcher(requestUrl);
 			failureView.forward(request, response);

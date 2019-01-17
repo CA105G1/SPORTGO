@@ -370,7 +370,7 @@ System.out.println("sqlStr="+sqlStr);
 				vo.setSg_pic_ext(rs.getString("sg_pic_ext"));
 				vo.setSg_per(rs.getString("sg_per"));
 				vo.setSp_no(rs.getString("sp_no"));
-				vo.setV_no(rs.getString("v_no"));
+				vo.setV_no(rs.getString("QCSJ_C000000000400000")); //因為三表join欄位名稱便亂碼
 				vo.setSg_maxno(rs.getInt("sg_maxno"));
 				vo.setSg_minno(rs.getInt("sg_minno"));
 				vo.setSg_ttlapl(rs.getInt("sg_ttlapl"));

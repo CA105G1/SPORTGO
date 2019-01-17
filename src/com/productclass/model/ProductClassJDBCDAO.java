@@ -4,6 +4,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.Context;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 public class ProductClassJDBCDAO implements ProductClassDAO_interface{
 	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
 	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
@@ -29,6 +33,18 @@ public class ProductClassJDBCDAO implements ProductClassDAO_interface{
 			e.printStackTrace();
 		}
 	}
+	
+	//連線池版
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new javax.naming.InitialContext();
+			ds = (DataSource)ctx.lookup("java:comp/env/jdbc/CA105G1DB");
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	//新增
 	@Override  
@@ -37,7 +53,8 @@ public class ProductClassJDBCDAO implements ProductClassDAO_interface{
 		PreparedStatement ps = null;
 		int count = 0;
 		try {
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+		    //連線池
+		    con = ds.getConnection();
 			ps = con.prepareStatement(INSERT);
 			ps.setString(1, productClassVO.getPro_classname());
 			count = ps.executeUpdate();
@@ -76,7 +93,8 @@ public class ProductClassJDBCDAO implements ProductClassDAO_interface{
 		int count = 0 ;
 		
 		try {	
-		con = DriverManager.getConnection(URL, USER, PASSWORD);
+		    //連線池
+		    con = ds.getConnection();
 		ps = con.prepareStatement(UPDATE);
 		ps.setString(1, productClassVO.getPro_classname());
 		ps.setString(2, productClassVO.getPro_classid());
@@ -113,7 +131,8 @@ public class ProductClassJDBCDAO implements ProductClassDAO_interface{
 			int count = 0;
 			
 			try {
-				con = DriverManager.getConnection(URL, USER, PASSWORD);
+			    //連線池
+			    con = ds.getConnection();
 				ps = con.prepareStatement(DELETE);
 				ps.setString(1,pro_classid );
 				count = ps.executeUpdate();
@@ -201,7 +220,8 @@ public class ProductClassJDBCDAO implements ProductClassDAO_interface{
 		ProductClassVO productClassVO = null;
 		
 		try {
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+		    //連線池
+		    con = ds.getConnection();
 			ps = con.prepareStatement(SELECT_FINDBYPK);
 			ps.setString(1, pro_classid);
 			rs = ps.executeQuery();
@@ -253,7 +273,8 @@ public class ProductClassJDBCDAO implements ProductClassDAO_interface{
 		ProductClassVO productClassVO = null;
 		List<ProductClassVO> productClassList = new ArrayList();
 		try {
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+		    //連線池
+		    con = ds.getConnection();
 			ps = con.prepareStatement(SELECT_ALL);
 			rs = ps.executeQuery();
 			
