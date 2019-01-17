@@ -7,8 +7,8 @@ import java.util.Map;
 public class mainAllimageIntoDB {
 	
 	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
-	private static final String URL = "jdbc:oracle:thin:@10.37.129.3:1521:xe";
-//	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
+//	private static final String URL = "jdbc:oracle:thin:@10.37.129.3:1521:xe";
+	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
 	// pls. set your user in DB
 	private static final String USER = "CA105G1";
 	// pls. set your password
@@ -20,7 +20,7 @@ public class mainAllimageIntoDB {
 //	    String rootPath = "C:\\Users\\kevin_000\\git\\SPORTGO\\WebContent\\InitDB\\image";
 //		String rootPath = "C:\\Users\\Java\\git\\SPORTGO\\WebContent\\InitDB\\image";
 
-		String rootPath = "/Users/ChengChih-Ren/git/SPORTGOG1/WebContent/InitDB/image";
+//		String rootPath = "/Users/ChengChih-Ren/git/SPORTGOG1/WebContent/InitDB/image";
 //		String rootPath = "C:\\Users\\wenshock\\git\\SPORTGO\\WebContent\\InitDB\\image";
 		String rootPath = "C:\\Users\\coolbee333\\git\\SPORTGO\\WebContent\\InitDB\\image";
 //		String rootPath = "C:\\Users\\Java\\git\\SPORTGO\\WebContent\\InitDB\\image";
