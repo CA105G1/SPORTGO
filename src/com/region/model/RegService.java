@@ -14,8 +14,8 @@ public class RegService {
 	
 	
 	public RegService() {
-//		this.regDAO = new RegDAO();
-		this.regDAO = new RegJDBCDAO();
+		this.regDAO = new RegDAO();
+//		this.regDAO = new RegJDBCDAO();
 	}
 	
 	public List<RegVO> getAll(){
