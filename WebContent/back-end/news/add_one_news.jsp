@@ -27,7 +27,7 @@
 	</style>
 </head>
 <body>
-	<h1>this is add one news page</h1>
+		<h1>this is add one news page</h1>
 <%-- 錯誤表列 --%>
 <%-- <c:if test="${not empty errorMsgs_tab2}"> --%>
 <!-- 	<font style="color:red">請修正以下錯誤:</font> -->
