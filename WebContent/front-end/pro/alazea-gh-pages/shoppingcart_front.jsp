@@ -44,6 +44,9 @@
 
     <!-- Core Stylesheet -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/style.css">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="<%=request.getContextPath()%>/front-end/pro/TWzipcode/jquery.twzipcode.min.js"></script>
         <style type="text/css">
     .panel {
       background-color: #F5F5F7;
@@ -379,12 +382,25 @@
                             style="max-width:100px;max-height:100px;margin-right: 10px;" class="rounded-circle">
                             <div class="shipping-address">
                                     <input type="text"  placeholder="收件人姓名" name="address_receiver" value="${param.receiver}">
-                                    <input type="text"  placeholder="收件人電話" name="address_phone" value="${param.phone}">
-                                    <input type="text"  placeholder="國家" name="address_country" value="${param.country}">
-                                    <input type="text"  placeholder="城市" name="address_city" value="${param.city}">
+                                    <input type="tel"  placeholder="收件人電話" name="address_phone" value="${param.phone}">
+                                    
+                                    <div id="zipcode"></div>
+	                                <script>
+	                                    $("#zipcode").twzipcode({
+	                                        countySel: "臺北市", // 城市預設值, 字串一定要用繁體的 "臺", 否則抓不到資料
+	                                        districtSel: "大安區", // 地區預設值
+	                                        zipcodeIntoDistrict: false, // 郵遞區號自動顯示在地區
+	                                        css: ["city form-control", "town form-control","form-control"], // 自訂 "城市"、"地區" class 名稱 
+	                                        countyName: "city", // 自訂城市 select 標籤的 name 值
+	                                        districtName: "town", // 自訂地區 select 標籤的 name 值
+	                                        zipcodeName:"zipcode"
+	                                    });
+	                                </script>  
+<%--                                     <input type="text"  placeholder="城市" name="address_city" value="${param.city}"> --%>
                                     <input type="text"  placeholder="地址" name="address_detail" value="${param.detail}">
-                                    <input type="text"  placeholder="郵遞區號" name="address_zip" value="${param.zip}">
-
+<%--                                     <input type="text"  placeholder="郵遞區號" name="address_zip" value="${param.zip}"> --%>
+									<jsp:include page="/front-end/pro/country-dropdown/country-select.jsp"/>
+									<input type="text"  style="background-color:#fff;color:#fff;border-color:#fff">
                             </div>
                         </div>
 

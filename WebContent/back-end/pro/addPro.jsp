@@ -120,7 +120,7 @@
 </head>
 
 <body onload="connect();" onunload="disconnect();">
-<%@ include file="/front-end/CA105G1_header.file" %>
+<%-- <%@ include file="/front-end/CA105G1_header.file" %> --%>
 	<div class="container-fluid backgc">
 		<div class="row">
 
@@ -383,12 +383,12 @@
 		                </div>
 					</div>
 				</FORM>
-<%@ include file="/front-end/CA105G1_footer.file" %>
+<%-- <%@ include file="/front-end/CA105G1_footer.file" %> --%>
 		</div>
 	</div>
 
 
-	<script src="https://code.jquery.com/jquery.js"></script>
+<!-- 	<script src="https://code.jquery.com/jquery.js"></script> -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <%-- 	<script src="<%=request.getContextPath() %>/back-end/pro/tool/websock.js"></script> --%>
 	<script src="<%=request.getContextPath() %>/back-end/pro/tool/websock_serviec.js"></script>

@@ -157,7 +157,7 @@
 		.divAdd{
 			/*按鈕add靠右*/
 		}
-		div.panel{
+		div.tuchpanel{
 			display:none;
 		}
 		</style>
@@ -245,7 +245,7 @@
 									</tbody>
 							</table>
 							<c:forEach var="orddetails" items="${orddetailsSvc.getOneOrd(ordListVO.ord_no)}" >
-							<div class="panel" style="margin-bottom: 0px;">
+							<div class="tuchpanel" style="margin-bottom: 0px;">
 								<table class="table table-hover">
 								    <thead>
 									    <th class="thwidth">商品名稱圖片</th>
@@ -309,7 +309,7 @@
 			<script type="text/javascript">
 				$(document).ready(function(){
 				      $(".flip").click(function(){
-				          $(this).siblings(".panel").slideToggle("slow");
+				          $(this).siblings(".tuchpanel").slideToggle("slow");
 // 				          $(this).siblings(".xs1").toggle();
 // 				          $(".xs1").toggle();
 // 				          $(".xs2").toggle();

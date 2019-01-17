@@ -82,12 +82,16 @@ if ("insert".equals(action)) { //來自shoppingcart_front.jsp的請求
 				}
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理(收貨地址)*************************/
 				
+				
 				String receiver = req.getParameter("address_receiver");
 				String phone = req.getParameter("address_phone");
-				String country = req.getParameter("address_country");
-				String city = req.getParameter("address_city");
+				String country = req.getParameter("countries");
+				String city = req.getParameter("city");
+				String town = req.getParameter("town");
+				String zip = req.getParameter("zipcode");
 				String detail = req.getParameter("address_detail");
-				String zip = req.getParameter("address_zip");
+				
+				detail = town + detail;//地區與地址相加
 				
 //				String receiver = req.getParameter("receiver");
 //				String phone = req.getParameter("phone");

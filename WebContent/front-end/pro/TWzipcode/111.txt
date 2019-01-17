@@ -1,0 +1,18 @@
+<div id="zipcode2">
+
+	<script>
+		$("#zipcode2").twzipcode({
+			countySel: "臺北市", // 城市預設值, 字串一定要用繁體的 "臺", 否則抓不到資料
+			districtSel: "大安區", // 地區預設值
+			zipcodeIntoDistrict: true, // 郵遞區號自動顯示在地區
+			css: ["city", "town"], // 自訂 "城市"、"地區" class 名稱 
+			countyName: "city", // 自訂城市 select 標籤的 name 值
+			districtName: "town" // 自訂地區 select 標籤的 name 值
+		});
+	</script>	
+</div>
+
+
+加入jsp的
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+你的路徑<script src="<%=request.getContextPath()%>/TWzipcode/jquery.twzipcode.min.js"></script>

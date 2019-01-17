@@ -167,7 +167,8 @@
 				<div class="col-xs-12 col-sm-3">
 <!-- <h1>後台共用區</h1> -->
 <!-- <h2>here need include left_side_field.jsp</h2> -->
-			<jsp:include page="/back-end/pro/page/left_side_field.jsp"/>
+<%-- 			<jsp:include page="/back-end/pro/page/left_side_field.jsp"/> --%>
+			<jsp:include page="/back-end/left_side_field.jsp"/>
 				</div>
 				<div class="col-xs-12 col-sm-9">
 					<h1>後台內容，使用tabs，也可自由發揮</h1>
@@ -182,7 +183,7 @@
 					            <a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">訂單列表</a>
 					        </li>
 					        <li role="presentation">
-					            <a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">標題三</a>
+					            <a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">新增商品</a>
 					        </li>
 					    </ul>
 					
@@ -341,13 +342,12 @@
 					</div>
 <!--------------------------------------------訂單管理-->
 					        </div>
-					        <a>
 						        <div role="tabpanel" class="tab-pane" id="tab2">
 						        	<jsp:include page="/back-end/pro/ord_back.jsp"/>
+
 						        </div>
-                            </a>
 					        <div role="tabpanel" class="tab-pane" id="tab3">
-					        	<h1>標題三內容</h1>
+					        		<jsp:include page="/back-end/pro/addPro.jsp"/>
 					        </div>
 					    </div>
 					</div>

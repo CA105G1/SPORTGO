@@ -1,14 +1,16 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Country dropdown</title>
-<script src="https://code.jquery.com/jquery.js"></script>
+<!-- <script src="https://code.jquery.com/jquery.js"></script> -->
 <!-- <msdropdown> -->
-<link rel="stylesheet" type="text/css" href="css/msdropdown/dd.css" />
-<script src="js/msdropdown/jquery.dd.min.js"></script>
+<!-- <link rel="stylesheet" type="text/css" href="css/msdropdown/dd.css" /> -->
+<!-- <script src="js/msdropdown/jquery.dd.min.js"></script> -->
 <!-- </msdropdown> -->
-<link rel="stylesheet" type="text/css" href="css/msdropdown/flags.css" />
+<!-- <link rel="stylesheet" type="text/css" href="css/msdropdown/flags.css" /> -->
 <style type="text/css">
 /*  #countries{
     width: 300px;
@@ -270,9 +272,9 @@
 
 
 <script>
-$(document).ready(function() {
-	$("#countries").msDropdown();
-})
+// $(document).ready(function() {
+// 	$("#countries").msDropdown();
+// })
 </script>
 </body>
 </html>
