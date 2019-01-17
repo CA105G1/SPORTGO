@@ -132,15 +132,15 @@
 // // 			    $(this).children('.collapse').collapse('hide');
 // // 			  }
 // 			);
-			$(".panel-heading").parent('.myGroup').on( "mouseenter",
-			  function() {
-			    $(this).children('.collapse').collapse('show');
-			    $(this).animate({fontSize:'1.8em'},'slow');
-			  }
-// 			  , function() {
-// 			    $(this).children('.collapse').collapse('hide');
+// 			$(".panel-heading").parent('.myGroup').on( "mouseenter",
+// 			  function() {
+// 			    $(this).children('.collapse').collapse('show');
+// 			    $(this).animate({fontSize:'1.8em'},'slow');
 // 			  }
-			);
+// // 			  , function() {
+// // 			    $(this).children('.collapse').collapse('hide');
+// // 			  }
+// 			);
 			
 		</script>
 		
