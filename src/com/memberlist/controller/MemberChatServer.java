@@ -98,23 +98,6 @@ public class MemberChatServer {
 			if(name.equals(chatFriend))
 				session2 = sessionsMap.get(name);
 		}
-		if(session1!=null) {
-			if(session1.isOpen())
-				try {
-					session1.getBasicRemote().sendText(message);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-		}
-		if(session2!=null) {
-			if(session2.isOpen())
-				try {
-					session2.getBasicRemote().sendText(message);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 		try {
 			if(session1!=null) {
 				if(session1.isOpen())
@@ -127,7 +110,6 @@ public class MemberChatServer {
 			System.out.println("Message received: "+message);
 		}catch(Exception e) {
 			e.printStackTrace(System.err);
-		}
 		}
 //		Collection<Session> sessions = sessionsMap.values();
 //		for(Session session : sessions) {
