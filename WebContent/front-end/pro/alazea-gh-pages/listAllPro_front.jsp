@@ -1,3 +1,4 @@
+<%@page import="com.product.model.ProductAssessVO"%>
 <%@page import="java.util.*"%>
 <%@page import="com.product.model.ProductVO"%>
 <%@page import="com.product.model.ProductService"%>
@@ -8,15 +9,29 @@
 
 	ProductService proSvc = new ProductService();
 	List<ProductVO> list = new ArrayList<ProductVO>();
+	List<ProductAssessVO> listAssess = new ArrayList<ProductAssessVO>();
 	if ("findBy".equals(request.getAttribute("findBy"))) {
 		list = (List<ProductVO>) request.getAttribute("pro_ByCompositeQuery");
+		String pro_classid = (String)request.getAttribute("pro_classid");
+		if(pro_classid == ""){
+			listAssess = proSvc.getProAssess();
+		} else {
+			listAssess = proSvc.getProAssesslike(pro_classid);
+		}
 	} else {
+		System.out.print("失敗");
 		list = proSvc.getAllOnShelve();
+		listAssess = proSvc.getProAssess();
 	}
     pageContext.setAttribute("list",list);
+    pageContext.setAttribute("listAssess",listAssess);
+    
+    
+    
 
 %>
 <jsp:useBean id="proclassSvc" scope="page" class="com.productclass.model.ProductClassService" />
+<jsp:useBean id="proSvclist" scope="page" class="com.product.model.ProductService" />
 <!DOCTYPE html>
 <html lang="en">
 
@@ -279,58 +294,47 @@
                             <div class="widget-desc">
 
                                 <!-- Single Best Seller Products -->
+                            <c:forEach var="AssessVO" items="${listAssess}">
                                 <div class="single-best-seller-product d-flex align-items-center">
                                     <div class="product-thumbnail">
-                                        <a href="shop-details.html"><img src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/bg-img/4.jpg" alt=""></a>
+                                        <a href="shop-details.html"><img src="<%=request.getContextPath()%>/pro/proImg.do?pro_no=${AssessVO.pro_no}" alt=""></a>
                                     </div>
                                     <div class="product-info">
-                                        <a href="shop-details.html">Cactus Flower</a>
-                                        <p>$10.99</p>
+                                        <a href="shop-details.html">${proSvclist.getOneProduct(AssessVO.pro_no).pro_name}</a>
+                                        <p>$ ${AssessVO.pro_bonus}</p>
                                         <div class="ratings">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <!-- Single Best Seller Products -->
-                                <div class="single-best-seller-product d-flex align-items-center">
-                                    <div class="product-thumbnail">
-                                        <a href="shop-details.html"><img src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/bg-img/5.jpg" alt=""></a>
-                                    </div>
-                                    <div class="product-info">
-                                        <a href="shop-details.html">Tulip Flower</a>
-                                        <p>$11.99</p>
-                                        <div class="ratings">
+                                          <c:if test="${AssessVO.pro_trunc_assess eq 5}">
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
+                                          </c:if>
+                                          <c:if test="${AssessVO.pro_trunc_assess eq 4}">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                          </c:if>
+                                          <c:if test="${AssessVO.pro_trunc_assess eq 3}">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                          </c:if>
+                                          <c:if test="${AssessVO.pro_trunc_assess eq 2}">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                          </c:if>
+                                          <c:if test="${AssessVO.pro_trunc_assess eq 1}">
+                                            <i class="fa fa-star"></i>
+                                          </c:if>
+                                           
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- Single Best Seller Products -->
-                                <div class="single-best-seller-product d-flex align-items-center">
-                                    <div class="product-thumbnail">
-                                        <a href="shop-details.html"><img src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/bg-img/34.jpg" alt=""></a>
-                                    </div>
-                                    <div class="product-info">
-                                        <a href="shop-details.html">Recuerdos Plant</a>
-                                        <p>$9.99</p>
-                                        <div class="ratings">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
+                            </c:forEach>
+                                
 
                             </div>
                         </div>

@@ -11,7 +11,7 @@ import javax.sql.DataSource;
 
 import com.pro.controller.jdbcUtil_CompositeQuery_Pro;
 
-public class ProductJDBCDAO implements ProductDAO_interface{
+public class ProductDAO_TEST implements ProductDAO_interface{
 	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
 	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
 	private static final String USER = "CA105G1";
@@ -41,19 +41,18 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 	//查詢全部商品除後評價
 	private static final String SELECT_ASSESS = "SELECT ROWNUM ,TOTASS.* FROM (SELECT PRO_NO,PRO_BONUS,PRO_PIC, NVL(trunc(PRO_ALL_ASSESS /NULLIF(PRO_ALL_ASSESSMAN,0)),0) AS PRO_TRUNC_ASSESS FROM PRODUCT order by pro_trunc_assess desc ) TOTASS WHERE ROWNUM <=4";
     //查詢全部商品除後評價(類別查詢)
-	private static final String SELECT_ASSESSLIKE = "SELECT ROWNUM ,TOTASS.* FROM (SELECT PRO_NO,PRO_BONUS,PRO_PIC, NVL(trunc(PRO_ALL_ASSESS /NULLIF(PRO_ALL_ASSESSMAN,0)),0) AS PRO_TRUNC_ASSESS FROM PRODUCT WHERE PRO_CLASSID = ? order by pro_trunc_assess desc ) TOTASS WHERE ROWNUM <=4";
-	
+	private static final String SELECT_ASSESSLIKE = "SELECT ROWNUM ,TOTASS.* FROM (SELECT PRO_NO,PRO_BONUS,PRO_PIC, NVL(trunc(PRO_ALL_ASSESS /NULLIF(PRO_ALL_ASSESSMAN,0)),0) AS PRO_TRUNC_ASSESS FROM PRODUCT WHERE PRO_CLASSID = ? order by pro_trunc_assess desc ) TOTASS WHERE ROWNUM <=4";	
 	//連線池版
-	private static DataSource ds = null;
-	static {
-		try {
-			Context ctx = new javax.naming.InitialContext();
-			ds = (DataSource)ctx.lookup("java:comp/env/jdbc/CA105G1DB");
-		} catch (NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+//	private static DataSource ds = null;
+//	static {
+//		try {
+//			Context ctx = new javax.naming.InitialContext();
+//			ds = (DataSource)ctx.lookup("java:comp/env/jdbc/CA105G1DB");
+//		} catch (NamingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 	//JDBC版本
 	static {
 		try {
@@ -74,7 +73,7 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 		int count = 0 ;
 		 try {
 			    //連線池
-			    con = ds.getConnection();
+//			    con = ds.getConnection();
 			    //JDBC版
 //				con = DriverManager.getConnection(URL, USER, PASSWORD);
 		        ps = con.prepareStatement(INSERT);
@@ -140,7 +139,7 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 		int count = 0;
 		try {
 		    //連線池
-		    con = ds.getConnection();
+//		    con = ds.getConnection();
 		    //JDBC版
 //			con = DriverManager.getConnection(URL, USER, PASSWORD);
 		    ps = con.prepareStatement(UPDATE);
@@ -195,7 +194,7 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 			int count = 0;
 			try {				
 			    //連線池
-			    con = ds.getConnection();
+//			    con = ds.getConnection();
 			    //JDBC版
 //				con = DriverManager.getConnection(URL, USER, PASSWORD);
 				ps = con.prepareStatement(DELETE);
@@ -250,7 +249,7 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 //			ps.executeBatch();
 			
 		    //連線池
-		    con = ds.getConnection();
+//		    con = ds.getConnection();
 		    //JDBC版
 //			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			ps = con.prepareStatement(DELETE_CHILDREN_PROM);
@@ -300,7 +299,7 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 		ResultSet rs = null;
 		try {
 		    //連線池
-		    con = ds.getConnection();
+//		    con = ds.getConnection();
 		    //JDBC版
 //			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			ps = con.prepareStatement(SELECT_ALL);
@@ -368,7 +367,7 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 		try {
 			
 		    //連線池
-		    con = ds.getConnection();
+//		    con = ds.getConnection();
 		    //JDBC版
 //			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			ps = con.prepareStatement(SELECT_FINDBYPK);
@@ -441,7 +440,7 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 		try {
 			
 		    //連線池
-		    con = ds.getConnection();
+//		    con = ds.getConnection();
 		    //JDBC版
 //			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			ps = con.prepareStatement(SELECT_FINDBYPK);
@@ -513,7 +512,7 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 		
 		try {
 		    //連線池
-		    con = ds.getConnection();
+//		    con = ds.getConnection();
 		    //JDBC版
 //			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			ps = con.prepareStatement(UPDATE_PRO_SHELVE);
@@ -563,7 +562,7 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 		ResultSet rs = null;
 		try {
 		    //連線池
-		    con = ds.getConnection();
+//		    con = ds.getConnection();
 		    //JDBC版
 //			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -630,7 +629,7 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 		ResultSet rs = null;
 		try {
 		    //連線池
-		    con = ds.getConnection();
+//		    con = ds.getConnection();
 		    //JDBC版
 //			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			ps = con.prepareStatement(SELECT_SHELVE);
@@ -698,7 +697,7 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 		try {
 			 
 		    //連線池
-		    con = ds.getConnection();
+//		    con = ds.getConnection();
 		    //JDBC版
 //			con = DriverManager.getConnection(URL, USER, PASSWORD);
 		    ps = con.prepareStatement(UPDATE_STOCK);
@@ -745,7 +744,7 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 		try {
 			
 		    //連線池
-		    con = ds.getConnection();
+//		    con = ds.getConnection();
 		    //JDBC版
 //			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			ps = con.prepareStatement(SELECT_FINDBYPK);
@@ -814,7 +813,7 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 		try {
 			 
 		    //連線池
-		    con = ds.getConnection();
+//		    con = ds.getConnection();
 		    //JDBC版
 //			con = DriverManager.getConnection(URL, USER, PASSWORD);
 		    ps = con.prepareStatement(UPDATE_STOCK);
@@ -861,9 +860,9 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 		try {
 			 
 		    //連線池
-		    con = ds.getConnection();
+//		    con = ds.getConnection();
 		    //JDBC版
-//			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
 		    ps = con.prepareStatement(SELECT_ASSESS);
 		    rs = ps.executeQuery();
 		    
@@ -912,9 +911,9 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 		try {
 			 
 		    //連線池
-		    con = ds.getConnection();
+//		    con = ds.getConnection();
 		    //JDBC版
-//			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
 		    ps = con.prepareStatement(SELECT_ASSESSLIKE);
 		    ps.setString(1, pro_classid);
 		    rs = ps.executeQuery();

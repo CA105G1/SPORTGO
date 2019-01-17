@@ -466,6 +466,35 @@
 <script src="<%=request.getContextPath() %>/front-end/pro/card/creditcard.js"></script>
 			<script type="text/javascript">
 				$(document).ready(function(){
+					//評價jquery
+				    var isclick = false;
+				    var arr = ["1分差評", "2分中評", "3分中評", "4分好評", "5分好評"];
+				    var clickind = -1;
+
+				    $(".s-xx").on("click", function() {
+				        isclick = true;
+				        clickind = $(this).index();
+				    });
+				    
+				    $(".s-xx").hover(function() {
+				        var ind = $(this).index();
+				        $(this).siblings(".s-xx").removeClass("color-f13a3a");
+				        for (var i = 0; i <= ind; i++) {
+				            $(".s-xx").eq(i).addClass("color-f13a3a");
+				            $(".s-haoping").siblings(".s-hp-txt").text(arr[i]).end().show();
+				        }
+				    }, function() {
+				        if (!isclick) {
+				            $(".s-xx").removeClass("color-f13a3a");
+				            $(".s-haoping").hide();
+				        } else {
+				            $(".s-xx").removeClass("color-f13a3a");
+				            for (var i = 0; i <= clickind; i++) {
+				                $(".s-xx").eq(i).addClass("color-f13a3a");
+				                $(".s-haoping").find(".s-hp-txt").text(arr[i]).end().show();
+				            }
+				        }
+				    });
 					<!--信用卡日期驗證-->
 					var cardtrue = false;
 					$(".expiry").keyup(function(){

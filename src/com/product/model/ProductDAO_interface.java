@@ -32,4 +32,8 @@ public interface ProductDAO_interface {
     public abstract ProductVO getSelectStock(String pro_no , Integer cart_pro_stock);
     //更新評價分數
     public abstract int updateAssess(String pro_no, Integer pro_all_assess);
+    //查詢全部商品除後評價
+    public abstract List<ProductAssessVO> getAllAssess();
+    //查詢全部商品除後評價(類別查詢)
+    public abstract List<ProductAssessVO> getAllAssesslike(String pro_classid);
 }

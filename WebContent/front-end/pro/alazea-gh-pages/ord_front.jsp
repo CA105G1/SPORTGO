@@ -52,6 +52,66 @@
 			height: auto;
 			float: left;
 		}
+			.s-txt {
+		/*float:left;*/
+	}
+
+	.s-xxs {
+		display: inline-block;
+		vertical-align: middle;
+	}
+
+	.s-xx {
+		float: left;
+		color: #e3e3e3;
+		padding-right: 8px;
+		cursor: pointer;
+		font-size: 25px;
+		vertical-align: middle;
+	}
+	/*外框*/
+
+	.s-haoping {
+		color: #f13a3a;
+		border: 1px solid #f13a3a;
+		padding: 2px 4px;
+		font-size: 12px;
+		vertical-align: middle;
+		position: relative;
+		display: none;
+	}
+
+	/*外框*/
+
+	.s-haoping .s-hp-triangle0 {
+		border-width: 4px;
+		position: absolute;
+		top: 5px;
+		left: -8px;
+		border-color: transparent #f13a3a transparent transparent;
+		border-style: dashed solid dashed dashed;
+	}
+
+	/*外框*/
+
+	.s-haoping .s-hp-triangle1 {
+		border-width: 4px;
+		position: absolute;
+		top: 5px;
+		left: -7px;
+		border-color: transparent #f8f8f8 transparent transparent;
+		border-style: dashed solid dashed dashed;
+	}
+
+	.divStyle {
+		border-bottom: 1px dotted #c8cbcc;
+	}
+
+	/*星星顏色*/
+
+	.color-f13a3a {
+		color: #f13a3a;
+	}
 	</style>
 </head>
 

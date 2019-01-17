@@ -511,6 +511,22 @@ overflow: hidden;
 																		<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
 																		<input type="hidden" name="action" value="getOne_For_Display_front">
 																	</FORM>
+																													    <!-- 評價系統 -->
+													<div class="star">
+													    <span class="s-txt">產品評價：</span>
+														    <span class="s-xxs" id="${proVO.pro_no}">
+														        <span class="iconfont s-xx">☆</span>
+															    <span class="iconfont s-xx">☆</span>
+															    <span class="iconfont s-xx">☆</span>
+															    <span class="iconfont s-xx">☆</span>
+															    <span class="iconfont s-xx">☆</span>
+														    </span>
+<!-- 													    <span class="s-haoping"> -->
+<!-- 														<em class="s-hp-triangle0"> -->
+<!-- 													        </em><em class="s-hp-triangle1"> -->
+<!-- 													        </em><span class="s-hp-txt">5分好評</span> -->
+<!-- 													    </span> -->
+													</div>
 														    	</div>
 														    </div>
 										    			</td> 
@@ -550,9 +566,11 @@ $(function() {
     });
     $(".s-xx").hover(function() {
         var ind = $(this).index();
-        $(".s-xx").removeClass("color-f13a3a");
+        var proid = $(this).parent().attr("id");
+        console.log(proid)
+//         $(".s-xx").removeClass("color-f13a3a");
         for (var i = 0; i <= ind; i++) {
-            $(".s-xx").eq(i).addClass("color-f13a3a");
+        	$(this).parent().find(".s-xx").eq(i).addClass("color-f13a3a");
             $(".s-haoping").find(".s-hp-txt").text(arr[i]).end().show();
         }
     }, function() {
@@ -567,6 +585,34 @@ $(function() {
             }
         }
     });
+    
+//     var isclick = false;
+//     var arr = ["1分差評", "2分中評", "3分中評", "4分好評", "5分好評"];
+//     var clickind = -1;
+
+//     $(".s-xx").on("click", function() {
+//         isclick = true;
+//         clickind = $(this).index();
+//     });
+//     $(".s-xx").hover(function() {
+//         var ind = $(this).index();
+//         $(".s-xx").removeClass("color-f13a3a");
+//         for (var i = 0; i <= ind; i++) {
+//             $(".s-xx").eq(i).addClass("color-f13a3a");
+//             $(".s-haoping").find(".s-hp-txt").text(arr[i]).end().show();
+//         }
+//     }, function() {
+//         if (!isclick) {
+//             $(".s-xx").removeClass("color-f13a3a");
+//             $(".s-haoping").hide();
+//         } else {
+//             $(".s-xx").removeClass("color-f13a3a");
+//             for (var i = 0; i <= clickind; i++) {
+//                 $(".s-xx").eq(i).addClass("color-f13a3a");
+//                 $(".s-haoping").find(".s-hp-txt").text(arr[i]).end().show();
+//             }
+//         }
+//     });
 });
 
 </script>

@@ -1,5 +1,6 @@
 package com.product.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,18 @@ public class ProductService {
         super();
 		proDAO = new ProductJDBCDAO();
 		
+	}
+	
+	public List<ProductAssessVO> getProAssess(){
+		List<ProductAssessVO> list = new ArrayList<>();
+		list = proDAO.getAllAssess();
+		return list;
+	}
+	
+	public List<ProductAssessVO> getProAssesslike(String pro_classid){
+		List<ProductAssessVO> list = new ArrayList<>();
+		list = proDAO.getAllAssesslike(pro_classid);
+		return list;
 	}
 	
 	public ProductVO addPro(String pro_classid ,String pro_name ,byte[]   pro_pic ,
@@ -98,4 +111,6 @@ public class ProductService {
 	public ProductVO getProductStock(String pro_no,Integer cart_pro_stock) {
 		return proDAO.getSelectStock(pro_no, cart_pro_stock);
 	}
+
 }
+
