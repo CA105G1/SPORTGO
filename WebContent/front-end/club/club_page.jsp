@@ -92,17 +92,16 @@
 	<body>
 	
 	<jsp:include page="/front-end/CA105G1_header.jsp" />
-		<div class="container-fluid">
+		<div class="container">
 			<div class="row">
-				<div class="col-xs-12 col-lg-1" id="xx1"></div>
 				
-				<div class="col-xs-12 col-lg-2" style="margin-right: -;padding-left: 5px;padding-right: 5px;">
+				<div class="col-xs-12 col-sm-2" style="margin-right: -;padding-left: 5px;padding-right: 5px;">
 					<jsp:include page="club_pageRight.jsp" />
 				</div>
 						
-				<div class="col-xs-12 col-lg-7">
+				<div class="col-xs-12 col-sm-8">
 					
-<!---------------------------- 貼文列表 ------------------------------------->
+<!---------------------------- 顯示貼文列表 ------------------------------------->
 <!-- 查詢的FORM --><form method="post" action="<%= request.getContextPath()%>/post_info.do">
 					<div><!-- 貼文搜尋 -->
 						<input type="text" class="form-control" placeholder="search" style="width:15em" />
@@ -110,17 +109,17 @@
 	  					<button class="btn btn-primary" type="button" id="postsearch">送出</button>
 					</div><!-- 貼文搜尋 -->
 <!-- 查詢的FORM --></form>					
-<!-- 貼文刪除FORM --><FORM METHOD="post" ACTION="<%=request.getContextPath()%>/respones.do" name="form">  
+<!-- 貼文刪除FORM --><FORM METHOD="post" ACTION="<%=request.getContextPath()%>/post_info.do" name="form">  
 					<div class="card text-center" id="post">
   							<div class="card-body">
 								<c:forEach var="postinfoVO" items="${postvolist}">
     								<h3 class="card-title"  class="list-group-item">
     									${postinfoVO.post_topic}
     								</h3>
-									<a href='<%=request.getContextPath()%>/post_info.do?action=update&post_no=${postinfoVO.post_no}'">編輯</a>
-<!-- 									<button type="submit" class="btn btn-link" id="deletepost" name="action" value="delete">刪除</button> -->
-<%-- 									<button class="btn btn-link" id="deletepost" onclick="location.href='<%=request.getContextPath()%>/post_info.do?action=delete&post_no=${postinfoVO.post_no}'">刪除</button> --%>
+    						<c:if test="${memberlistVO.mem_no==postinfoVO.mem_no}">		
+									<a href='<%=request.getContextPath()%>/post_info.do?action=getOnePost_display&post_no=${postinfoVO.post_no}'">編輯</a>
 									<a href='<%=request.getContextPath()%>/post_info.do?action=delete&post_no=${postinfoVO.post_no}'">刪除</a>
+							</c:if>		
     								<p class="card-text">${postinfoVO.post_content}</p><!--貼文內容 -->   								
 <!-- 貼文刪除FORM --></FORM>    								
 <!-------------------------------------------- 新增留言 --------------------------------------------------->
@@ -177,9 +176,9 @@
 <!------------------------------------------顯示&刪除留言-------------------------------------------------->
    								</c:forEach><!-- 最外層postinfoVO的 -->
   							</div> <!-- card-body結束 -->
-							<div class="col-xs-12 col-lg-2" id="xx"></div>
 					</div><!-- card text-center結束 -->
 				</div><!-- col-xs-12 col-lg-7結束-->
+				<div class="col-xs-12 col-sm-2" id="xx">	<div>clubVO = ${clubVO }</div></div>
 			</div><!-- row結束 -->
 		</div><!-- 最外層container-fluid結束 -->
 				

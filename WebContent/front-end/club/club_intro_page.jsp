@@ -96,5 +96,16 @@
 		<jsp:include page="/front-end/CA105G1_footer.jsp" />
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script>
+		var status = "${no_member}";
+		$(function(){
+			console.log(status);
+			if('no_member'===status){
+				swal("不是社團成員喔！", "趕快加入吧", "warning");
+			}
+			
+		})
+		
+		</script>
 	</body>
 </html>

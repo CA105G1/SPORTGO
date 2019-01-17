@@ -32,7 +32,7 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
-		<script src="https://cdn.ckeditor.com/ckeditor5/11.2.0/classic/ckeditor.js"></script>
+		<script src="https://cdn.ckeditor.com/4.11.2/standard/ckeditor.js"></script>
 		
 		<style type="text/css">
 			
@@ -89,9 +89,10 @@
 										貼文內容
 									<br>
 									<!--貼文內容輸入框-->
-									 <textarea name="editor" id="editor"  class="form-control" value="${editor}"></textarea>
-<%-- 									<textarea name="editor" id="post_content"  class="form-control" value="${editor}"></textarea> --%>
-               					
+									<textarea name="editor" id="post_content"  class="form-control" value="${editor}"></textarea>
+               						<script>
+                        				CKEDITOR.replace( 'editor', {width: '700px' } );
+                					</script>
 									<input type="hidden" name="club_no" id="club_no" value="${club_no}"/>
 									<input type="hidden" name="mem_no" id="mem_no" value="${mem_no}"/>
 									<!-- 時間可以不寫 -->
@@ -114,7 +115,7 @@
 						</ul>
 					</c:if>
 <!------------------------建立貼文------------------------------------------------------------>	
-				</div><!-- col-xs-12 col-lg-8結束 -->
+				</div><!-- col-xs-12 col-lg-7結束 -->
 				<div class="col-xs-12 col-sm-2" id="xx">	<div>clubVO = ${clubVO }</div></div>
 			</div><!-- row結束 -->
 		</div><!-- container-fluid結束 -->
@@ -123,21 +124,19 @@
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script>
+		// Enable local "abbr" plugin from /myplugins/abbr/ folder.
+		CKEDITOR.plugins.addExternal( 'abbr', '/myplugins/abbr/', 'plugin.js' );
 		
-		  ClassicEditor
-          .create( document.querySelector( '#editor' ) ,{
-			  cloudServices: {
-	                tokenUrl: 'https://36858.cke-cs.com/token/dev/P5oQfFj6vNube6BjhQLtEsAgtQ20tO0VqKeFLOzYFOlf4jS12ccjhd8UW1LX',
-	                uploadUrl: 'https://36858.cke-cs.com/easyimage/upload/'
-	                	     }
-		})
-          .then( editor => {
-                  console.log( editor );
-          } )
-          .catch( error => {
-                  console.error( error );
-          } );
 		
+			CKEDITOR.replace( 'editor', {
+			    extraPlugins: 'easyimage',
+			    removePlugins: 'image',
+			    cloudServices_tokenUrl: 'https://36858.cke-cs.com/token/dev/P5oQfFj6vNube6BjhQLtEsAgtQ20tO0VqKeFLOzYFOlf4jS12ccjhd8UW1LX',
+			    cloudServices_uploadUrl: 'https://36858.cke-cs.com/easyimage/upload/',
+			    extraPlugins: 'abbr',
+			    	  skin: 'moonocolor,/myskins/moonocolor/'
+			} );
+			
 		</script>
 	
 

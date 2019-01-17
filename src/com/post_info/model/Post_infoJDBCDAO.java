@@ -387,6 +387,11 @@ public class Post_infoJDBCDAO implements Post_infoDAO_interface{
 			// TODO Auto-generated method stub
 			return null;
 		}
+		@Override
+		public Post_infoVO findByMemNO(String mem_no) {
+			// TODO Auto-generated method stub
+			return null;
+		}
 	
 	
 	

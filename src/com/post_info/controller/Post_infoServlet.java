@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import org.json.HTTP;
+
 import com.club.model.ClubService;
 import com.club.model.ClubVO;
 import com.memberlist.model.MemberlistVO;
@@ -67,7 +69,7 @@ if ("getOnePost_display".equals(action)) {
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("responesvolist", responesvolist);
 				req.setAttribute("post_infoVO", post_infoVO); 
-				String url = CLUBPAGE;
+				String url = EDITPOST;
 				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				successView.forward(req, res);
 
@@ -87,23 +89,34 @@ if ("update".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			String requestURL = req.getParameter("requestURL");
-		
+			HttpSession session = req.getSession();
+			String memberlist_mem_no = (String)session.getAttribute("mem_no");
 			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+				String post_no = req.getParameter("post_no");
+				
+				String club_no = req.getParameter("club_no");
+				
+				String mem_no = req.getParameter("mem_no");
 				
 				String post_topic = req.getParameter("post_topic").trim();
 				if (post_topic == null || post_topic.trim().length() == 0) {
 					errorMsgs.add("貼文主題請勿空白");
 				}	
-
-				String post_content = req.getParameter("post_content").trim();
+				String post_content = req.getParameter("editor").trim();
 				if (post_content == null || post_content.trim().length() == 0) {
 					errorMsgs.add("貼文內容請勿空白");
 				}	
+				Timestamp post_date = new Timestamp(System.currentTimeMillis());
 
 				Post_infoVO post_infoVO = new Post_infoVO();
+				post_infoVO.setPost_no(post_no);
+				post_infoVO.setClub_no(club_no);
+				post_infoVO.setMem_no(mem_no);
 				post_infoVO.setPost_topic(post_topic);
 				post_infoVO.setPost_content(post_content);
+				post_infoVO.setPost_date(post_date);
+				
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -113,20 +126,18 @@ if ("update".equals(action)) {
 					failureView.forward(req, res);
 					return; //程式中斷
 				}
-				/***************************2.開始修改資料*****************************************/
+				/***************************2.開始新增資料***************************************/
 				Post_infoService post_infoSvc = new Post_infoService();
-				post_infoVO = post_infoSvc.updatePost_info(post_topic, post_content);
+				post_infoVO = post_infoSvc.updatePost_info(post_no, club_no, mem_no, post_topic, post_content, post_date);
+				/***************************3.新增完成,準備轉交(Send the Success view)***********/
+				req.setAttribute("post_infoVO", post_infoVO);
+				String url = (CLUBPAGE+"?"+club_no);
+				RequestDispatcher successView = req.getRequestDispatcher(url); 
+				successView.forward(req, res);				
 				
-				/***************************3.修改完成,準備轉交(Send the Success view)*************/
-
-				req.setAttribute("Post_infoVO", post_infoVO);
-				String url = EDITPOST;
-				RequestDispatcher successView = req.getRequestDispatcher(url);   // 修改成功後,轉交回送出修改的來源網頁
-				successView.forward(req, res);
-
-				/***************************其他可能的錯誤處理*************************************/
+				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {
-				errorMsgs.add("修改資料失敗:"+e.getMessage());
+				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req
 						.getRequestDispatcher(EDITPOST);
 				failureView.forward(req, res);
@@ -144,6 +155,7 @@ if ("insert".equals(action)) {
 				String club_no = req.getParameter("club_no");
 				
 				String mem_no = req.getParameter("mem_no");
+				
 				String post_topic = req.getParameter("post_topic").trim();
 				if (post_topic == null || post_topic.trim().length() == 0) {
 					errorMsgs.add("貼文主題請勿空白");
