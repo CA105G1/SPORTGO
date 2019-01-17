@@ -115,6 +115,8 @@ public class VenueCreateOrUpdateServlet extends HttpServlet {
 			// check parameter right
 			venueVO	= checkAllParameterForVenue(request, errorMsgs, oldVenueVO);
 		
+
+			
 			if(!errorMsgs.isEmpty()) {
 //				if(!errorMsgs.containsKey("v_photo1")) {
 //					venueVO.setV_photo1(oldVenueVO.getV_photo1());
@@ -133,6 +135,12 @@ public class VenueCreateOrUpdateServlet extends HttpServlet {
 			//// 轉交出去
 			HttpSession session = request.getSession();
 			Map<String, String[]> venueMap = (Map<String, String[]>)session.getAttribute("venueMap");
+			
+			Set<String> set = venueMap.keySet();
+			for(String string : set) {
+				System.out.println(string+" = "+venueMap.get(string));
+			}
+			
 			if(request.getParameter("whichPage")==null||"".equals(request.getParameter("whichPage"))) {
 				HashMap<String, String[]> getMap = new HashMap<String, String[]>(request.getParameterMap());
 				session.setAttribute("venueMap", getMap);
@@ -147,6 +155,7 @@ public class VenueCreateOrUpdateServlet extends HttpServlet {
 			return;
 		
 		}catch (Exception e) {
+//			e.printStackTrace();
 			errorMsgs.put(DB_ERROR_MSGS,"儲存資料失敗: "+e.getMessage());
 			request.setAttribute(venueVO4Error, venueVO);
 			request.setAttribute(WHITCH_TAB, whichTab_forError);

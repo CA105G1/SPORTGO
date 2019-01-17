@@ -443,6 +443,7 @@ public class VenueDAO implements VenueDAO_interface {
 			
 		}catch (SQLException e) {
 			list = new ArrayList<>();
+//			e.printStackTrace();
 			throw new RuntimeException("A database error occured. "+e.getMessage());
 		}finally {
 			if(resultSet!=null) {

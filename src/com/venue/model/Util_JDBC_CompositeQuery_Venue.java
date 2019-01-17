@@ -36,7 +36,8 @@ public class Util_JDBC_CompositeQuery_Venue {
 		int count = 0;
 		for(String key:keys) {
 			String value = map.get(key)[0];
-			if(value != null && value.trim().length() != 0 && !"action".equals(key) && !"whichPage".equals(key) && !"requestURL".equals(key)) {
+			if(value != null && value.trim().length() != 0 && !"action".equals(key) 
+					&& !"whichPage".equals(key) && !"requestURL".equals(key) && !"hasChangePictiure".equals(key)) {
 				count++;
 				String aCondition = get_aCondition_For_Oracle(key, value.trim());
 //				System.out.println("aCondition : "+aCondition);

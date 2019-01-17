@@ -109,7 +109,7 @@
 					
 					<tr>
 						<th><div class="mytitle">場地評價</div></th>
-						<td>${venue_score}</td>
+						<td>${venue_score=='-1'?'尚無場地評價':venue_score}</td>
 					</tr>
 					
 					<tr>
