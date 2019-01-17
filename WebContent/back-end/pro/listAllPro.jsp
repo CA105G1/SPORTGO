@@ -161,7 +161,7 @@
 	</head>
 
 <body onload="connect();" onunload="disconnect();">
-<%@ include file="/front-end/CA105G1_header.file" %>
+<jsp:include page="/back-end/CA105G1_header_back.jsp"/>
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-xs-12 col-sm-3">
@@ -341,9 +341,9 @@
 					</div>
 <!--------------------------------------------訂單管理-->
 					        </div>
-					        <a href="<%=request.getContextPath()%>/back-end/pro/ord_back.jsp">
-						        <div role="tabpanel" class="tab-pane" id="tab2" onclick="location.href='ord_back.jsp'">
-	<%-- 					        	<jsp:include page="/back-end/pro/ord_back.jsp"/> --%>
+					        <a>
+						        <div role="tabpanel" class="tab-pane" id="tab2">
+						        	<jsp:include page="/back-end/pro/ord_back.jsp"/>
 						        </div>
                             </a>
 					        <div role="tabpanel" class="tab-pane" id="tab3">
