@@ -107,7 +107,7 @@
 						<input type="text" class="form-control" placeholder="search" style="width:15em" />
 						<input type="hidden" name="action" value="postCompositeQuery">
 	  					<button class="btn btn-primary" type="button" id="postsearch">送出</button>
-					</div><!-- 貼文搜尋 -->
+					</div><!-- 貼文搜尋 --> 
 <!-- 查詢的FORM --></form>					
 <!-- 貼文刪除FORM --><FORM METHOD="post" ACTION="<%=request.getContextPath()%>/post_info.do" name="form">  
 					<div class="card text-center" id="post">
