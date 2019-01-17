@@ -78,4 +78,8 @@ public class Post_infoService {
 	public Post_infoVO findByMemNO(String mem_mo) {//////////////////////////////////////
 		return dao.findByMemNO(mem_mo);
 	}
+	
+	public List<Post_infoVO> getAllbykeyword(String keyword){
+		return dao.getAllbykeyword(keyword);
+	}
 }

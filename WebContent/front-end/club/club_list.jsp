@@ -94,7 +94,6 @@
 				<div class="panel panel-default">						
 					<div id="aaa" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="panel1">
 						<div class="list-group" id="myList" role="tablist">
-							<a class="list-group-item list-group-item-actionfront" data-toggle="list" href="#myclub" role="tab">我的社團</a>
 <!---建立社團--------------------------------------------------------------------------------->
 	<% Object object = request.getAttribute("errorMsgs"); %>
 		<% if("insert".equals(request.getParameter("actionfront")) && object != null){
