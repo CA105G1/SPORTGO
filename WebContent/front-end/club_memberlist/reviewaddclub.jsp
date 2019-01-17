@@ -133,7 +133,10 @@
 		  										<td>${memberlistSvc.getOneMem(club_memberlistVO.mem_no).mem_name}</td>
 		  										<td>
 		  											${club_memberlistVO.cmem_class}
-	  												<button class="btn btn-primary setBtn" name="cmem_class" value="${club_memberlistVO.cmem_class}">設為${club_memberlistVO.cmem_class}</button>
+	  												<button class="btn btn-primary setBtn" name="cmem_class" value="${club_memberlistVO.cmem_class}">
+	  													<c:if test="${club_memberlistVO.cmem_class=='管理員'}">設為一般成員</c:if>
+	  													<c:if test="${club_memberlistVO.cmem_class=='一般成員'}">設為管理員</c:if>
+	  												</button>
 		  											<input type="hidden" name="mem_no" value="${club_memberlistVO.mem_no}">
 	  											</td>
 		  									</tr>
@@ -162,6 +165,8 @@
 	
 	
 <script>
+
+
 	//設定旗標，用來回到原本的展開畫面
 	var flag = localStorage.getItem('isReloadFromClass');
 	if(flag == 'true'){

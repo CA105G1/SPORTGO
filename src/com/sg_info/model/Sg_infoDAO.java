@@ -350,9 +350,9 @@ public class Sg_infoDAO implements Sg_infoDAO_interface{
 		try {
 			con = ds.getConnection();
 //			con = DriverManager.getConnection(url, user, psw);
-			String sqlStr = "SELECT * FROM sg_info left outer join venue on sg_info.v_no = venue.v_no "
-			+ "WHERE (sg_status='揪團中' or sg_status='成團' or sg_status='流團')" + CompositeQuery_Sg_info.get_WhereCondition(map)
-			+ " ORDER BY sg_info.sg_date DESC";
+			String sqlStr = "SELECT * FROM (select * from sg_info left outer join venue on sg_info.v_no = venue.v_no) sgV left outer join region on sgV.reg_no = region.reg_no "
+			+ "WHERE (sgV.sg_status='揪團中' or sgV.sg_status='成團' or sgV.sg_status='流團')" + CompositeQuery_Sg_info.get_WhereCondition(map)
+			+ " ORDER BY sgV.sg_date DESC";
 System.out.println("sqlStr="+sqlStr);
 			pstmt = con.prepareStatement(sqlStr);
 			rs = pstmt.executeQuery();

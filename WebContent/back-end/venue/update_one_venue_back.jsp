@@ -31,24 +31,24 @@
 <%
 
 %>
-<div>
-	<form method="post" action="<%=request.getContextPath()%>/venue/venue.do">
-	 	<input type="hidden" name="action" value="update_reset"/>
-	 	<input type="submit" value="update_reset"/>
-	</form>
-</div>
+<!-- <div> -->
+<%-- 	<form method="post" action="<%=request.getContextPath()%>/venue/venue.do"> --%>
+<!-- 	 	<input type="hidden" name="action" value="update_reset"/> -->
+<!-- 	 	<input type="submit" value="update_reset"/> -->
+<!-- 	</form> -->
+<!-- </div> -->
 <!-- <div> -->
 <%-- 	<form method="post" action="<%=request.getContextPath()%>/venue/venue.do"> --%>
 <!-- 	 	<input type="hidden" name="action" value="update_cancel"/> -->
 <!-- 	 	<input type="submit" value="update_cancel"/> -->
 <!-- 	</form> -->
 <!-- </div> -->
-<div>
-	<form method="post" action="<%=request.getContextPath()%>/venue/venue.do">
-	 	<input type="hidden" name="action" value="update_commit"/>
-	 	<input type="submit" value="update_commit"/>
-	</form>
-</div>
+<!-- <div> -->
+<%-- 	<form method="post" action="<%=request.getContextPath()%>/venue/venue.do"> --%>
+<!-- 	 	<input type="hidden" name="action" value="update_commit"/> -->
+<!-- 	 	<input type="submit" value="update_commit"/> -->
+<!-- 	</form> -->
+<!-- </div> -->
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs_tab3}">
 	<font style="color:red">請修正以下錯誤:</font>
@@ -61,10 +61,28 @@
 
 <div class="container-fluid">
 	<div class="row">
-		<form action="<%=request.getContextPath()%>/venue/venue.do" method="post" enctype="multipart/form-data">
-			<table class="table table-hover table-striped table-bordered text-center">
-				<caption class="text-center">this is add venue page</caption>
-				<tbody>
+		
+		<table class="table table-hover table-striped table-bordered text-center">
+			<caption class="text-center">this is add venue page</caption>
+			<thead>
+				<tr>
+					<th colspan="2">
+						<div class="col-xs-12 col-sm-6">
+							<form method="post" action="<%=request.getContextPath()%>/venue/venue.do">
+								<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>" /><!--送出本網頁的路徑給Controller-->
+		     					<input type="hidden" name="whichPage"	value="${param.whichPage}" />
+		     					<input type="hidden" name="v_no" value="${venueVO_tab3.v_no}" />
+		     					<input type="hidden" name="action" value="update_reset" />
+								<input type="submit" value="回復原設定" class="btn btn-success btn-block" />
+							</form>
+						</div>
+						<div class="col-xs-12 col-sm-6">
+						</div>
+					</th>			
+				</tr>
+			</thead>
+			<tbody>
+				<form action="<%=request.getContextPath()%>/venue/venue.do" method="post" enctype="multipart/form-data">
 					<tr>
 						<th><div class="mytitle">場地編號</div></th>
 						<td>${venueVO_tab3.v_no}</td>
@@ -286,8 +304,8 @@
 						</th>
 					</tr>
 				</tbody>
-			</table>
-		</form>
+			</form>
+		</table>
 	</div>
 </div>
 

@@ -21,6 +21,7 @@ if(list == null){
 
 <html>
 <head>
+<meta charset="utf-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
@@ -77,18 +78,33 @@ if(list == null){
 												</select>
 						      				</th>
 						      			</tr>
+					      			<!-------- 縣市查詢 --------->
+						      			<tr>
+						      				<th>縣市</th>
+					      				</tr>
+					      				<tr>
+						      				<th>
+						      					<jsp:useBean id="regSvc" scope="page" class="com.region.model.RegService" />
+						      					<select id="reg_name" size="1" name="reg_name" class="text-center">
+						      						<option value="">請選擇縣市
+						      						<c:forEach var="regVO" items="${regSvc.all }">
+						      							<option value="${regVO.reg_name }">${regVO.reg_name}
+						      						</c:forEach>
+												</select>
+						      				</th>
+						      			</tr>
 			      					<!-------- 地區查詢 --------->
 						      			<tr>
 						      				<th>地區</th>
 					      				</tr>
 					      				<tr>
 						      				<th>
-						      					<jsp:useBean id="regSvc" scope="page" class="com.region.model.RegService" />
-						      					<select size="1" name="reg_no" class="text-center">
-						      						<option value="">請選擇地區
-						      						<c:forEach var="regVO" items="${regSvc.all }">
-						      							<option value="${regVO.reg_no }">${regVO.reg_name}-${regVO.reg_dist}
-						      						</c:forEach>
+<%-- 						      					<jsp:useBean id="regSvc" scope="page" class="com.region.model.RegService" /> --%>
+						      					<select size="1" name="reg_dist" class="text-center">
+						      						<option id="reg_dist" value="">請選擇地區
+<%-- 						      						<c:forEach var="regVO" items="${regSvc.all }"> --%>
+<%-- 						      							<option value="${regVO.reg_dist }">${regVO.reg_dist} --%>
+<%-- 						      						</c:forEach> --%>
 												</select>
 						      				</th>
 						      			</tr>
@@ -149,9 +165,9 @@ if(list == null){
 				  </div>
 				  
 				  
-				</div>
+				</div> <!-- panel-group -->
 
-			</div>
+			</div> <!-- col-sm-3 -->
 			
 			
 			
@@ -227,6 +243,35 @@ if(list == null){
 
 
 <script>
+
+//設定地區選單動態顯示
+$("#reg_name").change(function(){
+	var dataStr = {};
+	dataStr.action = "getReg_dist";
+	dataStr.reg_name = $("#reg_name").val();
+	
+	$.ajax({
+		type: "POST",
+		url: "<%= request.getContextPath()%>/region/region.do",
+		data: dataStr,
+		dataType: "json",
+		contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+		error: function(){
+			alert("發生錯誤!");
+		},
+		success: function(data){
+			$(".reg_distOption").remove();
+			var reg_distArr = data.reg_dist.split(',');
+			for(var i in reg_distArr){
+				$("#reg_dist").after("<option class='reg_distOption' value='"+reg_distArr[i]+"'>"+reg_distArr[i]);
+			}
+		}
+	});
+	
+});
+
+
+
 
 //查詢活動日期表設定
 	$.datetimepicker.setLocale('zh'); // kr ko ja en

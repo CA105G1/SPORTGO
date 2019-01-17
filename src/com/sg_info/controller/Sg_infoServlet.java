@@ -493,14 +493,12 @@ public class Sg_infoServlet extends HttpServlet {
 			
 						try {
 							dao.saveChatMessage(mem_no, mem2_no, value);
-						} catch (JSONException e) {
+						} catch (Exception e) {
 							System.out.println("分享出錯了");
 							e.printStackTrace();
 						}
 			}
-			
-			RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/memberlist/Friend.do?action=find_My_Friend");
-			dispatcher.forward(req, res);
+			res.sendRedirect(req.getContextPath()+"/front-end/memberlist/Friend.do?action=find_My_Friend");
 						
 		}
 		

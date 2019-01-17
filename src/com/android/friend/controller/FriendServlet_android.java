@@ -15,6 +15,7 @@ import com.android.friend.model.FriendService_android;
 import com.android.friend.model.Friend;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.memberlist.model.MemberlistRedisDAO;
 
 @WebServlet("/FriendServlet_android.do")
 public class FriendServlet_android extends HttpServlet {
@@ -204,6 +205,12 @@ public class FriendServlet_android extends HttpServlet {
 			} else {
 				writeText(res, "false");
 			}
+		}
+		
+		if("getHistoryChat".equals(action)) {
+			String sender = jsonObject.get("mem_no").getAsString();
+			List<String> historyData = new MemberlistRedisDAO().getHistoryMsg(sender);
+			writeText(res, historyData.toString());
 		}
 		
 	}

@@ -31,10 +31,11 @@ import redis.clients.jedis.Jedis;
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5  * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class ShoppingCartServlet extends HttpServlet{
 	//-----------------------------舊版路徑
-	private static final String PATH_LISTONEPRO_FRONT = "/front-end/pro/listOnePro_front.jsp";
+//	private static final String PATH_LISTONEPRO_FRONT = "/front-end/pro/listOnePro_front.jsp";
 //	private static final String PATH_SHOPPINGCART = "/front-end/pro/shoppingcart_front.jsp";
 	//-----------------------------模板路徑
 	private static final String PATH_SHOPPINGCART = "/front-end/pro/alazea-gh-pages/shoppingcart_front.jsp";
+	private static final String PATH_LISTONEPRO_FRONT = "/front-end/pro/alazea-gh-pages/listOnePro_front.jsp";
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
@@ -52,7 +53,7 @@ if ("insert".equals(action)) { //來自listOnePro_front.jsp的請求
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
-//			try {
+			try {
 			 
 			HttpSession session = req.getSession();
 			
@@ -118,11 +119,11 @@ if ("insert".equals(action)) { //來自listOnePro_front.jsp的請求
 //				failureView.forward(req, res);
 //				return;
 //			}
-//			} catch (Exception e) {
-//				RequestDispatcher failureView = req
-//						.getRequestDispatcher(PATH_LISTONEPRO_FRONT);
-//				failureView.forward(req, res);
-//			}
+			} catch (Exception e) {
+				RequestDispatcher failureView = req
+						.getRequestDispatcher(PATH_LISTONEPRO_FRONT);
+				failureView.forward(req, res);
+			}
 			
 		}
 if ("getAll_For_Display".equals(action)) { //來自listOnePro_front.jsp的請求

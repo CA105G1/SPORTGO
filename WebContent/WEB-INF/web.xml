@@ -39,6 +39,7 @@
     <url-pattern>/front-end/memberlist/sg.jsp</url-pattern>
     <url-pattern>/front-end/Sg_info/Sg_infoCreate.jsp</url-pattern>
     <url-pattern>/front-end/club/Sg_infoCreateForClub.jsp</url-pattern>
+    <url-pattern>/front-end/pro/alazea-gh-pages/shoppingcart_front.jsp</url-pattern>
     <dispatcher>REQUEST</dispatcher>
     <dispatcher>FORWARD</dispatcher>
     <dispatcher>INCLUDE</dispatcher>
@@ -337,4 +338,30 @@
     <servlet-name>RegionServlet</servlet-name>
     <url-pattern>/region/region.do</url-pattern>
   </servlet-mapping>
+  
+    <servlet>
+    <servlet-name>Product_like_Servlet</servlet-name>
+    <servlet-class>com.product_like.controller.Product_like_Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Product_like_Servlet</servlet-name>
+    <url-pattern>/prolike/prolike.do</url-pattern>
+  </servlet-mapping>
+  
+  <filter>
+    <filter-name>EmpCheckLoginFilter</filter-name>
+    <filter-class>com.emp.controller.EmpCheckLoginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>EmpCheckLoginFilter</filter-name>
+    <url-pattern>/back-end/venue/maintain_venue_info_back.jsp</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>INCLUDE</dispatcher>
+    <dispatcher>ERROR</dispatcher>
+    <dispatcher>ASYNC</dispatcher>
+  </filter-mapping>
+  
+  
+  
 </web-app>

@@ -56,11 +56,17 @@ public class MemberChatServer {
 					if(name.equals(list.getMem1_no())) {
 						String online = "{\"online\":\"online\",\"who\":\""+name+"\"}";
 						Session sess = sessionsMap.get(list.getMem2_no());
-						sess.getBasicRemote().sendText(online);
+						if(sess!=null) {
+							if(sess.isOpen())
+								sess.getBasicRemote().sendText(online);
+						}
 					}else if(name.equals(list.getMem2_no())) {
 						String online = "{\"online\":\"online\",\"who\":\""+name+"\"}";
 						Session sess = sessionsMap.get(list.getMem1_no());
-						sess.getBasicRemote().sendText(online);
+						if(sess!=null) {
+							if(sess.isOpen())
+								sess.getBasicRemote().sendText(online);
+						}
 					}
 				}
 			}
@@ -92,15 +98,39 @@ public class MemberChatServer {
 			if(name.equals(chatFriend))
 				session2 = sessionsMap.get(name);
 		}
+<<<<<<< HEAD
 		if(session1!=null) {
 			if(session1.isOpen())
-				session1.getAsyncRemote().sendText(message);
+				try {
+					session1.getBasicRemote().sendText(message);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		}
 		if(session2!=null) {
 			if(session2.isOpen())
-				session2.getAsyncRemote().sendText(message);
+				try {
+					session2.getBasicRemote().sendText(message);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+=======
+		try {
+			if(session1!=null) {
+				if(session1.isOpen())
+					session1.getBasicRemote().sendText(message);
+			}
+			if(session2!=null) {
+				if(session2.isOpen())
+					session2.getBasicRemote().sendText(message);
+			}
+			System.out.println("Message received: "+message);
+		}catch(Exception e) {
+			e.printStackTrace(System.err);
+>>>>>>> branch 'master' of https://github.com/CA105G1/SPORTGO.git
 		}
-		System.out.println("Message received: "+message);
 //		Collection<Session> sessions = sessionsMap.values();
 //		for(Session session : sessions) {
 //			if(session.isOpen())
@@ -142,11 +172,17 @@ public class MemberChatServer {
 					if(name.equals(list.getMem1_no())) {
 						String offline = "{\"online\":\"offline\",\"who\":\""+name+"\"}";
 						Session sess = sessionsMap.get(list.getMem2_no());
-							sess.getBasicRemote().sendText(offline);
+						if(sess!=null) {
+							if(sess.isOpen())
+								sess.getBasicRemote().sendText(offline);
+						}
 					}else if(name.equals(list.getMem2_no())) {
 						String offline = "{\"online\":\"offline\",\"who\":\""+name+"\"}";
 						Session sess = sessionsMap.get(list.getMem1_no());
-						sess.getBasicRemote().sendText(offline);
+						if(sess!=null) {
+							if(sess.isOpen())
+								sess.getBasicRemote().sendText(offline);
+						}
 					}
 				} 
 			}

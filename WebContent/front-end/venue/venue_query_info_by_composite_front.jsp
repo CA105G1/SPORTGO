@@ -34,25 +34,25 @@
 				</div>
 				<div class="col-xs-12 col-sm-10">
 					<!-- 連結到各分頁上 -->
-					<div class="row">
+<!-- 					<div class="row"> -->
 						
-						<div class="col-xs-12 col-sm-1"></div>
+<!-- 						<div class="col-xs-12 col-sm-1"></div> -->
 						
-						<div class="col-xs-12 col-sm-4">
-							<a href="<%=request.getContextPath()%>/front-end/venue/venue_query_info_by_composite_front.jsp" 
-							class="btn btn-success btn-block">一般詳細查詢</a>
-						</div>
+<!-- 						<div class="col-xs-12 col-sm-4"> -->
+<%-- 							<a href="<%=request.getContextPath()%>/front-end/venue/venue_query_info_by_composite_front.jsp"  --%>
+<!-- 							class="btn btn-success btn-block">一般詳細查詢</a> -->
+<!-- 						</div> -->
 						
-						<div class="col-xs-12 col-sm-2"></div>
+<!-- 						<div class="col-xs-12 col-sm-2"></div> -->
 												
-						<div class="col-xs-12 col-sm-4">
-							<a href="<%=request.getContextPath()%>/front-end/venue/venue_query_info_by_map_front.jsp" 
-							class="btn btn-success btn-block"> 地圖查詢</a>
-						</div>
+<!-- 						<div class="col-xs-12 col-sm-4"> -->
+<%-- 							<a href="<%=request.getContextPath()%>/front-end/venue/venue_query_info_by_map_front.jsp"  --%>
+<!-- 							class="btn btn-success btn-block"> 地圖查詢</a> -->
+<!-- 						</div> -->
 						
-						<div class="col-xs-12 col-sm-1"></div>
+<!-- 						<div class="col-xs-12 col-sm-1"></div> -->
 					
-					</div>
+<!-- 					</div> -->
 					<div class="row">
 						<div class="h1 center-block">venue_query_info_by_composite_front</div>
 						

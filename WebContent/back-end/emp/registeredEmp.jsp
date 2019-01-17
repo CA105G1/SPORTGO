@@ -8,15 +8,98 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-		<title>CA105G1:back-end:login</title>
+		<title>CA105G1:back-end:registeredEmp</title>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 		<!--[if lt IE 9]>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
+		<style>
+		.errorMsgs-color{
+			color:red
+		}
+		
+		</style>
+		
 	</head>
 	<body>
+		<div class="container-fluid">
+			<div class="ros">
+				<div class="col-xs-12 col-sm-6 col-sm-offset-1">
+					<div class="h1">新增管理員</div>
+					<form method="post" action ="<%=request.getContextPath()%>/emp/emp.do">
+			<%-------------
+						<!-- sample -->
+						<div class="form-group">
+							<label for=""></label>
+							<input type="" name="" id="" value="" class="form-control"/>
+						</div>
+			-------------%>
+						<div class="form-group">
+							<label for="emp_name">emp_name</label><span class="pull-right errorMsgs-color">${errorMsgs.get("emp_name")}</span>
+							<input type="text" name="emp_name" id="emp_name" value="${empVO_forRes.emp_name}" class="form-control"/>
+							<div class="center-block errorMsgs-color">${errorMsgs_tab2.get("newstype_no")}</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="emp_account">account</label><span class="pull-right errorMsgs-color">${errorMsgs.get("emp_account")}</span>
+							<input type="text" name="emp_account" id="emp_account" value="${empVO_forRes.emp_account}" class="form-control"/>
+						</div>
+						<!-- TODO: 寄發EMALIL 亂數密碼 -->
+						<div class="form-group">
+							<label for="emp_psw">password</label><span class="pull-right errorMsgs-color">${errorMsgs.get("emp_psw")}</span>
+							<input type="password" name="emp_psw" id="emp_psw" value="${empVO_forRes.emp_psw}" class="form-control"/>
+						</div>
+						
+						
+						<div class="form-group">
+							<label for="emp_auth">emp_auth</label><span class="pull-right errorMsgs-color">${errorMsgs.get("emp_auth")}</span>
+							<select size="1" name="emp_auth" id="emp_auth" class="form-control">
+								<option value="normal_emp" selected>管理員</option >
+								<option value=""></option>
+								<option value="supper_emp">超級管理員</option >
+							</select>
+<!-- 							<input type="text" name="emp_auth" id="emp_auth" value="" class="form-control"/> -->
+						</div>
+						
+						<div class="form-group">
+							<label for="emp_phone">phone</label><span class="pull-right errorMsgs-color">${errorMsgs.get("emp_phone")}</span>
+							<input type="text" name="emp_phone" id="emp_phone" value="${empVO_forRes.emp_phone}" class="form-control"/>
+						</div>
+						
+						<div class="form-group">
+							<label for="emp_email">email</label><span class="pull-right errorMsgs-color">${errorMsgs.get("emp_email")}</span>
+							<input type="email" name="emp_email" id="emp_email" value="${empVO_forRes.emp_email}" class="form-control"/>
+						</div>
+												
+						<div class="form-group">
+							<label for="hiredate_for_format">hiredate</label><span class="pull-right errorMsgs-color">${errorMsgs.get("hiredate")}</span>
+							<input type="text" name="hiredate" id="hiredate_for_format" class="form-control"
+							value='<fmt:formatDate value="${empVO_forRes.hiredate}" pattern="yyyy-MM-dd HH:mm"/>' />
+						</div>
+
+						<div class="row">
+							<div class="col-xs-12 col-sm-1">
+							</div>
+							<div class="col-xs-12 col-sm-4">
+								<button type="submit" name="action" class="btn btn-info btn-block" value="login_reset"> 清空 </button>
+							</div>
+							<div class="col-xs-12 col-sm-2"></div>
+							<div class="col-xs-12 col-sm-4">
+<%-- 								<input type="hidden" name="requestUrl" value="<%=request.getRequestURI()%>"/> --%>
+								<input type="hidden" name="requestUrl" value="<%=request.getServletPath()%>"/>
+								<button type="submit" name="action" class="btn btn-info btn-block" value="registered_emp"> 註冊 </button>
+							</div>
+							<div class="col-xs-12 col-sm-1">
+							</div>
+						</div>
+					</form>
+
+				</div>
+			</div>
+		</div>
 		<%-- for test login--%>
+<%-- 
 		<h4>This is registeredEmp.jsp</h4>
 		<form method="post" action="<%=request.getContextPath()%>/emp/emp.do">
 			
@@ -27,6 +110,8 @@
 			account  : <input type="text" name="emp_account" value="david"><br>
 			passwoed : <input type="password" name="emp_psw" value="123456"><br>
 			hiredate : <input type="text" name="hiredate" value="2018-12-01" id="hiredate_for_format"><br>
+
+
 			
 <!-- 		empVO.setEmp_name("David"); -->
 <!-- 		empVO.setEmp_auth("一般管理員"); -->
@@ -36,22 +121,39 @@
 <!-- 		empVO.setEmp_psw("123456"); -->
 <!-- 		empVO.setHiredate(java.sql.Date.valueOf("2018-12-01")); -->
 			
-			
 			<input type="hidden" name="action" value="registered_emp">
 			<input type="submit" value="registered_emp"><br>
 		</from>
+--%>			
 		<%-- 錯誤表列 --%>
-		<c:if test="${not empty errorMsgs}">
+<%--
+ 		<c:if test="${not empty errorMsgs}">
 			<ul>
 				<c:forEach var="message" items="${errorMsgs}">
 					<li style="color:red">${message}</li>
 				</c:forEach>
 			</ul>
 		</c:if>
+--%>		
 		<%-- --------------------------------------------------------- --%>
 		
-		<script src="https://code.jquery.com/jquery.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+<!-- 		<script src="https://code.jquery.com/jquery.js"></script> -->
+<!-- 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 	</body>
 	
 	<!-- =========================================以下為 datetimepicker 之相關設定========================================== -->

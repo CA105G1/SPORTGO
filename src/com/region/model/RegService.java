@@ -14,7 +14,8 @@ public class RegService {
 	
 	
 	public RegService() {
-		this.regDAO = new RegDAO();
+//		this.regDAO = new RegDAO();
+		this.regDAO = new RegJDBCDAO();
 	}
 	
 	public List<RegVO> getAll(){
@@ -63,24 +64,36 @@ public class RegService {
 		}
 		return reg_nameList;
 	}
-//	// version 1
+	// version 1
 //	public List<RegVO> getRegVOFormRegName(String reg_name) {
 //		Map<String, String[]> map = new HashMap<>();
 //		String[] reg_name_array = {reg_name};
 //		map.put("reg_name", reg_name_array);
 //		return regDAO.getAll(map);
 //	}
-	
-	// version 2
-	public List<RegVO> getRegVOFormRegName(String reg_name) {
-		return regionMapKeyReg_name.get(reg_name);
-	}
-	public Map<String, List<RegVO>> getRegionMapKeyReg_name(){
-		if(regionMapKeyReg_name==null) {
-			setRegionMapKeyReg_name();
+	public List<String> getRegVOFormRegName(String reg_name){
+		Map<String, String[]> map = new HashMap<>();
+		String[] reg_name_array = {reg_name};
+		map.put("reg_name", reg_name_array);
+		List<RegVO> listRegVO = regDAO.getAll(map);
+		List<String> list = new ArrayList<>();
+		for(RegVO regVO : listRegVO) {
+			list.add(regVO.getReg_dist());
 		}
-		return regionMapKeyReg_name;
+		return list;
 	}
+	
+	
+//	// version 2
+//	public List<RegVO> getRegVOFormRegName(String reg_name) {
+//		return regionMapKeyReg_name.get(reg_name);
+//	}
+//	public Map<String, List<RegVO>> getRegionMapKeyReg_name(){
+//		if(regionMapKeyReg_name==null) {
+//			setRegionMapKeyReg_name();
+//		}
+//		return regionMapKeyReg_name;
+//	}
 	
 
 }
