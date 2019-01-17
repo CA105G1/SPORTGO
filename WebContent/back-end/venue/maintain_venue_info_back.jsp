@@ -81,7 +81,7 @@
 									</div>
 									<div class="panel-body">
 										<div class="h1">預計放from表單---萬用</div>
-										<form method="get" action="<%=request.getContextPath()%>/venue/venue.do">
+										<form method="post" action="<%=request.getContextPath()%>/venue/venue.do">
 											<div class="label label-default label-text">請輸入場地編號 : (V000002)</div>
 											<input type="text" name="v_no" value="${venueMap.get('v_no')[0]}"/>
 											<br>
@@ -147,7 +147,9 @@
 									<% }else if("show_one_venue_back".equals(request.getParameter("action"))){ %>
 										<jsp:include page="show_one_venue_back.jsp"/>
 									<% }else if("delete".equals(request.getParameter("action"))){ %>
-										<div>${venue.v_no}-${venueVO.v_name}-${venueTypeVO.vt_name}-已被刪除</div>
+										<c:if test="${venue.v_no!=null}">
+											<div>${venue.v_no}-${venueVO.v_name}-${venueTypeVO.vt_name}-已被刪除</div>
+										</c:if>
 									<% } %>
 					        	</div>
 					        </div>

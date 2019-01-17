@@ -24,20 +24,20 @@ import com.venue.model.VenueVO;
 //TODO: 地址，電話，緯經度，驗證
 public class VenueCreateOrUpdateServlet extends HttpServlet {
 	
-	private static final String DB_ERROR_MSGS = "DataBaseError";
+	private final String DB_ERROR_MSGS = "DataBaseError";
 	
 	//private static final String ERRORMSGS_NO_TAB = "errorMsgs";
-	private static final String ERRORMSGS_TITLE = "errorMsgs_";
+	private final String ERRORMSGS_TITLE = "errorMsgs_";
 	
-	private static final String WHITCH_TAB = "whichTab";
-	private static final String TAB_SELECT = "tab1";
-	private static final String TAB_CREATE = "tab2";
-	private static final String TAB_UPDATE = "tab3";
+	private final String WHITCH_TAB = "whichTab";
+	private final String TAB_SELECT = "tab1";
+	private final String TAB_CREATE = "tab2";
+	private final String TAB_UPDATE = "tab3";
 	
-	private static final String VENUEVO_FOR_ERROR_NAME_TITLE = "venueVO_";
+	private final String VENUEVO_FOR_ERROR_NAME_TITLE = "venueVO_";
 	
-	private static final String MAINTAIN_VENUE_INFO_BACK = "/back-end/venue/maintain_venue_info_back.jsp";
-	private static final String QUERY_SUPER_SERVLET_ACTION_AGAIN = "/venue/venue.do?action=";
+	private final String MAINTAIN_VENUE_INFO_BACK = "/back-end/venue/maintain_venue_info_back.jsp";
+	private final String QUERY_SUPER_SERVLET_ACTION_AGAIN = "/venue/venue.do?action=";
 	//private static final String VENUE_QUERY_INFO_BY_COMPOSTIE_FRONT = "/front-end/venue/venue_query_info_by_composite_front.jsp";
 	//private static final String VENUE_QUERY_INFO_BY_MAP_FRONT = "/front-end/venue/venue_query_info_by_map_front.jsp";
 

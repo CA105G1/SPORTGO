@@ -26,22 +26,22 @@ import com.venuetype.model.VenueTypeVO;
 
 public class VenueSelectServlet extends HttpServlet {
 
-	private static final String DB_ERROR_MSGS = "DataBaseError";
+	private final String DB_ERROR_MSGS = "DataBaseError";
 	
-	private static final String ERRORMSGS_NO_TAB = "errorMsgs";
-	private static final String ERRORMSGS_TITLE = "errorMsgs_";
+	private final String ERRORMSGS_NO_TAB = "errorMsgs";
+	private final String ERRORMSGS_TITLE = "errorMsgs_";
 	
-	private static final String VENUEVO_FOR_ERROR_NAME_TITLE = "venueVO_";
-	private static final String VENUEVO_FOR_SHOW_ONE_NAME = "venueVO";
+	private final String VENUEVO_FOR_ERROR_NAME_TITLE = "venueVO_";
+	private final String VENUEVO_FOR_SHOW_ONE_NAME = "venueVO";
 	
-	private static final String WHITCH_TAB = "whichTab";
-	private static final String TAB_SELECT = "tab1";
-	private static final String TAB_CREATE = "tab2";
-	private static final String TAB_UPDATE = "tab3";
+	private final String WHITCH_TAB = "whichTab";
+	private final String TAB_SELECT = "tab1";
+	private final String TAB_CREATE = "tab2";
+	private final String TAB_UPDATE = "tab3";
 	
-	private static final String MAINTAIN_VENUE_INFO_BACK ="/back-end/venue/maintain_venue_info_back.jsp";
-	private static final String VENUE_QUERY_INFO_BY_COMPOSTIE_FRONT = "/front-end/venue/venue_query_info_by_composite_front.jsp";
-	private static final String VENUE_QUERY_INFO_BY_MAP_FRONT = "/front-end/venue/venue_query_info_by_map_front.jsp";
+	private final String MAINTAIN_VENUE_INFO_BACK ="/back-end/venue/maintain_venue_info_back.jsp";
+	private final String VENUE_QUERY_INFO_BY_COMPOSTIE_FRONT = "/front-end/venue/venue_query_info_by_composite_front.jsp";
+	private final String VENUE_QUERY_INFO_BY_MAP_FRONT = "/front-end/venue/venue_query_info_by_map_front.jsp";
 
 	public VenueSelectServlet() {
         super();
@@ -122,7 +122,7 @@ public class VenueSelectServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			@SuppressWarnings("unchecked")
 			Map<String, String[]> venueMap = (Map<String, String[]>)session.getAttribute("venueMap");
-			if(request.getParameter("whichPage")==null) {
+			if(request.getParameter("whichPage")==null || "".equals(request.getParameter("whichPage"))) {
 				HashMap<String, String[]> getMap = new HashMap<String, String[]>(request.getParameterMap());
 				session.setAttribute("venueMap", getMap);
 				venueMap = getMap;

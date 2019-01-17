@@ -24,9 +24,9 @@ import com.venuetype.model.VenueTypeVO;
 
 public class VenueFuncServlet extends HttpServlet {
 
-	private static final String DB_ERROR_MSGS = "DataBaseError";
-	private static final String ERRORMSGS_NO_TAB = "errorMsgs";
-	private static final String VENUE_QUERY_INFO_BY_COMPOSTIE_FRONT = "/front-end/venue/venue_query_info_by_composite_front.jsp";
+	private final String DB_ERROR_MSGS = "DataBaseError";
+	private final String ERRORMSGS_NO_TAB = "errorMsgs";
+	private final String VENUE_QUERY_INFO_BY_COMPOSTIE_FRONT = "/front-end/venue/venue_query_info_by_composite_front.jsp";
 	
 	
 	public VenueFuncServlet() {
