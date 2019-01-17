@@ -345,7 +345,7 @@
                 <div class="col-12 col-md-8 col-lg-9">
                     <div class="shop-products-area">
                         <div class="row">
-
+ 
 <!------------------------------ 商品列表 Product Area -->
                             <%@ include file="/front-end/pro/page/page1_ByCompositeQuery_new.file" %>
                             <c:forEach var="proVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
