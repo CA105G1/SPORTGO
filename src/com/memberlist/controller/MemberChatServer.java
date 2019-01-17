@@ -98,7 +98,6 @@ public class MemberChatServer {
 			if(name.equals(chatFriend))
 				session2 = sessionsMap.get(name);
 		}
-<<<<<<< HEAD
 		if(session1!=null) {
 			if(session1.isOpen())
 				try {
@@ -116,7 +115,6 @@ public class MemberChatServer {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-=======
 		try {
 			if(session1!=null) {
 				if(session1.isOpen())
@@ -129,7 +127,7 @@ public class MemberChatServer {
 			System.out.println("Message received: "+message);
 		}catch(Exception e) {
 			e.printStackTrace(System.err);
->>>>>>> branch 'master' of https://github.com/CA105G1/SPORTGO.git
+		}
 		}
 //		Collection<Session> sessions = sessionsMap.values();
 //		for(Session session : sessions) {
