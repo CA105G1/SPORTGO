@@ -397,13 +397,8 @@ System.out.println("memberlistVO= "+memberlistVO);
 		$("#repbtn").attr('disabled', true);
 	}
 	
-	//若報名人數已達上限則關閉報名按鍵
-	<%
-		boolean isFull = false;
-		if(vo.getSg_ttlapl() >= vo.getSg_maxno()){
-			isFull = true;
-		}
-	%>
+	//若報名人數已達上限則關閉報名按鍵並顯示圖示
+	
 	if(<%= vo.getSg_ttlapl() >= vo.getSg_maxno()%>){
 		$("#joinbtn").attr('disabled', true);
 		$("#joinFullPic").css('display', '');

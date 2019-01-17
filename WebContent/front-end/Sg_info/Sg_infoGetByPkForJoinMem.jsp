@@ -22,52 +22,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
-<style type="text/css">
-	#infoSpan{
-		margin-left:30%;
-	}
-	.table>tbody>tr>th{
-		border-top:0px;
-	}
-	.backToList{
-		cursor: pointer;
-	}
-	.backToList:active {
-	  	transform: translateY(1px);
-	}
-	#map {
-		height: 400px;  /* The height is 400 pixels */
-		width: 100%;  /* The width is the width of the web page */
-	}
-	#btnGroup{
-		display:flex;
-		justify-content: space-between;
-	}
-	.panel-title{
-		text-align: center;
-    	text-align-last: center;
-	}
-	#sg_memList{ 
- 		background-color: #FFFFE0; 
-		border-radius: 10px; 
-    	cursor: pointer; 
-     	box-shadow: 0 2px #999; 
-    	width:80%; 
-     	text-align: center; 
-     	text-align-last: center; 
- 	} 
-	#sg_memList:active {
-	  	box-shadow: 0 1px #666;
-	  	transform: translateY(1px);
-	}
-	#sg_memPic{
-		width:50px;
-		height:50px;
-		border-radius: 50px;
-		padding:3px;
-	}
-	
-</style>
+
  
 </head>
 <body>
@@ -117,10 +72,12 @@ Sg_infoVO vo = svc.GetByPK(sg_no);
 			
 				<table class="table table-hover">
 					<i class="glyphicon glyphicon-circle-arrow-left icon-large brown backToList"></i>  <!-- 返回按鍵 -->
-					<a href="<%= request.getContextPath()%>/front-end/Sg_info/SgHome.jsp" display="none" id="linkBack">回到揪團首頁</a>
+					<a href="<%= request.getContextPath()%>/front-end/memberlist/MemManager.do?action=Member_Sg" display="none" id="linkBack">回到個人揪團管理</a>
 					
 					<caption style="text-align:center">
 						<h3>
+							<!-- 額滿圖示 -->
+							<img id="joinFullPic" src="<%= request.getContextPath()%>/img/joinFull.png" style="width:80px; height:auto; display:none">
 							<!-- 團名 -->
 							<img src="<%= request.getContextPath()%>/img/sporticons/${Sg_infoVO.sp_no}.svg" style="width:20px; height:auto;">
 							${Sg_infoVO.sg_name }
@@ -403,6 +360,13 @@ Sg_infoVO vo = svc.GetByPK(sg_no);
 	}
 	
 	
+	//若報名人數已達上限則顯示額滿圖示
+	
+	if(<%= vo.getSg_ttlapl() >= vo.getSg_maxno()%>){
+		$("#joinFullPic").css('display', '');
+	}
+	
+	
 	
 	  
 		/////////////////收藏按鍵設定////////////////////////
@@ -581,6 +545,55 @@ Sg_infoVO vo = svc.GetByPK(sg_no);
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAb2lDof7yMn-TTXwt2hwVm4y92t1AqvyU&callback=initMap&libraries=places"
         async defer></script>
+
+
+
+<style type="text/css">
+	#infoSpan{
+		margin-left:30%;
+	}
+	.table>tbody>tr>th{
+		border-top:0px;
+	}
+	.backToList{
+		cursor: pointer;
+	}
+	.backToList:active {
+	  	transform: translateY(1px);
+	}
+	#map {
+		height: 400px;  /* The height is 400 pixels */
+		width: 100%;  /* The width is the width of the web page */
+	}
+	#btnGroup{
+		display:flex;
+		justify-content: space-between;
+	}
+	.panel-title{
+		text-align: center;
+    	text-align-last: center;
+	}
+	#sg_memList{ 
+ 		background-color: #FFFFE0; 
+		border-radius: 10px; 
+    	cursor: pointer; 
+     	box-shadow: 0 2px #999; 
+    	width:80%; 
+     	text-align: center; 
+     	text-align-last: center; 
+ 	} 
+	#sg_memList:active {
+	  	box-shadow: 0 1px #666;
+	  	transform: translateY(1px);
+	}
+	#sg_memPic{
+		width:50px;
+		height:50px;
+		border-radius: 50px;
+		padding:3px;
+	}
+	
+</style>
 
 
 
