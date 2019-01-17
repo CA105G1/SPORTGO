@@ -38,13 +38,15 @@
 					<jsp:include page="/back-end/left_side_field.jsp"/>
 				</div>
 				<div class="col-xs-12 col-sm-9">
-					<div>${empVO}</div>
+<%-- 					<div>${empVO}</div> --%>
 					<c:if test="${empVO==null}">
 						<jsp:include page="/back-end/emp/loginBackEnd.jsp"/>
 					</c:if>
 					<c:if test="${empVO!=null}">
-					
-						hello, ${empVO.emp_name}
+						<h1>hello, ${empVO.emp_name}</h1>
+						
+						<img src="<%=request.getContextPath()%>/img/logo_SportyGo_2_light.png" style="width:50%"/>
+						
 					
 					</c:if>
 				

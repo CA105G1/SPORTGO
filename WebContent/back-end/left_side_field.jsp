@@ -39,9 +39,9 @@
 			  	</div>
 			    <div class="panel-collapse collapse" id="adminiBack">
 					<div class="list-group">
-						<a href="<%=request.getContextPath()%>/back-end/emp/registeredEmp.jsp" class="list-group-item">新增管理員</a>
+						<a href="<%=request.getContextPath()%>/back-end/emp/add_one_emp.jsp" class="list-group-item">新增管理員</a>
 						<a href="#" class="list-group-item">管理員列表</a>
-						<a href="#" class="list-group-item">會員列表</a>
+						<a href="<%=request.getContextPath()%>/back-end/memberlist/listAllMem.jsp" class="list-group-item">會員列表</a>
 					</div>
 				</div>
 			</div>

@@ -18,7 +18,7 @@
 	</head>
 	<body>
 		
-	<form method="get" action="<%=request.getContextPath()%>/emp/emp.do">
+	<form method="post" action="<%=request.getContextPath()%>/emp/emp.do">
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-12 col-sm-6 col-sm-offset-1">
