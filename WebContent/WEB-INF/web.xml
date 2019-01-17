@@ -353,8 +353,14 @@
     <filter-class>com.emp.controller.EmpCheckLoginFilter</filter-class>
   </filter>
   <filter-mapping>
-    <filter-name>EmpCheckLoginFilter</filter-name>
+    <filter-name>EmpCheckLoginFilter</filter-name>    
+    <url-pattern>/back-end/emp/add_one_emp.jsp</url-pattern>
+    <url-pattern>/back-end/memberlist/listAllMem.jsp</url-pattern>
+    <url-pattern>/back-end/sg_info/sg_infoBackEnd.jsp</url-pattern>
+    <url-pattern>/back-end/pro/addPro.jsp</url-pattern>
+    <url-pattern>/back-end/pro/listAllPro.jsp</url-pattern>
     <url-pattern>/back-end/venue/maintain_venue_info_back.jsp</url-pattern>
+    <url-pattern>/back-end/news/maintain_news_info.jsp</url-pattern>
     <dispatcher>REQUEST</dispatcher>
     <dispatcher>FORWARD</dispatcher>
     <dispatcher>INCLUDE</dispatcher>
