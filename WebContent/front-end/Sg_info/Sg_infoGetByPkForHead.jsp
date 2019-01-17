@@ -8,12 +8,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <% 
 Sg_infoVO vo = (Sg_infoVO)request.getAttribute("Sg_infoVO");	
+
 if(vo == null){
 	String sg_no = (String)request.getParameter("Sg_no");
 	Sg_infoService svc = new Sg_infoService();
 	vo = svc.GetByPK(sg_no);
     pageContext.setAttribute("Sg_infoVO", vo);
-}
+} 
 %>
 
 <html>
@@ -30,7 +31,52 @@ if(vo == null){
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
-
+<style type="text/css">
+	th{
+		text-align:center;
+	}
+	td{
+		width: 65%;
+	}
+	.backToList{
+		cursor: pointer;
+	}
+	.backToList:active {
+	  	transform: translateY(1px);
+	}
+	#map {
+		height: 400px;  /* The height is 400 pixels */
+		width: 100%;  /* The width is the width of the web page */
+	}
+	#btnGroup{
+		display:flex;
+		justify-content: space-between;
+	}
+	.panel-title{
+		text-align: center;
+    	text-align-last: center;
+	}
+	#sg_memList{ 
+ 		background-color: #FFFFE0; 
+		border-radius: 10px; 
+    	cursor: pointer; 
+     	box-shadow: 0 2px #999; 
+    	width:80%; 
+     	text-align: center; 
+     	text-align-last: center; 
+ 	} 
+	#sg_memList:active {
+	  	box-shadow: 0 1px #666;
+	  	transform: translateY(1px);
+	}
+	#sg_memPic{
+		width:50px;
+		height:50px;
+		border-radius: 50px;
+		padding:3px;
+	}
+	
+</style>
  
 </head>
 <body>
@@ -193,10 +239,12 @@ if(vo == null){
 					<input type="hidden" name="sg_per" value="${Sg_infoVO.sg_per}" >
 					<input type="hidden" name="club_no" value="${Sg_infoVO.club_no}" >
 					<input type="hidden" name="sg_pic_ext" value="<%= vo.getSg_pic_ext()%>" >
+					<input type="hidden" name="sg_ttlapl" value="<%= vo.getSg_ttlapl()%>" >
 					<input type="hidden" name="loc_start" id="loc_start" value=<%= vo.getLoc_start() %>>
 					<input type="hidden" name="loc_end" id="loc_end" value=<%= vo.getLoc_end() %>>	
 					<input type="hidden" name="action" value="update">
 				</form>
+<%System.out.print("test"); %>
  				<form action="<%= request.getContextPath()%>/Sg_info/Sg_info.do" method="post" id="dismissForm">
 					<input type="button" class="btn btn-danger btn-block" id="dismiss" value="解散" >
 					<input type="hidden" name="action" value="dismiss">
@@ -641,52 +689,7 @@ if(vo == null){
 
 
 
-<style type="text/css">
-	th{
-		text-align:center;
-	}
-	td{
-		width: 65%;
-	}
-	.backToList{
-		cursor: pointer;
-	}
-	.backToList:active {
-	  	transform: translateY(1px);
-	}
-	#map {
-		height: 400px;  /* The height is 400 pixels */
-		width: 100%;  /* The width is the width of the web page */
-	}
-	#btnGroup{
-		display:flex;
-		justify-content: space-between;
-	}
-	.panel-title{
-		text-align: center;
-    	text-align-last: center;
-	}
-	#sg_memList{ 
- 		background-color: #FFFFE0; 
-		border-radius: 10px; 
-    	cursor: pointer; 
-     	box-shadow: 0 2px #999; 
-    	width:80%; 
-     	text-align: center; 
-     	text-align-last: center; 
- 	} 
-	#sg_memList:active {
-	  	box-shadow: 0 1px #666;
-	  	transform: translateY(1px);
-	}
-	#sg_memPic{
-		width:50px;
-		height:50px;
-		border-radius: 50px;
-		padding:3px;
-	}
-	
-</style>
+
 
 
 

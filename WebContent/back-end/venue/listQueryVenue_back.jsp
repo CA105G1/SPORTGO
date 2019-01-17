@@ -86,6 +86,9 @@
 	<%@ include file="pages/page2_forVenue.file" %> 
 --%>
 <!-- one card -->
+<% if(list==null || list.size()==0){%>
+	<div>查無資料</div>
+<% }else{ %>
 	<%@ include file="pages/page1_forVenue.file" %>
 	<table class="table table-hover table-striped table-bordered table-condensed">
 	<tbody>	
@@ -163,8 +166,12 @@
 									<tr>
 										<th></th>
 										<td style="text-align:right">
-											<a href="<%=request.getContextPath()%>/venue/venue.do?action=show_one_venue_back&v_no=${venueVO.v_no}"
-											class="btn btn-info btn-block">more information......</a>
+											<form method="post" action="<%=request.getContextPath()%>/venue/venue.do">
+												<input type="hidden" name="v_no" value="${venueVO.v_no}" />
+												<input type="hidden" name="whichPage" value="<%=whichPage%>" />
+												<input type="hidden" name="action" value="show_one_venue_back" />												
+												<input type="submit" value="more information......" class="btn btn-info btn-block"/>
+											</form>
 										</td>
 									</tr>
 								</tbody>
@@ -190,7 +197,7 @@
 	</tbody>
 	</table>
 	<%@ include file="pages/page2_forVenue.file" %> 
-	
+<% }%>	
 	<br>
 	<br>
 	<br>

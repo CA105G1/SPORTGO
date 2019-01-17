@@ -13,4 +13,6 @@ public interface Post_infoDAO_interface {
     public Post_infoVO findByMemNO(String mem_no);///////////////////////////////
     
 	public List<Post_infoVO> getAll(Map<String, String[]> map);
+	
+	public List<Post_infoVO> getAllbykeyword(String keyword);
 }

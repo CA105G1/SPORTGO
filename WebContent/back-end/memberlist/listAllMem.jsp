@@ -25,7 +25,7 @@
 </head>
 <body>
 	<jsp:include page="/back-end/CA105G1_header_back.jsp"/>
-<!-- 	<!-- 錯誤資訊 --> -->
+<!-- 	<!-- 錯誤資訊 -->
 <%-- 	<c:if test="${not empty errorMsgs}"> --%>
 <!-- 		<ul> -->
 <%-- 			<c:forEach var="message" items="${errorMsgs}"> --%>

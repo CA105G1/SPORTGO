@@ -102,7 +102,7 @@
 					</c:forEach>
 				</div>
 				<div class="col-xs-12 col-sm-2" id="xx">
-					<div>clubVO = ${clubVO }</div>
+<%-- 					<div>clubVO = ${clubVO }</div> --%>
 				</div>
 			</div>
 		</div>

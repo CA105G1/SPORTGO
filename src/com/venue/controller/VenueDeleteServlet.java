@@ -20,14 +20,14 @@ import com.venuetype.model.VenueTypeVO;
 
 public class VenueDeleteServlet extends HttpServlet {
 
-	public static final String MAINTAIN_NEWS_INFO_INDEX_BACK_PATH = "/back-end/venue/maintain_venue_info_back.jsp"; 
+	public final String MAINTAIN_NEWS_INFO_INDEX_BACK_PATH = "/back-end/venue/maintain_venue_info_back.jsp"; 
 	
-	private static final String DB_ERROR_MSGS = "DataBaseError";
+	private final String DB_ERROR_MSGS = "DataBaseError";
 	
-	private static final String WHITCH_TAB="whichTab";
-	private static final String TAB_SELECT="tab1";
+	private final String WHITCH_TAB="whichTab";
+	private final String TAB_SELECT="tab1";
 	
-	private static final String ERRORMSGS_TITILE = "errorMsgs_";
+	private final String ERRORMSGS_TITILE = "errorMsgs_";
 	
     public VenueDeleteServlet() {
         super();

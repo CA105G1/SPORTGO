@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface ClubDAO_interface {
-	public void insert(ClubVO clubVO);
+	public ClubVO insert(ClubVO clubVO,String mem_no);
     public void update(ClubVO clubVO);
     public ClubVO findByPrimaryKey(String club_no);
     public List<ClubVO> getAll();

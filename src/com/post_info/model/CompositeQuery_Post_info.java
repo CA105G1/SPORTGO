@@ -5,11 +5,9 @@ import java.util.Set;
 
 public class CompositeQuery_Post_info {
 	public static String get_aCondition_For_Oracle(String columnName, String value) {
-
 		String aCondition = null;
-
 		if ("keyword".equals(columnName)) {//關鍵字查詢
-			aCondition = "post_info_name" + " like '%" + value + "%'";
+			aCondition = "post_topic" + " like '%" + value + "%'";
 		}
 		return aCondition + " ";
 		}
@@ -24,9 +22,9 @@ public class CompositeQuery_Post_info {
 				count++;
 				String aCondition = get_aCondition_For_Oracle(key, value.trim());
 
-//				if (count == 1)
-//					whereCondition.append(" where " + aCondition);
-//				else
+				if (count == 1)
+					whereCondition.append(" where " + aCondition);
+				else
 					whereCondition.append(" and " + aCondition);
 
 				System.out.println("有送出查詢資料的欄位數count = " + count);

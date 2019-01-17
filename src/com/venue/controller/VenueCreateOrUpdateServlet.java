@@ -24,20 +24,20 @@ import com.venue.model.VenueVO;
 //TODO: 地址，電話，緯經度，驗證
 public class VenueCreateOrUpdateServlet extends HttpServlet {
 	
-	private static final String DB_ERROR_MSGS = "DataBaseError";
+	private final String DB_ERROR_MSGS = "DataBaseError";
 	
 	//private static final String ERRORMSGS_NO_TAB = "errorMsgs";
-	private static final String ERRORMSGS_TITLE = "errorMsgs_";
+	private final String ERRORMSGS_TITLE = "errorMsgs_";
 	
-	private static final String WHITCH_TAB = "whichTab";
-	private static final String TAB_SELECT = "tab1";
-	private static final String TAB_CREATE = "tab2";
-	private static final String TAB_UPDATE = "tab3";
+	private final String WHITCH_TAB = "whichTab";
+	private final String TAB_SELECT = "tab1";
+	private final String TAB_CREATE = "tab2";
+	private final String TAB_UPDATE = "tab3";
 	
-	private static final String VENUEVO_FOR_ERROR_NAME_TITLE = "venueVO_";
+	private final String VENUEVO_FOR_ERROR_NAME_TITLE = "venueVO_";
 	
-	private static final String MAINTAIN_VENUE_INFO_BACK = "/back-end/venue/maintain_venue_info_back.jsp";
-	private static final String QUERY_SUPER_SERVLET_ACTION_AGAIN = "/venue/venue.do?action=";
+	private final String MAINTAIN_VENUE_INFO_BACK = "/back-end/venue/maintain_venue_info_back.jsp";
+	private final String QUERY_SUPER_SERVLET_ACTION_AGAIN = "/venue/venue.do?action=";
 	//private static final String VENUE_QUERY_INFO_BY_COMPOSTIE_FRONT = "/front-end/venue/venue_query_info_by_composite_front.jsp";
 	//private static final String VENUE_QUERY_INFO_BY_MAP_FRONT = "/front-end/venue/venue_query_info_by_map_front.jsp";
 
@@ -75,7 +75,7 @@ public class VenueCreateOrUpdateServlet extends HttpServlet {
 				// OK---> // request.setAttribute(WHITCH_TAB, TAB_SELECT);
 				// Error---> // request.setAttribute(WHITCH_TAB, TAB_UPDATE);
 				doActionUpdateOneVenue(request, response, 
-						QUERY_SUPER_SERVLET_ACTION_AGAIN+"listVenueByCompositeQuery", // goToLocalUrl_forSuccess
+						QUERY_SUPER_SERVLET_ACTION_AGAIN, // goToLocalUrl_forSuccess
 						TAB_SELECT, // whichTab_forSuccess
 						MAINTAIN_VENUE_INFO_BACK,  // goToLocalUrl_forError
 						TAB_UPDATE, // whichTab_forError
@@ -115,6 +115,8 @@ public class VenueCreateOrUpdateServlet extends HttpServlet {
 			// check parameter right
 			venueVO	= checkAllParameterForVenue(request, errorMsgs, oldVenueVO);
 		
+
+			
 			if(!errorMsgs.isEmpty()) {
 //				if(!errorMsgs.containsKey("v_photo1")) {
 //					venueVO.setV_photo1(oldVenueVO.getV_photo1());
@@ -131,22 +133,26 @@ public class VenueCreateOrUpdateServlet extends HttpServlet {
 			venueService.updateVenue(venueVO);
 			
 			//// 轉交出去
+	
 			HttpSession session = request.getSession();
 			Map<String, String[]> venueMap = (Map<String, String[]>)session.getAttribute("venueMap");
-			if(request.getParameter("whichPage")==null||"".equals(request.getParameter("whichPage"))) {
+	
+			if(request.getParameter("whichPage")==null || "".equals(request.getParameter("whichPage"))) {
 				HashMap<String, String[]> getMap = new HashMap<String, String[]>(request.getParameterMap());
 				session.setAttribute("venueMap", getMap);
 			}
+			String whichPage = request.getParameter("whichPage");
 			List<VenueVO> list = venueService.getAll(venueMap, isFrontEnd);
 			
 			request.setAttribute("venueVO_toUpdate", venueVO);
 			request.setAttribute(WHITCH_TAB, whichTab_forSuccess);
 			request.setAttribute("myList", list);
-			RequestDispatcher successsView = request.getRequestDispatcher(goToLocalUrl_forSuccess+"&v_no="+venueVO.getV_no());
+			RequestDispatcher successsView = request.getRequestDispatcher(goToLocalUrl_forSuccess+"listVenueByCompositeQuery&v_no="+venueVO.getV_no()+"&whichPage="+whichPage);
 			successsView.forward(request, response);
 			return;
 		
 		}catch (Exception e) {
+//			e.printStackTrace();
 			errorMsgs.put(DB_ERROR_MSGS,"儲存資料失敗: "+e.getMessage());
 			request.setAttribute(venueVO4Error, venueVO);
 			request.setAttribute(WHITCH_TAB, whichTab_forError);
@@ -344,7 +350,6 @@ public class VenueCreateOrUpdateServlet extends HttpServlet {
 			venueVO.setV_photo1(v_photo1);
 		}else {
 			String hasChangePictiure = request.getParameter("hasChangePictiure");
-System.out.println("hasChangePictiure : "+hasChangePictiure);
 			if(!"false".equals(hasChangePictiure)) { // 表示有更動Picture
 				Map<String, byte[]> map = checkAndGetParameterAboutPicture(request, errorMsgs, "v_photo1");
 				Set<String> set = map.keySet();

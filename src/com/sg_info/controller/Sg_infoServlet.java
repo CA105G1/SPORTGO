@@ -327,6 +327,7 @@ public class Sg_infoServlet extends HttpServlet {
 				String sg_per = req.getParameter("sg_per").trim();
 				String sg_extrainfo = req.getParameter("sg_info4").trim();
 				String club_no = req.getParameter("club_no").trim();
+				Integer sg_ttlapl = new Integer(req.getParameter("sg_ttlapl"));
 				
 				
 				
@@ -346,6 +347,7 @@ public class Sg_infoServlet extends HttpServlet {
 				sg_infoVO.setV_no(v_no);
 				sg_infoVO.setSg_maxno(sg_maxno);
 				sg_infoVO.setSg_minno(sg_minno);
+				sg_infoVO.setSg_ttlapl(sg_ttlapl);
 				sg_infoVO.setSg_extrainfo(sg_extrainfo);
 				sg_infoVO.setLoc_start(loc_start);
 				sg_infoVO.setLoc_end(loc_end);
@@ -359,19 +361,20 @@ public class Sg_infoServlet extends HttpServlet {
 				}
 				
 				///////////////////開始UPDATE資料//////////////////////////
-				sg_infoVO = svc.updateSg_info(sg_no, mem_no, sg_name, sg_date, club_no, apl_end, sg_fee, sg_pic, sg_pic_ext, sg_per, sp_no, v_no, sg_maxno, sg_minno, sg_extrainfo, loc_start, loc_end);
-				
+				sg_infoVO = svc.updateSg_info(sg_no, mem_no, sg_name, sg_date, club_no, apl_end, sg_fee, sg_pic, sg_pic_ext, sg_per, sp_no, v_no, sg_maxno, sg_minno, sg_ttlapl, sg_extrainfo, loc_start, loc_end);
+				System.out.println("total = " + sg_infoVO.getSg_ttlapl());
 				req.setAttribute("Sg_infoVO", sg_infoVO);
 				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/Sg_info/Sg_infoGetByPkForHead.jsp");
 				dispatcher.forward(req, res);
 				
 				/////////其他錯誤處理/////////
 			}catch(Exception e){
-				e.getStackTrace();
-				errorMsg.add("修改資料失敗:"+e.getMessage());
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/front-end/Sg_info/Sg_infoGetByPkForHead.jsp");
-				failureView.forward(req, res);
+				e.printStackTrace();
+//				e.getStackTrace();
+//				errorMsg.add("修改資料失敗:"+e.getMessage());
+//				RequestDispatcher failureView = req
+//						.getRequestDispatcher("/front-end/Sg_info/Sg_infoGetByPkForHead.jsp");
+//				failureView.forward(req, res);
 			}
 		}
 		
@@ -461,8 +464,9 @@ public class Sg_infoServlet extends HttpServlet {
 				Sg_infoService svc = new Sg_infoService();
 				svc.updateStatus(sg_no, sg_status);
 				
-				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/memberlist/MemManager.do?action=Member_Sg");
-				dispatcher.forward(req, res);
+				res.sendRedirect(req.getContextPath()+"/front-end/memberlist/MemManager.do?action=Member_Sg");
+//				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/memberlist/MemManager.do?action=Member_Sg");
+//				dispatcher.forward(req, res);
 				
 			}catch(Exception e) {
 				errorMsg.add(e.getMessage());

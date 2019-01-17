@@ -299,6 +299,7 @@ if ("insert".equals(actionfront)) {
 //				String club_no = req.getParameter("club_no").trim();
 				
 				String sp_no = req.getParameter("sport");
+				String mem_no = req.getParameter("mem_no");
 				String sp_noReg = "^[(A-Z0-9_)]{5,7}$";
 				if (sp_no == null || sp_no.trim().length() == 0) {
 					errorMsgs.add("運動項目編號: 請勿空白");
@@ -350,13 +351,14 @@ if ("insert".equals(actionfront)) {
 				System.out.println("哈囉我在這");
 				/***************************2.開始新增資料***************************************/
 				ClubService clubSvc = new ClubService();
-				ClubVO clubVO = clubSvc.addClub(sp_no,photo,photo_ext, club_status, club_name, club_intro);
+				ClubVO clubVO = clubSvc.addClub(sp_no,photo,photo_ext, club_status, club_name, club_intro,mem_no);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-				req.setAttribute("clubVO", clubVO);
-				String url = "/front-end/club/club_page.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); 
-				successView.forward(req, res);				
+				HttpSession session = req.getSession();
+				session.setAttribute("clubVO", clubVO);
+				RequestDispatcher successView = req.getRequestDispatcher("/front-end/club/club_intro_page.jsp"); 
+				successView.forward(req, res);	
+//				res.sendRedirect("/CA105G1/front-end/club/club_list.jsp");
 				
 				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {
@@ -399,32 +401,6 @@ if("clubCompositeQuery".equals(actionfront)) {
 		errorMsg.add(e.getMessage());
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/club/club_list.jsp");
 		dispatcher.forward(req, res);
-	}
-}
-
-if ("myClub".equals(actionfront)) { //顯示我的社團
-	List<String> errorMsgs = new LinkedList<String>();
-	req.setAttribute("errorMsgs", errorMsgs);
-	try {
-		/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
-		String mem_no = req.getParameter("mem_no");
-		
-		/***************************2.開始查詢資料*****************************************/
-		Club_memberlistService cmemSvc = new Club_memberlistService();
-		List<Club_memberlistVO> cmem =  cmemSvc.getByMem(mem_no);
-		
-		
-		/***************************3.查詢完成,準備轉交(Send the Success view)*************/
-		RequestDispatcher successView = req.getRequestDispatcher(CLUB_MANAGE); 
-		successView.forward(req, res);
-		System.out.println("哈囉我在這");
-		/***************************其他可能的錯誤處理*************************************/
-	} catch (Exception e) {
-		e.printStackTrace();
-		errorMsgs.add(e.getMessage());
-		RequestDispatcher failureView = req
-				.getRequestDispatcher(CLUB_LIST);
-		failureView.forward(req, res);
 	}
 }
 

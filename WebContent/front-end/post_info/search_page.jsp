@@ -10,7 +10,7 @@
  
 <% 
 //	依照社團編號去找對應的貼文
-// 	List<Post_infoVO> postvolist=(ArrayList)request.getAttribute("postvolist");
+// 	List<Post_infoVO> postVOlist=(ArrayList)request.getAttribute("postVOlist");
  	ResponesVO responesVO = new ResponesVO();
  	
 /***回文的會員*********************************************************************************/ 	
@@ -29,9 +29,13 @@
 		
 		
 		
-		List<Post_infoVO> postvolist = postinfo.getAllfromclub(club_no);
-		request.setAttribute("postvolist", postvolist);
+// 		List<Post_infoVO> postVOlist = postinfo.getAllfromclub(club_no);
+// 		request.setAttribute("postVOlist", postVOlist);
 ////////////
+		String keyword = (String)request.getAttribute("keyword");
+		List<Post_infoVO> postVOlist = postinfo.getAllbykeyword(keyword);
+		request.setAttribute("postVOlist", postVOlist);
+		
 
 		
 %>
@@ -101,7 +105,7 @@
 			<div class="row">
 				
 				<div class="col-xs-12 col-sm-2" style="margin-right: -;padding-left: 5px;padding-right: 5px;">
-					<jsp:include page="club_pageRight.jsp" />
+					<jsp:include page="/front-end/club/club_pageRight.jsp" />
 				</div>
 						
 				<div class="col-xs-12 col-sm-8">
@@ -120,7 +124,7 @@
 <!-- 貼文刪除FORM --><FORM METHOD="post" ACTION="<%=request.getContextPath()%>/post_info.do" name="form">  
 					<div class="card text-center" id="post">
   							<div class="card-body">
-								<c:forEach var="postinfoVO" items="${postvolist}">
+								<c:forEach var="postinfoVO" items="${postVOlist}">
     								<h3 class="card-title"  class="list-group-item">
     									${postinfoVO.post_topic}
     								</h3>
@@ -164,7 +168,7 @@
 				    					<input type="hidden" name="res_no" id="res_no" value="${responesVO.res_no}"/>
 				    					<jsp:useBean id="post_infoSvc" scope="page" class="com.post_info.model.Post_infoService"/>
 				    					<input type="hidden" name="club_no" id="club_no" value="${post_infoSvc.getOnePost_info(responesVO.post_no).getClub_no()}"/>
-										<td scope="col" style=""><!-- 回文者的照片-->
+										<td scope="col"><!-- 回文者的照片-->
 					      			 		<img src="<%=request.getContextPath()%>/front-end/memberlist/showPicture.do?mem_no=${responesVO.mem_no}"  style="width: 10%">
 					      			 	</td>
 										<td scope="col"><!-- 回文內容-->

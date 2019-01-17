@@ -12,6 +12,7 @@ public class Sg_info extends Sg_infoVO_android implements Serializable{
 	private String v_name;
 	private Double v_lat;
 	private Double v_long;
+	private String rep_status;
 	
 	public Sg_info() {
 		
@@ -60,7 +61,13 @@ public class Sg_info extends Sg_infoVO_android implements Serializable{
 	public void setV_long(Double v_long) {
 		this.v_long = v_long;
 	}
-	
-	
+
+	public String getRep_status() {
+		return rep_status;
+	}
+
+	public void setRep_status(String rep_status) {
+		this.rep_status = rep_status;
+	}	
 	
 }

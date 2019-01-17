@@ -46,7 +46,7 @@ public class Sg_infoService {
 	
 	public Sg_infoVO updateSg_info(String sg_no, String mem_no, String sg_name, Timestamp sg_date, String club_no, Timestamp apl_end, 
 			Integer sg_fee, byte[] sg_pic, String sg_pic_ext, String sg_per, String sp_no, String v_no, 
-			Integer sg_maxno, Integer sg_minno, String sg_extrainfo, String loc_start, 
+			Integer sg_maxno, Integer sg_minno, Integer sg_ttlapl,String sg_extrainfo, String loc_start, 
 			String loc_end) {
 		
 		Sg_infoVO vo = new Sg_infoVO();
@@ -65,9 +65,28 @@ public class Sg_infoService {
 		vo.setV_no(v_no);
 		vo.setSg_maxno(sg_maxno);
 		vo.setSg_minno(sg_minno);
+		vo.setSg_ttlapl(sg_ttlapl);
 		vo.setSg_extrainfo(sg_extrainfo);
 		vo.setLoc_start(loc_start);
 		vo.setLoc_end(loc_end);
+		
+		System.out.println("sg_no+"+sg_no);
+		System.out.println("mem_no+"+mem_no);
+		System.out.println("sg_name+"+sg_name);
+		System.out.println("sg_date+"+sg_date);
+		System.out.println("club_no+"+club_no);
+		System.out.println("apl_end+"+apl_end);
+		System.out.println("sg_fee+"+sg_fee);
+		System.out.println("sg_pic+"+sg_pic);
+		System.out.println("sg_pic_ext+"+sg_pic_ext);
+		System.out.println("sg_per+"+sg_per);
+		System.out.println("sp_no+"+sp_no);
+		System.out.println("v_no+"+v_no);
+		System.out.println("sg_maxno+"+sg_maxno);
+		System.out.println("sg_minno+"+sg_minno);
+		System.out.println("sg_extrainfo+"+sg_extrainfo);
+		System.out.println("loc_start+"+loc_start);
+		System.out.println("loc_end+"+loc_end);
 		
 		dao.update(vo);
 		return vo;

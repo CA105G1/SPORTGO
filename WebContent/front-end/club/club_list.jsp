@@ -5,8 +5,9 @@
 <%@ page import="com.club_memberlist.model.*"%>
 <%@ page import="com.memberlist.model.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+ 
 <%
+	session.removeAttribute("club_no");
 	List<ClubVO> list = null;
 	//取得複合查詢後的list
 	list = (List<ClubVO>)request.getAttribute("list");
@@ -94,7 +95,6 @@
 				<div class="panel panel-default">						
 					<div id="aaa" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="panel1">
 						<div class="list-group" id="myList" role="tablist">
-							<a class="list-group-item list-group-item-actionfront" data-toggle="list" href="#myclub" role="tab">我的社團</a>
 <!---建立社團--------------------------------------------------------------------------------->
 	<% Object object = request.getAttribute("errorMsgs"); %>
 		<% if("insert".equals(request.getParameter("actionfront")) && object != null){
@@ -178,6 +178,7 @@
 											</div>
 											<div class="modal-footer">
 												<input type="hidden" name="actionfront" value="insert">
+												<input type="hidden" name="mem_no" value="${mem_no}">
 												<button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
 												<button type="submit" class="btn btn-primary">送出</button>
 											</div>

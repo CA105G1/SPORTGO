@@ -13,10 +13,15 @@ public class Util_JDBC_CompositeQuery_News {
 		}else if("news_script".equals(columnName) || "pic_extension".equals(columnName)) {
 			aCondition = columnName + " like '%"+value+"%' ";
 		// TimeStamp
-		}else if( "news_release_date".equals(columnName) || "news_last_date".equals(columnName)) {
-			aCondition = "to_char(" + columnName + ",'yyyy-mm-dd hh24:mi')='" + value + "'";
-			//to_timestamp('2018-12-08 14:45:32','yyyy-mm-dd hh24:mi:ss')
+		}else if("news_release_date".equals(columnName)) {
+			aCondition = " "+columnName + " <= to_timestamp('"+value+"','yyyy-mm-dd hh24:mi') ";
+		}else if("news_last_date".equals(columnName)) {
+			aCondition = " "+columnName + " >= to_timestamp('"+value+"','yyyy-mm-dd hh24:mi') ";
 		}
+//		else if( "news_release_date".equals(columnName) || "news_last_date".equals(columnName)) {
+//			aCondition = "to_char(" + columnName + ",'yyyy-mm-dd hh24:mi')='" + value + "'";
+//			//to_timestamp('2018-12-08 14:45:32','yyyy-mm-dd hh24:mi:ss')
+//		}
 		return aCondition;
 	}
 	

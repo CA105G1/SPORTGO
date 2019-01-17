@@ -26,9 +26,10 @@ public class ClubJDBCDAO implements ClubDAO_interface{
 			"UPDATE club set sp_no=?, photo=?, photo_ext=?, club_status=?, club_name=?, club_intro=? where club_no = ?";
 
 	@Override
-	public void insert(ClubVO clubVO)  {
+	public ClubVO insert(ClubVO clubVO,String mem_no)  {
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		ClubVO clubvo = new ClubVO();
 		
 		try {
 			Class.forName(driver);
@@ -44,6 +45,13 @@ public class ClubJDBCDAO implements ClubDAO_interface{
 			pstmt.setString(6, clubVO.getClub_intro());
 			
 			pstmt.executeUpdate();
+			ResultSet rs = pstmt.getGeneratedKeys();
+			clubvo.setClub_no(rs.getString("club_no"));
+			clubvo.setSp_no(clubVO.getSp_no());
+			clubvo.setPhoto(clubVO.getPhoto());
+			clubvo.setPhoto_ext(clubVO.getPhoto_ext());
+			clubvo.setClub_intro(clubVO.getClub_intro());
+			clubvo.setClub_name(clubVO.getClub_name());
 			
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. "
@@ -67,6 +75,7 @@ public class ClubJDBCDAO implements ClubDAO_interface{
 				}
 			}
 		}
+		return clubvo;
 	}
 
 	@Override

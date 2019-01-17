@@ -49,7 +49,7 @@
 					<ul class="nav navbar-nav">
 						<li>
 							<a class="navbar-left center-block" href="<%=request.getContextPath()%>/index.jsp">
-								<img style="height: 20px;"
+								<img style="height: 20px; width:20px;"
 								src="<%=request.getContextPath()%>/img/logo_SportyGo_2_light.png" alt="SportGo!"/>
 							</a>	
 						</li>
