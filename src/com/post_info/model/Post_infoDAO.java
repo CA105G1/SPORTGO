@@ -13,6 +13,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.pro.controller.jdbcUtil_CompositeQuery_Pro;
+
 
 public class Post_infoDAO  implements Post_infoDAO_interface{
 	private static DataSource ds = null;
@@ -281,11 +283,11 @@ public class Post_infoDAO  implements Post_infoDAO_interface{
 			ResultSet rs = null;
 		
 			try {
-				
+				String finalSQL = null; //暫時註解
 				con = ds.getConnection();
-				String finalSQL = "select * from post_info "
-			          + CompositeQuery_Post_info.get_WhereCondition(map)
-			          + "order by post_no";
+//				String finalSQL = "select * from post_info "
+//			          + CompositeQuery_Post_info.get_WhereCondition(map)
+//			          + "order by post_no";
 				pstmt = con.prepareStatement(finalSQL);
 				System.out.println("●●finalSQL(by DAO) = "+finalSQL);
 				rs = pstmt.executeQuery();
@@ -449,13 +451,21 @@ public class Post_infoDAO  implements Post_infoDAO_interface{
 			
 			Post_infoVO post_infoVO = null;
 			Connection con = null;
-			PreparedStatement pstmt = null;
+			PreparedStatement pstmt = null; 
 			ResultSet rs = null;
 			
 			try {
 				con = ds.getConnection();
-				pstmt = con.prepareStatement(GET_LIST_BY_KEYWORD);
-				pstmt.setString(1, keyword);
+				
+				String finalSQL = "select * from post_info  "
+				          + CompositeQuery_Post_info.get_WhereCondition(keyword)
+				          + "order by post_no";
+				System.out.println(finalSQL);
+				pstmt = con.prepareStatement(finalSQL);
+				
+				
+//				pstmt = con.prepareStatement(GET_LIST_BY_KEYWORD);
+//				pstmt.setString(1, keyword);
 				
 				rs = pstmt.executeQuery();
 				

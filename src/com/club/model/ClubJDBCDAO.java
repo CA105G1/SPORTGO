@@ -290,17 +290,17 @@ public class ClubJDBCDAO implements ClubDAO_interface{
 //		System.out.println("------------------------------");
 //
 //		//查詢
-//		List<ClubVO> list = dao.getAll();
-//		for (ClubVO aClub : list) {
-//			System.out.println(aClub.getClub_no()+ ",");
-//			System.out.println(aClub.getSp_no()+ ",");
-//			System.out.println(aClub.getPhoto()+ ",");
-//			System.out.println(aClub.getPhoto_ext()+ ",");
-//			System.out.println(aClub.getClub_status()+ ",");
-//			System.out.println(aClub.getClub_name()+ ",");
-//			System.out.println(aClub.getClub_intro());
-//			System.out.println();
-//		}
+		List<ClubVO> list = dao.getAll();
+		for (ClubVO aClub : list) {
+			System.out.println(aClub.getClub_no()+ ",");
+			System.out.println(aClub.getSp_no()+ ",");
+			System.out.println(aClub.getPhoto()+ ",");
+			System.out.println(aClub.getPhoto_ext()+ ",");
+			System.out.println(aClub.getClub_status()+ ",");
+			System.out.println(aClub.getClub_name()+ ",");
+			System.out.println(aClub.getClub_intro());
+			System.out.println();
+		}
 	}
 
 	@Override

@@ -51,6 +51,7 @@ public class Post_infoServlet extends HttpServlet{
 		String CREATE_POST = "/front-end/post_info/create_post.jsp";
 		String EDIT_POST = "/front-end/post_info/edit_post.jsp";
 		String SEARCH_PAGE = "/front-end/post_info/search_post.jsp";
+		System.out.println("action:" + action);
 //顯示貼文
 if ("getOnePost_display".equals(action)) { 
 
@@ -221,7 +222,7 @@ if ("delete".equals(action)) {
 		} catch (Exception e) {
 			errorMsgs.add("無法取得資料:" + e.getMessage());
 			RequestDispatcher failureView = req
-					.getRequestDispatcher(CLUB_PAGE);
+					.getRequestDispatcher(CLUB_PAGE); 
 			failureView.forward(req, res);
 		}
 		}
@@ -230,26 +231,25 @@ if ("delete".equals(action)) {
 if("postCompositeQuery".equals(action)) {
 	List<String> errorMsg = new LinkedList<String>();
 	req.setAttribute("errorMsg", errorMsg);
-	
 	List<Post_infoVO> list=new ArrayList<Post_infoVO>();
-	
-	try {
+//	try {
 		HttpSession session = req.getSession();
 		String keyword =req.getParameter("keyword");
-		Post_infoService svc = new Post_infoService();
-		list=svc.getAllbykeyword(keyword);
-		
+		System.out.println("keyword="+keyword);////////////////////////////////
+		Post_infoService post_infoSvc = new Post_infoService();
+		list=post_infoSvc.getAllbykeyword(keyword);
+		System.out.println("list="+list);/////////////////////////////////////
+		System.out.println("哈囉我在這呢5");///////////////////////////////////
 		req.setAttribute("listcom", list);
 		
-		
 		RequestDispatcher dispatcher = req.getRequestDispatcher(SEARCH_PAGE);
 		dispatcher.forward(req, res);
 		
-	}catch(Exception e) {
-		errorMsg.add(e.getMessage());
-		RequestDispatcher dispatcher = req.getRequestDispatcher(SEARCH_PAGE);
-		dispatcher.forward(req, res);
-	}
+//	}catch(Exception e) {
+//		errorMsg.add(e.getMessage());
+//		RequestDispatcher dispatcher = req.getRequestDispatcher(SEARCH_PAGE);
+//		dispatcher.forward(req, res);
+//	}
 }
 		
 	}

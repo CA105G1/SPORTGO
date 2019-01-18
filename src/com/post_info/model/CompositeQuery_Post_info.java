@@ -4,32 +4,25 @@ import java.util.Map;
 import java.util.Set;
 
 public class CompositeQuery_Post_info {
-	public static String get_aCondition_For_Oracle(String columnName, String value) {
+	public static String get_aCondition_For_Oracle(String keyword) {
 		String aCondition = null;
-		if ("keyword".equals(columnName)) {//關鍵字查詢
-			aCondition = "post_topic" + " like '%" + value + "%'";
-		}
+		
+			aCondition = "post_topic" + " like '%" + keyword + "%' or post_content" + " like '%" + keyword + "%'";
+		
 		return aCondition + " ";
 		}
 
-	public static String get_WhereCondition(Map<String, String[]> map) {
-		Set<String> keys = map.keySet();
+	public static String get_WhereCondition(String keyword) {
 		StringBuffer whereCondition = new StringBuffer();
-		int count = 0;
-		for (String key : keys) {
-			String value = map.get(key)[0];
-			if (value != null && value.trim().length() != 0	&& !"action".equals(key)) {
-				count++;
-				String aCondition = get_aCondition_For_Oracle(key, value.trim());
+			if (keyword != null && !keyword.isEmpty()) {
+				String aCondition = get_aCondition_For_Oracle(keyword.trim());
 
-				if (count == 1)
+				
 					whereCondition.append(" where " + aCondition);
-				else
-					whereCondition.append(" and " + aCondition);
+				System.out.println("whereCondition" + whereCondition.toString());
 
-				System.out.println("有送出查詢資料的欄位數count = " + count);
 			}
-		}
+			System.out.println("whereCondition" + whereCondition.toString());
 		
 		return whereCondition.toString();
 	}

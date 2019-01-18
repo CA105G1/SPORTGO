@@ -44,7 +44,7 @@ public class jdbcUtil_CompositeQuery_Pro {
 //				System.out.println("有送出查詢資料的欄位數count = " + count);
 			}
 		}
-		
+		System.out.println(whereCondition.toString());
 		return whereCondition.toString();
 	}
 

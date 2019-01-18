@@ -29,15 +29,12 @@
 		
 		
 		
-// 		List<Post_infoVO> postVOlist = postinfo.getAllfromclub(club_no);
-// 		request.setAttribute("postVOlist", postVOlist);
 ////////////
 		String keyword = (String)request.getAttribute("keyword");
 		List<Post_infoVO> postVOlist = postinfo.getAllbykeyword(keyword);
-		request.setAttribute("postVOlist", postVOlist);
+		
 		
 
-		
 %>
 
 
@@ -124,7 +121,7 @@
 <!-- 貼文刪除FORM --><FORM METHOD="post" ACTION="<%=request.getContextPath()%>/post_info.do" name="form">  
 					<div class="card text-center" id="post">
   							<div class="card-body">
-								<c:forEach var="postinfoVO" items="${postVOlist}">
+		 <!-- 外層forEach開始 --><c:forEach var="postinfoVO" items="${postVOlist}">
     								<h3 class="card-title"  class="list-group-item">
     									${postinfoVO.post_topic}
     								</h3>
@@ -162,7 +159,7 @@
 							<div class=" container-fluid" id="respones" style="display: none;">
 								<table class="table">
 									<jsp:useBean id="responesSvc" scope="page" class="com.respones.model.ResponesService"/>
-									<c:forEach var="responesVO" items="${responesSvc.getallfrompost(postinfoVO.post_no)}"><!-- 內層forEach -->
+			 <!-- 內層forEach開始  --><c:forEach var="responesVO" items="${responesSvc.getallfrompost(postinfoVO.post_no)}">
 					 <!-- 刪除的FORM --><FORM METHOD="post" ACTION="<%=request.getContextPath()%>/respones.do" name="form">
 				    					<tr>
 				    					<input type="hidden" name="res_no" id="res_no" value="${responesVO.res_no}"/>
@@ -182,11 +179,11 @@
  				      				 						
 				    					</tr>
 					 <!-- 刪除的FORM --></FORM>
-			    					</c:forEach><!-- 內層forEach -->
+			 <!-- 內層forEach結束  --></c:forEach>
 								</table>
 							</div><!-- id="respones"結束 -->
 <!------------------------------------------顯示&刪除留言-------------------------------------------------->
-   								</c:forEach><!-- 最外層postinfoVO的 -->
+   		 <!-- 外層forEach結束 --></c:forEach>
   							</div> <!-- card-body結束 -->
 					</div><!-- card text-center結束 -->
 				</div><!-- col-xs-12 col-lg-7結束-->
