@@ -51,7 +51,6 @@ System.out.println("reg_name="+reg_name);
 				RegService regSvc = new RegService();
 				List<String> reg_distlist = regSvc.getRegVOFormRegName(reg_name);
 				StringBuffer sb = new StringBuffer();
-//				sb.append("{");
 				int count = 0;
 				for(String reg_dist : reg_distlist) {
 					if(count == 0) {
@@ -62,7 +61,6 @@ System.out.println("reg_name="+reg_name);
 					}
 					
 				}
-//				sb.append("}");
 System.out.println("sb=" + sb.toString());
 				JSONObject obj = new JSONObject();
 				obj.put("reg_dist", sb);

@@ -87,8 +87,8 @@ if(list == null){
 						      					<jsp:useBean id="regSvc" scope="page" class="com.region.model.RegService" />
 						      					<select id="reg_name" size="1" name="reg_name" class="text-center">
 						      						<option value="">請選擇縣市
-						      						<c:forEach var="regVO" items="${regSvc.all }">
-						      							<option value="${regVO.reg_name }">${regVO.reg_name}
+						      						<c:forEach var="reg_name" items="${regSvc.reg_nameList }">
+						      							<option value="${reg_name }">${reg_name}
 						      						</c:forEach>
 												</select>
 						      				</th>
