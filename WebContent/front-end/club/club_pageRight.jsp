@@ -27,7 +27,7 @@
 					<a href="<%= request.getContextPath()%>/front-end/club/club_page.jsp" class="list-group-item">貼文區</a>
 					<a href="<%= request.getContextPath()%>/front-end/club/Sg_infoList.jsp" class="list-group-item">專屬揪團</a>
 					<a href="<%= request.getContextPath()%>/front-end/post_info/create_post.jsp" class="list-group-item" >建立貼文</a>
-					<a href="#" class="list-group-item">影音相簿</a>
+<!-- 					<a href="#" class="list-group-item">影音相簿</a> -->
 					<a href="<%= request.getContextPath()%>/front-end/club_memberlist/reviewaddclub.jsp" id="clubManage" class="list-group-item" style="display:none">社團管理</a>
 					<a href="<%= request.getContextPath()%>/front-end/club/club_list.jsp"class="list-group-item">返回列表</a>
 				</div>	

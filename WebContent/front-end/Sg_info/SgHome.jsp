@@ -156,13 +156,13 @@ if(list == null){
 				      </div>
 				  </div>
 <!----------------------------地圖查詢 ------------------------------->
-				  <div class="panel panel-info">
-				    <div class="panel-heading">
-				      <h4 class="panel-title">
-			          	 <a href="#">地圖查詢</a>
-				      </h4>
-				    </div>
-				  </div>
+<!-- 				  <div class="panel panel-info"> -->
+<!-- 				    <div class="panel-heading"> -->
+<!-- 				      <h4 class="panel-title"> -->
+<!-- 			          	 <a href="#">地圖查詢</a> -->
+<!-- 				      </h4> -->
+<!-- 				    </div> -->
+<!-- 				  </div> -->
 				  
 				  
 				</div> <!-- panel-group -->
