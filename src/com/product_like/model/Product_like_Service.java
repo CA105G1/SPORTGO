@@ -3,6 +3,7 @@ package com.product_like.model;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.ord.model.OrdVO;
 import com.orddetails.model.OrddetailsVO;
 
 

@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="com.product.model.*"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -9,8 +10,13 @@
 	ProductVO proVO = (ProductVO)session.getAttribute("proVO");
 	List<ProductVO> list = proSvc.getAll();
 	pageContext.setAttribute("list",list);
+	
+	List<ProductAssessVO> listAssess = new ArrayList<ProductAssessVO>();
+	listAssess = proSvc.getProAssess();
+	pageContext.setAttribute("listAssess",listAssess);
 %>
 <jsp:useBean id="proclassSvc" scope="page" class="com.productclass.model.ProductClassService" />
+<jsp:useBean id="proSvclist" scope="page" class="com.product.model.ProductService" />
 <!DOCTYPE html>
 <html lang="en">
 
@@ -451,31 +457,39 @@
             <div class="row">
 
                 <!-- Single Product Area -->
-                <div class="col-12 col-sm-6 col-lg-3">
-                    <div class="single-product-area mb-100">
-                        <!-- Product Image -->
-                        <div class="product-img">
-                            <a href="shop-details.html"><img src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/bg-img/40.png" alt=""></a>
-                            <!-- Product Tag -->
-                            <div class="product-tag">
-                                <a href="#">Hot</a>
-                            </div>
-                            <div class="product-meta d-flex">
-                                <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
-                                <a href="cart.html" class="add-to-cart-btn">Add to cart</a>
-                                <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
-                            </div>
-                        </div>
-                        <!-- Product Info -->
-                        <div class="product-info mt-15 text-center">
-                            <a href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/listOnePro_front.jsp">
-                                <p>Cactus Flower</p>
-                            </a>
-                            <h6>$10.99</h6>
-                        </div>
-                    </div>
-                </div>
-
+                <c:forEach var="AssessVO" items="${listAssess}">
+               
+	                <div class="col-12 col-sm-6 col-lg-3">
+	                    <div class="single-product-area mb-100">
+	                        <!-- Product Image -->
+	                        <div class="product-img">
+	                            <a href="#"><img src="<%=request.getContextPath()%>/pro/proImg.do?pro_no=${AssessVO.pro_no}" alt=""></a>
+	                            <!-- Product Tag -->
+	                            <div class="product-tag">
+	                                <a href="#">Hot</a>
+	                            </div>
+	                            <div class="product-meta d-flex">
+	                                <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
+	                                <a href="#" onclick="tuchlike(this.id);" id="${AssessVO.pro_no}" class="add-to-cart-btn">Add to cart</a>
+	                                <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
+	                             <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/pro/pro.do" style="margin-bottom: 0px;">
+	                                <input type="hidden" name="pro_no" value="${proVO.pro_no}">
+                                    <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
+                                    <input type="hidden" name="action" value="getOne_For_Display_front">
+                                     </FORM>
+	                            </div>
+	                        </div>
+	                        <!-- Product Info -->
+	                        <div class="product-info mt-15 text-center">
+	                            <a href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/listOnePro_front.jsp">
+	                                <p>${proSvclist.getOneProduct(AssessVO.pro_no).pro_name}</p>
+	                            </a>
+	                            <h6>$ ${AssessVO.pro_bonus}</h6>
+	                        </div>
+	                    </div>
+	                </div>
+	            
+                </c:forEach>
               
 
             </div>

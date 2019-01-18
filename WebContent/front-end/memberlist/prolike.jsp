@@ -1,12 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import = "com.memberlist.model.*" %>
+<%@ page import = "com.product_like.model.*" %>
 
 <% 
-	String action = (String) request.getAttribute("action");
+// 	String action = (String) request.getAttribute("action");
 // 	if(action == null)
 // 		pageContext.setAttribute("action", "");
 // 	else
-		pageContext.setAttribute("action", action);
+// 		pageContext.setAttribute("action", action);
+	MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO");
+	if(memberlistVO==null)
+		response.sendRedirect("Login.jsp");
+	Product_like_Service likeSvc = new Product_like_Service();
+	
 %>
 <!DOCTYPE html>
 <html lang="">

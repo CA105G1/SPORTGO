@@ -41,7 +41,7 @@
 					<a href="MemManager.do?action=Member_Club" class="list-group-item" style="display:flex;text-align:center;">個人社團管理</a>
 					<a href="Friend.do?action=find_My_Friend" class="list-group-item" style="display:flex;text-align:center;">好友管理</a>
 					<a href="order.jsp" class="list-group-item" style="display:flex;text-align:center;">訂單管理</a>
-					<a href="prolike.jsp" class="list-group-item" style="display:flex;text-align:center;">最愛的商品</a>
+<!-- 					<a href="prolike.jsp" class="list-group-item" style="display:flex;text-align:center;">最愛的商品</a> -->
 				</div>
 			</div>
 		</div>
