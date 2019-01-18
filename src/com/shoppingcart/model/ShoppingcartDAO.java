@@ -62,16 +62,12 @@ public class ShoppingcartDAO implements Shoppingcart_interface{
 		
 		Map<String , String> hAll = null;
 		hAll = jedis.hgetAll(mem_no);
-		if (!hAll.isEmpty()) {
-			
-			
-		}
+
 //		for (String pro_no : hAll.keySet()) {
 //			proVOList.add(proSvc.getOneProduct(pro_no));
 //			pro_countList.add(Integer.parseInt(hAll.get(pro_no)));
 //		}
 //		jedis.hdel("M001", "P001");
-		System.out.println("redis有東西");
 		jedis.close();
 		return hAll;
 	}

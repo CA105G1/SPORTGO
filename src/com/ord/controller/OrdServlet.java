@@ -210,6 +210,7 @@ if ("insert".equals(action)) { //來自shoppingcart_front.jsp的請求
 				/*訂單有一些會是null與0的情況
 				 * 前端部分因為有兩個form表單的問題，所以刪除按鈕可能需要用ajax處理
 				 */
+				String mem_noP = mem_no + "P";
 				ProductService proSvc1 = new ProductService();
 				List<OrddetailsVO> testList = new ArrayList<OrddetailsVO>(); // 準備置入訂單數量
 				OrdJDBCDAO ordDAO = new OrdJDBCDAO();
@@ -223,7 +224,8 @@ if ("insert".equals(action)) { //來自shoppingcart_front.jsp的請求
 				} else {
 				for(int i = 0 ; i < pro_no.length ; i ++) {
 					ShoppingcartDAO cartDAO = new ShoppingcartDAO();
-					Integer cart_pro_count = cartDAO.findByCount(mem_no, pro_no[i]);
+					
+					Integer cart_pro_count = cartDAO.findByCount(mem_noP, pro_no[i]);
 					ProductVO proVO = proSvc1.getProductStock(pro_no[i], cart_pro_count);
 					//查詢後商品數量為0時
 					if(proVO.getPro_stock().intValue() == 0) {
@@ -244,12 +246,12 @@ if ("insert".equals(action)) { //來自shoppingcart_front.jsp的請求
 					for(int i = 0 ; i < pro_no.length ; i ++) {  //選擇幾樣商品並加入到list的orddetailsVO
 						ShoppingcartDAO cartDAO = new ShoppingcartDAO();
 	                	Integer pro_bonus = proSvc1.getOneProduct(pro_no[i]).getPro_bonus();
-	                	Integer pro_count = cartDAO.findByCount(mem_no, pro_no[i]);
+	                	Integer pro_count = cartDAO.findByCount(mem_noP, pro_no[i]);
 	                	ord_amount += pro_bonus*pro_count;
 						testList.add(i, new OrddetailsVO(pro_no[i] , pro_bonus,pro_count));
 	                }
 					ShoppingcartDAO cartDAO = new ShoppingcartDAO();
-					cartDAO.deleteAll(mem_no, pro_no);
+					cartDAO.deleteAll(mem_noP, pro_no);
 					
 					/****製作訂單與訂單明細***/
 					OrdVO ordVO = new OrdVO();

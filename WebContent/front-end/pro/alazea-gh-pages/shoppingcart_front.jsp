@@ -15,7 +15,7 @@
 		List<ProductVO> proVOList = new ArrayList();
 		ProductService proSvc = new ProductService();
 	    ShoppingcartDAO cartDAO = new ShoppingcartDAO();
-	    Map<String , String> hAll =  cartDAO.getAll(memVO.getMem_no());
+	    Map<String , String> hAll =  cartDAO.getAll(memVO.getMem_no()+"P");
 		for(String pro_no : hAll.keySet()) {
 			proVOList.add(proSvc.getOneProduct(pro_no));
 			System.out.println(proSvc.getOneProduct(pro_no));

@@ -68,7 +68,7 @@ if ("insert".equals(action)) { //來自listOnePro_front.jsp的請求
 			Integer pro_count = new Integer(req.getParameter("pro_count"));//未驗證
 			Integer pro_bonus = new Integer(req.getParameter("pro_bonus"));
 			Integer count = pro_count * pro_bonus;
-			
+			mem_no = mem_no + "P";
 			System.out.println("mem_no :" + mem_no);
 			System.out.println("pro_no :" + pro_no);
 			
@@ -137,7 +137,7 @@ if ("getAll_For_Display".equals(action)) { //來自listOnePro_front.jsp的請求
 			if(mem_no == null || mem_no.trim().length() == 0) {
 				errorMsgs.add("未登入會員");
 			}			
-			
+			mem_no = mem_no + "P";
 			ProductService proSvc = new ProductService();
 			ShoppingcartDAO cartDAO = new ShoppingcartDAO();
 			List<ProductVO> proVOList = new ArrayList<>();
@@ -173,6 +173,7 @@ if("delete".equals(action)) {
 			if(pro_no == null || pro_no.trim().length() == 0) {
 				errorMsgs.add("未選取商品");
 			}
+			mem_no = mem_no + "P";
 			ShoppingcartDAO cartDAO = new ShoppingcartDAO();
 			cartDAO.delete(mem_no, pro_no);
 			cartDAO = null;
