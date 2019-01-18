@@ -266,7 +266,7 @@ public class EmpServlet extends HttpServlet {
 			EmpVO empVO2 = empService.addEmp(empVO);
 			/// 資料轉交
 			request.setAttribute(EMPVO_FOR_NEW_ONE, empVO);
-			RequestDispatcher successView = request.getRequestDispatcher("/back-end/emp/maintain_emp_info_back.jsp");
+			RequestDispatcher successView = request.getRequestDispatcher("/back-end/emp/maintain_emp_info.jsp");
 			successView.forward(request, response);
 			return;
 			
