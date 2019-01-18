@@ -34,7 +34,7 @@
 				</div>
 			</nav>
 		</div>
-		<div class="h3 navbar-myself-center">@ SportyGo! 2018</div>	
+		<div class="h3 navbar-myself-center">@ SportGo! 2018</div>	
 	</div>
 	<style type="text/css">
 		div.footer{
