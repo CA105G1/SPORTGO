@@ -470,13 +470,8 @@
 	                            </div>
 	                            <div class="product-meta d-flex">
 	                                <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
-	                                <a href="#" onclick="tuchlike(this.id);" id="${AssessVO.pro_no}" class="add-to-cart-btn">Add to cart</a>
+	                                <a href="<%=request.getContextPath()%>/pro/pro.do?action=getOne_For_Display_front&requestURL=<%=request.getServletPath()%>&pro_no=${AssessVO.pro_no}"  id="${AssessVO.pro_no}" class="add-to-cart-btn">Add to cart</a>
 	                                <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
-	                             <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/pro/pro.do" style="margin-bottom: 0px;">
-	                                <input type="hidden" name="pro_no" value="${proVO.pro_no}">
-                                    <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
-                                    <input type="hidden" name="action" value="getOne_For_Display_front">
-                                     </FORM>
 	                            </div>
 	                        </div>
 	                        <!-- Product Info -->

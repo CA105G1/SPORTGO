@@ -386,7 +386,12 @@ if ("insert".equals(action)) { //來自addPro.jsp的請求
 					if(!req.getParameter("pro_bonus").trim().matches(integerReg)) {
 						 errorMsgs.add("商品單價請勿非數字或負數");
 						 ProductService proSvc  = new ProductService();
-						 pro_bonus = proSvc.getOneProduct(pro_no).getPro_safestock();
+						 try {
+							pro_bonus = proSvc.getOneProduct(pro_no).getPro_safestock();
+						} catch (NullPointerException e) {
+							// TODO Auto-generated catch block
+							errorMsgs.add("商品單價請勿非數字或負數");
+						}
 					 } else {
 						 pro_bonus = new Integer(req.getParameter("pro_bonus").trim());
 					 }
@@ -399,7 +404,12 @@ if ("insert".equals(action)) { //來自addPro.jsp的請求
 					if(!req.getParameter("pro_stock").trim().matches(integerReg)) {
 						 errorMsgs.add("商品庫存量請勿非數字");
 						 ProductService proSvc  = new ProductService();
-						 pro_stock = proSvc.getOneProduct(pro_no).getPro_safestock();
+						 try {
+							pro_stock = proSvc.getOneProduct(pro_no).getPro_safestock();
+						} catch (NullPointerException e) {
+							// TODO Auto-generated catch block
+							errorMsgs.add("商品庫存量請勿非數字");
+						}
 					 } else {
 						 pro_stock = new Integer(req.getParameter("pro_stock").trim());
 					 }
@@ -411,7 +421,12 @@ if ("insert".equals(action)) { //來自addPro.jsp的請求
 					if(!req.getParameter("pro_safestock").trim().matches(integerReg)) {
 						 errorMsgs.add("商品安全庫存量請勿非數字");
 						 ProductService proSvc  = new ProductService();
-						 pro_safestock = proSvc.getOneProduct(pro_no).getPro_safestock();
+						 try {
+							pro_safestock = proSvc.getOneProduct(pro_no).getPro_safestock();
+						} catch (NullPointerException e) {
+							// TODO Auto-generated catch block
+							errorMsgs.add("商品安全庫存量請勿非數字");
+						}
 					 } else {
 						 pro_safestock = new Integer(req.getParameter("pro_safestock").trim());
 					 }
@@ -614,6 +629,7 @@ if ("getOne_For_Display_front".equals(action)) { //來自select_page.jsp的請�
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 			String requestURL = req.getParameter("requestURL");  //來源的路徑請求
+			System.out.println(requestURL);
 			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				String str = req.getParameter("pro_no");
@@ -659,7 +675,7 @@ if ("getOne_For_Display_front".equals(action)) { //來自select_page.jsp的請�
 				session.setAttribute("proVO", proVO);
 		//		req.setAttribute("proVO", proVO); // 資料庫取出的proVO物件,存入req
 				String url = null;
-				if(PATH_FRONT_LIST_ALL_PRO.equals(requestURL)) {  //前端與後端的導向不同
+				if(PATH_FRONT_LIST_ALL_PRO.equals(requestURL) || PATH_FRONT_LIST_ONE_PRO.equals(requestURL)) {  //前端與後端的導向不同
 					url = PATH_FRONT_LIST_ONE_PRO;
 				}else {
 					url = PATH_LIST_ONE_PRO;

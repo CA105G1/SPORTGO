@@ -32,6 +32,7 @@
 %>
 <jsp:useBean id="proclassSvc" scope="page" class="com.productclass.model.ProductClassService" />
 <jsp:useBean id="proSvclist" scope="page" class="com.product.model.ProductService" />
+<%-- <jsp:useBean id="productAssessVO" scope="page" class="com.product.model.ProductAssessVO" /> --%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -188,9 +189,9 @@
                             <!-- Post Content -->
                             <div class="hero-slides-content text-center">
                                 <h2>如果運動可以讓你更美更健康，你還會拒絕嗎？</p>
-                                <div class="welcome-btn-group">
-                                    <a href="<%=request.getContextPath()%>/index.jsp" class="btn alazea-btn mr-30">馬上體驗</a>
-                                </div>
+<!--                                 <div class="welcome-btn-group"> -->
+<%--                                     <a href="<%=request.getContextPath()%>/index.jsp" class="btn alazea-btn mr-30">馬上體驗</a> --%>
+<!--                                 </div> -->
                             </div>
                         </div>
                     </div>
@@ -207,9 +208,9 @@
                             <!-- Post Content -->
                             <div class="hero-slides-content text-center">
                                 <h2>現在就加入運動的行列吧!</p>
-                                <div class="welcome-btn-group">
-                                    <a href="<%=request.getContextPath()%>/index.jsp" class="btn alazea-btn mr-30">立即開始體驗!</a>
-                                </div>
+<!--                                 <div class="welcome-btn-group"> -->
+<%--                                     <a href="<%=request.getContextPath()%>/index.jsp" class="btn alazea-btn mr-30">立即開始體驗!</a> --%>
+<!--                                 </div> -->
                             </div>
                         </div>
                     </div>
@@ -297,13 +298,17 @@
                             <c:forEach var="AssessVO" items="${listAssess}">
                                 <div class="single-best-seller-product d-flex align-items-center">
                                     <div class="product-thumbnail">
-                                        <a href="shop-details.html"><img src="<%=request.getContextPath()%>/pro/proImg.do?pro_no=${AssessVO.pro_no}" alt=""></a>
+                                        <a href="<%=request.getContextPath()%>/pro/pro.do?action=getOne_For_Display_front&requestURL=<%=request.getServletPath()%>&pro_no=${AssessVO.pro_no}"><img src="<%=request.getContextPath()%>/pro/proImg.do?pro_no=${AssessVO.pro_no}" alt=""></a>
                                     </div>
                                     <div class="product-info">
                                         <a href="shop-details.html">${proSvclist.getOneProduct(AssessVO.pro_no).pro_name}</a>
                                         <p>$ ${AssessVO.pro_bonus}</p>
                                         <div class="ratings">
-
+<%--                                         <c:choose> --%>
+<%--                                             <c:when test="${AssessVO.pro_trunc_assess == 5}"> --%>
+<!--                                             <P>123</P> -->
+<%--                                             </c:when> --%>
+<%--                                         </c:choose> --%>
                                           <c:if test="${AssessVO.pro_trunc_assess eq 5}">
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>

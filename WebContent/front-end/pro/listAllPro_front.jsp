@@ -514,12 +514,12 @@ overflow: hidden;
 																													    <!-- 評價系統 -->
 													<div class="star">
 													    <span class="s-txt">產品評價：</span>
-														    <span class="s-xxs" id="${proVO.pro_no}">
+														    <span class="s-xxs" id="${proVO.pro_no}" onclick="tuchlike(this)">
 														        <span class="iconfont s-xx">☆</span>
+															    <span class="iconfont s-xx">☆</span> 
 															    <span class="iconfont s-xx">☆</span>
 															    <span class="iconfont s-xx">☆</span>
-															    <span class="iconfont s-xx">☆</span>
-															    <span class="iconfont s-xx">☆</span>
+															    <span class="iconfont s-xx s-xx_${proVO.pro_no}">☆</span>
 														    </span>
 <!-- 													    <span class="s-haoping"> -->
 <!-- 														<em class="s-hp-triangle0"> -->
@@ -554,36 +554,30 @@ overflow: hidden;
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="<%=request.getContextPath() %>/back-end/pro/tool/websock_client.js"></script>
 <script type="text/javascript">
-	
+	function tuchlike(tuch_id){
+		return tuch_id;
+	}
 $(function() {
     var isclick = false;
     var arr = ["1分差評", "2分中評", "3分中評", "4分好評", "5分好評"];
-    var clickind = -1;
 
-    $(".s-xx").on("click", function() {
-        isclick = true;
-        clickind = $(this).index();
-    });
+
+
     $(".s-xx").hover(function() {
         var ind = $(this).index();
         var proid = $(this).parent().attr("id");
         console.log(proid)
-//         $(".s-xx").removeClass("color-f13a3a");
+        $(this).parent().find(".s-xx").removeClass("color-f13a3a");
         for (var i = 0; i <= ind; i++) {
         	$(this).parent().find(".s-xx").eq(i).addClass("color-f13a3a");
-            $(".s-haoping").find(".s-hp-txt").text(arr[i]).end().show();
         }
-    }, function() {
-        if (!isclick) {
-            $(".s-xx").removeClass("color-f13a3a");
-            $(".s-haoping").hide();
-        } else {
-            $(".s-xx").removeClass("color-f13a3a");
-            for (var i = 0; i <= clickind; i++) {
-                $(".s-xx").eq(i).addClass("color-f13a3a");
-                $(".s-haoping").find(".s-hp-txt").text(arr[i]).end().show();
-            }
-        }
+        $(".s-xx").on("click", function() {
+            clickind = $(this).index();
+    		     for (var i = 0; i <= clickind; i++) {
+    		    	$(this).parent().find(".s-xx").eq(i).addClass("color-f13a3a");
+    		     }
+    		     var proid = $(this).parent().attr("id");
+        });
     });
     
 //     var isclick = false;

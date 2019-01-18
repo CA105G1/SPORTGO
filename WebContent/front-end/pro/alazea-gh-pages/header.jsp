@@ -22,9 +22,7 @@
 		      <li class="nav-item">
 		        <a class="nav-link" href="<%=request.getContextPath()%>/front-end/club/club_list.jsp">社團</a>
 		      </li>
-		      <li class="nav-item">
-		        <a class="nav-link disabled" href="#">Disabled</a>
-		      </li>
+		      
 		    </ul>
 		    
 		      <div class="collapse navbar-collapse" id="navbarResponsive">
