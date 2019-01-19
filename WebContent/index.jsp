@@ -34,7 +34,7 @@
 	</head>
 	<body>
 <%-- 		<jsp:include page="/front-end/pro/alazea-gh-pages/header.jsp"/>  --%>
-		<jsp:include page="/front-end/CA105G1_header.jsp" />
+		<jsp:include page="/front-end/CA105G1_header_bt4.jsp" />
 <%-- 		<jsp:include page="/front-end/pro/alazea-gh-pages/header.jsp"/> --%>
 
 <%-- 		<div class="container-fluid">${newsVOList.size()}</div> --%>
@@ -133,7 +133,7 @@
 
 		<%-- footer目前尚缺連結點 --%>
 <%-- 		<%@ include file="front-end/CA105G1_footer.file" %> <!--請更正成下一行-->--%>
-		<jsp:include page="/front-end/CA105G1_footer.jsp" />
+		<jsp:include page="/front-end/CA105G1_footer_bt4.jsp" />
 <%-- 		<jsp:include page="/front-end/pro/alazea-gh-pages/CA105G1_footer.jsp"/> --%>
 		
     <!-- ##### All Javascript Files ##### -->
