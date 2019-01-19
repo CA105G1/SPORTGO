@@ -138,11 +138,12 @@ console.log(dist);
 			  				'</a>'+
 		  				'</div>'+
 		  				'<div style="padding:5px 5px 0px 5px;">'+
-		  					'<i class="glyphicon glyphicon-user" style="padding-right:5px"></i>'+
+// 		  					'<i class="glyphicon glyphicon-user" style="padding-right:5px"></i>'+
+		  					'<i class="fa fa-user" style="padding-right:5px"></i>'+
 		  					'<%=memsvc.getOneMem(sg_infovo.getMem_no()).getMem_name()%>'+
   						'</div>'+
 		  				'<div style="padding:5px;">'+
-		  					'<i class="glyphicon glyphicon-time" style="padding-right:5px"></i>'+
+		  					'<i class="fa fa-clock-o" style="padding-right:5px"></i>'+
 		  					'<fmt:formatDate value="<%=sg_infovo.getSg_date()%>" pattern="yyyy-MM-dd HH:mm"/>'+
 	  					'</div>';
 				  infowindow.setContent(msg);
