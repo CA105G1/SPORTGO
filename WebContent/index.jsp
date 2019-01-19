@@ -37,6 +37,7 @@
 		<jsp:include page="/front-end/CA105G1_header_bt4.jsp" />
 <%-- 		<jsp:include page="/front-end/pro/alazea-gh-pages/header.jsp"/> --%>
 
+
 <%-- 		<div class="container-fluid">${newsVOList.size()}</div> --%>
 		
 <%-- 		<div>--------${newsTypeVOList}</div> --%>
