@@ -11,23 +11,16 @@
 <html>
 <head>
 <title>Sg_infoGetByPkForGeneral</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<link   rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
-<script src="<%= request.getContextPath()%>/datetimepicker/jquery.js"></script>
-<script src="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+
+<link  rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<link rel="icon" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/style.css">
 
 
-
- 
 </head>
 <body>
-<jsp:include page="/front-end/CA105G1_header.jsp" />
+<jsp:include page="/front-end/CA105G1_header_bt4.jsp" />
 
 <% 
 	Sg_infoVO vo = (Sg_infoVO)request.getAttribute("Sg_infoVO");	
@@ -36,19 +29,48 @@
     MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO");
 System.out.println("memberlistVO= "+memberlistVO);
 %>
+<!-- 麵包屑 -->
+<div class="breadcrumb-area">
+    <!-- Top Breadcrumb Area -->
+    <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(<%= request.getContextPath()%>/img/sgpic/sportbg2.jpg);">
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/index.jsp"><i class="fa fa-home"></i> 首頁</a></li>
+                        <!-- 判斷返回鍵要回到社團還是揪團 -->
+						<%String club_no =request.getParameter("club_no"); %>
+						<c:if test="<%=club_no == null%>">  
+							<li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/front-end/Sg_info/SgHome.jsp">揪團專區</a></li>
+						</c:if>
+						<c:if test="<%=club_no != null%>">
+							<li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/front-end/club/club_list.jsp">社團專區</a></li>  
+						 	<li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/front-end/club/Sg_infoList.jsp?club_no=<%=club_no %>">專屬揪團</a></li>
+						</c:if>
+                        <li class="breadcrumb-item active" aria-current="page">${Sg_infoVO.sg_name }</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div class="container">
 	<div class="row">
 		<div class="col-xs-12 col-sm-3">
-			<div class="panel panel-success">
-				<div class="panel-heading">
-					<h3 class="panel-title">團員列表</h3>
+			<div class="card" style="background-color:#444444">
+				<div class="card-header">
+					<h5 class="panel-title" style="font-weight:bold; color:white">團員列表</h5>
 				</div>
 				<div class="list-group">
 					<jsp:useBean id="sg_memSvc" scope="page" class="com.sg_mem.model.Sg_memService" />
 					<%pageContext.setAttribute("sg_no", vo.getSg_no());%>
 					<c:forEach var="sg_memVO" items="${sg_memSvc.getAllBySg_no(sg_no)}" > 
-						<div class="list-group-item">
+						<div class="list-group-item" style="border:0px">
 							<a href="<%=request.getContextPath()%>/front-end/memberlist/public_Member_page.jsp?mem_no=${sg_memVO.mem_no}">
 							<div id="sg_memList">
 								<jsp:useBean id="memberlistSvc" scope="page" class="com.memberlist.model.MemberlistService"/>
@@ -67,26 +89,16 @@ System.out.println("memberlistVO= "+memberlistVO);
 			<form action="<%= request.getContextPath()%>/Sg_info/Sg_info.do" method="post" enctype="multipart/form-data">
 			
 				<table class="table table-hover">
-					<!-- 返回按鍵 -->
-					<i class="glyphicon glyphicon-circle-arrow-left icon-large brown backToList"></i>
-					<!-- 判斷返回鍵要回到社團還是揪團 -->
-					<%String club_no =request.getParameter("club_no"); %>
-					<c:if test="<%=club_no == null%>">  
-					<a href="<%= request.getContextPath()%>/front-end/Sg_info/SgHome.jsp" display="none" id="linkBack">回到揪團列表</a>
-					</c:if>
-					<c:if test="<%=club_no != null%>">  
-					<a href="<%= request.getContextPath()%>/front-end/club/Sg_infoList.jsp?club_no=<%=club_no %>" display="none" id="linkBack">回到揪團列表</a>
-					</c:if>
-					<caption style="text-align:center">
+					<caption style="text-align:center; caption-side: top">
 						<h3>
 							<!-- 額滿圖示 -->
 							<img id="joinFullPic" src="<%= request.getContextPath()%>/img/joinFull.png" style="width:80px; height:auto; display:none">
 							<!-- 團名 -->
 							<img src="<%= request.getContextPath()%>/img/sporticons/${Sg_infoVO.sp_no}.svg" style="width:20px; height:auto;">
-							${Sg_infoVO.sg_name }
+							<span style="font-weight:bold;">${Sg_infoVO.sg_name }</span>
 							<!-- 團長 -->
 							<span style="font-size: 0.5em;margin-left: 15px;">
-								<i class="glyphicon glyphicon-user" style="padding-right:5px"></i>
+								<img src="<%= request.getContextPath()%>/img/sgmem.jpg"  style="width:20px; height:auto;">
 								<jsp:useBean id="memberlistSvc2" scope="page" class="com.memberlist.model.MemberlistService"/>
 								${memberlistSvc2.getOneMem(Sg_infoVO.mem_no).mem_name}
 							</span>
@@ -143,15 +155,15 @@ System.out.println("memberlistVO= "+memberlistVO);
 					</tbody>
 				</table>
 				<!-------------GOOGLE地圖 -------------->
-					<div class="panel panel-info">
-						<div class="panel-heading">
-							<h4 class="panel-title text-center">
-								位置資訊
+					<div class="card" style="background-color:#444444">
+						<div class="card-header" >
+							<h4 class="panel-title text-center" style="color:white; font-weight:bold; font-size:1.5em;">
+								LOCATION
 							</h4>
 						</div>
 						<div>
-								<div id="map"></div>
-								<div id="distance" style="font-size:1.5em; font-weight:bold; color:red"></div>
+							<div id="map"></div>
+							<div id="distance" style="font-size:1.5em; font-weight:bold; color:white; text-align:center"></div>
 						</div>
 					</div>
 <canvas id="myChart" width="700" height="400" style="display: none"></canvas>
@@ -159,12 +171,14 @@ System.out.println("memberlistVO= "+memberlistVO);
 			</form>
 		</div> <!-- col-sm-6 -->
 		<div class="col-xs-12 col-sm-3">
-			<div class="panel panel-danger">
-				<div class="panel-heading">
-					<h3 class="panel-title">報名人數</h3>
+			<div class="card" style="background-color:#444444">
+				<div class="card-header">
+					<h5 class="panel-title" style="font-weight:bold; color:white">報名人數</h5>
 				</div>
 				<div class="list-group text-center" style="font-size:2em; font-weight:bold;">
-					${Sg_infoVO.sg_ttlapl}
+					<div class="list-group-item" style="border:0px;">
+						<span style="color:#DC143C">${Sg_infoVO.sg_ttlapl}</span>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -204,52 +218,28 @@ System.out.println("memberlistVO= "+memberlistVO);
 			</button>
 		</div>
 		<div class="col-xs-12 col-sm-3">
-		<!--------------------------------------------- TEST ---------------------------------------------->
-<%if(memberlistVO!=null){
-// String mem_notest = memberlistVO.getMem_no();
-// FriendService friendSvc = new FriendService();
-// List<FriendVO> friendlist = friendSvc.findMyFriend(mem_notest);
-// MemberlistService service2 = new MemberlistService();
-// List<MemberlistVO> memberlist2 = service2.getAllMem();
-// pageContext.setAttribute("friendlist",friendlist);  	
-// pageContext.setAttribute("memberlist2",memberlist2);
-%>
-<%-- <form method="post" action="<%= request.getContextPath()%>/Sg_info/Sg_info.do"> --%>
-<!-- <input type="hidden" name="action" value="shareSg_info"> -->
-<%-- <input type="hidden" name="mem_no" value="${memberlistVO.mem_no}"> --%>
-<%-- <input type="hidden" name="sg_no" value="${Sg_infoVO.sg_no}"> --%>
-<%-- 	<c:forEach var="friend" items="${friendlist}"> --%>
-<%-- 		<c:forEach var="member" items="${memberlist2}"> --%>
-<%-- 			<c:if test="${memberlistVO.mem_no eq friend.mem1_no}"> --%>
-<%-- 				<c:if test="${friend.mem2_no eq member.mem_no}" > --%>
-<%-- 							<input type="checkbox" name="mem2_no"  value="${member.mem_no}"> --%>
-<%-- 							<img src="<%=request.getContextPath()%> --%>
-<%-- 							/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}" --%>
-<!-- 							style="width:40px;height:40px;border-radius:50%;"> -->
-<%-- 							<label>${member.mem_name}</label><br> --%>
-<%-- 				</c:if> --%>
-<%-- 			</c:if> --%>
-<%-- 			<c:if test="${memberlistVO.mem_no eq friend.mem2_no}"> --%>
-<%-- 				<c:if test="${friend.mem1_no eq member.mem_no}" > --%>
-<%-- 							<input type="checkbox" name="mem2_no"  value="${member.mem_no}"> --%>
-<%-- 							<img src="<%=request.getContextPath()%> --%>
-<%-- 							/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}" --%>
-<!-- 							style="width:40px;height:40px;border-radius:50%"> -->
-<%-- 							<label>${member.mem_name}</label><br> --%>
-<%-- 				</c:if> --%>
-<%-- 			</c:if> --%>
-<%-- 		</c:forEach> --%>
-<%-- 	</c:forEach> --%>
-<!-- 	<input type="submit" value="送出分享"> -->
-<!-- </form> -->
-	<%} %>
-<!--------------------------------------------- TEST ---------------------------------------------->
 		</div>
 	</div>
 </div>
 
 
-<jsp:include page="/front-end/CA105G1_footer.jsp" />
+<jsp:include page="/front-end/CA105G1_footer_bt4.jsp" />
+
+
+<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/jquery/jquery-2.2.4.min.js"></script>
+<script src="<%= request.getContextPath()%>/datetimepicker/jquery.js"></script>
+<script src="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+<!-- Popper js -->
+<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/popper.min.js"></script>
+<!-- Bootstrap js -->
+<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/bootstrap.min.js"></script>
+<!-- All Plugins js -->
+<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/plugins/plugins.js"></script>
+<!-- Active js -->
+<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/active.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
 
 <script type="text/javascript">
@@ -304,7 +294,8 @@ System.out.println("memberlistVO= "+memberlistVO);
 	         if(status == 'OK'){
 	             directionsDisplay.setDirections(result);
 	             //顯示路線距離
-	             $("#distance").text("總距離為： "+result.routes[0].legs[0].distance.text);
+	             console.log(result.routes[0].legs[0])
+	             $("#distance").text("DISTANCE： "+result.routes[0].legs[0].distance.text);
 	             
 	            //抓取路線各個點座標存入path陣列供計算海拔用
 				var pathobj = result.routes[0].overview_path;
@@ -715,7 +706,6 @@ System.out.println("memberlistVO= "+memberlistVO);
 		border-radius: 10px; 
     	cursor: pointer; 
      	box-shadow: 0 2px #999; 
-    	width:80%; 
      	text-align: center; 
      	text-align-last: center; 
  	} 

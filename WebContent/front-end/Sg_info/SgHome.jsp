@@ -23,10 +23,8 @@ if(list == null){
 <head>
 <meta charset="utf-8">
 <title>Insert title here</title>
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"> -->
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> -->
-<!-- <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script> -->
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+
+
 <link   rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 <link rel="icon" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/style.css">
@@ -43,8 +41,10 @@ if(list == null){
 </div>
 <!-- Header頁首 -->
 <header class="header-area">
-	<jsp:include page="/front-end/pro/alazea-gh-pages/header.jsp"/> 
+	<jsp:include page="/front-end/CA105G1_header_bt4.jsp" />
 </header>
+
+
 
 <section class="shop-page section-padding-0-100">
 	<div class="container-fluid">
@@ -191,7 +191,7 @@ if(list == null){
 	</div>
 </section>
 <!-- Footer頁尾 -->
-<jsp:include page="/front-end/pro/alazea-gh-pages/CA105G1_footer.jsp"/>
+<jsp:include page="/front-end/CA105G1_footer_bt4.jsp" />
 
 
 
