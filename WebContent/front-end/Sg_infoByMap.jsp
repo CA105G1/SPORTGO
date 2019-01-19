@@ -10,7 +10,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"> -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -30,18 +30,34 @@
 </style>
 </head>
 <body>
-<div class="form-group">
-	<label for="setRadius">搜尋半徑</label>
-	<div class="input-group" style="width:20%">
-		<input type="text" id="setRadius" value="5000" class="form-control">
-		<div class="input-group-addon">公尺</div>
-		<div class="input-group-btn">
-			<button class="btn btn-info" type="button" id="setRadiusBtn" onclick="initMap()">
-				<i class="glyphicon glyphicon-search"></i>
-			</button>
-		</div>
+<!-- <div class="form-group"> -->
+<!-- 	<label for="setRadius">搜尋半徑</label> -->
+<!-- 	<div class="input-group" style="width:20%"> -->
+<!-- 		<input type="text" id="setRadius" value="5000" class="form-control"> -->
+<!-- 		<div class="input-group-addon">公尺</div> -->
+<!-- 		<div class="input-group-btn"> -->
+<!-- 			<button class="btn btn-info" type="button" id="setRadiusBtn" onclick="initMap()"> -->
+<!-- 				<i class="glyphicon glyphicon-search"></i> // 因為語套版衝到，需更換 -->
+<!-- 			</button> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+<!-- </div> -->
+
+<label for="setRadius">搜尋半徑</label>
+	<div class="input-group mb-3" style="width:20%">
+	<input type="text" id="setRadius" value="5000" class="form-control">
+ 	<div class="input-group-append">
+    	<span class="input-group-text">公尺</span>
+  	</div>
+  	<div class="input-group-btn">
+		<button class="btn btn-info" type="button" id="setRadiusBtn1" onclick="initMap()">
+			<i class="fa fa-search"></i>
+		</button>
 	</div>
 </div>
+					
+
+
 <div id="map"></div>
 
 

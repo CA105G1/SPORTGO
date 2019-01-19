@@ -95,5 +95,13 @@ public class RegService {
 //		return regionMapKeyReg_name;
 //	}
 	
-
+//	public static void main(String[] args) {
+//		RegService regService = new RegService();
+//		List<String> list = regService.getReg_nameList();
+//		for(String string : list) {
+//			System.out.println("string : "+string);
+//		}
+//	}
+	
+	
 }

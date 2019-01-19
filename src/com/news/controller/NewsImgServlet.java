@@ -25,7 +25,6 @@ public class NewsImgServlet extends HttpServlet {
 		protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			request.setCharacterEncoding("UTF-8");
 			String news_no = request.getParameter("news_no");
-
 			NewsService newsService = new NewsService();
 			byte[] news_picture = newsService.getOneNews(news_no).getNews_picture();
 			if(news_picture!=null) {
