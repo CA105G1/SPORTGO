@@ -32,6 +32,8 @@ if(list == null){
 </head>
 <body>
 
+<jsp:include page="/front-end/CA105G1_header_bt4.jsp" />
+
 <!-- Loading時的小圖示 -->
 <div class="preloader d-flex align-items-center justify-content-center">
     <div class="preloader-circle"></div>
@@ -39,14 +41,30 @@ if(list == null){
         <img src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png" alt="">
     </div>
 </div>
-<!-- Header頁首 -->
-<header class="header-area">
-	<jsp:include page="/front-end/CA105G1_header_bt4.jsp" />
-</header>
+
+
+<!-- 麵包屑 -->
+<div class="breadcrumb-area">
+    <!-- Top Breadcrumb Area -->
+    <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(<%= request.getContextPath()%>/img/sgpic/sportbg2.jpg);">
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/index.jsp"><i class="fa fa-home"></i> 首頁</a></li>
+                   		<li class="breadcrumb-item active" aria-current="page">揪團專區</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
-<section class="shop-page section-padding-0-100">
 	<div class="container-fluid">
 		<div class="row">
 
@@ -189,7 +207,6 @@ if(list == null){
 
 		</div>
 	</div>
-</section>
 <!-- Footer頁尾 -->
 <jsp:include page="/front-end/CA105G1_footer_bt4.jsp" />
 
