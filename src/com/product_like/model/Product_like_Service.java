@@ -31,6 +31,9 @@ public class Product_like_Service {
 		return product_likeVO;
 	}
 	
+	public List<Product_likeVO> getAllMemLike(String mem_no){
+		return prolikeDAO.Mem_getAll(mem_no);
+	}
 //	public OrdVO getOneOrd (String ord_no) {
 //		return ordDAO.findByPK(ord_no);
 //	}
