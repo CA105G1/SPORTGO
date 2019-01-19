@@ -7,6 +7,16 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 	</head>
 	<body> 
+	
+<!-- Preloader -->
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-circle"></div>
+        <div class="preloader-img">
+            <img src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png" alt="">
+        </div>
+    </div>
+<!--  header -->
+	 <header class="header-area">
 		<nav class="navbar navbar-expand-lg navbar-light bg-light navbar-dark bg-dark">
 		<img style="height: 20px;"src="<%=request.getContextPath()%>/img/logo_SportyGo_2_light.png" alt="SportGo!"/>
 		  <a class="navbar-brand" href="<%=request.getContextPath()%>/index.jsp">SportGo!</a>
@@ -96,5 +106,6 @@
                 </div>
             </div>
         </div>
+     </header>
 	</body>
 </html>

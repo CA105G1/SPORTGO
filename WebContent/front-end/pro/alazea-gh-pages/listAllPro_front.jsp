@@ -62,15 +62,15 @@
 <body onload="connect();" onunload="disconnect();">
 
     <!-- Preloader -->
-    <div class="preloader d-flex align-items-center justify-content-center">
-        <div class="preloader-circle"></div>
-        <div class="preloader-img">
-            <img src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png" alt="">
-        </div>
-    </div>
+<!--     <div class="preloader d-flex align-items-center justify-content-center"> -->
+<!--         <div class="preloader-circle"></div> -->
+<!--         <div class="preloader-img"> -->
+<%--             <img src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png" alt=""> --%>
+<!--         </div> -->
+<!--     </div> -->
 
     <!-- ##### Header Area Start ##### -->
-    <header class="header-area">
+<!--    1 <header class="header-area"> -->
 
         <!-- ***** Top Header Area ***** -->
 <jsp:include page="/front-end/pro/alazea-gh-pages/header.jsp"/> 
@@ -172,7 +172,7 @@
 
         <!-- ***** Navbar Area ***** -->
 
-    </header>
+<!--    1 </header> -->
     <!-- ##### Header Area End ##### -->
   
 <!-- 輪播 -->
