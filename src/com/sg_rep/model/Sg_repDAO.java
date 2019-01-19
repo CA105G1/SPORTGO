@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.Context;
+import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import com.sg_msg.model.Sg_msgVO;
@@ -31,26 +33,26 @@ public class Sg_repDAO implements Sg_repDAO_interface{
 			"SELECT * FROM sg_rep WHERE rep_status='待審核' ORDER BY rep_no";
 	
 	//連線池版
-//	private static DataSource ds = null;
-//	
-//	static {
-//		try {
-//			Context ctx = new javax.naming.InitialContext();
-//			ds = (DataSource)ctx.lookup("java:comp/env/jdbc/TestDB");
-//		} catch (NamingException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
+	private static DataSource ds = null;
 	
-	//JDBC版
 	static {
 		try {
-			Class.forName(driver);
-		} catch (ClassNotFoundException e) {
+			Context ctx = new javax.naming.InitialContext();
+			ds = (DataSource)ctx.lookup("java:comp/env/jdbc/CA105G1DB");
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	
+//	//JDBC版
+//	static {
+//		try {
+//			Class.forName(driver);
+//		} catch (ClassNotFoundException e) {
+//			e.printStackTrace();
+//		}
+//	}
 	
 
 	@Override
@@ -60,9 +62,9 @@ public class Sg_repDAO implements Sg_repDAO_interface{
 		
 		try {
 			//連線池版
-//		con = ds.getConnection();
+			con = ds.getConnection();
 			//JDBC版
-			con = DriverManager.getConnection(url, user, psw);
+//			con = DriverManager.getConnection(url, user, psw);
 			pstmt = con.prepareStatement(insertStmt);
 			
 			pstmt.setString(1, sg_repVO.getSg_no());
@@ -101,9 +103,9 @@ public class Sg_repDAO implements Sg_repDAO_interface{
 		
 		try {
 			//連線池版
-//			con = ds.getConnection();
+			con = ds.getConnection();
 			//JDBC版
-			con = DriverManager.getConnection(url, user, psw);
+//			con = DriverManager.getConnection(url, user, psw);
 			pstmt = con.prepareStatement(updateStatus);
 			
 			pstmt.setString(1, sg_repVO.getRep_status());
@@ -142,9 +144,9 @@ public class Sg_repDAO implements Sg_repDAO_interface{
 		
 		try {
 			//連線池版
-//			con = ds.getConnection();
+			con = ds.getConnection();
 			//JDBC版
-			con = DriverManager.getConnection(url, user, psw);
+//			con = DriverManager.getConnection(url, user, psw);
 			pstmt = con.prepareStatement(deleteStmt);
 			
 			pstmt.setString(1, rep_no);
@@ -183,9 +185,9 @@ public class Sg_repDAO implements Sg_repDAO_interface{
 		
 		try {
 			//連線池版
-//			con = ds.getConnection();
+			con = ds.getConnection();
 			//JDBC版
-			con = DriverManager.getConnection(url, user, psw);
+//			con = DriverManager.getConnection(url, user, psw);
 			pstmt = con.prepareStatement(findByPkStmt);
 			
 			pstmt.setString(1, rep_no);
@@ -239,7 +241,8 @@ public class Sg_repDAO implements Sg_repDAO_interface{
 		List<Sg_repVO> list = new ArrayList<Sg_repVO>();
 		
 		try {
-			con = DriverManager.getConnection(url, user, psw);
+			con = ds.getConnection();
+//			con = DriverManager.getConnection(url, user, psw);
 			pstmt = con.prepareStatement(getAllStmt);
 			rs = pstmt.executeQuery();
 			

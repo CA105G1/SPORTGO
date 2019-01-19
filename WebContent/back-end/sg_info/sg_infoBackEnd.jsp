@@ -142,7 +142,7 @@
 									            <td>${sg_repVO.rep_type }</td>
 									            <td>${sg_repVO.rep_cont }</td>
 									            <td>${sg_repVO.rep_status }</td>
-									            <td><a href="Sg_infoGetByPkForRep.jsp?sg_no=${sg_repVO.sg_no}&rep_no=${sg_repVO.rep_no }"  class="btn btn-info">查看</a></td>
+									            <td><a href="Sg_infoGetByPkForRep.jsp?sg_no=${sg_repVO.sg_no}&rep_no=${sg_repVO.rep_no }" id="checkBtn" class="btn btn-info">查看</a></td>
 								        	</tr>
 								    	</c:forEach>
 								    </tbody>
@@ -171,13 +171,19 @@
 <script>
 $(document).ready( function () {
 	//設定旗標用來回到原本的頁籤
-	var flag = <%=request.getParameter("flag")%>;
-    if(flag){
-    	$("#repList").addClass("active");
+	var flag = localStorage.getItem('isBackForRep');
+	if(flag == 'true'){
+		$("#repList").addClass("active");
     	$("#sgList").removeClass("active");
     	$("#tab2").addClass("active");
     	$("#tab1").removeClass("active");
-    }
+		localStorage.setItem('isBackForRep', false);
+	}
+	
+	$("#checkBtn").click(function(){
+		localStorage.setItem('isBackForRep', true);
+	});
+	
 	
 	
     $('#sg_infoTable').DataTable({
