@@ -79,7 +79,7 @@ public class Post_infoService {
 		return dao.findByMemNO(mem_mo);
 	}
 	
-	public List<Post_infoVO> getAllbykeyword(String keyword){
-		return dao.getAllbykeyword(keyword);
+	public List<Post_infoVO> getAllbykeyword(String keyword,String club_no){
+		return dao.getAllbykeyword(keyword,club_no);
 	}
 }

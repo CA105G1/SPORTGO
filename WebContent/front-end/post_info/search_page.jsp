@@ -19,6 +19,8 @@
  	pageContext.setAttribute("list2", list2);
 /*********************************************************************************************/ 
 	 
+		
+
 		String club_no = (String)session.getAttribute("club_no");
 		request.setAttribute("club_no", club_no);
 		ClubService clubSvc = new ClubService();
@@ -26,14 +28,17 @@
 		request.setAttribute("clubVO", clubVO);
 		Post_infoService postinfo = new Post_infoService();
 		
-		
-		
-		
 ////////////
-		String keyword = (String)request.getAttribute("keyword");
-		List<Post_infoVO> postVOlist = postinfo.getAllbykeyword(keyword);
-		
-		
+
+// 		String keyword = request.getParameter("keyword");
+// 		System.out.println("search_page:keyword="+keyword);
+// 		List<Post_infoVO> postVOlist = postinfo.getAllbykeyword(keyword,club_no);
+// 		System.out.println("search_page:postVOlist="+postVOlist);
+        List<Post_infoVO> postVOlist = (List<Post_infoVO>)request.getAttribute("listcom");
+//         if(postVOlist == null){
+//         	List<Post_infoVO> postvolist = postinfo.getAllfromclub(club_no);
+//         }
+        pageContext.setAttribute("postVOlist", postVOlist);
 
 %>
 

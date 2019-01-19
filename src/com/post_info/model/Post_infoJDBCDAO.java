@@ -392,8 +392,9 @@ public class Post_infoJDBCDAO implements Post_infoDAO_interface{
 			// TODO Auto-generated method stub
 			return null;
 		}
+		
 		@Override
-		public List<Post_infoVO> getAllbykeyword(String keyword) {
+		public List<Post_infoVO> getAllbykeyword(String keyword, String club_no) {
 			// TODO Auto-generated method stub
 			return null;
 		}

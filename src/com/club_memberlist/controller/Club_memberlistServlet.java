@@ -32,7 +32,7 @@ public class Club_memberlistServlet extends HttpServlet{
 	private static final String REVIEWADDCLUB_PATH = "/front-end/club_memberlist/reviewaddclub.jsp";
 	private static final String CLUBLIST_PATH = "/front-end/club/club_list.jsp";
 	private static final String CLUBPAGE_PATH = "/front-end/club/club_page.jsp";
-	
+	private static final String CLUB_MEMBERLIST_LIST = "/front-end/club_memberlist/clubmember_list.jsp";
 	
 	
 	public Club_memberlistServlet(){
@@ -224,7 +224,8 @@ if ("dropoutclub".equals(action)) {
 		failureView.forward(req, res);
 	}
 }
-//顯示社團成員列表
+
+////顯示社團成員列表
 //if ("cmem_list".equals(action)) { 
 //	
 //	List<String> errorMsgs = new LinkedList<String>();
@@ -236,18 +237,12 @@ if ("dropoutclub".equals(action)) {
 //		
 //		String club_no = req.getParameter("club_no");
 //		String mem_no =  req.getParameter("mem_no");
+//		String cmem_status = req.getParameter("cmem_status");
 //		String cmem_class = req.getParameter("cmem_class");
-//		
-//		
-//		Club_memberlistVO club_memberlistVO = new Club_memberlistVO();
-//		
-//		club_memberlistVO.setClub_no(club_no);
-//		club_memberlistVO.setMem_no(mem_no);
-//		club_memberlistVO.setCmem_class(cmem_class);
 //		
 //		/***************************2.開始修改資料*****************************************/
 //		Club_memberlistService club_memberlistSvc = new Club_memberlistService();
-//		club_memberlistVO = club_memberlistSvc.cmem_list(club_no, mem_no,cmem_class);
+//		List<Club_memberlistVO> club_memberlistVO = club_memberlistSvc.getByClub(club_no);
 //		
 //		/***************************3.修改完成,準備轉交(Send the Success view)*************/
 //

@@ -106,17 +106,18 @@
 						
 				<div class="col-xs-12 col-sm-8">
 					
-<!---------------------------- 顯示貼文列表 ------------------------------------->
-					<!-- 關鍵字查詢 -->
+<!------------------------------------------ 關鍵字查詢 --------------------------------------------------->
 <!--查詢的FORM-->	<form method="post" action="<%= request.getContextPath()%>/post_info.do">
 				  	<div class="input-group" style="width:230px">
                     	<input type="text" class="form-control" placeholder="請輸入關鍵字" name="keyword" id="keyword">
                     	<span class="input-group-btn" ><!--style="display:none"-->
                     		<input type="hidden" name="action" value="postCompositeQuery">
+                    		<input type="hidden" name="club_no" value="${sessionScope.club_no}"> 
                         	<button class="btn btn-default" type="submit">GO</button>
                     	</span>
                 	</div><!-- input-group -->
-<!--查詢的FORM-->	</form>					
+<!--查詢的FORM-->	</form>
+<!----------------------------------------- 顯示貼文列表 -------------------------------------------------->
 <!-- 貼文刪除FORM --><FORM METHOD="post" ACTION="<%=request.getContextPath()%>/post_info.do" name="form">  
 					<div class="card text-center" id="post">
   							<div class="card-body">
@@ -129,7 +130,7 @@
 									<a href='<%=request.getContextPath()%>/post_info.do?action=delete&post_no=${postinfoVO.post_no}'">刪除</a>
 							</c:if>		
     								<p class="card-text">${postinfoVO.post_content}</p><!--貼文內容 -->   								
-<!-- 貼文刪除FORM --></FORM>    								
+<!-- 貼文刪除FORM --></FORM> 
 <!-------------------------------------------- 新增留言 --------------------------------------------------->
 		<!-- 新增的FORM --><FORM METHOD="post" ACTION="<%=request.getContextPath()%>/respones.do" name="form">  
   							<div class="card-footer text-muted">

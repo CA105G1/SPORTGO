@@ -14,5 +14,5 @@ public interface Post_infoDAO_interface {
     
 	public List<Post_infoVO> getAll(Map<String, String[]> map);
 	
-	public List<Post_infoVO> getAllbykeyword(String keyword);
+	public List<Post_infoVO> getAllbykeyword(String keyword, String club_no);
 }

@@ -50,7 +50,7 @@ public class Post_infoServlet extends HttpServlet{
 		String CLUB_PAGE = "/front-end/club/club_page.jsp";
 		String CREATE_POST = "/front-end/post_info/create_post.jsp";
 		String EDIT_POST = "/front-end/post_info/edit_post.jsp";
-		String SEARCH_PAGE = "/front-end/post_info/search_post.jsp";
+		String SEARCH_PAGE = "/front-end/post_info/search_page.jsp";
 		System.out.println("action:" + action);
 //顯示貼文
 if ("getOnePost_display".equals(action)) { 
@@ -232,24 +232,27 @@ if("postCompositeQuery".equals(action)) {
 	List<String> errorMsg = new LinkedList<String>();
 	req.setAttribute("errorMsg", errorMsg);
 	List<Post_infoVO> list=new ArrayList<Post_infoVO>();
-//	try {
-		HttpSession session = req.getSession();
-		String keyword =req.getParameter("keyword");
-		System.out.println("keyword="+keyword);////////////////////////////////
+	try {
+		
+		String keyword = req.getParameter("keyword");
+		String club_no = req.getParameter("club_no");
+		
+//		System.out.println("keyword:" +keyword);
+		
+		
 		Post_infoService post_infoSvc = new Post_infoService();
-		list=post_infoSvc.getAllbykeyword(keyword);
-		System.out.println("list="+list);/////////////////////////////////////
-		System.out.println("哈囉我在這呢5");///////////////////////////////////
+		list=post_infoSvc.getAllbykeyword(keyword,club_no);
 		req.setAttribute("listcom", list);
+//		System.out.println("listcom="+list);///////////////////////////////////
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher(SEARCH_PAGE);
 		dispatcher.forward(req, res);
 		
-//	}catch(Exception e) {
-//		errorMsg.add(e.getMessage());
-//		RequestDispatcher dispatcher = req.getRequestDispatcher(SEARCH_PAGE);
-//		dispatcher.forward(req, res);
-//	}
+	}catch(Exception e) {
+		errorMsg.add(e.getMessage());
+		RequestDispatcher dispatcher = req.getRequestDispatcher(SEARCH_PAGE);
+		dispatcher.forward(req, res);
+	}
 }
 		
 	}

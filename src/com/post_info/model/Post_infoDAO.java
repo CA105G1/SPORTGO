@@ -43,7 +43,7 @@ public class Post_infoDAO  implements Post_infoDAO_interface{
 		private static final String GET_ONE_BY_MEM_NO =////////////////////////////////////////////
 			"SELECT post_no,club_no,mem_no,post_topic,post_content,post_date FROM post_info where mem_no = ? ";
 		
-		private static final String GET_LIST_BY_KEYWORD="select * from post_info where post_topic like '%?%' order by post_no";
+		private static final String GET_LIST_BY_KEYWORD="select * from post_info where post_topic like ('%?%') and club_no=? order by post_no";
 		
 		@Override
 		public void insert(Post_infoVO post_infoVO) {
@@ -446,7 +446,7 @@ public class Post_infoDAO  implements Post_infoDAO_interface{
 
 
 		@Override
-		public List<Post_infoVO> getAllbykeyword(String keyword) {
+		public List<Post_infoVO> getAllbykeyword(String keyword,String club_no) {//,String club_no
 			List<Post_infoVO> list = new ArrayList<Post_infoVO>();
 			
 			Post_infoVO post_infoVO = null;
@@ -458,7 +458,7 @@ public class Post_infoDAO  implements Post_infoDAO_interface{
 				con = ds.getConnection();
 				
 				String finalSQL = "select * from post_info  "
-				          + CompositeQuery_Post_info.get_WhereCondition(keyword)
+				          + CompositeQuery_Post_info.get_WhereCondition(keyword,club_no)
 				          + "order by post_no";
 				System.out.println(finalSQL);
 				pstmt = con.prepareStatement(finalSQL);
