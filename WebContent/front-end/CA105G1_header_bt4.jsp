@@ -18,7 +18,7 @@
 <!--  header -->
 	 <header class="header-area">
 		<nav class="navbar navbar-expand-lg navbar-light bg-light navbar-dark bg-dark">
-		<img style="height: 20px;"src="<%=request.getContextPath()%>/img/logo_SportyGo_2_light.png" alt="SportGo!"/>
+		<img style="height: 20px; width:20px;"src="<%=request.getContextPath()%>/img/logo_SportyGo_2_light.png" alt="SportGo!"/>
 		  <a class="navbar-brand" href="<%=request.getContextPath()%>/index.jsp">SportGo!</a>
 		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
 		    <span class="navbar-toggler-icon"></span>
