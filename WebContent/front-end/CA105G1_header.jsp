@@ -133,17 +133,17 @@
 				<div class="navbar-myself-center">
 					<ul class="nav navbar-nav navbar-form">
 						<li ><a href="<%=request.getContextPath()%>/index.jsp">　首頁　</a></li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-								關於我們
-								<b class="caret"></b>
-							</a>
-							<ul class="dropdown-menu">
-								<li><a href="#">動機</a></li>
+<!-- 						<li class="dropdown"> -->
+<!-- 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"> -->
+<!-- 								關於我們 -->
+<!-- 								<b class="caret"></b> -->
+<!-- 							</a> -->
+<!-- 							<ul class="dropdown-menu"> -->
+<!-- 								<li><a href="#">動機</a></li> -->
 <!-- 								<li><a href="#">要做啥阿...2</a></li> -->
 <!-- 								<li><a href="#">.......</a></li> -->
-							</ul>
-						</li>
+<!-- 							</ul> -->
+<!-- 						</li> -->
 						
 						<li><a href="<%=request.getContextPath()%>/front-end/memberlist/public_Member_page.jsp">　會員專區　</a></li>
 <!-- 						<li class="dropdown"> -->
