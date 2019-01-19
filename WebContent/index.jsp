@@ -130,7 +130,6 @@
 		</div>
 --%>
 
-
 		<%-- footer目前尚缺連結點 --%>
 <%-- 		<%@ include file="front-end/CA105G1_footer.file" %> <!--請更正成下一行-->--%>
 		<jsp:include page="/front-end/CA105G1_footer_bt4.jsp" />
