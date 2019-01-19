@@ -19,12 +19,12 @@
 				<div class="navbar-myself-center">
 					<ul class="nav navbar-nav navbar-form">
 						<li ><a href="<%=request.getContextPath()%>/index.jsp">　首頁　</a></li>
-						<li class="dropup">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">　關於我們　</a>
-							<ul class="dropdown-menu">
-								<li><a href="#">動機</a></li>
-							</ul>
-						</li>
+<!-- 						<li class="dropup"> -->
+<!-- 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">　關於我們　</a> -->
+<!-- 							<ul class="dropdown-menu"> -->
+<!-- 								<li><a href="#">動機</a></li> -->
+<!-- 							</ul> -->
+<!-- 						</li> -->
 						<li><a href="<%=request.getContextPath()%>/front-end/memberlist/public_Member_page.jsp">　會員專區　</a></li>
 						<li><a href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp">　揪團　</a></li>
 						<li><a href="<%=request.getContextPath()%>/front-end/club/club_list.jsp">　社團　</a></li>
