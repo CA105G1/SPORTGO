@@ -23,177 +23,119 @@ if(list == null){
 <head>
 <meta charset="utf-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"> -->
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> -->
+<!-- <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 <link   rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
-<script src="<%= request.getContextPath()%>/datetimepicker/jquery.js"></script>
-<script src="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
-
-
+<link rel="icon" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/style.css">
+   
 </head>
 <body>
 
-<jsp:include page="/front-end/CA105G1_header.jsp" />
+<!-- Loading時的小圖示 -->
+<div class="preloader d-flex align-items-center justify-content-center">
+    <div class="preloader-circle"></div>
+    <div class="preloader-img">
+        <img src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png" alt="">
+    </div>
+</div>
+<!-- Header頁首 -->
+<header class="header-area">
+	<jsp:include page="/front-end/pro/alazea-gh-pages/header.jsp"/> 
+</header>
 
+<section class="shop-page section-padding-0-100">
 	<div class="container-fluid">
 		<div class="row">
 
-			<div class="col-xs-12 col-sm-3 col-sm-offset-1">
+			<div class="col-sm-3 offset-1">
 				
-				<div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
 <!-------------------- 建立揪團區塊 ---------------------->
-				  <div class="panel panel-info">
-				    <div class="panel-heading" role="tab" id="panel1">
-				      <h4 class="panel-title">
-				          <a href="<%= request.getContextPath()%>/front-end/Sg_info/Sg_infoCreate.jsp">建立揪團</a>
-				      </h4>
-				    </div>
-				  </div>
+		 		<a class="btn btn-success btn-block" href="<%= request.getContextPath()%>/front-end/Sg_info/Sg_infoCreate.jsp" style="margin-bottom:10px;">建立揪團</a>
 <!------------------------------------ 查詢區塊 ----------------------------------->
-				  <div class="panel panel-info">
-				    <div class="panel-heading">
-				      <h4 class="panel-title">
-				          <div>揪團查詢</div>
-				      </h4>
-				    </div>
-				      <div class="panel-body">
+			    <!-- Shop Widget -->
+                   <div class="shop-widget price mb-50">
+                    <button type="button" class="btn btn-secondary btn-block" disabled>揪團查詢</button>
+                   	<div class="widget-desc">
 				      	<form method="post" action="<%= request.getContextPath()%>/Sg_info/Sg_info.do">
-				      		<div class="table-responsive">
-					      		<table class="table table-hover text-center" align="center">
-					      			<thead >
-					      			<!-------- 運動種類查詢 --------->
-						      			<tr>
-						      				<th>運動種類</th>
-					      				</tr>
-					      				<tr>
-						      				<th>
-						      					<jsp:useBean id="sportSvc" scope="page" class="com.sport.model.SportService" />
-						      					<select size="1" name="sp_no" class="text-center">
-						      						<option value="">請選擇運動種類
-													<c:forEach var="sportVO" items="${sportSvc.all}" > 
-														<option value="${sportVO.sp_no}">${sportVO.sp_name}
-													</c:forEach>   
-												</select>
-						      				</th>
-						      			</tr>
-					      			<!-------- 縣市查詢 --------->
-						      			<tr>
-						      				<th>縣市</th>
-					      				</tr>
-					      				<tr>
-						      				<th>
-						      					<jsp:useBean id="regSvc" scope="page" class="com.region.model.RegService" />
-						      					<select id="reg_name" size="1" name="reg_name" class="text-center">
-						      						<option value="">請選擇縣市
-						      						<c:forEach var="reg_name" items="${regSvc.reg_nameList }">
-						      							<option value="${reg_name }">${reg_name}
-						      						</c:forEach>
-												</select>
-						      				</th>
-						      			</tr>
-			      					<!-------- 地區查詢 --------->
-						      			<tr>
-						      				<th>地區</th>
-					      				</tr>
-					      				<tr>
-						      				<th>
-<%-- 						      					<jsp:useBean id="regSvc" scope="page" class="com.region.model.RegService" /> --%>
-						      					<select size="1" name="reg_dist" class="text-center">
-						      						<option id="reg_dist" value="">請選擇地區
-<%-- 						      						<c:forEach var="regVO" items="${regSvc.all }"> --%>
-<%-- 						      							<option value="${regVO.reg_dist }">${regVO.reg_dist} --%>
-<%-- 						      						</c:forEach> --%>
-												</select>
-						      				</th>
-						      			</tr>
-						      		<!-------- 場地名稱查詢 --------->
-						      			<tr>
-						      				<th>場地名稱</th>
-					      				</tr>
-					      				<tr>
-						      				<th>
-						      					<jsp:useBean id="venueSvc" scope="page" class="com.venue.model.VenueService" />
-						      					<select size="1" name="v_no" class="text-center">
-						      						<option value="">請選擇場地名稱
-						      						<c:forEach var= "venueVO" items="${venueSvc.all}" >
-						      							<option value="${venueVO.v_no }">${venueVO.v_name }
-						      						</c:forEach>
-												</select>
-						      				</th>
-						      			</tr>
-				      				
-						      		<!-------- 活動日期查詢 --------->
-						      			<tr>
-						      				<th>活動日期</th>
-					      				</tr>
-					      				<tr>
-						      				<th>
-						      					<input name="sg_date" id="sg_date" type="text"  class="text-center" placeholder="請選擇日期">
-						      				</th>
-						      			</tr>
-					      			<!-------- 關鍵字查詢 --------->
-						      			<tr>
-						      				<th>關鍵字</th>
-					      				<tr>
-					      				</tr>
-						      				<th>
-						      					<input name="keyword" id="keyword" type="text" class="text-center" placeholder="請輸入關鍵字">
-						      				</th>
-						      			</tr>
-					      			<!-------- 送出查詢 --------->
-						      			<tr>
-						      				<input type="hidden" name="action" value="sg_infoCompositeQuery">
-						      				<input type="hidden" name="sg_per" value="公開">
-						      				<td><input type="submit" value="送出查詢" class="btn btn-primary"></td>
-						      			</tr>
+			      			<!-------- 運動種類查詢 --------->
+			      			<label>運動種類</label>
+	      					<jsp:useBean id="sportSvc" scope="page" class="com.sport.model.SportService" />
+	      					<select size="1" name="sp_no" class="text-center form-control">
+	      						<option value="">請選擇運動種類
+								<c:forEach var="sportVO" items="${sportSvc.all}" > 
+									<option value="${sportVO.sp_no}">${sportVO.sp_name}
+								</c:forEach>   
+							</select>
+			      			<!-------- 縣市查詢 --------->
+		      				<label>縣市</label>
+	      					<jsp:useBean id="regSvc" scope="page" class="com.region.model.RegService" />
+	      					<select id="reg_name" size="1" name="reg_name" class="text-center form-control">
+	      						<option value="">請選擇縣市
+	      						<c:forEach var="reg_name" items="${regSvc.reg_nameList }">
+	      							<option value="${reg_name }">${reg_name}
+	      						</c:forEach>
+							</select>
+	      					<!-------- 地區查詢 --------->
+		      				<label>地區</label>
+	      					<select size="1" name="reg_dist" class="text-center form-control">
+	      						<option id="reg_dist" value="">請選擇地區
+							</select>
+				      		<!-------- 場地名稱查詢 --------->
+		      				<label>場地名稱</label>
+	      					<jsp:useBean id="venueSvc" scope="page" class="com.venue.model.VenueService" />
+	      					<select size="1" name="v_no" class="text-center form-control">
+	      						<option value="">請選擇場地名稱
+	      						<c:forEach var= "venueVO" items="${venueSvc.all}" >
+	      							<option value="${venueVO.v_no }">${venueVO.v_name }
+	      						</c:forEach>
+							</select>
+		      				
+				      		<!-------- 活動日期查詢 --------->
+			      			<label for="sg_date">活動日期</label>
+	      					<input name="sg_date" id="sg_date" type="text"  class="text-center form-control" placeholder="請選擇日期">
+			      			<!-------- 關鍵字查詢 --------->
+		      				<label for="keyword">關鍵字查詢</label>
+      						<input name="keyword" id="keyword" type="text" class="text-center form-control" placeholder="請輸入關鍵字">
+			      			<!-------- 送出查詢 --------->
+		      				<div class="text-center"  style="margin-top:10px;">
+			      				<input type="hidden" name="action" value="sg_infoCompositeQuery">
+			      				<input type="hidden" name="sg_per" value="公開">
+			      				<input type="submit" value="送出查詢" class="btn btn-outline-success">
+		      				</div>
 						      			
-					      			</thead >
-					      		</table>
-				      		</div>
 				      	</form>
-				      </div>
-				  </div>
-<!----------------------------地圖查詢 ------------------------------->
-<!-- 				  <div class="panel panel-info"> -->
-<!-- 				    <div class="panel-heading"> -->
-<!-- 				      <h4 class="panel-title"> -->
-<!-- 			          	 <a href="#">地圖查詢</a> -->
-<!-- 				      </h4> -->
-<!-- 				    </div> -->
-<!-- 				  </div> -->
-				  
-				  
-				</div> <!-- panel-group -->
-
+			      	</div>
+	      		</div>
 			</div> <!-- col-sm-3 -->
 			
 			
 			
-			<div class="col-xs-12 col-sm-7 outer">
+			<div class="col-sm-7 outer">
 			
 			<%@ include file="page1.file" %>
 			<br>
 			<c:forEach var="Sg_infoVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
-			
+			<!-- ---------------------------------------------------- -->
 				<label for="${Sg_infoVO.sg_no}">
                     <!-- 	判斷時間是否正在揪團 -->
 					<%pageContext.setAttribute("date", new Date());%>
 					<c:if test="${Sg_infoVO.sg_date > date}">
-					<div class="btn sg_infoList" style="background-color: #FFC8B4">
+					<div class="btn sg_infoList" style="background-color: white;border: 1px solid">
 					</c:if>
 					<c:if test="${Sg_infoVO.sg_date < date}">
 					<div class="btn sg_infoList" style="background-color: #DDDDDD">
 					</c:if>
-						<div class="col-xs-12 col-sm-6 sg_picDiv">
+						<div class="col-xs-12 col-sm-8 sg_picDiv">
 							<img src="<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${Sg_infoVO.sg_no}" class="portrait img-responsive img-rounded">
 						</div>
-						<div class="col-xs-12 col-sm-6">
-							<table class="table text-center" background="1" style="border-color:#FF0000">
+						<div class="col-xs-12 col-sm-4">
+							<table class="table table-borderless" background="1" style="border-color:#FF0000">
 								<thead >
 									<tr>
-										<th colspan="2" class="text-center">
+										<th colspan="2" style="border-bottom: 2px solid #dee2e6;font-weight: bold;">
 											<img src="<%= request.getContextPath()%>/img/sporticons/${Sg_infoVO.sp_no}.svg" style="width:20px; height:auto;">
 											${Sg_infoVO.sg_name }
 										</th>
@@ -201,23 +143,31 @@ if(list == null){
 								</thead>
 								<tbody>
 									<tr>
-										<td>團長:</td>
+<!-- 										<td>團長:</td> -->
 										<jsp:useBean id="memberlistSvc" scope="page" class="com.memberlist.model.MemberlistService"/>
-										<td>${memberlistSvc.getOneMem(Sg_infoVO.mem_no).mem_name}</td>
+										<td>
+											<img src="<%= request.getContextPath()%>/img/sgmem.jpg" style="width:30px; height:auto; padding-right:5px">
+											${memberlistSvc.getOneMem(Sg_infoVO.mem_no).mem_name}
+										</td>
 									</tr>
 									<tr>
-										<td>活動時間:</td>
-										<td><fmt:formatDate value="${Sg_infoVO.sg_date}" pattern="yyyy-MM-dd HH:mm"/></td>
+										<td>
+											<img src="<%= request.getContextPath()%>/img/calendar.svg" style="width:30px; height:auto; padding-right:5px">
+											<fmt:formatDate value="${Sg_infoVO.sg_date}" pattern="yyyy-MM-dd HH:mm"/>
+										</td>
 									</tr>
 									<tr>
-										<td>報名截止日:</td>
-										<td><fmt:formatDate value="${Sg_infoVO.apl_end}" pattern="yyyy-MM-dd"/></td>
+										<td>
+											<img src="<%= request.getContextPath()%>/img/time.svg" style="width:30px; height:auto; padding-right:5px">
+											<fmt:formatDate value="${Sg_infoVO.apl_end}" pattern="yyyy-MM-dd"/>
+										</td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
 					</div>
 				</label>
+            <!-- ---------------------- -->
 					<form method="post" action="<%= request.getContextPath()%>/Sg_info/Sg_info.do">
 						<input type="hidden" name="sg_no" value="${Sg_infoVO.sg_no}">
 						<input type="hidden" name="action" value="getByPK">
@@ -239,7 +189,25 @@ if(list == null){
 
 		</div>
 	</div>
-<jsp:include page="/front-end/CA105G1_footer.jsp" />
+</section>
+<!-- Footer頁尾 -->
+<jsp:include page="/front-end/pro/alazea-gh-pages/CA105G1_footer.jsp"/>
+
+
+
+ <script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/jquery/jquery-2.2.4.min.js"></script>
+<script src="<%= request.getContextPath()%>/datetimepicker/jquery.js"></script>
+<script src="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+<!-- Popper js -->
+<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/popper.min.js"></script>
+<!-- Bootstrap js -->
+<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/bootstrap.min.js"></script>
+<!-- All Plugins js -->
+<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/plugins/plugins.js"></script>
+<!-- Active js -->
+<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/active.js"></script>
+
+
 
 
 <script>
