@@ -16,6 +16,7 @@ public class Product_likeJDBCDAO implements Product_likeDAO_interface{
 	private static final String PUSH_DISLIKE = "DELETE FROM PRODUCT_LIKE WHERE MEM_NO = ? AND PRODUCT_NO = ?";
 	private static final String PRODUCT_WHO_LIKE = "SELECT MEM_NO FROM PRODUCT_LIKE WHERE PRODUCT_NO = ?";
 	private static final String MEM_LIKE_WHICH_PRODUCT = "SELECT PRODUCT_NO FROM PRODUCT_LIKE WHERE MEM_NO = ?";
+	private static final String MEM_PRODUCT = "SELECT * FROM PRODUCT_LIKE WHERE PRODUCT_NO = ? AND MEM_NO = ?";
 	
 	private String driver = "oracle.jdbc.driver.OracleDriver";
 	private String url = "jdbc:oracle:thin:@10.37.129.3:1521:xe";
@@ -120,8 +121,8 @@ public class Product_likeJDBCDAO implements Product_likeDAO_interface{
 		ResultSet rs = null;
 		
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, user, password);
+		    //連線池
+		    con = ds.getConnection();
 			pstmt = con.prepareStatement(PRODUCT_WHO_LIKE);
 			pstmt.setString(1, product_no);
 			
@@ -133,10 +134,7 @@ public class Product_likeJDBCDAO implements Product_likeDAO_interface{
 				list.add(productlike);
 			}
 			
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load the database driver"
-														+e.getMessage());
-		} catch (SQLException se) {
+		}  catch (SQLException se) {
 			throw new RuntimeException("Database errors occured. "+ se.getMessage());
 		} finally {
 			if(rs!=null) {
@@ -174,8 +172,8 @@ public class Product_likeJDBCDAO implements Product_likeDAO_interface{
 		ResultSet rs = null;
 		
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, user, password);
+		    //連線池
+		    con = ds.getConnection();
 			pstmt = con.prepareStatement(MEM_LIKE_WHICH_PRODUCT);
 			
 			pstmt.setString(1, mem_no);
@@ -187,10 +185,7 @@ public class Product_likeJDBCDAO implements Product_likeDAO_interface{
 				list.add(product_likeVO);
 			}
 			
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load the database driver. "
-														+e.getMessage());
-		}catch (SQLException se) {
+		} catch (SQLException se) {
 			throw new RuntimeException("Database errors occured. " 
 														+se.getMessage());
 		}finally {
@@ -217,6 +212,59 @@ public class Product_likeJDBCDAO implements Product_likeDAO_interface{
 			}
 		}
 		return list;
+		
+	}
+	@Override
+	public Product_likeVO select(String product_no, String mem_no) {
+		Product_likeVO product_likeVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int count = 0 ;
+		
+		try {
+		    //連線池
+		    con = ds.getConnection();
+			pstmt = con.prepareStatement(MEM_PRODUCT);
+			
+			pstmt.setString(1, product_no);
+			pstmt.setString(2, mem_no);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				product_likeVO = new Product_likeVO();
+				product_likeVO.setMem_no(rs.getString("MEM_NO"));
+				product_likeVO.setProduct_no(rs.getString("product_no"));
+			}
+
+			
+		} catch (SQLException se) {
+			throw new RuntimeException("Database errors occured. " 
+														+se.getMessage());
+		}finally {
+			if(rs!=null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if(con!=null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return product_likeVO;
 	}
 	
 	public static void main(String[] args) {
@@ -242,4 +290,6 @@ public class Product_likeJDBCDAO implements Product_likeDAO_interface{
 		like.delete(memlike2);
 		System.out.println("Products be disliked. ");
 	}
+
+
 }

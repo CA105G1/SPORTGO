@@ -17,6 +17,7 @@
 %>
 <jsp:useBean id="proclassSvc" scope="page" class="com.productclass.model.ProductClassService" />
 <jsp:useBean id="proSvclist" scope="page" class="com.product.model.ProductService" />
+<jsp:useBean id="prolikeSvc" scope="page" class="com.product_like.model.Product_like_Service" />
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,7 +45,7 @@
 
 
         <!-- ***** Top Header Area ***** -->
-        <jsp:include page="/front-end/pro/alazea-gh-pages/header.jsp"/>
+  <jsp:include page="/front-end/CA105G1_header_bt4.jsp" />
 
     <!-- ##### Header Area End ##### -->
 
@@ -125,6 +126,8 @@
                                 <p><span>商品單價:</span> <span><%=proVO.getPro_bonus()%></span></p>
                                 <p><span>商品規格:</span> <span><%=proVO.getPro_format()%> </span></p>
                                 <p><span>商品庫存量:</span> <span><%=proVO.getPro_stock()%> </span></p>
+                                <p><span>目前按讚分數:</span><span><%=proVO.getPro_all_assess()%>分</span></p>
+                                <p><span>有多少人按讚:</span><span><%=proVO.getPro_all_assessman()%>人</span></p>
 <!--                                 <p> -->
 <!--                                     <span>Share on:</span> -->
 <!--                                     <span> -->
@@ -147,7 +150,14 @@
                                 </form>
                                 <!-- Wishlist & Compare -->
                                 <div class="wishlist-compare d-flex flex-wrap align-items-center">
-                                    <a href="#" class="wishlist-btn ml-15"><i class="icon_heart_alt"></i></a>
+                             	            <c:choose>
+	                                            <c:when test="${prolikeSvc.getfindbyOne(proVO.pro_no,memberlistVO.mem_no).product_no == proVO.pro_no}">
+	                                            <a href="#" onclick="tuchlike(this.id);" class="wishlist-btn ml-15 like_${proVO.pro_no}" id="${proVO.pro_no}" style="background-color: #ffc342"><i class="icon_heart_alt"></i></a>
+	                                            </c:when>
+	                                            <c:otherwise>
+                                           	 		<a href="#" onclick="tuchlike(this.id);" class="wishlist-btn ml-15 like_${proVO.pro_no}" id="${proVO.pro_no}"><i class="icon_heart_alt"></i></a>
+	                                            </c:otherwise>
+	                                        </c:choose>
                                     <a href="#" class="compare-btn ml-15"><i class="arrow_left-right_alt"></i></a>
                                 </div>
                             </div>
@@ -350,7 +360,7 @@
     <!-- ##### Related Product Area End ##### -->
 
     <!-- ##### Footer Area Start ##### -->
-<jsp:include page="/front-end/pro/alazea-gh-pages/CA105G1_footer.jsp"/>
+<jsp:include page="/front-end/CA105G1_footer_bt4.jsp" />
     <!-- ##### Footer Area End ##### -->
 
     <!-- ##### All Javascript Files ##### -->
@@ -371,11 +381,12 @@
 <!-- websock -->
 <script src="<%=request.getContextPath() %>/back-end/pro/tool/websock_client.js"></script>
     		<script type="text/javascript"> 
+    		var mem_no_login = "<%= session.getAttribute("memberlistVO")%>";
 			$(function(){
+//*****************************計算格
 				//設置數量框不可手動填寫（此處為避免不必要的操作失誤）
 	            $("#num").prop("disabled", true);
 
-				console.log(<%=proVO.getPro_stock()%>);
 				var t = $("#num");
 				$("#add").click(function(){	
 
@@ -399,9 +410,9 @@
 					t.val(parseInt(t.val()))
 				})
 				
-				//****************************************
+//***************************** 加入購物車 
 				var proVO = "<%= session.getAttribute("proVO")%>";
-				var mem_no_login = "<%= session.getAttribute("memberlistVO")%>";
+				
 				
 				$("#btn1").on('click', function () {
 					if(mem_no_login == "null"){
@@ -449,8 +460,7 @@
 					console.log(queryString);
 					return queryString;
 				}
-				//****************************************
-				
+
 				
 				
 				
@@ -458,11 +468,69 @@
 				// 	$("#total").html((parseInt(t.val())*3.95).toFixed(2));
 				// }
 				// setTotal();
-			})
+			});
 			// function returnvalue(){
 			// 	$("#returnValue").html((parseInt(t.val())).toFixed(2));
 			// }
-
+//*****************************加入收藏
+				function tuchlike(clicked_id){
+					var clickid = clicked_id;
+					if(mem_no_login ===""){
+						console.log("test"+mem_no_login);
+						<%session.setAttribute("location", request.getRequestURI());%>  
+						swal({
+						    title: '尚未登入',
+						    text: '請先登入會員。'
+						}).then(
+						    function () {
+						    console.log("<%= request.getContextPath()%>/front-end/memberlist/Login.jsp");
+						    	window.location.replace("<%= request.getContextPath()%>/front-end/memberlist/Login.jsp");
+						    }
+						)
+						
+					}else{
+						console.log($('.like_'+clickid).css("background-color"));
+						console.log($('.like_'+clickid).css("color") == "rgb(255, 0, 0)");
+						if($('.like_'+clickid).css("background-color") == "rgb(255, 195, 66)"){
+							console.log("我是紅色")
+							//取消讚
+							$.ajax({
+								 type: "POST",
+								 url: "<%= request.getContextPath()%>/prolike/prolike.do",
+								 data: deletelike(mem_no_login,clicked_id),
+								 dataType: "json",
+								 success: function (data){
+									 $('.like_'+clickid).css("background-color","#f2f4f5");
+							     },
+							     error: function(){alert("AJAX-class發生錯誤囉!")}
+							});
+						} else {
+							//加入讚
+							$.ajax({
+								 type: "POST",
+								 url: "<%= request.getContextPath()%>/prolike/prolike.do",
+								 data: addlike(mem_no_login,clicked_id),
+								 dataType: "json",
+								 success: function (data){
+									 $('.like_'+clickid).css("background-color","rgb(255, 195, 66)");
+							     },
+							     error: function(){alert("AJAX-class發生錯誤囉!")}
+					         });
+					         
+						}
+					}
+					
+				}
+				function addlike(mem_no_login,clicked_id){
+					var queryString= {"action":"insert" , "mem_no":mem_no_login , "pro_no":clicked_id};
+				    console.log(queryString);
+					return queryString;
+				}
+				function deletelike(mem_no_login,clicked_id){
+					var queryString= {"action":"delete" , "mem_no":mem_no_login , "pro_no":clicked_id};
+				    console.log(queryString);
+					return queryString;
+				}
 
 
 

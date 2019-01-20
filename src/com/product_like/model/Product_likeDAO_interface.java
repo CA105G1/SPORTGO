@@ -12,4 +12,6 @@ public interface Product_likeDAO_interface {
 	public List<Product_likeVO> Product_getAll(String product_no);
 	//find this people like which Products
 	public List<Product_likeVO> Mem_getAll(String mem_no);
+	//find people like and Product
+	public Product_likeVO select(String product_no , String mem_no);
 }
