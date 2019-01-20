@@ -14,11 +14,11 @@
 		list = (List<ProductVO>) request.getAttribute("pro_ByCompositeQuery");
 		String pro_classid = (String)request.getAttribute("pro_classid");
 		if(pro_classid == ""){
-			listAssess = proSvc.getProAssess();
+			listAssess = proSvc.getProAssess();  
 		} else {
 			listAssess = proSvc.getProAssesslike(pro_classid);
 		}
-	} else {
+	} else { 
 		System.out.print("失敗");
 		list = proSvc.getAllOnShelve();
 		listAssess = proSvc.getProAssess();

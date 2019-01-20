@@ -111,6 +111,10 @@ public class ProductService {
 	public ProductVO getProductStock(String pro_no,Integer cart_pro_stock) {
 		return proDAO.getSelectStock(pro_no, cart_pro_stock);
 	}
+	//更新評價分數
+	public int getUpdateAssess(String pro_no,Integer pro_all_assess) {
+		return proDAO.updateAssess(pro_no, pro_all_assess);
+	}
 
 }
 

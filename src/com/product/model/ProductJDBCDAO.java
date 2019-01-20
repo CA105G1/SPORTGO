@@ -37,9 +37,9 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 	//查詢購物車購買數量時庫存數量
 	private static final String SELECT_STOCK = "SELECT PRO_NO,PRO_CLASSID,PRO_NAME,PRO_PIC,PRO_PIC_EXT,PRO_FORMAT,PRO_BONUS,pro_stock ?,PRO_SAFESTOCK,PRO_DETAILS,PRO_SHELVE,PRO_ALL_ASSESS,PRO_ALL_ASSESSMAN from product where pro_no = ?";
 	//更新評價分數
-	private static final String UPDATE_ASSESS = "";
+	private static final String UPDATE_ASSESS = "UPDATE PRODUCT SET   PRO_ALL_ASSESS = PRO_ALL_ASSESS + ?,PRO_ALL_ASSESSMAN = PRO_ALL_ASSESSMAN +1 WHERE PRO_NO = ?";
 	//查詢全部商品除後評價
-	private static final String SELECT_ASSESS = "SELECT ROWNUM ,TOTASS.* FROM (SELECT PRO_NO,PRO_BONUS,PRO_PIC, NVL(trunc(PRO_ALL_ASSESS /NULLIF(PRO_ALL_ASSESSMAN,0)),0) AS PRO_TRUNC_ASSESS FROM PRODUCT order by pro_trunc_assess desc ) TOTASS WHERE ROWNUM <=4";
+	private static final String SELECT_ASSESS = "SELECT ROWNUM ,TOTASS.* FROM (SELECT PRO_NO,PRO_BONUS,PRO_PIC, NVL(trunc(PRO_ALL_ASSESS /NULLIF(PRO_ALL_ASSESSMAN,0)),0) AS PRO_TRUNC_ASSESS FROM PRODUCT WHERE PRO_SHELVE = '上架中' order by pro_trunc_assess desc ) TOTASS WHERE ROWNUM <=4";
     //查詢全部商品除後評價(類別查詢)
 	private static final String SELECT_ASSESSLIKE = "SELECT ROWNUM ,TOTASS.* FROM (SELECT PRO_NO,PRO_BONUS,PRO_PIC, NVL(trunc(PRO_ALL_ASSESS /NULLIF(PRO_ALL_ASSESSMAN,0)),0) AS PRO_TRUNC_ASSESS FROM PRODUCT WHERE PRO_CLASSID = ? order by pro_trunc_assess desc ) TOTASS WHERE ROWNUM <=4";
 	
@@ -817,10 +817,11 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 		    con = ds.getConnection();
 		    //JDBC版
 //			con = DriverManager.getConnection(URL, USER, PASSWORD);
-		    ps = con.prepareStatement(UPDATE_STOCK);
+		    ps = con.prepareStatement(UPDATE_ASSESS);
 //		    Integer pro_stock = proSvc.getProductStock(pro_no, cart_pro_stock).getPro_stock();
 //		    System.out.println(pro_stock);
 //		    ps.setInt(1,cart_pro_stock);
+		    ps.setInt(1, pro_all_assess);
 	        ps.setString(2, pro_no);
 	       
 	    	

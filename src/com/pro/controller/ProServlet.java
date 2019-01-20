@@ -744,19 +744,35 @@ if ("ok_cancel".equals(action)) {
 				}
 		}
 //評價
-System.out.println("action:"+action);
 if ("assess".equals(action)) {
 				List<String> errorMsgs = new LinkedList<String>();
 				// Store this set in the request scope, in case we need to
 				// send the ErrorPage view.
 				Enumeration assessList = req.getParameterNames();
+				ProductService proSvc = new ProductService();
 				while(assessList.hasMoreElements()) {
-					String name = (String)assessList.nextElement();
-					String values[] = req.getParameterValues(name);
-					for(int i = 0 ; i < values.length ; i++) {
-						System.out.println(name + ":" + values[i]);
+					String pro_no = (String)assessList.nextElement();
+					String values[] = req.getParameterValues(pro_no);
+					System.out.println("你是誰"+pro_no);
+					if(!pro_no.equals("action")) {
+						System.out.println("有進癌");
+						
+						for(int i = 0 ; i < values.length ; i++) {
+//							System.out.println(pro_no + ":==" + values[i]);
+//							String tt = values[i];
+//							int test = Integer.parseInt(tt);
+//							System.out.println(tt); 
+	//						Integer pro_all_assess = Integer.valueOf(values[i]);
+							proSvc.getUpdateAssess(pro_no, Integer.parseInt(values[i]));
+	//						Map<String,Integer> map = new HashMap();
+	//						map.put(name,Integer.parseInt(values[i]));
+						}
 					}
 				}
+				String url = PATH_FRONT_LIST_ALL_PRO;
+				System.out.println("準備轉交");
+				RequestDispatcher successView = req.getRequestDispatcher(url); 
+				successView.forward(req, res);
 		  }
 	}
 
