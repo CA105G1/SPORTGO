@@ -193,14 +193,14 @@ System.out.println("memberlistVO= "+memberlistVO);
 		<div class="col-xs-12 col-sm-3">
 		</div>
 		<div class="col-xs-12 col-sm-6" id="btnGroup">
-			<div class="btn like" id="likebtn" style="display:none">
+			<button class="btn like" id="likebtn" style="display:none">
 				<img src="<%= request.getContextPath()%>/img/love.png" id="like">
 				加入收藏
-			</div>
-			<div class="btn like" id="dislikebtn" style="display:">
+			</button>
+			<button class="btn like" id="dislikebtn" style="display:">
 				<img src="<%= request.getContextPath()%>/img/love_white.png" id="dislike">
 				加入收藏
-			</div>
+			</button>
 			
 			<button class="btn" id="joinbtn">
 				<img src="<%= request.getContextPath()%>/img/add.png">

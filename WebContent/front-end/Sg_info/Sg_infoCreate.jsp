@@ -82,6 +82,7 @@
 	<div class="row">
 		<div class="col-xs-12 col-sm-3"></div>
 		<div class="col-xs-12 col-sm-6">
+			<button class="btn" id="magicBtn">-</button>
 			<form action="<%= request.getContextPath()%>/Sg_info/Sg_info.do" method="post" enctype="multipart/form-data">
 				<!------------ 圖片上傳 ------------>
 				<img src="<%= request.getContextPath()%>/img/no-image.PNG" style="width:100%"  id="showPic">
@@ -98,7 +99,7 @@
 						<tr>
 							<th>團名</th>
 							<td>
-								<input type="text" name="sg_name" 
+								<input type="text" name="sg_name" id="sg_name"
 									value="${param.sg_name}">
 							</td>
 						</tr>
@@ -119,19 +120,10 @@
 						<tr>
 							<th>報名費用</th>
 							<td>
-								<input type="text" name="sg_fee" 
+								<input type="text" name="sg_fee" id="sg_fee"
 									value="${param.sg_fee }">
 							</td>
 						</tr>
-<!-- 						<tr> -->
-<!-- 							<th>權限</th> -->
-<!-- 							<td> -->
-<!-- 								<select name="sg_per"> -->
-<!-- 									<option value="公開">公開</option> -->
-<!-- 									<option value="限社團">限社團</option> -->
-<!-- 								</select> -->
-<!-- 							</td> -->
-<!-- 						</tr> -->
 						<jsp:useBean id="sportSvc" scope="page" class="com.sport.model.SportService" />
 						<tr>
 							<th>運動種類</th> <!-- 下拉選單 -->
@@ -158,14 +150,14 @@
 						<tr>
 							<th>人數上限</th>
 							<td>
-								<input type="text" name="sg_maxno" 
+								<input type="text" name="sg_maxno" id="sg_maxno"
 									value="${param.sg_maxno }">
 							</td>
 						</tr> 
 						<tr>
 							<th>人數下限</th>
 							<td>
-								<input type="text" name="sg_minno" 
+								<input type="text" name="sg_minno" id="sg_minno"
 									value="${param.sg_minno }">
 							</td>
 						</tr> 
@@ -541,7 +533,13 @@
    	
    	
    	
-   	
+   	$("#magicBtn").click(function(){
+   		$("#sg_name").val("阿里山的姑娘美如水");
+   		$("#sg_fee").val(0);
+   		$("#sg_maxno").val(3);
+   		$("#sg_minno").val(0);
+   		$("#sg_extrainfo").text("一起衝去阿里山看日出啊!");
+   	});
    	
    	
    	

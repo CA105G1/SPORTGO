@@ -34,13 +34,7 @@ if(list == null){
 
 <jsp:include page="/front-end/CA105G1_header_bt4.jsp" />
 
-<!-- Loading時的小圖示 -->
-<div class="preloader d-flex align-items-center justify-content-center">
-    <div class="preloader-circle"></div>
-    <div class="preloader-img">
-        <img src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png" alt="">
-    </div>
-</div>
+
 
 
 <!-- 麵包屑 -->
