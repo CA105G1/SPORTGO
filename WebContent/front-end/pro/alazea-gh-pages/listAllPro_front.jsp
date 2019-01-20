@@ -18,7 +18,7 @@
 		} else {
 			listAssess = proSvc.getProAssesslike(pro_classid);
 		}
-	} else {
+	} else { 
 		System.out.print("失敗");
 		list = proSvc.getAllOnShelve();
 		listAssess = proSvc.getProAssess();
