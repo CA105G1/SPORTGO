@@ -95,14 +95,13 @@ if ("addintoclub".equals(action)) {
 	
 	List<String> errorMsgs = new LinkedList<String>();
 	req.setAttribute("errorMsgs", errorMsgs);
-	String location = req.getParameter("location");
+//	String location = req.getParameter("location");
 	try {
 		/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 		
 		String club_no = req.getParameter("club_no");
 		String mem_no = req.getParameter("mem_no");
-		
-		
+
 		/***************************2.開始修改資料*****************************************/
 		Club_memberlistVO club_memberlistVO = new Club_memberlistVO();
 		
@@ -111,7 +110,6 @@ if ("addintoclub".equals(action)) {
 		
 		Club_memberlistService club_memberlistSvc = new Club_memberlistService();
 		club_memberlistVO = club_memberlistSvc.addintoclub(club_no, mem_no);
-		
 		/***************************3.修改完成,準備轉交(Send the Success view)*************/
 
 		JSONObject obj = new JSONObject();
@@ -133,7 +131,7 @@ if ("addintoclub".equals(action)) {
 	} catch (Exception e) {
 		errorMsgs.add("修改資料失敗:"+e.getMessage());
 		RequestDispatcher failureView = req
-				.getRequestDispatcher(location);
+				.getRequestDispatcher("/front-end/club/Sg_infoList.jsp");
 		failureView.forward(req, res);
 	}
 }

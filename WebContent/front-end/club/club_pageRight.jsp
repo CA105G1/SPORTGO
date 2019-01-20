@@ -10,25 +10,33 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 		<title>club_pageRight</title>
+		
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
+		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
+		
 	</head>
 	<body>
 		<!-- 右選單 -->
 		<div class="container-fluid">
-			<div class="row">
-				<h4 id="club_name" class="_19s-" >
-					${clubVO.club_name}
-				</h4>
-				<div class="list-group active">
-					<a href="<%= request.getContextPath()%>/front-end/club/club_intro_page.jsp" class="list-group-item">簡介</a>
-					<a href="<%= request.getContextPath()%>/front-end/post_info/create_post.jsp" class="list-group-item" >建立貼文</a>
-					<a href="<%= request.getContextPath()%>/front-end/club/club_page.jsp" class="list-group-item">貼文列表</a>
-					<a href="<%= request.getContextPath()%>/front-end/club/Sg_infoList.jsp" class="list-group-item">專屬揪團</a>
-<!-- 					<a href="#" class="list-group-item">影音相簿</a> -->
-					<a href="<%= request.getContextPath()%>/front-end/club_memberlist/reviewaddclub.jsp" id="clubManage" class="list-group-item" style="display:none">社團管理</a>
-					<a href="<%= request.getContextPath()%>/front-end/club/club_list.jsp"class="list-group-item">返回列表</a>
-				</div>	
-				<button type="button" class="btn btn-dark" id="joinbtn" style="display:">加入社團</button>	
-				<button type="button" class="btn btn-dark" id="outbtn" style="display:none">退出社團</button>	
+			<div class="row" style="text-align:center" >
+				<div class="card" style="background-color:#444444;width:100%">
+					<div class="card-header" >
+						<h6 id="club_name" style=" font-weight:bold;  color:white">
+							${clubVO.club_name}
+						</h6>
+					</div>
+					<div class="list-group list-group-flush" style="width:100%; ">
+						<a href="<%= request.getContextPath()%>/front-end/club/club_intro_page.jsp" class="list-group-item list-group-item-action">簡介</a>
+						<a href="<%= request.getContextPath()%>/front-end/post_info/create_post.jsp" class="list-group-item list-group-item-action" >建立貼文</a>
+						<a href="<%= request.getContextPath()%>/front-end/club/club_page.jsp" class="list-group-item list-group-item-action">貼文列表</a>
+						<a href="<%= request.getContextPath()%>/front-end/club/Sg_infoList.jsp" class="list-group-item list-group-item-action">專屬揪團</a>
+						<a href="<%= request.getContextPath()%>/front-end/club_memberlist/reviewaddclub.jsp" id="clubManage" class="list-group-item list-group-item-action" style="display:none">社團管理</a>
+						<a href="<%= request.getContextPath()%>/front-end/club/club_list.jsp"class="list-group-item list-group-item-action">返回列表</a>
+					</div>	
+					<button type="button" class="btn btn-dark" id="joinbtn" style="display:">加入社團</button>	
+					<button type="button" class="btn btn-dark" id="outbtn" style="display:none">退出社團</button>	
+				</div>
 			</div>
 		</div>
 	</body>

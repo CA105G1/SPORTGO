@@ -79,7 +79,7 @@ if(list == null){
                    	<div class="widget-desc">
 				      	<form method="post" action="<%= request.getContextPath()%>/Sg_info/Sg_info.do">
 			      			<!-------- 運動種類查詢 --------->
-			      			<label>運動種類</label>
+			      			<label style="font-weight:bold">運動種類</label>
 	      					<jsp:useBean id="sportSvc" scope="page" class="com.sport.model.SportService" />
 	      					<select size="1" name="sp_no" class="text-center form-control">
 	      						<option value="">請選擇運動種類
@@ -88,7 +88,7 @@ if(list == null){
 								</c:forEach>   
 							</select>
 			      			<!-------- 縣市查詢 --------->
-		      				<label>縣市</label>
+		      				<label style="font-weight:bold">縣市</label>
 	      					<jsp:useBean id="regSvc" scope="page" class="com.region.model.RegService" />
 	      					<select id="reg_name" size="1" name="reg_name" class="text-center form-control">
 	      						<option value="">請選擇縣市
@@ -97,12 +97,12 @@ if(list == null){
 	      						</c:forEach>
 							</select>
 	      					<!-------- 地區查詢 --------->
-		      				<label>地區</label>
+		      				<label style="font-weight:bold">地區</label>
 	      					<select size="1" name="reg_dist" class="text-center form-control">
 	      						<option id="reg_dist" value="">請選擇地區
 							</select>
 				      		<!-------- 場地名稱查詢 --------->
-		      				<label>場地名稱</label>
+		      				<label style="font-weight:bold">場地名稱</label>
 	      					<jsp:useBean id="venueSvc" scope="page" class="com.venue.model.VenueService" />
 	      					<select size="1" name="v_no" class="text-center form-control">
 	      						<option value="">請選擇場地名稱
@@ -112,10 +112,10 @@ if(list == null){
 							</select>
 		      				
 				      		<!-------- 活動日期查詢 --------->
-			      			<label for="sg_date">活動日期</label>
+			      			<label for="sg_date" style="font-weight:bold">活動日期</label>
 	      					<input name="sg_date" id="sg_date" type="text"  class="text-center form-control" placeholder="請選擇日期">
 			      			<!-------- 關鍵字查詢 --------->
-		      				<label for="keyword">關鍵字查詢</label>
+		      				<label for="keyword" style="font-weight:bold">關鍵字查詢</label>
       						<input name="keyword" id="keyword" type="text" class="text-center form-control" placeholder="請輸入關鍵字">
 			      			<!-------- 送出查詢 --------->
 		      				<div class="text-center"  style="margin-top:10px;">
@@ -296,7 +296,6 @@ $("#reg_name").change(function(){
     	display: flex;
     	flex-direction: column;
     	flex-wrap: wrap;
-    	justify-content: center;
     	align-items: center;
     }
 	th{

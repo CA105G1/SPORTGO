@@ -197,7 +197,7 @@
 							</td>
 						</tr>
 						<tr><td>
-							<div class="input-group" style="text-align:center; width:100%">
+							<div class="input-group" style="text-align:center; width:100%; padding-top:5px">
 						        <div class="input-group">
 						        	<label class="input-group-addon">終點</label>
 									<input type="text" class="form-control" name="endAddr" id="endAddr">

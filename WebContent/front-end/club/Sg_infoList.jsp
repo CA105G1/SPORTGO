@@ -9,9 +9,6 @@
 <html >
 	<head>
 	 	<meta name="viewport" content="width=device-width, initial-scale=1">
-    	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-   		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -20,14 +17,16 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
 <link rel="icon" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/style.css">
-		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+		
+<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/jquery/jquery-2.2.4.min.js"></script>
 		
 		<style type="text/css">
-/* 			#listDiv{ */
-/* 				display:flex; */
-/* 				flex-direction: row; */
-/* 				flex-wrap: wrap; */
-/* 			} */
+			#listDiv{ 
+ 				display:flex; 
+ 				flex-direction: row; 
+ 				flex-wrap: wrap; 
+ 			} 
 /* 			#sg_infoDiv{ */
 /* 				padding:5px;  */
 /* 				width:33%; */
@@ -84,7 +83,7 @@
 					<jsp:include page="/front-end/club/club_pageRight.jsp" />
 				</div>
 				<div class="col-xs-12 col-sm-8" id="listDiv">
-					<a class="btn btn-info btn-block" href="<%= request.getContextPath()%>/front-end/club/Sg_infoCreateForClub.jsp">
+					<a class="btn btn-info btn-block" href="<%= request.getContextPath()%>/front-end/club/Sg_infoCreateForClub.jsp" style="height:42px">
 						建立專屬揪團
 					</a>
 					<jsp:useBean id="sg_infoSvc" scope="page" class="com.sg_info.model.Sg_infoService"/>
@@ -121,15 +120,9 @@
                                 </div>
 	                        </div>
 							
-<%-- 							<form method="post" action="<%= request.getContextPath()%>/Sg_info/Sg_info.do"> --%>
-<%-- 								<input type="hidden" name="sg_no" value="${sg_infoVO.sg_no}"> --%>
-<%-- 								<input type="hidden" name="club_no" value="${club_no}"> --%>
-<!-- 								<input type="hidden" name="action" value="getByPK"> -->
-<%-- 								<input type="submit" id="${sg_infoVO.sg_no }" style="display:none" value="前往察看"> --%>
-<!-- 							</form> -->
 					</c:forEach>
 				</div>
-				<div class="col-xs-12 col-sm-2" id="xx">
+				<div class="col-xs-12 col-sm-2" >
 <%-- 					<div>clubVO = ${clubVO }</div> --%>
 				</div>
 			</div>
@@ -142,7 +135,7 @@
 		
 		<jsp:include page="/front-end/CA105G1_footer_bt4.jsp" />
 		
-<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/jquery/jquery-2.2.4.min.js"></script>
+
 <script src="<%= request.getContextPath()%>/datetimepicker/jquery.js"></script>
 <script src="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
 <!-- Popper js -->

@@ -9,12 +9,21 @@
 <html>
 <head>
 <title>Sg_infoCreateForClub</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"> -->
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> -->
+<!-- <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+<%-- <link   rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" /> --%>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script> -->
+
 <link   rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<link rel="icon" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/style.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/jquery/jquery-2.2.4.min.js"></script>
+
+
 
 <style type="text/css">
 	th{
@@ -39,7 +48,7 @@
 
 </head>
 <body>
-<jsp:include page="/front-end/CA105G1_header.jsp" />
+<jsp:include page="/front-end/CA105G1_header_bt4.jsp" />
 
 <%
 //  session中有memberlistVO、club_no，EL直接拿了就用
@@ -65,6 +74,30 @@
 	</ul>
 </c:if>
 
+
+<!-- 麵包屑 -->
+<div class="breadcrumb-area">
+    <!-- Top Breadcrumb Area -->
+    <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(<%= request.getContextPath()%>/img/sgpic/sportbg2.jpg);">
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/index.jsp"><i class="fa fa-home"></i> 首頁</a></li>
+                        <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/front-end/club/club_list.jsp">社團專區</a></li>
+                        <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/front-end/club/Sg_infoList.jsp">專屬揪團</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">建立專屬揪團</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div class="container">
 	<div class="row">
 		<div class="col-xs-12 col-sm-2">
@@ -72,9 +105,9 @@
 		</div>
 		<div class="col-xs-12 col-sm-8">
 			<form action="<%= request.getContextPath()%>/Sg_info/Sg_info.do" method="post" enctype="multipart/form-data">
-				<table class="table table-hover table-striped table-bordered text-center">
+				<table class="table table-striped table-bordered text-center">
 					<jsp:useBean id="clubSvc" scope="page" class="com.club.model.ClubService"/>
-					<caption class="text-center"><span id="title">${clubSvc.getOneClub(club_no).club_name}</span>專屬揪團</caption>
+					<caption class="text-center" style="text-align:center; caption-side: top"><span id="title">${clubSvc.getOneClub(club_no).club_name}</span>專屬揪團</caption>
 					<tbody>
 					<!------------ 圖片上傳 ------------>
 						<tr>
@@ -179,11 +212,11 @@
 								</div>
 							</td>
 							<td rowspan="2" align="center">
-								<input type="button" class="btn btn-success" name="road" id="road" value="規劃路線" style="width:80px; height:60px">
+								<input type="button" class="btn btn-success" name="road" id="road" value="規劃路線" style="width:90px; height:60px">
 							</td>
 						</tr>
 						<tr><td>
-							<div class="input-group" style="text-align:center; width:100%">
+							<div class="input-group" style="text-align:center; width:100%; padding-top:5px">
 						        <div class="input-group">
 						        	<label class="input-group-addon">終點</label>
 									<input type="text" class="form-control" name="endAddr" id="endAddr">
@@ -195,8 +228,17 @@
 						</td></tr>
 					</table>
 				</div>
-				<div id="distance" style="font-size:1.5em; font-weight:bold; color:red"></div>
-				<div id="map"></div>
+				<div class="card" style="background-color:#444444; ">
+					<div class="card-header" >
+						<h4 class="panel-title text-center" style="color:white; font-weight:bold; font-size:1.5em;">
+							LOCATION
+						</h4>
+					</div>
+					<div>
+						<div id="map"></div>
+						<div id="distance" style="font-size:1.5em; font-weight:bold; color:white; text-align:center"></div>
+					</div>
+				</div>
 <canvas id="myChart" width="700" height="400" style="display: none"></canvas>
 				
 				<input type="submit" value="送出" class="btn btn-success btn-block">
@@ -207,11 +249,33 @@
 				<input type="hidden" name="loc_end" id="loc_end">
 			</form>
 		</div>
-		<div class="col-xs-12 col-sm-2">123</div>
+		<div class="col-xs-12 col-sm-2"></div>
 	</div>
 </div>
 
-<jsp:include page="/front-end/CA105G1_footer.jsp" />
+<jsp:include page="/front-end/CA105G1_footer_bt4.jsp" />
+
+
+
+
+
+
+<script src="<%= request.getContextPath()%>/datetimepicker/jquery.js"></script>
+<script src="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+<!-- Popper js -->
+<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/popper.min.js"></script>
+<!-- Bootstrap js -->
+<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/bootstrap.min.js"></script>
+<!-- All Plugins js -->
+<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/plugins/plugins.js"></script>
+<!-- Active js -->
+<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/active.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
+
+
+
 
 <script type="text/javascript">
 
@@ -492,8 +556,6 @@
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAb2lDof7yMn-TTXwt2hwVm4y92t1AqvyU&callback=initMap&libraries=places"
         async defer></script>
-<script src="<%= request.getContextPath()%>/datetimepicker/jquery.js"></script>
-<script src="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
 
 
 

@@ -66,7 +66,7 @@ public class Club_memberlistDAO  implements Club_memberlistDAO_interface{
 				pstmt.setString (2, clubmemberlistVO.getMem_no());
 				pstmt.setString(3, clubmemberlistVO.getCmem_status());
 				pstmt.setString(4, clubmemberlistVO.getCmem_class());
-				pstmt.setTimestamp(5, clubmemberlistVO.getSilence_time());
+//				pstmt.setTimestamp(5, clubmemberlistVO.getSilence_time());
 				
 				 
 				pstmt.executeUpdate();

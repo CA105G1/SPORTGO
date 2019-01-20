@@ -44,7 +44,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/BackEndIndex.jsp"><i class="fa fa-home"></i> 後台首頁</a></li>
-						<li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/back-end/sg_info/sg_infoBackEnd.jsp">個人揪團管理</a></li>  
+						<li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/back-end/sg_info/sg_infoBackEnd.jsp">揪團管理</a></li>  
                         <li class="breadcrumb-item active" aria-current="page">${Sg_infoVO.sg_name }</li>
                     </ol>
                 </nav>

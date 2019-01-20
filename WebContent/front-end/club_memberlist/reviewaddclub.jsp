@@ -19,37 +19,45 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-		<script src="https://code.jquery.com/jquery.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 		<title>Title Page</title>
-		<!--[if lt IE 9]>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
-		<![endif]-->
-		<style type="text/css">
-			
-			textarea {
-  			resize : none; 
-			}
-
-			.modal-footer{
-			display:flex;
-   			align-items:center;
-    		justify-content:center; 
-			}
-			
-			#club_name{
-			font-family:Microsoft JhengHei
-			}
 		
-		</style>
+<link  rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
+<link rel="icon" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/style.css">
+
+<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/jquery/jquery-2.2.4.min.js"></script>
+		
 	</head>
 
 
 	<body>
 	 
-	<jsp:include page="/front-end/CA105G1_header.jsp" />
+<jsp:include page="/front-end/CA105G1_header_bt4.jsp" />
+
+
+<!-- 麵包屑 -->
+<div class="breadcrumb-area">
+    <!-- Top Breadcrumb Area -->
+    <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(<%= request.getContextPath()%>/img/sgpic/sportbg2.jpg);">
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/index.jsp"><i class="fa fa-home"></i> 首頁</a></li>
+                        <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/front-end/club/club_list.jsp">社團專區</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">社團管理</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-12 col-sm-2">
@@ -61,7 +69,7 @@
   							<tr>
   								<th>
   									社團加入申請
-  									<span class="badge" style="cursor: pointer; background-color:red" data-toggle="collapse" data-target="#cc1" aria-expanded="false" aria-controls="#cc1">
+  									<span class="badge" style="cursor: pointer;color:white; background-color:red"  data-toggle="collapse" data-target="#cc1" aria-expanded="false" aria-controls="#cc1">
 										+
 									</span>
 								</th>
@@ -69,7 +77,7 @@
 						</thead>	
 					</table>
 						<div class="collapse" id="cc1">
-							<table class="table table-hover">
+							<table class="table table-hover text-center">
 								<thead>
 									<tr>
 										<th>會員</th>
@@ -82,19 +90,22 @@
 		  								<c:if test="${club_memberlistVO.cmem_status=='待審核'}">
 		  									<tr>
 		  										<jsp:useBean id="memberlistSvc" scope="page" class="com.memberlist.model.MemberlistService"/>
-		  										<td>${memberlistSvc.getOneMem(club_memberlistVO.mem_no).mem_name}</td>
 		  										<td>
-			  										<form method="post" action="<%= request.getContextPath()%>/club_memberlist.do">
+		  											<img id="sg_memPic" src="<%= request.getContextPath()%>/front-end/memberlist/showPicture.do?mem_no=${club_memberlistVO.mem_no}" style="width:50px;height:50px;border-radius: 50px;padding:3px;">
+		  											${memberlistSvc.getOneMem(club_memberlistVO.mem_no).mem_name}
+	  											</td>
+		  										<td style="display:flex; flex-direction: row; justify-content:center; ">
+			  										<form method="post" action="<%= request.getContextPath()%>/club_memberlist.do" style="padding-right:10px">
 			  											<input type="hidden" name="club_no" value="${club_no}">
 			  											<input type="hidden" name="mem_no" value="${club_memberlistVO.mem_no}">
 			  											<input type="hidden" name="result" value="agree">
-		  												<button class="btn btn-primary" type="submit" name="action" value="isJoinClub">加入</button>
+		  												<button class="btn btn-info joinBtn" type="submit" name="action" value="isJoinClub">加入</button>
 			  										</form>
 		  											<form method="post" action="<%= request.getContextPath()%>/club_memberlist.do">
 		  												<input type="hidden" name="club_no" value="${club_no}">
 			  											<input type="hidden" name="mem_no" value="${club_memberlistVO.mem_no}">
 			  											<input type="hidden" name="result" value="disagree">
-		  												<button class="btn btn-primary" type="submit" name="action" value="isJoinClub">拒絕</button>
+		  												<button class="btn btn-danger joinBtn" type="submit" name="action" value="isJoinClub">拒絕</button>
 	  												</form>
 	  											</td>
 		  									</tr>
@@ -110,7 +121,7 @@
   							<tr>
   								<th>
   									社團成員權限設定
-  									<span class="badge" style="cursor: pointer; background-color:red" data-toggle="collapse" data-target="#cc2" aria-expanded="false" aria-controls="#cc2">
+  									<span class="badge" style="cursor: pointer;color:white; background-color:red" data-toggle="collapse" data-target="#cc2" aria-expanded="false" aria-controls="#cc2">
 										+
 									</span>
 								</th>
@@ -118,7 +129,7 @@
 						</thead>	
 					</table>
 						<div class="collapse" id="cc2">
-							<table class="table table-hover">
+							<table class="table table-hover text-center">
 								<thead>
 									<tr>
 										<th>會員</th>
@@ -130,7 +141,10 @@
 									<c:forEach var="club_memberlistVO" items="${club_memberlistSvc2.getByClub(club_no)}">
 		  								<c:if test="${club_memberlistVO.cmem_status=='正式社員'}">
 		  									<tr>
-		  										<td>${memberlistSvc.getOneMem(club_memberlistVO.mem_no).mem_name}</td>
+		  										<td>
+			  										<img id="sg_memPic" src="<%= request.getContextPath()%>/front-end/memberlist/showPicture.do?mem_no=${club_memberlistVO.mem_no}" style="width:50px;height:50px;border-radius: 50px;padding:3px;">
+			  										${memberlistSvc.getOneMem(club_memberlistVO.mem_no).mem_name}
+		  										</td>
 		  										<td>
 		  											${club_memberlistVO.cmem_class}
 	  												<button class="btn btn-primary setBtn" name="cmem_class" value="${club_memberlistVO.cmem_class}">
@@ -159,21 +173,52 @@
 		</div>
 		
 
-		<jsp:include page="/front-end/CA105G1_footer.jsp" />
+	
+<jsp:include page="/front-end/CA105G1_footer_bt4.jsp" />
 		
 	</body>
+	
+	
+	<script src="<%= request.getContextPath()%>/datetimepicker/jquery.js"></script>
+<script src="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+<!-- Popper js -->
+<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/popper.min.js"></script>
+<!-- Bootstrap js -->
+<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/bootstrap.min.js"></script>
+<!-- All Plugins js -->
+<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/plugins/plugins.js"></script>
+<!-- Active js -->
+<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/active.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
+	
 	
 	
 <script>
 
 
-	//設定旗標，用來回到原本的展開畫面
+	//設定旗標，用來回到加入申請的展開畫面
+	var flag = localStorage.getItem('isReloadFromJoin');
+	if(flag == 'true'){
+		$("#cc1").addClass("show");
+		localStorage.setItem('isReloadFromJoin', false);
+	}else{
+		$("#cc1").removeClass("show");
+	}
+	
+	$(".joinBtn").click(function(){
+		localStorage.setItem('isReloadFromJoin', true);
+	});
+
+
+
+	//設定旗標，用來回到權限設定的展開畫面
 	var flag = localStorage.getItem('isReloadFromClass');
 	if(flag == 'true'){
-		$("#cc2").addClass("in");
+		$("#cc2").addClass("show");
 		localStorage.setItem('isReloadFromClass', false);
 	}else{
-		$("#cc2").removeClass("in");
+		$("#cc2").removeClass("show");
 	}
 	
 	//點擊按鍵替換成員權限
