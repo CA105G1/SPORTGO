@@ -289,6 +289,9 @@ overflow: hidden;
 		.color-f13a3a {
 			color:#f13a3a;
 		}
+		.color-new {
+			color:#f13a3a;
+		}		
 
 	</style>
 </head>
@@ -514,12 +517,13 @@ overflow: hidden;
 																													    <!-- 評價系統 -->
 													<div class="star">
 													    <span class="s-txt">產品評價：</span>
-														    <span class="s-xxs" id="${proVO.pro_no}" onclick="tuchlike(this)">
-														        <span class="iconfont s-xx">☆</span>
-															    <span class="iconfont s-xx">☆</span> 
-															    <span class="iconfont s-xx">☆</span>
-															    <span class="iconfont s-xx">☆</span>
-															    <span class="iconfont s-xx s-xx_${proVO.pro_no}">☆</span>
+														    <span class="s-xxs" >
+														    <input type="hidden" name="assess" value="0" id="${proVO.pro_no}">
+														        <span class="iconfont s-xx" name = "a-xx_${proVO.pro_no}">☆</span>
+															    <span class="iconfont s-xx" name = "a-xx_${proVO.pro_no}">☆</span>
+															    <span class="iconfont s-xx" name = "a-xx_${proVO.pro_no}">☆</span>
+															    <span class="iconfont s-xx" name = "a-xx_${proVO.pro_no}">☆</span>
+															    <span class="iconfont s-xx" name = "a-xx_${proVO.pro_no}">☆</span>
 														    </span>
 <!-- 													    <span class="s-haoping"> -->
 <!-- 														<em class="s-hp-triangle0"> -->
@@ -565,21 +569,33 @@ $(function() {
 
     $(".s-xx").hover(function() {
         var ind = $(this).index();
-        var proid = $(this).parent().attr("id");
-        console.log(proid)
+//         var proid = $(this).parent().attr("id");
+//         console.log(proid)
         $(this).parent().find(".s-xx").removeClass("color-f13a3a");
-        for (var i = 0; i <= ind; i++) {
+        for (var i = 0; i < ind; i++) {
         	$(this).parent().find(".s-xx").eq(i).addClass("color-f13a3a");
         }
-        $(".s-xx").on("click", function() {
-            clickind = $(this).index();
-    		     for (var i = 0; i <= clickind; i++) {
-    		    	$(this).parent().find(".s-xx").eq(i).addClass("color-f13a3a");
-    		     }
-    		     var proid = $(this).parent().attr("id");
-        });
+
+    }, function() {
+        $(".s-xx").removeClass("color-f13a3a");
+        
+//         for (var i = 0; i <= clickind; i++) {
+//             $(".s-xx").eq(i).addClass("color-f13a3a");
+//         }
     });
-    
+    $(".s-xx").on("click", function() {
+        clickind = $(this).index();
+        var proid = $(this).attr("name").slice(5);
+        console.log(proid)
+        $(this).parent().find(".s-xx").removeClass("color-new");
+		     for (var i = 0; i < clickind; i++) {
+		    	$(this).parent().find(".s-xx").eq(i).addClass("color-new");
+		     }
+// 		     var proid = $(this).parent().attr("id");
+        
+        console.log($("span[name='a-xx_"+proid+"']").attr("class"))
+    });
+
 //     var isclick = false;
 //     var arr = ["1分差評", "2分中評", "3分中評", "4分好評", "5分好評"];
 //     var clickind = -1;

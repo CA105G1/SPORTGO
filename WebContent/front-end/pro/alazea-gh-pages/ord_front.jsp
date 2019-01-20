@@ -112,6 +112,9 @@
 	.color-f13a3a {
 		color: #f13a3a;
 	}
+	.color-new {
+		color:#f13a3a;
+	}
 	</style>
 </head>
 
@@ -219,7 +222,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										
+										<form METHOD="post" ACTION="<%=request.getContextPath()%>/pro/pro.do" id="form1">
 										<c:forEach var="orddetails" items="${list}">
 											<tr>
 												<!-- 商品圖片名稱 -->
@@ -251,22 +254,25 @@
 												    <!-- 評價系統 -->
 													<div class="star">
 													    <span class="s-txt">產品評價：</span>
-														    <span class="s-xxs">
-														        <span class="iconfont s-xx">☆</span>
-															    <span class="iconfont s-xx">☆</span>
-															    <span class="iconfont s-xx">☆</span>
-															    <span class="iconfont s-xx">☆</span>
-															    <span class="iconfont s-xx">☆</span>
+														    <input type="hidden" name="action" value="assess">
+														    <span class="s-xxs" >
+														   	 	<input type="hidden" name="${orddetails.pro_no}" value="0" id="assess_${orddetails.pro_no}">
+														        <span class="iconfont s-xx" name = "a-xx_${orddetails.pro_no}">☆</span>
+															    <span class="iconfont s-xx" name = "a-xx_${orddetails.pro_no}">☆</span>
+															    <span class="iconfont s-xx" name = "a-xx_${orddetails.pro_no}">☆</span>
+															    <span class="iconfont s-xx" name = "a-xx_${orddetails.pro_no}">☆</span>
+															    <span class="iconfont s-xx" name = "a-xx_${orddetails.pro_no}">☆</span>
 														    </span>
-													    <span class="s-haoping">
-														<em class="s-hp-triangle0">
-													        </em><em class="s-hp-triangle1">
-													        </em><span class="s-hp-txt">5分好評</span>
-													    </span>
+<!-- 													    <span class="s-haoping"> -->
+<!-- 														<em class="s-hp-triangle0"> -->
+<!-- 													        </em><em class="s-hp-triangle1"> -->
+<!-- 													        </em><span class="s-hp-txt">5分好評</span> -->
+<!-- 													    </span> -->
 													</div>
 												</td>
 											</tr>
 										</c:forEach>
+					                    </form>
 									</tbody>
 								</table> 
 								<div class="container">
@@ -278,7 +284,7 @@
 										</div>
 										<div class="col-xs-12 col-sm-6">
 										<div align="right">
-											<button type="button" class="btn btn-outline-success" onclick="returnpath()">回商城</button>
+											<button type="button" class="btn btn-outline-success" onclick="returnpath()">完成訂單</button>
 											<button type="button" value="<%= request.getAttribute("ord_no") %>" class="cancel btn btn-outline-danger">取消訂單</button> 
 										</div>
 										</div>
@@ -319,6 +325,37 @@
     
     			<script type="text/javascript">
 			$(document).ready(function(){
+				//評價jquery
+			    $(".s-xx").hover(function() {
+			        var ind = $(this).index();
+//			         var proid = $(this).parent().attr("id");
+//			         console.log(proid)
+			        $(this).parent().find(".s-xx").removeClass("color-f13a3a");
+			        for (var i = 0; i < ind; i++) {
+			        	$(this).parent().find(".s-xx").eq(i).addClass("color-f13a3a");
+			        }
+
+			    }, function() {
+			        $(".s-xx").removeClass("color-f13a3a");
+			        
+//			         for (var i = 0; i <= clickind; i++) {
+//			             $(".s-xx").eq(i).addClass("color-f13a3a");
+//			         }
+			    });
+			    $(".s-xx").on("click", function() {
+			        clickind = $(this).index();
+			        var proid = $(this).attr("name").slice(5);
+			        $(this).parent().find(".s-xx").removeClass("color-new");
+					     for (var i = 0; i < clickind; i++) {
+					    	$(this).parent().find(".s-xx").eq(i).addClass("color-new");
+					     }
+//			 		     var proid = $(this).parent().attr("id");
+			        console.log($("span[name='a-xx_"+proid+"']").attr("class"));
+			        $("#assess_" + proid).val(clickind);
+			        console.log($("#assess_P007").val());
+			    });
+			    
+				//取消訂單
 				$('.cancel').each( function() {
 					$(this).click( function() { 
 						var val = $(this).val();
@@ -340,38 +377,12 @@
 				var queryString= {"action":"ok_cancel", "ord_no":ord_no , "ord_status" :"取消"};
 				return queryString;
 			}
+			//完成訂單
 			function returnpath(){
-				window.location.replace("<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/listAllPro_front.jsp"); 
+				form1.submit();
 			}
-			//評價jquery
-		    var isclick = false;
-		    var arr = ["1分差評", "2分中評", "3分中評", "4分好評", "5分好評"];
-		    var clickind = -1;
+			
 
-		    $(".s-xx").on("click", function() {
-		        isclick = true;
-		        clickind = $(this).index();
-		    });
-		    
-		    $(".s-xx").hover(function() {
-		        var ind = $(this).index();
-		        $(this).siblings(".s-xx").removeClass("color-f13a3a");
-		        for (var i = 0; i <= ind; i++) {
-		            $(".s-xx").eq(i).addClass("color-f13a3a");
-		            $(".s-haoping").siblings(".s-hp-txt").text(arr[i]).end().show();
-		        }
-		    }, function() {
-		        if (!isclick) {
-		            $(".s-xx").removeClass("color-f13a3a");
-		            $(".s-haoping").hide();
-		        } else {
-		            $(".s-xx").removeClass("color-f13a3a");
-		            for (var i = 0; i <= clickind; i++) {
-		                $(".s-xx").eq(i).addClass("color-f13a3a");
-		                $(".s-haoping").find(".s-hp-txt").text(arr[i]).end().show();
-		            }
-		        }
-		    });
 		    function creatQueryAssess(){
 		    	var queryString= {"action":"assess", "ord_no":ord_no , "ord_status" :"取消"};
 				return queryString;

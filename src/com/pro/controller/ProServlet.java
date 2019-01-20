@@ -749,8 +749,14 @@ if ("assess".equals(action)) {
 				List<String> errorMsgs = new LinkedList<String>();
 				// Store this set in the request scope, in case we need to
 				// send the ErrorPage view.
-				String pro_no = req.getParameter("pro_no");
-				System.out.println("assess"+pro_no);
+				Enumeration assessList = req.getParameterNames();
+				while(assessList.hasMoreElements()) {
+					String name = (String)assessList.nextElement();
+					String values[] = req.getParameterValues(name);
+					for(int i = 0 ; i < values.length ; i++) {
+						System.out.println(name + ":" + values[i]);
+					}
+				}
 		  }
 	}
 
