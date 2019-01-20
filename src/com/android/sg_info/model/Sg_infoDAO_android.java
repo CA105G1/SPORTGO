@@ -45,7 +45,7 @@ public class Sg_infoDAO_android implements Sg_infoDAO_interface_android{
 	private static final String CANCEL =
 			"UPDATE sg_info SET SG_STATUS = '解散'  WHERE sg_no=?";
 	private static final String FIND_BY_SP =
-			"SELECT SG.*, SP.sp_name, V.V_Name, M.MEM_NAME , V.V_LAT, V.V_LONG FROM sg_info SG LEFT JOIN SPORT SP on SP.sp_no = SG.sp_no LEFT JOIN VENUE V ON V.V_NO = SG.V_NO LEFT JOIN MEMBERLIST M ON SG.MEM_NO = M.MEM_NO WHERE SG.SP_NO=? AND SG.APL_END > SYSDATE ORDER BY SG.APL_END";
+			"SELECT SG.*, SP.sp_name, V.V_Name, M.MEM_NAME , V.V_LAT, V.V_LONG FROM sg_info SG LEFT JOIN SPORT SP on SP.sp_no = SG.sp_no LEFT JOIN VENUE V ON V.V_NO = SG.V_NO LEFT JOIN MEMBERLIST M ON SG.MEM_NO = M.MEM_NO WHERE SG.SP_NO=? AND SG.APL_END > SYSDATE AND SG.SG_STATUS = '揪團中' ORDER BY SG.APL_END";
 	private static final String FIND_BY_PK =
 			"SELECT SG.*, SP.sp_name, V.V_Name, M.MEM_NAME , V.V_LAT, V.V_LONG FROM sg_info SG LEFT JOIN SPORT SP on SP.sp_no = SG.sp_no LEFT JOIN VENUE V ON V.V_NO = SG.V_NO LEFT JOIN MEMBERLIST M ON SG.MEM_NO = M.MEM_NO WHERE SG.SG_NO=?";
 	private static final String FIND_BY_MASTER =
@@ -57,7 +57,7 @@ public class Sg_infoDAO_android implements Sg_infoDAO_interface_android{
 	private static final String FIND_BY_HIS =
 			"SELECT SG.*, SP.sp_name, V.V_Name, M.MEM_NAME , V.V_LAT, V.V_LONG FROM SG_MEM SGM LEFT JOIN SG_INFO SG ON SGM.SG_NO = SG.SG_NO LEFT JOIN SPORT SP on SP.sp_no = SG.sp_no LEFT JOIN VENUE V ON V.V_NO = SG.V_NO LEFT JOIN MEMBERLIST M ON SG.MEM_NO = M.MEM_NO WHERE SGM.MEM_NO = ? AND SG.SG_DATE < SYSDATE ORDER BY SG.SG_DATE"; //找出活動時間過的會員揪團
 	private static final String GET_ALL =
-			"SELECT SG.*, SP.sp_name, V.V_Name, M.MEM_NAME , V.V_LAT, V.V_LONG FROM sg_info SG LEFT JOIN SPORT SP on SP.sp_no = SG.sp_no LEFT JOIN VENUE V ON V.V_NO = SG.V_NO LEFT JOIN MEMBERLIST M ON SG.MEM_NO = M.MEM_NO WHERE SG.APL_END > SYSDATE ORDER BY SG.APL_END"; //找出所有揪團
+			"SELECT SG.*, SP.sp_name, V.V_Name, M.MEM_NAME , V.V_LAT, V.V_LONG FROM sg_info SG LEFT JOIN SPORT SP on SP.sp_no = SG.sp_no LEFT JOIN VENUE V ON V.V_NO = SG.V_NO LEFT JOIN MEMBERLIST M ON SG.MEM_NO = M.MEM_NO WHERE SG.APL_END > SYSDATE AND SG.SG_STATUS = '揪團中' ORDER BY SG.APL_END"; //找出所有揪團
 	private static final String GET_IMAGE =
 			"SELECT SG_PIC FROM SG_INFO WHERE SG_NO = ?";
 	

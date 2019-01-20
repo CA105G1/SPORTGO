@@ -16,6 +16,8 @@ import com.android.sg_mem.model.Sg_memVO_android;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.android.sg_info.model.*;
+import com.android.sg_like.model.Sg_likeService_android;
+import com.android.sg_like.model.Sg_likeVO_android;
 
 @WebServlet("/Sg_memServlet_android.do")
 public class Sg_memServlet_android extends HttpServlet {
@@ -41,6 +43,7 @@ public class Sg_memServlet_android extends HttpServlet {
 		}
 		System.out.println("input: " + jsonIn);
 		Sg_memService_android service = new Sg_memService_android();
+		Sg_likeService_android like = new Sg_likeService_android();
 		JsonObject jsonObject = gson.fromJson(jsonIn.toString(), JsonObject.class);
 		String action = jsonObject.get("action").getAsString();
 		
@@ -58,10 +61,12 @@ public class Sg_memServlet_android extends HttpServlet {
 			//加入揪團
 			Sg_memVO_android vo = new Sg_memVO_android();
 			String sg_no = jsonObject.get("sg_no").getAsString();
-			vo.setSg_no(jsonObject.get("sg_no").getAsString());
-			vo.setMem_no(jsonObject.get("mem_no").getAsString());
+			String mem_no = jsonObject.get("mem_no").getAsString();
+			vo.setSg_no(sg_no);
+			vo.setMem_no(mem_no);
 			try {
 				service.insertSGMember(vo);
+				like.dislike(new Sg_likeVO_android(sg_no, mem_no));
 				writeText(res, "參加成功！");
 				//報名人數+1
 				new Sg_infoService_android().updateNumber(sg_no, 1);
