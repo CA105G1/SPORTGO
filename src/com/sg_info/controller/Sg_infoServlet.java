@@ -485,8 +485,8 @@ public class Sg_infoServlet extends HttpServlet {
 			for(String mem2_no : mem2_noArr) {
 				MemberlistRedisDAO dao = new MemberlistRedisDAO();
 			
-						String title = "<div>推薦您加入這個揪團<div>"
-								+ "<a href='"+req.getContextPath()+"/Sg_info/Sg_info.do?sg_no="+sg_no+"&action=getByPK'>點我進入2</a>";
+						String title = "<div>安安你好~ 一起加入揪團17 play吧! <div>"
+								+ "<a href='"+req.getContextPath()+"/Sg_info/Sg_info.do?sg_no="+sg_no+"&action=getByPK'>快速傳送門</a>";
 						
 						String value = "{"
 								+ "\"userName\":"+"\""+mem_no+"\""
