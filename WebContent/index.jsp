@@ -104,6 +104,7 @@
 							<img src="img/indexImg/bicycle.png" style="height:100%;width:100%;position:absolute;"/>
 						</div>
 					</a>
+					
 <!-- 					<a href="img/no-image.PNG" -->
 <!-- 					style="display:flex;flex-direction:column;width:calc(100% / 7 - 30px);margin:10px;"> -->
 <!-- 						<div style="width:100%;height:0;position:relative;padding-bottom:75%;overflow:hidden;border-radius:10px;"> -->
