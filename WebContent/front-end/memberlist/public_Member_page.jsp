@@ -63,14 +63,7 @@
 		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/jquery/jquery-2.2.4.min.js"></script>
 		<script src="<%= request.getContextPath()%>/datetimepicker/jquery.js"></script>
 		<script src="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
-		<!-- Popper js -->
-		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/popper.min.js"></script>
-		<!-- Bootstrap js -->
-		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/bootstrap.min.js"></script>
-		<!-- All Plugins js -->
-		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/plugins/plugins.js"></script>
-		<!-- Active js -->
-		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/active.js"></script>
+		
 		<!-- Font Awesome -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		
@@ -123,12 +116,12 @@
 	<body>
 		<jsp:include page="/front-end/CA105G1_header_bt4.jsp"/>
 		<!-- Loading時的小圖示 -->
-		<div class="preloader d-flex align-items-center justify-content-center">
-		    <div class="preloader-circle"></div>
-		    <div class="preloader-img">
-		        <img src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png" alt="">
-		    </div>
-		</div>
+<!-- 		<div class="preloader d-flex align-items-center justify-content-center"> -->
+<!-- 		    <div class="preloader-circle"></div> -->
+<!-- 		    <div class="preloader-img"> -->
+<%-- 		        <img src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png" alt=""> --%>
+<!-- 		    </div> -->
+<!-- 		</div> -->
 	    <!-- Top Breadcrumb Area -->
 		<div class="breadcrumb-area">
 		    <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(<%= request.getContextPath()%>/img/sgpic/sportbg2.jpg);">
@@ -320,5 +313,13 @@
 		}
 	</script>
 	<jsp:include page="/front-end/CA105G1_footer_bt4.jsp"/>
+		<!-- Popper js -->
+		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/popper.min.js"></script>
+		<!-- Bootstrap js -->
+		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/bootstrap.min.js"></script>
+		<!-- All Plugins js -->
+		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/plugins/plugins.js"></script>
+		<!-- Active js -->
+		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/active.js"></script>
 	</body>
 </html>

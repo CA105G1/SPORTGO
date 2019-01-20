@@ -1,5 +1,7 @@
 package com.sg_like.model;
 
+import java.util.List;
+
 import com.sg_mem.model.Sg_memVO;
 
 public class Sg_likeService {
@@ -27,5 +29,8 @@ public class Sg_likeService {
 		return dao.isLike(sg_no, mem_no);
 	}
 	
+	public List<Sg_likeVO> getMemLike(String mem_no){
+		return dao.Mem_getAll(mem_no);
+	}
 	
 }
