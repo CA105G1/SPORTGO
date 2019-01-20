@@ -91,6 +91,13 @@
 												</tr>
 												
 												<tr>
+													<th><label>請輸入場地名稱 : </label></th>
+													<td>
+														<input type="text" name="v_name" value="${venueMap.get('v_name')[0]}" class="text-left form-control"/>
+													</td>
+												</tr>
+												
+												<tr>
 													<th><label>請選擇場地種類 :</label></th>
 													<td>
 														<jsp:useBean id="venueTypeService" scope="session" class="com.venuetype.model.VenueTypeService" />
@@ -110,7 +117,7 @@
 													<td>
 														<jsp:useBean id="regSvc" scope="page" class="com.region.model.RegService" />
 								      					<select id="reg_name" size="1" name="reg_name" class="text-center form-control">
-								      						<option value="">請選擇縣市
+								      						<option value="">請選擇縣市</option>
 								      						<c:forEach var="reg_name" items="${regSvc.reg_nameList }">
 								      							<option value="${reg_name }">${reg_name}
 								      						</c:forEach>
@@ -122,7 +129,7 @@
 													<th><label>請選擇地區 :</label></th>
 													<td>
 														<select size="1" name="reg_dist" class="text-center form-control">
-								      						<option id="reg_dist" value="">請選擇地區
+								      						<option id="reg_dist" value="">請選擇地區</option>
 														</select>
 													</td>
 												</tr>

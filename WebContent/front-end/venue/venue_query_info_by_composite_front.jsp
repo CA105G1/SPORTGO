@@ -83,7 +83,7 @@
 					
 <!-- 					</div> -->
 					<div class="row">
-						<div class="h1 center-block">venue_query_info_by_composite_front</div>
+						
 						
 <%-- 						<!--測試前台萬用查詢-->
 							<form method="post" action="<%=request.getContextPath()%>/venue/venue.do">			
@@ -91,58 +91,76 @@
  							<input type="submit" value=" __查詢 __ " />
  						</form> --%>
 						<form method="get" action="<%=request.getContextPath()%>/venue/venue.do">
-							<div class="label label-default label-text">請輸入場地編號 : (V000002)</div>
-								<input type="text" name="v_no" value="${venueVO.v_no}"/>${errorMsgs.get("v_no")}
-							<br>
+							<h1>查詢場地資料</h1><br>
+							<table class="table table-hover table-striped table-bordered">
+								<tr>
+									<th><label>請輸入場地名稱 :</label></th>
+									<td>
+										<input type="text" name="v_name" value="${venueVO.v_name}"/>${errorMsgs.get("v_name")}
+									</td>
+								</tr>
+								
+								<tr>
+									<th><label>請選擇場地種類 :</label></th>
+									<td>
+										<jsp:useBean id="venueTypeService" scope="session" class="com.venuetype.model.VenueTypeService" />
+										<select size="1" name="vt_no" class="text-center">
+											<option value=""></option>
+											<c:forEach var="venueTypeVO" items="${venueTypeService.all}">
+												<option value="${venueTypeVO.vt_no}" ${(param.vt_no==venueTypeVO.vt_no)?'selected':''}>${venueTypeVO.vt_name}</option>
+											</c:forEach>
+										</select>
+									</td>
+								</tr>
+								
+								<tr>
+									<th><label>請選擇縣市 :</label></th>
+									<td>
+										<jsp:useBean id="regSvc" scope="page" class="com.region.model.RegService" />
+				      					<select id="reg_name" size="1" name="reg_name" class="text-center form-control">
+				      						<option value="">請選擇縣市</option>
+				      						<c:forEach var="reg_name" items="${regSvc.reg_nameList }">
+				      							<option value="${reg_name }">${reg_name}
+				      						</c:forEach>
+										</select>
+									</td>
+								</tr>
+								
+								<tr>
+									<th><label>請選擇地區 :</label></th>
+									<td>
+										<select size="1" name="reg_dist" class="text-center form-control">
+				      						<option id="reg_dist" value="">請選擇地區</option>
+										</select>
+									</td>
+								</tr>
 							
-							<div class="label label-default label-text">請輸入場地名稱 :</div>
-								<input type="text" name="v_no" value="${venueVO.v_name}"/>${errorMsgs.get("v_name")}
-							<br>
-							
-							<div class="label label-default label-text">請選擇場地種類:</div>							
-							<jsp:useBean id="venueTypeService" scope="session" class="com.venuetype.model.VenueTypeService" />
-							<select size="1" name="vt_no" class="text-center">
-								<option value=""></option>
-								<c:forEach var="venueTypeVO" items="${venueTypeService.all}">
-									<option value="${venueTypeVO.vt_no}" ${(param.vt_no==venueTypeVO.vt_no)?'selected':''}>${venueTypeVO.vt_name}</option>
-								</c:forEach>
-							</select>
-							<br>
-							
-							<label>請選擇縣市</label>
-	      					<jsp:useBean id="regSvc" scope="page" class="com.region.model.RegService" />
-	      					<select id="reg_name" size="1" name="reg_name" class="text-center form-control">
-	      						<option value="">請選擇縣市
-	      						<c:forEach var="reg_name" items="${regSvc.reg_nameList }">
-	      							<option value="${reg_name }">${reg_name}
-	      						</c:forEach>
-							</select>
-							<label>請選擇地區</label>
-	      					<select size="1" name="reg_dist" class="text-center form-control">
-	      						<option id="reg_dist" value="">請選擇地區
-							</select>
-							
-							
-							
-							<div class="label label-default label-text">請選擇時間開放:</div>							
-<%-- 												<jsp:useBean id="regService" scope="session" class="com.region.model.RegService" /> --%>
-							<label for="openday_mon">一</label>
-							<input type="checkbox" name="openday_mon" value="Y" id="openday_mon" />
-							<label for="openday_tue">二</label>
-							<input type="checkbox" name="openday_tue" value="Y" id="openday_tue" />
-							<label for="openday_wed">三</label>
-							<input type="checkbox" name="openday_wed" value="Y" id="openday_wed" />
-							<label for="openday_thu">四</label>
-							<input type="checkbox" name="openday_thu" value="Y" id="openday_thu" />
-							<label for="openday_fri">五</label>
-							<input type="checkbox" name="openday_fri" value="Y" id="openday_fri" />
-							<label for="openday_sat">六</label>
-							<input type="checkbox" name="openday_sat" value="Y" id="openday_sat" />
-							<label for="openday_sun">日</label>
-							<input type="checkbox" name="openday_sun" value="Y" id="openday_sun" />
-							
-							<input type="hidden" name="action" value="listVenueByCompostieQueryForFrontEnd" /><br>
-							<input type="submit" value="submit_composite_query" class="btn-primary"/>
+								<tr>
+									<th><label>請選擇時間開放 :</label></th>
+									<td>
+										<label for="openday_mon" class="checkbox-inline">一</label>
+										<input type="checkbox" name="openday_mon" value="Y" id="openday_mon" />
+										<label for="openday_tue" class="checkbox-inline">二</label>
+										<input type="checkbox" name="openday_tue" value="Y" id="openday_tue" />
+										<label for="openday_wed" class="checkbox-inline">三</label>
+										<input type="checkbox" name="openday_wed" value="Y" id="openday_wed" />
+										<label for="openday_thu" class="checkbox-inline">四</label>
+										<input type="checkbox" name="openday_thu" value="Y" id="openday_thu" />
+										<label for="openday_fri" class="checkbox-inline">五</label>
+										<input type="checkbox" name="openday_fri" value="Y" id="openday_fri" />
+										<label for="openday_sat" class="checkbox-inline">六</label>
+										<input type="checkbox" name="openday_sat" value="Y" id="openday_sat" />
+										<label for="openday_sun" class="checkbox-inline">日</label>
+										<input type="checkbox" name="openday_sun" value="Y" id="openday_sun" />
+									</td>
+								</tr>
+														
+								<tr><th colspan='2'>
+									<input type="hidden" name="action" value="listVenueByCompostieQueryForFrontEnd" /><br>
+									<input type="submit" value="送出查詢" class="btn btn-primary btn-block"/>
+								</th></tr>
+								
+							</table>
 						</form>
 						
 						
@@ -150,9 +168,10 @@
 
 					</div>
 					<div class="row">
-						<div class="h1 center-block">結果回傳區</div>
+						
 						<% if("listVenueByCompostieQueryForFrontEnd".equals(request.getParameter("action")) || 
 								"memEvaluateVenueInFrontEnd".equals(request.getParameter("action"))){ %>
+							<h1>---Result---</h1>
 							<jsp:include page="listQueryVenueForFront.jsp" />
 						<% } %>						
 						
