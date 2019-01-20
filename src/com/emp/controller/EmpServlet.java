@@ -160,7 +160,7 @@ public class EmpServlet extends HttpServlet {
 				return;
 			}
 			/// 跳轉到註冊頁面
-			RequestDispatcher sussesView = request.getRequestDispatcher(BACK_END_INDEX_PATH);
+			RequestDispatcher sussesView = request.getRequestDispatcher("/back-end/emp/add_one_emp.jsp");
 			sussesView.forward(request, response);
 			return;
 		} catch (Exception e) {

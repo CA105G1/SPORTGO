@@ -14,9 +14,9 @@ public class Util_JDBC_CompositeQuery_News {
 			aCondition = columnName + " like '%"+value+"%' ";
 		// TimeStamp
 		}else if("news_release_date".equals(columnName)) {
-			aCondition = " "+columnName + " <= to_timestamp('"+value+"','yyyy-mm-dd hh24:mi') ";
-		}else if("news_last_date".equals(columnName)) {
 			aCondition = " "+columnName + " >= to_timestamp('"+value+"','yyyy-mm-dd hh24:mi') ";
+		}else if("news_last_date".equals(columnName)) {
+			aCondition = " "+columnName + " <= to_timestamp('"+value+"','yyyy-mm-dd hh24:mi') ";
 		}
 //		else if( "news_release_date".equals(columnName) || "news_last_date".equals(columnName)) {
 //			aCondition = "to_char(" + columnName + ",'yyyy-mm-dd hh24:mi')='" + value + "'";

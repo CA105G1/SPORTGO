@@ -95,6 +95,10 @@
 								<input type="text" name="v_no" value="${venueVO.v_no}"/>${errorMsgs.get("v_no")}
 							<br>
 							
+							<div class="label label-default label-text">請輸入場地名稱 :</div>
+								<input type="text" name="v_no" value="${venueVO.v_name}"/>${errorMsgs.get("v_name")}
+							<br>
+							
 							<div class="label label-default label-text">請選擇場地種類:</div>							
 							<jsp:useBean id="venueTypeService" scope="session" class="com.venuetype.model.VenueTypeService" />
 							<select size="1" name="vt_no" class="text-center">
@@ -105,15 +109,20 @@
 							</select>
 							<br>
 							
-							<div class="label label-default label-text">請選擇地區:</div>							
-							<jsp:useBean id="regService" scope="session" class="com.region.model.RegService" />
-							<select size="1" name="reg_no" class="text-center">
-								<option value=""></option>
-								<c:forEach var="regVO" items="${regService.all}">
-									<option value="${regVO.reg_no}" ${(param.reg_no==regVO.reg_no)?'selected':''}>${regVO.reg_name}-${regVO.reg_dist}</option>
-								</c:forEach>
+							<label>請選擇縣市</label>
+	      					<jsp:useBean id="regSvc" scope="page" class="com.region.model.RegService" />
+	      					<select id="reg_name" size="1" name="reg_name" class="text-center form-control">
+	      						<option value="">請選擇縣市
+	      						<c:forEach var="reg_name" items="${regSvc.reg_nameList }">
+	      							<option value="${reg_name }">${reg_name}
+	      						</c:forEach>
 							</select>
-							<br>
+							<label>請選擇地區</label>
+	      					<select size="1" name="reg_dist" class="text-center form-control">
+	      						<option id="reg_dist" value="">請選擇地區
+							</select>
+							
+							
 							
 							<div class="label label-default label-text">請選擇時間開放:</div>							
 <%-- 												<jsp:useBean id="regService" scope="session" class="com.region.model.RegService" /> --%>
@@ -174,6 +183,35 @@
     <!-- Active js -->
     <script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/active.js"></script>
     
+    <script>
+    
+    $("#reg_name").change(function(){
+    	var dataStr = {};
+    	dataStr.action = "getReg_dist";
+    	dataStr.reg_name = $("#reg_name").val();
+    	
+    	$.ajax({
+    		type: "POST",
+    		url: "<%= request.getContextPath()%>/region/region.do",
+    		data: dataStr,
+    		dataType: "json",
+    		contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    		error: function(){
+    			alert("發生錯誤!");
+    		},
+    		success: function(data){
+    			$(".reg_distOption").remove();
+    			var reg_distArr = data.reg_dist.split(',');
+    			for(var i in reg_distArr){
+    				$("#reg_dist").after("<option class='reg_distOption' value='"+reg_distArr[i]+"'>"+reg_distArr[i]);
+    			}
+    		}
+    	});
+    	
+    });
+
+    
+    </script>
 		
 		
 <!-- 		<script src="https://code.jquery.com/jquery.js"></script> -->

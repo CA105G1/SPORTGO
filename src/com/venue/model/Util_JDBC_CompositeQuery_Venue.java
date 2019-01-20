@@ -3,6 +3,9 @@ package com.venue.model;
 import java.util.Set;
 import java.util.TreeMap;
 import java.lang.reflect.MalformedParameterizedTypeException;
+import java.security.KeyStore.PrivateKeyEntry;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Util_JDBC_CompositeQuery_Venue {
@@ -22,6 +25,8 @@ public class Util_JDBC_CompositeQuery_Venue {
 		// Number
 		}else if( "reg_no".equals(columnName) || "v_lat".equals(columnName) || "v_long".equals(columnName)) {
 			aCondition = " "+columnName + "=" + value+" ";
+		}else if( "reg_name".equals(columnName) || "reg_dist".equals(columnName)) {
+			aCondition = columnName + " like '%"+value+"%' ";
 		}
 		return aCondition;
 	}
@@ -34,23 +39,54 @@ public class Util_JDBC_CompositeQuery_Venue {
 		Set<String> keys = map.keySet();
 		StringBuffer whereCondition = new StringBuffer();
 		int count = 0;
+		int countSub = 0;
 		for(String key:keys) {
 			String value = map.get(key)[0];
 			if(value != null && value.trim().length() != 0 && !"action".equals(key) 
-					&& !"whichPage".equals(key) && !"requestURL".equals(key) && !"hasChangePictiure".equals(key)) {
+					&& !"whichPage".equals(key) && !"requestURL".equals(key) && !"hasChangePictiure".equals(key)
+					&& !"reg_no".equals(key)
+					) {
 				count++;
+				
 				String aCondition = get_aCondition_For_Oracle(key, value.trim());
 //				System.out.println("aCondition : "+aCondition);
-				if(count==1) {
-					whereCondition.append(" where "+aCondition);
+				if("reg_name".equals(key) || "reg_dist".equals(key)) {
+					// 設定list<String> 收集 reg_name or red_dist
+					if(count==1) count--;
+					countSub++;
+					if(countSub==1)
+						initSubAConditionRegion();
+					addSubAConditionRegion(aCondition);
 				}else {
-					whereCondition.append(" and "+aCondition);
+					if(count==1) {
+						whereCondition.append(" where "+aCondition);
+					}else {
+						whereCondition.append(" and "+aCondition);
+					}
 				}
 //				System.out.println("送出的欄位數"+count);
 			}
 		}
+		if(countSub>0) {
+			if(count == 0)
+				whereCondition.append(" where ");
+			else
+				whereCondition.append( " and ");
+			
+			whereCondition.append(" reg_no in ").append("(select reg_no from region ");
+			
+			for(int i = 0 ; i < subAConditionRegion.size(); i++) {
+				if(i==0) {
+					whereCondition.append(" where "+subAConditionRegion.get(i)+" ");
+				}else {
+					whereCondition.append(" and "+subAConditionRegion.get(i)+" ");
+				}
+			}
+			whereCondition.append(" ) ");
+			destorySubAConditionRegion();
+		}
 		if(isFrontEnd) {
-			if(count==0) {
+			if(count==0 && countSub ==0) {
 				whereCondition.append(" where v_fitall='Y' and v_display='顯示' and open_state in ('免費對外開放使用', '付費對外開放使用') ");
 			}else {
 				whereCondition.append(" and v_fitall='Y' and v_display='顯示'  and open_state in ('免費對外開放使用', '付費對外開放使用') ");				
@@ -58,6 +94,21 @@ public class Util_JDBC_CompositeQuery_Venue {
 		}
 		return whereCondition.toString();
 	}
+	
+//	select * from venue where reg_no in
+//	(select reg_no from region where reg_name='桃園市' and reg_dist='中壢區')
+//	
+	private static List<String> subAConditionRegion;
+	private static void initSubAConditionRegion() {
+		subAConditionRegion = new ArrayList<>();
+	}
+	private static void addSubAConditionRegion(String aCondition) {
+		subAConditionRegion.add(aCondition);
+	}
+	private static void destorySubAConditionRegion() {
+		subAConditionRegion = new ArrayList<>();
+	}
+	
 //	
 //	public static void main(String[] args) {
 //		Map<String, String[]> map = new TreeMap<>();

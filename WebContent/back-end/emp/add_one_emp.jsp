@@ -38,7 +38,12 @@
 					<jsp:include page="/back-end/left_side_field.jsp"/>
 				</div>
 				<div class="col-xs-12 col-sm-9">
-					<jsp:include page="/back-end/emp/registeredEmp.jsp"></jsp:include>
+					<c:if test="${empVO.emp_auth=='超級管理員'}">
+						<jsp:include page="/back-end/emp/registeredEmp.jsp"></jsp:include>
+					</c:if>
+					<c:if test="${empVO.emp_auth=='一般管理員'}">
+						<jsp:forward page="/backEndIndex.jsp"/>
+					</c:if>
 				</div>
 			</div>
 		</div>

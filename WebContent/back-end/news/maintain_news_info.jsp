@@ -235,15 +235,15 @@
 			theme: '',
  			step: 10,
  			timepicker: true,
- 			beforeShowDay: function(date) {
-  		  		if (date.getYear() <  news_release_date.getYear() || 
-  			    	(date.getYear() == news_release_date.getYear() && date.getMonth() <  news_release_date.getMonth()) || 
-  			    	(date.getYear() == news_release_date.getYear() && date.getMonth() == news_release_date.getMonth() && date.getDate() < news_release_date.getDate())
-  		        ){
-  		             return [false, ""]
-  		      	}
-  		      	return [true, ""];
-  			},
+//  			beforeShowDay: function(date) {
+//   		  		if (date.getYear() <  news_release_date.getYear() || 
+//   			    	(date.getYear() == news_release_date.getYear() && date.getMonth() <  news_release_date.getMonth()) || 
+//   			    	(date.getYear() == news_release_date.getYear() && date.getMonth() == news_release_date.getMonth() && date.getDate() < news_release_date.getDate())
+//   		        ){
+//   		             return [false, ""]
+//   		      	}
+//   		      	return [true, ""];
+//   			},
 			format:'Y-m-d H:i',
  				onShow:function( date ){
   					this.setOptions({

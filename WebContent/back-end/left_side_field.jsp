@@ -21,46 +21,49 @@
 		
 	</head>
 	<body>
+	<div style="height: 30px"></div>
 		<div class="panel panel-info">
-			<div class="panel-heading">
-				<img src="https://api.fnkr.net/testimg/350x100/00CED1/FFF/?text=backEndIndex" class="img-responsive img-rounded">
-			</div>
+<!-- 			<div class="panel-heading"> -->
+<!-- 				<img src="https://api.fnkr.net/testimg/350x100/00CED1/FFF/?text=backEndIndex" class="img-responsive img-rounded"> -->
+<!-- 			</div> -->
 
-			<div style="height: 15px"></div>
+<!-- 			<div style="height: 15px"></div> -->
 			
 			<!--後台管理員區-->
 			<div class="myGroup">
 				<div class="panel-heading">
 			    	<h3 class="panel-title">
-			    		<a role="button" data-toggle="collapse" href="#adminiBack" aria-expanded="false" aria-controls="adminiBack">
-							管理員專區
-						</a>
+			    		<a href="<%=request.getContextPath()%>/back-end/memberlist/listAllMem.jsp">會員列表</a>
+<!-- 			    		<a role="button" data-toggle="collapse" href="#adminiBack" aria-expanded="false" aria-controls="adminiBack"> -->
+<!-- 							管理員專區 -->
+<!-- 						</a> -->
 			    	</h3>
 			  	</div>
-			    <div class="panel-collapse collapse" id="adminiBack">
-					<div class="list-group">
+<!-- 			    <div class="panel-collapse collapse" id="adminiBack"> -->
+<!-- 					<div class="list-group"> -->
 <%-- 						<a href="<%=request.getContextPath()%>/back-end/emp/add_one_emp.jsp" class="list-group-item">新增管理員</a> --%>
 <!-- 						<a href="#" class="list-group-item">管理員列表</a> -->
-						<a href="<%=request.getContextPath()%>/back-end/memberlist/listAllMem.jsp" class="list-group-item">會員列表</a>
-					</div>
-				</div>
+<%-- 						<a href="<%=request.getContextPath()%>/back-end/memberlist/listAllMem.jsp" class="list-group-item">會員列表</a> --%>
+<!-- 					</div> -->
+<!-- 				</div> -->
 			</div>
 
 			<!--後台揪團專區-->
 			<div class="myGroup">
 				<div class="panel-heading">
 			    	<h3 class="panel-title">
-			    		<a  role="button" data-toggle="collapse" href="#sgBack" aria-expanded="false" aria-controls="sgBack">
-							揪團專區
-						</a>
+			    		<a href="<%=request.getContextPath()%>/back-end/sg_info/sg_infoBackEnd.jsp">揪團列表</a>
+<!-- 			    		<a  role="button" data-toggle="collapse" href="#sgBack" aria-expanded="false" aria-controls="sgBack"> -->
+<!-- 							揪團專區 -->
+<!-- 						</a> -->
 			    	</h3>
 			  	</div>
-			    <div class="panel-collapse collapse" id="sgBack">
-					<div class="list-group">
-						<a href="<%=request.getContextPath()%>/back-end/sg_info/sg_infoBackEnd.jsp" class="list-group-item">揪團列表</a>
+<!-- 			    <div class="panel-collapse collapse" id="sgBack"> -->
+<!-- 					<div class="list-group"> -->
+<%-- 						<a href="<%=request.getContextPath()%>/back-end/sg_info/sg_infoBackEnd.jsp" class="list-group-item">揪團列表</a> --%>
 <!-- 					<a href="#" class="list-group-item">揪團檢舉列表</a> -->
-					</div>
-				</div>
+<!-- 					</div> -->
+<!-- 				</div> -->
 			</div>
 
 			<!--後台社團專區-->
@@ -83,19 +86,20 @@
 			<div class="myGroup">
 				<div class="panel-heading">
 			    	<h3 class="panel-title">
-			    		<a  role="button" data-toggle="collapse" href="#shopBack" aria-expanded="false" aria-controls="shopBack">
-							商城管理
-						</a>
+			    		<a href="<%=request.getContextPath()%>/back-end/pro/listAllPro.jsp">商品列表</a>
+<!-- 			    		<a  role="button" data-toggle="collapse" href="#shopBack" aria-expanded="false" aria-controls="shopBack"> -->
+<!-- 							商城管理 -->
+<!-- 						</a> -->
 			    	</h3>
 			  	</div>
-			    <div class="panel-collapse collapse" id="shopBack">
-					<div class="list-group">
+<!-- 			    <div class="panel-collapse collapse" id="shopBack"> -->
+<!-- 					<div class="list-group"> -->
 <%-- 						<a href="<%=request.getContextPath()%>/back-end/pro/addPro.jsp" class="list-group-item">新增商品</a> --%>
-						<a href="<%=request.getContextPath()%>/back-end/pro/listAllPro.jsp" class="list-group-item">商品列表</a>
+<%-- 						<a href="<%=request.getContextPath()%>/back-end/pro/listAllPro.jsp" class="list-group-item">商品列表</a> --%>
 <!-- 						<a href="#" class="list-group-item">商品類別列表</a> -->
 <%-- 						<a href="<%=request.getContextPath()%>/back-end/pro/listAllPro.jsp" class="list-group-item">訂單列表</a> --%>
-					</div>
-				</div>
+<!-- 					</div> -->
+<!-- 				</div> -->
 			</div>
 
 			<!--後台資訊維護-->

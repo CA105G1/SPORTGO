@@ -74,61 +74,100 @@
 					    <div class="tab-content">
 					        <!-- 使用request.getAttribute("whichtab")來分辨，哪個class is active -->
 					        <div role="tabpanel" class="tab-pane ${whichTab==null?'active':(whichTab=='tab1'?'active':'') }" id="tab1">
-        	<%-- 查詢面板  --%>	<h1>查詢、更新</h1>
+        	<%-- 查詢面板  --%>	
 					        	<div class="panel panel-info">
 									<div class="panel-heading">
 										<h3 class="panel-title">維護場地資訊</h3>
 									</div>
 									<div class="panel-body">
-										<div class="h1">預計放from表單---萬用</div>
 										<form method="post" action="<%=request.getContextPath()%>/venue/venue.do">
-											<div class="label label-default label-text">請輸入場地編號 : (V000002)</div>
-											<input type="text" name="v_no" value="${venueMap.get('v_no')[0]}"/>
-											<br>
+<!-- 											<div class="label label-default label-text">請輸入場地編號 : (V000002)</div> -->
+											<table class="table table-hover table-striped table-bordered">
+												<tr>
+													<th><label>請輸入場地編號 : (V000002)</label></th>
+													<td>
+														<input type="text" name="v_no" value="${venueMap.get('v_no')[0]}" class="text-left form-control"/>
+													</td>
+												</tr>
+												
+												<tr>
+													<th><label>請選擇場地種類 :</label></th>
+													<td>
+														<jsp:useBean id="venueTypeService" scope="session" class="com.venuetype.model.VenueTypeService" />
+														<select size="1" name="vt_no" class="text-center form-control">
+															<option value=""></option>
+															<c:forEach var="venueTypeVO" items="${venueTypeService.all}">
+																<option value="${venueTypeVO.vt_no}" ${venueMap.get('vt_no')[0]==venueTypeVO.vt_no?'selected':''}>
+																	${venueTypeVO.vt_name}
+																</option>
+															</c:forEach>
+														</select>
+													</td>
+												</tr>
+												
+												<tr>
+													<th><label>請選擇縣市 :</label></th>
+													<td>
+														<jsp:useBean id="regSvc" scope="page" class="com.region.model.RegService" />
+								      					<select id="reg_name" size="1" name="reg_name" class="text-center form-control">
+								      						<option value="">請選擇縣市
+								      						<c:forEach var="reg_name" items="${regSvc.reg_nameList }">
+								      							<option value="${reg_name }">${reg_name}
+								      						</c:forEach>
+														</select>
+													</td>
+												</tr>
+												
+												<tr>
+													<th><label>請選擇地區 :</label></th>
+													<td>
+														<select size="1" name="reg_dist" class="text-center form-control">
+								      						<option id="reg_dist" value="">請選擇地區
+														</select>
+													</td>
+												</tr>
+												
+												<tr>
+													<th><label>請選擇時間開放 :</label></th>
+													<td>
+														<label for="openday_mon" class="checkbox-inline">一</label>
+														<input type="checkbox" name="openday_mon" value="Y" id="openday_mon" />
+														<label for="openday_tue" class="checkbox-inline">二</label>
+														<input type="checkbox" name="openday_tue" value="Y" id="openday_tue" />
+														<label for="openday_wed" class="checkbox-inline">三</label>
+														<input type="checkbox" name="openday_wed" value="Y" id="openday_wed" />
+														<label for="openday_thu" class="checkbox-inline">四</label>
+														<input type="checkbox" name="openday_thu" value="Y" id="openday_thu" />
+														<label for="openday_fri" class="checkbox-inline">五</label>
+														<input type="checkbox" name="openday_fri" value="Y" id="openday_fri" />
+														<label for="openday_sat" class="checkbox-inline">六</label>
+														<input type="checkbox" name="openday_sat" value="Y" id="openday_sat" />
+														<label for="openday_sun" class="checkbox-inline">日</label>
+														<input type="checkbox" name="openday_sun" value="Y" id="openday_sun" />
+													
+														<fieldset>
+    <legend>Hotel Ratings: </legend>
+    <label for="checkbox-1">2 Star</label>
+    <input type="checkbox" name="checkbox-1" id="checkbox-1">
+    <label for="checkbox-2">3 Star</label>
+    <input type="checkbox" name="checkbox-2" id="checkbox-2">
+    <label for="checkbox-3">4 Star</label>
+    <input type="checkbox" name="checkbox-3" id="checkbox-3">
+    <label for="checkbox-4">5 Star</label>
+    <input type="checkbox" name="checkbox-4" id="checkbox-4">
+  </fieldset>
+													</td>
+												</tr>
+												
+												<tr><th colspan='2'>
+													<input type="hidden" name="action" value="listVenueByCompositeQuery" />
+													<input type="submit" value="送出查詢" class="btn btn-primary btn-block"/>
+												</th></tr>
+												
+												
+											</table>
 											
-											<div class="label label-default label-text">請選擇場地種類:</div>							
-											<jsp:useBean id="venueTypeService" scope="session" class="com.venuetype.model.VenueTypeService" />
-											<select size="1" name="vt_no" class="text-center">
-												<option value=""></option>
-												<c:forEach var="venueTypeVO" items="${venueTypeService.all}">
-													<option value="${venueTypeVO.vt_no}" ${venueMap.get('vt_no')[0]==venueTypeVO.vt_no?'selected':''}>
-														${venueTypeVO.vt_name}
-													</option>
-												</c:forEach>
-											</select>
-											<br>
 											
-											<div class="label label-default label-text">請選擇地區:</div>							
-											<jsp:useBean id="regService" scope="session" class="com.region.model.RegService" />
-											<select size="1" name="reg_no" class="text-center">
-												<option value=""></option>
-												<c:forEach var="regVO" items="${regService.all}">
-													<option value="${regVO.reg_no}" ${venueMap.get('reg_no')[0]==regVO.reg_no?'selected':''}>
-														${regVO.reg_name}-${regVO.reg_dist}
-													</option>
-												</c:forEach>
-											</select>
-											<br>
-											
-											<div class="label label-default label-text">請選擇時間開放:</div>							
-<%-- 												<jsp:useBean id="regService" scope="session" class="com.region.model.RegService" /> --%>
-											<label for="openday_mon">一</label>
-											<input type="checkbox" name="openday_mon" value="Y" id="openday_mon" />
-											<label for="openday_tue">二</label>
-											<input type="checkbox" name="openday_tue" value="Y" id="openday_tue" />
-											<label for="openday_wed">三</label>
-											<input type="checkbox" name="openday_wed" value="Y" id="openday_wed" />
-											<label for="openday_thu">四</label>
-											<input type="checkbox" name="openday_thu" value="Y" id="openday_thu" />
-											<label for="openday_fri">五</label>
-											<input type="checkbox" name="openday_fri" value="Y" id="openday_fri" />
-											<label for="openday_sat">六</label>
-											<input type="checkbox" name="openday_sat" value="Y" id="openday_sat" />
-											<label for="openday_sun">日</label>
-											<input type="checkbox" name="openday_sun" value="Y" id="openday_sun" />
-											
-											<input type="hidden" name="action" value="listVenueByCompositeQuery" /><br>
-											<input type="submit" value="submit_composite_query" class="btn-primary"/>
 										</form>
 									</div>
 								</div>
@@ -214,6 +253,31 @@
 		};
 	}
 
+	$("#reg_name").change(function(){
+    	var dataStr = {};
+    	dataStr.action = "getReg_dist";
+    	dataStr.reg_name = $("#reg_name").val();
+    	
+    	$.ajax({
+    		type: "POST",
+    		url: "<%= request.getContextPath()%>/region/region.do",
+    		data: dataStr,
+    		dataType: "json",
+    		contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    		error: function(){
+    			alert("發生錯誤!");
+    		},
+    		success: function(data){
+    			$(".reg_distOption").remove();
+    			var reg_distArr = data.reg_dist.split(',');
+    			for(var i in reg_distArr){
+    				$("#reg_dist").after("<option class='reg_distOption' value='"+reg_distArr[i]+"'>"+reg_distArr[i]);
+    			}
+    		}
+    	});
+    	
+    });
+	
 	</script>
 	
 	

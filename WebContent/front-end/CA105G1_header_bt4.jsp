@@ -61,9 +61,9 @@
 								<a class="nav-link" href="<%=request.getContextPath()%>/front-end/memberlist/logout.do">登出</a>
 							</li>
 						</c:if>
-		             <li class="nav-item">
-		                 <a class="nav-link"  href="<%=request.getContextPath()%>/backEndIndex.jsp">後台首頁</a>
-		             </li>
+<!-- 		             <li class="nav-item"> -->
+<%-- 		                 <a class="nav-link"  href="<%=request.getContextPath()%>/backEndIndex.jsp">後台首頁</a> --%>
+<!-- 		             </li> -->
 		         </ul>
 		     </div>
 		  </div>
