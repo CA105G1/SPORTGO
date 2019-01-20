@@ -66,9 +66,9 @@
     		justify-content:center; 
 			}
 			
-			#club_name{
-			font-family:Microsoft JhengHei
-			}
+/* 			#club_name{ */
+/* 			font-family:Microsoft JhengHei */
+/* 			} */
 		
 			#postsearch{
     			padding-left: 5px;
@@ -188,7 +188,7 @@
 					</div><!-- card text-center結束 -->
 				</div><!-- col-xs-12 col-lg-7結束-->
 				<div class="col-xs-12 col-sm-2" id="xx"><!--社團成員列表-->
-<%-- 					<div>clubVO = ${clubVO }</div> --%>
+					<jsp:include page="/front-end/club_memberlist/clubmember_list.jsp" />
 				</div>
 			</div><!-- row結束 -->
 		</div><!-- 最外層container-fluid結束 -->

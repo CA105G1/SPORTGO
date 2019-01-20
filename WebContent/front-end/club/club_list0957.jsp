@@ -24,11 +24,21 @@
 
 <html>
 <head>
-<link  rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
-<link rel="icon" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/style.css">
-
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<title>Title Page</title>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<!--[if lt IE 9]>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
 <style type="text/css">
+/* .card-text{ */
+/* 	height:8rem; */
+/* } */
  .card-img-top {  
   	width: 100%; 
  }  
@@ -59,6 +69,10 @@
  	padding-right:0px;
  	
  } 
+/* .img-responsive.card-img-top{ */
+/* 	width:300px; */
+/* 	height:200px; */
+/* } */
 .modal-footer{
 			display:flex;
    			align-items:center;
@@ -69,38 +83,9 @@
  
 </head>
 <body ${(errorMsgs!=null)?"onload='errormsgs()'":""}>
-
 <jsp:include page="/front-end/CA105G1_header.jsp" />
-
 <br>
-<!-- <!-- Loading時的小圖示 --> -->
-<!-- <div class="preloader d-flex align-items-center justify-content-center"> -->
-<!--     <div class="preloader-circle"></div> -->
-<!--     <div class="preloader-img"> -->
-<%--         <img src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png" alt=""> --%>
-<!--     </div> -->
-<!-- </div> -->
 
-
-<!-- 麵包屑 -->
-<div class="breadcrumb-area">
-    <!-- Top Breadcrumb Area -->
-    <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(<%= request.getContextPath()%>/img/sgpic/sportbg2.jpg);">
-    </div>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/index.jsp"><i class="fa fa-home"></i> 首頁</a></li>
-                   		<li class="breadcrumb-item active" aria-current="page">揪團專區</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 <div class="container-fulid">
@@ -201,34 +186,48 @@
 									</div><!--div class="modal-content"結束 -->
 								</div><!--div class="modal-dialog .modal-dialog-centered"結束 -->
 							</div><!--div class="modal fade"結束-->
-<!---查詢社團-----------------------------------------------------------------------------查詢社團--->
- 
-                <!-- Shop Widget -->
-                <div class="shop-widget price mb-50">
-                    <button type="button" class="btn btn-secondary btn-block" disabled>社團查詢</button>
-                    <div class="widget-desc">
-        <!-- FORM開始 --><form method="post" action="<%= request.getContextPath()%>/clubfront.do">
-                            <!--------運動種類查詢--------->
-                            <label>運動種類</label>
-                            <jsp:useBean id="sportSvc1" scope="page" class="com.sport.model.SportService" />
-                            <select size="1" name="sp_no" class="text-center">
-                                <option value="">請選擇運動種類
-                                    <c:forEach var="sportVO" items="${sportSvc.all}" > 
-                                    <option value="${sportVO.sp_no}" ${(clubVO.sp_no==sportVO.sp_no)?'selected':'' } >${sportVO.sp_name}
-                                </c:forEach>   
-                            </select>
-                            <!-------- 關鍵字查詢 --------->
-                            <label>關鍵字</label>
-                            <input name="keyword" id="keyword" type="text" class="text-center form-control" placeholder="請輸入關鍵字">
-                            <!----------送出查詢 ---------->
-                            <div class="text-center"  style="margin-top:10px;">
-                                <input type="hidden" name="actionfront" value="clubCompositeQuery">
-                                <input type="submit" value="送出查詢" class="btn btn-primary">
-                            </div>
-        <!-- FORM結束 --></form> 
-                    </div>
-                </div>
-                
+<!---Modal------------------------------------------------------------------------------------>
+<!---建立社團-----------------------------------------------------------------------------建立社團--->
+							<a class="list-group-item list-group-item-actionfront " data-toggle="list" href="#searchclub" role="tab">
+								搜尋社團
+							</a>
+			<!-- FORM開始 --><form method="post" action="<%= request.getContextPath()%>/clubfront.do">
+				      		<div class="table-responsive">
+					      		<table class="table table-hover text-center" align="center">
+									<!--------運動種類查詢--------->
+						      			<tr>
+						      				<th>運動種類</th>
+					      				</tr>
+					      				<tr>
+						      				<th>
+						      					<jsp:useBean id="sportSvc1" scope="page" class="com.sport.model.SportService" />
+						      					<select size="1" name="sp_no" class="text-center">
+						      						<option value="">請選擇運動種類
+													<c:forEach var="sportVO" items="${sportSvc.all}" > 
+														<option value="${sportVO.sp_no}" ${(clubVO.sp_no==sportVO.sp_no)?'selected':'' } >${sportVO.sp_name}
+													</c:forEach>   
+												</select>
+						      				</th>
+						      			</tr>
+									<!-------- 關鍵字查詢 --------->
+						      			<tr>
+						      				<th>關鍵字</th>
+					      				<tr>
+					      				</tr>
+						      				<th>
+						      					<input name="keyword" id="keyword" type="text" class="text-center" placeholder="請輸入關鍵字">
+						      				</th>
+						      			</tr>
+									<!----------送出查詢 ---------->
+						      			<tr>
+						      				<input type="hidden" name="actionfront" value="clubCompositeQuery">
+						      				<td><input type="submit" value="送出查詢" class="btn btn-primary"></td>
+						      			</tr>
+						   			
+					      		</table>
+				      		</div>
+			<!-- FORM結束 --></form>
+				
 						</div><!-- list-group結束 -->
 					</div><!-- id="aaa"結束 -->
 				</div><!-- panel panel-default結束 -->
