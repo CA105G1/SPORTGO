@@ -44,7 +44,7 @@
 	}
 	function getReload(data){
 		swal({
-			title:"成功上架搂!",
+			title:"成功上架囉!",
 			html:$("<div>").html('商品:'+ data+"<br>"+'已成功上架'), 
 			type:"success",
 			allowOutsideClick: false

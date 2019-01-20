@@ -283,9 +283,12 @@ if ("insert".equals(action)) { //來自shoppingcart_front.jsp的請求
 					ShoppingcartDAO cartDAO = new ShoppingcartDAO();
 					List<ProductVO> proVOList = new ArrayList<>();
 					List<Integer> pro_countList = new ArrayList<>();
-					Map<String , String> hAll =  cartDAO.getAll(mem_no);
+					Map<String , String> hAll =  cartDAO.getAll(mem_noP);
+					System.out.println(hAll);
 					for(String pro_noAll : hAll.keySet()) {
 						proVOList.add(proSvc.getOneProduct(pro_noAll));
+						
+						System.out.println("訂單數量" +hAll.get(pro_noAll));
 //						pro_countList.add(Integer.parseInt(hAll.get(pro_no)));
 					}
 					req.setAttribute("proVOList", proVOList);

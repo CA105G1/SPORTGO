@@ -73,7 +73,7 @@
 <!--    1 <header class="header-area"> -->
 
         <!-- ***** Top Header Area ***** -->
-<jsp:include page="/front-end/pro/alazea-gh-pages/header.jsp"/> 
+<%-- <jsp:include page="/front-end/pro/alazea-gh-pages/header.jsp"/>  --%>
         
 <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-dark bg-dark"> -->
 <%-- <img style="height: 20px;"src="<%=request.getContextPath()%>/img/logo_SportyGo_2_light.png" alt="SportGo!"/> --%>
@@ -174,51 +174,64 @@
 
 <!--    1 </header> -->
     <!-- ##### Header Area End ##### -->
-  
-<!-- 輪播 -->
-    <section class="hero-area">
-        <div class="hero-post-slides owl-carousel">
-
-            <!-- Single Hero Post -->
-            <div class="single-hero-post bg-overlay">
-                <!-- Post Image -->
-                <div class="slide-img bg-img" style="background-image: url(<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/PN001.jpeg);"></div>
-                <div class="container h-100">
-                    <div class="row h-100 align-items-center">
-                        <div class="col-12">
-                            <!-- Post Content -->
-                            <div class="hero-slides-content text-center">
-                                <h2>如果運動可以讓你更美更健康，你還會拒絕嗎？</p>
-<!--                                 <div class="welcome-btn-group"> -->
-<%--                                     <a href="<%=request.getContextPath()%>/index.jsp" class="btn alazea-btn mr-30">馬上體驗</a> --%>
-<!--                                 </div> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Single Hero Post -->
-            <div class="single-hero-post bg-overlay">
-                <!-- Post Image -->
-                <div class="slide-img bg-img" style="background-image: url(<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/PN002.jpeg);"></div>
-                <div class="container h-100">
-                    <div class="row h-100 align-items-center">
-                        <div class="col-12">
-                            <!-- Post Content -->
-                            <div class="hero-slides-content text-center">
-                                <h2>現在就加入運動的行列吧!</p>
-<!--                                 <div class="welcome-btn-group"> -->
-<%--                                     <a href="<%=request.getContextPath()%>/index.jsp" class="btn alazea-btn mr-30">立即開始體驗!</a> --%>
-<!--                                 </div> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+  <jsp:include page="/front-end/CA105G1_header_bt4.jsp" />
+      <div class="breadcrumb-area">
+        <!-- Top Breadcrumb Area -->
+        <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/PN003.jpeg);">
+            <h2>Shopping Home</h2>
         </div>
-    </section>
+ 
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/listAllPro_front.jsp"><i class="fa fa-home"></i> Home</a></li>
+                           
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- 輪播 -->
+<!--     <section class="hero-area"> -->
+<!--         <div class="hero-post-slides owl-carousel"> -->
+
+<!--             Single Hero Post -->
+<!--             <div class="single-hero-post bg-overlay"> -->
+<!--                 Post Image -->
+<%--                 <div class="slide-img bg-img" style="background-image: url(<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/PN001.jpeg);"></div> --%>
+<!--                 <div class="container h-100"> -->
+<!--                     <div class="row h-100 align-items-center"> -->
+<!--                         <div class="col-12"> -->
+<!--                             Post Content -->
+<!--                             <div class="hero-slides-content text-center"> -->
+<!--                                 <h2>如果運動可以讓你更美更健康，你還會拒絕嗎？</p> -->
+<!--                             </div> -->
+<!--                         </div> -->
+<!--                     </div> -->
+<!--                 </div> -->
+<!--             </div> -->
+
+<!--             Single Hero Post -->
+<!--             <div class="single-hero-post bg-overlay"> -->
+<!--                 Post Image -->
+<%--                 <div class="slide-img bg-img" style="background-image: url(<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/PN002.jpeg);"></div> --%>
+<!--                 <div class="container h-100"> -->
+<!--                     <div class="row h-100 align-items-center"> -->
+<!--                         <div class="col-12"> -->
+<!--                             Post Content -->
+<!--                             <div class="hero-slides-content text-center"> -->
+<!--                                 <h2>現在就加入運動的行列吧!</p> -->
+<!--                             </div> -->
+<!--                         </div> -->
+<!--                     </div> -->
+<!--                 </div> -->
+<!--             </div> -->
+
+<!--         </div> -->
+<!--     </section> -->
     <!-- ##### Breadcrumb Area End ##### -->
 
     <!-- ##### Shop Area Start ##### -->
@@ -229,26 +242,26 @@
                 <div class="col-12">
                     <div class="shop-sorting-data d-flex flex-wrap align-items-center justify-content-between">
                         <!-- Shop Page Count -->
-                        <div class="shop-page-count">
-                            <p id="showpage">Showing 1–9 of 72 results</p>
+                        <div align="right" class="shop-page-count">
+                            <p  id="showpage">Showing 1–9 of 72 results</p>
                         </div>
                         <!-- Search by Terms -->
-                        <div class="search_by_terms">
-                            <form action="#" method="post" class="form-inline">
-                                <select class="custom-select widget-title">
-                                  <option selected>Short by Popularity</option>
-                                  <option value="1">Short by Newest</option>
-                                  <option value="2">Short by Sales</option>
-                                  <option value="3">Short by Ratings</option>
-                                </select>
-                                <select class="custom-select widget-title">
-                                  <option selected>Show: 9</option>
-                                  <option value="1">12</option>
-                                  <option value="2">18</option>
-                                  <option value="3">24</option>
-                                </select>
-                            </form>
-                        </div>
+<!--                         <div class="search_by_terms"> -->
+<!--                             <form action="#" method="post" class="form-inline"> -->
+<!--                                 <select class="custom-select widget-title"> -->
+<!--                                   <option selected>Short by Popularity</option> -->
+<!--                                   <option value="1">Short by Newest</option> -->
+<!--                                   <option value="2">Short by Sales</option> -->
+<!--                                   <option value="3">Short by Ratings</option> -->
+<!--                                 </select> -->
+<!--                                 <select class="custom-select widget-title"> -->
+<!--                                   <option selected>Show: 9</option> -->
+<!--                                   <option value="1">12</option> -->
+<!--                                   <option value="2">18</option> -->
+<!--                                   <option value="3">24</option> -->
+<!--                                 </select> -->
+<!--                             </form> -->
+<!--                         </div> -->
                     </div>
                 </div>
             </div>
@@ -381,7 +394,7 @@
                                         <a onclick="document.getElementById('${proVO.pro_no}').submit()">
                                             <p>${proVO.pro_name}</p>
                                         </a>
-                                        <h6>${proVO.pro_bonus}</h6>
+                                        <h6>$ ${proVO.pro_bonus}</h6>
                                     </div>
                                     </FORM>
                                 </div>
@@ -439,17 +452,19 @@
 <script src="<%=request.getContextPath() %>/back-end/pro/tool/websock_client.js"></script>
 
         <script type="text/javascript"> 
-       		var mem_no_login = "${memberlistVO.mem_no}";
-            
+       		
+	 			var mem_no_login = "${memberlistVO.mem_no}";
+	 			console.log("mem_no_login"+mem_no_login);
 			$(function() { 
 	 			document.getElementById("showpage").innerHTML = "Showing "+ <%=rowNumber%>+" results"; 
-                
 			});
 			
 			function tuchlike(clicked_id){
 				var clickid = clicked_id;
 				
-				if(mem_no_login == "null"){
+				
+				if(mem_no_login ===""){
+					console.log("test"+mem_no_login);
 					<%session.setAttribute("location", request.getRequestURI());%>  
 					swal({
 					    title: '尚未登入',

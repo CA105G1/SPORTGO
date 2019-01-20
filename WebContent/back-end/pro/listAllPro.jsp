@@ -267,9 +267,9 @@
 						<!-- 容器區 -->
 						<div class="container-fluid warpwidth">
 							<div class="row">
-				        		<%if ("update".equals(request.getAttribute("update"))) {%>
-									<jsp:include page="listOnePro.jsp" flush="true" />
-								<%} %>
+<%-- 				        		<%if ("update".equals(request.getAttribute("update"))) {%> --%>
+<%-- 									<jsp:include page="listOnePro.jsp" flush="true" /> --%>
+<%-- 								<%} %> --%>
 								<!-- 所有商品 -->
 								<table id="example" class="table table-striped table-bordered" style="width:100%">
 									<thead>
@@ -316,6 +316,7 @@
 												<td>
 													<div align="right">
 														<select name=""  class="form-control select_change" style="width:90px;">
+														        <option>請選擇</option>
 																<option value="${proVO.pro_no}">上架中</option>
 																<option value="${proVO.pro_no}">下架</option>
 														</select>
@@ -386,17 +387,21 @@
 	            
 				$('#example').DataTable();
 				$('.select_change').change(function(){
-					$.ajax({
-						 type: "POST",
-						 url: "<%= request.getContextPath()%>/pro/pro.do",
-						 data: creatQuerySelect($(this).val(),$("option:selected", this).text()),
-						 dataType: "json",
-						 success: function (data){
-							 console.log(data.pro_no+'A');
-							 $('#'+data.pro_no).html(data.pro_shelve);
-					     },
-					     error: function(){alert("AJAX-class發生錯誤囉!")}
-			         })
+					var ans_change = $(this).val();
+					if(ans_change != "請選擇"){
+						$.ajax({
+							 type: "POST",
+							 url: "<%= request.getContextPath()%>/pro/pro.do",
+							 data: creatQuerySelect($(this).val(),$("option:selected", this).text()),
+							 dataType: "json",
+							 success: function (data){
+								 console.log(data.pro_no+'A');
+								 $('#'+data.pro_no).html(data.pro_shelve);
+								 swal("已成功修改");
+						     },
+						     error: function(){alert("AJAX-class發生錯誤囉!")}
+				         });
+					}
 				})	
 			})
 			//*************

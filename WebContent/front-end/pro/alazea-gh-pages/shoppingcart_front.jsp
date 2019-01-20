@@ -118,6 +118,25 @@
     <!-- ##### Breadcrumb Area End ##### -->
 
     <!-- ##### Cart Area Start ##### -->
+        <div class="breadcrumb-area">
+        <!-- Top Breadcrumb Area -->
+        <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(<%=request.getContextPath()%>/InitDB/image/news/N003.png);">
+            <h2>Checkout</h2>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/listAllPro_front.jsp"><i class="fa fa-home"></i> Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Shopping cart</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
     <FORM METHOD="post" id="form-id" ACTION="<%= request.getContextPath()%>/ord/ord.do" name="form1" enctype="multipart/form-data">
     <div class="cart-area section-padding-0-100 clearfix">
         <div class="container">
@@ -139,7 +158,7 @@
                                     <th>Quantity</th>
                                     <th>Price</th>
                                     <th>TOTAL</th>
-                                    <th>test</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -185,52 +204,6 @@
 
                 <!-- Coupon Discount -->
                 <div class="col-12 col-lg-6">
-<!--                     測試<div class="cart-totals-area mt-70"> -->
-<!--                         <h5 class="title--">收貨資訊</h5> -->
-<!--                         <div class="shipping d-flex justify-content-between"> -->
-
-                        
-<%--                             <img src="<%=request.getContextPath()%>/front-end/memberlist/showPicture.do?mem_no=<%=session.getAttribute("mem_no")%>"  --%>
-<!--                             style="max-width:100px;max-height:100px;margin-right: 10px;" class="rounded-circle"> -->
-<!--                             <div class="container"> -->
-<!-- 							    <div class="row"> -->
-<!-- 							        <div class="col-xs-12 col-sm-12"> -->
-<!-- 			                        	<div class="checkout_details_area clearfix"> -->
-<!-- 			                        	    <div class="container"> -->
-<!-- 											    <div class="row"> -->
-<!-- 											        <div class="col-xs-12 col-sm-12"></div> -->
-<!-- 											    </div> -->
-<!-- 											</div> -->
-<!-- 									        <div class="col-md-10 mb-4"> -->
-<!-- 			                                    <label for="first_name">Name *</label> -->
-<%-- 			                                    <input type="text" placeholder="   收件人姓名" name="address_receiver" value="${param.receiver}"> --%>
-<!-- 			                                </div> -->
-<!-- 			                                <div class="col-md-10 mb-4"> -->
-<!-- 			                                    <label for="first_name">Name *</label> -->
-<%-- 			                                    <input type="text"  placeholder="   收件人電話" name="address_phone" value="${param.phone}"> --%>
-<!-- 			                                </div> -->
-<!-- 			                                <div class="col-md-10 mb-4"> -->
-<!-- 			                                    <label for="first_name">Name *</label> -->
-<%-- 			                                    <input type="text" placeholder="   國家" name="address_country" value="${param.country}"> --%>
-<!-- 			                                </div> -->
-<!-- 			                                <div class="col-md-10 mb-4"> -->
-<!-- 			                                    <label for="first_name">Name *</label> -->
-<%-- 			                                    <input type="text"   placeholder="   城市" name="address_city" value="${param.city}"> --%>
-<!-- 			                                </div> -->
-<!-- 			                                <div class="col-md-10 mb-4"> -->
-<!-- 			                                    <label for="first_name">Name *</label> -->
-<%-- 			                                    <input type="text"   placeholder="   地址" name="address_detail" value="${param.detail}"> --%>
-<!-- 			                                </div> -->
-<!-- 			                                <div class="col-md-10 mb-4"> -->
-<!-- 			                                    <label for="first_name">Name *</label> -->
-<%-- 			                                    <input type="text"  placeholder="郵遞區號" name="address_zip" value="${param.zip}"> --%>
-<!-- 			                                </div> -->
-<!-- 			　　　　　　　　　　　　　　		</div> -->
-<!--                                     </div> -->
-<!-- 							    </div> -->
-<!-- 							</div> -->
-<!--                         </div> -->
-<!--                     </div> -->
                     <div class="cart-totals-area mt-70">
                         <h5 class="title--">收貨資訊</h5>
                         <div class="shipping d-flex justify-content-between">

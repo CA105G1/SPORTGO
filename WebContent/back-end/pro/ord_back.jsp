@@ -176,32 +176,32 @@
 				<div class="container-fluid warpwidth">
 					<div class="row">
 						<div>
-							<h2 class="fontsize">?件商品</h2>
+							<h2 class="fontsize">訂單管理</h2>
 						</div>
 						<!-- 關鍵字搜尋 -->
-						<div class="container">
-							<div class="row">
-								<div class="col-xs-12 col-sm-4">
-									<div class="row">
-										<!-- 搜尋表單 -->
-										<div>
+<!-- 						<div class="container"> -->
+<!-- 							<div class="row"> -->
+<!-- 								<div class="col-xs-12 col-sm-4"> -->
+<!-- 									<div class="row"> -->
+<!-- 										搜尋表單 -->
+<!-- 										<div> -->
 						
-										</div>
-										<div class="input-group">
-											<input type="text" class="form-control" placeholder="請輸入關鍵字">
-											<span class="input-group-btn">
-												<button class="btn btn-info" type="button">搜尋</button>
-											</span>
-										</div>
-										<div class="divAdd">
-											<a href="<%= request.getContextPath()%>/back-end/pro/addPro.jsp">Add</a>
-										</div>
-									</div>
-								</div>
-								<div class="col-xs-12 col-sm-4"></div>
-								<div class="col-xs-12 col-sm-4"></div>
-							</div>
-						</div>
+<!-- 										</div> -->
+<!-- 										<div class="input-group"> -->
+<!-- 											<input type="text" class="form-control" placeholder="請輸入關鍵字"> -->
+<!-- 											<span class="input-group-btn"> -->
+<!-- 												<button class="btn btn-info" type="button">搜尋</button> -->
+<!-- 											</span> -->
+<!-- 										</div> -->
+<!-- 										<div class="divAdd"> -->
+<%-- 											<a href="<%= request.getContextPath()%>/back-end/pro/addPro.jsp">Add</a> --%>
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 								<div class="col-xs-12 col-sm-4"></div> -->
+<!-- 								<div class="col-xs-12 col-sm-4"></div> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
                                        
 						
 						<!-- 所有商品 -->
@@ -234,6 +234,7 @@
 										<th>${ordListVO.ord_amount}</th>
 										<th>
 											<select name=""  class="form-control select_ord_change" style="width:90px;">
+											    <option>請選擇</option>
 												<option value="${ordListVO.ord_no}">完成</option>
 												<option value="${ordListVO.ord_no}">取消</option>
 											</select>
@@ -316,17 +317,21 @@
 				        });
 					<!--下拉狀態-->
 					$('.select_ord_change').change(function(){
-						$.ajax({
-							 type: "POST",
-							 url: "<%= request.getContextPath()%>/ord/ord.do",
-							 data: creatQueryOrdSelect($(this).val(),$("option:selected", this).text()),
-							 dataType: "json",
-							 success: function (data){
-								 console.log(data.ord_no+'A');
-								 $('#'+data.ord_no).html(data.ord_status);
-						     },
-						     error: function(){alert("AJAX-class發生錯誤囉!")}
-				         })
+						var ans_change = $(this).val();
+						if(ans_change != "請選擇"){
+							$.ajax({
+								 type: "POST",
+								 url: "<%= request.getContextPath()%>/ord/ord.do",
+								 data: creatQueryOrdSelect($(this).val(),$("option:selected", this).text()),
+								 dataType: "json",
+								 success: function (data){
+									 console.log(data.ord_no+'A');
+									 $('#'+data.ord_no).html(data.ord_status);
+									 swal("已成功修改");
+							     },
+							     error: function(){alert("AJAX-class發生錯誤囉!")}
+					         });
+						}
 					})	
 				})
 					<!--按鈕-->
