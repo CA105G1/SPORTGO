@@ -7,6 +7,9 @@
 <!-- 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"> -->
 		<title>SPORTGO 會員登入/註冊</title>
 		<meta charset="utf-8">
+		<meta name="description" content="">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<link rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 		<link rel="icon" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png">
 		<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/style.css">
@@ -28,7 +31,6 @@
 		</style>
 	</head>
 	<body> 
-	<div></div>
 	<jsp:include page="/front-end/CA105G1_header_bt4.jsp"/>
 	<!-- Loading時的小圖示 -->
 	<div class="preloader d-flex align-items-center justify-content-center">
@@ -37,44 +39,61 @@
 	        <img src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png" alt="">
 	    </div>
 	</div>
-	<form METHOD="post" ACTION="login.do">
+	<div class="breadcrumb-area">
+    <!-- Top Breadcrumb Area -->
+	    <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(<%= request.getContextPath()%>/img/sgpic/sportbg2.jpg);">
+	    </div>
+	</div>
+<!-- 	login area -->
+	<section class="contact-area">
 		<div class="container">
-			<div class="row">
-				<div class="shop-widget col-sm-6 offset-3">
-					<h1 align="center">會員登入</h1>
-					<c:if test="${not empty errorMsgs}">
-						<ul class="error">
-							<c:forEach var="message" items="${errorMsgs}">
-								<li>${message.value}</li>
-							</c:forEach>
-						</ul>
-					</c:if>
-					<div class="form-group">
-						<label for="account">帳號</label>
-						<input type="text" name="account" id="account" 
-						class="form-control" value="${param.account}">
-					<div class="form-group">
-						<label for="password">密碼</label>
-						<input type="password" name="password" id="password" 
-						class="form-control" value="${param.password}">
+			<div class="row align-items-center justify-content-between">
+				<div class="col-sm-6 offset-3">
+					<div class="section-heading">
+						<h2 align="center">會員登入</h2>
 					</div>
-						<div class="col-xs-12 col-sm-6">
-							<center>
-								<button type="submit" name="button" class="btn btn-info" value="login">
-								登入</button>
-							</center>
-						</div>
-						<div class="col-xs-12 col-sm-6">
-							<center>
-								<button type="submit" name="button" class="btn btn-info" value="register">
-								註冊</button>
-							</center>
-						</div>
+					 <!-- Contact Form Area -->
+					<div class="contact-form-area mb-100">
+						<form METHOD="post" ACTION="login.do">
+							<div class="row">
+								<c:if test="${not empty errorMsgs}">
+									<ul class="error">
+										<c:forEach var="message" items="${errorMsgs}">
+											<li>${message.value}</li>
+										</c:forEach>
+									</ul>
+								</c:if>
+								<div class="col-12">
+									<div class="form-group">
+										<input type="text" name="account" id="account" 
+										class="form-control" value="${param.account}"
+										placeholder="帳號">
+									</div>
+								</div>
+								<div class="col-12">
+									<div class="form-group">
+										<input type="password" name="password" id="password" 
+										class="form-control" value="${param.password}"
+										placeholder="密碼">
+									</div>
+								</div>
+								<div class="col-6">
+									<button type="submit" name="button" 
+									class="btn alazea-btn" value="login">登入</button>
+								</div>
+								<div class="col-6">
+									<button type="submit" name="button"
+									class="btn alazea-btn" value="register" style="float:right;text-align:center;">
+									註冊</button>
+								</div>
 					</div>
+					</div>
+	</form>
+	</div>
 				</div>
 			</div>
 		</div>
-	</form>
+	</section>
 	<jsp:include page="/front-end/CA105G1_footer_bt4.jsp"/>
 		
 	</body>

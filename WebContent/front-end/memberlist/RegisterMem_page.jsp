@@ -5,12 +5,23 @@
 <head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+		<meta name="description" content="">
 		<title>SPORTGO 會員註冊</title>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-		<script src="https://code.jquery.com/jquery.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
+		<link rel="icon" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png">
+		<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/style.css">
+		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/jquery/jquery-2.2.4.min.js"></script>
+		<script src="<%= request.getContextPath()%>/datetimepicker/jquery.js"></script>
+		<script src="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+		<!-- Popper js -->
+		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/popper.min.js"></script>
+		<!-- Bootstrap js -->
+		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/bootstrap.min.js"></script>
+		<!-- All Plugins js -->
+		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/plugins/plugins.js"></script>
+		<!-- Active js -->
+		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/active.js"></script>
+		
 		<style type="text/css">
 			.btn{display: flex;}
 			.error{color:red;}
@@ -19,84 +30,119 @@
 		</style>
 </head>
 <body>
-	<jsp:include page="/front-end/CA105G1_header.jsp"/>
-	<form method="post" enctype="multipart/form-data" action="Register.do">
+	<jsp:include page="/front-end/CA105G1_header_bt4.jsp"/>
+	<!-- Loading時的小圖示 -->
+	<div class="preloader d-flex align-items-center justify-content-center">
+	    <div class="preloader-circle"></div>
+	    <div class="preloader-img">
+	        <img src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png" alt="">
+	    </div>
+	</div>
+    <!-- Top Breadcrumb Area -->
+	<div class="breadcrumb-area">
+	    <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(<%= request.getContextPath()%>/img/sgpic/sportbg2.jpg);">
+	    </div>
+	</div>
+<!-- 	RegisterArea -->
+	<section class="contact-area">
 		<div class="container">
-			<div class="row">
-				<div class="col-xs-12 col-sm-6 col-sm-offset-3">
-					<h1 align="center">會員註冊</h1>
-					<c:if test="${not empty errorMsgs}">
-						<ul class="error">
-							<c:forEach var="message" items="${errorMsgs}">
-								<li>${message.value}</li>
-							</c:forEach>
-						</ul>
-					</c:if>
-					
-					<div>
-						<label>照片</label>
-						<input type="file" name="picture" class="upl">
-						<img class="preview" src="<%=request.getContextPath()%>/img/mem_no.jpg">
+			<div class="row  align-items-center justify-content-between">
+				<div class="col-sm-6 offset-3">
+					<div class="section-heading">
+						<h2 align="center">會員註冊</h2>
 					</div>
-					<div class="form-group">
-						<label for="account">帳號</label>
-						<input type="text" name="account" 
-						class="form-control" value="${param.account}">
-					<div class="form-group">
-						<label for="password">密碼</label>
-						<input type="password" name="password" 
-						class="form-control" value="${param.password}">
-					</div>
-					<div class="form-group">
-						<label for="name">姓名</label>
-						<input type="text" name="name" 
-						class="form-control" value="${param.name}">
-					</div>
-					<div class="form-group">
-						<label for="nick">暱稱</label>
-						<input type="text" name="nick" 
-						class="form-control" value="${param.nick}">
-					</div>
-					<div class="form-group">
-						<label for="email">電子郵件</label>
-						<input type="email" name="email" 
-						class="form-control" value="${param.email}">
-					</div>
-					<div class="form-group">
-						<label for="phone">手機號碼</label>
-						<input type="text" name="phone" 
-						class="form-control" value="${param.phone}">
-					</div>
-					<div class="form-group">
-						<label for="emgc">緊急聯絡人</label>
-						<input type="text" name="emgc" 
-						class="form-control" value="${param.emgc}">
-					</div>
-					
-					<div class="form-group">
-						<label for="emgcphone">緊急聯絡人電話</label>
-						<input type="text" name="emgcphone" 
-						class="form-control" value="${param.emgcphone}">
-					</div>
-					<div class="col-xs-12 col-sm-6">
-						<center>
-							<button type="submit" name="button"
-							value="register" class="btn btn-info">註冊</button>
-						</center>
-					</div>
-					<div class="col-xs-12 col-sm-6">
-						<center>
-							<button type="submit" name="button"
-							value="cancel" class="btn btn-info">取消</button>
-						</center>
-					</div>
-					</div>
+					<div class="contact-form-area mb-100">
+						<form method="post" enctype="multipart/form-data" action="Register.do">
+						<div class="row">
+							<c:if test="${not empty errorMsgs}">
+								<ul class="error">
+									<c:forEach var="message" items="${errorMsgs}">
+										<li>${message.value}</li>
+									</c:forEach>
+								</ul>
+							</c:if>
+						<div class="col-12">
+							<div class="form-group">
+								<input type="file" name="picture" class="upl" placeholder="照片">
+								<div style="width:100%;height:0;position:relative;padding-bottom:75%;overflow:hidden;border-radius:10px;">
+								<img class="preview" src="<%=request.getContextPath()%>/img/mem_no.jpg"
+								style="height:100%;position:absolute;">
+								</div>							
+							</div>
+						</div>
+						<div class="col-12">
+							<div class="form-group">
+							${message.account.value}
+								<input type="text" name="account" 
+								class="form-control" value="${param.account}"
+								placeholder="帳號(必填)">
+							</div>
+						</div>
+						<div class="col-12">
+							<div class="form-group">
+								<input type="password" name="password" 
+								class="form-control" value="${param.password}"
+								placeholder="密碼(必填)">
+							</div>
+						</div>
+						<div class="col-12">
+							<div class="form-group">
+								<input type="text" name="name" 
+								class="form-control" value="${param.name}"
+								placeholder="姓名(必填)">
+							</div>
+						</div>
+						<div class="col-12">
+							<div class="form-group">
+								<input type="text" name="nick" 
+								class="form-control" value="${param.nick}"
+								placeholder="暱稱">
+							</div>
+						</div>
+						<div class="col-12">
+							<div class="form-group">
+								<input type="email" name="email" 
+								class="form-control" value="${param.email}"
+								placeholder="電子郵件(必填)">
+							</div>
+						</div>
+						<div class="col-12">
+							<div class="form-group">
+								<input type="phone" name="phone" 
+								class="form-control" value="${param.phone}"
+								placeholder="手機號碼(必填)">
+							</div>
+						</div>
+						<div class="col-12">
+							<div class="form-group">
+								<input type="text" name="emgc" 
+								class="form-control" value="${param.emgc}"
+								placeholder="緊急聯絡人">
+							</div>
+						</div>
+						<div class="col-12">
+							<div class="form-group">
+								<input type="text" name="emgcphone" 
+								class="form-control" value="${param.emgcphone}"
+								palceholder="緊急聯絡人電話">
+							</div>
+						</div>
+						<div class="col-6">
+							<button type="submit" name="button" class="btn alazea-btn"
+							value="register">註冊</button>
+						</div>
+						<div class="col-6">
+							<button type="submit" name="button" class="btn alazea-btn"
+							value="cancel" style="float:right;">取消</button>
+						</div>
+						</div>
+					</form>
 				</div>
 			</div>
-
 		</div>
-	</form>	
-	<jsp:include page="/front-end/CA105G1_footer.jsp"/>
+	</div>
+</section>
+	<jsp:include page="/front-end/CA105G1_footer_bt4.jsp"/>
 	
 <script>
 $(function (){

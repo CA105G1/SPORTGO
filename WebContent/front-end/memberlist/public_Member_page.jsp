@@ -57,10 +57,20 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-		<script src="https://code.jquery.com/jquery.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
+		<link rel="icon" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png">
+		<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/style.css">
+		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/jquery/jquery-2.2.4.min.js"></script>
+		<script src="<%= request.getContextPath()%>/datetimepicker/jquery.js"></script>
+		<script src="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+		<!-- Popper js -->
+		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/popper.min.js"></script>
+		<!-- Bootstrap js -->
+		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/bootstrap.min.js"></script>
+		<!-- All Plugins js -->
+		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/plugins/plugins.js"></script>
+		<!-- Active js -->
+		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/active.js"></script>
 		<!-- Font Awesome -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		
@@ -111,14 +121,39 @@
 		</style>
 	</head>
 	<body>
-		<jsp:include page="/front-end/CA105G1_header.jsp"/>
+		<jsp:include page="/front-end/CA105G1_header_bt4.jsp"/>
+		<!-- Loading時的小圖示 -->
+		<div class="preloader d-flex align-items-center justify-content-center">
+		    <div class="preloader-circle"></div>
+		    <div class="preloader-img">
+		        <img src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png" alt="">
+		    </div>
+		</div>
+	    <!-- Top Breadcrumb Area -->
+		<div class="breadcrumb-area">
+		    <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(<%= request.getContextPath()%>/img/sgpic/sportbg2.jpg);">
+		    </div>
+		</div>
 
 		<!-- 右選單 -->
-		<div class="container-fluid" style="width:90%;">
-			<div class="row">
+		<div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/front-end/index.jsp"><i class="fa fa-home"></i>首頁</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">會員專區</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <section class="blog-content-area section-padding-0-100">
+		<div class="container">
+			<div class="row justify-content-center">
 				<!-- 個人頁面 -->
-				<div class="col-xs-12 col-sm-3">
-						<h1>${member.mem_name}</h1>
+				<div class="col-12 col-sm-9 col-md-3">
+						<h2>${member.mem_name}</h2>
 						<div class="center">
 						<img src="<%=request.getContextPath()%>/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"
 						style="max-width:100%;max-height:250px;border-radius:50%;">
@@ -217,6 +252,7 @@
 				</div>
 			</div>
 		</div>
+		</section>
 	<script>
 	var status = "${status}";
 	var mem_no = "${mem_no}";
@@ -283,6 +319,6 @@
 			console.log('${memberlistVO.mem_no}');
 		}
 	</script>
-	<jsp:include page="/front-end/CA105G1_footer.jsp"/>
+	<jsp:include page="/front-end/CA105G1_footer_bt4.jsp"/>
 	</body>
 </html>
