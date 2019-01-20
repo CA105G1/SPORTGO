@@ -21,6 +21,8 @@
 	   <!-- Core Stylesheet -->
 	   <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/style.css">
 	   
+	   <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/venue/build.css" />
+	   
 	   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	   <script src="<%=request.getContextPath()%>/front-end/pro/TWzipcode/jquery.twzipcode.min.js"></script>
 

@@ -18,6 +18,7 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
 		
+		
 		<style>
 		input{
 			height:30px
@@ -152,6 +153,9 @@
 														<label for="openday_sun" class="checkbox-inline">日</label>
 														<input type="checkbox" name="openday_sun" value="Y" id="openday_sun" />
 													
+													
+													
+													
 														<fieldset>
     <legend>Hotel Ratings: </legend>
     <label for="checkbox-1">2 Star</label>
@@ -232,6 +236,7 @@
 		
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 	</body>
 	
 	<script type="text/javascript">

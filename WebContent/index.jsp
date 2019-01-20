@@ -45,7 +45,7 @@
 			<%-- 最新消息---跑馬燈 --%>
 			<jsp:include page="/front-end/indexPutNewsCarousel.jsp" />
 		</div>
-		<div style="height:50px"></div>
+		<div style="height:75px"></div>
 		
 		
 		<%-- 各個運動連結 --%>
@@ -56,7 +56,7 @@
 				<div class="col-xs-12 col-sm-10 " style="display:flex;flex-flow:row wrap;justify-content: center;">
 					<!-- baseball -->
 					<a href="<%=request.getContextPath()%>/Sg_info/Sg_info.do?action=sg_infoCompositeQuery&sp_no=SP001"
-					style="display:flex;flex-direction:column;width:calc(100% / 7 - 30px);margin:10px;">
+					style="display:flex;flex-direction:column;width:calc(100% / 7 - 20px);margin:10px;">
 						<div style="width:100%;height:0;position:relative;padding-bottom:75%;overflow:hidden;border-radius:10px;">
 							<img src="img/indexImg/baseball.png" style="height:100%;width:100%;position:absolute;"/>
 						</div>
@@ -64,42 +64,42 @@
 					
 					<!-- volleyball.png -->
 					<a href="<%=request.getContextPath()%>/Sg_info/Sg_info.do?action=sg_infoCompositeQuery&sp_no=SP002"
-					style="display:flex;flex-direction:column;width:calc(100% / 7 - 30px);margin:10px;">
+					style="display:flex;flex-direction:column;width:calc(100% / 7 - 20px);margin:10px;">
 						<div style="width:100%;height:0;position:relative;padding-bottom:75%;overflow:hidden;border-radius:10px;">
 							<img src="img/indexImg/volleyball.png" style="height:100%;width:100%;position:absolute;"/>
 						</div>
 					</a>
 					<!-- 	basketball.png -->
 					<a href="<%=request.getContextPath()%>/Sg_info/Sg_info.do?action=sg_infoCompositeQuery&sp_no=SP003"
-					style="display:flex;flex-direction:column;width:calc(100% / 7 - 30px);margin:10px;">
+					style="display:flex;flex-direction:column;width:calc(100% / 7 - 20px);margin:10px;">
 						<div style="width:100%;height:0;position:relative;padding-bottom:75%;overflow:hidden;border-radius:10px;">
 							<img src="img/indexImg/basketball.png" style="height:100%;width:100%;position:absolute;"/>
 						</div>
 					</a>					
 					<!--tennis.png -->
 					<a href="<%=request.getContextPath()%>/Sg_info/Sg_info.do?action=sg_infoCompositeQuery&sp_no=SP004"
-					style="display:flex;flex-direction:column;width:calc(100% / 7 - 30px);margin:10px;">
+					style="display:flex;flex-direction:column;width:calc(100% / 7 - 20px);margin:10px;">
 						<div style="width:100%;height:0;position:relative;padding-bottom:75%;overflow:hidden;border-radius:10px;">
 							<img src="img/indexImg/tennis.png" style="height:100%;width:100%;position:absolute;"/>
 						</div>
 					</a>
 					<!-- badminton.png -->
 					<a href="<%=request.getContextPath()%>/Sg_info/Sg_info.do?action=sg_infoCompositeQuery&sp_no=SP005"
-					style="display:flex;flex-direction:column;width:calc(100% / 7 - 30px);margin:10px;">
+					style="display:flex;flex-direction:column;width:calc(100% / 7 - 20px);margin:10px;">
 						<div style="width:100%;height:0;position:relative;padding-bottom:75%;overflow:hidden;border-radius:10px;">
 							<img src="img/indexImg/badminton.png" style="height:100%;width:100%;position:absolute;"/>
 						</div>
 					</a>
 					<!-- running.png -->
 					<a href="<%=request.getContextPath()%>/Sg_info/Sg_info.do?action=sg_infoCompositeQuery&sp_no=SP006"
-					style="display:flex;flex-direction:column;width:calc(100% / 7 - 30px);margin:10px;">
+					style="display:flex;flex-direction:column;width:calc(100% / 7 - 20px);margin:10px;">
 						<div style="width:100%;height:0;position:relative;padding-bottom:75%;overflow:hidden;border-radius:10px;">
 							<img src="img/indexImg/running.png" style="height:100%;width:100%;position:absolute;"/>
 						</div>
 					</a>
 					<!-- bicycle.png -->
 					<a href="<%=request.getContextPath()%>/Sg_info/Sg_info.do?action=sg_infoCompositeQuery&sp_no=SP007"
-					style="display:flex;flex-direction:column;width:calc(100% / 7 - 30px);margin:10px;">
+					style="display:flex;flex-direction:column;width:calc(100% / 7 - 20px);margin:10px;">
 						<div style="width:100%;height:0;position:relative;padding-bottom:75%;overflow:hidden;border-radius:10px;">
 							<img src="img/indexImg/bicycle.png" style="height:100%;width:100%;position:absolute;"/>
 						</div>
@@ -114,7 +114,7 @@
 				<div class="col-xs-12 col-sm-1"></div>
 			</div>
 		</div>
-		
+		<div style="height:75px"></div>
 		
 		
 		
