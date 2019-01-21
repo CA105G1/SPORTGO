@@ -566,12 +566,12 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 				$('.chat').scrollTop($('.chat').prop('scrollHeight'));
 // 				messageArea.scrollTop = messageArea.scrollHeight;
 				//上線通知
-				if(jsonObj.online==='online'){
-					$('.online_'+jsonObj.who).attr('src','/CA105G1/img/online.png');
+				if(jsonObj.type==='online'){
+					$('.online_'+jsonObj.userName).attr('src','/CA105G1/img/online.png');
 				};
 				//離線通知
-				if(jsonObj.online==='offline'){
-					$('.online_'+jsonObj.who).attr('src','/CA105G1/img/offline.png');
+				if(jsonObj.type==='offline'){
+					$('.online_'+jsonObj.userName).attr('src','/CA105G1/img/offline.png');
 				};
 			};
 			

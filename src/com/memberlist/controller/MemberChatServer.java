@@ -54,14 +54,14 @@ public class MemberChatServer {
 			for(FriendVO list : friendlist) {
 				for(String name : names ) {
 					if(name.equals(list.getMem1_no())) {
-						String online = "{\"online\":\"online\",\"who\":\""+name+"\"}";
+						String online = "{\"type\":\"online\",\"userName\":\""+name+"\"}";
 						Session sess = sessionsMap.get(list.getMem2_no());
 						if(sess!=null) {
 							if(sess.isOpen())
 								sess.getBasicRemote().sendText(online);
 						}
 					}else if(name.equals(list.getMem2_no())) {
-						String online = "{\"online\":\"online\",\"who\":\""+name+"\"}";
+						String online = "{\"type\":\"online\",\"userName\":\""+name+"\"}";
 						Session sess = sessionsMap.get(list.getMem1_no());
 						if(sess!=null) {
 							if(sess.isOpen())
@@ -150,14 +150,14 @@ public class MemberChatServer {
 			for(FriendVO list : friendlist) {
 				for(String name : names ) {
 					if(name.equals(list.getMem1_no())) {
-						String offline = "{\"online\":\"offline\",\"who\":\""+name+"\"}";
+						String offline = "{\"type\":\"offline\",\"userName\":\""+name+"\"}";
 						Session sess = sessionsMap.get(list.getMem2_no());
 						if(sess!=null) {
 							if(sess.isOpen())
 								sess.getBasicRemote().sendText(offline);
 						}
 					}else if(name.equals(list.getMem2_no())) {
-						String offline = "{\"online\":\"offline\",\"who\":\""+name+"\"}";
+						String offline = "{\"type\":\"offline\",\"userName\":\""+name+"\"}";
 						Session sess = sessionsMap.get(list.getMem1_no());
 						if(sess!=null) {
 							if(sess.isOpen())
