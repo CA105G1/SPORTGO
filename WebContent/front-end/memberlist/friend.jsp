@@ -553,23 +553,26 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 // 				}
 // 				console.log(jsonObj);
 				var message = jsonObj.userName + ": "+jsonObj.message+ "\r\n";
-				if(jsonObj.userName===userName){
-					$("#chat_" + jsonObj.to).append("<div style='display:flex;flex-direction:row-reverse;font-size:18px;'>"
-					+"<img style='width:30px;height:30px;border-radius:50%;' src='showPicture.do?mem_no="
-						+jsonObj.userName+"'><br>"+jsonObj.message+"<br>"+jsonObj.time+"</div>");
-				}else{
-					$("#chat_" + jsonObj.userName).append("<div style='display:flex;font-size:18px;'>"
-							+"<img style='width:30px;height:30px;border-radius:50%;' src='showPicture.do?mem_no="
+				//如果TYPE是CHAT
+				if(jsonObj.type==='chat') {
+					if(jsonObj.userName===userName){
+						$("#chat_" + jsonObj.to).append("<div style='display:flex;flex-direction:row-reverse;font-size:18px;'>"
+						+"<img style='width:30px;height:30px;border-radius:50%;' src='showPicture.do?mem_no="
 							+jsonObj.userName+"'><br>"+jsonObj.message+"<br>"+jsonObj.time+"</div>");
+					}else{
+						$("#chat_" + jsonObj.userName).append("<div style='display:flex;font-size:18px;'>"
+								+"<img style='width:30px;height:30px;border-radius:50%;' src='showPicture.do?mem_no="
+								+jsonObj.userName+"'><br>"+jsonObj.message+"<br>"+jsonObj.time+"</div>");
+					}
 				}
 // 				messageArea.value = messageArea.value + message;
 				$('.chat').scrollTop($('.chat').prop('scrollHeight'));
 // 				messageArea.scrollTop = messageArea.scrollHeight;
-				//上線通知
+				//上線通知(如果TYPE是online)
 				if(jsonObj.type==='online'){
 					$('.online_'+jsonObj.userName).attr('src','/CA105G1/img/online.png');
 				};
-				//離線通知
+				//離線通知(如果TYPE是offline)
 				if(jsonObj.type==='offline'){
 					$('.online_'+jsonObj.userName).attr('src','/CA105G1/img/offline.png');
 				};

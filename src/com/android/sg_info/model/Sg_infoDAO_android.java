@@ -49,7 +49,7 @@ public class Sg_infoDAO_android implements Sg_infoDAO_interface_android{
 	private static final String FIND_BY_PK =
 			"SELECT SG.*, SP.sp_name, V.V_Name, M.MEM_NAME , V.V_LAT, V.V_LONG FROM sg_info SG LEFT JOIN SPORT SP on SP.sp_no = SG.sp_no LEFT JOIN VENUE V ON V.V_NO = SG.V_NO LEFT JOIN MEMBERLIST M ON SG.MEM_NO = M.MEM_NO WHERE SG.SG_NO=?";
 	private static final String FIND_BY_MASTER =
-			"SELECT SG.*, SP.sp_name, V.V_Name, M.MEM_NAME , V.V_LAT, V.V_LONG FROM sg_info SG LEFT JOIN SPORT SP on SP.sp_no = SG.sp_no LEFT JOIN VENUE V ON V.V_NO = SG.V_NO LEFT JOIN MEMBERLIST M ON SG.MEM_NO = M.MEM_NO WHERE SG.MEM_NO=? AND SG.SG_STATUS = '揪團中' ORDER BY SG.SG_DATE DESC"; //主辦的揪團
+			"SELECT SG.*, SP.sp_name, V.V_Name, M.MEM_NAME , V.V_LAT, V.V_LONG FROM sg_info SG LEFT JOIN SPORT SP on SP.sp_no = SG.sp_no LEFT JOIN VENUE V ON V.V_NO = SG.V_NO LEFT JOIN MEMBERLIST M ON SG.MEM_NO = M.MEM_NO WHERE SG.MEM_NO=? AND SG.SG_STATUS != '解散'  ORDER BY SG.SG_DATE DESC"; //主辦的揪團
 	private static final String FIND_BY_MEM =
 			"SELECT SG.*, SP.sp_name, V.V_Name, M.MEM_NAME , V.V_LAT, V.V_LONG FROM SG_MEM SGM LEFT JOIN SG_INFO SG ON SGM.SG_NO = SG.SG_NO LEFT JOIN SPORT SP on SP.sp_no = SG.sp_no LEFT JOIN VENUE V ON V.V_NO = SG.V_NO LEFT JOIN MEMBERLIST M ON SG.MEM_NO = M.MEM_NO WHERE SGM.MEM_NO = ? AND SG.SG_DATE > SYSDATE ORDER BY SG.SG_DATE"; //參加的揪團
 	private static final String FIND_BY_LIKE =
