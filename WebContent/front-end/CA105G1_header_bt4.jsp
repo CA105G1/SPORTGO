@@ -8,7 +8,14 @@
 		
 		<!-- Font Awesome -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-		
+		<style type="text/css">
+		.dropbtn:hover {background-color:red;}
+		.dropdown-content {display: none;position:right;background-color: #f9f9f9;
+  		min-width: 160px;box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);z-index: 1;}
+  		.dropdown:hover .dropdown-content {display: block;}
+		.dropdown-content a {color: black;padding: 12px 16px;text-decoration: none;display: block;text-align: left;}
+  		
+		</style>
 		
 	</head>
 	<body> 
@@ -65,12 +72,17 @@
 							
 							
 <!-- 							<ul class="nav navbar-nav"> -->
-						        <li class="dropdown">
-						        	<a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-bell"></i> </a>
-							    	<ul class="dropdown-menu" id="notation">
-							            <li><a href="#">Account Settings <span class="glyphicon glyphicon-cog pull-left"></span></a></li>
-						          	</ul>
-						     	</li>
+					        <li class="dropdown">
+					        	<a href="javascript:void(0)" class="dropbtn">
+					        		<i class="fa fa-bell" style="color:white;margin-top:12px;"></i>
+					        	</a>
+				        		<div>
+				        			<h5 id="count" style="color:red;margin-top:-32px;margin-left:13px;font-weight:bold;"></h5>
+				        		</div>
+						    	<div class="dropdown-content dropdown-menu dropdown-menu-right" id="notification"
+						    	style="position:absolute">
+					          	</div>
+					     	</li>
 <!-- 						     </ul> -->
 							
 							
@@ -144,7 +156,8 @@
 	 var path = window.location.pathname;
 	 var webCtx = path.substring(0,path.indexOf('/',1));
 	 var endPointURL = "ws://"+host+webCtx+MemPoint;
-	 var webSocket; 
+	 var webSocket;
+	 var count;
      console.log(memberlistVO);
      $(function(){
 			if(memberlistVO!="")
@@ -152,26 +165,24 @@
 		})
      function connect(){
 			webSocket = new WebSocket(endPointURL);
-			console.log(webSocket);
-			
 			webSocket.onopen = function(event){
 				//alert(event.data);
+				count = 0;
 				console.log("WebSocket connected successful");
 			};
 			
 			webSocket.onmessage = function(event){
-				$("#notation").show();
 				var jsonObj = JSON.parse(event.data);
-				console.log(jsonObj.type);
-					if(jsonObj.type==='notation'){
+				if(jsonObj.type==='notification'){
 // 						$("#notation").append("<div class='alert alert-info alert-dismissable' role='alert'>"+
 // 						"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"+
 // 			         	"<span aria-hidden='true' style='color: deeppink;'>好</span></button>"+
 // 		            	"<p class='alert-title'>"+jsonObj.to+"</p><p class='alert-body'>"+
 // 		            	jsonObj.message+"</p></div>");
-						$("#notation").append("<li><a href='#'>"+jsonObj.to+"  "+
-		            	jsonObj.message+"<span class='fa fa-cog pull-left'></span></a></li>");
-					}
+						$("#notification").append("<a class='dropdown-item' href='#'>"+jsonObj.to+" "+jsonObj.message+"</a>");
+						count++;
+				}
+				$("#count").append(count);
 			};
 			
 			webSocket.onclose = function(event){

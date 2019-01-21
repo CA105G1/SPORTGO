@@ -51,7 +51,7 @@ public class MemberlistRedisDAO implements MemberlistRedisDAO_interface {
 			JSONObject json = new JSONObject();
 			String message=null;
 			try {
-				message = json.getJSONObject(list).getString("message");
+				message = json.getJSONObject(list).getString("to");
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}

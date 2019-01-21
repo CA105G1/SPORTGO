@@ -12,6 +12,8 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.memberlist.model.MemberlistRedisDAO;
 
 @ServerEndpoint("/MemEchoServer/{mem_no}")
@@ -29,11 +31,14 @@ public class MemberEchoServer {
 		List<String> notation = dao.getNotationMsg(mem_no);
 		if(notation!=null) {
 			for(String list : notation) {
-				System.out.println(list.toString());
-				userSession.getBasicRemote().sendText(list.toString());
+				JsonObject jsonObject = new Gson().fromJson(list.toString(), JsonObject.class);
+				if(jsonObject.get("type").getAsString().equals("notification")) {
+					userSession.getBasicRemote().sendText(list.toString());
+					System.out.println(list.toString());
+					System.out.println("WebSocket push succeed.");
+				}
 			}
 		}
-		System.out.println("WebSocket push succeed.");
 		
 	}
 	
