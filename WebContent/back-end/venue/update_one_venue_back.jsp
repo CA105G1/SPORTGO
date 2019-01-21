@@ -178,7 +178,7 @@
 						<td>
 							<div id="v_address_show_tab3" class="pull-left"  style="padding-left:10px;"></div>
 							<input type="text" id="v_address_temp_tab3" class="v_address_class form-control" value="${venueVO_tab3.v_address}"/>
-							<input type="hidden" name="v_address" id="v_address_tab3" value=""/>
+							<input type="hidden" name="v_address" id="v_address_tab3" value="${venueVO_tab3.v_address}"/>
 							<div class="center-block errorMsgs-color">${errorMsgs_tab3.get("v_address")}</div> 
 						</td>
 					</tr>

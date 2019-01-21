@@ -94,27 +94,68 @@
 						</td>
 					</tr>
 					
+<!-- 					<tr> -->
+<!-- 						<th><div class="mytitle">場地地區</div></th> -->
+<!-- 						<td> -->
+<%-- 							<jsp:useBean id="regService" scope="page" class="com.region.model.RegService" /> --%>
+<!-- 							<select size="1" name="reg_no" id="reg_no_tab2" class="form-control text-center"> -->
+<!-- 								<option value=""></option> -->
+<%-- 								<c:forEach var="regVO" items="${regService.all}"> --%>
+<%-- 									<option value="${regVO.reg_no}" ${regVO.reg_no==venueVO_tab2.reg_no?'selected':''}>${regVO.reg_name}-${regVO.getReg_dist().trim()}</option> --%>
+<%-- 								</c:forEach> --%>
+<!-- 							</select> -->
+<%-- 							<div class="center-block errorMsgs-color">${errorMsgs_tab2.get("reg_no")}</div> --%>
+<!-- 						</td> -->
+<!-- 					</tr> -->
+					
+					
+					
 					<tr>
-						<th><div class="mytitle">場地地區</div></th>
+						<th><div class="mytitle">請選擇縣市</div></th>
 						<td>
-							<jsp:useBean id="regService" scope="page" class="com.region.model.RegService" />
-							<select size="1" name="reg_no" id="reg_no_tab2" class="form-control text-center">
-								<option value=""></option>
-								<c:forEach var="regVO" items="${regService.all}">
-									<option value="${regVO.reg_no}" ${regVO.reg_no==venueVO_tab2.reg_no?'selected':''}>${regVO.reg_name}-${regVO.getReg_dist().trim()}</option>
-								</c:forEach>
+							<jsp:useBean id="regSvc" scope="page" class="com.region.model.RegService" />
+	      					<select id="reg_name_tab2" size="1" name="reg_name" class="reg_name_class text-center form-control">
+	      						<option value="">請選擇縣市</option>
+	      						<c:forEach var="reg_name" items="${regSvc.reg_nameList }">
+	      							<option value="${reg_name}">${reg_name}
+	      						</c:forEach>
 							</select>
-							<div class="center-block errorMsgs-color">${errorMsgs_tab2.get("reg_no")}</div>
+						</td>
+					</tr>
+					
+					<tr>
+						<th><div class="mytitle">請選擇地區</div></th>
+						<td>
+							<select size="1" name="reg_dist" class="reg_dist_class text-center form-control" id="reg_dist_tab2">
+	      						<option id="reg_dist_tab2Option" value="">請選擇地區</option>
+							</select>
+						</td>
+					</tr>
+					
+					<tr>
+						<th><div class="mytitle">郵遞區號</div></th>
+						<td>
+							<div id="reg_no_show_tab2" class="pull-left"  style="padding-left:10px;">${venueVO_tab2.reg_no}</div>
+							<input type="hidden" name='reg_no' value='' id='reg_no_tab2' class="form-control" />
 						</td>
 					</tr>
 					
 					<tr>
 						<th><div class="mytitle">場地地址<div style="color:red; padding-left:5px;"> * </div></div></th>
 						<td>
-							<input type="text" name="v_address" value="${venueVO_tab2.v_address}" class="form-control"/>
+							<div id="v_address_show_tab2" class="pull-left"  style="padding-left:10px;"></div>
+							<input type="text" id="v_address_temp_tab2" class="v_address_class form-control" value="${venueVO_tab2.v_address}"/>
+							<input type="hidden" name="v_address" id="v_address_tab2" value="${venueVO_tab2.v_address}"/>
 							<div class="center-block errorMsgs-color">${errorMsgs_tab2.get("v_address")}</div> 
 						</td>
 					</tr>
+<!-- 					<tr> -->
+<!-- 						<th><div class="mytitle">場地地址<div style="color:red; padding-left:5px;"> * </div></div></th> -->
+<!-- 						<td> -->
+<%-- 							<input type="text" name="v_address" value="${venueVO_tab2.v_address}" class="form-control"/> --%>
+<%-- 							<div class="center-block errorMsgs-color">${errorMsgs_tab2.get("v_address")}</div>  --%>
+<!-- 						</td> -->
+<!-- 					</tr> -->
 					
 					
 					<tr>
