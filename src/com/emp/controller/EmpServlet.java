@@ -29,6 +29,7 @@ public class EmpServlet extends HttpServlet {
 
     private final String BACK_END_INDEX_PATH = "/backEndIndex.jsp";
     private final String FOR_ADD_EMP_SUCCESS_PATH = "/back-end/emp/maintain_emp_info_back.jsp";
+    private final String LOGIN_SUCCESS_TEMP_PATH = "/back-end/memberlist/listAllMem.jsp";
 //    private final String BACK_END_INDEX_PATH = "/backEndIndex_fortest.jsp";
     
     private final String DB_ERROR_MSGS = "DataBaseError";
@@ -109,7 +110,7 @@ public class EmpServlet extends HttpServlet {
 			/////
 			HttpSession session = request.getSession();
 			session.setAttribute("empVO", empVO);
-			RequestDispatcher successView = request.getRequestDispatcher(BACK_END_INDEX_PATH);
+			RequestDispatcher successView = request.getRequestDispatcher(LOGIN_SUCCESS_TEMP_PATH);
 			successView.forward(request, response);
 			return;
 		}catch (Exception e) {

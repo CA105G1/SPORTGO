@@ -20,10 +20,13 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-		<script src="https://code.jquery.com/jquery.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-		
+		<link rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
+		<link rel="icon" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png">
+		<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/style.css">
+		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/jquery/jquery-2.2.4.min.js"></script>
+		<script src="<%= request.getContextPath()%>/datetimepicker/jquery.js"></script>
+		<script src="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+				
 <!-- 		<script src='//production-assets.codepen.io/assets/editor/live/console_runner-079c09a0e3b9ff743e39ee2d5637b9216b3545af0de366d4b9aad9dc87e26bfd.js'></script> -->
 <!-- 	    <script src='//production-assets.codepen.io/assets/editor/live/events_runner-73716630c22bbc8cff4bd0f07b135f00a0bdc5d14629260c3ec49e5606f98fdd.js'></script> -->
 <!-- 	    <script src='//production-assets.codepen.io/assets/editor/live/css_live_reload_init-2c0dc5167d60a5af3ee189d570b1835129687ea2a61bee3513dee3a50c115a77.js'></script> -->
@@ -207,26 +210,112 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 	<script src="https://use.fontawesome.com/1c6f725ec5.js"></script>
 	</head>
 	<body>
-		<jsp:include page="/front-end/CA105G1_header.jsp"/>
-		
+		<jsp:include page="/front-end/CA105G1_header_bt4.jsp"/>
+		 <!-- Top Breadcrumb Area -->
+		<div class="breadcrumb-area">
+		    <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(<%= request.getContextPath()%>/img/badmintoncount.JPG);">
+		    </div>
+		</div>
 		<!-- 右選單 -->
-		<div class="container-fluid">
+		<div class="container-fluid" style="width:90%;">
 			<div class="row">
 				<div class="col-xs-12 col-sm-3">
 					<jsp:include page="list_group.jsp"/>
+					<h3>我的捧油</h3><br>
+				<div class="grid-container" style="display:grid;">
+					<c:forEach var="friend" items="${friendlist}">
+						<c:forEach var="member" items="${memberlist}">
+							<c:if test="${memberlistVO.mem_no eq friend.mem1_no}">
+								<c:if test="${friend.mem2_no eq member.mem_no}" >
+									<form method="post" action="Friend.do"  class="grid-item">
+										<a href="public_Member_page.jsp?mem_no=${member.mem_no}">
+											<img src="<%=request.getContextPath()%>
+											/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"
+											style="width:80px;height:80px;border-radius:50%;"><br>
+											<label>${member.mem_name}</label><br>
+											<input type="hidden" name="action" value="delete_Friend">
+											<input type="hidden" name="mem2_no" value="${member.mem_no}">
+											<button type="submit" class="btn btn-danger">刪刪</button>
+										</a>
+									</form>
+								</c:if>
+							</c:if>
+							<c:if test="${memberlistVO.mem_no eq friend.mem2_no}">
+								<c:if test="${friend.mem1_no eq member.mem_no}" >
+									<form method="post" action="Friend.do"  class="grid-item">
+										<a href="public_Member_page.jsp?mem_no=${member.mem_no}">
+											<img src="<%=request.getContextPath()%>
+											/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"
+											style="width:80px;height:80px;border-radius:50%"><br>
+											<label>${member.mem_name}</label><br>
+											<input type="hidden" name="action" value="delete_Friend">
+											<input type="hidden" name="mem2_no" value="${member.mem_no}">
+											<button type="submit" class="btn btn-danger">刪刪</button>
+										</a>
+									</form>
+								</c:if>
+							</c:if>
+						</c:forEach>
+					</c:forEach>
+				</div>
+				<h3>捧油拜託加加</h3><br>
+				<div class="grid-container" style="display:grid;">
+					<c:forEach var="friend" items="${possiblefriend}">
+						<c:forEach var="member" items="${memberlist}">
+							<c:if test="${memberlistVO.mem_no eq friend.mem1_no}">
+								<c:if test="${friend.mem2_no eq member.mem_no}" >
+									<form method="post" action="Friend.do"  class="grid-item">
+										<a href="public_Member_page.jsp?mem_no=${member.mem_no}">
+											<img src="<%=request.getContextPath()%>
+											/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"
+											style="width:80px;height:80px;border-radius:50%;"><br>
+											<label>${member.mem_name}</label><br>
+											<input type="hidden" name="action" value="delete_Friend">
+											<input type="hidden" name="mem2_no" value="${member.mem_no}">
+											<button type="submit" class="btn btn-danger">刪刪</button>
+										</a>
+									</form>
+								</c:if>
+							</c:if>
+						</c:forEach>
+					</c:forEach>
+				</div>
+				<h3>哪些捧油誰想加我呀</h3><br>
+				<div class="grid-container" style="display:grid;">
+					<c:forEach var="friend" items="${whoaddme}">
+						<c:forEach var="member" items="${memberlist}">
+							<c:if test="${memberlistVO.mem_no eq friend.mem2_no}">
+								<c:if test="${friend.mem1_no eq member.mem_no}" >
+									<form method="post" action="Friend.do"  class="grid-item">
+										<a href="public_Member_page.jsp?mem_no=${member.mem_no}">
+											<img src="<%=request.getContextPath()%>
+											/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"
+											style="width:80px;height:80px;border-radius:50%;"><br>
+											<label>${member.mem_name}</label><br>
+											<input type="hidden" name="action" value="update_Friend">
+											<input type="hidden" name="mem2_no" value="${member.mem_no}">
+											<button type="submit" class="btn btn-info">加加</button>
+										</a>
+									</form>
+								</c:if>
+							</c:if>
+						</c:forEach>
+					</c:forEach>
+				</div>
+					
 				</div>
 <!-- 				聊天區 -->
-				<div class="col-xs-12 col-sm-6">
+				<div class="col-xs-12 col-sm-9">
 					<div class="row wrap">
 <!-- 						左邊好友欄 -->
-						<section class="left">
+						<section class="left" style="width:calc(100%/4);">
 							<div class="profile">
 								<img src="<%=request.getContextPath()%>
 											/front-end/memberlist/showPicture.do?mem_no=${memberlistVO.mem_no}">
-								<h3 id="userName" style="max-width:100%;max-height:100%">${memberlistVO.mem_name}</h3>
+								<h3 id="userName">${memberlistVO.mem_name}</h3>
 								<div class="icons">
 									<i class="fa fa-commenting fa-lg" aria-hidden="true"></i>
-									<i class="fa fa-bars fa-lg" aria-hidden="true"></i>
+<!-- 									<i class="fa fa-bars fa-lg" aria-hidden="true"></i> -->
 								</div>
 							</div>
 <!-- 							<div class="wrap-search"> -->
@@ -266,7 +355,7 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 						</div>
 				</section>
 
-				<section class="right">
+				<section class="right" style="width:calc(100%/4*3);">
 						<div class="chat-head">
 <!-- 								<img src=""> -->
 <!-- 								<div class="chat-name"> -->
@@ -320,87 +409,87 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 				</div>
 				<div class="col-xs-12 col-sm-3">
 				<!-- 好友管理 -->
-				<h3>我的捧油</h3><br>
-				<div class="grid-container" style="display:grid;">
-					<c:forEach var="friend" items="${friendlist}">
-						<c:forEach var="member" items="${memberlist}">
-							<c:if test="${memberlistVO.mem_no eq friend.mem1_no}">
-								<c:if test="${friend.mem2_no eq member.mem_no}" >
-									<form method="post" action="Friend.do"  class="grid-item">
-										<a href="public_Member_page.jsp?mem_no=${member.mem_no}">
-											<img src="<%=request.getContextPath()%>
-											/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"
-											style="width:80px;height:80px;border-radius:50%;"><br>
-											<label>${member.mem_name}</label><br>
-											<input type="hidden" name="action" value="delete_Friend">
-											<input type="hidden" name="mem2_no" value="${member.mem_no}">
-											<button type="submit" class="btn btn-danger">超堵爛你</button>
-										</a>
-									</form>
-								</c:if>
-							</c:if>
-							<c:if test="${memberlistVO.mem_no eq friend.mem2_no}">
-								<c:if test="${friend.mem1_no eq member.mem_no}" >
-									<form method="post" action="Friend.do"  class="grid-item">
-										<a href="public_Member_page.jsp?mem_no=${member.mem_no}">
-											<img src="<%=request.getContextPath()%>
-											/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"
-											style="width:80px;height:80px;border-radius:50%"><br>
-											<label>${member.mem_name}</label><br>
-											<input type="hidden" name="action" value="delete_Friend">
-											<input type="hidden" name="mem2_no" value="${member.mem_no}">
-											<button type="submit" class="btn btn-danger">超堵爛你</button>
-										</a>
-									</form>
-								</c:if>
-							</c:if>
-						</c:forEach>
-					</c:forEach>
-				</div>
-				<h3>捧油拜託加加</h3><br>
-				<div class="grid-container" style="display:grid;">
-					<c:forEach var="friend" items="${possiblefriend}">
-						<c:forEach var="member" items="${memberlist}">
-							<c:if test="${memberlistVO.mem_no eq friend.mem1_no}">
-								<c:if test="${friend.mem2_no eq member.mem_no}" >
-									<form method="post" action="Friend.do"  class="grid-item">
-										<a href="public_Member_page.jsp?mem_no=${member.mem_no}">
-											<img src="<%=request.getContextPath()%>
-											/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"
-											style="width:80px;height:80px;border-radius:50%;"><br>
-											<label>${member.mem_name}</label><br>
-											<input type="hidden" name="action" value="delete_Friend">
-											<input type="hidden" name="mem2_no" value="${member.mem_no}">
-											<button type="submit" class="btn btn-danger">超堵爛你</button>
-										</a>
-									</form>
-								</c:if>
-							</c:if>
-						</c:forEach>
-					</c:forEach>
-				</div>
-				<h3>哪些捧油誰想加我呀</h3><br>
-				<div class="grid-container" style="display:grid;">
-					<c:forEach var="friend" items="${whoaddme}">
-						<c:forEach var="member" items="${memberlist}">
-							<c:if test="${memberlistVO.mem_no eq friend.mem2_no}">
-								<c:if test="${friend.mem1_no eq member.mem_no}" >
-									<form method="post" action="Friend.do"  class="grid-item">
-										<a href="public_Member_page.jsp?mem_no=${member.mem_no}">
-											<img src="<%=request.getContextPath()%>
-											/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"
-											style="width:80px;height:80px;border-radius:50%;"><br>
-											<label>${member.mem_name}</label><br>
-											<input type="hidden" name="action" value="update_Friend">
-											<input type="hidden" name="mem2_no" value="${member.mem_no}">
-											<button type="submit" class="btn btn-info">來～加加</button>
-										</a>
-									</form>
-								</c:if>
-							</c:if>
-						</c:forEach>
-					</c:forEach>
-				</div>
+<!-- 				<h3>我的捧油</h3><br> -->
+<!-- 				<div class="grid-container" style="display:grid;"> -->
+<%-- 					<c:forEach var="friend" items="${friendlist}"> --%>
+<%-- 						<c:forEach var="member" items="${memberlist}"> --%>
+<%-- 							<c:if test="${memberlistVO.mem_no eq friend.mem1_no}"> --%>
+<%-- 								<c:if test="${friend.mem2_no eq member.mem_no}" > --%>
+<!-- 									<form method="post" action="Friend.do"  class="grid-item"> -->
+<%-- 										<a href="public_Member_page.jsp?mem_no=${member.mem_no}"> --%>
+<%-- 											<img src="<%=request.getContextPath()%> --%>
+<%-- 											/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}" --%>
+<!-- 											style="width:80px;height:80px;border-radius:50%;"><br> -->
+<%-- 											<label>${member.mem_name}</label><br> --%>
+<!-- 											<input type="hidden" name="action" value="delete_Friend"> -->
+<%-- 											<input type="hidden" name="mem2_no" value="${member.mem_no}"> --%>
+<!-- 											<button type="submit" class="btn btn-danger">刪刪</button> -->
+<!-- 										</a> -->
+<!-- 									</form> -->
+<%-- 								</c:if> --%>
+<%-- 							</c:if> --%>
+<%-- 							<c:if test="${memberlistVO.mem_no eq friend.mem2_no}"> --%>
+<%-- 								<c:if test="${friend.mem1_no eq member.mem_no}" > --%>
+<!-- 									<form method="post" action="Friend.do"  class="grid-item"> -->
+<%-- 										<a href="public_Member_page.jsp?mem_no=${member.mem_no}"> --%>
+<%-- 											<img src="<%=request.getContextPath()%> --%>
+<%-- 											/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}" --%>
+<!-- 											style="width:80px;height:80px;border-radius:50%"><br> -->
+<%-- 											<label>${member.mem_name}</label><br> --%>
+<!-- 											<input type="hidden" name="action" value="delete_Friend"> -->
+<%-- 											<input type="hidden" name="mem2_no" value="${member.mem_no}"> --%>
+<!-- 											<button type="submit" class="btn btn-danger">刪刪</button> -->
+<!-- 										</a> -->
+<!-- 									</form> -->
+<%-- 								</c:if> --%>
+<%-- 							</c:if> --%>
+<%-- 						</c:forEach> --%>
+<%-- 					</c:forEach> --%>
+<!-- 				</div> -->
+<!-- 				<h3>捧油拜託加加</h3><br> -->
+<!-- 				<div class="grid-container" style="display:grid;"> -->
+<%-- 					<c:forEach var="friend" items="${possiblefriend}"> --%>
+<%-- 						<c:forEach var="member" items="${memberlist}"> --%>
+<%-- 							<c:if test="${memberlistVO.mem_no eq friend.mem1_no}"> --%>
+<%-- 								<c:if test="${friend.mem2_no eq member.mem_no}" > --%>
+<!-- 									<form method="post" action="Friend.do"  class="grid-item"> -->
+<%-- 										<a href="public_Member_page.jsp?mem_no=${member.mem_no}"> --%>
+<%-- 											<img src="<%=request.getContextPath()%> --%>
+<%-- 											/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}" --%>
+<!-- 											style="width:80px;height:80px;border-radius:50%;"><br> -->
+<%-- 											<label>${member.mem_name}</label><br> --%>
+<!-- 											<input type="hidden" name="action" value="delete_Friend"> -->
+<%-- 											<input type="hidden" name="mem2_no" value="${member.mem_no}"> --%>
+<!-- 											<button type="submit" class="btn btn-danger">刪刪</button> -->
+<!-- 										</a> -->
+<!-- 									</form> -->
+<%-- 								</c:if> --%>
+<%-- 							</c:if> --%>
+<%-- 						</c:forEach> --%>
+<%-- 					</c:forEach> --%>
+<!-- 				</div> -->
+<!-- 				<h3>哪些捧油誰想加我呀</h3><br> -->
+<!-- 				<div class="grid-container" style="display:grid;"> -->
+<%-- 					<c:forEach var="friend" items="${whoaddme}"> --%>
+<%-- 						<c:forEach var="member" items="${memberlist}"> --%>
+<%-- 							<c:if test="${memberlistVO.mem_no eq friend.mem2_no}"> --%>
+<%-- 								<c:if test="${friend.mem1_no eq member.mem_no}" > --%>
+<!-- 									<form method="post" action="Friend.do"  class="grid-item"> -->
+<%-- 										<a href="public_Member_page.jsp?mem_no=${member.mem_no}"> --%>
+<%-- 											<img src="<%=request.getContextPath()%> --%>
+<%-- 											/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}" --%>
+<!-- 											style="width:80px;height:80px;border-radius:50%;"><br> -->
+<%-- 											<label>${member.mem_name}</label><br> --%>
+<!-- 											<input type="hidden" name="action" value="update_Friend"> -->
+<%-- 											<input type="hidden" name="mem2_no" value="${member.mem_no}"> --%>
+<!-- 											<button type="submit" class="btn btn-info">加加</button> -->
+<!-- 										</a> -->
+<!-- 									</form> -->
+<%-- 								</c:if> --%>
+<%-- 							</c:if> --%>
+<%-- 						</c:forEach> --%>
+<%-- 					</c:forEach> --%>
+<!-- 				</div> -->
 			</div>	
 		</div>
 		
@@ -409,13 +498,18 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 		
 	</div>
-	<jsp:include page="/front-end/CA105G1_footer.jsp"/>
+	
 	<script>
 		var userName = '${memberlistVO.mem_no}';
 		var MemPoint = '/MemChatServer'+'/'+userName;
 		var chatFriend = null;
 		var host = window.location.host;
 		var endPointURL = 'ws://'+host+'/CA105G1'+MemPoint;
+// 		var date = new Date();
+// 		var time = date.toString();
+// 		var time = (date.getFullYear()+"/"+date.getMonth()+"/"+date.getDate()+" "+
+// 		date.getHours()+":"+date.Minutes()+":"+date.Seconds()).toString();
+// 		console.log(time);
 		
 		var webSocket;
 		
@@ -462,22 +556,22 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 				if(jsonObj.userName===userName){
 					$("#chat_" + jsonObj.to).append("<div style='display:flex;flex-direction:row-reverse;font-size:18px;'>"
 					+"<img style='width:30px;height:30px;border-radius:50%;' src='showPicture.do?mem_no="
-						+jsonObj.userName+"'><br>"+jsonObj.message+ "</div>");
+						+jsonObj.userName+"'><br>"+jsonObj.message+"<br>"+jsonObj.time+"</div>");
 				}else{
 					$("#chat_" + jsonObj.userName).append("<div style='display:flex;font-size:18px;'>"
 							+"<img style='width:30px;height:30px;border-radius:50%;' src='showPicture.do?mem_no="
-							+jsonObj.userName+"'><br>"+jsonObj.message+ "</div>");
+							+jsonObj.userName+"'><br>"+jsonObj.message+"<br>"+jsonObj.time+"</div>");
 				}
 // 				messageArea.value = messageArea.value + message;
 				$('.chat').scrollTop($('.chat').prop('scrollHeight'));
 // 				messageArea.scrollTop = messageArea.scrollHeight;
 				//上線通知
-				if(jsonObj.online==='online'){
-					$('.online_'+jsonObj.who).attr('src','/CA105G1/img/online.png');
+				if(jsonObj.type==='online'){
+					$('.online_'+jsonObj.userName).attr('src','/CA105G1/img/online.png');
 				};
 				//離線通知
-				if(jsonObj.online==='offline'){
-					$('.online_'+jsonObj.who).attr('src','/CA105G1/img/offline.png');
+				if(jsonObj.type==='offline'){
+					$('.online_'+jsonObj.userName).attr('src','/CA105G1/img/offline.png');
 				};
 			};
 			
@@ -489,11 +583,15 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 		function sendMessage(){
 			var inputMessage = document.getElementById("input-message");
 			var message = inputMessage.value;
+			var date = new Date();
+			var time = date.getFullYear().toString() + "/" + ('0' + date.getMonth()+1).slice(-2)+ "/" + ('0' + date.getDate()).slice(-2)+" "
+			   + ('0' + date.getHours()).slice(-2)+":"+ ('0' + date.getMinutes()).slice(-2)+":"+ ('0' + date.getSeconds()).slice(-2);
 			var jsonObj = {
 					"userName" :userName,
 					"to" :chatFriend,
 					"type" : "chat",
-					"message" :message
+					"message" :message,
+					"time": time
 			};
 			if(chatFriend!=null)
 				webSocket.send(JSON.stringify(jsonObj));
@@ -501,5 +599,14 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 			inputMessage.focus();
 		}
 	</script>
+	<jsp:include page="/front-end/CA105G1_footer_bt4.jsp"/>	
+	<!-- Popper js -->
+		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/popper.min.js"></script>
+		<!-- Bootstrap js -->
+		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/bootstrap.min.js"></script>
+		<!-- All Plugins js -->
+		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/plugins/plugins.js"></script>
+		<!-- Active js -->
+		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/active.js"></script>
 	</body>
 </html>

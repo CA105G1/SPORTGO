@@ -80,6 +80,7 @@ public class VenueServlet extends HttpServlet {
 					break;
 				// insert or update
 				//case "update_cancel":
+				case "update_disply_by_v_no":
 				case "insert_one_venue":
 				case "update_commit":
 					doForwardNextServlet(request, response, VENUE_CREATE_OR_UPATE_SERVLET);

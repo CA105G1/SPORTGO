@@ -29,7 +29,7 @@
 	</style>
 </head>
 <body>
-	<h1>this is show one venue page for back</h1>
+<!-- 	<h1>this is show one venue page for back</h1> -->
 <%
 	VenueVO venueVO = (VenueVO)request.getAttribute("venueVO");
 	VenueTypeVO venueTypeVO = (VenueTypeVO)request.getAttribute("venueTypeVO");
@@ -48,20 +48,32 @@
 <div class="container-fluid">
 	<div class="row">
 			<table class="table table-hover table-striped table-bordered text-center">
-				<caption class="text-center">this is show one news page</caption>
+				<caption class="text-center">
+					<div class='h3'>${venueVO.v_no}-${venueVO.v_name}-${venueTypeVO.vt_name}-詳細資料</div>
+				</caption>
 				<thead>
 					<tr>
 						<th colspan="2">
 						
-							<div class="col-xs-12 col-sm-6">
-								<form method="post" action="<%=request.getContextPath()%>/venue/venue.do">
-									<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>" /><!--送出本網頁的路徑給Controller-->
-			     					<input type="hidden" name="v_no" value="${venueVO.v_no}" />
-									<input type="hidden" name="action" value="delete" />
-									<input type="submit" value="刪除" class="btn btn-success btn-block" />
-								</form>
-							</div>
-						
+<!-- 							<div class="col-xs-12 col-sm-6"> -->
+<%-- 								<form method="post" action="<%=request.getContextPath()%>/venue/venue.do"> --%>
+<%-- 									<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>" /><!--送出本網頁的路徑給Controller--> --%>
+<%-- 			     					<input type="hidden" name="v_no" value="${venueVO.v_no}" /> --%>
+<!-- 									<input type="hidden" name="action" value="delete" /> -->
+<!-- 									<input type="submit" value="刪除" class="btn btn-success btn-block" /> -->
+<!-- 								</form> -->
+<!-- 							</div> -->
+							
+<!-- 							<div class="col-xs-12 col-sm-6"> -->
+<%-- 								<form method="post" action="<%=request.getContextPath()%>/venue/venue.do"> --%>
+<%-- 									<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>" /><!--送出本網頁的路徑給Controller--> --%>
+<%-- 			     					<input type="hidden" name="v_no" value="${venueVO.v_no}" /> --%>
+<%-- 			     					<input type="hidden" name="v_display" value="${venueVO.v_display=='顯示'?'不顯示':'顯示'}"> --%>
+<!-- 									<input type="hidden" name="action" value="update_disply_by_v_no" /> -->
+<%-- 									<input type="submit" value="${venueVO.v_display=='顯示'?'不顯示於前台':'顯示於前台'}" class="btn btn-success btn-block" /> --%>
+<!-- 								</form> -->
+<!-- 							</div> -->
+							<div class="col-xs-12 col-sm-6"></div>
 							<div class="col-xs-12 col-sm-6">
 								<form method="post" action="<%=request.getContextPath()%>/venue/venue.do">
 									<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>" /><!--送出本網頁的路徑給Controller-->

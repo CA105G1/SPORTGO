@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import org.omg.CORBA.ValueMember;
+
 import com.venue.model.VenueService;
 import com.venue.model.VenueVO;
 //TODO: 地址，電話，緯經度，驗證
@@ -82,12 +84,46 @@ public class VenueCreateOrUpdateServlet extends HttpServlet {
 						VENUEVO_FOR_ERROR_NAME_TITLE+TAB_UPDATE, // request.setAttribute("?",venueVO);
 						false);  // isFrontEnd
 				break;
+//			case "update_disply_by_v_no":
+//				doActionUpdateOneVneue(request,response,
+//						);
+//				break;
 			default:
 				break;
 		}
 		
 	}
 	
+//	private void doActionUpdateOneVneue(HttpServletRequest request, HttpServletResponse response,
+//			String goToLocalUrl_forSuccess, String whichTab_forSuccess,
+//			String goToLocalUrl_forError, String whichTab_forError) throws ServletException, IOException {
+//		request.setCharacterEncoding("UTF-8");
+//		Map<String, String> errorMsgs = getErrorMsgsCollection(request, ERRORMSGS_TITLE, whichTab_forError);
+//		try {
+//			String v_no = request.getParameter("v_no");
+//			String v_display = request.getParameter("v_display");
+//			////
+//			VenueService venueService = new VenueService();
+//			VenueVO venueVO = venueService.getOneVenue(v_no);
+//			venueVO.setV_display(v_display);
+//			venueService.updateVenue(venueVO);
+//			
+//			RequestDispatcher requestDispatcher = request.getRequestDispatcher(goToLocalUrl_forSuccess);
+//			requestDispatcher.forward(request, response);
+//			return;
+//			
+//		}catch (Exception e) {
+////			e.printStackTrace();
+//			errorMsgs.put(DB_ERROR_MSGS,"儲存資料失敗: "+e.getMessage());
+//			request.setAttribute(venueVO4Error, venueVO);
+//			request.setAttribute(WHITCH_TAB, whichTab_forError);
+//			RequestDispatcher failureView = request.getRequestDispatcher(goToLocalUrl_forError);
+//			failureView.forward(request, response);
+//			return;
+//		}
+//		
+//		
+//	}
 
 
 	private Map<String, String> getErrorMsgsCollection(HttpServletRequest request, String titleName,String tabNum){
@@ -260,8 +296,13 @@ public class VenueCreateOrUpdateServlet extends HttpServlet {
 		venueVO.setV_introduction(v_introduction);
 		
 		String v_address = request.getParameter("v_address");
-		v_address = checkParameter_IfIsEmpty_TransToNull(v_address);
-		venueVO.setV_address(v_address);
+		if(v_address==null||v_address.trim().length()==0) {
+			errorMsgs.put("v_address", "場地地址請勿留白");
+		}else {
+			venueVO.setV_address(v_address);
+		}
+//		v_address = checkParameter_IfIsEmpty_TransToNull(v_address);
+//		venueVO.setV_address(v_address);
 		
 		String v_phoneno = request.getParameter("v_phoneno");
 		v_phoneno = checkParameter_IfIsEmpty_TransToNull(v_phoneno);

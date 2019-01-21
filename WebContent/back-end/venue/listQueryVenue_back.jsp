@@ -87,7 +87,7 @@
 --%>
 <!-- one card -->
 <% if(list==null || list.size()==0){%>
-	<div>查無資料</div>
+	<div class="text-center h1">---查無資料---</div>
 <% }else{ %>
 	<%@ include file="pages/page1_forVenue.file" %>
 	<table class="table table-hover table-striped table-bordered table-condensed">
@@ -96,7 +96,7 @@
 		<c:forEach var="venueVO" items="${myList}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 		<tr class='${venueVO.v_no==venueVO_toUpdate.v_no?"showSP":""}'>
 			<th>
-				<div class="col-sm-1 h5" style="width:20px"><%=(++countItem)+(whichPage-1)*(rowsPerPage) %></div>
+				<div class="col-sm-1 h5" style="width:20px;"><%=(++countItem)+(whichPage-1)*(rowsPerPage) %></div>
 			</th>
 			<td>
 				<div class="col-sm-11">
@@ -170,7 +170,7 @@
 												<input type="hidden" name="v_no" value="${venueVO.v_no}" />
 												<input type="hidden" name="whichPage" value="<%=whichPage%>" />
 												<input type="hidden" name="action" value="show_one_venue_back" />												
-												<input type="submit" value="more information......" class="btn btn-info btn-block"/>
+												<input type="submit" value="update or more information......" class="btn btn-info btn-block form-control "/>
 											</form>
 										</td>
 									</tr>
@@ -182,7 +182,7 @@
 <!-- 							<div> -->
 <%-- 								<a href="${venueVO.v_photo1_url}"><img src="${venueVO.v_photo1_url}" class="img-responsive img-rounded"></a> --%>
 <!-- 							</div> -->
-							<p>DB</p>
+<!-- 							<p>DB</p> -->
 							<div>
 								<img src="<%=request.getContextPath()%>/venue/venueImg.do?v_no=${venueVO.v_no}" class="img-responsive img-rounded" alt="WTF"/>
 							</div>

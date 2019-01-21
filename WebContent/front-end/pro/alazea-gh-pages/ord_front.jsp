@@ -120,15 +120,15 @@
 
 <body onload="connect();" onunload="disconnect();">
     <!-- Preloader -->
-    <div class="preloader d-flex align-items-center justify-content-center">
-        <div class="preloader-circle"></div>
-        <div class="preloader-img">
-            <img src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png" alt="">
-        </div>
-    </div>
+<!--     <div class="preloader d-flex align-items-center justify-content-center"> -->
+<!--         <div class="preloader-circle"></div> -->
+<!--         <div class="preloader-img"> -->
+<%--             <img src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png" alt=""> --%>
+<!--         </div> -->
+<!--     </div> -->
 
     <!-- ##### Header Area Start ##### -->
-    <header class="header-area">
+<!--     <header class="header-area"> -->
 
         <!-- ***** Top Header Area ***** -->
         <jsp:include page="/front-end/pro/alazea-gh-pages/header.jsp"/>
@@ -176,9 +176,9 @@
 
         <!-- ***** Navbar Area ***** -->
 
-    </header>
+<!--     </header> -->
     <!-- ##### Header Area End ##### -->
-
+  <jsp:include page="/front-end/CA105G1_header_bt4.jsp" />
     <!-- ##### Breadcrumb Area Start ##### -->
     <div class="breadcrumb-area">
         <!-- Top Breadcrumb Area -->
@@ -284,7 +284,7 @@
 										</div>
 										<div class="col-xs-12 col-sm-6">
 										<div align="right">
-											<button type="button" class="btn btn-outline-success" onclick="returnpath()">完成訂單</button>
+											<button type="button" class="btn btn-outline-success" onclick="returnpath()" id="buttonCancel">完成訂單</button>
 											<button type="button" value="<%= request.getAttribute("ord_no") %>" class="cancel btn btn-outline-danger">取消訂單</button> 
 										</div>
 										</div>
@@ -302,7 +302,7 @@
     <!-- ##### Checkout Area End ##### -->
 
     <!-- ##### Footer Area Start ##### -->
-<jsp:include page="/front-end/pro/alazea-gh-pages/CA105G1_footer.jsp"/>
+<jsp:include page="/front-end/CA105G1_footer_bt4.jsp" />
     <!-- ##### Footer Area End ##### -->
 
     <!-- ##### All Javascript Files ##### -->
@@ -379,7 +379,25 @@
 			}
 			//完成訂單
 			function returnpath(){
-				form1.submit();
+				document.getElementById('buttonCancel').disabled=true;
+				swal({
+					title:"完成訂單囉!",
+					showCancelButton : true,
+					closeOnConfirm: false,
+					cancelButtonText : '回商城!',
+					confirmButtonText : '查看訂單去!',
+					html:"是否前往查看訂單"
+				}).then(
+					function (result) {
+						form1.submit();
+		                if (result) {
+		                	 window.location.replace("<%=request.getContextPath()%>/front-end/memberlist/order.jsp"); 
+		                }
+					}
+				), function(dismiss) {
+					window.location.replace("<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/listAllPro_front.jsp"); 
+	   		    }
+				
 			}
 			
 

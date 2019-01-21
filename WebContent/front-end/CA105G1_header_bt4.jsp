@@ -93,7 +93,7 @@
                             <!-- Navbar Start -->
                             <div class="classynav">
                                 <ul>
-                                    <li><a href="<%=request.getContextPath()%>/index.jsp">　首頁　</a></li>
+                                    <li><a href="<%=request.getContextPath()%>/index.jsp">　<img style="height: 30px; width:30px;"src="<%=request.getContextPath()%>/img/logo_SportyGo_2_light.png" alt="SportGo!"/> 首頁　</a></li>
 <!--                                     <li><a href="#">關於我們</a></li> -->
                                     <li><a href="<%=request.getContextPath()%>/front-end/memberlist/public_Member_page.jsp">　會員專區　</a></li>
                                     <li><a href="<%=request.getContextPath()%>/front-end/Sg_info/SgHome.jsp">　揪團　</a></li>

@@ -124,7 +124,7 @@
 <!-- 		</div> -->
 	    <!-- Top Breadcrumb Area -->
 		<div class="breadcrumb-area">
-		    <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(<%= request.getContextPath()%>/img/sgpic/sportbg2.jpg);">
+		    <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(<%= request.getContextPath()%>/img/badmintoncount.JPG);">
 		    </div>
 		</div>
 
@@ -134,7 +134,7 @@
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/front-end/index.jsp"><i class="fa fa-home"></i>首頁</a></li>
+                            <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/index.jsp"><i class="fa fa-home"></i>首頁</a></li>
                             <li class="breadcrumb-item active" aria-current="page">會員專區</li>
                         </ol>
                     </nav>
@@ -146,27 +146,28 @@
 			<div class="row justify-content-center">
 				<!-- 個人頁面 -->
 				<div class="col-12 col-sm-9 col-md-3">
-						<h2>${member.mem_name}</h2>
-						<div class="center">
-						<img src="<%=request.getContextPath()%>/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"
-						style="max-width:100%;max-height:250px;border-radius:50%;">
+					<div class="row">
+<!-- 					大頭貼 -->
+						<div 
+						style="width:100%;height:0;position:relative;padding-bottom:75%;overflow:hidden;border-radius:10px;">
+							<img src="<%=request.getContextPath()%>/front-end/memberlist/showPicture.do?mem_no=${member.mem_no}"
+							style="height:100%;position:absolute;">
 						</div>
-						<c:if test="${type==1}">
-						<form method="post" action="Friend.do" class="center">
-							<input type="hidden" name="action" value="add_Friend">
-							<input type="hidden" name="mem2_no" value="${member.mem_no}">
-							<input type="submit" class="btn btn-info"
-							 value="好友加加">
-						</form>
-						<div class="list-group" id="myTab">
-							<a href="#sg" data-toggle="tab" class="list-group-item" style="display:flex;text-align:center;">揪團</a>
-							<a href="#club" data-toggle="tab" class="list-group-item" style="display:flex;text-align:center;">社團</a>
-							<a href="#information" data-toggle="tab" class="list-group-item" style="display:flex;text-align:center;">個人簡介</a>
+						<div class="container-fluid">
+							<h3 style="text-align:center;">${member.mem_name}</h3>
+							<c:if test="${type==1}">
+									<form method="post" action="Friend.do" class="center">
+										<input type="hidden" name="action" value="add_Friend">
+										<input type="hidden" name="mem2_no" value="${member.mem_no}">
+										<input type="submit" class="btn btn-info"
+										 value="好友加加">
+									</form>
+							</c:if>
+							<c:if test="${type==0}">
+								<jsp:include page="list_group.jsp"></jsp:include>
+							</c:if>
 						</div>
-						</c:if>
-						<c:if test="${type==0}">
-							<jsp:include page="list_group.jsp"></jsp:include>
-						</c:if>
+					</div>
 				</div>	
 				
 				
@@ -180,31 +181,66 @@
 							<c:forEach var="sg_memVO" items="${sg_mem}">
 								<c:forEach var="sg_infoVO" items="${sgall}">
 									<c:if test="${sg_infoVO.sg_no eq sg_memVO.sg_no}">
-										<a href="<%=request.getContextPath()%>/front-end/Sg_info/Sg_infoGetByPkForJoinMem.jsp?Sg_no=${sg_infoVO.sg_no}" 
-										style="display:flex;flex-direction:column;width:calc(100% / 3 - 20px);margin:10px;">
-										<div style="width:100%;height:0;position:relative;padding-bottom:70%;overflow:hidden;border-radius:10px;">
-										<img src="<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${sg_infoVO.sg_no}"
-										style="height:100%;position:absolute;">
-										</div>
-										<label class="center">${sg_infoVO.sg_name}</label>
-										<label class="center">團長：${memberlistService.getOneMem(sg_infoVO.mem_no).mem_name}</label>
-										<label class="center">${sg_infoVO.sg_date}</label>
+<!-- 									新的動畫 -->
+										<div class="col-12 col-sm-6 col-lg-6 single_portfolio_item design home-design">
+						                    <!-- Portfolio Thumbnail -->
+						                    <div class="portfolio-thumbnail bg-img" style="background-image: url(<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${sg_infoVO.sg_no});"
+						                    style="width:100%;height:0;position:relative;padding-bottom:70%;overflow:hidden;border-radius:10px;"></div>
+						                    <!-- Portfolio Hover Text -->
+							                    <div class="portfolio-hover-overlay" >
+							                        <a href="<%=request.getContextPath()%>/front-end/Sg_info/Sg_infoGetByPkForJoinMem.jsp?Sg_no=${sg_infoVO.sg_no}" 
+							                        class="portfolio-img d-flex align-items-center justify-content-center" title="Portfolio 1">
+							                            <div class="port-hover-text">
+							                                <h3>${sg_infoVO.sg_name}</h3>
+							                                <h5>團長：${memberlistService.getOneMem(sg_infoVO.mem_no).mem_name}</h5>
+							                                <h5>${sg_infoVO.sg_date}</h5>
+							                            </div>
+							                        </a>
+							                    </div>
+					               		</div>
+<!-- 					               		舊的切版 -->
+<%-- 										<a href="<%=request.getContextPath()%>/front-end/Sg_info/Sg_infoGetByPkForJoinMem.jsp?Sg_no=${sg_infoVO.sg_no}"  --%>
+<!-- 										style="display:flex;flex-direction:column;width:calc(100% / 3 - 20px);margin:10px;"> -->
+<!-- 										<div style="width:100%;height:0;position:relative;padding-bottom:70%;overflow:hidden;border-radius:10px;"> -->
+<%-- 										<img src="<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${sg_infoVO.sg_no}" --%>
+<!-- 										style="height:100%;position:absolute;"> -->
+<!-- 										</div> -->
+<%-- 										<label class="center">${sg_infoVO.sg_name}</label> --%>
+<%-- 										<label class="center">團長：${memberlistService.getOneMem(sg_infoVO.mem_no).mem_name}</label> --%>
+<%-- 										<label class="center">${sg_infoVO.sg_date}</label> --%>
 										</a>
 									</c:if>
 								</c:forEach>
 							</c:forEach>
 <!-- 							創建的揪團 -->
 								<c:forEach var="sg_infoVO" items="${sglist}">
-										<a href="<%=request.getContextPath()%>/front-end/Sg_info/Sg_infoGetByPkForHead.jsp?Sg_no=${sg_infoVO.sg_no}" 
-										style="display:flex;flex-direction:column;width:calc(100% / 3 - 20px);margin:10px;">
-										<div style="width:100%;height:0;position:relative;padding-bottom:70%;overflow:hidden;border-radius:10px;">
-										<img src="<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${sg_infoVO.sg_no}"
-										style="height:100%;position:absolute;">
-										</div>
-										<label class="center">${sg_infoVO.sg_name}</label>
-										<label class="center">團長：${memberlistService.getOneMem(sg_infoVO.mem_no).mem_name}</label>
-										<label class="center">${sg_infoVO.sg_date}</label>
-										</a>
+									<div class="col-12 col-sm-6 col-lg-6 single_portfolio_item design home-design">
+						                    <!-- Portfolio Thumbnail -->
+						                    <div class="portfolio-thumbnail bg-img" style="background-image: url(<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${sg_infoVO.sg_no});"
+						                    style="width:100%;height:0;position:relative;padding-bottom:70%;overflow:hidden;border-radius:10px;"></div>
+						                    <!-- Portfolio Hover Text -->
+						                    <div class="portfolio-hover-overlay" >
+						                        <a href="<%=request.getContextPath()%>/front-end/Sg_info/Sg_infoGetByPkForJoinMem.jsp?Sg_no=${sg_infoVO.sg_no}" 
+						                        class="portfolio-img d-flex align-items-center justify-content-center" title="Portfolio 1">
+						                            <div class="port-hover-text">
+						                                <h3>${sg_infoVO.sg_name}</h3>
+						                                <h5>團長：${memberlistService.getOneMem(sg_infoVO.mem_no).mem_name}</h5>
+						                                <h5>${sg_infoVO.sg_date}</h5>
+						                            </div>
+						                        </a>
+						                    </div>
+					               		</div>
+								
+<%-- 										<a href="<%=request.getContextPath()%>/front-end/Sg_info/Sg_infoGetByPkForHead.jsp?Sg_no=${sg_infoVO.sg_no}"  --%>
+<!-- 										style="display:flex;flex-direction:column;width:calc(100% / 3 - 20px);margin:10px;"> -->
+<!-- 										<div style="width:100%;height:0;position:relative;padding-bottom:70%;overflow:hidden;border-radius:10px;"> -->
+<%-- 										<img src="<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${sg_infoVO.sg_no}" --%>
+<!-- 										style="height:100%;position:absolute;"> -->
+<!-- 										</div> -->
+<%-- 										<label class="center">${sg_infoVO.sg_name}</label> --%>
+<%-- 										<label class="center">團長：${memberlistService.getOneMem(sg_infoVO.mem_no).mem_name}</label> --%>
+<%-- 										<label class="center">${sg_infoVO.sg_date}</label> --%>
+<!-- 										</a> -->
 								</c:forEach>
 							
 							
@@ -215,28 +251,58 @@
 <%-- 							<%System.out.println(clublist.get(1).getClub_no()); %> --%>
 						<div class=" tab-pane" style="display:flex;flex-flow:row wrap;">
 							<c:forEach var="clubmember" items="${clubmember}">
+								<div class="col-12 col-sm-6 col-lg-6 single_portfolio_item design home-design">
+						                    <!-- Portfolio Thumbnail -->
+				                    <div class="portfolio-thumbnail bg-img" style="background-image: url(<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${clubmember.club_no});"
+				                    style="width:100%;height:0;position:relative;padding-bottom:70%;overflow:hidden;border-radius:10px;"></div>
+				                    <!-- Portfolio Hover Text -->
+				                    <div class="portfolio-hover-overlay" >
+				                        <a href="<%=request.getContextPath()%>/front-end/Sg_info/Sg_infoGetByPkForJoinMem.jsp?Sg_no=${clubmember.club_no}" 
+				                        class="portfolio-img d-flex align-items-center justify-content-center" title="Portfolio 1">
+				                            <div class="port-hover-text">
+				                                <h3>${clubService.getOneClub(clubmember.club_no).club_name}</h3>
+				                                <h5>${sportService.getByPK(clubService.getOneClub(clubmember.club_no).sp_no).sp_name}</h5>
+				                            </div>
+				                        </a>
+				                    </div>
+			               		</div>
 							
-										<a href="<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clubmember.club_no}" 
-										style="display:flex;flex-direction:column;width:calc(100% / 3 - 20px);margin:10px;">
-										<div style="width:100%;height:auto;position:relative;padding-bottom:70%;overflow:hidden;border-radius:10px;">
-										<img src="<%=request.getContextPath()%>/clubImg.do?club_no=${clubmember.club_no}"
-										style="height:100%;position:absolute;"><br>
-										</div>
-										<label class="center"><i class="fa fa-users"></i>${clubService.getOneClub(clubmember.club_no).club_name}</label>
-												<label class="center"><i class="fa fa-arrow-circle-o-right"></i>${sportService.getByPK(clubService.getOneClub(clubmember.club_no).sp_no).sp_name}</label>
-										</a>
+<%-- 										<a href="<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clubmember.club_no}"  --%>
+<!-- 										style="display:flex;flex-direction:column;width:calc(100% / 3 - 20px);margin:10px;"> -->
+<!-- 										<div style="width:100%;height:auto;position:relative;padding-bottom:70%;overflow:hidden;border-radius:10px;"> -->
+<%-- 										<img src="<%=request.getContextPath()%>/clubImg.do?club_no=${clubmember.club_no}" --%>
+<!-- 										style="height:100%;position:absolute;"><br> -->
+<!-- 										</div> -->
+<%-- 										<label class="center"><i class="fa fa-users"></i>${clubService.getOneClub(clubmember.club_no).club_name}</label> --%>
+<%-- 												<label class="center"><i class="fa fa-arrow-circle-o-right"></i>${sportService.getByPK(clubService.getOneClub(clubmember.club_no).sp_no).sp_name}</label> --%>
+<!-- 										</a> -->
 							</c:forEach>
 							<c:forEach var="clubhost" items="${clubhost}">
-											<a href="<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clubhost.club_no}"
-											style="display:flex;flex-direction:column;width:calc(100% / 3 - 20px);margin:10px;">
-											<div style="width:100%;height:auto;position:relative;padding-bottom:70%; overflow:hidden;border-radius:10px;">
-												<img class="img-responsive card-img-top" src="<%=request.getContextPath()%>/clubImg.do?club_no=${clubhost.club_no}"
-												style="height:100%;position:absolute;"><br>
-											</div>
-											<label class="center"><i class="fa fa-users"></i>${clubService.getOneClub(clubhost.club_no).club_name}</label>
-											<label class="center"><i class="fa fa-arrow-circle-o-right"></i>${clubService.getOneClub(clubhost.club_no).club_name}</label>
-											</a>
-								</c:forEach>
+								<div class="col-12 col-sm-6 col-lg-6 single_portfolio_item design home-design">
+						                    <!-- Portfolio Thumbnail -->
+				                    <div class="portfolio-thumbnail bg-img" style="background-image: url(<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${clubhost.club_no});"
+				                    style="width:100%;height:0;position:relative;padding-bottom:70%;overflow:hidden;border-radius:10px;"></div>
+				                    <!-- Portfolio Hover Text -->
+				                    <div class="portfolio-hover-overlay" >
+				                        <a href="<%=request.getContextPath()%>/front-end/Sg_info/Sg_infoGetByPkForJoinMem.jsp?Sg_no=${clubhost.club_no}" 
+				                        class="portfolio-img d-flex align-items-center justify-content-center" title="Portfolio 1">
+				                            <div class="port-hover-text">
+				                                <h3>${clubService.getOneClub(clubhost.club_no).club_name}</h3>
+				                                <h5>${sportService.getByPK(clubService.getOneClub(clubhost.club_no).sp_no).sp_name}</h5>
+				                            </div>
+				                        </a>
+				                    </div>
+			               		</div>
+<%-- 											<a href="<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clubhost.club_no}" --%>
+<!-- 											style="display:flex;flex-direction:column;width:calc(100% / 3 - 20px);margin:10px;"> -->
+<!-- 											<div style="width:100%;height:auto;position:relative;padding-bottom:70%; overflow:hidden;border-radius:10px;"> -->
+<%-- 												<img class="img-responsive card-img-top" src="<%=request.getContextPath()%>/clubImg.do?club_no=${clubhost.club_no}" --%>
+<!-- 												style="height:100%;position:absolute;"><br> -->
+<!-- 											</div> -->
+<%-- 											<label class="center"><i class="fa fa-users"></i>${clubService.getOneClub(clubhost.club_no).club_name}</label> --%>
+<%-- 											<label class="center"><i class="fa fa-arrow-circle-o-right"></i>${clubService.getOneClub(clubhost.club_no).club_name}</label> --%>
+<!-- 											</a> -->
+							</c:forEach>
 						</div>
 						
 						

@@ -54,51 +54,91 @@
 <% if(list==null || list.size()==0){%>
 	<div>查無資料</div>
 <% }else{ %>
-	<table border="1">
-		<tr>
-			<th>消息編號</th>
-			<th>消息類型編號</th>
-			<th>消息類型名稱</th>
-			<th>文字內容</th>
-			<th>圖片附檔名</th>			
-			<th>圖片內容</th>
-			<th>消息狀態</th>
-			<th>最初發布時間</th>
-			<th>截止時間</th>
-			<th>修改</th>
-		</tr>
-		<%@ include file="pages/page1_forNews.file" %> 
+	<%@ include file="pages/page1_forNews.file" %> 
+	<table class="table table-hover table-striped table-bordered table-condensed">
+	<tbody>
+		<% int countItem=0;%> 
 		<c:forEach var="newsVO" items="${myList}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
-<!-- 		<script type="text/javascript"> -->
-<!-- // 			var ttt = 0; -->
-<%-- // 			console.log( (++ttt)+" : ${newsVO.news_no}"); --%>
-<%-- // 			console.log( (  ttt)+" : ${newsVO_toUpdate.news_no}"); --%>
-<!-- 		</script> -->
+		<tr class='${newsVO.news_no==newsVO_toUpdate.news_no?"showSP":""}'>
+			<th>
+				<div class="col-sm-1 h5" style="width:20px"><%=(++countItem)+(whichPage-1)*(rowsPerPage) %></div>
+			</th>
 			
-			<tr class='${newsVO.news_no==newsVO_toUpdate.news_no?"showSP":""}'>
-				<td>${newsVO.news_no}</td>
-				<td>${newsVO.newstype_no}</td>
-				<td>${newstypeService.getOneNewsType(newsVO.getNewstype_no()).getNewstype_name()}</td>
-				<td>${newsVO.news_script}</td>
-				<td>${newsVO.pic_extension}</td>
-				<td><img src="<%=request.getContextPath()%>/news/newsImg.do?news_no=${newsVO.news_no}" /></td>
-				<td>${newsVO.news_stutas}</td>
-				<td><fmt:formatDate value="${newsVO.news_release_date}" pattern="yyyy-MM-dd HH:mm"/></td>
-				<td><fmt:formatDate value="${newsVO.news_last_date}" pattern="yyyy-MM-dd HH:mm"/></td>
-				
-				<td>
-				  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/news/news.do" style="margin-bottom: 0px;">
-				     <input type="submit" value="修改_刪除"> 
-				     <input type="hidden" name="news_no"      value="${newsVO.news_no}">
-				     <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
-				     <input type="hidden" name="whichPage"	value="<%=whichPage%>">               <!--送出當前是第幾頁給Controller-->
-<!-- 				     <input type="hidden" name="action"	    value="getOne_For_Update"> -->
-				     <input type="hidden" name="action"	    value="showOneNews">
-				  </FORM>
-				</td>
-			</tr>
-			
+			<td>
+				<div class="col-sm-11">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<div class="col-sm-9">
+							<table class="table table-hover table-bordered table-condensed text-center">
+								<tbody>
+									<tr>
+										<th>消息編號</th>
+										<td>${newsVO.news_no}</td>
+									</tr>
+									
+<!-- 									<tr>	 -->
+<!-- 										<th>消息類型編號</th> -->
+<%-- 										<td>${newsVO.newstype_no}</td> --%>
+<!-- 									</tr> -->
+									
+									<tr>
+										<th>消息類型名稱</th>
+										<td>${newstypeService.getOneNewsType(newsVO.getNewstype_no()).getNewstype_name()}</td>
+									</tr>	
+									
+									<tr>
+										<th>文字內容</th>
+										<td>${newsVO.news_script}</td>
+									</tr>
+									
+<!-- 									<tr> -->
+<!-- 										<th>圖片附檔名</th> -->
+<%-- 										<td>${newsVO.pic_extension}</td> --%>
+<!-- 									</tr> -->
+									
+									<tr>
+										<th>消息狀態</th>
+										<td>${newsVO.news_stutas}</td>
+									</tr>
+									
+									<tr>
+										<th>最初發布時間</th>
+										<td><fmt:formatDate value="${newsVO.news_release_date}" pattern="yyyy-MM-dd HH:mm"/></td>
+									</tr>
+									
+									<tr>
+										<th>截止時間</th>
+										<td><fmt:formatDate value="${newsVO.news_last_date}" pattern="yyyy-MM-dd HH:mm"/></td>
+									</tr>
+									
+									<tr>
+										<th colspan='2'>
+										  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/news/news.do" style="margin-bottom: 0px;">
+										     <input type="submit" value="修改_刪除" class="btn btn-info btn-block form-control"> 
+										     <input type="hidden" name="news_no"      value="${newsVO.news_no}">
+										     <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
+										     <input type="hidden" name="whichPage"	value="<%=whichPage%>">               <!--送出當前是第幾頁給Controller-->
+										     <input type="hidden" name="action"	    value="showOneNews">
+										  </FORM>
+										</th>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						
+						<div class="col-sm-3">
+							<div>
+								<img src="<%=request.getContextPath()%>/news/newsImg.do?news_no=${newsVO.news_no}" class="img-responsive img-rounded"/>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+				</div>
+			</td>
+		</tr>
 		</c:forEach>
+	</tbody>
 	</table>
 	<%@ include file="pages/page2_forNews.file" %> 
 <% } %>

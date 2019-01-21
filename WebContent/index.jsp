@@ -13,16 +13,16 @@
 		<!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 		
 		<title>CA105G1:SportGo!</title>
-<!-- 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"> -->
+		<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"> -->
 		
 		<!-- Favicon -->
-    	<link rel="icon" href="<%=request.getContextPath()%>/img/logo_SportyGo_2_light.pngy">
-
-    	<!-- Core Stylesheet -->
-    	<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/style.css">
-		
+	   <link rel="icon" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png">
+	
+	   <!-- Core Stylesheet -->
+	   <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/style.css">
+	   
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    	<script src="<%=request.getContextPath()%>/front-end/pro/TWzipcode/jquery.twzipcode.min.js"></script>
+	    <script src="<%=request.getContextPath()%>/front-end/pro/TWzipcode/jquery.twzipcode.min.js"></script>
 
 		<style>
 /* 	.grid-container{  */
@@ -148,11 +148,11 @@
     <script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/popper.min.js"></script>
     <!-- Bootstrap js -->
     <script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/bootstrap.min.js"></script>
-    <!-- All Plugins js -->
+	<!-- All Plugins js -->
     <script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/plugins/plugins.js"></script>
     <!-- Active js -->
     <script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/active.js"></script>
-
+   
 <!-- 		<script src="https://code.jquery.com/jquery.js"></script> -->
 <!-- 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 	</body>

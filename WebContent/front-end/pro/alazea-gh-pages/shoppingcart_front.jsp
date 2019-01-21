@@ -91,7 +91,7 @@
 
 
         <!-- ***** Top Header Area ***** -->
-        <jsp:include page="/front-end/pro/alazea-gh-pages/header.jsp"/>
+  <jsp:include page="/front-end/CA105G1_header_bt4.jsp" />
 
 
 
@@ -268,7 +268,7 @@
     <!-- ##### Cart Area End ##### -->
 
     <!-- ##### Footer Area Start ##### -->
-<jsp:include page="/front-end/pro/alazea-gh-pages/CA105G1_footer.jsp"/>
+<jsp:include page="/front-end/CA105G1_footer_bt4.jsp" />
     <!-- ##### Footer Area End ##### -->
 
     <!-- ##### All Javascript Files ##### -->

@@ -1,3 +1,4 @@
+<%@page import="com.product_like.model.Product_like_Service"%>
 <%@page import="com.product.model.ProductAssessVO"%>
 <%@page import="java.util.*"%>
 <%@page import="com.product.model.ProductVO"%>
@@ -10,6 +11,7 @@
 	ProductService proSvc = new ProductService();
 	List<ProductVO> list = new ArrayList<ProductVO>();
 	List<ProductAssessVO> listAssess = new ArrayList<ProductAssessVO>();
+	
 	if ("findBy".equals(request.getAttribute("findBy"))) {
 		list = (List<ProductVO>) request.getAttribute("pro_ByCompositeQuery");
 		String pro_classid = (String)request.getAttribute("pro_classid");
@@ -32,6 +34,7 @@
 %>
 <jsp:useBean id="proclassSvc" scope="page" class="com.productclass.model.ProductClassService" />
 <jsp:useBean id="proSvclist" scope="page" class="com.product.model.ProductService" />
+<jsp:useBean id="prolikeSvc" scope="page" class="com.product_like.model.Product_like_Service" />
 <%-- <jsp:useBean id="productAssessVO" scope="page" class="com.product.model.ProductAssessVO" /> --%>
 <!DOCTYPE html>
 <html lang="en">
@@ -379,7 +382,15 @@
                                         </div>
                                         <div class="product-meta d-flex">
                                             <!-- 我的最愛 -->
-                                            <a href="#" onclick="tuchlike(this.id);" class="wishlist-btn like_${proVO.pro_no}" id="${proVO.pro_no}"><i class="icon_heart_alt"></i></a>
+                                            
+	                                        <c:choose>
+	                                            <c:when test="${prolikeSvc.getfindbyOne(proVO.pro_no,memberlistVO.mem_no).product_no == proVO.pro_no}">
+	                                            <a href="#" onclick="tuchlike(this.id);" class="wishlist-btn like_${proVO.pro_no}" id="${proVO.pro_no}" style="background-color: #ffc342"><i class="icon_heart_alt"></i></a>
+	                                            </c:when>
+	                                            <c:otherwise>
+                                           	 		<a href="#" onclick="tuchlike(this.id);" class="wishlist-btn like_${proVO.pro_no}" id="${proVO.pro_no}"><i class="icon_heart_alt"></i></a>
+	                                            </c:otherwise>
+	                                        </c:choose>
                                             <!-- 查看商品詳情 -->
                                             <a onclick="document.getElementById('${proVO.pro_no}').submit()" class="add-to-cart-btn">Add to cart</a>
                                             <input type="hidden" name="pro_no" value="${proVO.pro_no}">
@@ -430,7 +441,7 @@
     <!-- ##### Shop Area End ##### -->
 
     <!-- ##### Footer Area Start ##### -->
-<jsp:include page="/front-end/pro/alazea-gh-pages/CA105G1_footer.jsp"/>
+<jsp:include page="/front-end/CA105G1_footer_bt4.jsp" />
     <!-- ##### Footer Area End ##### -->
 
     <!-- ##### All Javascript Files ##### -->
@@ -461,8 +472,6 @@
 			
 			function tuchlike(clicked_id){
 				var clickid = clicked_id;
-				
-				
 				if(mem_no_login ===""){
 					console.log("test"+mem_no_login);
 					<%session.setAttribute("location", request.getRequestURI());%>  
@@ -479,8 +488,9 @@
 				}else{
 					console.log($('.like_'+clickid).css("background-color"));
 					console.log($('.like_'+clickid).css("color") == "rgb(255, 0, 0)");
-					if($('.like_'+clickid).css("background-color") == "rgb(255, 0, 0)"){
+					if($('.like_'+clickid).css("background-color") == "rgb(255, 195, 66)"){
 						console.log("我是紅色")
+						//取消讚
 						$.ajax({
 							 type: "POST",
 							 url: "<%= request.getContextPath()%>/prolike/prolike.do",
@@ -488,20 +498,18 @@
 							 dataType: "json",
 							 success: function (data){
 								 $('.like_'+clickid).css("background-color","#303030");
-								 $('.like_'+clickid).hover(function(){
-									 $('.like_'+clickid).css("background-color","#70c745");
-								 })
 						     },
 						     error: function(){alert("AJAX-class發生錯誤囉!")}
 						});
 					} else {
+						//加入讚
 						$.ajax({
 							 type: "POST",
 							 url: "<%= request.getContextPath()%>/prolike/prolike.do",
 							 data: addlike(mem_no_login,clicked_id),
 							 dataType: "json",
 							 success: function (data){
-								 $('.like_'+clickid).css("background-color","red");
+								 $('.like_'+clickid).css("background-color","rgb(255, 195, 66)");
 						     },
 						     error: function(){alert("AJAX-class發生錯誤囉!")}
 				         });

@@ -19,6 +19,7 @@ import com.club_memberlist.model.Club_memberlistService;
 import com.club_memberlist.model.Club_memberlistVO;
 import com.memberlist.model.*;
 import com.sg_info.model.*;
+import com.sg_like.model.*;
 import com.sg_mem.model.*;
 import com.sport.model.SportVO;
 @MultipartConfig(fileSizeThreshold=1024*1024,maxFileSize=5*1024*1024,maxRequestSize=5*5*1024*1024)
@@ -232,16 +233,19 @@ public class MemManagerServlet extends HttpServlet {
 		
 	
 		if("Member_Sg".equals(action)) {
+			Sg_likeService sglikeSvc = new Sg_likeService();
 			List<Sg_infoVO> sglist = service.getSgHostByMem(mem_no);
 			List<Sg_infoVO> sghislist = service.getHisSgHostByMem(mem_no);
 			List<Sg_infoVO> sgall = service.getAllSg();
 			List<Sg_infoVO> sghisall = service.getAllHisSg();
+			List<Sg_likeVO> sglike = sglikeSvc.getMemLike(mem_no);
 			List<Sg_memVO> sgmem = service.getSgPartByMem(mem_no);
 			req.setAttribute("sglist",sglist);
 			req.setAttribute("sghislist",sghislist);
 			req.setAttribute("sgall",sgall);
 			req.setAttribute("sghisall",sghisall);
 			req.setAttribute("sg_mem",sgmem);
+			req.setAttribute("sglike", sglike);
 			RequestDispatcher sggo = req.getRequestDispatcher("sg.jsp");
 			sggo.forward(req, res);
 		}
