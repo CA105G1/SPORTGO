@@ -72,7 +72,7 @@
 	<%
 	boolean isJoin = false;
 	List<Club_memberlistVO> list2 = svc.getByMem(memberlistVO.getMem_no());
-
+System.out.print("memno="+memberlistVO.getMem_no());
 	for(Club_memberlistVO club_memberlistvo : list2) {
 		if(club_memberlistvo.getClub_no().equals(club_no)) {
 			isJoin = true;

@@ -78,7 +78,7 @@ public class ClubDAO implements ClubDAO_interface{
 					member.setClub_no(clubno);
 					member.setMem_no(mem_no);
 					member.setCmem_class("管理員");
-					member.setCmem_status("一般成員");
+					member.setCmem_status("正式社員");
 //					member.setSilence_time();
 					dao.insert(member, con);
 				
