@@ -73,6 +73,29 @@ System.out.println("sb=" + sb.toString());
 			
 		}
 		
+		// 提供設定好reg_name 與 reg_dist 回傳一個 reg_no
+		if("getReg_no".equals(action)) {
+			String reg_name = req.getParameter("reg_name");
+			String reg_dist = req.getParameter("reg_dist");
+//			System.out.println("reg_name : "+reg_name);
+//			System.out.println("reg_dist : "+reg_dist);
+			try {
+				//取得縣市的地區名稱
+				RegService regSvc = new RegService();
+				RegVO regVO = regSvc.getRegVOFromAddress(reg_name+reg_dist);
+				JSONObject jsonObject = new JSONObject();
+				jsonObject.put("reg_no", regVO.getReg_no());
+				pw.write(jsonObject.toString());
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+			
+			
+		}
+		
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

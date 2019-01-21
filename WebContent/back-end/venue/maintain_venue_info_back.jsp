@@ -130,7 +130,7 @@
 														<th><label>請選擇縣市 :</label></th>
 														<td>
 															<jsp:useBean id="regSvc" scope="page" class="com.region.model.RegService" />
-									      					<select id="reg_name" size="1" name="reg_name" class="text-center form-control">
+									      					<select id="reg_name_tab1" size="1" name="reg_name" class="reg_name_class text-center form-control">
 									      						<option value="">請選擇縣市</option>
 									      						<c:forEach var="reg_name" items="${regSvc.reg_nameList }">
 									      							<option value="${reg_name }">${reg_name}
@@ -143,7 +143,7 @@
 														<th><label>請選擇地區 :</label></th>
 														<td>
 															<select size="1" name="reg_dist" class="text-center form-control">
-									      						<option id="reg_dist" value="">請選擇地區</option>
+									      						<option id="reg_dist_tab1Option" value="" class="reg_dist_class">請選擇地區</option>
 															</select>
 														</td>
 													</tr>
@@ -271,11 +271,16 @@
 		};
 	}
 
-	$("#reg_name").change(function(){
+	var temp_My_reg_name;
+	$(".reg_name_class").change(function(){
     	var dataStr = {};
     	dataStr.action = "getReg_dist";
-    	dataStr.reg_name = $("#reg_name").val();
-    	
+    	dataStr.reg_name = $(this).val();
+    	temp_My_reg_name = $(this).context.id;
+    	temp_My_reg_name = 
+    		temp_My_reg_name.substring(
+    				temp_My_reg_name.lastIndexOf("_"),
+    				temp_My_reg_name.length);
     	$.ajax({
     		type: "POST",
     		url: "<%= request.getContextPath()%>/region/region.do",
@@ -286,15 +291,68 @@
     			alert("發生錯誤!");
     		},
     		success: function(data){
-    			$(".reg_distOption").remove();
+    			$(".reg_distOption"+temp_My_reg_name).remove();
     			var reg_distArr = data.reg_dist.split(',');
     			for(var i in reg_distArr){
-    				$("#reg_dist").after("<option class='reg_distOption' value='"+reg_distArr[i]+"'>"+reg_distArr[i]);
+    				$("#reg_dist"+temp_My_reg_name+"Option").after("<option class='reg_distOption"+temp_My_reg_name+"' value='"+reg_distArr[i]+"'>"+reg_distArr[i]);
     			}
     		}
     	});
-    	
     });
+	
+	var temp_for_get_reg_no_tab;
+	$(".reg_dist_class").change(function(){
+		temp_for_get_reg_no_tab = $(this).context.id;
+		temp_for_get_reg_no_tab = 
+			temp_for_get_reg_no_tab.substring(
+					temp_for_get_reg_no_tab.lastIndexOf("_"),
+					temp_for_get_reg_no_tab.length);
+//console.log("temp_for_get_reg_no_tab : "+temp_for_get_reg_no_tab);
+		var myDataString = {};
+		myDataString.action = "getReg_no";
+		myDataString.reg_name = $("#reg_name"+temp_for_get_reg_no_tab).val();
+//console.log("myDataString.reg_name : "+myDataString.reg_name);
+		myDataString.reg_dist = $("#reg_dist"+temp_for_get_reg_no_tab).val();
+//console.log("myDataString.reg_dist : "+myDataString.reg_dist);
+		$.ajax({
+    		type: "POST",
+    		url: "<%= request.getContextPath()%>/region/region.do",
+    		data: myDataString,
+    		dataType: "json",
+    		contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    		error: function(){
+    			alert("發生錯誤!");
+    		},
+    		success: function(data){
+    			$("#reg_no"+temp_for_get_reg_no_tab).val(data.reg_no);
+    			$("#reg_no_show"+temp_for_get_reg_no_tab).html(data.reg_no);
+    			$("#v_address_show"+temp_for_get_reg_no_tab).html(myDataString.reg_name+myDataString.reg_dist);
+    			$("#v_address_temp"+temp_for_get_reg_no_tab).val('');
+    		}
+    	});
+	});
+	
+	var temp_v_address;
+	$(".v_address_class").keyup(function(){
+		console.log("hello");
+		temp_v_address = $(this).context.id;
+		temp_v_address = 
+			temp_v_address.substring(
+					temp_v_address.lastIndexOf("_"),
+					temp_v_address.length);
+		console.log("temp_v_address : "+temp_v_address);
+		var tempStringTitele = $("#v_address_show"+temp_v_address).html();
+		
+		console.log("tempStringTitele : "+tempStringTitele);
+		
+		var tempStringLast = $("#v_address_temp"+temp_v_address).val();
+		
+		console.log("tempStringLast : "+tempStringLast);
+		$(this).next().val("");
+		$(this).next().val(tempStringTitele+tempStringLast);
+		
+	});
+	
 	
 	</script>
 	
