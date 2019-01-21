@@ -63,7 +63,7 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/listAllPro_front.jsp"><i class="fa fa-home"></i> Home</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Shop</li>
-                            <li class="breadcrumb-item"><a href="#">Shopping cart</a></li>
+<!--                             <li class="breadcrumb-item"><a href="#">Shopping cart</a></li> -->
                         </ol>
                     </nav>
                 </div>
@@ -158,7 +158,7 @@
                                            	 		<a href="#" onclick="tuchlike(this.id);" class="wishlist-btn ml-15 like_${proVO.pro_no}" id="${proVO.pro_no}"><i class="icon_heart_alt"></i></a>
 	                                            </c:otherwise>
 	                                        </c:choose>
-                                    <a href="#" class="compare-btn ml-15"><i class="arrow_left-right_alt"></i></a>
+<!--                                     <a href="#" class="compare-btn ml-15"><i class="arrow_left-right_alt"></i></a> -->
                                 </div>
                             </div>
 
@@ -338,7 +338,7 @@
 	                            <div class="product-meta d-flex">
 	                                <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
 	                                <a href="<%=request.getContextPath()%>/pro/pro.do?action=getOne_For_Display_front&requestURL=<%=request.getServletPath()%>&pro_no=${AssessVO.pro_no}"  id="${AssessVO.pro_no}" class="add-to-cart-btn">Add to cart</a>
-	                                <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
+<!-- 	                                <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a> -->
 	                            </div>
 	                        </div>
 	                        <!-- Product Info -->

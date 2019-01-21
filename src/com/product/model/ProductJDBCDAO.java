@@ -10,6 +10,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import com.pro.controller.jdbcUtil_CompositeQuery_Pro;
+import com.pro.controller.jdbcUtil_CompositeQuery_Pro_Back;
 
 public class ProductJDBCDAO implements ProductDAO_interface{
 	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
@@ -428,7 +429,7 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 		return proVO;
 	}
 	
-	//複合查詢
+	//複合查詢前端
 	@Override
 	public List<ProductVO> getAll(Map<String, String[]> map) {
 		List<ProductVO> list = new ArrayList<ProductVO>();
@@ -449,6 +450,83 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 			String finalSQL = "select * from product "
 			          + jdbcUtil_CompositeQuery_Pro.get_WhereCondition(map)
 			          + "order by pro_no";
+			ps = con.prepareStatement(finalSQL);
+			rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				proVO = new ProductVO();
+				proVO.setPro_no(rs.getString("PRO_NO"));
+				proVO.setPro_classid(rs.getString("PRO_CLASSID"));
+				proVO.setPro_name(rs.getString("PRO_NAME"));
+				proVO.setPro_pic(rs.getBytes("PRO_PIC"));
+				proVO.setPro_pic_ext(rs.getString("PRO_PIC_EXT"));
+				proVO.setPro_format(rs.getString("PRO_FORMAT"));
+				proVO.setPro_bonus(rs.getInt("PRO_BONUS"));
+				proVO.setPro_stock(rs.getInt("PRO_STOCK"));
+				proVO.setPro_safestock(rs.getInt("PRO_SAFESTOCK"));
+				proVO.setPro_details(rs.getString("PRO_DETAILS"));
+				proVO.setPro_shelve(rs.getString("PRO_SHELVE"));
+				proVO.setPro_all_assess(rs.getInt("PRO_ALL_ASSESS"));
+				proVO.setPro_all_assessman(rs.getInt("PRO_ALL_ASSESSMAN"));
+				list.add(proVO);
+			}
+			
+		} catch (SQLException  e) {
+			// TODO Auto-generated catch block
+			throw new RuntimeException(e.getMessage());
+			
+		} finally {
+			if(rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		
+		return list;
+	}
+	//複合查詢後端
+	@Override
+	public List<ProductVO> getAll_back(Map<String, String[]> map) {
+		List<ProductVO> list = new ArrayList<ProductVO>();
+		ProductVO proVO = null;
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			
+		    //連線池
+		    con = ds.getConnection();
+		    //JDBC版
+//			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			ps = con.prepareStatement(SELECT_FINDBYPK);
+			
+			String finalSQL = "select * from product "
+			          + jdbcUtil_CompositeQuery_Pro_Back.get_WhereCondition(map)
+			          + "order by pro_no"; 
+			System.out.println(finalSQL);
 			ps = con.prepareStatement(finalSQL);
 			rs = ps.executeQuery();
 			
@@ -952,6 +1030,7 @@ public class ProductJDBCDAO implements ProductDAO_interface{
 		}	
 		return list;
 	}
+
 	
 	
 	

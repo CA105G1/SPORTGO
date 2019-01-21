@@ -490,7 +490,7 @@ if ("insert".equals(action)) { //來自addPro.jsp的請求
 					System.out.println("errorMsgs"+errorMsgs);
 					req.setAttribute("proVO", proVO); // 含有輸入格式錯誤的proVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher(PATH_ADDPRO);
+							.getRequestDispatcher(PATH_LIST_ALL_PRO);
 					failureView.forward(req, res);
 					return;
    				}
@@ -596,6 +596,67 @@ if ("pro_ByCompositeQuery".equals(action)) { //來自listAllPro的複合查詢�
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
 				req.setAttribute("pro_ByCompositeQuery", list); // 資料庫取出的list物件,存入request
+				req.setAttribute("pro_classid", pro_classid);
+				req.setAttribute("findBy", "findBy");
+				}
+				String url = null;
+				System.out.println("requestURL : "+requestURL);
+				if(PATH_FRONT_LIST_ALL_PRO.equals(requestURL)) {
+					System.out.println("進到前端");
+					url = PATH_FRONT_LIST_ALL_PRO;
+					
+				} else {
+					url = PATH_LIST_ALL_PRO;
+					System.out.println("進到後台");
+				}
+				
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交listAllPro.jsp
+				successView.forward(req, res);
+				
+				/***************************其他可能的錯誤處理**********************************/
+			} catch (Exception e) {
+				errorMsgs.add(e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher(PATH_LIST_ALL_PRO);
+				failureView.forward(req, res);
+				e.printStackTrace();
+			}
+		}
+if ("back_pro_ByCompositeQuery".equals(action)) { //來自listAllPro的複合查詢請求
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+		
+			try {
+				String requestURL = req.getParameter("requestURL");  //來源的路徑請求
+				/***************************1.將輸入資料轉為Map**********************************/ 
+				//採用Map<String,String[]> getParameterMap()的方法 
+				//注意:an immutable java.util.Map 
+				String pro_classid = null;
+				try {
+					pro_classid = req.getParameter("pro_classid");
+				} catch (Exception e) {
+					//查無類別
+				}
+				
+				HttpSession session = req.getSession();
+				Map<String, String[]> map = (Map<String, String[]>)session.getAttribute("map");
+				if (req.getParameter("whichPage") == null){
+					HashMap<String, String[]> map1 = new HashMap<String, String[]>(req.getParameterMap());
+					session.setAttribute("map",map1);
+					map = map1;
+				} 
+				System.out.println(requestURL);
+				System.out.println(PATH_FRONT_LIST_ALL_PRO.equals(requestURL));
+				                
+				/***************************2.開始複合查詢***************************************/
+				if(map !=null) { 
+				ProductService proSvc = new ProductService();
+				List<ProductVO> list  = proSvc.getAll(map);
+				
+				/***************************3.查詢完成,準備轉交(Send the Success view)************/
+				req.setAttribute("back_pro_ByCompositeQuery", list); // 資料庫取出的list物件,存入request
 				req.setAttribute("pro_classid", pro_classid);
 				req.setAttribute("findBy", "findBy");
 				}

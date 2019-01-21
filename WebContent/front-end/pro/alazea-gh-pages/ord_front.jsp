@@ -131,7 +131,7 @@
 <!--     <header class="header-area"> -->
 
         <!-- ***** Top Header Area ***** -->
-        <jsp:include page="/front-end/pro/alazea-gh-pages/header.jsp"/>
+<%--         <jsp:include page="/front-end/pro/alazea-gh-pages/header.jsp"/> --%>
 <!--         <div class="top-header-area"> -->
 <!--             <div class="container"> -->
 <!--                 <div class="row"> -->
@@ -322,6 +322,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />    
 <!-- websock -->
 <script src="<%=request.getContextPath() %>/back-end/pro/tool/websock_client.js"></script>       
+
+
     
     			<script type="text/javascript">
 			$(document).ready(function(){

@@ -7,9 +7,9 @@ public class Product_Main {
 	
 	public static void main (String[]  args) {
 		
-		System.out.println("123");
+//		System.out.println("123");
 		ProductDAO_TEST proDAO = new ProductDAO_TEST();
-		System.out.println("456");
+//		System.out.println("456");
 //		String inpath = "C:\\Users\\kevin_000\\School_project\\Project\\img";
 //
 //		File file = new File(inpath);
@@ -78,23 +78,23 @@ public class Product_Main {
 //    	System.out.println("-------------------------------------");
 // 
 //    	//多筆查詢
-//    	List<ProductVO> provolist = proDAO.getAll();
-//    	for (ProductVO proVO4 : provolist) {
-//        	System.out.println(proVO4.getPro_no() + ",");
-//        	System.out.println(proVO4.getPro_classid() + ",");
-//        	System.out.println(proVO4.getPro_name() + ",");
-//        	System.out.println(proVO4.getPro_pic() + ",");
-//        	System.out.println(proVO4.getPro_pic_ext() + ",");
-//        	System.out.println(proVO4.getPro_format() + ",");
-//        	System.out.println(proVO4.getPro_bonus() + ",");
-//        	System.out.println(proVO4.getPro_stock() + ",");
-//        	System.out.println(proVO4.getPro_safestock() + ",");
-//        	System.out.println(proVO4.getPro_details() + ",");
-//        	System.out.println(proVO4.getPro_shelve() + ",");
-//        	System.out.println(proVO4.getPro_all_assess() + ",");
-//        	System.out.println(proVO4.getPro_all_assessman() + ",");
-//        	System.out.println("-----------------------------------");
-//    	}
+    	List<ProductVO> provolist = proDAO.getAllOnShelve();
+    	for (ProductVO proVO4 : provolist) {
+        	System.out.println(proVO4.getPro_no() + ",");
+        	System.out.println(proVO4.getPro_classid() + ",");
+        	System.out.println(proVO4.getPro_name() + ",");
+        	System.out.println(proVO4.getPro_pic() + ",");
+        	System.out.println(proVO4.getPro_pic_ext() + ",");
+        	System.out.println(proVO4.getPro_format() + ",");
+        	System.out.println(proVO4.getPro_bonus() + ",");
+        	System.out.println(proVO4.getPro_stock() + ",");
+        	System.out.println(proVO4.getPro_safestock() + ",");
+        	System.out.println(proVO4.getPro_details() + ",");
+        	System.out.println(proVO4.getPro_shelve() + ",");
+        	System.out.println(proVO4.getPro_all_assess() + ",");
+        	System.out.println(proVO4.getPro_all_assessman() + ",");
+        	System.out.println("-----------------------------------");
+    	}
 //    	
 //    	//刪除   (雙子表格)   
 //    	System.out.println("成功刪除" + proDAO.delete("20181217-000001" , "PR001" ,"P001"));//測試的話日期每天需要修改才能
@@ -105,15 +105,15 @@ public class Product_Main {
 //		proDAO.updateStock("P001", 1);
 		//test2
 //		proDAO.getSelectStock("P001",2);
-		String pro_classid = "PT003";
-		List<ProductAssessVO> provolist = proDAO.getAllAssesslike(pro_classid);
-    	for (ProductAssessVO proVO4 : provolist) {
-    	System.out.println(proVO4.getPro_no() + ",");
-    	System.out.println(proVO4.getPro_trunc_assess() + ",");
-    	System.out.println(proVO4.getPro_pic() + ",");
-    	System.out.println(proVO4.getPro_bonus() + ",");
-    	System.out.println("-----------------------------------");
-	}
+//		String pro_classid = "PT003";
+//		List<ProductAssessVO> provolist = proDAO.getAllAssesslike(pro_classid);
+//    	for (ProductAssessVO proVO4 : provolist) {
+//    	System.out.println(proVO4.getPro_no() + ",");
+//    	System.out.println(proVO4.getPro_trunc_assess() + ",");
+//    	System.out.println(proVO4.getPro_pic() + ",");
+//    	System.out.println(proVO4.getPro_bonus() + ",");
+//    	System.out.println("-----------------------------------");
+//	}
     	
 	}
 

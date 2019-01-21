@@ -9,7 +9,7 @@
 	ProductService proSvc = new ProductService();
 	List<ProductVO> list = new ArrayList<ProductVO>();
 	if ("findBy".equals(request.getAttribute("findBy"))) {
-		list = (List<ProductVO>) request.getAttribute("pro_ByCompositeQuery");
+		list = (List<ProductVO>) request.getAttribute("back_pro_ByCompositeQuery");
 	} else {
 		list = proSvc.getAll();
 	}
@@ -176,13 +176,13 @@
 					<div role="tabpanel">
 			<!-- 標籤面板：標籤區 -->
 					    <ul class="nav nav-tabs" role="tablist">
-					        <li role="presentation" class="active">
+					        <li role="presentation" class="active" id="proList">
 					            <a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">商品列表</a>
 					        </li>
 					        <li role="presentation" class="">
 					            <a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">訂單列表</a>
 					        </li>
-					        <li role="presentation">
+					        <li role="presentation" id="addpro">
 					            <a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">新增商品</a>
 					        </li>
 					    </ul>
@@ -248,7 +248,7 @@
                               <td>
                                 <center>
 			                      <input type="submit"  value="送出" class="btn btn-primary">
-			                       <input type="hidden" name="action" value="pro_ByCompositeQuery">
+			                       <input type="hidden" name="action" value="back_pro_ByCompositeQuery">
 			                    </center>
                               </td>
                             </th>
@@ -384,6 +384,18 @@
 				);
 			}
 			$(document).ready(function(){
+				var flag = localStorage.getItem('isBackForRep');
+				if(flag == 'true'){
+					$("#addpro").addClass("active");
+			    	$("#proList").removeClass("active");
+			    	$("#tab3").addClass("active");
+			    	$("#tab1").removeClass("active");
+					localStorage.setItem('isBackForRep', false);
+				}
+				
+				$("#addproSubmit").click(function(){
+					localStorage.setItem('isBackForRep', true);
+				});
 	            
 				$('#example').DataTable();
 				$('.select_change').change(function(){

@@ -87,7 +87,10 @@ public class ProductService {
 		return proDAO.getAll();
 	} 
 	
-	public List<ProductVO> getAll(Map<String, String[]> map) {
+	public List<ProductVO> getAll(Map<String, String[]> map) {//前端使用複合
+		return proDAO.getAll(map);
+	}
+	public List<ProductVO> getAll_back(Map<String, String[]> map) {//前端使用複合
 		return proDAO.getAll(map);
 	}
 	public List<ProductVO> getAllOnShelve(){

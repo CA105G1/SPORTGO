@@ -20,8 +20,10 @@ public interface ProductDAO_interface {
     public abstract List<ProductVO> getAll();
     //全部查詢(上架)
     public abstract List<ProductVO> getAllOnShelve();
-    //複合查詢
+    //複合查詢前端
     public abstract List<ProductVO> getAll(Map<String, String[]> map);
+    //複合查詢後端
+    public abstract List<ProductVO> getAll_back(Map<String, String[]> map);
     //更新狀態
     public abstract int updateShelve(String pro_no ,String pro_shelve);
     //查詢最後一筆

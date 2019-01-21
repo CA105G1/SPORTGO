@@ -115,6 +115,9 @@
 		    width: 300px;
 		    height: auto;
  		}
+ 		#prodetails{
+ 			resize:none;
+ 		}
 
 	</style>
 </head>
@@ -232,7 +235,7 @@
 							    				<!-- 左空白 -->
 							    				<div class="col-xs-12 col-sm-1 ">
 							    				    <div class="row">
-								    				    	左
+								    				    	
 							    				    </div>
 							    				</div>
 							    				<!-- 內容詳情 -->
@@ -252,10 +255,15 @@
 								    					</div>
 								    					<div class="fontsize_s">
 								    						商品詳述 :				    						
-								    					</div>
+								    					</div><br><br>
 								    					<div class="fontsize_s">
 								    						商品狀態 :				    						
 								    					</div>
+								    					<div class="fontsize_s">
+<!-- 								    						商品狀態 :				    						 -->
+								    					</div>
+								    					
+								    					
 
 	                                                </div>
 	                                                <div class="col-xs-12 col-sm-8 ">
@@ -277,11 +285,13 @@
 <!-- 	                                                	</div> -->
 	                                                	<!-- 商品規格 -->
 	                                                	<div class="valuesize">
-	                                                		<input type="TEXT" class="form-control" name="format" size="45" value="<%= (proVO==null)? "" : proVO.getPro_format()%>" />
+	                                                		<input type="TEXT" id="proformat" class="form-control" name="format" size="45" value="<%= (proVO==null)? "" : proVO.getPro_format()%>" />
 	                                                	</div>
 	                                                	<!-- 商品詳述 -->
 	                                                	<div class="valuesize">
-	                                                		<input type="TEXT" class="form-control" name="details" size="45" value="<%= (proVO==null)? "" : proVO.getPro_details()%>" />
+	                                                	    <textarea rows="" cols="" id="prodetails" name="details" style="margin: 0px; width: 557px; height: 65px;" style="resize:none">
+<%-- 	                                                		<input type="TEXT" id="prodetails" class="form-control" name="details" size="45" value="<%= (proVO==null)? "" : proVO.getPro_details()%>" /> --%>
+	                                                	    </textarea>
 	                                                	</div>
 	                                                	<!-- 商品狀態 -->
 	                                                	<div class="valuesize">
@@ -297,7 +307,7 @@
 							    				</div>
 							    				<!-- 右空白 -->
 							    				<div class="col-xs-12 col-sm-1 ">
-							    					右
+							    					
 							    				</div>
 							    			</div>
 						    			</div>
@@ -310,7 +320,7 @@
 								    				<!-- 左空白 -->
 								    				<div class="col-xs-12 col-sm-1 ">
 								    				    <div class="row">
-									    				    	左
+									    				    	
 								    				    </div>
 								    				</div>
 								    				<!-- 內容詳情 -->
@@ -335,15 +345,18 @@
 		                                                <div class="col-xs-12 col-sm-8 ">
 		                                                	<!-- 商品單價 -->
 		                                                    <div class="valuesize">
-		                                                    	<input type="TEXT" class="form-control"  name="pro_bonus" size="45" value="<%= (proVO==null)? "" : proVO.getPro_bonus()%>" />
+<%-- 		                                                    	<input type="TEXT" class="form-control"  name="pro_bonus" size="45" value="<%= (proVO==null)? "" : proVO.getPro_bonus()%>" /> --%>
+		                                                    	<input type="TEXT" id="probonus" class="form-control"  name="pro_bonus" size="45" value="" />
 		                                                    </div>
 		                                                	<!-- 商品庫存量 -->
 		                                                	<div class="valuesize">
-		                                                		<input type="TEXT" class="form-control" name="pro_stock" size="45" value="<%= (proVO==null)? "" : proVO.getPro_stock()%>" />
+<%-- 		                                                		<input type="TEXT" class="form-control" name="pro_stock" size="45" value="<%= (proVO==null)? "" : proVO.getPro_stock()%>" /> --%>
+		                                                		<input type="TEXT" id="prostock" class="form-control" name="pro_stock" size="45" value="" />
 		                                                	</div>
 		                                                	<!-- 商品安全庫存量 -->  
 		                                                	<div class="valuesize">
-		                                                		<input type="TEXT" class="form-control" name="pro_safestock" size="45" value="<%= (proVO==null)? "" : proVO.getPro_safestock()%>" />
+		                                                		<input type="TEXT" id="prosafestock" class="form-control" name="pro_safestock" size="45" value="" />
+<%-- 		                                                		<input type="TEXT" class="form-control" name="pro_safestock" size="45" value="<%= (proVO==null)? "" : proVO.getPro_safestock()%>" /> --%>
 		                                                	</div>
 		                                                	<!-- 商品總評價 -->
 		                                                	<div class="valuesize">
@@ -359,7 +372,7 @@
 								    				</div>
 								    				<!-- 右空白 -->
 								    				<div class="col-xs-12 col-sm-1 ">
-								    					右
+								    					
 								    				</div>
 								    			</div>
 							    			</div>
@@ -370,7 +383,8 @@
 		                                    	<!-- 送出按鈕使用websock -->
 									    		<div style="text-align: center;">
 									    			<input type="hidden" name="action" value="insert">
-									    			<input type="submit" value="新增">
+									    			<button type="button" id="addvalue"></button>
+									    			<input type="submit" value="新增" id="addproSubmit"> 
 <!-- 													<input type="button" value="送出新增" onclick="starWebsock()"> -->
 <!-- 									    		        <input type="button" value="送出新增" onclick="formAjax()"> -->
 								    			<!-- 取消按鈕 -->
@@ -393,6 +407,14 @@
 <%-- 	<script src="<%=request.getContextPath() %>/back-end/pro/tool/websock.js"></script> --%>
 	<script src="<%=request.getContextPath() %>/back-end/pro/tool/websock_serviec.js"></script>
 	<script type="text/javascript">
+	     $("#addvalue").click(function(){
+	    	$("#productname").val("一棒入魂");
+	    	$("#proformat").val("單一規格");
+	    	$("#prodetails").val("中華隊少了這隻超級球棒，打擊無法發揮，全壘打少得可憐，這固然跟球棒有著密切的關係，但也可以從科學觀點分析球棒在全壘打中扮演的角色，就更能了解為什麼選手大棒一揮，就能讓球飛出全壘打牆外，一棒入魂好球棒!!!!!!");
+	        $("#probonus").val("10000");
+	        $("#prostock").val("1");
+	        $("#prosafestock").val("1");
+	     })
 	    function formAjax(){
 	    	var data = new FormData($("#formSubmit")[0]);
 	    	$.ajax({

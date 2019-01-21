@@ -630,8 +630,8 @@ public class ProductDAO_TEST implements ProductDAO_interface{
 		try {
 		    //連線池
 //		    con = ds.getConnection();
-		    //JDBC版
-//			con = DriverManager.getConnection(URL, USER, PASSWORD);
+//		    JDBC版
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			ps = con.prepareStatement(SELECT_SHELVE);
 			ps.setString(1,"上架中");
 		    rs = ps.executeQuery();
@@ -949,6 +949,11 @@ public class ProductDAO_TEST implements ProductDAO_interface{
 			}
 		}	
 		return list;
+	}
+	@Override
+	public List<ProductVO> getAll_back(Map<String, String[]> map) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

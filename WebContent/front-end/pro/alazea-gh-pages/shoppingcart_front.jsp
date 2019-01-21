@@ -15,12 +15,14 @@
 		List<ProductVO> proVOList = new ArrayList();
 		ProductService proSvc = new ProductService();
 	    ShoppingcartDAO cartDAO = new ShoppingcartDAO();
+	    
 	    Map<String , String> hAll =  cartDAO.getAll(memVO.getMem_no()+"P");
 		for(String pro_no : hAll.keySet()) {
 			proVOList.add(proSvc.getOneProduct(pro_no));
 			System.out.println(proSvc.getOneProduct(pro_no));
 		}
 		cartDAO = null;
+		request.setAttribute("hAll", hAll);
 		request.setAttribute("proVOList", proVOList);
 //     }
     
@@ -80,6 +82,10 @@
 
     .btn:hover {
       cursor: pointer;
+    }
+	#map { /*一定要有不然跑不出來*/
+         height: 400px;  /* The height is 400 pixels */
+         width: 400px;  /* The width is the width of the web page */
     }
         </style>
     
@@ -205,14 +211,21 @@
                 <!-- Coupon Discount -->
                 <div class="col-12 col-lg-6">
                     <div class="cart-totals-area mt-70">
-                        <h5 class="title--">收貨資訊</h5>
+                        <h5 class="title--">收貨資訊<button type="button" class="btn btn-outline-success float-right"  id="changeMap">切換地圖</button> </h5>
                         <div class="shipping d-flex justify-content-between">
                             <img src="<%=request.getContextPath()%>/front-end/memberlist/showPicture.do?mem_no=<%=session.getAttribute("mem_no")%>" 
                             style="max-width:100px;max-height:100px;margin-right: 10px;" class="rounded-circle">
                             <div class="shipping-address">
                                     <input type="text"  placeholder="收件人姓名" name="address_receiver" value="${param.receiver}">
                                     <input type="tel"  placeholder="收件人電話" name="address_phone" value="${param.phone}">
-                                    
+                                    <!-- google map -->
+                                    <input id="searchtext" type="text" class="form-control" placeholder="Search for...">
+                                    <button class="btn btn-default" type="button" onclick="mySearch();">Go!</button>
+                                     <div id="map"></div>
+                                     <input type="hidden" class="inputCity">
+                                     <input type="hidden" class="inputTown">
+                                     <input type="hidden" class="inputZipcode">
+                                     
                                     <div id="zipcode"></div>
 	                                <script>
 	                                    $("#zipcode").twzipcode({
@@ -226,7 +239,7 @@
 	                                    });
 	                                </script>  
 <%--                                     <input type="text"  placeholder="城市" name="address_city" value="${param.city}"> --%>
-                                    <input type="text"  placeholder="地址" name="address_detail" value="${param.detail}">
+                                    <input type="text"  placeholder="地址" name="address_detail" value="${param.detail}" id="cartaddress">
 <%--                                     <input type="text"  placeholder="郵遞區號" name="address_zip" value="${param.zip}"> --%>
 									<jsp:include page="/front-end/pro/country-dropdown/country-select.jsp"/>
 									<input type="text"  style="background-color:#fff;color:#fff;border-color:#fff">
@@ -256,6 +269,8 @@
                         
                             <a id="testnum" onclick="document.getElementById('form-id').submit();" class="btn alazea-btn w-100"></a>
                             <a id="testnum2" class="btn alazea-btn w-100"></a>
+<!-- <input type="text" name="addr" id="addr"> -->
+<!-- <input type="submit" name="search" value="查詢" id="btnSubmit"> -->
 
                             
                     </div>
@@ -265,6 +280,7 @@
         </div>
     </div>
     </FORM>
+   
     <!-- ##### Cart Area End ##### -->
 
     <!-- ##### Footer Area Start ##### -->
@@ -293,9 +309,133 @@
 <script src="<%=request.getContextPath() %>/front-end/pro/card/card-js.min.js"></script>
 <!-- 信用卡日期驗證 -->
 <script src="<%=request.getContextPath() %>/front-end/pro/card/creditcard.js"></script>
+<!-- google map api -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAb2lDof7yMn-TTXwt2hwVm4y92t1AqvyU&callback=initMap&libraries=places"async defer>
+        </script>
 			<script type="text/javascript">
+			<!--google mapy-->
+			var map;
+			var infowindow;
+			var loc;
+			var service;
+			var markerArray = [];
+			var flag = false;
+			var geocoder ;
+			$('#map').hide();
+			function initMap(){
+				navigator.geolocation.getCurrentPosition(myLoc);
+			}
+			function myLoc(pos){
+
+				loc = {lat: pos.coords.latitude, lng: pos.coords.longitude};//本地位置
+				map = new google.maps.Map(document.getElementById('map'), {
+					center: loc,
+					zoom: 12
+				});
+
+				infowindow = new google.maps.InfoWindow();//初始化
+				 geocoder = new google.maps.Geocoder();
+				
+				var marker = new google.maps.Marker({
+					position: loc,
+					map: map,
+					animation: google.maps.Animation.DROP,
+					draggable: true
+				});
+				service = new google.maps.places.PlacesService(map);
+				
+				//畫圓
+				var circle = new google.maps.Circle({
+				  center: loc,
+				  radius: 500,
+				  strokeOpacity: 0,
+				  fillColor: '#f00',
+				  fillOpacity: 0.35,
+				  map: map
+				});
+				//點擊時取得地址
+				google.maps.event.addListener(map, 'click', function(event) {
+				  geocoder.geocode({
+				    'latLng': event.latLng
+				  }, function(results, status) {
+				    if (status == google.maps.GeocoderStatus.OK) {
+				      if (results[0]) {
+				        console.log(results[0].formatted_address);
+				      }
+				    }
+				  });
+				});
+				
+			}
+			//按下收尋
+          	function mySearch(){
+                  for(var i = 0 ; i < markerArray.length ; i ++){
+                      markerArray[i].setMap(null);
+                  }
+                  markerArray = [];
+                  service.nearbySearch({
+                      location: loc,
+                      radius: 3000,
+                      type:  'convenience_store',
+                      keyword: document.getElementById("searchtext").value
+                  }, callback);
+             }
+            function callback(results, status) {//回傳
+                if (status === google.maps.places.PlacesServiceStatus.OK) {
+                  for (var i = 0; i < results.length; i++) {
+                    createMarker(results[i]);
+                     // console.log(results[i]);
+                  }
+                }
+             }
+              
+            
+            function createMarker(place) {
+              var placeLoc = place.geometry.location;
+              var marker = new google.maps.Marker({
+                  map: map,
+                  position: place.geometry.location,
+                  icon: {
+                    url: '<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/store.jpg',
+                    anchor: new google.maps.Point(10, 10),
+                    scaledSize: new google.maps.Size(20, 34)
+                  }
+              });
+              //new
+              markerArray.push(marker);
+
+              google.maps.event.addListener(marker, 'click', function() {//點擊maker取得當前資訊
+                	msg = place.name + "<br>" + place.rating;
+                console.log(place.vicinity);
+                console.log(place.plus_code.compound_code);
+                for(var i = 0 ; i < parseInt(place.rating); i++){
+                    msg = msg + "\u2605";
+                }
+                infowindow.setContent(msg);
+                infowindow.open(map, this);
+              });
+            }
+              
+              
+              
+			$("#changeMap").click(function(){
+				if(flag === false){
+					$('#map').show();
+					$('#zipcode').hide();
+					$('#cartaddress').hide();
+					$('#countries').hide();
+					flag = true;
+				} else {
+					$('#map').hide();
+					$('#zipcode').show();
+					$('#cartaddress').show();
+					$('#countries').show();
+					flag = false;
+				}
+			})
+			
 				$(document).ready(function(){
-					//評價jquery
+					<!--評價jquery-->
 				    var isclick = false;
 				    var arr = ["1分差評", "2分中評", "3分中評", "4分好評", "5分好評"];
 				    var clickind = -1;
@@ -326,6 +466,7 @@
 				    });
 					<!--信用卡日期驗證-->
 					var cardtrue = false;
+					$(".expiry").prop('disabled', true);//先把日期關掉
 					$(".expiry").keyup(function(){
 						var number = $(".expiry").val();
 						console.log("number"+number)
@@ -357,26 +498,34 @@
 					});
 					<!--信用卡卡號驗證-->
 	                $('#testnum2').hide();
+	                $(".cvc").attr("name", "cvc");
 		            $(".card-number").keyup(function(){
 		                var number = $(".card-number").val();
 		                var arr = number.split(" ");//將取得的數字去掉所有空白回傳字串array
 		                var num = arr.join("");//將array組起來
+		                var cardnum = 0;
 		                if(num.length == 16){
 		                    var name = detectCardType(num);
-		                    if(name === false){
-		                        //卡號錯誤
-			                    $('#testnum2').css("background-color","#dc3545");
-			                    $('#testnum2').css("border","#dc3545");
-			                    $('#testnum2').css("color","#ffffff");
-			                    $('#testnum2').html("信用卡號錯誤");
-			                    $('#testnum2').css("pointer-events","none");
-		                    }else{
-		                    	//卡號正確
-		                    	console.log(cardtrue);
-		                    	if(cardtrue === true){
-			                        $('#testnum2').hide();
-			                        $('#testnum').show();
-		                    	}
+		                    if(name != false){//驗證卡號廠商正確的話驗證號碼
+			                    	cardnum = checkCreditCard(num,name);
+			                        console.log("cardnum"+cardnum);
+			                    
+			                    if(cardnum === false){
+			                        //卡號錯誤
+				                    $('#testnum2').css("background-color","#dc3545");
+				                    $('#testnum2').css("border","#dc3545");
+				                    $('#testnum2').css("color","#ffffff");
+				                    $('#testnum2').html("信用卡號錯誤");
+				                    $('#testnum2').css("pointer-events","none");
+			                    }else{
+			                    	//卡號正確
+			                    	console.log(cardnum);
+	// 		                    	if(cardtrue === true){
+				                        $('#testnum2').hide();
+				                        $('#testnum').show();
+				                        $(".expiry").prop('disabled', false);
+	// 		                    	}
+			                    }
 		                    }
 		                } else {
 		                    //卡號長度不正確
@@ -389,8 +538,10 @@
 			                    $('#testnum2').html("信用卡號長度不正確");
 			                    $('#testnum2').css("pointer-events","none");
 		                    }else{
-		                    $('#testnum2').hide();
-		                    $('#testnum').show();
+			                    $('#testnum2').hide();
+			                    $('#testnum').show();
+			                    $(".expiry").prop('disabled', true);
+			                    $(".expiry").val("");
 		                    }
 		                }
 		            });

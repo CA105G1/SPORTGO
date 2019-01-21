@@ -309,6 +309,7 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 			<script type="text/javascript">
 				$(document).ready(function(){
+					<!--訂單表格展開-->
 				      $(".flip").click(function(){
 				          $(this).siblings(".tuchpanel").slideToggle("slow");
 // 				          $(this).siblings(".xs1").toggle();

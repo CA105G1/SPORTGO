@@ -11,7 +11,7 @@
 	ProductService proSvc = new ProductService();
 	List<ProductVO> list = new ArrayList<ProductVO>();
 	List<ProductAssessVO> listAssess = new ArrayList<ProductAssessVO>();
-	
+	//判斷是不是複合查詢來的
 	if ("findBy".equals(request.getAttribute("findBy"))) {
 		list = (List<ProductVO>) request.getAttribute("pro_ByCompositeQuery");
 		String pro_classid = (String)request.getAttribute("pro_classid");
@@ -279,8 +279,8 @@
                             <h4 class="widget-title">Prices</h4>
                             <div class="widget-desc">
                                 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/pro/pro.do" name="form1">
-                                    <label>商品編號:</label>
-                                    <input type="text" name="pro_no" class="form-control">
+<!--                                     <label>商品編號:</label> -->
+<!--                                     <input type="text" name="pro_no" class="form-control"> -->
                                     <label for="email">商品類別編號:</label>
                                     <select size="1" name="pro_classid" class="form-control">
                                         
@@ -293,7 +293,7 @@
                                     <label for="email">商品名稱:</label>
                                     <input type="text" name="pro_name" class="form-control">
                                     <label for="email">商品單價:</label>
-                                    <input type="text" name="pro_bonus" class="form-control">
+                                    <input type="text" name="pro_bonus" class="form-control" placeholder="0~99999">
                                     <br>
                                     <center>
                                     <button type="submit" class="btn btn-outline-info">送出查詢</button>
@@ -397,7 +397,7 @@
 	                                        <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
 	                                        <input type="hidden" name="action" value="getOne_For_Display_front">
                                             <!-- 分享 -->
-                                            <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
+<!--                                             <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a> -->
                                         </div>
                                     </div>
                                     <!-- Product Info -->

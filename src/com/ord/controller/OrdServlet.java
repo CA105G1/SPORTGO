@@ -73,12 +73,16 @@ if ("insert".equals(action)) { //來自shoppingcart_front.jsp的請求
 				card = remove_Multi_Spaces(card);
 				String expirydate = req.getParameter("expirydate");
 				expirydate = remove_Multi_Spaces(expirydate);
+				String cvc = req.getParameter("cvc");
 				
 				if("".equals(card)||(card.trim()).length()==0) {
 					errorMsgs.add("信用卡欄位必填");
 				}
 				if("".equals(expirydate)||(expirydate.trim()).length()==0) {
 					errorMsgs.add("信用卡日期欄位必填");
+				}
+				if("".equals(cvc)||(cvc.trim()).length()==0) {
+					errorMsgs.add("信用卡驗證碼必填");
 				}
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理(收貨地址)*************************/
 				

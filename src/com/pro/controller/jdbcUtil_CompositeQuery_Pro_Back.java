@@ -9,7 +9,7 @@ package com.pro.controller;
  
 import java.util.*;
 
-public class jdbcUtil_CompositeQuery_Pro {
+public class jdbcUtil_CompositeQuery_Pro_Back {
 
 	public static String get_aCondition_For_Oracle(String columnName, String value) {
 
@@ -47,23 +47,18 @@ public class jdbcUtil_CompositeQuery_Pro {
 		int count = 0;
 		for (String key : keys) {
 			String value = map.get(key)[0];
-			System.out.println(key + "====" + value);
 			if (value != null && value.trim().length() != 0	&& !"action".equals(key) && !"requestURL".equals(key)) {
 				count++;
 				String aCondition = get_aCondition_For_Oracle(key, value.trim());
 				if (count == 1)
-					whereCondition.append(" where PRO_SHELVE = '上架中'  AND " + aCondition); 
+					whereCondition.append(" where " + aCondition); 
 				else
 					whereCondition.append(" and " + aCondition);
 
 //				System.out.println("有送出查詢資料的欄位數count = " + count);
 			}
 		}
-		if(whereCondition.length() == 0) {
-			whereCondition.append(" where PRO_SHELVE = '上架中'  ");
-		}
-		System.out.println("whereCondition.length()==="+whereCondition.length());
-		System.out.println("whereCondition.toString()==="+whereCondition.toString());
+		System.out.println(whereCondition.toString());
 		return whereCondition.toString();
 	}
 
