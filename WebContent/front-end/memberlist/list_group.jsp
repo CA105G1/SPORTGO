@@ -31,8 +31,6 @@
 	</head>
 	<body>
 		<!-- 右選單 -->
-		<div class="container-fluid">
-			<div class="row">
 				<div class="list-group" id="myTab">
 					<a href="public_Member_page.jsp" class="list-group-item" style="display:flex;text-align:center;">個人頁面</a>
 <!-- 					<a href="Calendar.jsp" class="list-group-item" style="display:flex;text-align:center;">行事曆</a> -->
@@ -43,8 +41,6 @@
 					<a href="order.jsp" class="list-group-item" style="display:flex;text-align:center;">訂單管理</a>
 <!-- 					<a href="prolike.jsp" class="list-group-item" style="display:flex;text-align:center;">最愛的商品</a> -->
 				</div>
-			</div>
-		</div>
 	<script>
 // 	var action = "${action}";
 // 	$(function(){

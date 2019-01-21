@@ -14,7 +14,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 		<title>Title Page</title>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-		<title>所有的會員</title>
+		<title>後台首頁</title>
 		
 		<style type="text/css">
 			.error{
@@ -39,7 +39,7 @@
 					<jsp:include page="/back-end/left_side_field.jsp"/>
 				</div>
 				<div class="col-xs-12 col-sm-9">
-					<h1>揪團專區</h1>
+					<h1>會員列表</h1>
 	<table class="table table-hover">
 					<thead>
 						<tr>
