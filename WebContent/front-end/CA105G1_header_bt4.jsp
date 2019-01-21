@@ -5,6 +5,11 @@
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+		
+		<!-- Font Awesome -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		
+		
 	</head>
 	<body> 
 	
@@ -53,9 +58,32 @@
 							<li class="nav-item">
 								<a class="nav-link" href="<%=request.getContextPath()%>/front-end/memberlist/public_Member_page.jsp">${memberlistVO.mem_name}，您好</a>
 							</li>
-							<li class="nav-item ">
-								<a class="nav-link" href="#" >通知</a>
-							</li>
+			<!-- 通知 -->
+<!-- 							<li class="nav-item "> -->
+<!-- 								<a class="nav-link" id="notation" href="#" >通知</a> -->
+<!-- 							</li> -->
+							
+							
+<!-- 							<ul class="nav navbar-nav"> -->
+						        <li class="dropdown">
+						        	<a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-bell"></i> </a>
+							    	<ul class="dropdown-menu" id="notation">
+							            <li><a href="#">Account Settings <span class="glyphicon glyphicon-cog pull-left"></span></a></li>
+						          	</ul>
+						     	</li>
+<!-- 						     </ul> -->
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
 							<li class="nav-item">
 								<% System.out.println("log_out_location :　"+ request.getRequestURI());%>
 								<a class="nav-link" href="<%=request.getContextPath()%>/front-end/memberlist/logout.do">登出</a>
@@ -108,5 +136,54 @@
             </div>
         </div>
      </header>
+     <script>
+     var memberlistVO = '${memberlistVO}';
+     var mem_no ='${mem_no}';
+	 var MemPoint = "/MemEchoServer/"+mem_no;
+	 var host = window.location.host;
+	 var path = window.location.pathname;
+	 var webCtx = path.substring(0,path.indexOf('/',1));
+	 var endPointURL = "ws://"+host+webCtx+MemPoint;
+	 var webSocket; 
+     console.log(memberlistVO);
+     $(function(){
+			if(memberlistVO!="")
+				connect();
+		})
+     function connect(){
+			webSocket = new WebSocket(endPointURL);
+			console.log(webSocket);
+			
+			webSocket.onopen = function(event){
+				//alert(event.data);
+				console.log("WebSocket connected successful");
+			};
+			
+			webSocket.onmessage = function(event){
+				$("#notation").show();
+				var jsonObj = JSON.parse(event.data);
+				console.log(jsonObj.type);
+					if(jsonObj.type==='notation'){
+// 						$("#notation").append("<div class='alert alert-info alert-dismissable' role='alert'>"+
+// 						"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"+
+// 			         	"<span aria-hidden='true' style='color: deeppink;'>好</span></button>"+
+// 		            	"<p class='alert-title'>"+jsonObj.to+"</p><p class='alert-body'>"+
+// 		            	jsonObj.message+"</p></div>");
+						$("#notation").append("<li><a href='#'>"+jsonObj.to+"  "+
+		            	jsonObj.message+"<span class='fa fa-cog pull-left'></span></a></li>");
+					}
+			};
+			
+			webSocket.onclose = function(event){
+				webSocket.close();
+				console.log("WebSocket disconnected");
+			};
+		}
+		
+		function sendMessage(){
+			webSocket.send('${memberlistVO.mem_no}');
+			console.log('${memberlistVO.mem_no}');
+		}
+     </script>
 	</body>
 </html>
