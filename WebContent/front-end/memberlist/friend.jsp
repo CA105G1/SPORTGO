@@ -416,6 +416,11 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 		var chatFriend = null;
 		var host = window.location.host;
 		var endPointURL = 'ws://'+host+'/CA105G1'+MemPoint;
+// 		var date = new Date();
+// 		var time = date.toString();
+// 		var time = (date.getFullYear()+"/"+date.getMonth()+"/"+date.getDate()+" "+
+// 		date.getHours()+":"+date.Minutes()+":"+date.Seconds()).toString();
+// 		console.log(time);
 		
 		var webSocket;
 		
@@ -462,11 +467,11 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 				if(jsonObj.userName===userName){
 					$("#chat_" + jsonObj.to).append("<div style='display:flex;flex-direction:row-reverse;font-size:18px;'>"
 					+"<img style='width:30px;height:30px;border-radius:50%;' src='showPicture.do?mem_no="
-						+jsonObj.userName+"'><br>"+jsonObj.message+ "</div>");
+						+jsonObj.userName+"'><br>"+jsonObj.message+"<br>"+jsonObj.time+"</div>");
 				}else{
 					$("#chat_" + jsonObj.userName).append("<div style='display:flex;font-size:18px;'>"
 							+"<img style='width:30px;height:30px;border-radius:50%;' src='showPicture.do?mem_no="
-							+jsonObj.userName+"'><br>"+jsonObj.message+ "</div>");
+							+jsonObj.userName+"'><br>"+jsonObj.message+"<br>"+jsonObj.time+"</div>");
 				}
 // 				messageArea.value = messageArea.value + message;
 				$('.chat').scrollTop($('.chat').prop('scrollHeight'));
@@ -489,11 +494,16 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 		function sendMessage(){
 			var inputMessage = document.getElementById("input-message");
 			var message = inputMessage.value;
+			var date = new Date();
+			var time = date.getFullYear().toString()+"/"+(date.getMonth()+1).toString()+"/"+date.getDate().toString()+" "+
+			 		date.getHours().toString()+":"+date.getMinutes().toString()+":"+date.getSeconds().toString();
+// 			var time = date.toString();
 			var jsonObj = {
 					"userName" :userName,
 					"to" :chatFriend,
 					"type" : "chat",
-					"message" :message
+					"message" :message,
+					"time": time
 			};
 			if(chatFriend!=null)
 				webSocket.send(JSON.stringify(jsonObj));
