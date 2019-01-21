@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Sg_infoCreateForClub</title>
+<title>建立專屬揪團</title>
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"> -->
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> -->
 <!-- <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script> -->
@@ -166,7 +166,7 @@
 						<tr>
 							<th>場地名稱</th> <!-- 下拉選單 -->
 							<td>
-							<select name='v_no'>
+							<select name='v_no' id="v_no">
 								<option value=''>請選擇場地
 								<c:forEach var='venueVO' items='${venueSvc.all}' > 
 									<option value='${venueVO.v_no}' ${(param.v_no == venueVO.v_no)? 'selected':'' }>${venueVO.v_name}
@@ -393,6 +393,36 @@
    			animation: google.maps.Animation.DROP,
    			draggable: true
    		});
+   		
+   		
+   	//定位場館位置
+   		$("#v_no").change(function(){
+   			var v_no = $("#v_no").val();
+   			$.ajax({
+				type: "POST",
+				url: "<%= request.getContextPath()%>/venue/venue.do",
+				data: {"action" : "getLoc", "v_no" : v_no},
+				dataType: "json",
+				error: function(){
+					alert("發生錯誤!");
+				},
+				success: function(data){
+					var v_lat = parseFloat(data.v_lat);
+					var v_long = parseFloat(data.v_long);
+					map = new google.maps.Map(document.getElementById('map'), {
+						center: {lat: v_lat, lng: v_long},
+						zoom:14
+					});
+					var marker = new google.maps.Marker({
+			   			position: {lat: v_lat, lng: v_long},
+			   			map: map,
+			   			animation: google.maps.Animation.DROP,
+			   			draggable: false
+			   		});
+				}
+			});
+   		});
+   		
    		
    		var loc_start;
         var loc_end

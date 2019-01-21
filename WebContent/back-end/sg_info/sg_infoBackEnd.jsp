@@ -142,7 +142,7 @@
 									            <td>${sg_repVO.rep_type }</td>
 									            <td>${sg_repVO.rep_cont }</td>
 									            <td>${sg_repVO.rep_status }</td>
-									            <td><a href="Sg_infoGetByPkForRep.jsp?sg_no=${sg_repVO.sg_no}&rep_no=${sg_repVO.rep_no }" id="checkBtn" class="btn btn-info">查看</a></td>
+									            <td><a href="Sg_infoGetByPkForRep.jsp?sg_no=${sg_repVO.sg_no}&rep_no=${sg_repVO.rep_no }" class="btn btn-info checkBtn">查看</a></td>
 								        	</tr>
 								    	</c:forEach>
 								    </tbody>
@@ -180,7 +180,7 @@ $(document).ready( function () {
 		localStorage.setItem('isBackForRep', false);
 	}
 	
-	$("#checkBtn").click(function(){
+	$(".checkBtn").click(function(){
 		localStorage.setItem('isBackForRep', true);
 	});
 	

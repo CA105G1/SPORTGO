@@ -10,7 +10,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
-<title>Sg_infoGetByPkForGeneral</title>
+
+<% 
+	Sg_infoVO vo = (Sg_infoVO)request.getAttribute("Sg_infoVO");	
+	if(vo == null){vo = (Sg_infoVO)session.getAttribute("Sg_infoVO");}
+    
+    MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO");
+System.out.println("memberlistVO= "+memberlistVO);
+%>
+
+<title>${Sg_infoVO.sg_name }</title>
 
 <link  rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
@@ -22,13 +31,7 @@
 <body>
 <jsp:include page="/front-end/CA105G1_header_bt4.jsp" />
 
-<% 
-	Sg_infoVO vo = (Sg_infoVO)request.getAttribute("Sg_infoVO");	
-	if(vo == null){vo = (Sg_infoVO)session.getAttribute("Sg_infoVO");}
-    
-    MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO");
-System.out.println("memberlistVO= "+memberlistVO);
-%>
+
 <!-- 麵包屑 -->
 <div class="breadcrumb-area">
     <!-- Top Breadcrumb Area -->
@@ -267,9 +270,15 @@ System.out.println("memberlistVO= "+memberlistVO);
 		var loc_start = <%=vo.getLoc_start()%>;
 		var loc_end = <%=vo.getLoc_end()%>;
 		if(loc_start == null || loc_end == null){
-			//若沒有路線資料則設定本機定位(之後改成場館位置)////////////////////////////////////////////////////////////////
+			//若沒有路線資料則設定場館位置
+			var v_lat = parseFloat("${venueSvc.getOneVenue(Sg_infoVO.v_no).v_lat}");
+			var v_long = parseFloat("${venueSvc.getOneVenue(Sg_infoVO.v_no).v_long}");
+			map = new google.maps.Map(document.getElementById('map'), {
+				center: {lat: v_lat, lng: v_long},
+				zoom:14
+			});
 			var marker = new google.maps.Marker({
-	   			position: loc,
+	   			position: {lat: v_lat, lng: v_long},
 	   			map: map,
 	   			animation: google.maps.Animation.DROP,
 	   			draggable: false
@@ -582,10 +591,11 @@ System.out.println("memberlistVO= "+memberlistVO);
 				title: '想分享給誰呢',
 				showConfirmButton: false,
 				html:
-					'<form method="post" action="<%= request.getContextPath()%>/Sg_info/Sg_info.do">'+
+					'<form method="post" action="<%= request.getContextPath()%>/Sg_info/Sg_info.do" style="text-align:left; padding-left:150px">'+
 						'<input type="hidden" name="action" value="shareSg_info">'+
 						'<input type="hidden" name="mem_no" value="${memberlistVO.mem_no}">'+
 						'<input type="hidden" name="sg_no" value="${Sg_infoVO.sg_no}">'+
+						'<div >'+
 							'<c:forEach var="friend" items="${friendlist}">'+
 								'<c:forEach var="member" items="${memberlist2}">'+
 									'<c:if test="${memberlistVO.mem_no eq friend.mem1_no}">'+
@@ -608,7 +618,8 @@ System.out.println("memberlistVO= "+memberlistVO);
 									'</c:if>'+
 								'</c:forEach>'+
 							'</c:forEach>'+
-						'<input type="submit" value="送出分享">'+
+						'</div>'+
+						'<input type="submit" class="btn btn-outline-success"  value="送出分享">'+
 					'</form>'
 			})
 		});

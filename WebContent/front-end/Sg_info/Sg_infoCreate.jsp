@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Sg_infoCreate</title>
+<title>建立揪團</title>
 
 <link   rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 <link rel="icon" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png">
@@ -139,7 +139,7 @@
 						<tr>
 							<th>場地名稱</th> <!-- 下拉選單 -->
 							<td>
-							<select name='v_no'>
+							<select name='v_no' id="v_no">
 								<option value=''>請選擇場地
 								<c:forEach var='venueVO' items='${venueSvc.all}' > 
 									<option value='${venueVO.v_no}' ${(param.v_no == venueVO.v_no)? 'selected':'' }>${venueVO.v_name}
@@ -370,6 +370,34 @@
    			map: map,
    			animation: google.maps.Animation.DROP,
    			draggable: true
+   		});
+   		
+   		//定位場館位置
+   		$("#v_no").change(function(){
+   			var v_no = $("#v_no").val();
+   			$.ajax({
+				type: "POST",
+				url: "<%= request.getContextPath()%>/venue/venue.do",
+				data: {"action" : "getLoc", "v_no" : v_no},
+				dataType: "json",
+				error: function(){
+					alert("發生錯誤!");
+				},
+				success: function(data){
+					var v_lat = parseFloat(data.v_lat);
+					var v_long = parseFloat(data.v_long);
+					map = new google.maps.Map(document.getElementById('map'), {
+						center: {lat: v_lat, lng: v_long},
+						zoom:14
+					});
+					var marker = new google.maps.Marker({
+			   			position: {lat: v_lat, lng: v_long},
+			   			map: map,
+			   			animation: google.maps.Animation.DROP,
+			   			draggable: false
+			   		});
+				}
+			});
    		});
    		
    		var loc_start;

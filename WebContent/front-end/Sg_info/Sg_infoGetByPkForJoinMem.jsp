@@ -10,16 +10,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
-<title>Sg_infoGetByPkForJoinMem</title>
-
-<link  rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
-<link rel="icon" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/style.css">
- 
-</head>
-<body>
-<jsp:include page="/front-end/CA105G1_header_bt4.jsp" />
 
 
 <% 
@@ -35,6 +25,21 @@ Sg_infoVO vo = svc.GetByPK(sg_no);
 	pageContext.setAttribute("Sg_infoVO", vo);
  	MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO");
 %>
+
+
+<title>${Sg_infoVO.sg_name }</title>
+
+<link  rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
+<link rel="icon" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/style.css">
+ 
+</head>
+<body>
+<jsp:include page="/front-end/CA105G1_header_bt4.jsp" />
+
+
+
 
 <!-- 麵包屑 -->
 <div class="breadcrumb-area">

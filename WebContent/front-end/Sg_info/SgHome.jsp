@@ -22,7 +22,7 @@ if(list == null){
 <html>
 <head>
 <meta charset="utf-8">
-<title>Insert title here</title>
+<title>揪團專區</title>
 
 
 <link   rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
