@@ -175,6 +175,32 @@
 														</td>
 													</tr>
 													
+													<tr>
+														<th><label>評價分數 :</label></th>
+														<td>
+															<div class="col-sm-6">
+																<select size="1" name="score_max" class="text-center form-control" id="score_max">
+									      							<option value="" >請選擇上限</option>
+									      							<option value="1">一分</option>
+									      							<option value="2">二分</option>
+									      							<option value="3">三分</option>
+									      							<option value="4">四分</option>
+									      							<option value="5">五分</option>
+																</select>												
+															</div>
+															<div class="col-sm-6">
+																<select size="1" name="score_min" class="text-center form-control" id="score_min">
+									      							<option value="" >請選擇下限</option>
+									      							<option value="1">一分</option>
+									      							<option value="2">二分</option>
+									      							<option value="3">三分</option>
+									      							<option value="4">四分</option>
+									      							<option value="5">五分</option>
+																</select>
+															</div>
+														</td>
+													</tr>
+													
 													<tr><th colspan='2'>
 														<input type="hidden" name="action" value="listVenueByCompositeQuery" />
 														<input type="submit" value="送出查詢" class="btn btn-primary btn-block"/>
@@ -325,6 +351,7 @@
     		},
     		success: function(data){
     			$("#reg_no"+temp_for_get_reg_no_tab).val(data.reg_no);
+  // console.log("reg_no"+$("#reg_no"+temp_for_get_reg_no_tab).val());
     			$("#reg_no_show"+temp_for_get_reg_no_tab).html(data.reg_no);
     			$("#v_address_show"+temp_for_get_reg_no_tab).html(myDataString.reg_name+myDataString.reg_dist);
     			$("#v_address_temp"+temp_for_get_reg_no_tab).val('');
@@ -334,24 +361,49 @@
 	
 	var temp_v_address;
 	$(".v_address_class").keyup(function(){
-		console.log("hello");
+		//console.log("hello");
 		temp_v_address = $(this).context.id;
 		temp_v_address = 
 			temp_v_address.substring(
 					temp_v_address.lastIndexOf("_"),
 					temp_v_address.length);
-		console.log("temp_v_address : "+temp_v_address);
+		//console.log("temp_v_address : "+temp_v_address);
 		var tempStringTitele = $("#v_address_show"+temp_v_address).html();
 		
-		console.log("tempStringTitele : "+tempStringTitele);
+		//console.log("tempStringTitele : "+tempStringTitele);
 		
 		var tempStringLast = $("#v_address_temp"+temp_v_address).val();
 		
-		console.log("tempStringLast : "+tempStringLast);
+		//console.log("tempStringLast : "+tempStringLast);
 		$(this).next().val("");
 		$(this).next().val(tempStringTitele+tempStringLast);
 		
 	});
+	
+	$("#score_max").change(function(){
+		var max = $(this).context.value;
+		for(var i = 1 ; i<=5; i++){
+			if(i>max){
+				$("#score_min option[value='"+i+"']")
+					.prop("disabled",true).attr("style","display:none");
+			}else{
+				$("#score_min option[value='"+i+"']")
+					.prop("disabled",false).attr("style","display:block");
+			}
+		}
+	});
+	$("#score_min").change(function(){
+		var min = $(this).context.value;
+		for(var i = 1 ; i<=5; i++){
+			if(i<min){
+				$("#score_max option[value='"+i+"']")
+					.prop("disabled",true).attr("style","display:none");
+			}else{
+				$("#score_max option[value='"+i+"']")
+					.prop("disabled",false).attr("style","display:block");
+			}
+		}
+	});	
 	
 	
 	</script>

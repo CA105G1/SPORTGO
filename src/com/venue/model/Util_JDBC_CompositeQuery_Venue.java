@@ -5,10 +5,48 @@ import java.util.TreeMap;
 import java.lang.reflect.MalformedParameterizedTypeException;
 import java.security.KeyStore.PrivateKeyEntry;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Util_JDBC_CompositeQuery_Venue {
+	
+	public static String get_Right_Join_SubSelectForGetScoreBetween(Map<String, String[]> map) {
+		Set<String> keys = map.keySet();
+		StringBuffer right_join_clanse = new StringBuffer();
+		Map<String, String> scoreMap = new HashMap<>();
+		for(String key:keys) {
+			if("score_max".equals(key) || "score_min".equals(key)) {
+				String value = map.get(key)[0];
+				if(value!=null && value.trim().length()>0) {
+					scoreMap.put(key, value);
+				}
+			}
+		}
+		if(scoreMap.size()!=0) {
+			if(!scoreMap.containsKey("score_max")) {
+				scoreMap.put("score_max", "5");
+			}
+			if(!scoreMap.containsKey("score_min")) {
+				scoreMap.put("score_min", "1");
+			}
+			right_join_clanse.append(" right join ")
+							 .append(" ( select v_no, avg(score) score ")
+							 .append(" from v_evaluation ")
+							 .append(" group by v_no ")
+							 .append(" having avg(score) between ")
+							 .append(scoreMap.get("score_min"))
+							 .append(" and ")
+							 .append(scoreMap.get("score_max"))
+							 .append(" ) a ")
+							 .append(" on a.v_no = venue.v_no ");
+		}else {
+			return "";
+		}
+		return right_join_clanse.toString();
+	}
+	
+	
 	public static String get_aCondition_For_Oracle(String columnName, String value) {
 		String aCondition = null;
 		// Varchar2 like
@@ -44,7 +82,7 @@ public class Util_JDBC_CompositeQuery_Venue {
 			String value = map.get(key)[0];
 			if(value != null && value.trim().length() != 0 && !"action".equals(key) 
 					&& !"whichPage".equals(key) && !"requestURL".equals(key) && !"hasChangePictiure".equals(key)
-					&& !"reg_no".equals(key)
+					&& !"reg_no".equals(key) && !"score_min".equals(key) && !"score_max".equals(key) 
 					) {
 				count++;
 				

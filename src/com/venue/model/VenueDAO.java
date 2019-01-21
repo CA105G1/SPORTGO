@@ -431,9 +431,10 @@ public class VenueDAO implements VenueDAO_interface {
 		ResultSet resultSet = null;
 		try {
 			connection = dataSource.getConnection();
-			String finalSQL = "Select * from venue "
+			String finalSQL = "Select venue.* from venue "
+					+ Util_JDBC_CompositeQuery_Venue.get_Right_Join_SubSelectForGetScoreBetween(map)
 					+ Util_JDBC_CompositeQuery_Venue.get_WhereCondition(map, isFrontEnd)
-					+ " order by v_no";
+					+ " order by venue.v_no";
 			
 			preparedStatement = connection.prepareStatement(finalSQL);
 			System.out.println("+++FinalSQL(by JDBCDAO) = "+finalSQL);

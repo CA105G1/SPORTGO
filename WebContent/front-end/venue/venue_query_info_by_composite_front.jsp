@@ -204,24 +204,37 @@
 										    	<label class="custom-control-label" for="openday_sun">星期日</label>
 										  	</div>
 										</div>
-										
-<!-- 										<label for="openday_mon" class="checkbox-inline">一</label> -->
-<!-- 										<input type="checkbox" name="openday_mon" value="Y" id="openday_mon" /> -->
-<!-- 										<label for="openday_tue" class="checkbox-inline">二</label> -->
-<!-- 										<input type="checkbox" name="openday_tue" value="Y" id="openday_tue" /> -->
-<!-- 										<label for="openday_wed" class="checkbox-inline">三</label> -->
-<!-- 										<input type="checkbox" name="openday_wed" value="Y" id="openday_wed" /> -->
-<!-- 										<label for="openday_thu" class="checkbox-inline">四</label> -->
-<!-- 										<input type="checkbox" name="openday_thu" value="Y" id="openday_thu" /> -->
-<!-- 										<label for="openday_fri" class="checkbox-inline">五</label> -->
-<!-- 										<input type="checkbox" name="openday_fri" value="Y" id="openday_fri" /> -->
-<!-- 										<label for="openday_sat" class="checkbox-inline">六</label> -->
-<!-- 										<input type="checkbox" name="openday_sat" value="Y" id="openday_sat" /> -->
-<!-- 										<label for="openday_sun" class="checkbox-inline">日</label> -->
-<!-- 										<input type="checkbox" name="openday_sun" value="Y" id="openday_sun" /> -->
 
 									</td>
 								</tr>
+									
+								<tr>
+									<th><label>評價分數 :</label></th>
+									<td>
+										<div class="row">
+											<div class="col-sm-6">
+												<select size="1" name="score_max" class="form-control" id="score_max">
+					      							<option value="" >請選擇上限</option>
+					      							<option value="1">一分</option>
+					      							<option value="2">二分</option>
+					      							<option value="3">三分</option>
+					      							<option value="4">四分</option>
+					      							<option value="5">五分</option>
+												</select>												
+											</div>
+											<div class="col-sm-6">
+												<select size="1" name="score_min" class="form-control" id="score_min">
+					      							<option value="" >請選擇下限</option>
+					      							<option value="1">一分</option>
+					      							<option value="2">二分</option>
+					      							<option value="3">三分</option>
+					      							<option value="4">四分</option>
+					      							<option value="5">五分</option>
+												</select>
+											</div>
+										</div>
+									</td>
+								</tr>	
 														
 								<tr><th colspan='2'>
 									<input type="hidden" name="action" value="listVenueByCompostieQueryForFrontEnd" />
@@ -298,7 +311,31 @@
     	});
     	
     });
-
+	
+    $("#score_max").change(function(){
+		var max = $(this).context.value;
+		for(var i = 1 ; i<=5; i++){
+			if(i>max){
+				$("#score_min option[value='"+i+"']")
+					.prop("disabled",true).attr("style","display:none");
+			}else{
+				$("#score_min option[value='"+i+"']")
+					.prop("disabled",false).attr("style","display:block");
+			}
+		}
+	});
+	$("#score_min").change(function(){
+		var min = $(this).context.value;
+		for(var i = 1 ; i<=5; i++){
+			if(i<min){
+				$("#score_max option[value='"+i+"']")
+					.prop("disabled",true).attr("style","display:none");
+			}else{
+				$("#score_max option[value='"+i+"']")
+					.prop("disabled",false).attr("style","display:block");
+			}
+		}
+	});	
     
     </script>
 		

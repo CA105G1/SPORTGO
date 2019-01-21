@@ -169,7 +169,7 @@
 						<th><div class="mytitle">郵遞區號</div></th>
 						<td>
 							<div id="reg_no_show_tab3" class="pull-left"  style="padding-left:10px;">${venueVO_tab3.reg_no}</div>
-							<input type="hidden" name='reg_no' value='' id='reg_no_tab3' class="form-control" />
+							<input type="hidden" name='reg_no' value='${venueVO_tab3.reg_no}' id='reg_no_tab3' class="form-control" />
 						</td>
 					</tr>
 					
