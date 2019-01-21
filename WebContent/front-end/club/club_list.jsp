@@ -28,7 +28,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-		<title>專屬揪團</title>
+		<title>社團專區</title>
 <link  rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 <link rel="icon" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/style.css">
@@ -42,12 +42,13 @@
  }  
 
 .CARD {  
-  	WIDTH: 35rem;
+  	WIDTH: 20rem;
 	padding-left:20px; 
 	padding-right:20px; 
   	margin-left:20px;
-  	margin-right:15px
-  	display:flex;
+  	margin-right:15px;
+   	display:flex; 
+/* display:inline-flex; */
   	
   }  
  
@@ -95,28 +96,29 @@
     <!-- Top Breadcrumb Area -->
     <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(<%= request.getContextPath()%>/img/sgpic/sportbg2.jpg);">
     </div>
+</div>
 
-    <div class="container">
+    <div class="container-fluid" style="width:90%">
         <div class="row">
             <div class="col-12">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/index.jsp"><i class="fa fa-home"></i> 首頁</a></li>
-                   		<li class="breadcrumb-item active" aria-current="page">揪團專區</li>
+                   		<li class="breadcrumb-item active" aria-current="page">社團專區</li>
                     </ol>
                 </nav>
             </div>
         </div>
     </div>
-</div>
 
 
-<div class="container-fulid">
+<div class="container-fluid" style="width:90%">
 	<div class="row">
-		<div class="col-xs-12 col-lg-2">
+		<div class="col-xs-12 col-sm-3">
 			<div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
 				<div class="panel panel-default">						
-					<div id="aaa" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="panel1">
+<!-- 	XXXXXX		<div id="aaa" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="panel1"> XXXXXX-->
+<!-- 				<div class="card" > -->
 						<div class="list-group" id="myList" role="tablist">
 <!---建立社團--------------------------------------------------------------------------------->
 	<% Object object = request.getAttribute("errorMsgs"); %>
@@ -143,6 +145,10 @@
 									<div class="modal-content">
 										<div class="modal-header">
 											<h4 class="modal-title" id="clubModalLongTitle">建立社團</h4>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
 											<%-- 錯誤表列 --%>
 											<c:if test="${not empty errorMsgs}">
 												<font style="color:red">請修正以下錯誤:</font>
@@ -152,10 +158,6 @@
 												</c:forEach>
 												</ul>
 											</c:if>
-											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-												<span aria-hidden="true">&times;</span>
-											</button>
-										</div>
 						<!-- FORM開始 --><FORM METHOD="post" ACTION="<%=request.getContextPath()%>/clubfront.do" name="form1" enctype='multipart/form-data'>
 										<div class="modal-body ">
 											<br>
@@ -179,7 +181,7 @@
 												<select name="sport" id="sport" class="form-control">
 													<option value="">請選擇運動種類
 													<c:forEach var="sportVO" items="${sportSvc.all}">
-														<option value="${sportVO.sp_no}" ${(clubVO.sp_no==sportVO.sp_no)?'selected':'' }>
+														<option value="${sportVO.sp_no}" ${(clubVO.sp_no==sportVO.sp_no)?'請選擇運動種類':'' }>
 														${sportVO.sp_name}
 													</c:forEach>
 												</select>
@@ -215,58 +217,63 @@
                 <!-- Shop Widget -->
                 <div class="shop-widget price mb-50">
                     <button type="button" class="btn btn-secondary btn-block" disabled>社團查詢</button>
+                    
                     <div class="widget-desc">
         <!-- FORM開始 --><form method="post" action="<%= request.getContextPath()%>/clubfront.do">
                             <!--------運動種類查詢--------->
                             <label>運動種類</label>
                             <jsp:useBean id="sportSvc1" scope="page" class="com.sport.model.SportService" />
-                            <select size="1" name="sp_no" class="text-center">
+                            <select size="1" name="sp_no" class="text-center" style="width: 244px;margin-top: 5px;">
                                 <option value="">請選擇運動種類
                                     <c:forEach var="sportVO" items="${sportSvc.all}" > 
-                                    <option value="${sportVO.sp_no}" ${(clubVO.sp_no==sportVO.sp_no)?'selected':'' } >${sportVO.sp_name}
+                                    <option value="${sportVO.sp_no}" ${(clubVO.sp_no==sportVO.sp_no)?'':'' } >${sportVO.sp_name}
                                 </c:forEach>   
                             </select>
                             <!-------- 關鍵字查詢 --------->
                             <label>關鍵字</label>
-                            <input name="keyword" id="keyword" type="text" class="text-center form-control" placeholder="請輸入關鍵字">
+                            <input name="keyword" id="keyword" type="text" class="text-center form-control" placeholder="請輸入關鍵字" >
                             <!----------送出查詢 ---------->
                             <div class="text-center"  style="margin-top:10px;">
                                 <input type="hidden" name="actionfront" value="clubCompositeQuery">
-                                <input type="submit" value="送出查詢" class="btn btn-primary">
+                                <input type="submit" value="送出查詢" class="btn btn-success">
                             </div>
         <!-- FORM結束 --></form> 
                     </div>
                 </div>
                 
 						</div><!-- list-group結束 -->
-					</div><!-- id="aaa"結束 -->
-				</div><!-- panel panel-default結束 -->
+ 				</div><!--panel panel-default結束 -->
 			</div><!-- panel-group結束 -->
-		</div><!-- col-lg-2結束 -->
+		</div><!-- col-sm-2結束 -->
 				
-		<div class="col-xs-12 col-lg-9">
-			<c:forEach var="clubVO" items="${list}">
-				<div class="col-xs-12 col-sm-4">
-					<div class="container_1" >
-						<div class="card" >
-							<div>
-								<img class="img-responsive card-img-top" src="<%=request.getContextPath()%>/clubImg.do?club_no=${clubVO.club_no}">
-							</div>
-							<div class="card-body">
-								<h4 class="card-title">${clubVO.club_name}</h4>
-								<p class="card-text">${clubVO.club_intro}</p>
-							</div>
-							<div class="card-footer" style="padding-left: 90px;">
-								<input type="hidden" id="club_no" class="btn btn-primary" value="${clubVO.club_no}">
-								<a href='<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clubVO.club_no}' class="btn btn-primary">進入</a>
-							</div>
-							<br>
-							<br>
-						</div>
-					</div>
-				</div><!-- col-sm-4結束 -->
-			</c:forEach>
-		</div><!-- col-lg-9結束 -->
+        <div class="col-12 col-md-9">
+			<section class="alazea-blog-area mb-100">
+        		<div class="container">
+            		<div class="row">
+						<c:forEach var="clubVO" items="${list}">
+						<div class="col-xs-12 col-sm-6">
+			                <div class="single-blog-post mb-50">
+			                    <div class="post-thumbnail mb-30">
+			                        <a href="<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clubVO.club_no}">
+			                        	<img src="<%=request.getContextPath()%>/clubImg.do?club_no=${clubVO.club_no}" alt="">
+			                        </a>
+			                    </div>
+			                    <div class="post-content">
+			                        <a href="<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clubVO.club_no}" class="post-title">
+			                        	<h5>${clubVO.club_name}</h5>
+			                        </a>
+			                        <a href="<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clubVO.club_no}" class="post-title">
+			                        	<p class="post-excerpt">${clubVO.club_intro}</p>
+			                        </a>
+			                    </div>
+			                </div>
+			            </div>
+			            </c:forEach>
+            		</div>
+        		</div>
+			</section>
+        </div>
+			
 	</div><!-- row結束 -->
 </div><!-- 最外層container-fulid結束 -->
 <jsp:include page="/front-end/CA105G1_footer_bt4.jsp" />

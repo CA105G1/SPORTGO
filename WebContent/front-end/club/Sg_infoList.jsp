@@ -82,7 +82,7 @@
 				<div class="col-xs-12 col-sm-2" >
 					<jsp:include page="/front-end/club/club_pageRight.jsp" />
 				</div>
-				<div class="col-xs-12 col-sm-8" id="listDiv">
+				<div class="col-xs-12 col-sm-7" id="listDiv">
 					<a class="btn btn-info btn-block" href="<%= request.getContextPath()%>/front-end/club/Sg_infoCreateForClub.jsp" style="height:42px">
 						建立專屬揪團
 					</a>
@@ -122,8 +122,8 @@
 							
 					</c:forEach>
 				</div>
-				<div class="col-xs-12 col-sm-2" >
-<%-- 					<div>clubVO = ${clubVO }</div> --%>
+				<div class="col-xs-12 col-sm-3" id="xx"><!--社團成員列表-->
+					<jsp:include page="/front-end/club_memberlist/clubmember_list.jsp" />
 				</div>
 			</div>
 		</div>

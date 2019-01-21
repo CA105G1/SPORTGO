@@ -43,7 +43,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-		<title>Title Page</title>
+		<title>貼文列表</title>
 		
 <link   rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 <link rel="icon" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png">
@@ -112,8 +112,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/index.jsp"><i class="fa fa-home"></i> 首頁</a></li>
                         <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/front-end/club/club_list.jsp">社團專區</a></li>
-                        <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/front-end/club/Sg_infoList.jsp">專屬揪團</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">建立專屬揪團</li>
+                        <li class="breadcrumb-item active" aria-current="page">貼文列表</li>
                     </ol>
                 </nav>
             </div>
@@ -129,10 +128,10 @@
 					<jsp:include page="club_pageRight.jsp" />
 				</div>
 						
-				<div class="col-xs-12 col-sm-8">
+				<div class="col-xs-12 col-sm-7">
 					
 <!------------------------------------------ 關鍵字查詢 --------------------------------------------------->
-<!--查詢的FORM-->	<form method="post" action="<%= request.getContextPath()%>/post_info.do">
+<!--查詢的FORM-->	<form method="post" action="<%= request.getContextPath()%>/post_info.do" style=" margin-left: 380px;">
 				  	<div class="input-group" style="width:230px">
                     	<input type="text" class="form-control" placeholder="請輸入關鍵字" name="keyword" id="keyword">
                     	<span class="input-group-btn" ><!--style="display:none"-->
@@ -144,7 +143,7 @@
 <!--查詢的FORM-->	</form>
 <!----------------------------------------- 顯示貼文列表 -------------------------------------------------->
 <!-- 貼文刪除FORM --><FORM METHOD="post" ACTION="<%=request.getContextPath()%>/post_info.do" name="form">  
-					<div class="card text-center" id="post">
+					<div class="card text-center" id="post" style="border-style:none;">
   							<div class="card-body">
 								<c:forEach var="postinfoVO" items="${postvolist}">
     								<h3 class="card-title"  class="list-group-item">
@@ -158,8 +157,8 @@
 <!-- 貼文刪除FORM --></FORM> 
 <!-------------------------------------------- 新增留言 --------------------------------------------------->
 		<!-- 新增的FORM --><FORM METHOD="post" ACTION="<%=request.getContextPath()%>/respones.do" name="form">  
-  							<div class="card-footer text-muted">
-									<div class="card" id="respones">
+  							<div class="card-footer text-muted" style="border-style:none;">
+									<div class="card" id="respones" style="border-style:none;">
 							  			<div class="card-body">
 					   	   <!-- 留言輸入框 --><textarea class="form-control" name="res_content" id="res_content" placeholder="我要留言" row="5"></textarea>
 											<input type="hidden" name="club_no" id="club_no" value="${postinfoVO.club_no}"/>
@@ -167,8 +166,8 @@
 											<input type="hidden" name="mem_no" id="mem_no" value="${memberlistVO.mem_no}">
 											<input type="hidden" name="requestURL" id="requestURL" value="/front-end/club/club_page.jsp">
 							  			</div>
-							  		<br>
-							  			<div class="card-footer text-muted">
+<!-- 							  		<br> -->
+							  			<div class="card-footer text-muted" style="border-style:none;">
 							  				<input type="hidden" name="action" value="insert">
 							    			<button type="submit" class="btn btn-primary">送出</button>
 							  			</div>
@@ -181,7 +180,7 @@
 					  		<button class="responesShow btn  btn-link" type="button" id="dropdownMenuButton" data-toggle="" aria-haspopup="true" aria-expanded="false">
 					    		顯示所有留言
 					  		</button>
-							<div class=" container-fluid" id="respones" style="display: none;">
+							<div class=" container-fluid" id="respones" >
 								<table class="table">
 									<jsp:useBean id="responesSvc" scope="page" class="com.respones.model.ResponesService"/>
 									<c:forEach var="responesVO" items="${responesSvc.getallfrompost(postinfoVO.post_no)}"><!-- 內層forEach -->
@@ -190,10 +189,10 @@
 				    					<input type="hidden" name="res_no" id="res_no" value="${responesVO.res_no}"/>
 				    					<jsp:useBean id="post_infoSvc" scope="page" class="com.post_info.model.Post_infoService"/>
 				    					<input type="hidden" name="club_no" id="club_no" value="${post_infoSvc.getOnePost_info(responesVO.post_no).getClub_no()}"/>
-										<td scope="col" style=""><!-- 回文者的照片-->
-					      			 		<img src="<%=request.getContextPath()%>/front-end/memberlist/showPicture.do?mem_no=${responesVO.mem_no}"  style="width: 10%">
+										<td scope="col"><!-- 回文者的照片-->
+					      			 		<img src="<%=request.getContextPath()%>/front-end/memberlist/showPicture.do?mem_no=${responesVO.mem_no}"  style="width:10%">
 					      			 	</td>
-										<td scope="col"><!-- 回文內容-->
+										<td scope="col" ><!-- 回文內容-->
 					      					${responesVO.res_content}
 				      				 	</td>
 				      				 	<td>
@@ -212,7 +211,7 @@
   							</div> <!-- card-body結束 -->
 					</div><!-- card text-center結束 -->
 				</div><!-- col-xs-12 col-lg-7結束-->
-				<div class="col-xs-12 col-sm-2" id="xx"><!--社團成員列表-->
+				<div class="col-xs-12 col-sm-3" id="xx"><!--社團成員列表-->
 					<jsp:include page="/front-end/club_memberlist/clubmember_list.jsp" />
 				</div>
 			</div><!-- row結束 -->
