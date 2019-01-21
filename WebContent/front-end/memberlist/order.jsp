@@ -99,13 +99,13 @@
                 <span class="text-muted">${ord.ord_date}</span><br>
                 <span class="text-muted">${ord.ord_status}</span>
             </div>
-            <div class="col-xs-1 col-sm-1 dropdown-user" id="drop_${ord.ord_no}" data-for=".cyruxx">
+            <div class="col-xs-1 col-sm-1 dropdown-user" id="drop_${ord.ord_no}" data-for=".cyruxx_${ord.ord_no}">
                 <i class="glyphicon glyphicon-chevron-down text-muted"></i>
             </div>
         </div>
         
         
-        <div class="row user-infos cyruxx">
+        <div class="row user-infos cyruxx_${ord.ord_no}">
             <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
@@ -130,17 +130,17 @@
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <button class="btn btn-sm btn-primary" type="button"
-                                data-toggle="tooltip"
-                                data-original-title="Send message to user"><i class="glyphicon glyphicon-envelope"></i></button>
-                        <span class="pull-right">
-                            <button class="btn btn-sm btn-warning" type="button"
-                                    data-toggle="tooltip"
-                                    data-original-title="Edit this user"><i class="glyphicon glyphicon-edit"></i></button>
-                            <button class="btn btn-sm btn-danger" type="button"
-                                    data-toggle="tooltip"
-                                    data-original-title="Remove this user"><i class="glyphicon glyphicon-remove"></i></button>
-                        </span>
+<!--                         <button class="btn btn-sm btn-primary" type="button" -->
+<!--                                 data-toggle="tooltip" -->
+<!--                                 data-original-title="Send message to user"><i class="glyphicon glyphicon-envelope"></i></button> -->
+<!--                         <span class="pull-right"> -->
+<!--                             <button class="btn btn-sm btn-warning" type="button" -->
+<!--                                     data-toggle="tooltip" -->
+<!--                                     data-original-title="Edit this user"><i class="glyphicon glyphicon-edit"></i></button> -->
+<!--                             <button class="btn btn-sm btn-danger" type="button" -->
+<!--                                     data-toggle="tooltip" -->
+<!--                                     data-original-title="Remove this user"><i class="glyphicon glyphicon-remove"></i></button> -->
+<!--                         </span> -->
                     </div>
                 </div>
             </div>
@@ -165,6 +165,7 @@
 	    //Click dropdown
 	    panelsButton.click(function() {
 	        //get data-for attribute
+	        console.log(this.id);
 	        var dataFor = $(this).attr('data-for');
 	        var idFor = $(dataFor);
 
