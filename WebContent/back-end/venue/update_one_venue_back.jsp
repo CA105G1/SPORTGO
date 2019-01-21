@@ -183,7 +183,6 @@
 						</td>
 					</tr>
 					
-					
 					<tr>
 						<th><div class="mytitle">場地電話</div></th>
 						<td>
