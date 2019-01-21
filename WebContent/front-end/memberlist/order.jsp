@@ -24,10 +24,13 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-		<script src="https://code.jquery.com/jquery.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-		<title>SPORTGO 會員頁面</title>
+		<link rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
+		<link rel="icon" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png">
+		<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/style.css">
+		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/jquery/jquery-2.2.4.min.js"></script>
+		<script src="<%= request.getContextPath()%>/datetimepicker/jquery.js"></script>
+		<script src="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+		<title>SPORTGO 會員訂單管理</title>
 		<style type="text/css">
 			.container{
 				width: 100%;
@@ -36,7 +39,6 @@
 				font-size: xx-large;
 				color: red;
 			}
-			
 			.user-row {
     margin-bottom: 14px;
 }
@@ -67,96 +69,115 @@
 .table-user-information > tbody > tr > td {
     border-top: 0;
 }
-
-			
 			
 		</style>
 	</head>
 	<body>
-		<jsp:include page="/front-end/CA105G1_header.jsp"/>
-		
+		<jsp:include page="/front-end/CA105G1_header_bt4.jsp"/>
+		<div class="breadcrumb-area">
+	    	<div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(<%= request.getContextPath()%>/img/badmintoncount.JPG);">
+	    	</div>
+		</div>		
+		<div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/index.jsp"><i class="fa fa-home"></i>首頁</a></li>
+                            <li class="breadcrumb-item" aria-current="page"><a href="public_Member_page.jsp">會員專區</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">揪團管理</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
 		<!-- 右選單 -->
-		<div class="container-fluid">
+		<div class="container">
 			<div class="row">
 				<div class="col-xs-12 col-sm-3">
 					<jsp:include page="list_group.jsp"/>
 				</div>
-				<div class="col-xs-12 col-sm-9 tab-content">
+				<div class="col-xs-12 col-sm-9">
 				<!-- 訂單管理 -->
-<c:forEach var="ord" items="${ordlist}">
-				
-        
-       <div class="well col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
-<!--          一開始看到畫面 -->
-        <div class="row user-row">
-            <div class="col-xs-1 col-sm-1">
-<!--                 <img class="img-circle" -->
-<!--                      src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=50" -->
-<!--                      alt="User Pic"> -->
-            </div>
-            <div class="col-xs-10 col-sm-10">
-                <strong>下訂日期</strong><br>
-                <span class="text-muted">${ord.ord_date}</span><br>
-                <span class="text-muted">${ord.ord_status}</span>
-            </div>
-            <div class="col-xs-1 col-sm-1 dropdown-user" id="drop_${ord.ord_no}" data-for=".cyruxx_${ord.ord_no}">
-                <i class="glyphicon glyphicon-chevron-down text-muted"></i>
-            </div>
-        </div>
-        
-        
-        <div class="row user-infos cyruxx_${ord.ord_no}">
-            <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">訂單資訊</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div class="row">
-                        <c:forEach var="detail" items="${OrddetailSvc.getOneOrd(ord.ord_no)}">
-                            <div class="col-xs-2 col-sm-2" >
-                                <img class="img-circle"
-                                     src="<%=request.getContextPath()%>/pro/proImg.do?pro_no=${detail.pro_no}"
-                                     alt="User Pic" style="max-width:55px;max-height:55px;border-redius:1px;">
-                            </div>
-<!--                             比較小的的跳行 -->
-                            <div class="col-xs-10 col-sm-10">
-                                <strong>商品：${prdSvc.getOneProduct(detail.pro_no).pro_name}</strong><br>
-                                <strong>數量：${detail.pro_count}</strong><br>
-                                <strong>數量：${detail.pro_no}</strong><br>
-                            </div>
-<!--                             比較大的使用table表示 -->
-                        </c:forEach>
-                        </div>
-                    </div>
-                    <div class="panel-footer">
-<!--                         <button class="btn btn-sm btn-primary" type="button" -->
-<!--                                 data-toggle="tooltip" -->
-<!--                                 data-original-title="Send message to user"><i class="glyphicon glyphicon-envelope"></i></button> -->
-<!--                         <span class="pull-right"> -->
-<!--                             <button class="btn btn-sm btn-warning" type="button" -->
-<!--                                     data-toggle="tooltip" -->
-<!--                                     data-original-title="Edit this user"><i class="glyphicon glyphicon-edit"></i></button> -->
-<!--                             <button class="btn btn-sm btn-danger" type="button" -->
-<!--                                     data-toggle="tooltip" -->
-<!--                                     data-original-title="Remove this user"><i class="glyphicon glyphicon-remove"></i></button> -->
-<!--                         </span> -->
-                    </div>
-                </div>
-            </div>
-        </div>
-        </div>
-				
-				
-				
+					<c:forEach var="ord" items="${ordlist}">
+						<div class="container">
+							<div class="well col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+					        	<div class="row user-row">
+					            	<div class="col-xs-3 col-sm-2 col-md-1 col-lg-1">
+					<!--                 <img class="img-circle" -->
+					<!--                      src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=50" -->
+					<!--                      alt="User Pic"> -->
+					            	</div>
+            						<div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
+						                <strong>下訂日期</strong><br>
+						                <span class="text-muted">${ord.ord_date}</span><br>
+						                <span class="text-muted">${ord.ord_status}</span>
+						            </div>
+						            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 dropdown-user"  id="drop_${ord.ord_no}" data-for=".cyruxx_${ord.ord_no}">
+						                <i class="fa fa-caret-down"></i>
+						            </div>
+        						</div>
+						        <div class="row user-infos cyruxx_${ord.ord_no}">
+						            <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1">
+						                <div class="panel panel-primary">
+						                    <div class="panel-heading">
+						                        <h3 class="panel-title">訂單資訊</h3>
+						                    </div>
+						                    <div class="panel-body">
+						                        <div class="row">
+						                        <c:forEach var="detail" items="${OrddetailSvc.getOneOrd(ord.ord_no)}">
+						                            <div class="col-xs-2 col-sm-2 hidden-md hidden-lg">
+						                                <img class="img-circle"
+						                                     src="<%=request.getContextPath()%>/pro/proImg.do?pro_no=${detail.pro_no}"
+						                                     alt="User Pic" style="max-width:55px;max-height:55px;border-redius:1px;">
+						                            </div>
+						                            <div class="col-xs-10 col-sm-10">
+						                                <strong>商品：${prdSvc.getOneProduct(detail.pro_no).pro_name}</strong><br>
+						                                <strong>數量：${detail.pro_count}</strong><br>
+						                            </div>
+						                        </c:forEach>
+						                        </div>
+						                    </div>
+						                    <div class="panel-footer">
+						<!--                         <button class="btn btn-sm btn-primary" type="button" -->
+						<!--                                 data-toggle="tooltip" -->
+						<!--                                 data-original-title="Send message to user"><i class="glyphicon glyphicon-envelope"></i></button> -->
+						<!--                         <span class="pull-right"> -->
+						<!--                             <button class="btn btn-sm btn-warning" type="button" -->
+						<!--                                     data-toggle="tooltip" -->
+						<!--                                     data-original-title="Edit this user"><i class="glyphicon glyphicon-edit"></i></button> -->
+						<!--                             <button class="btn btn-sm btn-danger" type="button" -->
+						<!--                                     data-toggle="tooltip" -->
+						<!--                                     data-original-title="Remove this user"><i class="glyphicon glyphicon-remove"></i></button> -->
+						<!--                         </span> -->
+						                    </div>
+						                </div>
+						            </div>
+        						</div>
+        					</div>
+        				</div>
 				</c:forEach>				
+				
+				
+				
+				
+				
+				
+				
 				
 				
 				</div>	
 			</div>
 		</div>
-	<jsp:include page="/front-end/CA105G1_footer.jsp"/>
-	
+		<jsp:include page="/front-end/CA105G1_footer_bt4.jsp"/>	
+		<!-- Popper js -->
+		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/popper.min.js"></script>
+		<!-- Bootstrap js -->
+		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/bootstrap.min.js"></script>
+		<!-- All Plugins js -->
+		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/plugins/plugins.js"></script>
+		<!-- Active js -->
+		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/active.js"></script>
 	<script>
 	$(document).ready(function() {
 	    var panels = $('.user-infos');
