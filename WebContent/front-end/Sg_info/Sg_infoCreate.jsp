@@ -41,20 +41,7 @@
 %>
 
 
-<%-- 錯誤表列 --%>
-<c:if test="${not empty errorMsg}">
-	<font style="color:red">請修正以下錯誤:</font>
-<!-- 	<ul> -->
-<%-- 		<c:forEach var="message" items="${errorMsg}"> --%>
-<%-- 			<li style="color:red">${message}</li> --%>
-<%-- 		</c:forEach> --%>
-<!-- 	</ul> -->
-	<ul>
-		<c:forEach var="message" items="${errorMsg}">  <!-- 等同於${errorMsgs.entrySet()} -->
-			<li style="color:red">${message.value}</li>  <!-- 等同於${message.getValue()} -->
-		</c:forEach>
-	</ul>
-</c:if>
+
 
 <!-- 麵包屑 -->
 <div class="breadcrumb-area">
@@ -76,6 +63,21 @@
         </div>
     </div>
 </div>
+
+<%-- 錯誤表列 --%>
+<c:if test="${not empty errorMsg}">
+	<font style="color:red">請修正以下錯誤:</font>
+<!-- 	<ul> -->
+<%-- 		<c:forEach var="message" items="${errorMsg}"> --%>
+<%-- 			<li style="color:red">${message}</li> --%>
+<%-- 		</c:forEach> --%>
+<!-- 	</ul> -->
+	<ul>
+		<c:forEach var="message" items="${errorMsg}">  <!-- 等同於${errorMsgs.entrySet()} -->
+			<li style="color:red">${message.value}</li>  <!-- 等同於${message.getValue()} -->
+		</c:forEach>
+	</ul>
+</c:if>
 
 <section>
 <div class="container">
@@ -562,11 +564,11 @@
    	
    	
    	$("#magicBtn").click(function(){
-   		$("#sg_name").val("阿里山的姑娘美如水");
+   		$("#sg_name").val("人生短短幾個秋");
    		$("#sg_fee").val(0);
    		$("#sg_maxno").val(3);
    		$("#sg_minno").val(0);
-   		$("#sg_extrainfo").text("一起衝去阿里山看日出啊!");
+   		$("#sg_extrainfo").text("我愛江山更愛美人!");
    	});
    	
    	
