@@ -356,9 +356,9 @@ if ("insert".equals(actionfront)) {
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				HttpSession session = req.getSession();
 				session.setAttribute("clubVO", clubVO);
-				RequestDispatcher successView = req.getRequestDispatcher("/front-end/club/club_intro_page.jsp"); 
-				successView.forward(req, res);	
-//				res.sendRedirect("/CA105G1/front-end/club/club_list.jsp");
+//				RequestDispatcher successView = req.getRequestDispatcher("/front-end/club/club_intro_page.jsp"); 
+//				successView.forward(req, res);	
+				res.sendRedirect("/CA105G1/front-end/club/club_list.jsp");
 				
 				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {

@@ -23,8 +23,8 @@ public class mainAllimageIntoDB {
 //		String rootPath = "/Users/ChengChih-Ren/git/SPORTGOG1/WebContent/InitDB/image";
 //		String rootPath = "C:\\Users\\wenshock\\git\\SPORTGO\\WebContent\\InitDB\\image";
 //		String rootPath = "C:\\Users\\coolbee333\\git\\SPORTGO\\WebContent\\InitDB\\image";
-//		String rootPath = "C:\\Users\\Java\\git\\SPORTGO\\WebContent\\InitDB\\image";
-		String rootPath = "C:\\Users\\Shawn\\git\\SPORTGO\\WebContent\\InitDB\\image"; 
+		String rootPath = "C:\\Users\\Java\\git\\SPORTGO\\WebContent\\InitDB\\image";
+//		String rootPath = "C:\\Users\\Shawn\\git\\SPORTGO\\WebContent\\InitDB\\image"; 
 		String pathContant = "\\"; // microsoft "\\" mac "/"
 		File file = new File(rootPath);
 		if(!file.isDirectory()) {

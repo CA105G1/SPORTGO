@@ -138,7 +138,7 @@
     <url-pattern>/front-end/club/create_page.jsp</url-pattern>
     <url-pattern>/front-end/club_memberlist/reviewaddclub.jsp</url-pattern>
     <url-pattern>/front-end/post_info/create_post.jsp</url-pattern>
-    <url-pattern>/front-end/club/club_list.jsp</url-pattern>
+<!--     <url-pattern>/front-end/club/club_list.jsp</url-pattern> -->
     <dispatcher>REQUEST</dispatcher>
     <dispatcher>FORWARD</dispatcher>
     <dispatcher>INCLUDE</dispatcher>

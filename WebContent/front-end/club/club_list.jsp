@@ -24,9 +24,17 @@
 
 <html>
 <head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+		<title>專屬揪團</title>
 <link  rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 <link rel="icon" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/style.css">
+
+
+
 
 <style type="text/css">
  .card-img-top {  
@@ -70,7 +78,7 @@
 </head>
 <body ${(errorMsgs!=null)?"onload='errormsgs()'":""}>
 
-<jsp:include page="/front-end/CA105G1_header.jsp" />
+<jsp:include page="/front-end/CA105G1_header_bt4.jsp" />
 
 <br>
 <!-- <!-- Loading時的小圖示 --> -->
@@ -129,6 +137,7 @@
 <!-- 		    href="#createclub" role="tab" >建立社團</a> -->
 <%-- 	</c:if> --%>
 <!---Modal------------------------------------------------------------------------------------>
+							
 							<div class="modal fade" id="clubModalLong" tabindex="-1" role="dialog" aria-labelledby="clubModalLongTitle" aria-hidden="true">
 								<div class="modal-dialog  .modal-dialog-centered " role="document">
 									<div class="modal-content">
@@ -260,13 +269,21 @@
 		</div><!-- col-lg-9結束 -->
 	</div><!-- row結束 -->
 </div><!-- 最外層container-fulid結束 -->
-<jsp:include page="/front-end/CA105G1_footer.jsp" />
+<jsp:include page="/front-end/CA105G1_footer_bt4.jsp" />
 
 
+<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/jquery/jquery-2.2.4.min.js"></script>
+<script src="<%= request.getContextPath()%>/datetimepicker/jquery.js"></script>
+<script src="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+<!-- Popper js -->
+<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/popper.min.js"></script>
+<!-- Bootstrap js -->
+<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/bootstrap.min.js"></script>
+<!-- All Plugins js -->
+<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/plugins/plugins.js"></script>
+<!-- Active js -->
+<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/active.js"></script>
 
-
-<script src="https://code.jquery.com/jquery.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	
 	<script type="text/javascript"> 
 	//照片上傳
