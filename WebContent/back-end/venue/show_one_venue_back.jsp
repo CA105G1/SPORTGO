@@ -29,7 +29,7 @@
 	</style>
 </head>
 <body>
-	<h1>this is show one venue page for back</h1>
+<!-- 	<h1>this is show one venue page for back</h1> -->
 <%
 	VenueVO venueVO = (VenueVO)request.getAttribute("venueVO");
 	VenueTypeVO venueTypeVO = (VenueTypeVO)request.getAttribute("venueTypeVO");
@@ -48,7 +48,9 @@
 <div class="container-fluid">
 	<div class="row">
 			<table class="table table-hover table-striped table-bordered text-center">
-				<caption class="text-center">this is show one news page</caption>
+				<caption class="text-center">
+					<div class='h3'>${venueVO.v_no}-${venueVO.v_name}-${venueTypeVO.vt_name}-詳細資料</div>
+				</caption>
 				<thead>
 					<tr>
 						<th colspan="2">

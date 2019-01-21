@@ -33,7 +33,17 @@
 %>
 
 <%if (pageNumber>0){%>
-  <b><font color=red>第<%=whichPage%>/<%=pageNumber%>頁</font></b>
+	<div class='text-center'>
+<% 	if(whichPage==1) {%>		
+		<b><font color=red><%=whichPage%>st</font> page / The total pages is <font color=red><%=pageNumber%></font>.</b>
+<% 	} else if(whichPage==2){%>
+		<b><font color=red><%=whichPage%>nd</font> page / The total pages is <font color=red><%=pageNumber%></font>.</b>
+<% 	} else if(whichPage==3){%>
+		<b><font color=red><%=whichPage%>rd</font> page / The total pages is <font color=red><%=pageNumber%></font>.</b>
+<% 	} else {%>
+		<b><font color=red><%=whichPage%>th</font> page / The total pages is <font color=red><%=pageNumber%></font>.</b>
+<% 	}%>
+	<b>　　　　Showing <font color=red><%=rowNumber%></font> results</b></div>
+<%}else{%>
+	<div class='text-center'><b>Showing <font color=red><%=rowNumber%></font> results</b></div>
 <%}%>
-
-<b>●符 合 查 詢 條 件 如 下 所 示: 共<font color=red><%=rowNumber%></font>筆</b>

@@ -24,10 +24,15 @@
 			display: flex;
 			justify-content:center;
 		}
+		#openday_week > div{
+			padding-right:7px;
+			padding-left:7px;
+		}
+		
 	</style>
 </head>
 <body>
-	<h1>this is update one venue page for back</h1>
+<!-- 	<h1>this is update one venue page for back</h1> -->
 <%
 
 %>
@@ -63,7 +68,9 @@
 	<div class="row">
 		
 		<table class="table table-hover table-striped table-bordered text-center">
-			<caption class="text-center">this is add venue page</caption>
+<%-- 			<caption class="text-center"> --%>
+<%-- 					<div class='h3'>${venueVO.v_no}-${venueVO.v_name}-${venueTypeVO.vt_name}-詳細資料</div> --%>
+<%-- 			</caption> --%>
 			<thead>
 				<tr>
 					<th colspan="2">
@@ -85,18 +92,18 @@
 				<form action="<%=request.getContextPath()%>/venue/venue.do" method="post" enctype="multipart/form-data">
 					<tr>
 						<th><div class="mytitle">場地編號</div></th>
-						<td>${venueVO_tab3.v_no}</td>
+						<td><div class="pull-left" style="padding-left:17px">${venueVO_tab3.v_no}</div></td>
 					</tr>
 					<tr>
 						<th><div class="mytitle">場地類型<div style="color:red"> * </div></div></th>
 						<td>
 							<jsp:useBean id="venueTypeService" scope="page" class="com.venuetype.model.VenueTypeService" />
-							<select size="1" name="vt_no" id="vt_no_tab3">
+							<select size="1" name="vt_no" id="vt_no_tab3" class="form-control text-center">
 								<option value=""></option>
 								<c:forEach var="venueTypeVO" items="${venueTypeService.all}">
 									<option value="${venueTypeVO.vt_no}" ${venueTypeVO.vt_no==venueVO_tab3.vt_no?'selected':''}>${venueTypeVO.vt_name}</option>
 								</c:forEach>
-							</select><br>
+							</select>
 							<div class="center-block errorMsgs-color">${errorMsgs_tab3.get("vt_no")}</div>
 						</td>
 					</tr>
@@ -104,19 +111,19 @@
 					<tr>
 						<th><div class="mytitle">場地名稱<div style="color:red"> * </div></div></th>
 						<td>
-							<input type="text" name="v_name" value="${venueVO_tab3.v_name}"/><br>
+							<input type="text" name="v_name" value="${venueVO_tab3.v_name}"  class="form-control"/>
 							<div class="center-block errorMsgs-color">${errorMsgs_tab3.get("v_name")}</div> 
 						</td>
 					</tr>
 					
 					<tr>
-						<th><div class="mytitle">室內or室外</div></th>
+						<th><div class="mytitle">室內or室外<div style="color:red"> * </div></div></th>
 						<td>
-							<select size="1" name="v_inout" id="v_inout_tab3">
+							<select size="1" name="v_inout" id="v_inout_tab3"  class="form-control text-center">
 								<option value=""></option>
 								<option value="室內設施" ${'室內設施'==venueVO_tab3.v_inout?'selected':''}>室內設施</option>
 								<option value="室外設施" ${'室外設施'==venueVO_tab3.v_inout?'selected':''}>室外設施</option>
-							</select><br>
+							</select>
 							<div class="center-block errorMsgs-color">${errorMsgs_tab3.get("v_inout")}</div>
 						</td>
 					</tr>
@@ -125,12 +132,12 @@
 						<th><div class="mytitle">場地地區</div></th>
 						<td>
 							<jsp:useBean id="regService" scope="page" class="com.region.model.RegService" />
-							<select size="1" name="reg_no" id="reg_no_tab3">
+							<select size="1" name="reg_no" id="reg_no_tab3"  class="form-control text-center">
 								<option value=""></option>
 								<c:forEach var="regVO" items="${regService.all}">
 									<option value="${regVO.reg_no}" ${regVO.reg_no==venueVO_tab3.reg_no?'selected':''}>${regVO.reg_name}-${regVO.getReg_dist().trim()}</option>
 								</c:forEach>
-							</select><br>
+							</select>
 							<div class="center-block errorMsgs-color">${errorMsgs_tab3.get("reg_no")}</div>
 						</td>
 					</tr>
@@ -138,7 +145,7 @@
 					<tr>
 						<th><div class="mytitle">場地地址<div style="color:red"> * </div></div></th>
 						<td>
-							<input type="text" name="v_address" value="${venueVO_tab3.v_address}"/><br>
+							<input type="text" name="v_address" value="${venueVO_tab3.v_address}"  class="form-control"/>
 							<div class="center-block errorMsgs-color">${errorMsgs_tab3.get("v_address")}</div> 
 						</td>
 					</tr>
@@ -147,7 +154,7 @@
 					<tr>
 						<th><div class="mytitle">場地電話</div></th>
 						<td>
-							<input type="text" name="v_phoneno" value="${venueVO_tab3.v_phoneno}"/><br>
+							<input type="text" name="v_phoneno" value="${venueVO_tab3.v_phoneno}"  class="form-control"/>
 							<div class="center-block errorMsgs-color">${errorMsgs_tab3.get("v_phoneno")}</div> 
 						</td>
 					</tr>
@@ -155,12 +162,12 @@
 					<tr>
 						<th><div class="mytitle">開放狀態<div style="color:red"> * </div></div></th>
 						<td>
-							<select size="1" name="open_state" id="open_state_tab3">
+							<select size="1" name="open_state" id="open_state_tab3"  class="form-control text-center">
 								<option value=""></option>
 								<option value="不開放對外使用" ${'不開放對外使用'==venueVO_tab3.open_state?'selected':''}>不開放對外使用</option>
 								<option value="免費對外開放使用" ${'免費對外開放使用'==venueVO_tab3.open_state?'selected':''}>免費對外開放使用</option>
 								<option value="付費對外開放使用" ${'付費對外開放使用'==venueVO_tab3.open_state?'selected':''}>付費對外開放使用</option>
-							</select><br>
+							</select>
 							<div class="center-block errorMsgs-color">${errorMsgs_tab3.get("open_state")}</div>
 						</td>
 					</tr>
@@ -168,10 +175,10 @@
 					<tr>
 						<th><div class="mytitle">開放日<div style="color:red"> * </div></div></th>
 						<td>
-							<div style="display:inline-flex">
-								<div>
+							<div style="display:inline-flex" id="openday_week">
+								<div >
 									<div class='p'>星期一</div>
-									<select size="1" name="openday_mon" id="openday_mon_tab3">
+									<select size="1" name="openday_mon" id="openday_mon_tab3" class="form-control text-center">
 										<option value=""></option>
 										<option value="Y" ${'Y'==venueVO_tab3.openday_mon?'selected':''}>開放使用</option>
 										<option value="N" ${'N'==venueVO_tab3.openday_mon?'selected':''}>休館</option>
@@ -180,7 +187,7 @@
 								
 								<div>
 									<div class='p'>星期二</div>
-									<select size="1" name="openday_tue" id="openday_tue_tab3">
+									<select size="1" name="openday_tue" id="openday_tue_tab3" class="form-control text-center">
 										<option value=""></option>
 										<option value="Y" ${'Y'==venueVO_tab3.openday_tue?'selected':''}>開放使用</option>
 										<option value="N" ${'N'==venueVO_tab3.openday_tue?'selected':''}>休館</option>
@@ -189,7 +196,7 @@
 								
 								<div>
 									<div class='p'>星期三</div>
-									<select size="1" name="openday_wed" id="openday_wed_tab3">
+									<select size="1" name="openday_wed" id="openday_wed_tab3" class="form-control text-center">
 										<option value=""></option>
 										<option value="Y" ${'Y'==venueVO_tab3.openday_wed?'selected':''}>開放使用</option>
 										<option value="N" ${'N'==venueVO_tab3.openday_wed?'selected':''}>休館</option>
@@ -198,7 +205,7 @@
 								
 								<div>
 									<div class='p'>星期四</div>
-									<select size="1" name="openday_thu" id="openday_thu_tab3">
+									<select size="1" name="openday_thu" id="openday_thu_tab3" class="form-control text-center">
 										<option value=""></option>
 										<option value="Y" ${'Y'==venueVO_tab3.openday_thu?'selected':''}>開放使用</option>
 										<option value="N" ${'N'==venueVO_tab3.openday_thu?'selected':''}>休館</option>
@@ -207,7 +214,7 @@
 								
 								<div>
 									<div class='p'>星期五</div>
-									<select size="1" name="openday_fri" id="openday_fri_tab3">
+									<select size="1" name="openday_fri" id="openday_fri_tab3" class="form-control text-center">
 										<option value=""></option>
 										<option value="Y" ${'Y'==venueVO_tab3.openday_fri?'selected':''}>開放使用</option>
 										<option value="N" ${'N'==venueVO_tab3.openday_fri?'selected':''}>休館</option>
@@ -216,7 +223,7 @@
 								
 								<div>
 									<div class='p'>星期六</div>
-									<select size="1" name="openday_sat" id="openday_sat_tab3">
+									<select size="1" name="openday_sat" id="openday_sat_tab3" class="form-control text-center">
 										<option value=""></option>
 										<option value="Y" ${'Y'==venueVO_tab3.openday_sat?'selected':''}>開放使用</option>
 										<option value="N" ${'N'==venueVO_tab3.openday_sat?'selected':''}>休館</option>
@@ -225,7 +232,7 @@
 								
 								<div>
 									<div class='p'>星期日</div>
-									<select size="1" name="openday_sun" id="openday_sun_tab3">
+									<select size="1" name="openday_sun" id="openday_sun_tab3" class="form-control text-center">
 										<option value=""></option>
 										<option value="Y" ${'Y'==venueVO_tab3.openday_sun?'selected':''}>開放使用</option>
 										<option value="N" ${'N'==venueVO_tab3.openday_sun?'selected':''}>休館</option>
@@ -240,7 +247,7 @@
 <!-- 					<tr> -->
 <!-- 						<th><div class="mytitle">開放時間</div></th> -->
 <!-- 						<td> -->
-<!-- 							<div>無法填入-->TODO:引入時間選擇器 ---> 確認OK送出</div> -->
+<!-- 							<div>無法填入  TODO:引入時間選擇器   確認OK送出</div> -->
 <!-- 						</td> -->
 <!-- 					</tr> -->
 					
@@ -248,23 +255,22 @@
 					<tr>
 						<th><div class="mytitle">是否顯示<div style="color:red"> * </div></div></th>
 						<td>
-							<select size="1" name="v_display" id="v_display_tab3">
+							<select size="1" name="v_display" id="v_display_tab3"  class="form-control text-center">
 								<option value=""></option>
 								<option value="顯示" ${'顯示'==venueVO_tab3.v_display?'selected':''}>顯示</option>
 								<option value="不顯示" ${'不顯示'==venueVO_tab3.v_display?'selected':''}>不顯示</option>
-							</select><br>
+							</select>
 							<div class="center-block errorMsgs-color">${errorMsgs_tab3.get("v_display")}</div>
 						</td>
 					</tr>
 					<tr>
 						<th><div class="mytitle">適用對象-民眾<div style="color:red"> * </div></div></th>
 						<td>
-							
-							<select size="1" name="v_fitall" id="v_fitall_tab3">
+							<select size="1" name="v_fitall" id="v_fitall_tab3"  class="form-control text-center">
 								<option value=""></option>
 								<option value="Y" ${'Y'==venueVO_tab3.v_fitall?'selected':''}>開放</option>
 								<option value="N" ${'N'==venueVO_tab3.v_fitall?'selected':''}>不開放</option>
-							</select><br>
+							</select>
 							<div class="center-block errorMsgs-color">${errorMsgs_tab3.get("v_fitall")}</div>
 						</td>
 					</tr>
@@ -272,20 +278,21 @@
 						<th><div class="mytitle">適用對象-內部人員<div style="color:red"> * </div></div></th>
 						<td>
 							
-							<select size="1" name="v_fitinter" id="v_fitinter_tab3">
+							<select size="1" name="v_fitinter" id="v_fitinter_tab3"  class="form-control text-center">
 								<option value=""></option>
 								<option value="Y" ${'Y'==venueVO_tab3.v_fitinter?'selected':''}>開放</option>
 								<option value="N" ${'N'==venueVO_tab3.v_fitinter?'selected':''}>不開放</option>
-							</select><br>
+							</select>
 							<div class="center-block errorMsgs-color">${errorMsgs_tab3.get("v_fitinter")}</div>
 						</td>
 					</tr>
 					<!------------ 圖片上傳 ------------>
 					<tr>
-						<td colspan="2" class="uploadPicTd">
+						<th><div class="mytitle">圖片上傳<div style="color:red"> * </div></div></th>
+						<td class="uploadPicTd">
 							<div>
 								<input type="hidden" name="hasChangePictiure" id="hasChangePictiure_tab3" value="false">
-								<input type="file" id="v_photo1_tab3" name="v_photo1" /><div style="color:red"> * </div>
+								<input type="file" id="v_photo1_tab3" name="v_photo1"  class="form-control text-center"/>
 								<div class="pull-left errorMsgs-color">${errorMsgs_tab3.get("v_photo1")}</div>
 							</div>
 							<div>

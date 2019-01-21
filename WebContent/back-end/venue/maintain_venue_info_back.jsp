@@ -31,6 +31,7 @@
 		</style>
 		
 		
+		
 	</head>
 	<body>
 		<%-- include header --%>
@@ -80,109 +81,112 @@
         	<%-- 查詢面板  --%>	
 					        	<div class="panel panel-info">
 									<div class="panel-heading">
-										<h3 class="panel-title">維護場地資訊</h3>
+<!-- 										<h3 class="panel-title">維護場地資訊</h3> -->
+										<div class="panel-title" role="button" data-toggle="collapse" href="#cc2" aria-expanded="false" aria-controls="#cc2">
+										    維護場地資訊查詢
+										</div>
 									</div>
-									<div class="panel-body">
-										<form method="post" action="<%=request.getContextPath()%>/venue/venue.do">
-<!-- 											<div class="label label-default label-text">請輸入場地編號 : (V000002)</div> -->
-											<table class="table table-hover table-striped table-bordered">
-												<tr>
-													<th><label>請輸入場地編號 : (V000002)</label></th>
-													<td>
-														<input type="text" name="v_no" value="${venueMap.get('v_no')[0]}" class="text-left form-control"/>
-													</td>
-												</tr>
-												
-												<tr>
-													<th><label>請輸入場地名稱 : </label></th>
-													<td>
-														<input type="text" name="v_name" value="${venueMap.get('v_name')[0]}" class="text-left form-control"/>
-													</td>
-												</tr>
-												
-												<tr>
-													<th><label>請選擇場地種類 :</label></th>
-													<td>
-														<jsp:useBean id="venueTypeService" scope="session" class="com.venuetype.model.VenueTypeService" />
-														<select size="1" name="vt_no" class="text-center form-control">
-															<option value=""></option>
-															<c:forEach var="venueTypeVO" items="${venueTypeService.all}">
-																<option value="${venueTypeVO.vt_no}" ${venueMap.get('vt_no')[0]==venueTypeVO.vt_no?'selected':''}>
-																	${venueTypeVO.vt_name}
-																</option>
-															</c:forEach>
-														</select>
-													</td>
-												</tr>
-												
-												<tr>
-													<th><label>請選擇縣市 :</label></th>
-													<td>
-														<jsp:useBean id="regSvc" scope="page" class="com.region.model.RegService" />
-								      					<select id="reg_name" size="1" name="reg_name" class="text-center form-control">
-								      						<option value="">請選擇縣市</option>
-								      						<c:forEach var="reg_name" items="${regSvc.reg_nameList }">
-								      							<option value="${reg_name }">${reg_name}
-								      						</c:forEach>
-														</select>
-													</td>
-												</tr>
-												
-												<tr>
-													<th><label>請選擇地區 :</label></th>
-													<td>
-														<select size="1" name="reg_dist" class="text-center form-control">
-								      						<option id="reg_dist" value="">請選擇地區</option>
-														</select>
-													</td>
-												</tr>
-												
-												<tr>
-													<th><label>請選擇時間開放 :</label></th>
-													<td>
-														<label for="openday_mon" class="checkbox-inline">一</label>
-														<input type="checkbox" name="openday_mon" value="Y" id="openday_mon" />
-														<label for="openday_tue" class="checkbox-inline">二</label>
-														<input type="checkbox" name="openday_tue" value="Y" id="openday_tue" />
-														<label for="openday_wed" class="checkbox-inline">三</label>
-														<input type="checkbox" name="openday_wed" value="Y" id="openday_wed" />
-														<label for="openday_thu" class="checkbox-inline">四</label>
-														<input type="checkbox" name="openday_thu" value="Y" id="openday_thu" />
-														<label for="openday_fri" class="checkbox-inline">五</label>
-														<input type="checkbox" name="openday_fri" value="Y" id="openday_fri" />
-														<label for="openday_sat" class="checkbox-inline">六</label>
-														<input type="checkbox" name="openday_sat" value="Y" id="openday_sat" />
-														<label for="openday_sun" class="checkbox-inline">日</label>
-														<input type="checkbox" name="openday_sun" value="Y" id="openday_sun" />
+								<% if("listVenueByCompositeQuery".equals(request.getParameter("action"))){%>
+									<div class="collapse" id="cc2">
+								<% }else if("show_one_venue_back".equals(request.getParameter("action"))){ %>
+									<div class="collapse" id="cc2">
+								<% }else {%>
+									<div class="collapse in" id="cc2">
+								<% }%>
+										<div class="panel-body">
+											<form method="post" action="<%=request.getContextPath()%>/venue/venue.do">
+	<!-- 											<div class="label label-default label-text">請輸入場地編號 : (V000002)</div> -->
+												<table class="table table-hover table-striped table-bordered">
+													<tr>
+														<th><label>請輸入場地編號 : (V000002)</label></th>
+														<td>
+															<input type="text" name="v_no" value="${venueMap.get('v_no')[0]}" class="text-left form-control"/>
+														</td>
+													</tr>
+													
+													<tr>
+														<th><label>請輸入場地名稱 : </label></th>
+														<td>
+															<input type="text" name="v_name" value="${venueMap.get('v_name')[0]}" class="text-left form-control"/>
+														</td>
+													</tr>
+													
+													<tr>
+														<th><label>請選擇場地種類 :</label></th>
+														<td>
+															<jsp:useBean id="venueTypeService" scope="session" class="com.venuetype.model.VenueTypeService" />
+															<select size="1" name="vt_no" class="text-center form-control">
+																<option value=""></option>
+																<c:forEach var="venueTypeVO" items="${venueTypeService.all}">
+																	<option value="${venueTypeVO.vt_no}" ${venueMap.get('vt_no')[0]==venueTypeVO.vt_no?'selected':''}>
+																		${venueTypeVO.vt_name}
+																	</option>
+																</c:forEach>
+															</select>
+														</td>
+													</tr>
+													
+													<tr>
+														<th><label>請選擇縣市 :</label></th>
+														<td>
+															<jsp:useBean id="regSvc" scope="page" class="com.region.model.RegService" />
+									      					<select id="reg_name" size="1" name="reg_name" class="text-center form-control">
+									      						<option value="">請選擇縣市</option>
+									      						<c:forEach var="reg_name" items="${regSvc.reg_nameList }">
+									      							<option value="${reg_name }">${reg_name}
+									      						</c:forEach>
+															</select>
+														</td>
+													</tr>
+													
+													<tr>
+														<th><label>請選擇地區 :</label></th>
+														<td>
+															<select size="1" name="reg_dist" class="text-center form-control">
+									      						<option id="reg_dist" value="">請選擇地區</option>
+															</select>
+														</td>
+													</tr>
+													
+													<tr>
+														<th><label>請選擇時間開放 :</label></th>
+														<td>
+															<label for="openday_mon" class="checkbox-inline">星期一</label>
+															<input type="checkbox" name="openday_mon" value="Y" id="openday_mon" style="vertical-align:middle;"/>
+															
+															<label for="openday_tue" class="checkbox-inline">星期二</label>
+															<input type="checkbox" name="openday_tue" value="Y" id="openday_tue" style="vertical-align:middle;" />
+															
+															<label for="openday_wed" class="checkbox-inline">星期三</label>
+															<input type="checkbox" name="openday_wed" value="Y" id="openday_wed" style="vertical-align:middle;" />
+															
+															<label for="openday_thu" class="checkbox-inline">星期四</label>
+															<input type="checkbox" name="openday_thu" value="Y" id="openday_thu" style="vertical-align:middle;" />
+															
+															<label for="openday_fri" class="checkbox-inline">星期五</label>
+															<input type="checkbox" name="openday_fri" value="Y" id="openday_fri" style="vertical-align:middle;" />
+															
+															<label for="openday_sat" class="checkbox-inline">星期六</label>
+															<input type="checkbox" name="openday_sat" value="Y" id="openday_sat" style="vertical-align:middle;" />
+															
+															<label for="openday_sun" class="checkbox-inline">星期日</label>
+															<input type="checkbox" name="openday_sun" value="Y" id="openday_sun" style="vertical-align:middle;" />
+													
+														</td>
+													</tr>
+													
+													<tr><th colspan='2'>
+														<input type="hidden" name="action" value="listVenueByCompositeQuery" />
+														<input type="submit" value="送出查詢" class="btn btn-primary btn-block"/>
+													</th></tr>
 													
 													
-													
-													
-														<fieldset>
-    <legend>Hotel Ratings: </legend>
-    <label for="checkbox-1">2 Star</label>
-    <input type="checkbox" name="checkbox-1" id="checkbox-1">
-    <label for="checkbox-2">3 Star</label>
-    <input type="checkbox" name="checkbox-2" id="checkbox-2">
-    <label for="checkbox-3">4 Star</label>
-    <input type="checkbox" name="checkbox-3" id="checkbox-3">
-    <label for="checkbox-4">5 Star</label>
-    <input type="checkbox" name="checkbox-4" id="checkbox-4">
-  </fieldset>
-													</td>
-												</tr>
-												
-												<tr><th colspan='2'>
-													<input type="hidden" name="action" value="listVenueByCompositeQuery" />
-													<input type="submit" value="送出查詢" class="btn btn-primary btn-block"/>
-												</th></tr>
+												</table>
 												
 												
-											</table>
-											
-											
-										</form>
-									</div>
+											</form>
+										</div>
+									</div><!-- for collapse -->
 								</div>
 					        	<%-- 錯誤表列 --%>
 								<c:if test="${not empty errorMsgs_tab1}">

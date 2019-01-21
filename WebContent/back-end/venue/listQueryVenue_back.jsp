@@ -87,7 +87,7 @@
 --%>
 <!-- one card -->
 <% if(list==null || list.size()==0){%>
-	<div>查無資料</div>
+	<div class="text-center h1">---查無資料---</div>
 <% }else{ %>
 	<%@ include file="pages/page1_forVenue.file" %>
 	<table class="table table-hover table-striped table-bordered table-condensed">
@@ -170,7 +170,7 @@
 												<input type="hidden" name="v_no" value="${venueVO.v_no}" />
 												<input type="hidden" name="whichPage" value="<%=whichPage%>" />
 												<input type="hidden" name="action" value="show_one_venue_back" />												
-												<input type="submit" value="more information......" class="btn btn-info btn-block"/>
+												<input type="submit" value="update or more information......" class="btn btn-info btn-block"/>
 											</form>
 										</td>
 									</tr>
