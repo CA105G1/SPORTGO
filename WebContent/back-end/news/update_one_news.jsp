@@ -27,14 +27,14 @@
 	</style>
 </head>
 <body>
-	<h1>this is update one news page</h1>
+<!-- 	<h1>this is update one news page</h1> -->
 <%
 
 %>
 <div class="container-fluid">
 	<div class="row">
 		<table class="table table-hover table-striped table-bordered text-center">
-			<caption class="text-center">this is update news page</caption>
+<%-- 			<caption class="text-center">this is update news page</caption> --%>
 			<thead>
 				<tr>
 					<th colspan="2">
@@ -56,32 +56,32 @@
 				<tbody>
 					<tr>
 						<th><div class="mytile">消息編號</div></th>
-						<td>${newsVO.news_no}</td>
+						<td><div class="pull-left" style="padding-left:17px">${newsVO.news_no}</div></td>
 					</tr>
 					<tr>
-						<th><div class="mytile">消息種類</div></th>
+						<th><div class="mytile">消息種類<div style="color:red; padding-left:5px;"> * </div></div></th>
 						<td>
 							<jsp:useBean id="newstypeService" scope="page" class="com.newstype.model.NewstypeService" />
-							<select size="1" name="newstype_no" id="newstype_no">
+							<select size="1" name="newstype_no" id="newstype_no" class="form-control text-center">
 								<option value=""></option>
 								<c:forEach var="newstypeVO" items="${newstypeService.all}">
 									<option value="${newstypeVO.newstype_no}" ${newsVO.newstype_no==newstypeVO.newstype_no?'selected':''}>${newstypeVO.newstype_name}</option>
 								</c:forEach>
-							</select><br>
+							</select>
 							<div class="center-block errorMsgs-color">${errorMsgs_tab3.get("newstype_no")}</div>
 						</td>
 					</tr>
 					<tr>
 						<th><div class="mytile">消息內容</div></th>
 						<td>
-							<input type="text" name="news_script" value="${newsVO.news_script}"/><br>
+							<input type="text" name="news_script" value="${newsVO.news_script}"  class="form-control"/>
 							<div class="center-block errorMsgs-color">${errorMsgs_tab3.get("news_script")}</div> 
 						</td>
 					</tr>
 					<tr>
 						<th><div class="mytile">關於發布設定</div></th>
 						<td>
-							<div class="mytile">
+							<div class="mytile pull-left">
 								<p>不設定指定發布開始時間及發布截止時間，發布狀態為<b>未發布</b></p>
 							</div>
 						</td>
@@ -90,10 +90,10 @@
 						<th><div class="mytile">發布開始時間</div></th>
 						<td>
 							<c:if test="${newsVO==null}">
-								<input type="text" id="news_release_date_tab3" name="news_release_date" value=''/>
+								<input type="text" id="news_release_date_tab3" name="news_release_date" value=''  class="form-control"/>
 							</c:if>
 							<c:if test="${newsVO!=null}">
-								<input type="text" id="news_release_date_tab3" name="news_release_date" 
+								<input type="text" id="news_release_date_tab3" name="news_release_date" class="form-control"
 									value='<fmt:formatDate value="${newsVO.news_release_date}" pattern="yyyy-MM-dd HH:mm"/>'/><br>
 								<div class="center-block errorMsgs-color">${errorMsgs_tab2.get("news_release_date")}</div> 
 							</c:if>
@@ -103,21 +103,22 @@
 						<th><div class="mytile">發布截止時間</div></th>
 						<td>
 							<c:if test="${newsVO==null}">
-								<input type="text" id="news_last_date_tab3" name="news_last_date" value=''/>
+								<input type="text" id="news_last_date_tab3" name="news_last_date" value=''  class="form-control"/>
 							</c:if>
 							<c:if test="${newsVO!=null}">
-								<input type="text" id="news_last_date_tab3" name="news_last_date" 
-									value='<fmt:formatDate value="${newsVO.news_last_date}" pattern="yyyy-MM-dd HH:mm"/>'/><br>
+								<input type="text" id="news_last_date_tab3" name="news_last_date"   class="form-control"
+									value='<fmt:formatDate value="${newsVO.news_last_date}" pattern="yyyy-MM-dd HH:mm"/>'/>
 								<div class="center-block errorMsgs-color">${errorMsgs_tab2.get("news_last_date")}</div> 
 							</c:if>	
 						</td>
 					</tr>
 					<!------------ 圖片上傳 ------------>
 					<tr>
-						<td colspan="2" class="uploadPicTd">
+						<th><div class="mytile">消息圖片上傳<div style="color:red; padding-left:5px;"> * </div></div></th>
+						<td class="uploadPicTd">
 							<div>
 								<input type="hidden" name="hasChangePicture" id="hasChangePicture_tab3" value="false">
-								<input type="file" id="news_picture_tab3" name="news_picture" />
+								<input type="file" id="news_picture_tab3" name="news_picture"  class="form-control"/>
 								<div class="pull-left errorMsgs-color">${errorMsgs_tab3.get("news_picture")}</div>
 							</div>
 							<div>

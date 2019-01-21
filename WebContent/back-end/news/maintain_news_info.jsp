@@ -84,7 +84,7 @@
 									<div class="panel-heading">
 <!-- 										<h3 class="panel-title">最新消息管理</h3> -->
 										<div class="panel-title" role="button" data-toggle="collapse" href="#cc2" aria-expanded="false" aria-controls="#cc2">
-										    最新消息管理
+										    最新消息查詢
 										</div>
 									</div>
 									<% if("listNewsByCompositeQuery".equals(request.getParameter("action")) || "showOneNews".equals(request.getParameter("action"))
@@ -97,7 +97,7 @@
 										<div class="panel-body">
 											<form method="post" action="<%=request.getContextPath()%>/news/news.do">
 												
-												<table class="table table-hover table-striped table-bordered">
+												<table class="table table-hover table-striped table-bordered ">
 													<tr>
 														<th><label>請輸入消息編號 : (N001)</label></th>
 														<td>
@@ -157,7 +157,7 @@
 													<tr>
 														<th colspan="2">
 														<input type="hidden" name="action" value="listNewsByCompositeQuery" />
-														<input type="submit" value="送出查詢" class="btn btn-primary btn-block"/>
+														<input type="submit" value="送出查詢" class="btn btn-primary btn-block form-control"/>
 														</th>
 													</tr>
 													

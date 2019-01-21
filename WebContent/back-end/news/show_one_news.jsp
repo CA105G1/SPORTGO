@@ -29,7 +29,7 @@
 	</style>
 </head>
 <body>
-	<h1>this is show one news page</h1>
+<!-- 	<h1>this is show one news page</h1> -->
 <%
 	NewsVO newsVO = (NewsVO)request.getAttribute("newsVO");
 	NewstypeVO newstypeVO = (NewstypeVO)request.getAttribute("newstypeVO");
@@ -48,7 +48,9 @@
 <div class="container-fluid">
 	<div class="row">
 			<table class="table table-hover table-striped table-bordered text-center">
-				<caption class="text-center">this is show one news page</caption>
+				<caption class="text-center">
+					<div class='h3'>${newsVO.news_no}-${newstypeVO.newstype_name}-${newsVO.news_script}-詳細資料</div>
+				</caption>
 				<thead>
 					<tr>
 						<th colspan="2">

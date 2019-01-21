@@ -27,7 +27,7 @@
 	</style>
 </head>
 <body>
-		<h1>this is add one news page</h1>
+<!-- 		<h1>this is add one news page</h1> -->
 <%-- 錯誤表列 --%>
 <%-- <c:if test="${not empty errorMsgs_tab2}"> --%>
 <!-- 	<font style="color:red">請修正以下錯誤:</font> -->
@@ -41,27 +41,26 @@
 	<div class="row">
 		<form action="<%=request.getContextPath()%>/news/news.do" method="post" enctype="multipart/form-data">
 			<table class="table table-hover table-striped table-bordered text-center">
-				<caption class="text-center">this is add news page</caption>
+				<caption class="text-center">新增最新消息</caption>
 				<tbody>
 				
 					<tr>
-						<th><div class="mytile">消息種類</div></th>
+						<th><div class="mytile">消息種類<div style="color:red; padding-left:5px;"> * </div></div></th>
 						<td>
 							<jsp:useBean id="newstypeService" scope="page" class="com.newstype.model.NewstypeService" />
-							<select size="1" name="newstype_no" id="newstype_no">
+							<select size="1" name="newstype_no" id="newstype_no" class="form-control">
 								<option value=""></option>
 								<c:forEach var="newstypeVO" items="${newstypeService.all}">
 									<option value="${newstypeVO.newstype_no}" ${newsVO.newstype_no==newstypeVO.newstype_no?'selected':''}>${newstypeVO.newstype_name}</option>
-<%--				<option value="${sportVO.sp_no}" ${(param.sp_no == sportVO.sp_no)? 'selected':'' }>${sportVO.sp_name} --%>
 								</c:forEach>
-							</select><br>
+							</select>
 							<div class="center-block errorMsgs-color">${errorMsgs_tab2.get("newstype_no")}</div>
 						</td>
 					</tr>
 					<tr>
 						<th><div class="mytile">消息內容</div></th>
 						<td>
-							<input type="text" name="news_script" value="${newsVO.news_script}"/><br>
+							<input type="text" name="news_script" value="${newsVO.news_script}" class="form-control"/>
 							<div class="center-block errorMsgs-color">${errorMsgs_tab2.get("news_script")}</div> 
 						</td>
 					</tr>
@@ -69,11 +68,11 @@
 						<th><div class="mytile">發布開始時間</div></th>
 						<td>
 							<c:if test="${newsVO==null}">
-								<input type="text" id="news_release_date_tab2" name="news_release_date" value=''/>
+								<input type="text" id="news_release_date_tab2" name="news_release_date" value='' class="form-control"/>
 							</c:if>
 							<c:if test="${newsVO!=null}">
-								<input type="text" id="news_release_date_tab2" name="news_release_date" 
-									value='<fmt:formatDate value="${newsVO.news_release_date}" pattern="yyyy-MM-dd HH:mm"/>'/><br>
+								<input type="text" id="news_release_date_tab2" name="news_release_date" class="form-control"
+									value='<fmt:formatDate value="${newsVO.news_release_date}" pattern="yyyy-MM-dd HH:mm"/>'/>
 								<div class="center-block errorMsgs-color">${errorMsgs_tab2.get("news_release_date")}</div> 
 							</c:if>
 						</td>
@@ -82,26 +81,29 @@
 						<th><div class="mytile">發布截止時間</div></th>
 						<td>
 							<c:if test="${newsVO==null}">
-								<input type="text" id="news_last_date_tab2" name="news_last_date" value=''/>
+								<input type="text" id="news_last_date_tab2" name="news_last_date" value='' class="form-control"/>
 							</c:if>
 							<c:if test="${newsVO!=null}">
-								<input type="text" id="news_last_date_tab2" name="news_last_date" 
-									value='<fmt:formatDate value="${newsVO.news_last_date}" pattern="yyyy-MM-dd HH:mm"/>'/><br>
+								<input type="text" id="news_last_date_tab2" name="news_last_date" class="form-control"
+									value='<fmt:formatDate value="${newsVO.news_last_date}" pattern="yyyy-MM-dd HH:mm"/>'/>
 								<div class="center-block errorMsgs-color">${errorMsgs_tab2.get("news_last_date")}</div> 
 							</c:if>						
 						</td>
 					</tr>
-				</tbody>
-			</table>
-			<input type="hidden" name="action"value="insert_one_news">
-			<input type="submit" value="送出" class="btn btn-success btn-block">
-			<table>
-				<tbody>				
+<!-- 				</tbody> -->
+<!-- 			</table> -->
+					<tr><th colspan="2">
+						<input type="hidden" name="action"value="insert_one_news" />
+						<input type="submit" value="送出" class="btn btn-success btn-block" class="form-control text-center" />
+					</th></tr>
+<!-- 			<table> -->
+<!-- 				<tbody>				 -->
 					<!------------ 圖片上傳 ------------>
 					<tr>
+						<th><div class="mytile">消息圖片上傳<div style="color:red; padding-left:5px;"> * </div></div></th>
 						<td colspan="2" class="uploadPicTd">
 							<div>
-								<input type="file" id="news_picture_tab2" name="news_picture" />
+								<input type="file" id="news_picture_tab2" name="news_picture" class="form-control text-center"/>
 								<div class="pull-left errorMsgs-color">${errorMsgs_tab2.get("news_picture")}</div>
 							</div>
 							<div>

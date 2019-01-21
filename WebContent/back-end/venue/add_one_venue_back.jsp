@@ -61,7 +61,7 @@
 				<caption class="text-center ">新增場地資訊</caption>
 				<tbody>
 					<tr>
-						<th><div class="mytitle">場地類型<div style="color:red"> * </div></div></th>
+						<th><div class="mytitle">場地類型<div style="color:red; padding-left:5px;"> * </div></div></th>
 						<td>
 							<jsp:useBean id="venueTypeService" scope="page" class="com.venuetype.model.VenueTypeService" />
 							<select size="1" name="vt_no" id="vt_no_tab2" class="form-control text-center">
@@ -75,7 +75,7 @@
 					</tr>
 					
 					<tr>
-						<th><div class="mytitle">場地名稱<div style="color:red"> * </div></div></th>
+						<th><div class="mytitle">場地名稱<div style="color:red; padding-left:5px;"> * </div></div></th>
 						<td>
 							<input type="text" name="v_name" value="${venueVO_tab2.v_name}" class="form-control"/>
 							<div class="center-block errorMsgs-color">${errorMsgs_tab2.get("v_name")}</div> 
@@ -83,7 +83,7 @@
 					</tr>
 					
 					<tr>
-						<th><div class="mytitle">室內or室外<div style="color:red"> * </div></div></th>
+						<th><div class="mytitle">室內or室外<div style="color:red; padding-left:5px;"> * </div></div></th>
 						<td>
 							<select size="1" name="v_inout" id="v_inout_tab2" class="form-control text-center">
 								<option value=""></option>
@@ -109,7 +109,7 @@
 					</tr>
 					
 					<tr>
-						<th><div class="mytitle">場地地址<div style="color:red"> * </div></div></th>
+						<th><div class="mytitle">場地地址<div style="color:red; padding-left:5px;"> * </div></div></th>
 						<td>
 							<input type="text" name="v_address" value="${venueVO_tab2.v_address}" class="form-control"/>
 							<div class="center-block errorMsgs-color">${errorMsgs_tab2.get("v_address")}</div> 
@@ -126,7 +126,7 @@
 					</tr>
 					
 					<tr>
-						<th><div class="mytitle">開放狀態<div style="color:red"> * </div></div></th>
+						<th><div class="mytitle">開放狀態<div style="color:red; padding-left:5px;"> * </div></div></th>
 						<td>
 							<select size="1" name="open_state" id="open_state_tab2" class="form-control text-center">
 								<option value=""></option>
@@ -139,7 +139,7 @@
 					</tr>
 					
 					<tr>
-						<th><div class="mytitle">開放日<div style="color:red"> * </div></div></th>
+						<th><div class="mytitle">開放日<div style="color:red; padding-left:5px;"> * </div></div></th>
 						<td>
 							<div style="display:inline-flex">
 								<div>
@@ -219,7 +219,7 @@
 					
 					
 					<tr>
-						<th><div class="mytitle">是否顯示<div style="color:red"> * </div></div></th>
+						<th><div class="mytitle">是否顯示<div style="color:red; padding-left:5px;"> * </div></div></th>
 						<td>
 							<select size="1" name="v_display" id="v_display_tab2" class="form-control text-center">
 								<option value=""></option>
@@ -230,7 +230,7 @@
 						</td>
 					</tr>
 					<tr>
-						<th><div class="mytitle">適用對象-民眾<div style="color:red"> * </div></div></th>
+						<th><div class="mytitle">適用對象-民眾<div style="color:red; padding-left:5px;"> * </div></div></th>
 						<td>
 							
 							<select size="1" name="v_fitall" id="v_fitall_tab2" class="form-control text-center">
@@ -242,7 +242,7 @@
 						</td>
 					</tr>
 					<tr>
-						<th><div class="mytitle">適用對象-內部人員<div style="color:red"> * </div></div></th>
+						<th><div class="mytitle">適用對象-內部人員<div style="color:red; padding-left:5px;"> * </div></div></th>
 						<td>
 							
 							<select size="1" name="v_fitinter" id="v_fitinter_tab2" class="form-control text-center">
@@ -265,7 +265,7 @@
 <!-- 				<tbody>				 -->
 					<!------------ 圖片上傳 ------------>
 					<tr>
-						<th><div class="mytitle">圖片上傳<div style="color:red"> * </div></div></th>
+						<th><div class="mytitle">圖片上傳<div style="color:red; padding-left:5px;"> * </div></div></th>
 						<td class="uploadPicTd">
 							<div>
 								<input type="file" id="v_photo1_tab2" name="v_photo1" class="form-control text-center"/>
