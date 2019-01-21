@@ -15,7 +15,10 @@ public class jdbcUtil_CompositeQuery_Pro {
 
 		String aCondition = null;
 
-		if ("pro_pic".equals(columnName) || "pro_bonus".equals(columnName) || "pro_stock".equals(columnName) || "pro_safestock".equals(columnName) || "pro_all_assess".equals(columnName)
+		//單價可以0~xxxx
+        if("pro_bonus".equals(columnName) )
+      	aCondition = columnName + "<=" + value;
+		else if ("pro_pic".equals(columnName) || "pro_stock".equals(columnName) || "pro_safestock".equals(columnName) || "pro_all_assess".equals(columnName)
 				 || "pro_all_assessman".equals(columnName)) // 用於其他
 			aCondition = columnName + "=" + value;
 		else if ("pro_no".equals(columnName) || "pro_classid".equals(columnName) || "pro_name".equals(columnName) || "pro_pic_ext".equals(columnName) || "pro_format".equals(columnName) 
@@ -25,6 +28,17 @@ public class jdbcUtil_CompositeQuery_Pro {
 			aCondition = "to_char(" + columnName + ",'yyyy-mm-dd')='" + value + "'";
 		
 		return aCondition + " ";
+		//原版
+//		if ("pro_pic".equals(columnName) || "pro_bonus".equals(columnName) || "pro_stock".equals(columnName) || "pro_safestock".equals(columnName) || "pro_all_assess".equals(columnName)
+//				 || "pro_all_assessman".equals(columnName)) // 用於其他
+//			aCondition = columnName + "=" + value;
+//		else if ("pro_no".equals(columnName) || "pro_classid".equals(columnName) || "pro_name".equals(columnName) || "pro_pic_ext".equals(columnName) || "pro_format".equals(columnName) 
+//				|| "pro_details".equals(columnName) || "pro_shelve".equals(columnName)) // 用於varchar
+//			aCondition = columnName + " like '%" + value + "%'";
+//		else if ("hiredate".equals(columnName))                          // 用於Oracle的date
+//			aCondition = "to_char(" + columnName + ",'yyyy-mm-dd')='" + value + "'";
+//		
+//		return aCondition + " ";
 	}
 
 	public static String get_WhereCondition(Map<String, String[]> map) {
