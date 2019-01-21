@@ -103,7 +103,7 @@
 		<div class="col-xs-12 col-sm-2">
 			<jsp:include page="/front-end/club/club_pageRight.jsp" />						
 		</div>
-		<div class="col-xs-12 col-sm-8">
+		<div class="col-xs-12 col-sm-7">
 			<form action="<%= request.getContextPath()%>/Sg_info/Sg_info.do" method="post" enctype="multipart/form-data">
 				<table class="table table-striped table-bordered text-center">
 					<jsp:useBean id="clubSvc" scope="page" class="com.club.model.ClubService"/>
@@ -249,7 +249,9 @@
 				<input type="hidden" name="loc_end" id="loc_end">
 			</form>
 		</div>
-		<div class="col-xs-12 col-sm-2"></div>
+		<div class="col-xs-12 col-sm-3" id="xx"><!--社團成員列表-->
+					<jsp:include page="/front-end/club_memberlist/clubmember_list.jsp" />
+		</div>
 	</div>
 </div>
 

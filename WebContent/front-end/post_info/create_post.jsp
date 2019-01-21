@@ -74,8 +74,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/index.jsp"><i class="fa fa-home"></i> 首頁</a></li>
                         <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/front-end/club/club_list.jsp">社團專區</a></li>
-                        <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/front-end/club/Sg_infoList.jsp">專屬揪團</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">建立專屬揪團</li>
+                        <li class="breadcrumb-item active" aria-current="page">建立貼文</li>
                     </ol>
                 </nav>
             </div>
@@ -91,13 +90,13 @@
 					<jsp:include page="/front-end/club/club_pageRight.jsp" />
 				</div>
 						
-				<div class="col-xs-12 col-sm-8">
+				<div class="col-xs-12 col-sm-7">
 <!------------------------建立貼文------------------------------------------------------------>		
 					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/post_info.do" name="form">
-						<div class="card text-center">
-				  			<div class="card-header">
+						<div class="card text-center" style="border-style:none;">
+<!-- 				  			<div class="card-header" style="border-style:none;"> -->
 				   				<h3>建立貼文</h3>
-				  			</div>
+<!-- 				  			</div> -->
 				  			<br>
 				  			<div class="card-body">
 				    			<div class="form-group">
@@ -120,7 +119,7 @@
 									</label>
 								</div>
 				  			</div>
-				  			<div class="card-footer text-muted">
+				  			<div class="card-footer text-muted" style="border-style:none;">
 				  				<input type="hidden" name="action" value="insert">
 				   				<button type="submit" class="btn btn-primary">建立</button>
 				  			</div>
@@ -137,8 +136,8 @@
 					</c:if>
 <!------------------------建立貼文------------------------------------------------------------>	
 				</div><!-- col-xs-12 col-lg-8結束 -->
-				<div class="col-xs-12 col-sm-2" id="xx">
-<%-- 					<div>clubVO = ${clubVO }</div> --%>
+				<div class="col-xs-12 col-sm-3" id="xx"><!--社團成員列表-->
+					<jsp:include page="/front-end/club_memberlist/clubmember_list.jsp" />
 				</div>
 			</div><!-- row結束 -->
 		</div><!-- container-fluid結束 -->

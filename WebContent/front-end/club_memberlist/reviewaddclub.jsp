@@ -63,7 +63,7 @@
 				<div class="col-xs-12 col-sm-2">
 					<jsp:include page="/front-end/club/club_pageRight.jsp" />	
 				</div>
-				<div class="col-xs-12 col-sm-8">
+				<div class="col-xs-12 col-sm-7">
 					<table class="table table-hover">
 						<thead>
   							<tr>
@@ -165,9 +165,8 @@
 
 				</div> <!-- col-sm-8 -->
 					
-				<div class="col-xs-12 col-sm-2" id="xx">
-					
-
+				<div class="col-xs-12 col-sm-3" id="xx"><!--社團成員列表-->
+					<jsp:include page="/front-end/club_memberlist/clubmember_list.jsp" />
 				</div>
 			</div>
 		</div>
