@@ -15,7 +15,7 @@
 		
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
 		
-	</head>
+	</head> 
 	<body>
 		<!-- 右選單 -->
 		<div class="container-fluid">
