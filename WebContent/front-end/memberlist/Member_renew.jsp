@@ -24,6 +24,9 @@
   	.container{
   		align:center;
   	}
+  	.form-group{
+  		display:flex;
+  	}
   </style>
 </head>
 <body>
@@ -46,19 +49,18 @@
             </div>
         </div>
 	<div class="container">
-		<div class="col-xs-12 col-sm-3">
+		<div class="row">
+		<div class="col-12 col-sm-3 col-md-3">
 			<jsp:include page="list_group.jsp"/>
 		</div>
-		<div class="col-xs-12 col-sm-9">
-		<div class="container" style="display:flex;flex-direction:column;text-align:center;width:60%;">
+		<div class="col-12 col-sm-9 col-md-9">
 		
 		  <h2>修改個人資訊</h2>
 		  <form method="post" class="form-horizontal" enctype="multipart/form-data" action="MemManager.do">
-		  		
 			  <div style="text-align:center;">
 			  	<img class="preview" src="showPicture.do?mem_no=${memberlistVO.mem_no}">
 			  </div>
-		  <br>
+		  		<br>
 <!-- 		  錯誤時的畫面 -->
 		  	<c:if test="${not empty errorMsgs}">
 				<ul class="error">
@@ -108,11 +110,11 @@
 			        <input type="text" class="form-control" size="30" id="emgc" value="${mem_emgc}" name="emgc">
 			      </div>
 			    </div>
-			    <div class="form-group">        
-			      <div class="col-sm-12">
-			        <button type="submit" class="btn btn-info" name="action" value="Member_renew">修改</button>
-			        <button type="submit" class="btn btn-info" name="action" value="cancel">取消</button>
-			      </div>
+			    <div class="form-group">
+				    <div  style="display:flex;justify-content:center;">
+				        <button type="submit" class="btn btn-info" name="action" value="Member_renew">修改</button>
+				        <button type="submit" class="btn btn-info" name="action" value="cancel">取消</button>
+				    </div>        
 		    	</div>
 			</c:if>
 <!-- 			剛進入的畫面 帶入原本的值 -->
@@ -168,8 +170,8 @@
 		    </c:if>
 		  </form>
 		  </div>
-		</div>
-	</div>
+		  </div>
+		  </div>
 	<jsp:include page="/front-end/CA105G1_footer_bt4.jsp"/>
 		<!-- Popper js -->
 		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/popper.min.js"></script>

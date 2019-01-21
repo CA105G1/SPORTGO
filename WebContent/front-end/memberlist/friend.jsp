@@ -209,13 +209,26 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<script src="https://use.fontawesome.com/1c6f725ec5.js"></script>
 	</head>
-	<body>
+	<body style="background-color:white;">
 		<jsp:include page="/front-end/CA105G1_header_bt4.jsp"/>
 		 <!-- Top Breadcrumb Area -->
 		<div class="breadcrumb-area">
 		    <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(<%= request.getContextPath()%>/img/badmintoncount.JPG);">
 		    </div>
 		</div>
+		<div class="container-fluid" style="width:90%;">
+            <div class="row">
+                <div class="col-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/index.jsp"><i class="fa fa-home"></i>首頁</a></li>
+                            <li class="breadcrumb-item" aria-current="page"><a href="public_Member_page.jsp">會員專區</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">好友管理</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
 		<!-- 右選單 -->
 		<div class="container-fluid" style="width:90%;">
 			<div class="row">

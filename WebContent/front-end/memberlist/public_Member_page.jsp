@@ -57,16 +57,13 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-		<link rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
-		<link rel="icon" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png">
-		<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/style.css">
-		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/jquery/jquery-2.2.4.min.js"></script>
-		<script src="<%= request.getContextPath()%>/datetimepicker/jquery.js"></script>
-		<script src="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
 		
-		<!-- Font Awesome -->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		
+    <!-- Favicon -->
+    <link rel="icon" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png">
+
+    <!-- Core Stylesheet -->
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/style.css">
 		<title>SPORTGO 會員頁面</title>
 		<style type="text/css">
 			
@@ -114,7 +111,7 @@
 		</style>
 	</head>
 	<body>
-		<jsp:include page="/front-end/CA105G1_header_bt4.jsp"/>
+		<jsp:include page="/front-end/CA105G1_header_bt4.jsp" />
 		<!-- Loading時的小圖示 -->
 <!-- 		<div class="preloader d-flex align-items-center justify-content-center"> -->
 <!-- 		    <div class="preloader-circle"></div> -->
@@ -145,7 +142,7 @@
 		<div class="container">
 			<div class="row justify-content-center">
 				<!-- 個人頁面 -->
-				<div class="col-12 col-sm-9 col-md-3">
+				<div class="col-12 col-sm-3 col-md-3">
 					<div class="row">
 <!-- 					大頭貼 -->
 						<div 
@@ -172,9 +169,6 @@
 				
 				
 				<div class="col-xs-12 col-sm-9" id="detail" style="padding:15px;">
-					<div class="container notation" style="width:100%;display:none;">
-	            	
-	       			</div>
 						<h2>揪團</h2>
 <!-- 						參加的揪團 -->
 						<div class=" tab-pane" style="display:flex;flex-flow:row wrap;">
@@ -312,6 +306,16 @@
 			</div>
 		</div>
 		</section>
+	<!-- jQuery-2.2.4 js -->
+    <script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/jquery/jquery-2.2.4.min.js"></script>
+    <!-- Popper js -->
+    <script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/popper.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/bootstrap.min.js"></script>
+    <!-- All Plugins js -->
+    <script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/plugins/plugins.js"></script>
+    <!-- Active js -->
+    <script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/active.js"></script>
 	<script>
 	var status = "${status}";
 	var mem_no = "${mem_no}";
@@ -379,13 +383,6 @@
 		}
 	</script>
 	<jsp:include page="/front-end/CA105G1_footer_bt4.jsp"/>
-		<!-- Popper js -->
-		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/popper.min.js"></script>
-		<!-- Bootstrap js -->
-		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/bootstrap.min.js"></script>
-		<!-- All Plugins js -->
-		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/plugins/plugins.js"></script>
-		<!-- Active js -->
-		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/active.js"></script>
+	
 	</body>
 </html>

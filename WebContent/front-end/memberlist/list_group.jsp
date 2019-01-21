@@ -6,9 +6,6 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-		<script src="https://code.jquery.com/jquery.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 		<title>SPORTGO 會員頁面</title>
 		<style type="text/css">
 			.container{
@@ -33,7 +30,6 @@
 		<!-- 右選單 -->
 				<div class="list-group" id="myTab">
 					<a href="public_Member_page.jsp" class="list-group-item" style="display:flex;text-align:center;">個人頁面</a>
-<!-- 					<a href="Calendar.jsp" class="list-group-item" style="display:flex;text-align:center;">行事曆</a> -->
 					<a href="Member_renew.jsp" class="list-group-item" style="display:flex;text-align:center;">個人頁面管理</a>
 					<a href="MemManager.do?action=Member_Sg" class="list-group-item" style="display:flex;text-align:center;">個人揪團管理</a>
 					<a href="MemManager.do?action=Member_Club" class="list-group-item" style="display:flex;text-align:center;">個人社團管理</a>

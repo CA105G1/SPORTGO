@@ -18,15 +18,16 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-		<script src="https://code.jquery.com/jquery.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-		
+		<link rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
+		<link rel="icon" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png">
+		<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/style.css">
+		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/jquery/jquery-2.2.4.min.js"></script>
+		<script src="<%= request.getContextPath()%>/datetimepicker/jquery.js"></script>
+		<script src="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
 		<!-- Font Awesome -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		
-		<title>SPORTGO 會員頁面</title>
+		<title>SPORTGO 會員社團畫面</title>
 		<style type="text/css">
 			.container{
 				width: 100%;
@@ -46,10 +47,26 @@
 		</style>
 	</head>
 	<body>
-		<jsp:include page="/front-end/CA105G1_header.jsp"/>
-		
+		<jsp:include page="/front-end/CA105G1_header_bt4.jsp"/>
+		<div class="breadcrumb-area">
+	    	<div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(<%= request.getContextPath()%>/img/badmintoncount.JPG);">
+	    	</div>
+		</div>		
+		<div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/index.jsp"><i class="fa fa-home"></i>首頁</a></li>
+                            <li class="breadcrumb-item" aria-current="page"><a href="public_Member_page.jsp">會員專區</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">社團管理</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>		
 		<!-- 右選單 -->
-		<div class="container-fluid">
+		<div class="container">
 			<div class="row">
 				<div class="col-xs-12 col-sm-3">
 					<jsp:include page="list_group.jsp"/>
@@ -57,7 +74,6 @@
 				<div class="col-xs-12 col-sm-9 tab-content">
 <!-- 				參加的社團 -->
 					<div class="container">
-						<div class="row">
 							<h3>社團</h3>
 							<div class=" grid-container" style="display:grid;">
 								<c:forEach var="clubmember" items="${clubmember}">
@@ -87,7 +103,6 @@
 									</c:forEach>
 								</c:forEach>
 							</div>
-						</div>
 					</div>
 				
 <!-- 				當管理員的社團 -->
@@ -165,7 +180,15 @@
 				</div>	
 			</div>
 		</div>
-	<jsp:include page="/front-end/CA105G1_footer.jsp"/>
+	<jsp:include page="/front-end/CA105G1_footer_bt4.jsp"/>
+		<!-- Popper js -->
+		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/popper.min.js"></script>
+		<!-- Bootstrap js -->
+		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/bootstrap.min.js"></script>
+		<!-- All Plugins js -->
+		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/plugins/plugins.js"></script>
+		<!-- Active js -->
+		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/active.js"></script>
 	<script>
 	var status = "${status}";
 	var mem_no = "${mem_no}";
