@@ -85,17 +85,6 @@
 					     	</li>
 <!-- 						     </ul> -->
 							
-							
-							
-							
-							
-							
-							
-							
-							
-							
-							
-							
 							<li class="nav-item">
 								<% System.out.println("log_out_location :　"+ request.getRequestURI());%>
 								<a class="nav-link" href="<%=request.getContextPath()%>/front-end/memberlist/logout.do">登出</a>
