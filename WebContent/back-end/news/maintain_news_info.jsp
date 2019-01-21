@@ -12,13 +12,15 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-		<title>SPORTYGO!</title>
+		<title>SportGo:最新消息管理</title>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 		<!--[if lt IE 9]>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
-		
+		<!-- Favicon -->
+	    <link rel="icon" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png">
+	
 		
 		
 		
@@ -32,9 +34,9 @@
 	</head>
 	<body>
  		<%-- include header --%> 
-<%-- 		<%@ include file="/back-end/CA105G1_header_back.file" %> --%>
+		<%-- <%@ include file="/back-end/CA105G1_header_back.file" %> --%>
  		<%-- include show_loginBox--%> 
-<%-- 		<%@ include file="/back-end/emp/loginfile/showLoginBackEnd.file" %> --%>
+		<%-- <%@ include file="/back-end/emp/loginfile/showLoginBackEnd.file" %> --%>
 		<jsp:include page="/back-end/CA105G1_header_back.jsp"/>
 		
 

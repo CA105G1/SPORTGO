@@ -34,6 +34,9 @@
 		align-items: center;
 		justify-content: center;
 	}
+	.myAlign-Center div{
+		margin:12px;
+	}
 	.table > tbody > tr > th{
             vertical-align: middle;
             text-align:center
@@ -69,106 +72,127 @@
 										</c:if>											
 									</c:forEach>
 									<h4>${venueVO.v_name}---${pageScope.vt_name}</h4>
-									<div class="col-sm-9">
-										<table class="table table-hover table-bordered table-condensed text-center">
-											<tbody>
-												<tr>
-													<th>場地編號</th>
-													<td>${venueVO.v_no}</td>
-												</tr>
-												<tr>
-													<th>場地名稱</th>
-													<td>${venueVO.v_name}</td>
-												</tr>
-												<tr>
-													<th>場地種類</th>
-													<td>${pageScope.vt_name}</td>
-												</tr>
-												<tr>
-													<th>場地地址</th>
-													<td>${venueVO.reg_no}-${venueVO.v_address}</td>
-												</tr>
-												<tr>
-													<th>場地電話</th>
-													<td>${venueVO.v_phoneno}</td>
-												</tr>
-												<tr>
-													<th>場地開放狀態</th>
-													<td>${venueVO.open_state}</td>
-												</tr>
-												<tr>
-													<th>場地開放日期</th>
-													<td>
-														<c:if test="${venueVO.openday_mon=='Y'}"> 一 </c:if>
-														<c:if test="${venueVO.openday_tue=='Y'}"> 二 </c:if>
-														<c:if test="${venueVO.openday_wed=='Y'}"> 三 </c:if>
-														<c:if test="${venueVO.openday_thu=='Y'}"> 四 </c:if>
-														<c:if test="${venueVO.openday_fri=='Y'}"> 五 </c:if>
-														<c:if test="${venueVO.openday_sat=='Y'}"> 六 </c:if>
-														<c:if test="${venueVO.openday_sun=='Y'}"> 日 </c:if>
-													</td>
-												</tr>
-												<tr ${v_evaluationVO.v_no==venueVO.v_no?'style="background-color:#FFEE99"':''}>
-													<th>場地評價</th>
-													<td>${scoreMap.get(venueVO.getV_no())==-1?'尚無評價分數':scoreMap.get(venueVO.getV_no())}</td>
-												</tr>
-												<c:if test="${memberlistVO!=null}">
+									<div class="row">
+										<div class="col-sm-9">
+											<table class="table table-hover table-bordered table-condensed text-center">
+												<tbody>
 													<tr>
-														<th colspan='2'>
-															<a href='#modal_id_${venueVO.v_no}' data-toggle="modal" class="btn btn-primary btn-block">評價場地</a>
-															<div class="modal fade" id="modal_id_${venueVO.v_no}">
-																<div class="modal-dialog">
-																	<div class="modal-content">
-																		<form>
-																			<div class="modal-header">
-																				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-																				<h4 class="modal-title">標題</h4>
-																			</div>
-																			<div class="modal-body">
-																				<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>" />
-																				<input type="hidden" name="whichPage" value="<%=whichPage%>" />
-																				<div class="myAlign-Center">
-																					<input type="radio" name="score" value="1" id='radio_id_${venueVO.v_no}_1'/><label for="radio_id_${venueVO.v_no}_1">一顆星</label>
-																					<input type="radio" name="score" value="2" id='radio_id_${venueVO.v_no}_2'/><label for="radio_id_${venueVO.v_no}_2">二顆星</label>
-																					<input type="radio" name="score" value="3" id='radio_id_${venueVO.v_no}_3'/><label for="radio_id_${venueVO.v_no}_3">三顆星</label>
-																					<input type="radio" name="score" value="4" id='radio_id_${venueVO.v_no}_4'/><label for="radio_id_${venueVO.v_no}_4">四顆星</label>
-																					<input type="radio" name="score" value="5" id='radio_id_${venueVO.v_no}_5'/><label for="radio_id_${venueVO.v_no}_5">五顆星</label>
+														<th>場地編號</th>
+														<td>${venueVO.v_no}</td>
+													</tr>
+													<tr>
+														<th>場地名稱</th>
+														<td>${venueVO.v_name}</td>
+													</tr>
+													<tr>
+														<th>場地種類</th>
+														<td>${pageScope.vt_name}</td>
+													</tr>
+													<tr>
+														<th>場地地址</th>
+														<td>${venueVO.reg_no}-${venueVO.v_address}</td>
+													</tr>
+													<tr>
+														<th>場地電話</th>
+														<td>${venueVO.v_phoneno}</td>
+													</tr>
+													<tr>
+														<th>場地開放狀態</th>
+														<td>${venueVO.open_state}</td>
+													</tr>
+													<tr>
+														<th>場地開放日期</th>
+														<td>
+															<c:if test="${venueVO.openday_mon=='Y'}"> 一 </c:if>
+															<c:if test="${venueVO.openday_tue=='Y'}"> 二 </c:if>
+															<c:if test="${venueVO.openday_wed=='Y'}"> 三 </c:if>
+															<c:if test="${venueVO.openday_thu=='Y'}"> 四 </c:if>
+															<c:if test="${venueVO.openday_fri=='Y'}"> 五 </c:if>
+															<c:if test="${venueVO.openday_sat=='Y'}"> 六 </c:if>
+															<c:if test="${venueVO.openday_sun=='Y'}"> 日 </c:if>
+														</td>
+													</tr>
+													<tr ${v_evaluationVO.v_no==venueVO.v_no?'style="background-color:#FFEE99"':''}>
+														<th>場地評價</th>
+														<td>${scoreMap.get(venueVO.getV_no())==-1?'尚無評價分數':scoreMap.get(venueVO.getV_no())}</td>
+													</tr>
+													<c:if test="${memberlistVO!=null}">
+														<tr>
+															<th colspan='2'>
+																<a href='#modal_id_${venueVO.v_no}' data-toggle="modal" class="btn btn-primary btn-block">評價場地</a>
+																<div class="modal fade" id="modal_id_${venueVO.v_no}">
+																	<div class="modal-dialog">
+																		<div class="modal-content">
+																			<form>
+																				<div class="modal-header">
+																					<h4 class="modal-title">${memberlistVO.mem_name}，你好。</h4>
+																					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 																				</div>
-<!-- 																				<input type="text" name="score" value="5" /> -->
-																				<input type="hidden" name="v_no" value="${venueVO.v_no}" />
-																				<input type="hidden" name="mem_no" value="${memberlistVO.mem_no}" />																				
-																				<input type="hidden" name="action" value="memEvaluateVenueInFrontEnd" />
-																			</div>
-																			<div class="modal-footer">
-																				<button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
-																				<button type="submit" class="btn btn-primary">Save changes</button>
-																			</div>
-																		</form>
+																				<div class="modal-body">
+																					<div>關於場地 : ${venueVO.v_name}-${pageScope.vt_name}</div>
+																					<div>請給予評價分數</div>
+																					<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>" />
+																					<input type="hidden" name="whichPage" value="<%=whichPage%>" />
+																					<div class="myAlign-Center">
+																						
+																						<div class="custom-control custom-radio">
+																							<input type="radio" class="custom-control-input" id="radio_id_${venueVO.v_no}_1" name="score" value="1">
+																							<label class="custom-control-label" for="radio_id_${venueVO.v_no}_1">一分</label>
+																						</div>
+																						<div class="custom-control custom-radio">
+																							<input type="radio" class="custom-control-input" id="radio_id_${venueVO.v_no}_2" name="score" value="2">
+																							<label class="custom-control-label" for="radio_id_${venueVO.v_no}_2">兩分</label>
+																						</div> 
+																						<div class="custom-control custom-radio">
+																							<input type="radio" class="custom-control-input" id="radio_id_${venueVO.v_no}_3" name="score" value="3">
+																							<label class="custom-control-label" for="radio_id_${venueVO.v_no}_3">三分</label>
+																						</div> 
+																						<div class="custom-control custom-radio">
+																							<input type="radio" class="custom-control-input" id="radio_id_${venueVO.v_no}_4" name="score" value="4">
+																							<label class="custom-control-label" for="radio_id_${venueVO.v_no}_4">四分</label>
+																						</div> 
+																						<div class="custom-control custom-radio">
+																							<input type="radio" class="custom-control-input" id="radio_id_${venueVO.v_no}_5" name="score" value="5">
+																							<label class="custom-control-label" for="radio_id_${venueVO.v_no}_5">五分</label>
+																						</div> 
+																						
+																						
+																					</div>
+																					<input type="hidden" name="v_no" value="${venueVO.v_no}" />
+																					<input type="hidden" name="mem_no" value="${memberlistVO.mem_no}" />																				
+																					<input type="hidden" name="action" value="memEvaluateVenueInFrontEnd" />
+																				</div>
+																				<div class="modal-footer">
+																					<button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
+																					<button type="submit" class="btn btn-primary">Save changes</button>
+																				</div>
+																			</form>
+																		</div>
 																	</div>
 																</div>
-															</div>
-														</th>
-													</tr>
-												</c:if>
-												
-												
-		<!-- 										<tr> -->
-		<!-- 											<th></th> -->
-		<!-- 											<td style="text-align:right"> -->
-		<%-- 												<a href="<%=request.getContextPath()%>/venue/venue.do?action=get_one_venue&v_no=${venueVO.v_no}"> more...... </a> --%>
-		<!-- 											</td> -->
-		<!-- 										</tr> -->
-											</tbody>
-										</table>
-									</div>
-									<div class="col-sm-3">
-<!-- 										<p>URL</p> -->
-<!-- 										<div> -->
-<%-- 											<a href="${venueVO.v_photo1_url}"><img src="${venueVO.v_photo1_url}" class="img-responsive img-rounded"></a> --%>
-<!-- 										</div> -->
-										<p>DB</p>
-										<div>
-											<img src="<%=request.getContextPath()%>/venue/venueImg.do?v_no=${venueVO.v_no}" class="img-responsive img-rounded" alt="WTF"/>
+															</th>
+														</tr>
+													</c:if>
+													
+													
+			<!-- 										<tr> -->
+			<!-- 											<th></th> -->
+			<!-- 											<td style="text-align:right"> -->
+			<%-- 												<a href="<%=request.getContextPath()%>/venue/venue.do?action=get_one_venue&v_no=${venueVO.v_no}"> more...... </a> --%>
+			<!-- 											</td> -->
+			<!-- 										</tr> -->
+												</tbody>
+											</table>
+										</div>
+										<div class="col-sm-3">
+	<!-- 										<p>URL</p> -->
+	<!-- 										<div> -->
+	<%-- 											<a href="${venueVO.v_photo1_url}"><img src="${venueVO.v_photo1_url}" class="img-responsive img-rounded"></a> --%>
+	<!-- 										</div> -->
+											<p>DB</p>
+											<div>
+												<img src="<%=request.getContextPath()%>/venue/venueImg.do?v_no=${venueVO.v_no}" class="img-responsive img-rounded" alt="WTF"/>
+											</div>
 										</div>
 									</div>
 								</div>

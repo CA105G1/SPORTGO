@@ -21,7 +21,7 @@
 	   <!-- Core Stylesheet -->
 	   <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/style.css">
 	   
-	   <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/venue/build.css" />
+<%-- 	   <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/venue/build.css" /> --%>
 	   
 	   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	   <script src="<%=request.getContextPath()%>/front-end/pro/TWzipcode/jquery.twzipcode.min.js"></script>
@@ -32,6 +32,9 @@
 		}
 		.label-text{
 			font-size:1.3em;
+		}
+		.myWeekSet div{
+			margin:8px;
 		}
 		</style>
 		
@@ -84,7 +87,7 @@
 <!-- 						<div class="col-xs-12 col-sm-1"></div> -->
 					
 <!-- 					</div> -->
-					<div class="row">
+					<div class="row" style="display:felx; justify-content: center;">
 						
 						
 <%-- 						<!--測試前台萬用查詢-->
@@ -93,25 +96,36 @@
  							<input type="submit" value=" __查詢 __ " />
  						</form> --%>
 						<form method="get" action="<%=request.getContextPath()%>/venue/venue.do">
-							<h1>查詢場地資料</h1><br>
+							<h1>查詢場地資料</h1>
 							<table class="table table-hover table-striped table-bordered">
+								
+<!-- 								  <div class="input-group mb-3"> -->
+<!-- 								    <div class="input-group-prepend"> -->
+<!-- 								      <span class="input-group-text">Default</span> -->
+<!-- 								    </div> -->
+<!-- 								    <input type="text" class="form-control"> -->
+<!-- 								  </div> -->
+								
 								<tr>
 									<th><label>請輸入場地名稱 :</label></th>
 									<td>
-										<input type="text" name="v_name" value="${venueVO.v_name}"/>${errorMsgs.get("v_name")}
+										<input type="text" name="v_name" value="${venueVO.v_name}" class="form-control"/>
+										<div>${errorMsgs.get("v_name")}</div>
 									</td>
 								</tr>
 								
 								<tr>
-									<th><label>請選擇場地種類 :</label></th>
+									<th><label for='vt_no'>請選擇場地種類 :</label></th>
 									<td>
 										<jsp:useBean id="venueTypeService" scope="session" class="com.venuetype.model.VenueTypeService" />
-										<select size="1" name="vt_no" class="text-center">
-											<option value=""></option>
-											<c:forEach var="venueTypeVO" items="${venueTypeService.all}">
-												<option value="${venueTypeVO.vt_no}" ${(param.vt_no==venueTypeVO.vt_no)?'selected':''}>${venueTypeVO.vt_name}</option>
-											</c:forEach>
-										</select>
+										<div class="form-group">
+											<select size="1" name="vt_no" class="text-center form-control" id="vt_no">
+												<option value=""></option>
+												<c:forEach var="venueTypeVO" items="${venueTypeService.all}">
+													<option value="${venueTypeVO.vt_no}" ${(param.vt_no==venueTypeVO.vt_no)?'selected':''}>${venueTypeVO.vt_name}</option>
+												</c:forEach>
+											</select>
+										</div>
 									</td>
 								</tr>
 								
@@ -136,29 +150,81 @@
 										</select>
 									</td>
 								</tr>
-							
+								
+								<tr>
+									<th><label>是否有場地使用費 :</label></th>
+									<td>
+										<select size="1" name="open_state" class="text-center form-control">
+				      						<option value="">是否有場地使用費</option>
+				      						<option value="免費對外開放使用" ${venueVO.v_display=='免費對外開放使用'?'selected':'' }>免費對外開放使用</option>
+				      						<option value="付費對外開放使用" ${venueVO.v_display=='付費對外開放使用'?'selected':'' }>付費對外開放使用</option>
+										</select>
+									</td>
+								</tr>
+								
+								
+								
+								
 								<tr>
 									<th><label>請選擇時間開放 :</label></th>
 									<td>
-										<label for="openday_mon" class="checkbox-inline">一</label>
-										<input type="checkbox" name="openday_mon" value="Y" id="openday_mon" />
-										<label for="openday_tue" class="checkbox-inline">二</label>
-										<input type="checkbox" name="openday_tue" value="Y" id="openday_tue" />
-										<label for="openday_wed" class="checkbox-inline">三</label>
-										<input type="checkbox" name="openday_wed" value="Y" id="openday_wed" />
-										<label for="openday_thu" class="checkbox-inline">四</label>
-										<input type="checkbox" name="openday_thu" value="Y" id="openday_thu" />
-										<label for="openday_fri" class="checkbox-inline">五</label>
-										<input type="checkbox" name="openday_fri" value="Y" id="openday_fri" />
-										<label for="openday_sat" class="checkbox-inline">六</label>
-										<input type="checkbox" name="openday_sat" value="Y" id="openday_sat" />
-										<label for="openday_sun" class="checkbox-inline">日</label>
-										<input type="checkbox" name="openday_sun" value="Y" id="openday_sun" />
+										<div class="myWeekSet" style="display:inline-flex;">
+											<div class="custom-control custom-checkbox">
+										    	<input type="checkbox" class="custom-control-input" id="openday_mon" name="openday_mon">
+										    	<label class="custom-control-label" for="openday_mon">星期一</label>
+										  	</div>
+											
+											<div class="custom-control custom-checkbox">
+										    	<input type="checkbox" class="custom-control-input" id="openday_tue" name="openday_tue">
+										    	<label class="custom-control-label" for="openday_tue">星期二</label>
+										  	</div>
+											
+											<div class="custom-control custom-checkbox">
+										    	<input type="checkbox" class="custom-control-input" id="openday_wed" name="openday_wed">
+										    	<label class="custom-control-label" for="openday_wed">星期三</label>
+										  	</div>
+											
+											<div class="custom-control custom-checkbox">
+										    	<input type="checkbox" class="custom-control-input" id="openday_thu" name="openday_thu">
+										    	<label class="custom-control-label" for="openday_thu">星期四</label>
+										  	</div>
+											
+											<div class="custom-control custom-checkbox">
+										    	<input type="checkbox" class="custom-control-input" id="openday_fri" name="openday_fri">
+										    	<label class="custom-control-label" for="openday_fri">星期五</label>
+										  	</div>
+											
+											<div class="custom-control custom-checkbox">
+										    	<input type="checkbox" class="custom-control-input" id="openday_sat" name="openday_sat">
+										    	<label class="custom-control-label" for="openday_sat">星期六</label>
+										  	</div>
+											
+											<div class="custom-control custom-checkbox">
+										    	<input type="checkbox" class="custom-control-input" id="openday_sun" name="openday_sun">
+										    	<label class="custom-control-label" for="openday_sun">星期日</label>
+										  	</div>
+										</div>
+										
+<!-- 										<label for="openday_mon" class="checkbox-inline">一</label> -->
+<!-- 										<input type="checkbox" name="openday_mon" value="Y" id="openday_mon" /> -->
+<!-- 										<label for="openday_tue" class="checkbox-inline">二</label> -->
+<!-- 										<input type="checkbox" name="openday_tue" value="Y" id="openday_tue" /> -->
+<!-- 										<label for="openday_wed" class="checkbox-inline">三</label> -->
+<!-- 										<input type="checkbox" name="openday_wed" value="Y" id="openday_wed" /> -->
+<!-- 										<label for="openday_thu" class="checkbox-inline">四</label> -->
+<!-- 										<input type="checkbox" name="openday_thu" value="Y" id="openday_thu" /> -->
+<!-- 										<label for="openday_fri" class="checkbox-inline">五</label> -->
+<!-- 										<input type="checkbox" name="openday_fri" value="Y" id="openday_fri" /> -->
+<!-- 										<label for="openday_sat" class="checkbox-inline">六</label> -->
+<!-- 										<input type="checkbox" name="openday_sat" value="Y" id="openday_sat" /> -->
+<!-- 										<label for="openday_sun" class="checkbox-inline">日</label> -->
+<!-- 										<input type="checkbox" name="openday_sun" value="Y" id="openday_sun" /> -->
+
 									</td>
 								</tr>
 														
 								<tr><th colspan='2'>
-									<input type="hidden" name="action" value="listVenueByCompostieQueryForFrontEnd" /><br>
+									<input type="hidden" name="action" value="listVenueByCompostieQueryForFrontEnd" />
 									<input type="submit" value="送出查詢" class="btn btn-primary btn-block"/>
 								</th></tr>
 								
@@ -169,12 +235,14 @@
 						
 
 					</div>
-					<div class="row">
+					<div class="row" style="display:felx; justify-content: center;">
 						
 						<% if("listVenueByCompostieQueryForFrontEnd".equals(request.getParameter("action")) || 
 								"memEvaluateVenueInFrontEnd".equals(request.getParameter("action"))){ %>
-							<h1>---Result---</h1>
-							<jsp:include page="listQueryVenueForFront.jsp" />
+							<div style="display:felx; justify-content: center;">
+								<div class="h1">---Result---</div>
+								<jsp:include page="listQueryVenueForFront.jsp" />
+							</div>
 						<% } %>						
 						
 						
@@ -199,7 +267,7 @@
     <script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/popper.min.js"></script>
     <!-- Bootstrap js -->
     <script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/bootstrap.min.js"></script>
-    <!-- All Plugins js -->
+	<!-- All Plugins js -->
     <script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/plugins/plugins.js"></script>
     <!-- Active js -->
     <script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/active.js"></script>

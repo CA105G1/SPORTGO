@@ -88,7 +88,7 @@
 						<td>${venueVO_tab3.v_no}</td>
 					</tr>
 					<tr>
-						<th><div class="mytitle">場地類型</div></th>
+						<th><div class="mytitle">場地類型<div style="color:red"> * </div></div></th>
 						<td>
 							<jsp:useBean id="venueTypeService" scope="page" class="com.venuetype.model.VenueTypeService" />
 							<select size="1" name="vt_no" id="vt_no_tab3">
@@ -102,7 +102,7 @@
 					</tr>
 					
 					<tr>
-						<th><div class="mytitle">場地名稱</div></th>
+						<th><div class="mytitle">場地名稱<div style="color:red"> * </div></div></th>
 						<td>
 							<input type="text" name="v_name" value="${venueVO_tab3.v_name}"/><br>
 							<div class="center-block errorMsgs-color">${errorMsgs_tab3.get("v_name")}</div> 
@@ -136,7 +136,7 @@
 					</tr>
 					
 					<tr>
-						<th><div class="mytitle">場地地址</div></th>
+						<th><div class="mytitle">場地地址<div style="color:red"> * </div></div></th>
 						<td>
 							<input type="text" name="v_address" value="${venueVO_tab3.v_address}"/><br>
 							<div class="center-block errorMsgs-color">${errorMsgs_tab3.get("v_address")}</div> 
@@ -153,7 +153,7 @@
 					</tr>
 					
 					<tr>
-						<th><div class="mytitle">開放狀態</div></th>
+						<th><div class="mytitle">開放狀態<div style="color:red"> * </div></div></th>
 						<td>
 							<select size="1" name="open_state" id="open_state_tab3">
 								<option value=""></option>
@@ -166,7 +166,7 @@
 					</tr>
 					
 					<tr>
-						<th><div class="mytitle">開放日</div></th>
+						<th><div class="mytitle">開放日<div style="color:red"> * </div></div></th>
 						<td>
 							<div style="display:inline-flex">
 								<div>
@@ -237,16 +237,16 @@
 					</tr>
 					
 					<% //TODO: 引入時間選擇器 ---> 確認OK送出 %>
-					<tr>
-						<th><div class="mytitle">開放時間</div></th>
-						<td>
-							<div>無法填入-->TODO:引入時間選擇器 ---> 確認OK送出</div>
-						</td>
-					</tr>
+<!-- 					<tr> -->
+<!-- 						<th><div class="mytitle">開放時間</div></th> -->
+<!-- 						<td> -->
+<!-- 							<div>無法填入-->TODO:引入時間選擇器 ---> 確認OK送出</div> -->
+<!-- 						</td> -->
+<!-- 					</tr> -->
 					
 					
 					<tr>
-						<th><div class="mytitle">是否顯示</div></th>
+						<th><div class="mytitle">是否顯示<div style="color:red"> * </div></div></th>
 						<td>
 							<select size="1" name="v_display" id="v_display_tab3">
 								<option value=""></option>
@@ -257,7 +257,7 @@
 						</td>
 					</tr>
 					<tr>
-						<th><div class="mytitle">適用對象-民眾</div></th>
+						<th><div class="mytitle">適用對象-民眾<div style="color:red"> * </div></div></th>
 						<td>
 							
 							<select size="1" name="v_fitall" id="v_fitall_tab3">
@@ -269,7 +269,7 @@
 						</td>
 					</tr>
 					<tr>
-						<th><div class="mytitle">適用對象-內部人員</div></th>
+						<th><div class="mytitle">適用對象-內部人員<div style="color:red"> * </div></div></th>
 						<td>
 							
 							<select size="1" name="v_fitinter" id="v_fitinter_tab3">
@@ -285,7 +285,7 @@
 						<td colspan="2" class="uploadPicTd">
 							<div>
 								<input type="hidden" name="hasChangePictiure" id="hasChangePictiure_tab3" value="false">
-								<input type="file" id="v_photo1_tab3" name="v_photo1" />
+								<input type="file" id="v_photo1_tab3" name="v_photo1" /><div style="color:red"> * </div>
 								<div class="pull-left errorMsgs-color">${errorMsgs_tab3.get("v_photo1")}</div>
 							</div>
 							<div>

@@ -14,7 +14,9 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
-		
+		<!-- Favicon -->
+	    <link rel="icon" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png">
+	
 		<style>
 		input{
 			height:30px
@@ -27,7 +29,7 @@
 		<%-- include show_loginBox--%>
 		<%@ include file="/back-end/emp/loginfile/showLoginBackEnd.file" %>
 		
-<%-- 		<jsp:include page="/back-end/CA105G1_header_back.jsp" /> --%>
+		<%-- <jsp:include page="/back-end/CA105G1_header_back.jsp" /> --%>
 		
 		<!--  -->
 		<div class="container-fluid">
@@ -42,14 +44,6 @@
 					<c:if test="${empVO==null}">
 						<jsp:include page="/back-end/emp/loginBackEnd.jsp"/>
 					</c:if>
-					<c:if test="${empVO!=null}">
-						<h1>hello, ${empVO.emp_name}</h1>
-						
-						<img src="<%=request.getContextPath()%>/img/logo_SportyGo_2_light.png" style="width:50%"/>
-						
-					
-					</c:if>
-				
 				
 				
 				
