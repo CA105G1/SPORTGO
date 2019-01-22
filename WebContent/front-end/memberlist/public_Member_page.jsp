@@ -61,7 +61,7 @@
 		
     <!-- Favicon -->
     <link rel="icon" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png">
-
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <!-- Core Stylesheet -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/style.css">
 		<title>SPORTGO 會員頁面</title>

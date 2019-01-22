@@ -122,4 +122,9 @@ public class MemberlistRedisDAO implements MemberlistRedisDAO_interface {
 //		System.out.println("deleted completed");
 	}
 
+	@Override
+	public boolean isOpen() {
+		return jedis.isConnected();
+	}
+
 }

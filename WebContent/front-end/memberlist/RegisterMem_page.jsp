@@ -54,13 +54,13 @@
 					<div class="contact-form-area mb-100">
 						<form method="post" enctype="multipart/form-data" action="Register.do">
 						<div class="row">
-							<c:if test="${not empty errorMsgs}">
-								<ul class="error">
-									<c:forEach var="message" items="${errorMsgs}">
-										<li>${message.value}</li>
-									</c:forEach>
-								</ul>
-							</c:if>
+<%-- 							<c:if test="${not empty errorMsgs}"> --%>
+<!-- 								<ul class="error"> -->
+<%-- 									<c:forEach var="message" items="${errorMsgs}"> --%>
+<%-- 										<li>${message.value}</li> --%>
+<%-- 									</c:forEach> --%>
+<!-- 								</ul> -->
+<%-- 							</c:if> --%>
 						<div class="col-12">
 							<div class="form-group">
 								<input type="file" name="picture" class="upl" placeholder="照片">
@@ -76,6 +76,7 @@
 								<input type="text" name="account" 
 								class="form-control" value="${param.account}"
 								placeholder="帳號(必填)">
+								<div style="color:red;">${errorMsgs.account}</div>
 							</div>
 						</div>
 						<div class="col-12">
@@ -83,6 +84,7 @@
 								<input type="password" name="password" 
 								class="form-control" value="${param.password}"
 								placeholder="密碼(必填)">
+								<div style="color:red;">${errorMsgs.password}</div>
 							</div>
 						</div>
 						<div class="col-12">
@@ -90,6 +92,7 @@
 								<input type="text" name="name" 
 								class="form-control" value="${param.name}"
 								placeholder="姓名(必填)">
+								<div style="color:red;">${errorMsgs.name}</div>
 							</div>
 						</div>
 						<div class="col-12">
@@ -104,6 +107,7 @@
 								<input type="email" name="email" 
 								class="form-control" value="${param.email}"
 								placeholder="電子郵件(必填)">
+								<div style="color:red;">${errorMsgs.email}</div>
 							</div>
 						</div>
 						<div class="col-12">
@@ -111,20 +115,22 @@
 								<input type="phone" name="phone" 
 								class="form-control" value="${param.phone}"
 								placeholder="手機號碼(必填)">
+								<div style="color:red;">${errorMsgs.phone}</div>
 							</div>
 						</div>
 						<div class="col-12">
 							<div class="form-group">
 								<input type="text" name="emgc" 
 								class="form-control" value="${param.emgc}"
-								placeholder="緊急聯絡人">
+								placeholder="推薦人">
 							</div>
 						</div>
 						<div class="col-12">
 							<div class="form-group">
 								<input type="text" name="emgcphone" 
 								class="form-control" value="${param.emgcphone}"
-								palceholder="緊急聯絡人電話">
+								placeholder="推薦人電話">
+								<div style="color:red;">${errorMsgs.emgcphone}</div>
 							</div>
 						</div>
 						<div class="col-6">
