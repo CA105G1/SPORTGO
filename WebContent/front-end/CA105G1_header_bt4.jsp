@@ -8,6 +8,7 @@
 		
 		<!-- Font Awesome -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/jquery/jquery-2.2.4.min.js"></script>
 		<style type="text/css">
 		.dropbtn:hover {background-color:red;}
 		.dropdown-content {display: none;position:right;background-color: #f9f9f9;
