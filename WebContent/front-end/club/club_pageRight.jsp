@@ -57,9 +57,7 @@
 	boolean isManager = false;
 	Club_memberlistService svc = new Club_memberlistService();
 	String club_no = (String)session.getAttribute("club_no");
-	System.out.println("club_no======="+club_no);
 	Club_memberlistVO club_memberlistVO = svc.getOneClubmemberlist(club_no, memberlistVO.getMem_no());
-	System.out.println("club_memberlistVO==="+club_memberlistVO.getCmem_class());
 	if(club_memberlistVO != null && "管理員".equals(club_memberlistVO.getCmem_class())){
 		isManager = true;
 	}
@@ -68,12 +66,7 @@
  	
 	//若是管理員才能進入社團管理頁面
 	if(<%=isManager%>){
-		console.log($("#clubManage"));
-		console.log(<%=isManager%>);
-		console.log("test");
-		$("#clubManage").show();
-// 		document.getElementById("clubManage").style.display("");
-// 		$("a[name='someName']").css("display","");
+		$("#clubManage").css("display","");
 	}
 	
 
@@ -81,7 +74,6 @@
 	<%
 	boolean isJoin = false;
 	List<Club_memberlistVO> list2 = svc.getByMem(memberlistVO.getMem_no());
-System.out.print("memno="+memberlistVO.getMem_no());
 	for(Club_memberlistVO club_memberlistvo : list2) {
 		if(club_memberlistvo.getClub_no().equals(club_no)) {
 			isJoin = true;

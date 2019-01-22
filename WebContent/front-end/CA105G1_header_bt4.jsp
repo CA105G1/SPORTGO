@@ -149,7 +149,7 @@
 	 var path = window.location.pathname;
 	 var webCtx = path.substring(0,path.indexOf('/',1));
 	 var endPointURL = "wss://"+host+webCtx+MemPoint;
-	 var webSocket;
+	 var webS;
 	 var count;
      console.log(memberlistVO);
      $(function(){
@@ -157,14 +157,14 @@
 				connect();
 		})
      function connect(){
-			webSocket = new WebSocket(endPointURL);
-			webSocket.onopen = function(event){
+    	 webS = new WebSocket(endPointURL);
+    	 webS.onopen = function(event){
 				//alert(event.data);
 				count = 0;
 				console.log("WebSocket connected successful");
 			};
 			
-			webSocket.onmessage = function(event){
+			webS.onmessage = function(event){
 				var jsonObj = JSON.parse(event.data);
 				if(jsonObj.type==='notification'){
 // 						$("#notation").append("<div class='alert alert-info alert-dismissable' role='alert'>"+
@@ -178,14 +178,14 @@
 				$("#count").append(count);
 			};
 			
-			webSocket.onclose = function(event){
-				webSocket.close();
+			webS.onclose = function(event){
+				webS.close();
 				console.log("WebSocket disconnected");
 			};
 		}
 		
 		function sendMessage(){
-			webSocket.send('${memberlistVO.mem_no}');
+			webS.send('${memberlistVO.mem_no}');
 			console.log('${memberlistVO.mem_no}');
 		}
      </script>

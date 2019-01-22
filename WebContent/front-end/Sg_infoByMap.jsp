@@ -45,7 +45,7 @@
 
 <label for="setRadius">搜尋半徑</label>
 	<div class="input-group mb-3" style="width:20%">
-	<input type="text" id="setRadius" value="5000" class="form-control">
+	<input type="text" id="setRadius" value="2000" class="form-control">
  	<div class="input-group-append">
     	<span class="input-group-text">公尺</span>
   	</div>
@@ -70,11 +70,11 @@ function initMap(){
 
 function myLoc(pos){
 
-	var loc = {lat: pos.coords.latitude, lng: pos.coords.longitude};
+	var loc = {lat: 24.969367, lng: 121.190733};
 
 	map = new google.maps.Map(document.getElementById('map'), {
 		center: loc,
-		zoom: 12
+		zoom: 14
 	});
 	
 	var marker = new google.maps.Marker({

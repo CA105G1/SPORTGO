@@ -35,7 +35,8 @@
 	}
 	function starWebsock(pro_name){
 //		var pro_name = $('#productname').val();
-		var jsonObj = {"pro_name" : pro_name};
+		var jsonObj = {"pro_name":pro_name};
+		console.log(jsonObj);
         webSocket.send(JSON.stringify(jsonObj));//會觸發java端onMessage
 	}
 	
