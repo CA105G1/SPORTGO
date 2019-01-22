@@ -510,10 +510,11 @@ public class NewsDAO implements NewsDAO_interface{
 	
 	private static final String GET_NEED_TO_RELEASE_LIST_NEWS_SQL = ""
 			+ " Select * from news " + 
-			" where sysdate " + 
+			" where ( sysdate " + 
 			" between news_release_date and news_last_date " + 
 			" or (news_release_date <=sysdate and news_last_date is null) " + 
-			" or (news_last_date >=sysdate and news_release_date is null) ";
+			" or (news_last_date >=sysdate and news_release_date is null) )" + 
+			" and news_stutas != '下架' ";
 
 	@Override
 	synchronized public List<NewsVO> getNeedToReleaseListNews() {
