@@ -79,6 +79,15 @@
 						</td>
 					</tr>
 					<tr>
+						<th><div class="mytile">發布狀態</div></th>
+						<td>
+							<select size="1" name="news_stutas" id="news_stutas_tab3" class="form-control text-center">
+								<option value="">現在狀態為 : ${newsVO.news_stutas}</option>								
+								<option value="下架" >下架</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
 						<th><div class="mytile">關於發布設定</div></th>
 						<td>
 							<div class="mytile pull-left">

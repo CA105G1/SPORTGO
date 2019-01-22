@@ -140,6 +140,7 @@ public class NewsServlet extends HttpServlet {
 			// remark:
 			// OK---> // request.setAttribute(WHITCH_TAB, TAB_SELECT);
 			// Error---> // request.setAttribute(WHITCH_TAB, TAB_UPDATE);
+			// 2019/01/22 add stutas
 			doActionUpdateOneNewsButNoStutas(request,response);
 			break;
 		case "update_news_for_reset":
@@ -359,27 +360,29 @@ public class NewsServlet extends HttpServlet {
 	
 	// 依時間變更信息狀態
 	private void setNews_stutasByTwoTimestamp(long rightNow, Timestamp news_release_date, Timestamp news_last_date, NewsVO newsVO) {
-		if( news_release_date==null && news_last_date==null ) {
-			newsVO.setNews_stutas(NEW_STUTAS_BEFORE_RELEASE);
-		}else if(news_release_date==null && news_last_date!=null) {
-			if(news_last_date.getTime() < rightNow) {
-				newsVO.setNews_stutas(NEW_STUTAS_OUT_OF_TIME);
-			}else {
-				newsVO.setNews_stutas(NEW_STUTAS_RELEASE);
-			}
-		}else if(news_release_date!=null && news_last_date==null) {
-			if(news_release_date.getTime() > rightNow) {
+		if(!"下架".equals(newsVO.getNews_stutas())) {
+			if( news_release_date==null && news_last_date==null ) {
 				newsVO.setNews_stutas(NEW_STUTAS_BEFORE_RELEASE);
-			}else {
-				newsVO.setNews_stutas(NEW_STUTAS_RELEASE);
-			}
-		}else if(news_release_date!=null && news_last_date!=null) {
-			if(rightNow < news_release_date.getTime()) {
-				newsVO.setNews_stutas(NEW_STUTAS_BEFORE_RELEASE);
-			}else if(news_last_date.getTime() <rightNow) {
-				newsVO.setNews_stutas(NEW_STUTAS_OUT_OF_TIME);
-			}else {
-				newsVO.setNews_stutas(NEW_STUTAS_RELEASE);
+			}else if(news_release_date==null && news_last_date!=null) {
+				if(news_last_date.getTime() < rightNow) {
+					newsVO.setNews_stutas(NEW_STUTAS_OUT_OF_TIME);
+				}else {
+					newsVO.setNews_stutas(NEW_STUTAS_RELEASE);
+				}
+			}else if(news_release_date!=null && news_last_date==null) {
+				if(news_release_date.getTime() > rightNow) {
+					newsVO.setNews_stutas(NEW_STUTAS_BEFORE_RELEASE);
+				}else {
+					newsVO.setNews_stutas(NEW_STUTAS_RELEASE);
+				}
+			}else if(news_release_date!=null && news_last_date!=null) {
+				if(rightNow < news_release_date.getTime()) {
+					newsVO.setNews_stutas(NEW_STUTAS_BEFORE_RELEASE);
+				}else if(news_last_date.getTime() <rightNow) {
+					newsVO.setNews_stutas(NEW_STUTAS_OUT_OF_TIME);
+				}else {
+					newsVO.setNews_stutas(NEW_STUTAS_RELEASE);
+				}
 			}
 		}
 	}
@@ -421,7 +424,7 @@ public class NewsServlet extends HttpServlet {
 	}
 	
 	private void doActionUpdateOneNewsButNoStutas(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		//update_news_no_stutas
+		//update_news_no_stutas---2019/01/22 add stutas
 		Map<String, String> errorMsgs = getErrorMsgsCollection(request, ERRORMSGS_TITILE, TAB_UPDATE);
 		NewsVO newsVO = null;
 		try {
@@ -445,6 +448,15 @@ public class NewsServlet extends HttpServlet {
 			}else {
 				newsVO.setNews_script(news_script);
 			}
+			
+			String news_stutas = request.getParameter("news_stutas");
+			if(news_stutas!=null && "下架".equals(news_stutas)) {
+				newsVO.setNews_stutas(news_stutas);
+			}
+			
+//			public static final String NEW_STUTAS_BEFORE_RELEASE = "未發布";
+//			public static final String NEW_STUTAS_RELEASE = "發布中";
+//			public static final String NEW_STUTAS_OUT_OF_TIME = "下架";
 			
 			Timestamp news_release_date = checkAndGetParameterAboutTimeStamp(request, errorMsgs, "news_release_date");
 			newsVO.setNews_release_date(news_release_date);
@@ -488,6 +500,8 @@ public class NewsServlet extends HttpServlet {
 				failureView.forward(request, response);
 				return;
 			}
+			
+			
 			
 			/// 永續層工作
 			NewsService newsService = new NewsService();
@@ -537,34 +551,35 @@ public class NewsServlet extends HttpServlet {
 	
 	
 	
-/*	/// 有點複雜，暫時不要寫進這功能
+/*
+  	/// 有點複雜，暫時不要寫進這功能
 	private void doActionChangeNewsStutasByPK(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		//change_news_stutas
-//		Map<String, String> errorMsgs = getErrorMsgsCollection(request);
-		/// 會有的參數，編號、狀態; 連動可能改變 開始與結束時間
-//		try {
-			/// 接收參數及驗證
-//			String news_no = request.getParameter("news_no"); // --->透過hidden取得
-//			String news_stutas = request.getParameter("news_stutas");  // ----> select選單
-			/// 永續層工作
-//			NewsService newsService = new NewsService();
-//			NewsVO newsVO = newsService.getOneNews(news_no);
-//			if(NEW_STUTAS_BEFORE_RELEASE.equals(news_stutas)) {
-//				newsVO.setNews_release_date(null);
-//				newsVO.setNews_last_date(null);
-//				newsVO.setNews_stutas(NEW_STUTAS_BEFORE_RELEASE);
-//				newsService.update(newsVO);
-//			}else if(NEW_STUTAS_RELEASE.equals(news_stutas)) {
-//			}else if(NEW_STUTAS_OUT_OF_TIME.equals(news_stutas)) {
-//			}
-//			newsVO.setNews_stutas(news_stutas);
-//			/ 轉交對象		
-//		}catch (Exception e) {
-//			errorMsgs.put(DB_ERROR_MSGS, e.getMessage());
-//			RequestDispatcher failureView = request.getRequestDispatcher(MAINTAIN_NEWS_INFO_INDEX_BACK_PATH);
-//			failureView.forward(request, response);
-//			return;
-//		}
+		Map<String, String> errorMsgs = getErrorMsgsCollection(request, ERRORMSGS_TITILE, TAB_UPDATE);
+		// 會有的參數，編號、狀態; 連動可能改變 開始與結束時間
+		try {
+			// 接收參數及驗證
+			String news_no = request.getParameter("news_no"); // --->透過hidden取得
+			String news_stutas = request.getParameter("news_stutas");  // ----> select選單
+			// 永續層工作
+			NewsService newsService = new NewsService();
+			NewsVO newsVO = newsService.getOneNews(news_no);
+			newsVO.setNews_stutas(news_stutas);
+			
+			chargeNewsStutas();
+			updateTheNewsTypeList();
+			updateTheNewsList();
+			
+			// 轉交對象
+			
+			
+			
+		}catch (Exception e) {
+			errorMsgs.put(DB_ERROR_MSGS, e.getMessage());
+			RequestDispatcher failureView = request.getRequestDispatcher(MAINTAIN_NEWS_INFO_INDEX_BACK_PATH);
+			failureView.forward(request, response);
+			return;
+		}
 	}
 */	
 	
