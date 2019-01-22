@@ -16,7 +16,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.memberlist.model.MemberlistRedisDAO;
 
-@ServerEndpoint("/MemEchoServer/{mem_no}")
+@ServerEndpoint("/MemServer/{mem_no}")
 public class MemberEchoServer {
 
 	public MemberEchoServer() {
