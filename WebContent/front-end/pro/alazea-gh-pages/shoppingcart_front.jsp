@@ -200,8 +200,10 @@
                                 </c:forEach>
                             </tbody>
                         </table>
-     					<input type="button" class="btn btn-outline-primary" name="name" value="全選" id="allSelect" />
-   						<input type="button" class="btn btn-outline-secondary" name="name" value="取消全選" id="notSelect" />
+                        <div align="right">
+	     					<input type="button" class="btn btn-outline-primary" name="name" value="全選商品" id="allSelect" />
+	   						<input type="button" class="btn btn-outline-secondary" name="name" value="取消全選" id="notSelect" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -312,6 +314,8 @@
 <!-- google map api -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAb2lDof7yMn-TTXwt2hwVm4y92t1AqvyU&callback=initMap&libraries=places"async defer>
         </script>
+
+        
 			<script type="text/javascript">
 			<!--google mapy-->
 			var map;
@@ -354,17 +358,30 @@
 				  map: map
 				});
 				//點擊時取得地址
+				var address;
 				google.maps.event.addListener(map, 'click', function(event) {
 				  geocoder.geocode({
 				    'latLng': event.latLng
 				  }, function(results, status) {
 				    if (status == google.maps.GeocoderStatus.OK) {
 				      if (results[0]) {
-				        console.log(results[0].formatted_address);
+				        console.log(results[0]);
+				        address = results[0];
 				      }
 				    }
 				  });
 				});
+				
+			   if (geocoder) {
+				      geocoder.geocode({ 'address': address }, function (results, status) {
+				         if (status == google.maps.GeocoderStatus.OK) {
+				            console.log(results[0].geometry.location);
+				         }
+				         else {
+				            console.log("Geocoding failed: " + status);
+				         }
+				      });
+				   }
 				
 			}
 			//按下收尋
@@ -381,18 +398,19 @@
                   }, callback);
              }
             function callback(results, status) {//回傳
-                if (status === google.maps.places.PlacesServiceStatus.OK) {
+                if (status === google.maps.GeocoderStatus.OK) {
                   for (var i = 0; i < results.length; i++) {
                     createMarker(results[i]);
-                     // console.log(results[i]);
+                    address = results[0];
+//                      console.log(results[i]);
                   }
                 }
              }
               
-            
+            var marker;
             function createMarker(place) {
               var placeLoc = place.geometry.location;
-              var marker = new google.maps.Marker({
+               marker = new google.maps.Marker({
                   map: map,
                   position: place.geometry.location,
                   icon: {
@@ -406,6 +424,39 @@
 
               google.maps.event.addListener(marker, 'click', function() {//點擊maker取得當前資訊
                 	msg = place.name + "<br>" + place.rating;
+                	
+                	
+//                 	console.log(place.vicinity.substr(0, 3));
+//                 	console.log(place.plus_code.compound_code.substring(10, 13));
+                	var city = place.plus_code.compound_code.substring(10, 13);
+                	var town = place.vicinity.substr(0, 3);
+                	var address = place.vicinity.substring(3);
+                    console.log(place);
+                	
+					$("select[name='city']").val(city);
+					$("input[name='address_detail']").val(address);
+// 					$("select[name='town']").hide();
+// 					$("select[name='town']").removeAttr('name');
+// 					jQuery('<input type="text" name="town">');
+					
+					
+//                     document.getElementsByName("city").value = city;
+//                     document.getElementsByName("city").fireEvent("onchange");
+//                     $("select[name='city']").change(function(){
+//                     	console.log("tewst")
+//                     })
+//                 	$("select[name='city']").val(city).trigger('change');
+                	
+                	
+                		
+// onclickAddress(city ,  address,town);
+                	
+//                 $("select[name='city']").val(city);
+//                 $("select[name='town']").val(town);
+                
+//                 $("select[name='city']").removeAttr('name');
+//                 $("select[name='town']").removeAttr('name');
+//                 $("select[name='town']").removeAttr('name');
                 console.log(place.vicinity);
                 console.log(place.plus_code.compound_code);
                 for(var i = 0 ; i < parseInt(place.rating); i++){
@@ -416,8 +467,8 @@
               });
             }
               
-              
-              
+           
+               
 			$("#changeMap").click(function(){
 				if(flag === false){
 					$('#map').show();

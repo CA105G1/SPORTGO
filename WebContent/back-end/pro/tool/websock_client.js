@@ -47,12 +47,17 @@
 	}
 	function getReload(data){
 		swal({
-   			html: $("<div>").text('全新商品上架囉!'),
-   			background : 'url(/CA105G1/back-end/pro/tool/test3.jpg)',
+//   			html: $("<div>").text('全新商品上架囉!'),
+			title:"全新商品上架囉!",
+   			background : 'url(/CA105G1/back-end/pro/tool/test4.jpg)',
    			customClass: 'swal-wide',
    			showCancelButton : true,
-   			confirmButtonColor : '#3085d6',
-   			cancelButtonColor : '#d33',
+   			imageSize: '458x458',
+   			width: 600,
+   			padding: 150,
+//   			confirmButtonColor : '#3085d6',
+//   			cancelButtonColor : '#d33',
+//   			type
    			confirmButtonText : 'Yes, 馬上搶購去!',
    			cancelButtonText : '等會再買!',
    			closeOnConfirm : false,
