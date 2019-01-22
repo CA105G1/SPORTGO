@@ -404,7 +404,40 @@
 			}
 		}
 	});	
-	
+	$("#forAddNewNenue").click(function(){
+		// 場地類型---籃球場
+		$("#vt_no_tab2 option[value='VT001']").prop("selected",true);
+		// 場地名稱---湘北高中台灣分部
+		$("#v_name_tab2").val("湘北高中台灣分部");
+		// 室內or室外---室內設施
+		$("#v_inout_tab2 option[value='室內設施']").prop("selected",true);
+		// 場地電話---03-1234567
+		$("#v_phoneno_tab2").val("03-1234567");
+		// 開放狀態---
+		$("#open_state_tab2 option[value='免費對外開放使用']").prop("selected",true);
+		// 開放日
+		$("#openday_mon_tab2 option[value='Y']").prop("selected",true);
+		$("#openday_tue_tab2 option[value='Y']").prop("selected",true);
+		$("#openday_wed_tab2 option[value='Y']").prop("selected",true);
+		$("#openday_thu_tab2 option[value='Y']").prop("selected",true);
+		$("#openday_fri_tab2 option[value='Y']").prop("selected",true);
+		$("#openday_sat_tab2 option[value='Y']").prop("selected",true);
+		$("#openday_sun_tab2 option[value='Y']").prop("selected",true);
+		// 是否顯示
+		$("#v_display_tab2 option[value='顯示']").prop("selected",true);
+		// 適用對象-民眾
+		$("#v_fitall_tab2 option[value='Y']").prop("selected",true);
+		// 適用對象-內部人員
+		$("#v_fitinter_tab2 option[value='Y']").prop("selected",true);
+		
+		// 場地地址---桃園市大溪區和平路33-1
+		$("#v_address_temp_tab2").val("桃園市大溪區和平路33-1");
+		$("#v_address_tab2").val("桃園市大溪區和平路33-1");
+		// 郵遞區號
+		$("#reg_no_show_tab2").html("335");
+		$("#reg_no_tab2").val("335");
+		
+	});
 	
 	</script>
 	
