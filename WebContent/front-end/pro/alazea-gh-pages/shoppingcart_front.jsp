@@ -325,7 +325,7 @@
 			var markerArray = [];
 			var flag = false;
 			var geocoder ;
-			$('#map').hide();
+			$('#map').hide(); 
 			function initMap(){
 				navigator.geolocation.getCurrentPosition(myLoc);
 			}
