@@ -42,7 +42,7 @@
 	
 	function disconnect () {
 		webSocket.close();
-
+ 
 	}
 	function getReload(data){
 		swal({
