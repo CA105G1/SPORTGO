@@ -180,114 +180,110 @@ ClassicEditor
 
 
 
-		<script>
+<!-- 		<script> -->
 		
 		
-		// ------為了抓到管理員:::begin---------------------------------------------------------------------------------
-		<%MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO");%>
+// 		// ------為了抓到管理員:::begin---------------------------------------------------------------------------------
+<%-- 		<%MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO");%> --%>
 
-		<%if(memberlistVO == null){
-			session.setAttribute("location", request.getRequestURI());%>
-			$("#joinbtn").click(function(){
-				document.location.href="<%= request.getContextPath()%>/front-end/memberlist/Login.jsp";
-				return;
-			});
-		<%}else{%>
+<%-- 		<%if(memberlistVO == null){ --%>
+<%-- 			session.setAttribute("location", request.getRequestURI());%> --%>
+// 			$("#joinbtn").click(function(){
+<%-- 				document.location.href="<%= request.getContextPath()%>/front-end/memberlist/Login.jsp"; --%>
+// 				return;
+// 			});
+<%-- 		<%}else{%> --%>
 
-			//判斷是否為管理員
-			<%
-			boolean isManager = false;
-			Club_memberlistService svc = new Club_memberlistService();
-			club_no = (String)session.getAttribute("club_no");
-			System.out.println("club_no======="+club_no);
-			Club_memberlistVO club_memberlistVO = svc.getOneClubmemberlist(club_no, memberlistVO.getMem_no());
-			System.out.println("club_memberlistVO==="+club_memberlistVO.getCmem_class());
-			if(club_memberlistVO != null && "管理員".equals(club_memberlistVO.getCmem_class())){
-				isManager = true;
-			}
-		 	%> 
+// 			//判斷是否為管理員
+<%-- 			<% --%>
+// 			boolean isManager = false;
+// 			Club_memberlistService svc = new Club_memberlistService();
+// 			club_no = (String)session.getAttribute("club_no");
+// 			Club_memberlistVO club_memberlistVO = svc.getOneClubmemberlist(club_no, memberlistVO.getMem_no());
+// 			if(club_memberlistVO != null && "管理員".equals(club_memberlistVO.getCmem_class())){
+// 				isManager = true;
+// 			}
+<%-- 		 	%>  --%>
 		 	
-			//若是管理員才能進入社團管理頁面
-			if(<%=isManager%>){
-				console.log($("#clubManage"));
-				console.log(<%=isManager%>);
-				console.log("test");
-				$("#clubManage").show();
-//		 		document.getElementById("clubManage").style.display("");
-//		 		$("a[name='someName']").css("display","");
-			}
+// 			//若是管理員才能進入社團管理頁面
+<%-- 			if(<%=isManager%>){ --%>
+// 				console.log($("#clubManage"));
+<%-- 				console.log(<%=isManager%>); --%>
+// 				console.log("test");
+// 				$("#clubManage").css("display","");
+// 			}
 
-			//判斷是否重複加入
-			<%
-			boolean isJoin = false;
-			List<Club_memberlistVO> list2 = svc.getByMem(memberlistVO.getMem_no());
-		System.out.print("memno="+memberlistVO.getMem_no());
-			for(Club_memberlistVO club_memberlistvo : list2) {
-				if(club_memberlistvo.getClub_no().equals(club_no)) {
-					isJoin = true;
-				}
-			}
-			%>
+// 			//判斷是否重複加入
+<%-- 			<% --%>
+// 			boolean isJoin = false;
+// 			List<Club_memberlistVO> list2 = svc.getByMem(memberlistVO.getMem_no());
+// 		System.out.print("memno="+memberlistVO.getMem_no());
+// 			for(Club_memberlistVO club_memberlistvo : list2) {
+// 				if(club_memberlistvo.getClub_no().equals(club_no)) {
+// 					isJoin = true;
+// 				}
+// 			}
+<%-- 			%> --%>
 			
-			//變換加入或退出按鍵
-			if(<%=isJoin%>){
-				$("#joinbtn").css("display","none");
-				$("#outbtn").css("display","");
+// 			//變換加入或退出按鍵
+<%-- 			if(<%=isJoin%>){ --%>
+// 				$("#joinbtn").css("display","none");
+// 				$("#outbtn").css("display","");
 				
-			}
+// 			}
 
-		//////////////////加入社團按鍵設定///////////////////////////
-			$("#joinbtn").click(function(){
-				$.ajax({
-					type: "POST",
-					url: "<%= request.getContextPath()%>/club_memberlist.do",
-					data: {"action" : "addintoclub", "club_no" : "${club_no}", "mem_no" : "<%= memberlistVO.getMem_no()%>", "location" : "<%=request.getRequestURI()%>"},
-					dataType: "json",
-					error: function(){
-						alert("發生錯誤!");
-					},
-					success: function(data){
-						swal({
-							  title: "成功提出申請!", type: "success", showCloseButton: true,confirmButtonText: "確定"
-							}).then(
-								function (result) {
-								if(result){
-									location.reload();
-								}
-								},function(dismiss) {
-									location.reload();
-								});
-					}
-				}); //ajax
-			}); //joinbtn click
+// 		//////////////////加入社團按鍵設定///////////////////////////
+// 			$("#joinbtn").click(function(){
+// 				$.ajax({
+// 					type: "POST",
+<%-- 					url: "<%= request.getContextPath()%>/club_memberlist.do", --%>
+<%-- 					data: {"action" : "addintoclub", "club_no" : "${club_no}", "mem_no" : "<%= memberlistVO.getMem_no()%>", "location" : "<%=request.getRequestURI()%>"}, --%>
+// 					dataType: "json",
+// 					error: function(){
+// 						alert("發生錯誤!");
+// 					},
+// 					success: function(data){
+// 						swal({
+// 							  title: "成功提出申請!", type: "success", showCloseButton: true,confirmButtonText: "確定"
+// 							}).then(
+// 								function (result) {
+// 								if(result){
+// 									location.reload();
+// 								}
+// 								},function(dismiss) {
+// 									location.reload();
+// 								});
+// 					}
+// 				}); //ajax
+// 			}); //joinbtn click
 			
-			$("#outbtn").click(function(){
-				swal({
-				  title: "確定退出?", type: "warning", showCancelButton: true, showCloseButton: true,
-				}).then(
-					function (result) {
-					if(result){
-						$.ajax({
-							type: "POST",
-							url: "<%= request.getContextPath()%>/club_memberlist.do",
-							data: {"action" : "dropoutclub", "club_no" : "${club_no}", "mem_no" : "<%= memberlistVO.getMem_no()%>", "location" : "<%=request.getRequestURI()%>"},
-							dataType: "json",
-							error: function(){
-								alert("發生錯誤!");
-							},
-							success: function(data){
-								location.reload();
-							}
-						});
-					}
-				});
-			});
+// 			$("#outbtn").click(function(){
+// 				swal({
+// 				  title: "確定退出?", type: "warning", showCancelButton: true, showCloseButton: true,
+// 				}).then(
+// 					function (result) {
+// 					if(result){
+// 						$.ajax({
+// 							type: "POST",
+<%-- 							url: "<%= request.getContextPath()%>/club_memberlist.do", --%>
+<%-- 							data: {"action" : "dropoutclub", "club_no" : "${club_no}", "mem_no" : "<%= memberlistVO.getMem_no()%>", "location" : "<%=request.getRequestURI()%>"}, --%>
+// 							dataType: "json",
+// 							error: function(){
+// 								alert("發生錯誤!");
+// 							},
+// 							success: function(data){
+// 								location.reload();
+// 							}
+// 						});
+// 					}
+// 				});
+// 			});
 	
-		<%}%> //else
-		// ------為了抓到管理員:::end---------------------------------------------------------------------------------
+<%-- 		<%}%> //else --%>
+// 		// ------為了抓到管理員:::end---------------------------------------------------------------------------------
 
 		
-		</script>
+<!-- 		</script> -->
 	
 
 	</body>
