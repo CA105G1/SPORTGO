@@ -54,6 +54,9 @@
     			padding-top: 2px;
     			padding-bottom: 2px;
 			}
+			.ck-editor__editable{
+				min-height: 350px;
+			}
 			
 		</style>
 	</head>
@@ -102,7 +105,7 @@
 				    			<div class="form-group">
 									<label class="post_topic">
 										貼文主題
-										<input type="text" name="post_topic" id="post_topic" class="form-control"  size="50" value="${post_topic}">
+									<input type="text" name="post_topic" id="post_topic" class="form-control"  size="50" value="${post_topic}" style="margin-right: 55px;">
 									</label>
 									<br>
 									<br>
@@ -110,9 +113,7 @@
 										貼文內容
 									<br>
 									<!--貼文內容輸入框-->
-									 <textarea name="editor" id="editor"  class="form-control" value="${editor}"></textarea>
-<%-- 									<textarea name="editor" id="post_content"  class="form-control" value="${editor}"></textarea> --%>
-               					
+									 <textarea name="editor" id="editor"  class="form-control" value="${editor}" style="height:1000px" ></textarea>
 									<input type="hidden" name="club_no" id="club_no" value="${club_no}"/>
 									<input type="hidden" name="mem_no" id="mem_no" value="${mem_no}"/>
 									<!-- 時間可以不寫 -->
@@ -121,7 +122,7 @@
 				  			</div>
 				  			<div class="card-footer text-muted" style="border-style:none;">
 				  				<input type="hidden" name="action" value="insert">
-				   				<button type="submit" class="btn btn-primary">建立</button>
+				   				<button type="submit" class="btn btn-success">建立</button>
 				  			</div>
 						</div>
 					</FORM>
@@ -164,6 +165,7 @@
 			  cloudServices: {
 	                tokenUrl: 'https://36858.cke-cs.com/token/dev/P5oQfFj6vNube6BjhQLtEsAgtQ20tO0VqKeFLOzYFOlf4jS12ccjhd8UW1LX',
 	                uploadUrl: 'https://36858.cke-cs.com/easyimage/upload/'
+	                
 	                	     }
 		})
           .then( editor => {

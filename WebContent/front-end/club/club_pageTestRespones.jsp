@@ -169,7 +169,7 @@
 <!-- 							  		<br> -->
 							  			<div class="card-footer text-muted" style="border-style:none;">
 							  				<input type="hidden" name="action" value="insert">
-							    			<button type="submit" class="btn btn-success">送出</button>
+							    			<button type="submit" class="btn btn-primary">送出</button>
 							  			</div>
 									</div>
   							</div>
@@ -177,16 +177,11 @@
   							
 <!--------------------------------------------新增留言 ---------------------------------------------------->
 <!------------------------------------------顯示&刪除留言-------------------------------------------------->
-<!-- 					  		<button class="responesShow btn  btn-link" type="button" id="dropdownMenuButton" data-toggle="" aria-haspopup="true" aria-expanded="false"> -->
-<!-- 					    		顯示所有留言 -->
-<!-- 					  		</button> -->
-					  		<a class="responesShow" type="href" id="dropdownMenuButton" data-toggle="" aria-haspopup="true" aria-expanded="false" style="color:	#6c6c6c;">
-					    		顯示所有留言
-					  		</a>
+							<jsp:useBean id="responesSvc" scope="page" class="com.respones.model.ResponesService"/>
 							<div class="comment_area clearfix">
-								<jsp:useBean id="responesSvc" scope="page" class="com.respones.model.ResponesService"/>
-								<c:forEach var="responesVO" items="${responesSvc.getallfrompost(postinfoVO.post_no)}"><!-- 內層forEach -->
-			 <!-- 刪除的FORM --><FORM METHOD="post" ACTION="<%=request.getContextPath()%>/respones.do" name="form"> 
+							    <h4 class="headline">留言區</h4>
+							<c:forEach var="responesVO" items="${responesSvc.getallfrompost(postinfoVO.post_no)}"><!-- 內層forEach -->
+		 <!-- 刪除的FORM --><FORM METHOD="post" ACTION="<%=request.getContextPath()%>/respones.do" name="form"> 
 							    <ol>
 							        <!-- Single Comment Area -->
 							        <li class="single_comment_area">
@@ -201,19 +196,25 @@
 							                <!-- Comment Content -->
 							                <div class="comment-content">
 							                    <div class="d-flex align-items-center justify-content-between">
-							                    	<button type="submit" class="btn btn-light delete_${responesVO.mem_no}" name="action" value="delete" style="display:none;" >
-  							 							刪除  
-  													</button> 
+<!-- 							                        <h5>留言者名</h5> -->
+<%-- 							                        <span type="submit" class="delete_${responesVO.mem_no}" name="action" value="delete" style="display:none;" > --%>
+<!-- 			 							 					刪除  -->
+<!-- 							                        </span> -->
 							                    </div>
 							                    <p>${responesVO.res_content}</p>
+							                    <button type="submit" class="btn btn-light delete_${responesVO.mem_no}" name="action" value="delete" style="display:none;" >
+  							 						刪除  
+  												</button> 
 							                </div>
 							            </div>
 							        </li>
 							    </ol>
-							    </FORM>
 							    </c:forEach><!-- 內層forEach -->
 							</div>
 
+<!-- 					  		<button class="responesShow btn  btn-link" type="button" id="dropdownMenuButton" data-toggle="" aria-haspopup="true" aria-expanded="false"> -->
+<!-- 					    		顯示所有留言 -->
+<!-- 					  		</button> -->
 <!------------------------------------------顯示&刪除留言-------------------------------------------------->
    								</c:forEach><!-- 最外層postinfoVO的 -->
   							</div> <!-- card-body結束 -->

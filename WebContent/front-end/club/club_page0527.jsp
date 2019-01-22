@@ -169,7 +169,7 @@
 <!-- 							  		<br> -->
 							  			<div class="card-footer text-muted" style="border-style:none;">
 							  				<input type="hidden" name="action" value="insert">
-							    			<button type="submit" class="btn btn-success">送出</button>
+							    			<button type="submit" class="btn btn-primary">送出</button>
 							  			</div>
 									</div>
   							</div>
@@ -177,43 +177,35 @@
   							
 <!--------------------------------------------新增留言 ---------------------------------------------------->
 <!------------------------------------------顯示&刪除留言-------------------------------------------------->
-<!-- 					  		<button class="responesShow btn  btn-link" type="button" id="dropdownMenuButton" data-toggle="" aria-haspopup="true" aria-expanded="false"> -->
-<!-- 					    		顯示所有留言 -->
-<!-- 					  		</button> -->
-					  		<a class="responesShow" type="href" id="dropdownMenuButton" data-toggle="" aria-haspopup="true" aria-expanded="false" style="color:	#6c6c6c;">
+					  		<button class="responesShow btn  btn-link" type="button" id="dropdownMenuButton" data-toggle="" aria-haspopup="true" aria-expanded="false">
 					    		顯示所有留言
-					  		</a>
-							<div class="comment_area clearfix">
-								<jsp:useBean id="responesSvc" scope="page" class="com.respones.model.ResponesService"/>
-								<c:forEach var="responesVO" items="${responesSvc.getallfrompost(postinfoVO.post_no)}"><!-- 內層forEach -->
-			 <!-- 刪除的FORM --><FORM METHOD="post" ACTION="<%=request.getContextPath()%>/respones.do" name="form"> 
-							    <ol>
-							        <!-- Single Comment Area -->
-							        <li class="single_comment_area">
-							            <div class="comment-wrapper d-flex">
-							                <!-- Comment Meta -->
-							                <input type="hidden" name="res_no" id="res_no" value="${responesVO.res_no}"/>
-							                <jsp:useBean id="post_infoSvc" scope="page" class="com.post_info.model.Post_infoService"/>
-							                <input type="hidden" name="club_no" id="club_no" value="${post_infoSvc.getOnePost_info(responesVO.post_no).getClub_no()}"/>
-							                <div class="comment-author">
-							                    <img src="<%=request.getContextPath()%>/front-end/memberlist/showPicture.do?mem_no=${responesVO.mem_no}" alt=""><!-- 留言者照片 -->
-							                </div>
-							                <!-- Comment Content -->
-							                <div class="comment-content">
-							                    <div class="d-flex align-items-center justify-content-between">
-							                    	<button type="submit" class="btn btn-light delete_${responesVO.mem_no}" name="action" value="delete" style="display:none;" >
-  							 							刪除  
-  													</button> 
-							                    </div>
-							                    <p>${responesVO.res_content}</p>
-							                </div>
-							            </div>
-							        </li>
-							    </ol>
-							    </FORM>
-							    </c:forEach><!-- 內層forEach -->
-							</div>
-
+					  		</button>
+							<div class=" container-fluid" id="respones" >
+								<table class="table">
+									<jsp:useBean id="responesSvc" scope="page" class="com.respones.model.ResponesService"/>
+									<c:forEach var="responesVO" items="${responesSvc.getallfrompost(postinfoVO.post_no)}"><!-- 內層forEach -->
+					 <!-- 刪除的FORM --><FORM METHOD="post" ACTION="<%=request.getContextPath()%>/respones.do" name="form">
+				    					<tr>
+				    					<input type="hidden" name="res_no" id="res_no" value="${responesVO.res_no}"/>
+				    					<jsp:useBean id="post_infoSvc" scope="page" class="com.post_info.model.Post_infoService"/>
+				    					<input type="hidden" name="club_no" id="club_no" value="${post_infoSvc.getOnePost_info(responesVO.post_no).getClub_no()}"/>
+										<td scope="col"><!-- 回文者的照片-->
+					      			 		<img src="<%=request.getContextPath()%>/front-end/memberlist/showPicture.do?mem_no=${responesVO.mem_no}"  style="width:10%">
+					      			 	</td>
+										<td scope="col" ><!-- 回文內容-->
+					      					${responesVO.res_content}
+				      				 	</td>
+				      				 	<td>
+			 								<button type="submit" class="btn btn-light delete_${responesVO.mem_no}" name="action" value="delete" style="display:none;" >
+ 							 					刪除 
+ 											</button>
+				      				 	</td> 
+ 				      				 						
+				    					</tr>
+					 <!-- 刪除的FORM --></FORM>
+			    					</c:forEach><!-- 內層forEach -->
+								</table>
+							</div><!-- id="respones"結束 -->
 <!------------------------------------------顯示&刪除留言-------------------------------------------------->
    								</c:forEach><!-- 最外層postinfoVO的 -->
   							</div> <!-- card-body結束 -->
