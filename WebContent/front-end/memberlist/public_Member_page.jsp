@@ -247,11 +247,11 @@
 							<c:forEach var="clubmember" items="${clubmember}">
 								<div class="col-12 col-sm-6 col-lg-6 single_portfolio_item design home-design">
 						                    <!-- Portfolio Thumbnail -->
-				                    <div class="portfolio-thumbnail bg-img" style="background-image: url(<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${clubmember.club_no});"
+				                    <div class="portfolio-thumbnail bg-img" style="background-image: url(<%=request.getContextPath()%>/clubImg.do?club_no=${clubmember.club_no});"
 				                    style="width:100%;height:0;position:relative;padding-bottom:70%;overflow:hidden;border-radius:10px;"></div>
 				                    <!-- Portfolio Hover Text -->
 				                    <div class="portfolio-hover-overlay" >
-				                        <a href="<%=request.getContextPath()%>/front-end/Sg_info/Sg_infoGetByPkForJoinMem.jsp?Sg_no=${clubmember.club_no}" 
+				                        <a href="<%=request.getContextPath()%>/clubImg.do?club_no=${clubmember.club_no}" 
 				                        class="portfolio-img d-flex align-items-center justify-content-center" title="Portfolio 1">
 				                            <div class="port-hover-text">
 				                                <h3>${clubService.getOneClub(clubmember.club_no).club_name}</h3>
@@ -274,11 +274,11 @@
 							<c:forEach var="clubhost" items="${clubhost}">
 								<div class="col-12 col-sm-6 col-lg-6 single_portfolio_item design home-design">
 						                    <!-- Portfolio Thumbnail -->
-				                    <div class="portfolio-thumbnail bg-img" style="background-image: url(<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${clubhost.club_no});"
+				                    <div class="portfolio-thumbnail bg-img" style="background-image: url(<%=request.getContextPath()%>/clubImg.do?club_no=${clubhost.club_no});"
 				                    style="width:100%;height:0;position:relative;padding-bottom:70%;overflow:hidden;border-radius:10px;"></div>
 				                    <!-- Portfolio Hover Text -->
 				                    <div class="portfolio-hover-overlay" >
-				                        <a href="<%=request.getContextPath()%>/front-end/Sg_info/Sg_infoGetByPkForJoinMem.jsp?Sg_no=${clubhost.club_no}" 
+				                        <a href="<%=request.getContextPath()%>/clubImg.do?club_no=${clubhost.club_no}" 
 				                        class="portfolio-img d-flex align-items-center justify-content-center" title="Portfolio 1">
 				                            <div class="port-hover-text">
 				                                <h3>${clubService.getOneClub(clubhost.club_no).club_name}</h3>
@@ -340,7 +340,7 @@
 		var host = window.location.host;
 		var path = window.location.pathname;
 		var webCtx = path.substring(0,path.indexOf('/',1));
-		var endPointURL = "ws://"+host+webCtx+MemPoint;
+		var endPointURL = "wss://"+host+webCtx+MemPoint;
 		var type = ${type};
 		
 		var webSocket;

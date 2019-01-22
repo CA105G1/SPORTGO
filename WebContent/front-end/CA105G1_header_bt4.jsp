@@ -147,7 +147,7 @@
 	 var host = window.location.host;
 	 var path = window.location.pathname;
 	 var webCtx = path.substring(0,path.indexOf('/',1));
-	 var endPointURL = "ws://"+host+webCtx+MemPoint;
+	 var endPointURL = "wss://"+host+webCtx+MemPoint;
 	 var webSocket;
 	 var count;
      console.log(memberlistVO);

@@ -263,7 +263,7 @@
                     				<div class="portfolio-thumbnail bg-img" style="background-image: url(<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${sglike.sg_no});"></div>
                     			Portfolio Hover Text
                     					<div class="portfolio-hover-overlay">
-                        					<a href="<%=request.getContextPath()%>/front-end/Sg_info/Sg_infoGetByPkForJoinMem.jsp?Sg_no=${sglike.sg_no}" class="portfolio-img d-flex align-items-center justify-content-center" title="Portfolio 1">
+                        					<a href="<%=request.getContextPath()%>/front-end/Sg_info/Sg_infoGetByPkForGeneral.jsp?Sg_no=${sglike.sg_no}" class="portfolio-img d-flex align-items-center justify-content-center" title="Portfolio 1">
 	                            				<div class="port-hover-text">
 		                             				<h3>${sginfoService.GetByPK(sglike.sg_no).sg_name}</h3>
 		                                			<h5>團長：${memberlistService.getOneMem(sglike.mem_no).mem_name}</h5>
@@ -280,7 +280,7 @@
                     				<div class="portfolio-thumbnail bg-img" style="background-image: url(<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${sg_infoVO.sg_no});"></div>
                     			<!-- Portfolio Hover Text -->
                     					<div class="portfolio-hover-overlay">
-                        					<a href="<%=request.getContextPath()%>/front-end/Sg_info/Sg_infoGetByPkForJoinMem.jsp?Sg_no=${sg_infoVO.sg_no}" class="portfolio-img d-flex align-items-center justify-content-center" title="Portfolio 1">
+                        					<a href="<%=request.getContextPath()%>/front-end/Sg_info/Sg_infoGetByPkForHead.jsp?Sg_no=${sg_infoVO.sg_no}" class="portfolio-img d-flex align-items-center justify-content-center" title="Portfolio 1">
 	                            				<div class="port-hover-text">
 		                             				<h3>${sg_infoVO.sg_name}</h3>
 		                                			<h5>團長：${memberlistService.getOneMem(sg_infoVO.mem_no).mem_name}</h5>
@@ -319,7 +319,7 @@
                     				<div class="portfolio-thumbnail bg-img" style="background-image: url(<%= request.getContextPath()%>/Sg_info/Sg_infoImg.do?sg_no=${sg_infoVO.sg_no});"></div>
                     			<!-- Portfolio Hover Text -->
                     					<div class="portfolio-hover-overlay">
-                        					<a href="<%=request.getContextPath()%>/front-end/Sg_info/Sg_infoGetByPkForJoinMem.jsp?Sg_no=${sg_infoVO.sg_no}" class="portfolio-img d-flex align-items-center justify-content-center" title="Portfolio 1">
+                        					<a href="<%=request.getContextPath()%>/front-end/Sg_info/Sg_infoGetByPkForHead.jsp?Sg_no=${sg_infoVO.sg_no}" class="portfolio-img d-flex align-items-center justify-content-center" title="Portfolio 1">
 	                            				<div class="port-hover-text">
 		                             				<h3>${sg_infoVO.sg_name}</h3>
 		                                			<h5>團長：${memberlistService.getOneMem(sg_infoVO.mem_no).mem_name}</h5>

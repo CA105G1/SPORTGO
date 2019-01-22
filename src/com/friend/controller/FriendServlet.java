@@ -27,6 +27,7 @@ public class FriendServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
+		res.setCharacterEncoding("UTF-8");
 		HttpSession session = req.getSession();
 		FriendService service = new FriendService();
 		MemberlistVO memberlistVO = null;

@@ -8,7 +8,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -484,6 +486,8 @@ public class Sg_infoServlet extends HttpServlet {
 			
 			for(String mem2_no : mem2_noArr) {
 				MemberlistRedisDAO dao = new MemberlistRedisDAO();
+				DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+				String time = df.format(Calendar.getInstance().getTimeInMillis());
 			
 						String title = "<div>安安你好~ 一起加入揪團17 play吧! <div>"
 								+ "<a href='"+req.getContextPath()+"/Sg_info/Sg_info.do?sg_no="+sg_no+"&action=getByPK'>快速傳送門</a>";
@@ -493,6 +497,7 @@ public class Sg_infoServlet extends HttpServlet {
 								+ ",\"type\":"+"\"chat\""
 								+ ",\"message\":"+"\""+title+"\""
 								+ ",\"to\":"+"\""+mem2_no+"\""
+								+ ",\"time\":"+"\""+ time +"\""
 								+ "}";
 			
 						try {

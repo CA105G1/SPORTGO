@@ -517,7 +517,7 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 		var MemPoint = '/MemChatServer'+'/'+userName;
 		var chatFriend = null;
 		var host = window.location.host;
-		var endPointURL = 'ws://'+host+'/CA105G1'+MemPoint;
+		var endPointURL = 'wss://'+host+'/CA105G1'+MemPoint;
 // 		var date = new Date();
 // 		var time = date.toString();
 // 		var time = (date.getFullYear()+"/"+date.getMonth()+"/"+date.getDate()+" "+
