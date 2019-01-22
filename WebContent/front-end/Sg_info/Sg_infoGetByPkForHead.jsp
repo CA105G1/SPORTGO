@@ -348,7 +348,7 @@ if(vo == null){
  		    });
     	//編輯場地
     	 $("#v_no").html(function(index, content){
- 		    return "<select name='v_no' id='v_no'><option value=''>請選擇場地<c:forEach var='venueVO' items='${venueSvc.all}' > <option value='${venueVO.v_no}' ${(Sg_infoVO.v_no == venueVO.v_no)? 'selected' : ''}>${venueVO.v_name}</c:forEach></select>";
+ 		    return "<select name='v_no' id='v_no2'><option value=''>請選擇場地<c:forEach var='venueVO' items='${venueSvc.all}' > <option value='${venueVO.v_no}' ${(Sg_infoVO.v_no == venueVO.v_no)? 'selected' : ''}>${venueVO.v_name}</c:forEach></select>";
  		    });
     	//篩選只有慢跑及自行車可以編輯地圖
     	$("#sp_no").change(function(){
@@ -435,7 +435,34 @@ if(vo == null){
 		}
 	    
 		
-		
+		//定位場館位置
+   		$("#v_no2").change(function(){
+   			var v_no = $("#v_no2").val();
+   			console.log(v_no);
+   			$.ajax({
+				type: "POST",
+				url: "<%= request.getContextPath()%>/venue/venue.do",
+				data: {"action" : "getLoc", "v_no" : v_no},
+				dataType: "json",
+				error: function(){
+					alert("發生錯誤!");
+				},
+				success: function(data){
+					var v_lat = parseFloat(data.v_lat);
+					var v_long = parseFloat(data.v_long);
+					map = new google.maps.Map(document.getElementById('map'), {
+						center: {lat: v_lat, lng: v_long},
+						zoom:14
+					});
+					var marker = new google.maps.Marker({
+			   			position: {lat: v_lat, lng: v_long},
+			   			map: map,
+			   			animation: google.maps.Animation.DROP,
+			   			draggable: false
+			   		});
+				}
+			});
+   		});
 		
 		
 		

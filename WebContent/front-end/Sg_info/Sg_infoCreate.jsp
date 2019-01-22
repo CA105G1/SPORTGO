@@ -131,6 +131,7 @@
 							<th>運動種類</th> <!-- 下拉選單 -->
 							<td>
 								<select size="1" name="sp_no" id='sp_no'>
+									<option value=''>請選擇運動種類
 									<c:forEach var="sportVO" items="${sportSvc.all}" > 
 										<option value="${sportVO.sp_no}" ${(param.sp_no == sportVO.sp_no)? 'selected':'' }>${sportVO.sp_name}
 									</c:forEach>   
@@ -480,7 +481,7 @@
 	         if(status == 'OK'){
 	             directionsDisplay.setDirections(result);
 	          	 //顯示路線距離
-	             $("#distance").text("總距離為： "+result.routes[0].legs[0].distance.text);
+	             $("#distance").text("DISTANCE： "+result.routes[0].legs[0].distance.text);
 	           	
 	          	 //先清空path
 	          	 path=[];
