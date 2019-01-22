@@ -617,7 +617,7 @@ if ("pro_ByCompositeQuery".equals(action)) { //來自listAllPro的複合查詢�
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher(PATH_LIST_ALL_PRO);
+						.getRequestDispatcher(PATH_FRONT_LIST_ALL_PRO);
 				failureView.forward(req, res);
 				e.printStackTrace();
 			}
