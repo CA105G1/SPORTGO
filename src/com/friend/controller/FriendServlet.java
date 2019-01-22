@@ -237,7 +237,7 @@ public class FriendServlet extends HttpServlet {
 					String mem_name = member.getMem_name();
 					System.out.println(mem2_no+","+mem_name);
 					String name = null;
-					if(dao!=null)
+					if(dao.isOpen())
 						name = dao.getValue(mem1_no);
 					if(name.equals(mem_name)) {
 						dao.deleteRedis(mem1_no, mem_name);
