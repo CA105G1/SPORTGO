@@ -49,7 +49,6 @@ public class FriendServlet_android extends HttpServlet {
 		JsonObject jsonObject = gson.fromJson(jsonIn.toString(), JsonObject.class);
 		String action = jsonObject.get("action").getAsString();
 		
-		/****好友列表****/
 		if("findMyFriend".equals(action)) {
 			String mem_no = jsonObject.get("mem_no").getAsString();
 			List<Friend> myfriend = service.findMyFriend(mem_no);
@@ -72,13 +71,11 @@ public class FriendServlet_android extends HttpServlet {
 			writeText(res, gson.toJson(whoaddme));
 		}
 		
-		/****加入好友****/
 		if("addFriend".equals(action)) {
 			String mem1_no = jsonObject.get("mem1_no").getAsString();
 			String mem2_no = jsonObject.get("mem2_no").getAsString();
 			List<Friend> friendlist = service.findMyFriend(mem1_no);
 			
-			/****驗證是否已是好友*****/
 			for(Friend list : friendlist) {
 				if(list.getMem1_no().equals(mem1_no)) {
 					if(list.getMem2_no().equals(mem2_no)) {
@@ -106,7 +103,6 @@ public class FriendServlet_android extends HttpServlet {
 			//成功
 		}
 		
-		/****刪除好友****/
 		if("deleteFriend".equals(action)) {
 			String mem1_no = jsonObject.get("mem1_no").getAsString();
 			String mem2_no = jsonObject.get("mem2_no").getAsString();
@@ -143,7 +139,6 @@ public class FriendServlet_android extends HttpServlet {
 			}
 		}
 		
-		/****更新好友狀態****/
 		if("updateFriend".equals(action)) {
 
 			String mem1_no = jsonObject.get("mem1_no").getAsString();

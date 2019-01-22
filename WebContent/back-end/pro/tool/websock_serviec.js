@@ -22,6 +22,7 @@
 
 		webSocket.onmessage = function(event) {
 			var obj = eval("(" + event.data + ")");
+			console.log("obj"+obj);
 			getReload(obj.pro_name);
 			
 //			var test = 'helloworld';

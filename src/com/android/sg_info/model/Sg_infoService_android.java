@@ -80,7 +80,13 @@ public class Sg_infoService_android {
 	
 	
 	public List<Sg_info> getBySP(String sp_no) {
-		return dao.findBySp(sp_no);
+		List<Sg_info> list = dao.findBySp(sp_no);
+		for (Sg_info x: list) {
+			if (x.getClub_no() != null) {
+			x.setClub_name(service.getOneClub(x.getClub_no()).getClub_name());
+			}
+		}
+		return list;
 		
 	}
 	
