@@ -11,10 +11,10 @@
 <%@ page import="java.util.*"%>
 <%
 
-// 	String club_no = (String)session.getAttribute("club_no");
-	pageContext.setAttribute("club_no", "C0001");
+ 	String club_no = (String)session.getAttribute("club_no");
+	//pageContext.setAttribute("club_no", "C0001");
 	ClubService clubSvc = new ClubService();
-	ClubVO clubVO = clubSvc.getOneClub("C0001");
+	ClubVO clubVO = clubSvc.getOneClub(club_no);
 	pageContext.setAttribute("clubVO", clubVO);
 
 // 	Club_memberlistVO club_memberlistVO = (Club_memberlistVO)session.getAttribute("club_memberlistVO");

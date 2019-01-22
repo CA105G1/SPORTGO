@@ -7,7 +7,6 @@
 <%@ page import="com.respones.model.*"%>
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ page import="com.club_memberlist.model.*"%>
 
 <%
 // 	String mem_no = (String)session.getAttribute("mem_no");
@@ -18,10 +17,9 @@ ClubVO clubVO = clubSvc.getOneClub(club_no);
 request.setAttribute("clubVO", clubVO);
 %>
 
-
-<html >
-	<head>
-	 	<meta name="viewport" content="width=device-width, initial-scale=1">
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -60,10 +58,9 @@ request.setAttribute("clubVO", clubVO);
 			}
 			
 		</style>
-	</head>
-
-	<body>
-	<jsp:include page="/front-end/CA105G1_header_bt4.jsp" />
+</head>
+<body>
+<jsp:include page="/front-end/CA105G1_header_bt4.jsp" />
 
 <!-- 麵包屑 -->
 <div class="breadcrumb-area">
@@ -85,7 +82,7 @@ request.setAttribute("clubVO", clubVO);
     </div>
 </div>
 
-		<div class="container">
+<div class="container">
 			<div class="row">
 				
 				<div class="col-xs-12 col-sm-2" style="margin-right: -;padding-left: 5px;padding-right: 5px;">
@@ -153,7 +150,7 @@ request.setAttribute("clubVO", clubVO);
 <jsp:include page="/front-end/CA105G1_footer_bt4.jsp" />
 
 <script src="<%= request.getContextPath()%>/datetimepicker/jquery.js"></script>
-<%-- <script src="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script> --%>
+<script src="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
 <!-- Popper js -->
 <script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/popper.min.js"></script>
 <!-- Bootstrap js -->
@@ -162,133 +159,30 @@ request.setAttribute("clubVO", clubVO);
 <script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/plugins/plugins.js"></script>
 <!-- Active js -->
 <script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/active.js"></script>
-<script>
-ClassicEditor
-.create( document.querySelector( '#editor' ) ,{
-	  cloudServices: {
-           tokenUrl: 'https://36858.cke-cs.com/token/dev/P5oQfFj6vNube6BjhQLtEsAgtQ20tO0VqKeFLOzYFOlf4jS12ccjhd8UW1LX',
-           uploadUrl: 'https://36858.cke-cs.com/easyimage/upload/'
-           	     }
-})
-.then( editor => {
-        console.log( editor );
-} )
-.catch( error => {
-        console.error( error );
-} );
-</script>
 
-
-
+		
+		
+		
+		
+		
 		<script>
-		
-		
-		// ------為了抓到管理員:::begin---------------------------------------------------------------------------------
-		<%MemberlistVO memberlistVO = (MemberlistVO)session.getAttribute("memberlistVO");%>
-
-		<%if(memberlistVO == null){
-			session.setAttribute("location", request.getRequestURI());%>
-			$("#joinbtn").click(function(){
-				document.location.href="<%= request.getContextPath()%>/front-end/memberlist/Login.jsp";
-				return;
+		console.log("delete_${mem_no}");
+		$(function() {
+			$(".delete_${mem_no}").css("display","inline");
+			$(".responesShow").click(function() {
+//	 			$(".answer:not(this)").hide("slow"),
+				$(this).next().slideToggle("slow");
 			});
-		<%}else{%>
-
-			//判斷是否為管理員
-			<%
-			boolean isManager = false;
-			Club_memberlistService svc = new Club_memberlistService();
-			club_no = (String)session.getAttribute("club_no");
-			System.out.println("club_no======="+club_no);
-			Club_memberlistVO club_memberlistVO = svc.getOneClubmemberlist(club_no, memberlistVO.getMem_no());
-			System.out.println("club_memberlistVO==="+club_memberlistVO.getCmem_class());
-			if(club_memberlistVO != null && "管理員".equals(club_memberlistVO.getCmem_class())){
-				isManager = true;
-			}
-		 	%> 
-		 	
-			//若是管理員才能進入社團管理頁面
-			if(<%=isManager%>){
-				console.log($("#clubManage"));
-				console.log(<%=isManager%>);
-				console.log("test");
-				$("#clubManage").show();
-//		 		document.getElementById("clubManage").style.display("");
-//		 		$("a[name='someName']").css("display","");
-			}
-
-			//判斷是否重複加入
-			<%
-			boolean isJoin = false;
-			List<Club_memberlistVO> list2 = svc.getByMem(memberlistVO.getMem_no());
-		System.out.print("memno="+memberlistVO.getMem_no());
-			for(Club_memberlistVO club_memberlistvo : list2) {
-				if(club_memberlistvo.getClub_no().equals(club_no)) {
-					isJoin = true;
-				}
-			}
-			%>
-			
-			//變換加入或退出按鍵
-			if(<%=isJoin%>){
-				$("#joinbtn").css("display","none");
-				$("#outbtn").css("display","");
-				
-			}
-
-		//////////////////加入社團按鍵設定///////////////////////////
-			$("#joinbtn").click(function(){
-				$.ajax({
-					type: "POST",
-					url: "<%= request.getContextPath()%>/club_memberlist.do",
-					data: {"action" : "addintoclub", "club_no" : "${club_no}", "mem_no" : "<%= memberlistVO.getMem_no()%>", "location" : "<%=request.getRequestURI()%>"},
-					dataType: "json",
-					error: function(){
-						alert("發生錯誤!");
-					},
-					success: function(data){
-						swal({
-							  title: "成功提出申請!", type: "success", showCloseButton: true,confirmButtonText: "確定"
-							}).then(
-								function (result) {
-								if(result){
-									location.reload();
-								}
-								},function(dismiss) {
-									location.reload();
-								});
-					}
-				}); //ajax
-			}); //joinbtn click
-			
-			$("#outbtn").click(function(){
-				swal({
-				  title: "確定退出?", type: "warning", showCancelButton: true, showCloseButton: true,
-				}).then(
-					function (result) {
-					if(result){
-						$.ajax({
-							type: "POST",
-							url: "<%= request.getContextPath()%>/club_memberlist.do",
-							data: {"action" : "dropoutclub", "club_no" : "${club_no}", "mem_no" : "<%= memberlistVO.getMem_no()%>", "location" : "<%=request.getRequestURI()%>"},
-							dataType: "json",
-							error: function(){
-								alert("發生錯誤!");
-							},
-							success: function(data){
-								location.reload();
-							}
-						});
-					}
-				});
-			});
-	
-		<%}%> //else
-		// ------為了抓到管理員:::end---------------------------------------------------------------------------------
-
-		
+		});
+			ClassicEditor
+				.create( document.querySelector( '#editor' ) )
+				.then( editor => {
+					console.log( editor );
+				} )
+				.catch( error => {
+					console.error( error );
+				} );
 		</script>
-	
 
-	</body>
+</body>
 </html>
