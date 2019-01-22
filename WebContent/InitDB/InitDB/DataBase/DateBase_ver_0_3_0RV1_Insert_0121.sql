@@ -929,7 +929,7 @@ insert into SG_LIKE values('S005','M013');
 ------------CLUB_MEMBERLIST--------------
 ---------------------------------20181210
 Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0001','M001','正式社員','管理員');
-Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0001','M024','正式社員',DEFAULT);
+Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0001','M024','正式社員','管理員');
 Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0001','M005','待審核',DEFAULT);
 Insert into CLUB_memberlist (CLUB_NO,MEM_NO,CMEM_STATUS,CMEM_CLASS) values ('C0001','M006','待審核',DEFAULT);
 

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import com.memberlist.model.*;
+import com.util.lang.Send;
 @MultipartConfig(fileSizeThreshold=1024*1024,maxFileSize=5*1024*1024,maxRequestSize=5*5*1024*1024)
 public class RegisterMem extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -87,10 +88,15 @@ public class RegisterMem extends HttpServlet {
 			errorMsgs.put("email", "電子郵件格式有誤");
 		}
 		if("".equals(phone)||(phone.trim()).length()==0) {
-			errorMsgs.put("phone","電話欄位必填");
+			errorMsgs.put("phone","手機號碼欄位必填");
 		}
 		if(!phone.matches("^[0][0-9]{9}")) {
-			errorMsgs.put("phone","電話欄位格式有誤,必須為開頭是0的10個數字");
+			errorMsgs.put("phone","手機號碼格式有誤,必須為開頭是0的10個數字");
+		}
+		if(!"".equals(emgcphone)||(phone.trim()).length()!=0) {
+			if(!emgcphone.matches("^[0][0-9]{9}")) {
+				errorMsgs.put("emgcphone","推薦人格式有誤,必須為開頭是0的10個數字");
+			}
 		}
 		if(!errorMsgs.isEmpty()) {
 			RequestDispatcher notnull = req.getRequestDispatcher("RegisterMem_page.jsp");
@@ -113,6 +119,10 @@ public class RegisterMem extends HttpServlet {
 			}
 			if (!("".equals(nick) && "".equals(emgc) && "".equals(emgcphone))) {
 				newmem = service.renewPrivacy(mem_no, name, nick, email, phone, emgc, emgcphone);
+				Send sd = new Send();
+				String[] tel ={"0937351931"};
+			 	String message = name+" 被您推薦的好友已經加入了！";
+			 	sd.sendMessage(tel , message);
 			} 
 		} catch (RuntimeException e) {
 			System.out.println("新增資料錯誤"+e.getMessage());

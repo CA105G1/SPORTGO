@@ -34,7 +34,7 @@ public class MemberEchoServer {
 				JsonObject jsonObject = new Gson().fromJson(list.toString(), JsonObject.class);
 				if(jsonObject.get("type").getAsString().equals("notification")) {
 					userSession.getBasicRemote().sendText(list.toString());
-					System.out.println(list.toString());
+//					System.out.println(list.toString());
 					System.out.println("WebSocket push succeed.");
 				}
 			}

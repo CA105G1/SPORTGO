@@ -27,6 +27,7 @@ public class FriendServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
+		res.setCharacterEncoding("UTF-8");
 		HttpSession session = req.getSession();
 		FriendService service = new FriendService();
 		MemberlistVO memberlistVO = null;
@@ -113,7 +114,7 @@ public class FriendServlet extends HttpServlet {
 				MemberlistService memberService = new MemberlistService();
 				MemberlistVO member = memberService.getOneMem(mem1_no);
 				String mem_name = member.getMem_name();
-				if(dao!=null&& mem_name!=null && mem2_no !=null) {
+				if(dao.isOpen()&& mem_name!=null && mem2_no !=null) {
 					dao.appendRedis(mem2_no,"notification","捧油加加",mem_name+" 想加你好友唷");
 					System.out.println("insert into Redis succeed.");
 				}

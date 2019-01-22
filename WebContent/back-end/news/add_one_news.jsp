@@ -48,7 +48,7 @@
 						<th><div class="mytile">消息種類<div style="color:red; padding-left:5px;"> * </div></div></th>
 						<td>
 							<jsp:useBean id="newstypeService" scope="page" class="com.newstype.model.NewstypeService" />
-							<select size="1" name="newstype_no" id="newstype_no" class="form-control">
+							<select size="1" name="newstype_no" id="newstype_no_tab2" class="form-control">
 								<option value=""></option>
 								<c:forEach var="newstypeVO" items="${newstypeService.all}">
 									<option value="${newstypeVO.newstype_no}" ${newsVO.newstype_no==newstypeVO.newstype_no?'selected':''}>${newstypeVO.newstype_name}</option>
@@ -58,9 +58,9 @@
 						</td>
 					</tr>
 					<tr>
-						<th><div class="mytile">消息內容</div></th>
+						<th><div class="mytile">消息內容<div style="color:red; padding-left:5px;"> * </div></div></th>
 						<td>
-							<input type="text" name="news_script" value="${newsVO.news_script}" class="form-control"/>
+							<input type="text" name="news_script" id="new_script_tab2" value="${newsVO.news_script}" class="form-control"/>
 							<div class="center-block errorMsgs-color">${errorMsgs_tab2.get("news_script")}</div> 
 						</td>
 					</tr>
@@ -92,10 +92,18 @@
 					</tr>
 <!-- 				</tbody> -->
 <!-- 			</table> -->
+
+					<tr><th colspan='2'>
+						<div class="col-sm-4">
+							<input type="button" id="forAddNewNenue" value="快速輸入" class="btn btn-success btn-block"/>
+						</div>
+						<div class="col-sm-8"></div>
+					</th></tr>
 					<tr><th colspan="2">
 						<input type="hidden" name="action"value="insert_one_news" />
 						<input type="submit" value="送出" class="btn btn-success btn-block" class="form-control text-center" />
 					</th></tr>
+
 <!-- 			<table> -->
 <!-- 				<tbody>				 -->
 					<!------------ 圖片上傳 ------------>

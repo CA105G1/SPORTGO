@@ -1,5 +1,8 @@
 package com.memberlist.model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import org.json.JSONException;
@@ -32,11 +35,14 @@ public class MemberlistRedisDAO implements MemberlistRedisDAO_interface {
 
 	@Override
 	public void appendRedis(String mem_no, String type,String title,String element) {
+		DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		String time = df.format(Calendar.getInstance().getTimeInMillis());
 		String value = "{"
 				+ "\"userName\":"+"\""+mem_no+"\""
 				+ ",\"type\":"+"\""+type+"\""
 				+ ",\"message\":"+"\""+element+"\""
 				+ ",\"to\":"+"\""+title+"\""
+				+ ",\"time\":"+"\""+ time +"\""
 				+ "}";
 		jedis.lpush(mem_no, value);//List<String>
 		jedis.close();
@@ -114,6 +120,11 @@ public class MemberlistRedisDAO implements MemberlistRedisDAO_interface {
 //		
 //		dao.deleteRedis("Hello");
 //		System.out.println("deleted completed");
+	}
+
+	@Override
+	public boolean isOpen() {
+		return jedis.isConnected();
 	}
 
 }

@@ -216,7 +216,7 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 		    <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(<%= request.getContextPath()%>/img/badmintoncount.JPG);">
 		    </div>
 		</div>
-		<div class="container-fluid" style="width:90%;">
+		<div class="container-fluid" style="width:80%">
             <div class="row">
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
@@ -230,7 +230,7 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
             </div>
         </div>
 		<!-- 右選單 -->
-		<div class="container-fluid" style="width:90%;">
+		<div class="container-fluid" style="width:80%">
 			<div class="row">
 				<div class="col-xs-12 col-sm-3">
 					<jsp:include page="list_group.jsp"/>
@@ -517,7 +517,7 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 		var MemPoint = '/MemChatServer'+'/'+userName;
 		var chatFriend = null;
 		var host = window.location.host;
-		var endPointURL = 'ws://'+host+'/CA105G1'+MemPoint;
+		var endPointURL = 'wss://'+host+'/CA105G1'+MemPoint;
 // 		var date = new Date();
 // 		var time = date.toString();
 // 		var time = (date.getFullYear()+"/"+date.getMonth()+"/"+date.getDate()+" "+

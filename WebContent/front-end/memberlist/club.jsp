@@ -21,6 +21,7 @@
 		<link rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 		<link rel="icon" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/leaf.png">
 		<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/style.css">
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/jquery/jquery-2.2.4.min.js"></script>
 		<script src="<%= request.getContextPath()%>/datetimepicker/jquery.js"></script>
 		<script src="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
@@ -71,7 +72,7 @@
 				<div class="col-xs-12 col-sm-3">
 					<jsp:include page="list_group.jsp"/>
 				</div>
-				<div class="col-xs-12 col-sm-9 tab-content">
+				<div class="col-xs-12 col-sm-9">
 <!-- 				參加的社團 -->
 					<div class="container">
 							<h3>社團</h3>
@@ -103,12 +104,9 @@
 									</c:forEach>
 								</c:forEach>
 							</div>
-					</div>
 				
 <!-- 				當管理員的社團 -->
 
-					<div class="container">
-						<div class="row">
 							<h3>我管理的社團</h3>
 							<div class=" grid-container" style="display:grid;">
 								<c:forEach var="clubhost" items="${clubhost}">
@@ -139,11 +137,7 @@
 									</c:forEach>
 								</c:forEach>
 							</div>
-						</div>
-					</div>
 <!-- 					待審核 -->
-					<div class="container">
-						<div class="row">
 							<h3>等待審核的社團</h3>
 							<div class=" grid-container" style="display:grid;">
 								<c:forEach var="clubwait" items="${clubwait}">
@@ -173,8 +167,6 @@
 									</c:forEach>
 								</c:forEach>
 							</div>
-						</div>
-					</div>
 					
 					
 				</div>	

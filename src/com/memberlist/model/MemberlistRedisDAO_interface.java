@@ -15,4 +15,5 @@ public interface MemberlistRedisDAO_interface {
 	public List<String> getNotationMsg(String sender);
 	public void saveChatMessage(String sender, String receiver, String message) throws JSONException;
 	public List<String> getHistoryMsg(String sender);
+	public boolean isOpen();
 }

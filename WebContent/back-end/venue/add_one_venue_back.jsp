@@ -77,7 +77,7 @@
 					<tr>
 						<th><div class="mytitle">場地名稱<div style="color:red; padding-left:5px;"> * </div></div></th>
 						<td>
-							<input type="text" name="v_name" value="${venueVO_tab2.v_name}" class="form-control"/>
+							<input type="text" name="v_name" id="v_name_tab2" value="${venueVO_tab2.v_name}" class="form-control"/>
 							<div class="center-block errorMsgs-color">${errorMsgs_tab2.get("v_name")}</div> 
 						</td>
 					</tr>
@@ -135,7 +135,7 @@
 					<tr>
 						<th><div class="mytitle">郵遞區號</div></th>
 						<td>
-							<div id="reg_no_show_tab2" class="pull-left"  style="padding-left:10px;">${venueVO_tab2.reg_no}</div>
+							<div id="reg_no_show_tab2" class="pull-left"  style="padding-left:15px;">${venueVO_tab2.reg_no}</div>
 							<input type="hidden" name='reg_no' value='' id='reg_no_tab2' class="form-control" />
 						</td>
 					</tr>
@@ -161,7 +161,7 @@
 					<tr>
 						<th><div class="mytitle">場地電話</div></th>
 						<td>
-							<input type="text" name="v_phoneno" value="${venueVO_tab2.v_phoneno}" class="form-control"/>
+							<input type="text" name="v_phoneno" id="v_phoneno_tab2" value="${venueVO_tab2.v_phoneno}" class="form-control"/>
 							<div class="center-block errorMsgs-color">${errorMsgs_tab2.get("v_phoneno")}</div> 
 						</td>
 					</tr>
@@ -298,6 +298,14 @@
 					
 <!-- 				</tbody> -->
 <!-- 			</table> -->
+
+			<tr><th colspan='2'>
+				<div class="col-sm-4">
+					<input type="button" id="forAddNewNenue" value="快速輸入" class="btn btn-success btn-block"/>
+				</div>
+				<div class="col-sm-8"></div>
+			</th></tr>
+
 			<tr><th colspan='2'>
 				<input type="hidden" name="action"value="insert_one_venue" class="form-control text-center">
 				<input type="submit" value="送出" class="btn btn-success btn-block">
