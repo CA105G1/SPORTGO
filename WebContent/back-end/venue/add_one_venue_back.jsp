@@ -53,7 +53,9 @@
 </c:if>
 
 --%>
-
+<div style="margin-top:10px;margin-left:10px;">
+	<img src="<%=request.getContextPath()%>/img/logo_SportyGo_2_light.png" id="forAddNewNenue" style="width:20px;height:20px"/>
+</div>
 <div class="container-fluid">
 	<div class="row">
 		<form action="<%=request.getContextPath()%>/venue/venue.do" method="post" enctype="multipart/form-data">
@@ -298,13 +300,6 @@
 					
 <!-- 				</tbody> -->
 <!-- 			</table> -->
-
-			<tr><th colspan='2'>
-				<div class="col-sm-4">
-					<input type="button" id="forAddNewNenue" value="快速輸入" class="btn btn-success btn-block"/>
-				</div>
-				<div class="col-sm-8"></div>
-			</th></tr>
 
 			<tr><th colspan='2'>
 				<input type="hidden" name="action"value="insert_one_venue" class="form-control text-center">

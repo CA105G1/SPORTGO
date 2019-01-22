@@ -431,6 +431,10 @@
 		$("#v_fitinter_tab2 option[value='Y']").prop("selected",true);
 		
 		// 場地地址---桃園市大溪區和平路33-1
+		$("#reg_name_tab2 option[value='']").prop("selected",true);
+		$("#reg_dist_tab2 option[value='']").prop("selected",true);
+		$(".reg_distOption_tab2").remove();
+		$("#v_address_show_tab2").html("");
 		$("#v_address_temp_tab2").val("桃園市大溪區和平路33-1");
 		$("#v_address_tab2").val("桃園市大溪區和平路33-1");
 		// 郵遞區號
