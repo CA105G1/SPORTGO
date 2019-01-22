@@ -322,65 +322,65 @@
 	var update_successful="${update_successful}";
 	var doupdate = "${update_do}";
 	console.log(mem_no);
-	$(function(){
-		console.log(status);
-		if('succeed'===status){
-			swal("加入成功！", "等待好友的回應吧", "success");
-		}else if('false'===status){
-			swal("加入失敗！", "可憐小蟲蟲", "error");
-		}else if('duplicate'===status){
-			swal("已經是好友了！", "就算很愛他也不可以這樣喔", "warning");
-		}else if('do'===doupdate){
-			swal("更新資料",update_successful,"success");
-		}
+// 	$(function(){
+// 		console.log(status);
+// 		if('succeed'===status){
+// 			swal("加入成功！", "等待好友的回應吧", "success");
+// 		}else if('false'===status){
+// 			swal("加入失敗！", "可憐小蟲蟲", "error");
+// 		}else if('duplicate'===status){
+// 			swal("已經是好友了！", "就算很愛他也不可以這樣喔", "warning");
+// 		}else if('do'===doupdate){
+// 			swal("更新資料",update_successful,"success");
+// 		}
 		
-	})
-		var mem_no ='${mem_no}';
-		var MemPoint = "/MemEchoServer/"+mem_no;
-		var host = window.location.host;
-		var path = window.location.pathname;
-		var webCtx = path.substring(0,path.indexOf('/',1));
-		var endPointURL = "wss://"+host+webCtx+MemPoint;
-		var type = ${type};
+// 	})
+// 		var mem_no ='${mem_no}';
+// 		var MemPoint = "/MemEchoServer/"+mem_no;
+// 		var host = window.location.host;
+// 		var path = window.location.pathname;
+// 		var webCtx = path.substring(0,path.indexOf('/',1));
+// 		var endPointURL = "wss://"+host+webCtx+MemPoint;
+// 		var type = ${type};
 		
-		var webSocket;
+// 		var webSocket;
 		
-		$(function(){
-			if(type==0)
-				connect();
-		})
-		function connect(){
-			webSocket = new WebSocket(endPointURL);
-			console.log(webSocket);
+// 		$(function(){
+// 			if(type==0)
+// 				connect();
+// 		})
+// 		function connect(){
+// 			webSocket = new WebSocket(endPointURL);
+// 			console.log(webSocket);
 			
-			webSocket.onopen = function(event){
-				//alert(event.data);
-				console.log("WebSocket connected successful");
-			};
+// 			webSocket.onopen = function(event){
+// 				//alert(event.data);
+// 				console.log("WebSocket connected successful");
+// 			};
 			
-			webSocket.onmessage = function(event){
-				$(".notation").show();
-				var jsonObj = JSON.parse(event.data);
-				console.log(jsonObj.type);
-					if(jsonObj.type==='notation'){
-						$(".notation").append("<div class='alert alert-info alert-dismissable' role='alert'>"+
-						"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"+
-			         	"<span aria-hidden='true' style='color: deeppink;'>好</span></button>"+
-		            	"<p class='alert-title'>"+jsonObj.to+"</p><p class='alert-body'>"+
-		            	jsonObj.message+"</p></div>");
-					}
-			};
+// 			webSocket.onmessage = function(event){
+// 				$(".notation").show();
+// 				var jsonObj = JSON.parse(event.data);
+// 				console.log(jsonObj.type);
+// 					if(jsonObj.type==='notation'){
+// 						$(".notation").append("<div class='alert alert-info alert-dismissable' role='alert'>"+
+// 						"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"+
+// 			         	"<span aria-hidden='true' style='color: deeppink;'>好</span></button>"+
+// 		            	"<p class='alert-title'>"+jsonObj.to+"</p><p class='alert-body'>"+
+// 		            	jsonObj.message+"</p></div>");
+// 					}
+// 			};
 			
-			webSocket.onclose = function(event){
-				webSocket.close();
-				console.log("WebSocket disconnected");
-			};
-		}
+// 			webSocket.onclose = function(event){
+// 				webSocket.close();
+// 				console.log("WebSocket disconnected");
+// 			};
+// 		}
 		
-		function sendMessage(){
-			webSocket.send('${memberlistVO.mem_no}');
-			console.log('${memberlistVO.mem_no}');
-		}
+// 		function sendMessage(){
+// 			webSocket.send('${memberlistVO.mem_no}');
+// 			console.log('${memberlistVO.mem_no}');
+// 		}
 	</script>
 	<jsp:include page="/front-end/CA105G1_footer_bt4.jsp"/>
 	
