@@ -43,6 +43,9 @@
 	    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
 	    <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
 	<![endif]-->
+	
+	 <script src="<%=request.getContextPath() %>/back-end/pro/tool/websock_serviec.js"></script>
+	
 	<style type="text/css">
 		.aa {
 			background-color: #faa;
@@ -360,7 +363,7 @@
 
 <%@ include file="/front-end/CA105G1_footer.file" %>
 <!-- websock -->
-<script src="<%=request.getContextPath() %>/back-end/pro/tool/websock_serviec.js"></script>
+
 
 			<%if ("success".equals(request.getAttribute("success"))) {
 			out.println("<script type=\"text/javascript\">$(document).ready(function(){ ");

@@ -58,7 +58,7 @@ public class MyEchoServer {
 	
 	@OnError
 	public void onError(Session userSession, Throwable e){
-//		e.printStackTrace();
+		e.printStackTrace();
 	}
 
 }

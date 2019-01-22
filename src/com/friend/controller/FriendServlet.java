@@ -232,17 +232,17 @@ public class FriendServlet extends HttpServlet {
 					service.changeStatus(mem1_no, mem2_no, "好友");
 					System.out.println("更新好友成功");
 					/****更新Redis****/
-					MemberlistService memberService = new MemberlistService();
-					MemberlistVO member = memberService.getOneMem(mem2_no);
-					String mem_name = member.getMem_name();
-					System.out.println(mem2_no+","+mem_name);
-					String name = null;
-					if(dao.isOpen())
-						name = dao.getValue(mem1_no);
-					if(name.equals(mem_name)) {
-						dao.deleteRedis(mem1_no, mem_name);
-						System.out.println("delete data from Redis succeed.");
-					}
+				//	MemberlistService memberService = new MemberlistService();
+				//	MemberlistVO member = memberService.getOneMem(mem2_no);
+				//	String mem_name = member.getMem_name();
+				//	System.out.println(mem2_no+","+mem_name);
+				//	String name = null;
+				//	if(dao.isOpen())
+				//		name = dao.getValue(mem1_no);
+				//	if(name.equals(mem_name)) {
+				//		dao.deleteRedis(mem1_no, mem_name);
+				//		System.out.println("delete data from Redis succeed.");
+				//	}
 				}catch(RuntimeException je) {
 					je.printStackTrace(System.err);
 					System.out.println("資料庫刪除不成功");

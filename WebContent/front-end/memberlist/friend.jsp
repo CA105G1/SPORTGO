@@ -531,7 +531,7 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 // 		date.getHours()+":"+date.Minutes()+":"+date.Seconds()).toString();
 // 		console.log(time);
 		
-		var webSocket;
+		var Socket;
 		
 		$(function(){
 					connect();
@@ -552,13 +552,13 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 							+"'><h3 id='userName' style='max-width:100%;max-height:100%'>"+$('#name_'+chatFriend).html()+"</h3>");
 				});
 		function connect(){
-			webSocket = new WebSocket(endPointURL);
+			Socket = new WebSocket(endPointURL);
 			
-			webSocket.onopen =function(event){
+			Socket.onopen =function(event){
 				console.log("WebSocket connected successful");
 			};
 			
-			webSocket.onmessage = function(event){
+			Socket.onmessage = function(event){
 				var messageArea = document.getElementById("chat");
 				var jsonObj = JSON.parse(event.data);
 // 				var online = jsonObj.message;
@@ -598,7 +598,7 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 				};
 			};
 			
-			webSocket.onclose = function(event){
+			Socket.onclose = function(event){
 				console.log("WebSocket disconnected");
 			};
 		}
@@ -617,7 +617,7 @@ body::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-w
 					"time": time
 			};
 			if(chatFriend!=null)
-				webSocket.send(JSON.stringify(jsonObj));
+				Socket.send(JSON.stringify(jsonObj));
 			inputMessage.value = "";
 			inputMessage.focus();
 		}

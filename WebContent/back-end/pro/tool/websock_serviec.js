@@ -6,7 +6,7 @@
     
     var statusOutput  = document.getElementById("statusOutput");
     var statusPublish = document.getElementById("statusPublish");
-	var webSocket;
+	var webSocket = new WebSocket(endPointURL);
 	
 	function connect() {
 		// 建立 websocket 物件
@@ -14,7 +14,7 @@
 		console.log('path:'+path);
 		console.log('webCtx:'+webCtx);
 		console.log('endPointURL:'+endPointURL);
-		webSocket = new WebSocket(endPointURL);
+		
 		
 		webSocket.onopen = function(event) {
 			console.log("WebSocket 成功連線");

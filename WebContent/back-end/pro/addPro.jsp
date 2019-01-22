@@ -405,7 +405,7 @@
 <!-- 	<script src="https://code.jquery.com/jquery.js"></script> -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <%-- 	<script src="<%=request.getContextPath() %>/back-end/pro/tool/websock.js"></script> --%>
-	<script src="<%=request.getContextPath() %>/back-end/pro/tool/websock_serviec.js"></script>
+<%--	<script src="<%=request.getContextPath() %>/back-end/pro/tool/websock_serviec.js"></script> --%>
 	<script type="text/javascript">
 	     $("#addvalue").click(function(){
 	    	$("#productname").val("一棒入魂");
@@ -425,7 +425,8 @@
 				 contentType: false,
 				 async: false,
 				 success: function (data){//還是會回傳:傳回的值怪怪的
-					 starWebsock();
+				// console.log("data "+data);
+					starWebsock();
 			     },
 			     error: function(){alert("AJAX-class發生錯誤囉!")}
 	         });
