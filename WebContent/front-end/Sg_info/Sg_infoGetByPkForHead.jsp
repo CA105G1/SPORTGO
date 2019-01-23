@@ -151,6 +151,8 @@ if(vo == null){
 								<img src="<%= request.getContextPath()%>/img/sgmem.jpg"  style="width:20px; height:auto;">
 								<jsp:useBean id="memberlistSvc2" scope="page" class="com.memberlist.model.MemberlistService"/>
 								${memberlistSvc2.getOneMem(Sg_infoVO.mem_no).mem_name}
+								<!-- 解散圖示 -->
+								<img id="dismissPic" src="<%= request.getContextPath()%>/img/dismiss.png" style="margin-left:10px;width:80px; height:auto; display:none">
 							</span>
 							</h3>
 						</caption>
@@ -270,7 +272,6 @@ if(vo == null){
 					<input type="hidden" name="loc_end" id="loc_end" value=<%= vo.getLoc_end() %>>	
 					<input type="hidden" name="action" value="update">
 				</form>
-<%System.out.print("test"); %>
  				<form action="<%= request.getContextPath()%>/Sg_info/Sg_info.do" method="post" id="dismissForm">
 					<input type="button" class="btn btn-danger btn-block" id="dismiss" value="解散" >
 					<input type="hidden" name="action" value="dismiss">
@@ -318,7 +319,13 @@ if(vo == null){
 
 
 <script type="text/javascript">
-		
+		//若解散則關閉按鍵
+		var sg_status = '<%= vo.getSg_status()%>';
+		if(sg_status == '解散'){
+			$("#update").attr("disabled", true);
+			$("#dismiss").attr("disabled", true);
+			$("#dismissPic").css('display', '');
+		}
 		
 	  $("#update").click(function(){
 		//編輯照片
