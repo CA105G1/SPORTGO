@@ -207,6 +207,7 @@
 												<input type="hidden" name="mem_no" value="${mem_no}">
 												<button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
 												<button type="submit" class="btn btn-primary">送出</button>
+												<button type="button" class="btn btn-primary" id="magic">magic</button>
 											</div>
 						<!-- FORM結束 --></FORM>
 									</div><!--div class="modal-content"結束 -->
@@ -315,7 +316,11 @@
 		$("#myCreateClud").trigger("click");
 	}
 	
-	
+	$("#magic").click(function(){
+		var club_name = $("#club_name").val("夜貓組不當夜貓當球員");
+		var club_intro = $("#club_intro").val("大家一起來打球喲");
+		
+	})
 
 </script> 
 	

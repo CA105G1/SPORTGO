@@ -804,8 +804,8 @@ VALUES('M'||LPAD(TO_CHAR(member_seq.NEXTVAL),3,'0'),'周天成','a019','123456',
 INSERT INTO MEMBERLIST(MEM_NO,MEM_NAME,MEM_ACCOUNT,MEM_PSWD,MEM_EMAIL,MEM_PHONE,MEM_STATUS)
 VALUES('M'||LPAD(TO_CHAR(member_seq.NEXTVAL),3,'0'),'李宗偉','a020','123456','s9821100@gm.pu.edu.tw','0937351931','正式會員');
 
-INSERT INTO MEMBERLIST(MEM_NO,MEM_NAME,MEM_ACCOUNT,MEM_PSWD,MEM_EMAIL,MEM_PHONE,MEM_STATUS)
-VALUES('M'||LPAD(TO_CHAR(member_seq.NEXTVAL),3,'0'),'OHTANI','a021','123456','s9821100@gm.pu.edu.tw','0937351931','正式會員');
+INSERT INTO MEMBERLIST(MEM_NO,MEM_NAME,MEM_NICK,MEM_ACCOUNT,MEM_PSWD,MEM_EMAIL,MEM_PHONE,MEM_STATUS)
+VALUES('M'||LPAD(TO_CHAR(member_seq.NEXTVAL),3,'0'),'OHTANI','大谷翔平','a021','123456','s9821100@gm.pu.edu.tw','0937351931','正式會員');
 
 INSERT INTO MEMBERLIST(MEM_NO,MEM_NAME,MEM_ACCOUNT,MEM_PSWD,MEM_EMAIL,MEM_PHONE,MEM_STATUS)
 VALUES('M'||LPAD(TO_CHAR(member_seq.NEXTVAL),3,'0'),'厄文','a022','123456','s9821100@gm.pu.edu.tw','0937351931','正式會員');
@@ -1567,6 +1567,7 @@ insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M008', '中�
 insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M024', '湘北湘北得第一', to_timestamp('2019-01-25 20:00:00','yyyy-mm-dd hh24:mi:ss'),'C0002',to_timestamp('2019-01-24 00:00:00','yyyy-mm-dd hh24:mi:ss'),0,null,null,'限社團','SP003','V000159',10,3,1,0,'紙上得來終覺淺，絕知此事必躬行',default,null,null);
 insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M008', '忠孝東路跑九遍', to_timestamp('2019-02-12 18:00:00','yyyy-mm-dd hh24:mi:ss'),'C0003',to_timestamp('2019-02-10 00:00:00','yyyy-mm-dd hh24:mi:ss'),0,null,null,'限社團','SP006',null,10,5,2,0,'紙上得來終覺淺，絕知此事必躬行',default,'{"lat":25.044765,"lng":121.523426}','{"lat":25.052120,"lng":121.606545}');
 insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M004', '王建民棒球訓練營', to_timestamp('2019-02-19 18:00:00','yyyy-mm-dd hh24:mi:ss'),null,to_timestamp('2019-02-18 00:00:00','yyyy-mm-dd hh24:mi:ss'),0,null,null,'公開','SP001','V000146',3,1,2,0,'快來跟大樹哥相見歡喔!',default,null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M005', '中央扛霸子', to_timestamp('2019-02-10 18:00:00','yyyy-mm-dd hh24:mi:ss'),null,to_timestamp('2019-02-09 00:00:00','yyyy-mm-dd hh24:mi:ss'),0,null,null,'公開','SP001','V000146',3,1,2,0,'挖喜扛霸子，來作伙運動啊',default,null,null);
 
 
 ------------09-INSERT--------------------
@@ -2145,7 +2146,7 @@ INSERT INTO EMP(
 	EMP_EMAIL,EMP_ACCOUNT,EMP_PSW,
 	HIREDATE,LEAVEDATE)
 VALUES(
-	'E'||LPAD(TO_CHAR(EMP_SEQ.NEXTVAL),3,'0'),'Peter1','超級管理員','0912345678',
+	'E'||LPAD(TO_CHAR(EMP_SEQ.NEXTVAL),3,'0'),'Coach','超級管理員','0912345678',
 	'peter1@ca105.test.test','Peter1','123456',
 	null,null
 );

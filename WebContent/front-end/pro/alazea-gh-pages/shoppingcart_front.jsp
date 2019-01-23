@@ -104,7 +104,7 @@
     <!-- ##### Breadcrumb Area Start ##### -->
 <!--     <div class="breadcrumb-area"> -->
 <!--         Top Breadcrumb Area -->
-<%--         <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(<%=request.getContextPath()%>/InitDB/image/news/N002.png);"> --%>
+<%--         <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(<%=request.getContextPath()%>/InitDB/image/news/N002.jpeg);"> --%>
 <!--             <h2>Cart</h2> -->
 <!--         </div> -->
 
@@ -222,7 +222,7 @@
                                     <input type="tel"  placeholder="收件人電話" name="address_phone" value="${param.phone}">
                                     <!-- google map -->
                                     <input id="searchtext" type="text" class="form-control" placeholder="Search for...">
-                                    <button class="btn btn-default" type="button" onclick="mySearch();">Go!</button>
+                                    <button id="mySearchBtn" class="btn btn-default" type="button" onclick="mySearch();">Go!</button>
                                      <div id="map"></div>
                                      <input type="hidden" class="inputCity">
                                      <input type="hidden" class="inputTown">
@@ -326,6 +326,9 @@
 			var flag = false;
 			var geocoder ;
 			$('#map').hide(); 
+			$('#searchtext').hide(); 
+			$('#mySearchBtn').hide();
+			
 			var marker;
 			function initMap(){
 				navigator.geolocation.getCurrentPosition(myLoc);

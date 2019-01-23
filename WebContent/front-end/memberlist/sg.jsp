@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import = "com.memberlist.model.*" %>
 <%@ page import = "com.sg_info.model.*" %>
 <%@ page import = "com.sg_mem.model.*" %>
@@ -249,7 +250,7 @@
 			                            				<div class="port-hover-text">
 				                             				<h3>${sg_infoVO.sg_name}</h3>
 				                                			<h5>團長：${memberlistService.getOneMem(sg_infoVO.mem_no).mem_name}</h5>
-				                                			<h5>${sg_infoVO.sg_date}</h5>
+				                                			<fmt:formatDate value="${sg_infoVO.sg_date}" pattern="yyyy-MM-dd HH:mm"/>
 			                           					</div>
 		                        					</a>
 		                    					</div>
@@ -268,7 +269,7 @@
 	                            				<div class="port-hover-text">
 		                             				<h3>${sginfoService.GetByPK(sglike.sg_no).sg_name}</h3>
 		                                			<h5>團長：${memberlistService.getOneMem(sglike.mem_no).mem_name}</h5>
-		                                			<h5>${sginfoService.GetByPK(sglike.sg_no).sg_date}</h5>
+		                                			<fmt:formatDate value="${sginfoService.GetByPK(sglike.sg_no).sg_date}" pattern="yyyy-MM-dd HH:mm"/>
 	                           					</div>
                         					</a>
                     					</div>
@@ -285,7 +286,7 @@
 	                            				<div class="port-hover-text">
 		                             				<h3>${sg_infoVO.sg_name}</h3>
 		                                			<h5>團長：${memberlistService.getOneMem(sg_infoVO.mem_no).mem_name}</h5>
-		                                			<h5>${sg_infoVO.sg_date}</h5>
+		                                			<fmt:formatDate value="${sg_infoVO.sg_date}" pattern="yyyy-MM-dd HH:mm"/>
 	                           					</div>
                         					</a>
                     					</div>
@@ -305,7 +306,7 @@
 			                            				<div class="port-hover-text">
 				                             				<h3>${sg_infoVO.sg_name}</h3>
 				                                			<h5>團長：${memberlistService.getOneMem(sg_infoVO.mem_no).mem_name}</h5>
-				                                			<h5>${sg_infoVO.sg_date}</h5>
+				                                			<fmt:formatDate value="${sg_infoVO.sg_date}" pattern="yyyy-MM-dd HH:mm"/>
 			                           					</div>
 		                        					</a>
 		                    					</div>
@@ -324,7 +325,7 @@
 	                            				<div class="port-hover-text">
 		                             				<h3>${sg_infoVO.sg_name}</h3>
 		                                			<h5>團長：${memberlistService.getOneMem(sg_infoVO.mem_no).mem_name}</h5>
-		                                			<h5>${sg_infoVO.sg_date}</h5>
+		                                			<fmt:formatDate value="${sg_infoVO.sg_date}" pattern="yyyy-MM-dd HH:mm"/>
 	                           					</div>
                         					</a>
                     					</div>

@@ -33,7 +33,7 @@
 			<div class="myGroup">
 				<div class="panel-heading">
 			    	<h3 class="panel-title">
-			    		<a href="<%=request.getContextPath()%>/back-end/memberlist/listAllMem.jsp">會員列表</a>
+			    		<a href="<%=request.getContextPath()%>/back-end/memberlist/listAllMem.jsp">會員管理</a>
 <!-- 			    		<a role="button" data-toggle="collapse" href="#adminiBack" aria-expanded="false" aria-controls="adminiBack"> -->
 <!-- 							管理員專區 -->
 <!-- 						</a> -->
@@ -52,7 +52,7 @@
 			<div class="myGroup">
 				<div class="panel-heading">
 			    	<h3 class="panel-title">
-			    		<a href="<%=request.getContextPath()%>/back-end/sg_info/sg_infoBackEnd.jsp">揪團列表</a>
+			    		<a href="<%=request.getContextPath()%>/back-end/sg_info/sg_infoBackEnd.jsp">揪團管理</a>
 <!-- 			    		<a  role="button" data-toggle="collapse" href="#sgBack" aria-expanded="false" aria-controls="sgBack"> -->
 <!-- 							揪團專區 -->
 <!-- 						</a> -->
@@ -86,7 +86,7 @@
 			<div class="myGroup">
 				<div class="panel-heading">
 			    	<h3 class="panel-title">
-			    		<a href="<%=request.getContextPath()%>/back-end/pro/listAllPro.jsp">商品列表</a>
+			    		<a href="<%=request.getContextPath()%>/back-end/pro/listAllPro.jsp">商品管理</a>
 <!-- 			    		<a  role="button" data-toggle="collapse" href="#shopBack" aria-expanded="false" aria-controls="shopBack"> -->
 <!-- 							商城管理 -->
 <!-- 						</a> -->

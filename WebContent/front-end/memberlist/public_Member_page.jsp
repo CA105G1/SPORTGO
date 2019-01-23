@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import = "com.memberlist.model.*" %>
 <%@ page import = "com.sg_info.model.*" %>
 <%@ page import = "com.sg_mem.model.*" %>
@@ -187,7 +188,7 @@
 							                            <div class="port-hover-text">
 							                                <h3>${sg_infoVO.sg_name}</h3>
 							                                <h5>團長：${memberlistService.getOneMem(sg_infoVO.mem_no).mem_name}</h5>
-							                                <h5>${sg_infoVO.sg_date}</h5>
+							                                <fmt:formatDate value="${sg_infoVO.sg_date}" pattern="yyyy-MM-dd HH:mm"/>
 							                            </div>
 							                        </a>
 							                    </div>
@@ -219,7 +220,7 @@
 						                            <div class="port-hover-text">
 						                                <h3>${sg_infoVO.sg_name}</h3>
 						                                <h5>團長：${memberlistService.getOneMem(sg_infoVO.mem_no).mem_name}</h5>
-						                                <h5>${sg_infoVO.sg_date}</h5>
+						                                <fmt:formatDate value="${sg_infoVO.sg_date}" pattern="yyyy-MM-dd HH:mm"/>
 						                            </div>
 						                        </a>
 						                    </div>
@@ -322,19 +323,19 @@
 	var update_successful="${update_successful}";
 	var doupdate = "${update_do}";
 	console.log(mem_no);
-// 	$(function(){
-// 		console.log(status);
-// 		if('succeed'===status){
-// 			swal("加入成功！", "等待好友的回應吧", "success");
-// 		}else if('false'===status){
-// 			swal("加入失敗！", "可憐小蟲蟲", "error");
-// 		}else if('duplicate'===status){
-// 			swal("已經是好友了！", "就算很愛他也不可以這樣喔", "warning");
-// 		}else if('do'===doupdate){
-// 			swal("更新資料",update_successful,"success");
-// 		}
+	$(function(){
+		console.log(status);
+		if('succeed'===status){
+			swal("加入成功！", "等待好友的回應吧", "success");
+		}else if('false'===status){
+			swal("加入失敗！", "可憐小蟲蟲", "error");
+		}else if('duplicate'===status){
+			swal("已經是好友了！", "就算很愛他也不可以這樣喔", "warning");
+		}else if('do'===doupdate){
+			swal("更新資料",update_successful,"success");
+		}
 		
-// 	})
+	})
 // 		var mem_no ='${mem_no}';
 // 		var MemPoint = "/MemEchoServer/"+mem_no;
 // 		var host = window.location.host;

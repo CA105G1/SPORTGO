@@ -70,16 +70,21 @@ if ("insert".equals(action)) { //來自shoppingcart_front.jsp的請求
 //				}
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理(信用卡)*************************/
 				String card = req.getParameter("card-number");
-				card = remove_Multi_Spaces(card);
+				
 				String expirydate = req.getParameter("expirydate");
-				expirydate = remove_Multi_Spaces(expirydate);
+				
 				String cvc = req.getParameter("cvc");
 				
 				if("".equals(card)||(card.trim()).length()==0) {
 					errorMsgs.add("信用卡欄位必填");
+				}else {
+					card = remove_Multi_Spaces(card);
 				}
-				if("".equals(expirydate)||(expirydate.trim()).length()==0) {
+				System.out.println("expirydate=="+expirydate);
+				if("".equals(expirydate) || expirydate == null) {
 					errorMsgs.add("信用卡日期欄位必填");
+				}else {
+					expirydate = remove_Multi_Spaces(expirydate);
 				}
 				if("".equals(cvc)||(cvc.trim()).length()==0) {
 					errorMsgs.add("信用卡驗證碼必填");
@@ -95,7 +100,7 @@ if ("insert".equals(action)) { //來自shoppingcart_front.jsp的請求
 				String zip = req.getParameter("zipcode");
 				String detail = req.getParameter("address_detail");
 				
-				detail = town + detail;//地區與地址相加
+				
 				
 //				String receiver = req.getParameter("receiver");
 //				String phone = req.getParameter("phone");
@@ -123,7 +128,7 @@ if ("insert".equals(action)) { //來自shoppingcart_front.jsp的請求
 					errorMsgs.add("郵遞區號欄位必填");
 				}
 
-				
+				detail = town + detail;//地區與地址相加
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理(購物車成訂單)*************************/
 				String integerReg = "([0-9]{0,7})";
 				String[] pro_no = req.getParameterValues("pro_no");

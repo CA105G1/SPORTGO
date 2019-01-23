@@ -174,7 +174,7 @@
 			<jsp:include page="/back-end/left_side_field.jsp"/>
 				</div>
 				<div class="col-xs-12 col-sm-9">
-					<h1>後台內容，使用tabs，也可自由發揮</h1>
+<!-- 					<h1>後台內容，使用tabs，也可自由發揮</h1> -->
 					
 					<div role="tabpanel">
 			<!-- 標籤面板：標籤區 -->

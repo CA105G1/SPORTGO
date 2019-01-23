@@ -13,14 +13,6 @@
 		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/jquery/jquery-2.2.4.min.js"></script>
 		<script src="<%= request.getContextPath()%>/datetimepicker/jquery.js"></script>
 		<script src="<%= request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
-		<!-- Popper js -->
-		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/popper.min.js"></script>
-		<!-- Bootstrap js -->
-		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/bootstrap.min.js"></script>
-		<!-- All Plugins js -->
-		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/plugins/plugins.js"></script>
-		<!-- Active js -->
-		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/active.js"></script>
 		
 		<style type="text/css">
 			.btn{display: flex;}
@@ -149,7 +141,15 @@
 	</div>
 </section>
 	<jsp:include page="/front-end/CA105G1_footer_bt4.jsp"/>
-	
+	<!-- Popper js -->
+		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/popper.min.js"></script>
+		<!-- Bootstrap js -->
+		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/bootstrap/bootstrap.min.js"></script>
+		<!-- All Plugins js -->
+		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/plugins/plugins.js"></script>
+		<!-- Active js -->
+		<script src="<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/js/active.js"></script>
+		
 <script>
 $(function (){
 	function format_float(num, pos){

@@ -120,8 +120,8 @@ public class RegisterMem extends HttpServlet {
 			if (!("".equals(nick) && "".equals(emgc) && "".equals(emgcphone))) {
 				newmem = service.renewPrivacy(mem_no, name, nick, email, phone, emgc, emgcphone);
 				Send sd = new Send();
-				String[] tel ={"0937351931"};
-			 	String message = name+" 被您推薦的好友已經加入了！";
+				String[] tel ={emgcphone};
+			 	String message = emgc+"-您推薦的好友-"+name+"-已經加入了SPORTGO！";
 			 	sd.sendMessage(tel , message);
 			} 
 		} catch (RuntimeException e) {
