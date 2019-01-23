@@ -326,7 +326,7 @@ if(vo == null){
 			$("#dismiss").attr("disabled", true);
 			$("#dismissPic").css('display', '');
 		}
-		
+		 
 	  $("#update").click(function(){
 		//編輯照片
 		$(".uploadPic").html(function(index, content){
