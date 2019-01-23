@@ -97,14 +97,14 @@
 
 
         <!-- ***** Top Header Area ***** -->
-  <jsp:include page="/front-end/CA105G1_header_bt4.jsp" />
-
+<%--   <jsp:include page="/front-end/CA105G1_header_bt4.jsp" /> --%>
+    <jsp:include page="/front-end/pro/page/pro_header_bt4.jsp" />
 
 
     <!-- ##### Breadcrumb Area Start ##### -->
 <!--     <div class="breadcrumb-area"> -->
 <!--         Top Breadcrumb Area -->
-<%--         <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(<%=request.getContextPath()%>/InitDB/image/news/N002.png);"> --%>
+<%--         <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(<%=request.getContextPath()%>/InitDB/image/news/N002.jpeg);"> --%>
 <!--             <h2>Cart</h2> -->
 <!--         </div> -->
 
@@ -201,6 +201,7 @@
                             </tbody>
                         </table>
                         <div align="right">
+                            <button type="button" class="btn btn-outline-primary" id="addvalue"></button>
 	     					<input type="button" class="btn btn-outline-primary" name="name" value="全選商品" id="allSelect" />
 	   						<input type="button" class="btn btn-outline-secondary" name="name" value="取消全選" id="notSelect" />
                         </div>
@@ -213,7 +214,9 @@
                 <!-- Coupon Discount -->
                 <div class="col-12 col-lg-6">
                     <div class="cart-totals-area mt-70">
-                        <h5 class="title--">收貨資訊<button type="button" class="btn btn-outline-success float-right"  id="changeMap">切換地圖</button> </h5>
+                        <h5 class="title--">收貨資訊
+<!--                         <button type="button" class="btn btn-outline-success float-right"  id="changeMap">切換地圖</button> -->
+                         </h5>
                         <div class="shipping d-flex justify-content-between">
                             <img src="<%=request.getContextPath()%>/front-end/memberlist/showPicture.do?mem_no=<%=session.getAttribute("mem_no")%>" 
                             style="max-width:100px;max-height:100px;margin-right: 10px;" class="rounded-circle">
@@ -221,12 +224,12 @@
                                     <input type="text"  placeholder="收件人姓名" name="address_receiver" value="${param.receiver}">
                                     <input type="tel"  placeholder="收件人電話" name="address_phone" value="${param.phone}">
                                     <!-- google map -->
-                                    <input id="searchtext" type="text" class="form-control" placeholder="Search for...">
-                                    <button class="btn btn-default" type="button" onclick="mySearch();">Go!</button>
-                                     <div id="map"></div>
-                                     <input type="hidden" class="inputCity">
-                                     <input type="hidden" class="inputTown">
-                                     <input type="hidden" class="inputZipcode">
+<!--                                     <input id="searchtext" type="text" class="form-control" placeholder="Search for..."> -->
+<!--                                     <button id="mySearchBtn" class="btn btn-default" type="button" onclick="mySearch();">Go!</button> -->
+<!--                                      <div id="map"></div> -->
+<!--                                      <input type="hidden" class="inputCity"> -->
+<!--                                      <input type="hidden" class="inputTown"> -->
+<!--                                      <input type="hidden" class="inputZipcode"> -->
                                      
                                     <div id="zipcode"></div>
 	                                <script>
@@ -312,180 +315,195 @@
 <!-- 信用卡日期驗證 -->
 <script src="<%=request.getContextPath() %>/front-end/pro/card/creditcard.js"></script>
 <!-- google map api -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAb2lDof7yMn-TTXwt2hwVm4y92t1AqvyU&callback=initMap&libraries=places"async defer>
-        </script>
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAb2lDof7yMn-TTXwt2hwVm4y92t1AqvyU&callback=initMap&libraries=places"async defer> -->
+<!--         </script> -->
 
         
 			<script type="text/javascript">
 			<!--google mapy-->
-			var map;
-			var infowindow;
-			var loc;
-			var service;
-			var markerArray = [];
-			var flag = false;
-			var geocoder ;
-			$('#map').hide(); 
-			function initMap(){
-				navigator.geolocation.getCurrentPosition(myLoc);
-			}
-			function myLoc(pos){
+// 			var map;
+// 			var infowindow;
+// 			var loc;
+// 			var service;
+// 			var markerArray = [];
+// 			var flag = false;
+// 			var geocoder ;
+// 			$('#map').hide(); 
+// 			$('#searchtext').hide(); 
+// 			$('#mySearchBtn').hide();
+			
+// 			var marker;
+// 			function initMap(){
+// 				navigator.geolocation.getCurrentPosition(myLoc);
+// 			}
+// 			function myLoc(pos){
 
-				loc = {lat: pos.coords.latitude, lng: pos.coords.longitude};//本地位置
-				map = new google.maps.Map(document.getElementById('map'), {
-					center: loc,
-					zoom: 12
-				});
+// 				loc = {lat: pos.coords.latitude, lng: pos.coords.longitude};//本地位置
+// 				map = new google.maps.Map(document.getElementById('map'), {
+// 					center: loc,
+// 					zoom: 12
+// 				});
 
-				infowindow = new google.maps.InfoWindow();//初始化
-				 geocoder = new google.maps.Geocoder();
+// 				infowindow = new google.maps.InfoWindow();//初始化
+// 				 geocoder = new google.maps.Geocoder();
 				
-				var marker = new google.maps.Marker({
-					position: loc,
-					map: map,
-					animation: google.maps.Animation.DROP,
-					draggable: true
-				});
-				service = new google.maps.places.PlacesService(map);
+// 				var marker = new google.maps.Marker({
+// 					position: loc,
+// 					map: map,
+// 					animation: google.maps.Animation.DROP,
+// 					draggable: true
+// 				});
+// 				service = new google.maps.places.PlacesService(map);
 				
-				//畫圓
-				var circle = new google.maps.Circle({
-				  center: loc,
-				  radius: 500,
-				  strokeOpacity: 0,
-				  fillColor: '#f00',
-				  fillOpacity: 0.35,
-				  map: map
-				});
-				//點擊時取得地址
-				var address;
-				google.maps.event.addListener(map, 'click', function(event) {
-				  geocoder.geocode({
-				    'latLng': event.latLng
-				  }, function(results, status) {
-				    if (status == google.maps.GeocoderStatus.OK) {
-				      if (results[0]) {
-				        console.log(results[0]);
-				        address = results[0];
-				      }
-				    }
-				  });
-				});
+// 				//畫圓
+// 				var circle = new google.maps.Circle({
+// 				  center: loc,
+// 				  radius: 500,
+// 				  strokeOpacity: 0,
+// 				  fillColor: '#f00',
+// 				  fillOpacity: 0.35,
+// 				  map: map
+// 				});
+// 				//點擊時取得地址
+// 				var address;
+// 				google.maps.event.addListener(map, 'click', function(event) {
+// 				  geocoder.geocode({
+// // 					  'address': address
+// 					  'latLng': event.latLng
+// 				  }, function(results, status) {
+// 				    if (status == google.maps.GeocoderStatus.OK) {
+// 				      if (results[0]) {
+// 				        console.log(results[0]);
+// 				        address = results[0];
+// 				      }
+// 				    }
+// 				  });
+// 				});
 				
-			   if (geocoder) {
-				      geocoder.geocode({ 'address': address }, function (results, status) {
-				         if (status == google.maps.GeocoderStatus.OK) {
-				            console.log(results[0].geometry.location);
-				         }
-				         else {
-				            console.log("Geocoding failed: " + status);
-				         }
-				      });
-				   }
+// 			   if (geocoder) {
+// 				      geocoder.geocode({ 'address': address }, function (results, status) {
+// 				         if (status == google.maps.GeocoderStatus.OK) {
+// 				            console.log(results[0].geometry.location);
+// 				         }
+// 				         else {
+// 				            console.log("Geocoding failed: " + status);
+// 				         }
+// 				      });
+// 				   }
 				
-			}
-			//按下收尋
-          	function mySearch(){
-                  for(var i = 0 ; i < markerArray.length ; i ++){
-                      markerArray[i].setMap(null);
-                  }
-                  markerArray = [];
-                  service.nearbySearch({
-                      location: loc,
-                      radius: 3000,
-                      type:  'convenience_store',
-                      keyword: document.getElementById("searchtext").value
-                  }, callback);
-             }
-            function callback(results, status) {//回傳
-                if (status === google.maps.GeocoderStatus.OK) {
-                  for (var i = 0; i < results.length; i++) {
-                    createMarker(results[i]);
-                    address = results[0];
-//                      console.log(results[i]);
-                  }
-                }
-             }
+// 			}
+// 			//按下收尋
+//           	function mySearch(){
+//                   for(var i = 0 ; i < markerArray.length ; i ++){
+//                       markerArray[i].setMap(null);
+//                   }
+//                   markerArray = [];
+//                   service.nearbySearch({
+//                       location: loc,
+//                       radius: 3000,
+//                       type:  'convenience_store',
+//                       keyword: document.getElementById("searchtext").value
+//                   }, callback);
+//              }
+//             function callback(results, status) {//回傳
+//                 if (status === google.maps.GeocoderStatus.OK) {
+//                   for (var i = 0; i < results.length; i++) {
+//                     createMarker(results[i]);
+                    
+// //                      console.log(results[i]);
+//                   }
+//                 }
+//              }
               
-            var marker;
-            function createMarker(place) {
-              var placeLoc = place.geometry.location;
-               marker = new google.maps.Marker({
-                  map: map,
-                  position: place.geometry.location,
-                  icon: {
-                    url: '<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/store.jpg',
-                    anchor: new google.maps.Point(10, 10),
-                    scaledSize: new google.maps.Size(20, 34)
-                  }
-              });
-              //new
-              markerArray.push(marker);
+            
+//             function createMarker(place) {
+//               var placeLoc = place.geometry.location;
+//                marker = new google.maps.Marker({
+//                   map: map,
+//                   position: place.geometry.location,
+//                   icon: {
+<%--                     url: '<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/store.jpg', --%>
+//                     anchor: new google.maps.Point(10, 10),
+//                     scaledSize: new google.maps.Size(20, 34)
+//                   }
+//               });
+//               //new
+//               markerArray.push(marker);
 
-              google.maps.event.addListener(marker, 'click', function() {//點擊maker取得當前資訊
-                	msg = place.name + "<br>" + place.rating;
+//               google.maps.event.addListener(marker, 'click', function() {//點擊maker取得當前資訊
+//                 	msg = place.name + "<br>" + place.rating;
                 	
+// //                 	console.log(place.vicinity.substr(0, 3));
+// //                 	console.log(place.plus_code.compound_code.substring(10, 13));
+
+//                 	var city = place.plus_code.compound_code.substring(10, 13);
+//                 	var town = place.vicinity.substr(0, 3);
+//                 	var address = place.vicinity.substring(3);
+//                     console.log(place.formatted_address);
                 	
-//                 	console.log(place.vicinity.substr(0, 3));
-//                 	console.log(place.plus_code.compound_code.substring(10, 13));
-                	var city = place.plus_code.compound_code.substring(10, 13);
-                	var town = place.vicinity.substr(0, 3);
-                	var address = place.vicinity.substring(3);
-                    console.log(place);
-                	
-					$("select[name='city']").val(city);
-					$("input[name='address_detail']").val(address);
+// 					$("select[name='city']").val(city);
+// 					$("input[name='address_detail']").val(address);
+					
 // 					$("select[name='town']").hide();
 // 					$("select[name='town']").removeAttr('name');
-// 					jQuery('<input type="text" name="town">');
+// 					$("select[name='city']").after('<input type="text" name="town">');
 					
+// 					$("input[name='town']").val(town);
 					
-//                     document.getElementsByName("city").value = city;
-//                     document.getElementsByName("city").fireEvent("onchange");
-//                     $("select[name='city']").change(function(){
-//                     	console.log("tewst")
-//                     })
-//                 	$("select[name='city']").val(city).trigger('change');
+// //                     document.getElementsByName("city").value = city;
+// //                     document.getElementsByName("city").fireEvent("onchange");
+// //                     $("select[name='city']").change(function(){
+// //                     	console.log("tewst")
+// //                     })
+// //                 	$("select[name='city']").val(city).trigger('change');
                 	
                 	
                 		
-// onclickAddress(city ,  address,town);
+// // onclickAddress(city ,  address,town);
                 	
-//                 $("select[name='city']").val(city);
-//                 $("select[name='town']").val(town);
+// //                 $("select[name='city']").val(city);
+// //                 $("select[name='town']").val(town);
                 
-//                 $("select[name='city']").removeAttr('name');
-//                 $("select[name='town']").removeAttr('name');
-//                 $("select[name='town']").removeAttr('name');
-                console.log(place.vicinity);
-                console.log(place.plus_code.compound_code);
-                for(var i = 0 ; i < parseInt(place.rating); i++){
-                    msg = msg + "\u2605";
-                }
-                infowindow.setContent(msg);
-                infowindow.open(map, this);
-              });
-            }
+// //                 $("select[name='city']").removeAttr('name');
+// //                 $("select[name='town']").removeAttr('name');
+// //                 $("select[name='town']").removeAttr('name');
+//                 console.log(place.vicinity);
+//                 console.log(place.plus_code.compound_code);
+//                 for(var i = 0 ; i < parseInt(place.rating); i++){
+//                     msg = msg + "\u2605";
+//                 }
+//                 infowindow.setContent(msg);
+//                 infowindow.open(map, this);
+//               });
+//             }
               
            
                
-			$("#changeMap").click(function(){
-				if(flag === false){
-					$('#map').show();
-					$('#zipcode').hide();
-					$('#cartaddress').hide();
-					$('#countries').hide();
-					flag = true;
-				} else {
-					$('#map').hide();
-					$('#zipcode').show();
-					$('#cartaddress').show();
-					$('#countries').show();
-					flag = false;
-				}
-			})
+// 			$("#changeMap").click(function(){
+// 				if(flag === false){
+// 					$('#map').show();
+// 					$('#zipcode').hide();
+// 					$('#cartaddress').hide();
+// 					$('#countries').hide();
+// 					flag = true;
+// 				} else {
+// 					$('#map').hide();
+// 					$('#zipcode').show();
+// 					$('#cartaddress').show();
+// 					$('#countries').show();
+// 					flag = false;
+// 				}
+// 			})
 			
 				$(document).ready(function(){
+					<!--小按鈕-->
+				     $("#addvalue").click(function(){
+					    	$("input[name='address_receiver']").val("peter1");
+					    	$("input[name='address_phone']").val("0955377602");
+					    	$("input[name='address_detail']").val("提拔me中壢資策會");
+// 					    	$("input[name='card-number']").val("4438929940680261");
+// 					    	$("input[name='card-number']").val("4438929940680261");
+					     })					
 					<!--評價jquery-->
 				    var isclick = false;
 				    var arr = ["1分差評", "2分中評", "3分中評", "4分好評", "5分好評"];

@@ -172,7 +172,7 @@
 // 			         	"<span aria-hidden='true' style='color: deeppink;'>好</span></button>"+
 // 		            	"<p class='alert-title'>"+jsonObj.to+"</p><p class='alert-body'>"+
 // 		            	jsonObj.message+"</p></div>");
-						$("#notification").append("<a class='dropdown-item' href='#'>"+jsonObj.to+" "+jsonObj.message+"</a>");
+						$("#notification").append("<a class='dropdown-item' href='front-end/memberlist/Friend.do?action=find_My_Friend'>"+jsonObj.to+" "+jsonObj.message+"</a>");
 						count++;
 				}
 				$("#count").append(count);

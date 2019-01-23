@@ -39,7 +39,9 @@ public class MemberChatServer {
 		//上線時抓歷史訊息
 		MemberlistRedisDAO dao = new MemberlistRedisDAO();
 		try {
-			List<String> historydata = dao.getHistoryMsg(userName);
+			List<String> historydata = null;
+			if(dao.isOpen())
+				historydata = dao.getHistoryMsg(userName);
 			Session session = sessionsMap.get(userName);
 			if(session.isOpen()) {
 				for(String data : historydata) {
@@ -84,7 +86,8 @@ public class MemberChatServer {
 		//存進Redis
 		MemberlistRedisDAO dao = new MemberlistRedisDAO();
 		try {
-			dao.saveChatMessage(userName, chatFriend, message);
+			if(dao.isOpen())
+				dao.saveChatMessage(userName, chatFriend, message);
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("Redis save error");

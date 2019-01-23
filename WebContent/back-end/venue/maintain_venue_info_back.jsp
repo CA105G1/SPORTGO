@@ -107,7 +107,11 @@
 													<tr>
 														<th><label>請輸入場地名稱 : </label></th>
 														<td>
-															<input type="text" name="v_name" value="${venueMap.get('v_name')[0]}" class="text-left form-control"/>
+															<input type="text" name="v_name" id="v_name" value="${venueMap.get('v_name')[0]}" 
+																list="v_name_list" class="text-left form-control"/>
+															<datalist id='v_name_list'>
+<!-- 																<option>Detroit Lions</option>  -->
+															</datalist>
 														</td>
 													</tr>
 													
@@ -296,7 +300,41 @@
 			reader.readAsDataURL(input.files[0]);
 		};
 	}
-
+	
+// 	/// v_name test
+// 	$("#v_name").keyup(function(){
+//     	var dataStr = {};
+//     	dataStr.action = "getV_name_listAjax";
+//     	dataStr.v_name_key = $(this).val();
+//     	$.ajax({
+//     		type: "POST",
+<%--     		url: "<%= request.getContextPath()%>/venue/venue.do", --%>
+//     		data: dataStr,
+//     		dataType: "json",
+//     		contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+//     		error: function(){
+//     			alert("發生錯誤!");
+//     		},
+//     		success: function(data){
+    			
+//     			$(".v_name_option").remove();
+//     			var v_name_array = data;
+//     			$("#v_name_list").html("");
+//     			var v_name_html;
+//     			for(var i in v_name_array){
+// 					v_name_html = v_name_html + "<option class='v_name_option'>"+v_name_array[i]+"</option>";
+//     			}
+//     			$("#v_name_list").html("");
+//     			$("#v_name_list").html(v_name_html);
+//     			$("#v_name_list").show();
+//     		}
+//     	});
+//     });
+	
+	
+	
+	
+	/// region
 	var temp_My_reg_name;
 	$(".reg_name_class").change(function(){
     	var dataStr = {};

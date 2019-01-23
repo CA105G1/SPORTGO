@@ -189,7 +189,7 @@
 	<!-- 										<div> -->
 	<%-- 											<a href="${venueVO.v_photo1_url}"><img src="${venueVO.v_photo1_url}" class="img-responsive img-rounded"></a> --%>
 	<!-- 										</div> -->
-											<p>DB</p>
+											<p>場地圖片</p>
 											<div>
 												<img src="<%=request.getContextPath()%>/venue/venueImg.do?v_no=${venueVO.v_no}" class="img-responsive img-rounded" alt="WTF"/>
 											</div>
