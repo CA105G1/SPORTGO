@@ -177,7 +177,8 @@
 
 <!--    1 </header> -->
     <!-- ##### Header Area End ##### -->
-  <jsp:include page="/front-end/CA105G1_header_bt4.jsp" />
+<%--   <jsp:include page="/front-end/CA105G1_header_bt4.jsp" /> --%>
+    <jsp:include page="/front-end/pro/page/pro_header_bt4.jsp" />
       <div class="breadcrumb-area">
         <!-- Top Breadcrumb Area -->
         <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(<%=request.getContextPath()%>/front-end/pro/alazea-gh-pages/img/core-img/PN003.jpeg);">

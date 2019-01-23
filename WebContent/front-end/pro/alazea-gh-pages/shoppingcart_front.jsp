@@ -97,8 +97,8 @@
 
 
         <!-- ***** Top Header Area ***** -->
-  <jsp:include page="/front-end/CA105G1_header_bt4.jsp" />
-
+<%--   <jsp:include page="/front-end/CA105G1_header_bt4.jsp" /> --%>
+    <jsp:include page="/front-end/pro/page/pro_header_bt4.jsp" />
 
 
     <!-- ##### Breadcrumb Area Start ##### -->
@@ -326,6 +326,7 @@
 			var flag = false;
 			var geocoder ;
 			$('#map').hide(); 
+			var marker;
 			function initMap(){
 				navigator.geolocation.getCurrentPosition(myLoc);
 			}
@@ -361,7 +362,8 @@
 				var address;
 				google.maps.event.addListener(map, 'click', function(event) {
 				  geocoder.geocode({
-				    'latLng': event.latLng
+// 					  'address': address
+					  'latLng': event.latLng
 				  }, function(results, status) {
 				    if (status == google.maps.GeocoderStatus.OK) {
 				      if (results[0]) {
@@ -401,13 +403,13 @@
                 if (status === google.maps.GeocoderStatus.OK) {
                   for (var i = 0; i < results.length; i++) {
                     createMarker(results[i]);
-                    address = results[0];
+                    
 //                      console.log(results[i]);
                   }
                 }
              }
               
-            var marker;
+            
             function createMarker(place) {
               var placeLoc = place.geometry.location;
                marker = new google.maps.Marker({
@@ -425,20 +427,22 @@
               google.maps.event.addListener(marker, 'click', function() {//點擊maker取得當前資訊
                 	msg = place.name + "<br>" + place.rating;
                 	
-                	
 //                 	console.log(place.vicinity.substr(0, 3));
 //                 	console.log(place.plus_code.compound_code.substring(10, 13));
+
                 	var city = place.plus_code.compound_code.substring(10, 13);
                 	var town = place.vicinity.substr(0, 3);
                 	var address = place.vicinity.substring(3);
-                    console.log(place);
+                    console.log(place.formatted_address);
                 	
 					$("select[name='city']").val(city);
 					$("input[name='address_detail']").val(address);
-// 					$("select[name='town']").hide();
-// 					$("select[name='town']").removeAttr('name');
-// 					jQuery('<input type="text" name="town">');
 					
+					$("select[name='town']").hide();
+					$("select[name='town']").removeAttr('name');
+					$("select[name='city']").after('<input type="text" name="town">');
+					
+					$("input[name='town']").val(town);
 					
 //                     document.getElementsByName("city").value = city;
 //                     document.getElementsByName("city").fireEvent("onchange");
