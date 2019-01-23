@@ -72,7 +72,7 @@
 						</td>
 					</tr>
 					<tr>
-						<th><div class="mytile">消息內容</div></th>
+						<th><div class="mytile">消息內容<div style="color:red; padding-left:5px;"> * </div></div></th>
 						<td>
 							<input type="text" name="news_script" value="${newsVO.news_script}"  class="form-control"/>
 							<div class="center-block errorMsgs-color">${errorMsgs_tab3.get("news_script")}</div> 
@@ -87,14 +87,14 @@
 							</select>
 						</td>
 					</tr>
-					<tr>
-						<th><div class="mytile">關於發布設定</div></th>
-						<td>
-							<div class="mytile pull-left">
-								<p>不設定指定發布開始時間及發布截止時間，發布狀態為<b>未發布</b></p>
-							</div>
-						</td>
-					</tr>
+<!-- 					<tr> -->
+<!-- 						<th><div class="mytile">關於發布設定</div></th> -->
+<!-- 						<td> -->
+<!-- 							<div class="mytile pull-left"> -->
+<!-- 								<p>不設定指定發布開始時間及發布截止時間，發布狀態為<b>未發布</b></p> -->
+<!-- 							</div> -->
+<!-- 						</td> -->
+<!-- 					</tr> -->
 					<tr>
 						<th><div class="mytile">發布開始時間</div></th>
 						<td>
@@ -103,7 +103,7 @@
 							</c:if>
 							<c:if test="${newsVO!=null}">
 								<input type="text" id="news_release_date_tab3" name="news_release_date" class="form-control"
-									value='<fmt:formatDate value="${newsVO.news_release_date}" pattern="yyyy-MM-dd HH:mm"/>'/><br>
+									value='<fmt:formatDate value="${newsVO.news_release_date}" pattern="yyyy-MM-dd HH:mm"/>'/>
 								<div class="center-block errorMsgs-color">${errorMsgs_tab2.get("news_release_date")}</div> 
 							</c:if>
 						</td>
