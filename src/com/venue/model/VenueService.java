@@ -1,5 +1,7 @@
 package com.venue.model;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +11,23 @@ public class VenueService {
 	
 	public VenueService() {
 		venueDAO = new VenueDAO();
+	}
+	
+	public List<String> getV_name_list(String v_name_key){
+		Map<String, String[]> map = new HashMap<>();
+		String[] stringArray = {v_name_key};
+		map.put("v_name", stringArray);
+		List<VenueVO> list = venueDAO.getAll(map);
+		List<String> list2 = new ArrayList<>();
+		int i = 0;
+		for(VenueVO venueVO : list) {
+			i++;
+			list2.add(venueVO.getV_name());
+			if(i==10) {
+				break;
+			}
+		}
+		return list2;
 	}
 	
 	public List<VenueVO> getAll(Map<String, String[]> map, boolean isFrontEnd){

@@ -3,6 +3,7 @@ package com.venue.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -67,6 +69,27 @@ public class VenueServlet extends HttpServlet {
 				}
 				pw.write(obj.toString());
 			}
+			/// 取得 v_name 提示字
+			if("getV_name_listAjax".equals(action)) {
+				response.setCharacterEncoding("UTF-8");
+				PrintWriter printWriter = response.getWriter();
+				String v_name_kay = request.getParameter("v_name_key");
+				VenueService svc = new VenueService();
+				List<String> v_name_list = svc.getV_name_list(v_name_kay);
+				JSONArray jsonArray = new JSONArray();
+				try {
+					for(int i = 0 ; i<v_name_list.size() ; i++) {
+						jsonArray.put(i, v_name_list.get(i));
+					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				printWriter.write(jsonArray.toString());
+				return;
+			}
+			
+			
 			
 			switch (action) {
 				//select
