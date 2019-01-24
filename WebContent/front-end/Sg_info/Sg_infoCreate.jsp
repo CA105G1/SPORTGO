@@ -85,6 +85,7 @@
 		<div class="col-xs-12 col-sm-3"></div>
 		<div class="col-xs-12 col-sm-6">
 			<button class="btn" id="magicBtn">-</button>
+			<button class="btn" id="magicBtn2">2</button>
 			<form action="<%= request.getContextPath()%>/Sg_info/Sg_info.do" method="post" enctype="multipart/form-data">
 				<!------------ 圖片上傳 ------------>
 				<img src="<%= request.getContextPath()%>/img/no-image.PNG" style="width:100%"  id="showPic">
@@ -570,6 +571,14 @@
    		$("#sg_maxno").val(3);
    		$("#sg_minno").val(0);
    		$("#sg_extrainfo").text("我愛江山更愛美人!");
+   	});
+   	
+	$("#magicBtn2").click(function(){
+   		$("#sg_name").val("羽球共舞");
+   		$("#sg_fee").val(0);
+   		$("#sg_maxno").val(3);
+   		$("#sg_minno").val(0);
+   		$("#sg_extrainfo").text("羽球好棒棒!");
    	});
    	
    	

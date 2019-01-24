@@ -81,7 +81,8 @@ public class EmpServlet extends HttpServlet {
 				errorMsgs.put("emp_account","輸入格式不正確(a-zA-Z0-9_)");
 			}
 			String passwordReg= "[a-zA-Z0-9_]{1,20}";
-			String emp_psw = request.getParameter("emp_psw_test");
+			String emp_psw = request.getParameter("emp_psw");
+//			String emp_psw = request.getParameter("emp_psw_test");
 			if(emp_psw==null||emp_psw.trim().length()==0) {
 				errorMsgs.put("emp_psw","請輸入密碼");
 			}else if(!emp_psw.trim().matches(passwordReg)) {

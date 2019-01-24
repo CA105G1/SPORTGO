@@ -444,9 +444,9 @@
 	});	
 	$("#forAddNewNenue").click(function(){
 		// 場地類型---籃球場
-		$("#vt_no_tab2 option[value='VT001']").prop("selected",true);
+		$("#vt_no_tab2 option[value='VT005']").prop("selected",true);
 		// 場地名稱---湘北高中台灣分部
-		$("#v_name_tab2").val("湘北高中台灣分部");
+		$("#v_name_tab2").val("湘北高中羽球場");
 		// 室內or室外---室內設施
 		$("#v_inout_tab2 option[value='室內設施']").prop("selected",true);
 		// 場地電話---03-1234567

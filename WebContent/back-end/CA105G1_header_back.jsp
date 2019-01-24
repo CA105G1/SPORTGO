@@ -80,47 +80,48 @@
 						<li>
 							<c:if test="${empVO==null || empVO.emp_psw==null}">
 						<%--		<%@ include file="/back-end/emp/loginfile/checkHasLogin.file" %>  --%>
-								<a href="#myModalId" data-toggle="modal"> 後台 : 登入 </a>
-								<div class="modal fade" id="myModalId" style="z-index:9999999">
-									<div class="modal-dialog">
-										<div class="modal-content">
+								<a href="<%=request.getContextPath()%>/backEndIndex.jsp"> 後台 : 登入</a>
+<!-- 								<a href="#myModalId" data-toggle="modal"> 後台 : 登入 </a> -->
+<!-- 								<div class="modal fade" id="myModalId" style="z-index:9999999"> -->
+<!-- 									<div class="modal-dialog"> -->
+<!-- 										<div class="modal-content"> -->
 										
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-												<h4 class="modal-title"> 後台 : 登入 </h4>
-											</div>
+<!-- 											<div class="modal-header"> -->
+<!-- 												<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+<!-- 												<h4 class="modal-title"> 後台 : 登入 </h4> -->
+<!-- 											</div> -->
 												
-											<div class="modal-body">
+<!-- 											<div class="modal-body"> -->
 							
-												<%-- for test login--%>
-								      			<form method="post" action="<%=request.getContextPath()%>/emp/emp.do">
-													account  : <input type="text" name="emp_account" value="Peter1"><br>
-													passwoed : <input type="password" name="emp_psw" value=""><br>
-													<input type="hidden" name="action" value="emp_login">
-													<input type="submit" value="login" class="btn btn-primary" />		
-								      			</form>
+<%-- 												for test login --%>
+<%-- 								      			<form method="post" action="<%=request.getContextPath()%>/emp/emp.do"> --%>
+<!-- 													account  : <input type="text" name="emp_account" value="Peter1"><br> -->
+<!-- 													passwoed : <input type="password" name="emp_psw" value=""><br> -->
+<!-- 													<input type="hidden" name="action" value="emp_login"> -->
+<!-- 													<input type="submit" value="login" class="btn btn-primary" />		 -->
+<!-- 								      			</form> -->
 												
-												<%-- 錯誤表列 --%>
-												<c:if test="${not empty errorMsgs}">
-													<ul>
-														<c:forEach var="message" items="${errorMsgs}">
-															<li style="color:red">${message}</li>
-														</c:forEach>
-													</ul>
-												</c:if>
+<%-- 												錯誤表列 --%>
+<%-- 												<c:if test="${not empty errorMsgs}"> --%>
+<!-- 													<ul> -->
+<%-- 														<c:forEach var="message" items="${errorMsgs}"> --%>
+<%-- 															<li style="color:red">${message}</li> --%>
+<%-- 														</c:forEach> --%>
+<!-- 													</ul> -->
+<%-- 												</c:if> --%>
 							
-											</div>
+<!-- 											</div> -->
 												
-											<div class="modal-footer">
-												<button type="button" class="btn btn-default" data-dismiss="modal"> 關閉 </button>
-											<!--	<button type="button" class="btn btn-primary"> Login </button> -->
+<!-- 											<div class="modal-footer"> -->
+<!-- 												<button type="button" class="btn btn-default" data-dismiss="modal"> 關閉 </button> -->
+<!-- 												<button type="button" class="btn btn-primary"> Login </button> -->
 										
 								
-											</div>
+<!-- 											</div> -->
 												
-										</div>
-									</div>
-								</div>
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
 								
 							</c:if>
 							<c:if test="${!(empVO==null || empVO.emp_psw==null)}">

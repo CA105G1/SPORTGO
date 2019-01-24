@@ -148,6 +148,8 @@
 							<div id="v_address_show_tab2" class="pull-left"  style="padding-left:10px;"></div>
 							<input type="text" id="v_address_temp_tab2" class="v_address_class form-control" value="${venueVO_tab2.v_address}"/>
 							<input type="hidden" name="v_address" id="v_address_tab2" value="${venueVO_tab2.v_address}"/>
+							<input type="hidden" name="v_lat" value="24.884945" />
+							<input type="hidden" name="v_long" value="121.288203" />
 							<div class="center-block errorMsgs-color">${errorMsgs_tab2.get("v_address")}</div> 
 						</td>
 					</tr>

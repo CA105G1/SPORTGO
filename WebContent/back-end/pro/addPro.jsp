@@ -408,11 +408,11 @@
 <%--	<script src="<%=request.getContextPath() %>/back-end/pro/tool/websock_serviec.js"></script> --%>
 	<script type="text/javascript">
 	     $("#addvalue").click(function(){
-	    	$("#productname").val("一棒入魂");
+	    	$("#productname").val("羽球同行");
 	    	$("#proformat").val("單一規格");
-	    	$("#prodetails").val("中華隊少了這隻超級球棒，打擊無法發揮，全壘打少得可憐，這固然跟球棒有著密切的關係，但也可以從科學觀點分析球棒在全壘打中扮演的角色，就更能了解為什麼選手大棒一揮，就能讓球飛出全壘打牆外，一棒入魂好球棒!!!!!!");
+	    	$("#prodetails").val("戴資穎少了這隻超級球拍，打擊無法發揮，殺球少得可憐，這固然跟球拍有著密切的關係，但也可以從科學觀點分析球拍在球賽中扮演角色的重要性，就更能了解為什麼選手大臂一揮，就能讓對手瞬間出局，必殺一球入魂好球拍!!!!!!");
 	        $("#probonus").val("10000");
-	        $("#prostock").val("1");
+	        $("#prostock").val("3");
 	        $("#prosafestock").val("1");
 	     })
 	    function formAjax(){

@@ -318,7 +318,7 @@
                                         <a href="<%=request.getContextPath()%>/pro/pro.do?action=getOne_For_Display_front&requestURL=<%=request.getServletPath()%>&pro_no=${AssessVO.pro_no}"><img src="<%=request.getContextPath()%>/pro/proImg.do?pro_no=${AssessVO.pro_no}" alt=""></a>
                                     </div>
                                     <div class="product-info">
-                                        <a href="shop-details.html">${proSvclist.getOneProduct(AssessVO.pro_no).pro_name}</a>
+                                        <a href="#">${proSvclist.getOneProduct(AssessVO.pro_no).pro_name}</a>
                                         <p>$ ${AssessVO.pro_bonus}</p>
                                         <div class="ratings">
 <%--                                         <c:choose> --%>

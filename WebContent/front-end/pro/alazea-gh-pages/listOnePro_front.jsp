@@ -443,6 +443,9 @@
 			            title: "成功加入購物車",
 			            html: "按下確定前往購物車",
 			            type: "success", // type can be "success", "error", "warning", "info", "question"
+			            confirmButtonText:"GO",
+			            cancelButtonText:"繼續購物",
+			            confirmButtonColor:"#70c745",
 			            showCancelButton: true,
 			        	showCloseButton: true,
 			        }).then(

@@ -235,7 +235,7 @@
 									    				<!-- 左空白 -->
 										    				<div class="col-xs-12 col-sm-1 ">
 										    				    <div class="row">
-											    				    	左
+											    				    	
 										    				    </div>
 										    				</div>
 									    				<!-- 內容詳情 -->
@@ -300,7 +300,7 @@
 										    				</div>
 									    				<!-- 右空白 -->
 										    				<div class="col-xs-12 col-sm-1 ">
-										    					右
+										    					
 										    				</div>
 									    			</div>
 								    			</div>
@@ -313,7 +313,7 @@
 									    				<!-- 左空白 -->
 										    				<div class="col-xs-12 col-sm-1 ">
 										    				    <div class="row">
-											    				    	左
+											    				    	
 										    				    </div>
 										    				</div>
 									    				<!-- 內容詳情 -->
@@ -362,7 +362,7 @@
 										    				</div>
 									    				<!-- 右空白 -->
 										    				<div class="col-xs-12 col-sm-1 ">
-										    					右
+										    					
 										    				</div>
 									    			</div>
 								    			</div>

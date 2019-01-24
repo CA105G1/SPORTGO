@@ -32,13 +32,13 @@
 					</c:if>
 					<div class="form-group">
 						<label for="account">帳號</label>
-						<input type="text" name="emp_account" id="emp_account" class="form-control" value="Peter1" />
+						<input type="text" name="emp_account" id="emp_account" class="form-control" />
 						<div class="text-center" style="color:red">${errorMsgs.get("emp_account")}</div>
 					</div>
 					<div class="form-group">
 						<label for="emp_psw">密碼</label>
-						<input type="password" name="emp_psw_test" id="emp_psw" class="form-control" value="654321" />
-<!-- 						<input type="password" name="emp_psw" id="emp_psw" class="form-control" value="654321" /> -->
+<!-- 						<input type="password" name="emp_psw_test" id="emp_psw" class="form-control" /> -->
+						<input type="password" name="emp_psw" id="emp_psw" class="form-control" />
 						<div class="text-center" style="color:red">${errorMsgs.get("emp_psw")}</div>
 					</div>
 				</div>	

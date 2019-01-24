@@ -283,7 +283,7 @@
 											<th>商品單價</th>
 											<th>商品庫存</th>
 											<th>商品狀態</th>
-											<th>狀態操作</th>
+<!-- 											<th>狀態操作</th> -->
 											<th>詳細操作</th>
 										</tr>
 									</thead>
@@ -316,15 +316,15 @@
 													<div id="${proVO.pro_no}">${proVO.pro_shelve}</div>
 												</td>
 												<!-- 下拉式按鈕 -->
-												<td>
-													<div align="right">
-														<select name=""  class="form-control select_change" style="width:90px;">
-														        <option>請選擇</option>
-																<option value="${proVO.pro_no}">上架中</option>
-																<option value="${proVO.pro_no}">下架</option>
-														</select>
-													</div>
-												</td>
+<!-- 												<td> -->
+<!-- 													<div align="right"> -->
+<!-- 														<select name=""  class="form-control select_change" style="width:90px;"> -->
+<!-- 														        <option>請選擇</option> -->
+<%-- 																<option value="${proVO.pro_no}">上架中</option> --%>
+<%-- 																<option value="${proVO.pro_no}">下架</option> --%>
+<!-- 														</select> -->
+<!-- 													</div> -->
+<!-- 												</td> -->
 												<!-- 修改按鈕 -->
 												<td>
 												    <div>

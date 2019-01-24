@@ -846,6 +846,7 @@ INSERT INTO FRIEND (MEM1_NO,MEM2_NO,FRIEND_STATUS) VALUES ('M003','M004','好友
 INSERT INTO FRIEND (MEM1_NO,MEM2_NO,FRIEND_STATUS) VALUES ('M004','M006','好友');
 INSERT INTO FRIEND (MEM1_NO,MEM2_NO,FRIEND_STATUS) VALUES ('M010','M001','好友');
 INSERT INTO FRIEND (MEM1_NO,MEM2_NO,FRIEND_STATUS) VALUES ('M024','M005','好友');
+INSERT INTO FRIEND (MEM1_NO,MEM2_NO,FRIEND_STATUS) VALUES ('M002','M005','好友');
 INSERT INTO FRIEND (MEM1_NO,MEM2_NO) VALUES ('M015','M001');
 INSERT INTO FRIEND (MEM1_NO,MEM2_NO) VALUES ('M016','M001');
 INSERT INTO FRIEND (MEM1_NO,MEM2_NO) VALUES ('M017','M001');
@@ -1532,7 +1533,7 @@ Insert into CLUB (CLUB_NO,SP_NO,PHOTO,PHOTO_EXT,CLUB_STATUS,CLUB_NAME,CLUB_INTRO
 Insert into CLUB (CLUB_NO,SP_NO,PHOTO,PHOTO_EXT,CLUB_STATUS,CLUB_NAME,CLUB_INTRO)
             values ('C'||LPAD(to_char(club_seq.NEXTVAL), 4, '0'),'SP007',NULL,NULL,DEFAULT,'中央騎跡','大至國際的自行車盛事，小到YouBike的芝麻小事，讓我們從踩踏間找到生活的樂趣，中央騎跡要讓你成為全世界最幸福的車友！');
 Insert into CLUB (CLUB_NO,SP_NO,PHOTO,PHOTO_EXT,CLUB_STATUS,CLUB_NAME,CLUB_INTRO)
-            values ('C'||LPAD(to_char(club_seq.NEXTVAL), 4, '0'),'SP004',NULL,NULL,DEFAULT,'今晚打老虎','打爆你們這些嫩逼');
+            values ('C'||LPAD(to_char(club_seq.NEXTVAL), 4, '0'),'SP005',NULL,NULL,DEFAULT,'今晚打老虎','打爆你們這些嫩逼');
 Insert into CLUB (CLUB_NO,SP_NO,PHOTO,PHOTO_EXT,CLUB_STATUS,CLUB_NAME,CLUB_INTRO)
             values ('C'||LPAD(to_char(club_seq.NEXTVAL), 4, '0'),'SP005',NULL,NULL,'封鎖','羽球俱樂部','不管你是新手、老手、High咖、悶騷咖，只要你是想打球的『羽球咖』，哩來，哩來，攏總來！技巧不重要，開心才重要，逗陣來打球，一起交朋友。 我們都很好相處哦，想打球的伙伴快加入我們吧！');
 Insert into CLUB (CLUB_NO,SP_NO,PHOTO,PHOTO_EXT,CLUB_STATUS,CLUB_NAME,CLUB_INTRO)
@@ -1566,8 +1567,8 @@ insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M004', '中�
 insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M008', '中壢高中籃球魂不滅', to_timestamp('2019-02-12 18:00:00','yyyy-mm-dd hh24:mi:ss'),null,to_timestamp('2019-02-10 00:00:00','yyyy-mm-dd hh24:mi:ss'),0,null,null,'公開','SP003','V000215',2,0,2,0,'教練，我想打球阿....',default,null,null);
 insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M024', '湘北湘北得第一', to_timestamp('2019-01-25 20:00:00','yyyy-mm-dd hh24:mi:ss'),'C0002',to_timestamp('2019-01-24 00:00:00','yyyy-mm-dd hh24:mi:ss'),0,null,null,'限社團','SP003','V000159',10,3,1,0,'紙上得來終覺淺，絕知此事必躬行',default,null,null);
 insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M008', '忠孝東路跑九遍', to_timestamp('2019-02-12 18:00:00','yyyy-mm-dd hh24:mi:ss'),'C0003',to_timestamp('2019-02-10 00:00:00','yyyy-mm-dd hh24:mi:ss'),0,null,null,'限社團','SP006',null,10,5,2,0,'紙上得來終覺淺，絕知此事必躬行',default,'{"lat":25.044765,"lng":121.523426}','{"lat":25.052120,"lng":121.606545}');
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M004', '王建民棒球訓練營', to_timestamp('2019-02-19 18:00:00','yyyy-mm-dd hh24:mi:ss'),null,to_timestamp('2019-02-18 00:00:00','yyyy-mm-dd hh24:mi:ss'),0,null,null,'公開','SP001','V000146',3,1,2,0,'快來跟大樹哥相見歡喔!',default,null,null);
-insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M005', '中央扛霸子', to_timestamp('2019-02-10 18:00:00','yyyy-mm-dd hh24:mi:ss'),null,to_timestamp('2019-02-09 00:00:00','yyyy-mm-dd hh24:mi:ss'),0,null,null,'公開','SP001','V000146',3,1,2,0,'挖喜扛霸子，來作伙運動啊',default,null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M004', '王建民棒球訓練營', to_timestamp('2019-02-19 18:00:00','yyyy-mm-dd hh24:mi:ss'),null,to_timestamp('2019-02-18 00:00:00','yyyy-mm-dd hh24:mi:ss'),0,null,null,'公開','SP001','V000100',3,1,2,0,'快來跟大樹哥相見歡喔!',default,null,null);
+insert into SG_INFO values('S' || LPAD(SG_INFO_SEQ.nextval, 3, 0), 'M005', '中央扛霸子', to_timestamp('2019-02-10 18:00:00','yyyy-mm-dd hh24:mi:ss'),null,to_timestamp('2019-02-09 00:00:00','yyyy-mm-dd hh24:mi:ss'),0,null,null,'公開','SP001','V000146',3,1,0,0,'挖喜扛霸子，來作伙運動啊',default,null,null);
 
 
 ------------09-INSERT--------------------
@@ -2146,10 +2147,11 @@ INSERT INTO EMP(
 	EMP_EMAIL,EMP_ACCOUNT,EMP_PSW,
 	HIREDATE,LEAVEDATE)
 VALUES(
-	'E'||LPAD(TO_CHAR(EMP_SEQ.NEXTVAL),3,'0'),'Coach','超級管理員','0912345678',
+	'E'||LPAD(TO_CHAR(EMP_SEQ.NEXTVAL),3,'0'),'Peter1','超級管理員','0912345678',
 	'peter1@ca105.test.test','Peter1','123456',
 	null,null
 );
+
 
 
 ------------33-INSERT--------------------

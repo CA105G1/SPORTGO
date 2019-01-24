@@ -328,11 +328,11 @@
 
 	$("#forAddNewNenue").click(function(){
 		// 消息種類--NT001--SportGo
-		$("#newstype_no_tab2 option[value='NT003']").prop("selected",true);
+		$("#newstype_no_tab2 option[value='NT002']").prop("selected",true);
 		// 消息內容
-		$("#new_script_tab2").val("現在熱賣中!");
+		$("#new_script_tab2").val("現在新增一個羽球場地!");
 		// 發布開始時間
-		$("#news_release_date_tab2").val("2019-01-25 18:50");
+		$("#news_release_date_tab2").val("2019-01-25 00:50");
 		// 發布截止時間
 		$("#news_last_date_tab2").val("2019-02-25 18:50");
 	});

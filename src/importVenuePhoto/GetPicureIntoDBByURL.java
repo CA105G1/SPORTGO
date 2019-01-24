@@ -98,25 +98,25 @@ public class GetPicureIntoDBByURL{
 			System.out.println("+++++++++++++++++END");
 		}
 		System.out.println("---------------input_photo1_end");
-		System.out.println("---------------input_photo2_start");
-		for(int i = 0 ; i<list.size();i++) {
-			String myUrl = list.get(i).getV_photo2_url();
-			System.out.println("myUrl_"+i+" : "+myUrl);
-			list.get(i).setV_photo2(getPictureByUrlString(myUrl));
-			if(list.get(i).getV_photo2()==null) {
-				continue;
-			}
-			list.get(i).setV_photo2_ext(myUrl.substring(myUrl.lastIndexOf(".") , myUrl.length()));
-			if(i%5==0) {
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-			venueJDBCDAO.update(list.get(i));
-			System.out.println("+++++++++++++++++END");
-		}
+//		System.out.println("---------------input_photo2_start");
+//		for(int i = 0 ; i<list.size();i++) {
+//			String myUrl = list.get(i).getV_photo2_url();
+//			System.out.println("myUrl_"+i+" : "+myUrl);
+//			list.get(i).setV_photo2(getPictureByUrlString(myUrl));
+//			if(list.get(i).getV_photo2()==null) {
+//				continue;
+//			}
+//			list.get(i).setV_photo2_ext(myUrl.substring(myUrl.lastIndexOf(".") , myUrl.length()));
+//			if(i%5==0) {
+//				try {
+//					Thread.sleep(1000);
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//			venueJDBCDAO.update(list.get(i));
+//			System.out.println("+++++++++++++++++END");
+//		}
 		System.out.println("---------------input_photo2_end");
 		
 		
