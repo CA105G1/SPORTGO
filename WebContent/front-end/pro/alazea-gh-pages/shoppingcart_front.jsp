@@ -148,14 +148,14 @@
             <div class="row">
                 <div class="col-12">
                     <div class="cart-table clearfix">
-    					<c:if test="${not empty errorMsgs}">
-							<font style="color:red">請修正以下錯誤:</font>
-							<ul>
-								<c:forEach var="message" items="${errorMsgs}">
-									<li style="color:red">${message}</li>
-								</c:forEach>
-							</ul>
-						</c:if>
+<%--     					<c:if test="${not empty errorMsgs}"> --%>
+<!-- 							<font style="color:red">請修正以下錯誤:</font> -->
+<!-- 							<ul> -->
+<%-- 								<c:forEach var="message" items="${errorMsgs}"> --%>
+<%-- 									<li style="color:red">${message}</li> --%>
+<%-- 								</c:forEach> --%>
+<!-- 							</ul> -->
+<%-- 						</c:if> --%>
                         <table class="table table-responsive">
                             <thead>
                                 <tr>
@@ -201,6 +201,7 @@
                             </tbody>
                         </table>
                         <div align="right">
+                            <div style="color:red;">${errorMsgs.empty_product}</div>
                             <button type="button" class="btn btn-outline-primary" id="addvalue"></button>
 	     					<input type="button" class="btn btn-outline-primary" name="name" value="全選商品" id="allSelect" />
 	   						<input type="button" class="btn btn-outline-secondary" name="name" value="取消全選" id="notSelect" />
@@ -221,7 +222,9 @@
                             <img src="<%=request.getContextPath()%>/front-end/memberlist/showPicture.do?mem_no=<%=session.getAttribute("mem_no")%>" 
                             style="max-width:100px;max-height:100px;margin-right: 10px;" class="rounded-circle">
                             <div class="shipping-address">
+                                    <div style="color:red;">${errorMsgs.receiver}</div>
                                     <input type="text"  placeholder="收件人姓名" name="address_receiver" value="${param.receiver}">
+                                    <div style="color:red;">${errorMsgs.phone}</div>
                                     <input type="tel"  placeholder="收件人電話" name="address_phone" value="${param.phone}">
                                     <!-- google map -->
 <!--                                     <input id="searchtext" type="text" class="form-control" placeholder="Search for..."> -->
@@ -244,6 +247,8 @@
 	                                    });
 	                                </script>  
 <%--                                     <input type="text"  placeholder="城市" name="address_city" value="${param.city}"> --%>
+                                    <div style="color:red;">${errorMsgs.zip}</div>
+                                    <div style="color:red;">${errorMsgs.detail}</div>
                                     <input type="text"  placeholder="地址" name="address_detail" value="${param.detail}" id="cartaddress">
 <%--                                     <input type="text"  placeholder="郵遞區號" name="address_zip" value="${param.zip}"> --%>
 									<jsp:include page="/front-end/pro/country-dropdown/country-select.jsp"/>
@@ -260,7 +265,10 @@
                         <h5 class="title--">信用卡付款</h5>
                         <div class="shipping d-flex justify-content-between">
                             <h5>請輸入卡號：</h5>
-                                <div class="checkout-btn panel">                
+                                <div class="checkout-btn panel"> 
+                                <div style="color:red;">${errorMsgs.card}</div>
+                                <div style="color:red;">${errorMsgs.expirydate}</div>
+                                <div style="color:red;">${errorMsgs.cvc}</div>               
 	                              <div class="card-js stripe" data-stripe="true"></div>
 <!--------------------------------<button class="btncard" onclick="document.getElementById('form-id').submit();"><div id="testnum"></div></button> -->
 	                              <input type="hidden" name="ord_amount" value="test">

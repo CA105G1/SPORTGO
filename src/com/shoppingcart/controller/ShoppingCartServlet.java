@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -127,7 +128,7 @@ if ("insert".equals(action)) { //來自listOnePro_front.jsp的請求
 			
 		}
 if ("getAll_For_Display".equals(action)) { //來自listOnePro_front.jsp的請求
-			List<String> errorMsgs = new LinkedList<String>();
+			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -135,7 +136,7 @@ if ("getAll_For_Display".equals(action)) { //來自listOnePro_front.jsp的請求
 			
 			String mem_no = session.getAttribute("mem_no").toString();//********需要把listAllPro_front.jsp中的session拿掉接正式版的會員********
 			if(mem_no == null || mem_no.trim().length() == 0) {
-				errorMsgs.add("未登入會員");
+				errorMsgs.put("mem_no","未登入會員");
 			}			
 			mem_no = mem_no + "P";
 			ProductService proSvc = new ProductService();
