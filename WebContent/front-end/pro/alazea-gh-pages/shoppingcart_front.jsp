@@ -19,7 +19,6 @@
 	    Map<String , String> hAll =  cartDAO.getAll(memVO.getMem_no()+"P");
 		for(String pro_no : hAll.keySet()) {
 			proVOList.add(proSvc.getOneProduct(pro_no));
-			System.out.println(proSvc.getOneProduct(pro_no));
 		}
 		cartDAO = null;
 		request.setAttribute("hAll", hAll);
@@ -188,6 +187,7 @@
                             				<input type="text" class="return_mem_no" value="<%=session.getAttribute("mem_no")%>" style="display: none;"/>
 							                <input type="text" class="return_pro_no" value="${proVO.pro_no}" style="display: none;"/>
 							                <input type="text" class="return_pro_bonus" value="${proVO.pro_bonus}" style="display: none;"/>
+							                <input type="hidden" class="return_pro_stock" value="${proVO.pro_stock}"/>
 							                <input class="danjia" value="" style="display: none;"/>
 							                
                                         </div>
@@ -670,7 +670,8 @@
 		                var mem_no = $(this).siblings(".return_mem_no").val();//獲取session的當前編號
 		                var pro_no =  $(this).siblings(".return_pro_no").val();//獲取pro_no選擇的商品
 		                var pro_bonus = $(this).siblings(".return_pro_bonus").val();//獲取pro_bonus商品單價
-		                if (num == ${proVO.pro_stock}){ //當庫存數量小於購買數量時封鎖狀態
+		                var pro_stock = $(this).siblings(".return_pro_stock").val();//獲取pro_bonus購買數量
+		                if (num == pro_stock){ //當庫存數量小於購買數量時封鎖狀態
 				        	$(this).prop("disabled", true);
 		                    return;
 		                }
